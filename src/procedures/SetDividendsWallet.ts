@@ -1,13 +1,12 @@
 import { Procedure } from './Procedure';
 import { DividendModuleTypes } from '~/LowLevel/types';
 import { DividendCheckpoint } from '~/LowLevel/DividendCheckpoint';
-import { types } from '@polymathnetwork/new-shared';
-import { SetDividendsWalletProcedureArgs } from '~/types';
+import { SetDividendsWalletProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
 
 export class SetDividendsWallet extends Procedure<
   SetDividendsWalletProcedureArgs
 > {
-  public type = types.ProcedureTypes.SetDividendsWallet;
+  public type = ProcedureTypes.SetDividendsWallet;
   public async prepareTransactions() {
     const { symbol, dividendType, address } = this.args;
     const { securityTokenRegistry } = this.context;
@@ -33,7 +32,7 @@ export class SetDividendsWallet extends Procedure<
     }
 
     await this.addTransaction(dividendModule.setWallet, {
-      tag: types.PolyTransactionTags.SetDividendsWallet,
+      tag: PolyTransactionTags.SetDividendsWallet,
     })({ address });
   }
 }

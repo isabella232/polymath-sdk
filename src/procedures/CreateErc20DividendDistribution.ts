@@ -1,13 +1,12 @@
 import { Procedure } from './Procedure';
-import { types } from '@polymathnetwork/new-shared';
-import { CreateErc20DividendDistributionProcedureArgs } from '~/types';
+import { CreateErc20DividendDistributionProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
 import { Approve } from '~/procedures/Approve';
 
 export class CreateErc20DividendDistribution extends Procedure<
   CreateErc20DividendDistributionProcedureArgs,
   number
 > {
-  public type = types.ProcedureTypes.CreateErc20DividendDistribution;
+  public type = ProcedureTypes.CreateErc20DividendDistribution;
   public async prepareTransactions() {
     const {
       symbol,
@@ -42,7 +41,7 @@ export class CreateErc20DividendDistribution extends Procedure<
     const dividendIndex = await this.addTransaction(
       erc20Module.createDividend,
       {
-        tag: types.PolyTransactionTags.CreateErc20DividendDistribution,
+        tag: PolyTransactionTags.CreateErc20DividendDistribution,
         // TODO @monitz87: replace this with the correct receipt type when we integrate the SDK with
         // the contract-wrappers package
         resolver: async receipt => {
@@ -81,7 +80,7 @@ export class CreateErc20DividendDistribution extends Procedure<
       });
 
       await this.addTransaction(erc20Module.setWithholding, {
-        tag: types.PolyTransactionTags.SetErc20TaxWithholding,
+        tag: PolyTransactionTags.SetErc20TaxWithholding,
       })({ investors, percentages });
     }
 

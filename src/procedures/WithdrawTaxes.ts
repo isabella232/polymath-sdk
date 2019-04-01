@@ -1,11 +1,10 @@
 import { Procedure } from './Procedure';
 import { DividendModuleTypes } from '~/LowLevel/types';
 import { DividendCheckpoint } from '~/LowLevel/DividendCheckpoint';
-import { types } from '@polymathnetwork/new-shared';
-import { WithdrawTaxesProcedureArgs } from '~/types';
+import { WithdrawTaxesProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
 
 export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
-  public type = types.ProcedureTypes.WithdrawTaxes;
+  public type = ProcedureTypes.WithdrawTaxes;
   public async prepareTransactions() {
     const { symbol, dividendIndex, dividendType } = this.args;
     const { securityTokenRegistry } = this.context;
@@ -31,7 +30,7 @@ export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
     }
 
     await this.addTransaction(dividendModule.withdrawWithholding, {
-      tag: types.PolyTransactionTags.WithdrawTaxWithholdings,
+      tag: PolyTransactionTags.WithdrawTaxWithholdings,
     })({ dividendIndex });
   }
 }

@@ -1,4 +1,4 @@
-import { typeHelpers } from '@polymathnetwork/new-shared';
+import { OmitFromProcedureArgs } from '~/types';
 import { Polymath } from '~/Polymath';
 import { Entity } from './Entity';
 import { serialize } from '~/utils';
@@ -33,7 +33,7 @@ export class SecurityTokenReservation extends Entity {
   }
 
   public reserve = (
-    args: typeHelpers.OmitFromProcedureArgs<
+    args: OmitFromProcedureArgs<
       Polymath['reserveSecurityToken'],
       ExcludedArgs
     >
@@ -45,7 +45,7 @@ export class SecurityTokenReservation extends Entity {
     });
 
   public createSecurityToken = (
-    args: typeHelpers.OmitFromProcedureArgs<
+    args: OmitFromProcedureArgs<
       Polymath['createSecurityToken'],
       ExcludedArgs
     >

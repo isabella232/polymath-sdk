@@ -1,11 +1,10 @@
 import { Procedure } from './Procedure';
 import { DividendModuleTypes } from '~/LowLevel/types';
 import { DividendCheckpoint } from '~/LowLevel/DividendCheckpoint';
-import { types } from '@polymathnetwork/new-shared';
-import { ReclaimFundsProcedureArgs } from '~/types';
+import { ReclaimFundsProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
 
 export class ReclaimFunds extends Procedure<ReclaimFundsProcedureArgs> {
-  public type = types.ProcedureTypes.ReclaimFunds;
+  public type = ProcedureTypes.ReclaimFunds;
   public async prepareTransactions() {
     const { symbol, dividendIndex, dividendType } = this.args;
     const { securityTokenRegistry } = this.context;
@@ -31,7 +30,7 @@ export class ReclaimFunds extends Procedure<ReclaimFundsProcedureArgs> {
     }
 
     await this.addTransaction(dividendModule.reclaimDividend, {
-      tag: types.PolyTransactionTags.ReclaimDividendFunds,
+      tag: PolyTransactionTags.ReclaimDividendFunds,
     })({ dividendIndex });
   }
 }

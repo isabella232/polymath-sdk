@@ -1,4 +1,4 @@
-import { types } from '@polymathnetwork/new-shared';
+import { TransactionQueueStatus, isPojo } from '~/types';
 import { MockedContract, getMockTransactionSpec } from '~/testUtils';
 import { TransactionQueue } from '../TransactionQueue';
 
@@ -59,7 +59,7 @@ describe('TransactionQueue', () => {
 
       const transactionQueue = new TransactionQueue([txOne]);
 
-      expect(types.isPojo(transactionQueue.toPojo())).toBeTruthy();
+      expect(isPojo(transactionQueue.toPojo())).toBeTruthy();
     });
   });
 
@@ -97,28 +97,28 @@ describe('TransactionQueue', () => {
       const transactionQueue = new TransactionQueue([txOne, txTwo]);
 
       expect(transactionQueue.status).toEqual(
-        types.TransactionQueueStatus.Idle
+        TransactionQueueStatus.Idle
       );
       transactionQueue.run();
       expect(transactionQueue.status).toEqual(
-        types.TransactionQueueStatus.Running
+        TransactionQueueStatus.Running
       );
       contract.fakeTxOnePromiEvent.resolve();
       await transactionQueue.transactions[0].promise;
       expect(transactionQueue.status).toEqual(
-        types.TransactionQueueStatus.Running
+        TransactionQueueStatus.Running
       );
       contract.fakeTxTwoPromiEvent.resolve();
       await transactionQueue.transactions[1].promise;
 
       expect(transactionQueue.status).toEqual(
-        types.TransactionQueueStatus.Running
+        TransactionQueueStatus.Running
       );
 
       await transactionQueue.promise;
 
       expect(transactionQueue.status).toEqual(
-        types.TransactionQueueStatus.Succeeded
+        TransactionQueueStatus.Succeeded
       );
     });
   });
@@ -131,7 +131,7 @@ describe('TransactionQueue', () => {
     await expect(transactionQueue.run()).rejects.toEqual(expect.any(Error));
 
     expect(transactionQueue.status).toEqual(
-      types.TransactionQueueStatus.Failed
+      TransactionQueueStatus.Failed
     );
   });
 });

@@ -1,4 +1,4 @@
-import { typeHelpers } from '@polymathnetwork/new-shared';
+import { OmitFromProcedureArgs } from '~/types';
 import { Polymath } from '~/Polymath';
 import { Entity } from '~/entities/Entity';
 import { serialize } from '~/utils';
@@ -36,7 +36,7 @@ export class SecurityToken extends Entity {
   }
 
   public getErc20DividendsModule = (
-    args: typeHelpers.OmitFromProcedureArgs<
+    args: OmitFromProcedureArgs<
       Polymath['getErc20DividendsModule'],
       ExcludedArgs
     >
@@ -47,7 +47,7 @@ export class SecurityToken extends Entity {
     });
 
   public enableDividendModules = (
-    args: typeHelpers.OmitFromProcedureArgs<
+    args: OmitFromProcedureArgs<
       Polymath['enableDividendModules'],
       ExcludedArgs
     >
@@ -58,7 +58,7 @@ export class SecurityToken extends Entity {
     });
 
   public getCheckpoints = (
-    args: typeHelpers.OmitFromProcedureArgs<
+    args: OmitFromProcedureArgs<
       Polymath['getCheckpoints'],
       ExcludedArgs
     >
@@ -69,7 +69,7 @@ export class SecurityToken extends Entity {
     });
 
   public getCheckpoint = (
-    args: typeHelpers.OmitFromProcedureArgs<
+    args: OmitFromProcedureArgs<
       Polymath['getCheckpoint'],
       ExcludedArgs
     >
@@ -80,14 +80,14 @@ export class SecurityToken extends Entity {
     });
 
   public createCheckpoint = (
-    args: typeHelpers.OmitFromProcedureArgs<
+    args: OmitFromProcedureArgs<
       Polymath['createCheckpoint'],
       ExcludedArgs
     >
   ) => this.polyClient.createCheckpoint({ ...args, symbol: this.symbol });
 
   public createPolyDividendDistribution = (
-    args: typeHelpers.OmitFromProcedureArgs<
+    args: OmitFromProcedureArgs<
       Polymath['createPolyDividendDistribution'],
       ExcludedArgs
     >
@@ -98,7 +98,7 @@ export class SecurityToken extends Entity {
     });
 
   public createErc20DividendDistribution = (
-    args: typeHelpers.OmitFromProcedureArgs<
+    args: OmitFromProcedureArgs<
       Polymath['createErc20DividendDistribution'],
       ExcludedArgs
     >
@@ -109,7 +109,7 @@ export class SecurityToken extends Entity {
     });
 
   public createEthDividendDistribution = (
-    args: typeHelpers.OmitFromProcedureArgs<
+    args: OmitFromProcedureArgs<
       Polymath['createEthDividendDistribution'],
       ExcludedArgs
     >

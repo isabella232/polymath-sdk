@@ -5,7 +5,8 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "postinstall": "rm -f node_modules/web3/index.d.ts node_modules/web3/types.d.ts"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -42,19 +43,20 @@
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
     "@types/jest": "^23.3.10",
+    "@types/lodash": "^4.14.123",
     "@types/node": "^10.12.12",
     "@types/semver": "^5.5.0",
     "@types/uuid": "^3.4.4",
-    "@types/web3": "^1.0.14",
+    "@types/web3": "^1.0.18",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "husky": "^1.3.1",
     "jest": "^24.1.0",
     "reflect-metadata": "^0.1.12",
     "regenerator-runtime": "^0.13.1",
+    "semantic-release": "^15.13.3",
     "typescript": "3.2.4",
-    "web3-core-promievent": "^1.0.0-beta.37",
-    "semantic-release": "^15.13.3"
+    "web3-core-promievent": "^1.0.0-beta.37"
   },
   "husky": {
     "hooks": {

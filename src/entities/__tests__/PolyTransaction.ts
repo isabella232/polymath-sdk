@@ -1,8 +1,8 @@
 import { PolyTransaction } from '~/entities/PolyTransaction';
 import { TransactionQueue } from '~/entities/TransactionQueue';
-import { types } from '@polymathnetwork/new-shared';
+import { PolyTransactionTags, TransactionStatus, isPojo } from '~/types';
 import { MockedContract, getMockTransactionSpec } from '~/testUtils';
-import { utils } from '@polymathnetwork/new-shared';
+import { delay } from '~/utils';
 
 describe('PolyTransaction', () => {
   describe('.constructor', () => {
@@ -31,7 +31,7 @@ describe('PolyTransaction', () => {
 
       expect(polyTransaction).toHaveProperty(
         'tag',
-        types.PolyTransactionTags.Any
+        PolyTransactionTags.Any
       );
     });
 
@@ -44,7 +44,7 @@ describe('PolyTransaction', () => {
         transaction,
         {} as TransactionQueue
       );
-      expect(polyTransaction.status).toEqual(types.TransactionStatus.Idle);
+      expect(polyTransaction.status).toEqual(TransactionStatus.Idle);
     });
   });
 
@@ -80,7 +80,7 @@ describe('PolyTransaction', () => {
 
       expect(listenerSpy).toHaveBeenLastCalledWith(polyTransaction);
 
-      await utils.delay(1);
+      await delay(1);
 
       testContract.fakeTxOnePromiEvent.eventEmitter.emit(
         'transactionHash',
@@ -93,7 +93,7 @@ describe('PolyTransaction', () => {
       testContract.fakeTxOnePromiEvent.resolve();
       await runPromise;
 
-      expect(polyTransaction.status).toEqual(types.TransactionStatus.Succeeded);
+      expect(polyTransaction.status).toEqual(TransactionStatus.Succeeded);
     });
 
     test('correctly handles errors', async () => {
@@ -121,7 +121,7 @@ describe('PolyTransaction', () => {
         uid: 'tqid0',
       } as TransactionQueue);
 
-      expect(types.isPojo(polyTransaction.toPojo())).toBeTruthy();
+      expect(isPojo(polyTransaction.toPojo())).toBeTruthy();
     });
   });
 
@@ -135,7 +135,7 @@ describe('PolyTransaction', () => {
 
       await polyTransaction.run();
 
-      expect(polyTransaction.status).toEqual(types.TransactionStatus.Succeeded);
+      expect(polyTransaction.status).toEqual(TransactionStatus.Succeeded);
     });
   });
 });
