@@ -1,11 +1,10 @@
 import { Procedure } from './Procedure';
-import { types } from '@polymathnetwork/new-shared';
-import { CreateEtherDividendDistributionProcedureArgs } from '~/types';
+import { CreateEtherDividendDistributionProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
 
 export class CreateEtherDividendDistribution extends Procedure<
   CreateEtherDividendDistributionProcedureArgs
 > {
-  public type = types.ProcedureTypes.CreateEtherDividendDistribution;
+  public type = ProcedureTypes.CreateEtherDividendDistribution;
   public async prepareTransactions() {
     const {
       symbol,
@@ -31,7 +30,7 @@ export class CreateEtherDividendDistribution extends Procedure<
     }
 
     await this.addTransaction(etherModule.createDividend, {
-      tag: types.PolyTransactionTags.CreateEtherDividendDistribution,
+      tag: PolyTransactionTags.CreateEtherDividendDistribution,
     })({
       maturityDate,
       expiryDate,
@@ -51,7 +50,7 @@ export class CreateEtherDividendDistribution extends Procedure<
       });
 
       await this.addTransaction(etherModule.setWithholding, {
-        tag: types.PolyTransactionTags.SetEtherTaxWithholding,
+        tag: PolyTransactionTags.SetEtherTaxWithholding,
       })({ investors, percentages });
     }
   }

@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 import Accounts from 'web3/eth/accounts';
+import { NetworkIds } from './types';
 import { web3 } from './web3Client';
-import { constants } from '@polymathnetwork/new-shared';
 import { HttpProvider } from 'web3/providers';
 import { PolyToken } from './PolyToken';
 import { PolymathRegistry } from './PolymathRegistry';
@@ -45,7 +45,7 @@ export class LowLevel {
   public securityTokenRegistry?: SecurityTokenRegistry;
   public moduleRegistry?: ModuleRegistry;
   public account?: string;
-  private networkId: constants.NetworkIds = -1;
+  private networkId: NetworkIds = -1;
 
   constructor(params: Params = {}) {
     const { provider, privateKey } = params;

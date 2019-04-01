@@ -2,7 +2,7 @@ import Web3 from 'web3';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCodes } from '~/types';
 import { HttpProvider } from 'web3/providers';
-import { utils } from '@polymathnetwork/new-shared';
+import { delay } from './utils';
 
 export enum BrowserSupport {
   None = 'NONE',
@@ -103,7 +103,7 @@ export async function getNetworkId(): Promise<number | null> {
   }
 
   if (rawNetworkId === 'loading' || !rawNetworkId) {
-    await utils.delay(50);
+    await delay(50);
     return getNetworkId();
   }
 

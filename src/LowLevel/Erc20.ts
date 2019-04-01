@@ -1,4 +1,3 @@
-import Web3 from 'web3';
 import { TransactionObject } from 'web3/eth/types';
 import { Contract } from './Contract';
 import { Context } from './LowLevel';

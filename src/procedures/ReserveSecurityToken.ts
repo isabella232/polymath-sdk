@@ -1,12 +1,11 @@
 import { Procedure } from './Procedure';
 import { Approve } from './Approve';
-import { types } from '@polymathnetwork/new-shared';
-import { ReserveSecurityTokenProcedureArgs } from '~/types';
+import { ReserveSecurityTokenProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
 
 export class ReserveSecurityToken extends Procedure<
   ReserveSecurityTokenProcedureArgs
 > {
-  public type = types.ProcedureTypes.ReserveSecurityToken;
+  public type = ProcedureTypes.ReserveSecurityToken;
   public async prepareTransactions() {
     const { symbol, name } = this.args;
     const { securityTokenRegistry, currentWallet } = this.context;
@@ -21,7 +20,7 @@ export class ReserveSecurityToken extends Procedure<
     });
 
     await this.addTransaction(securityTokenRegistry.registerTicker, {
-      tag: types.PolyTransactionTags.ReserveSecurityToken,
+      tag: PolyTransactionTags.ReserveSecurityToken,
     })({ owner: currentWallet.address, ticker: symbol, tokenName: name });
   }
 }

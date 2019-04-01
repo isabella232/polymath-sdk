@@ -1,6 +1,5 @@
 import { Procedure } from './Procedure';
-import { types } from '@polymathnetwork/new-shared';
-import { PushDividendPaymentProcedureArgs, DividendModuleTypes } from '~/types';
+import { PushDividendPaymentProcedureArgs, DividendModuleTypes, ProcedureTypes, PolyTransactionTags } from '~/types';
 import { chunk } from 'lodash';
 
 const CHUNK_SIZE = 100;
@@ -8,7 +7,7 @@ const CHUNK_SIZE = 100;
 export class PushDividendPayment extends Procedure<
   PushDividendPaymentProcedureArgs
 > {
-  public type = types.ProcedureTypes.PushDividendPayment;
+  public type = ProcedureTypes.PushDividendPayment;
   public async prepareTransactions() {
     const {
       symbol,
@@ -59,7 +58,7 @@ export class PushDividendPayment extends Procedure<
 
     for (const addresses of investorAddressChunks) {
       await this.addTransaction(dividendsModule.pushDividendPayment, {
-        tag: types.PolyTransactionTags.PushDividendPayment,
+        tag: PolyTransactionTags.PushDividendPayment,
       })({
         dividendIndex,
         investorAddresses: addresses,
