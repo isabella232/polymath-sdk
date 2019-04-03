@@ -298,9 +298,7 @@ export function isPojo(pojo: any): pojo is Pojo {
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export type ArgumentsType<T> = T extends (...args: infer A) => any ? A : never;
-
 export type OmitFromProcedureArgs<
   Procedure extends (...args: any[]) => any,
   T
-> = Omit<ArgumentsType<Procedure>[0], keyof T>;
+> = Omit<Parameters<Procedure>[0], keyof T>;

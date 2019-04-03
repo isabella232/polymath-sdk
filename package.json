@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "semantic-release": "semantic-release",
-    "postinstall": "rm -f node_modules/web3/index.d.ts node_modules/web3/types.d.ts"
+    "postinstall": "rm -f node_modules/web3/index.d.ts node_modules/web3/types.d.ts",
+    "prepack": "ttsc -b ."
   },
   "jest": {
     "moduleFileExtensions": [
@@ -56,6 +57,8 @@
     "regenerator-runtime": "^0.13.1",
     "semantic-release": "^15.13.3",
     "typescript": "3.2.4",
+    "tsconfig-paths": "^3.7.0",
+    "ttypescript": "1.5.6",
     "web3-core-promievent": "^1.0.0-beta.37"
   },
   "husky": {
