@@ -6,17 +6,22 @@
     "paths": {
       "~/*": ["*"]
     },
+    "plugins": [
+      {
+        "transform": "./config/absoluteToRelative.ts",
+        "afterDeclarations": true
+      }
+    ],
     "target": "es6",
     "module": "commonjs",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
     "strict": true,
-    "composite": true,
     "esModuleInterop": true,
     "emitDeclarationOnly": true,
     "jsx": "react",
     "lib": ["es2017", "dom"],
   },
-  "exclude": ["src/specsInit.ts", "build", "node_modules"]
+  "exclude": ["config", "build", "node_modules"]
 }
