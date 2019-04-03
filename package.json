@@ -7,7 +7,7 @@
     "test": "jest",
     "semantic-release": "semantic-release",
     "postinstall": "rm -f node_modules/web3/index.d.ts node_modules/web3/types.d.ts",
-    "prepack": "ttsc -b ."
+    "build:ts": "ttsc -b --watch ."
   },
   "jest": {
     "moduleFileExtensions": [
