@@ -7,9 +7,9 @@
     "test": "jest",
     "semantic-release": "semantic-release",
     "postinstall": "rm -f node_modules/web3/index.d.ts node_modules/web3/types.d.ts",
-    "build:ts": "ttsc -b --watch .",
+    "build:ts": "ttsc -b .",
     "build:dev": "webpack --mode development --display-error-details",
-    "build:prod": "webpack --mode production"
+    "build:prod": "webpack --mode production && yarn run build:ts"
   },
   "jest": {
     "moduleFileExtensions": [

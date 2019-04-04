@@ -2,6 +2,12 @@ const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   entry: './src/index.ts',
+  output: {
+    filename: 'index.js',
+    library: 'PolymathNetworkSdk',
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
+  },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     plugins: [new TsconfigPathsPlugin()],
