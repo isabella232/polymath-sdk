@@ -1,15 +1,18 @@
 {
   "name": "@polymathnetwork/sdk",
-  "version": "0.0.0-development",
+  "version": "0.0.0-alpha.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "test": "jest",
     "semantic-release": "semantic-release",
     "postinstall": "rm -f node_modules/web3/index.d.ts node_modules/web3/types.d.ts",
-    "build:ts": "ttsc -b .",
+    "build:ts": "ttsc -b --watch",
     "build:dev": "webpack --mode development --display-error-details",
-    "build:prod": "webpack --mode production && yarn run build:ts"
+    "build:prod": "webpack --mode production && ttsc -b"
   },
   "jest": {
     "moduleFileExtensions": [
