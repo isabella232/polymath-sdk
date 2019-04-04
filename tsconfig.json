@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "build/dist",
+    "outDir": "dist",
     "rootDir": "src",
     "baseUrl": "src",
     "paths": {
@@ -21,7 +21,7 @@
     "esModuleInterop": true,
     "emitDeclarationOnly": true,
     "jsx": "react",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2017", "dom"]
   },
   "exclude": ["config", "build", "node_modules"]
 }
