@@ -23,5 +23,5 @@
     "jsx": "react",
     "lib": ["es2017", "dom"]
   },
-  "exclude": ["config", "build", "node_modules"]
+  "exclude": ["config", "dist", "node_modules"]
 }
