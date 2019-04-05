@@ -1,6 +1,13 @@
 {
   "name": "@polymathnetwork/sdk",
   "version": "0.0.0-alpha.0",
+  "description": "A Javascript SDK for interacting with the Polymath network for the browser and Node.js",
+  "bugs": {
+    "url": "https://github.com/PolymathNetwork/polymath-sdk/issues"
+  },
+  "homepage": "https://github.com/PolymathNetwork/polymath-sdk#readme",
+  "author": "Polymath Studios Inc.",
+  "license": "ISC",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -106,12 +113,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "description": "A Javascript SDK for interacting with the Polymath network for the browser and Node.js",
-  "bugs": {
-    "url": "https://github.com/PolymathNetwork/polymath-sdk/issues"
-  },
-  "homepage": "https://github.com/PolymathNetwork/polymath-sdk#readme",
-  "author": "Polymath Studios Inc.",
-  "license": "ISC"
+  }
 }
