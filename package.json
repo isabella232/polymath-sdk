@@ -1,6 +1,13 @@
 {
   "name": "@polymathnetwork/sdk",
   "version": "0.0.0-alpha.0",
+  "description": "A Javascript SDK for interacting with the Polymath network for the browser and Node.js",
+  "bugs": {
+    "url": "https://github.com/PolymathNetwork/polymath-sdk/issues"
+  },
+  "homepage": "https://github.com/PolymathNetwork/polymath-sdk#readme",
+  "author": "Polymath Studios Inc.",
+  "license": "ISC",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -8,7 +15,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "semantic-release": "semantic-release",
+    "semantic-release": "semantic-release --no-ci",
     "postinstall": "rm -f node_modules/web3/index.d.ts node_modules/web3/types.d.ts",
     "build:ts": "ttsc -b --watch",
     "build:dev": "webpack --mode development --display-error-details",
@@ -51,6 +58,7 @@
     "@babel/preset-typescript": "^7.3.3",
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
+    "@semantic-release/git": "^7.0.8",
     "@types/jest": "^23.3.10",
     "@types/lodash": "^4.14.123",
     "@types/node": "^10.12.12",
@@ -67,12 +75,12 @@
     "reflect-metadata": "^0.1.12",
     "regenerator-runtime": "^0.13.1",
     "semantic-release": "^15.13.3",
+    "tsconfig-paths": "^3.7.0",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "tslint": "^5.15.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "3.2.4",
-    "tsconfig-paths": "^3.7.0",
     "ttypescript": "1.5.6",
+    "typescript": "3.2.4",
     "web3-core-promievent": "^1.0.0-beta.37",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"
@@ -94,13 +102,16 @@
     "url": "git+https://github.com/PolymathNetwork/polymath-sdk.git"
   },
   "release": {
-    "branch": "master"
+    "branch": "master",
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ]
   },
-  "description": "A Javascript SDK for interacting with the Polymath network for the browser and Node.js",
-  "bugs": {
-    "url": "https://github.com/PolymathNetwork/polymath-sdk/issues"
-  },
-  "homepage": "https://github.com/PolymathNetwork/polymath-sdk#readme",
-  "author": "",
-  "license": "ISC"
+  "publishConfig": {
+    "access": "public"
+  }
 }
