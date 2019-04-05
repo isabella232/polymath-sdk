@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "semantic-release": "semantic-release",
+    "semantic-release": "semantic-release --no-ci",
     "postinstall": "rm -f node_modules/web3/index.d.ts node_modules/web3/types.d.ts",
     "build:ts": "ttsc -b --watch",
     "build:dev": "webpack --mode development --display-error-details",
