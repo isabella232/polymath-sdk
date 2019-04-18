@@ -1,7 +1,7 @@
-import { Polymath } from '~/Polymath';
+import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
-import { serialize } from '~/utils';
-import { DividendModuleTypes } from '~/types';
+import { serialize } from '../utils';
+import { DividendModuleTypes } from '../types';
 
 interface Params {
   securityTokenSymbol: string;

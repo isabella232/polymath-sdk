@@ -1,7 +1,11 @@
 import { Procedure } from './Procedure';
-import { DividendModuleTypes } from '~/LowLevel/types';
-import { DividendCheckpoint } from '~/LowLevel/DividendCheckpoint';
-import { UpdateDividendsTaxWithholdingListProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
+import { DividendModuleTypes } from '../LowLevel/types';
+import { DividendCheckpoint } from '../LowLevel/DividendCheckpoint';
+import {
+  UpdateDividendsTaxWithholdingListProcedureArgs,
+  ProcedureTypes,
+  PolyTransactionTags,
+} from '../types';
 import { chunk } from 'lodash';
 
 const CHUNK_SIZE = 200;

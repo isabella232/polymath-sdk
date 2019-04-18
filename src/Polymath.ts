@@ -1,17 +1,17 @@
 import { HttpProvider } from 'web3/providers';
-import { PolyToken } from '~/LowLevel/PolyToken';
-import { LowLevel } from '~/LowLevel';
-import { PolymathRegistry } from '~/LowLevel/PolymathRegistry';
-import { SecurityTokenRegistry } from '~/LowLevel/SecurityTokenRegistry';
-import { SecurityToken } from '~/LowLevel/SecurityToken';
-import { Context } from '~/Context';
-import { ModuleRegistry } from '~/LowLevel/ModuleRegistry';
-import { TaxWithholdingEntry } from '~/types';
+import { PolyToken } from './LowLevel/PolyToken';
+import { LowLevel } from './LowLevel';
+import { PolymathRegistry } from './LowLevel/PolymathRegistry';
+import { SecurityTokenRegistry } from './LowLevel/SecurityTokenRegistry';
+import { SecurityToken } from './LowLevel/SecurityToken';
+import { Context } from './Context';
+import { ModuleRegistry } from './LowLevel/ModuleRegistry';
+import { TaxWithholdingEntry } from './types';
 import {
   Dividend as LowLevelDividend,
   Checkpoint as LowLevelCheckpoint,
   DividendModuleTypes,
-} from '~/LowLevel/types';
+} from './LowLevel/types';
 import {
   Dividend as DividendEntity,
   Checkpoint as CheckpointEntity,
@@ -20,7 +20,7 @@ import {
   Erc20DividendsModule as Erc20DividendsModuleEntity,
   EthDividendsModule as EthDividendsModuleEntity,
   Erc20TokenBalance as Erc20TokenBalanceEntity,
-} from '~/entities';
+} from './entities';
 
 import {
   ReserveSecurityToken,
@@ -32,12 +32,12 @@ import {
   PushDividendPayment,
   WithdrawTaxes,
 } from './procedures';
-import { CreateSecurityToken } from '~/procedures/CreateSecurityToken';
-import { Entity } from '~/entities/Entity';
-import { PolymathNetworkParams } from '~/types';
+import { CreateSecurityToken } from './procedures/CreateSecurityToken';
+import { Entity } from './entities/Entity';
+import { PolymathNetworkParams } from './types';
 import BigNumber from 'bignumber.js';
 import { includes } from 'lodash';
-import { SetDividendsWallet } from '~/procedures/SetDividendsWallet';
+import { SetDividendsWallet } from './procedures/SetDividendsWallet';
 
 // TODO @RafaelVidaurre: Type this correctly. It should return a contextualized
 // version of T

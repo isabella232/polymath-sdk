@@ -1,5 +1,10 @@
 import { Procedure } from './Procedure';
-import { PushDividendPaymentProcedureArgs, DividendModuleTypes, ProcedureTypes, PolyTransactionTags } from '~/types';
+import {
+  PushDividendPaymentProcedureArgs,
+  DividendModuleTypes,
+  ProcedureTypes,
+  PolyTransactionTags,
+} from '../types';
 import { chunk } from 'lodash';
 
 const CHUNK_SIZE = 100;

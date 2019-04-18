@@ -1,6 +1,10 @@
 import { Procedure } from './Procedure';
-import { CreateErc20DividendDistributionProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
-import { Approve } from '~/procedures/Approve';
+import {
+  CreateErc20DividendDistributionProcedureArgs,
+  ProcedureTypes,
+  PolyTransactionTags,
+} from '../types';
+import { Approve } from '../procedures/Approve';
 
 export class CreateErc20DividendDistribution extends Procedure<
   CreateErc20DividendDistributionProcedureArgs,

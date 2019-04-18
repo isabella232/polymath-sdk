@@ -1,5 +1,9 @@
 import { Procedure } from './Procedure';
-import { CreateCheckpointProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
+import {
+  CreateCheckpointProcedureArgs,
+  ProcedureTypes,
+  PolyTransactionTags,
+} from '../types';
 
 export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs> {
   public type = ProcedureTypes.CreateCheckpoint;

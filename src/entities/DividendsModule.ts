@@ -1,4 +1,4 @@
-import { Polymath } from '~/Polymath';
+import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 
 export interface Params {

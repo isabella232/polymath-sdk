@@ -1,5 +1,5 @@
-import { isAddress } from '~/LowLevel/utils';
-import { Pojo, isPojo } from '~/types';
+import { isAddress } from '../LowLevel/utils';
+import { Pojo, isPojo } from '../types';
 import { join, keys } from 'lodash';
 
 /**

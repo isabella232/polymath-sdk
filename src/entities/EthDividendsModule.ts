@@ -1,5 +1,5 @@
-import { Polymath } from '~/Polymath';
-import { serialize } from '~/utils';
+import { Polymath } from '../Polymath';
+import { serialize } from '../utils';
 import { DividendsModule } from './DividendsModule';
 
 interface Params {

@@ -1,6 +1,6 @@
 import { DividendsModule, Params } from './DividendsModule';
-import { Polymath } from '~/Polymath';
-import { serialize } from '~/utils';
+import { Polymath } from '../Polymath';
+import { serialize } from '../utils';
 
 export class Erc20DividendsModule extends DividendsModule {
   public static generateId({

@@ -1,6 +1,10 @@
 import { Procedure } from './Procedure';
-import { DividendModuleTypes } from '~/LowLevel/types';
-import { EnableDividendModulesProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
+import { DividendModuleTypes } from '../LowLevel/types';
+import {
+  EnableDividendModulesProcedureArgs,
+  ProcedureTypes,
+  PolyTransactionTags,
+} from '../types';
 
 export class EnableDividendModules extends Procedure<
   EnableDividendModulesProcedureArgs

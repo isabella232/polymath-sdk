@@ -1,5 +1,5 @@
-import { TransactionQueueStatus, isPojo } from '~/types';
-import { MockedContract, getMockTransactionSpec } from '~/testUtils';
+import { TransactionQueueStatus, isPojo } from '../../types';
+import { MockedContract, getMockTransactionSpec } from '../../testUtils';
 import { TransactionQueue } from '../TransactionQueue';
 
 describe('TransactionQueue', () => {
@@ -96,30 +96,20 @@ describe('TransactionQueue', () => {
 
       const transactionQueue = new TransactionQueue([txOne, txTwo]);
 
-      expect(transactionQueue.status).toEqual(
-        TransactionQueueStatus.Idle
-      );
+      expect(transactionQueue.status).toEqual(TransactionQueueStatus.Idle);
       transactionQueue.run();
-      expect(transactionQueue.status).toEqual(
-        TransactionQueueStatus.Running
-      );
+      expect(transactionQueue.status).toEqual(TransactionQueueStatus.Running);
       contract.fakeTxOnePromiEvent.resolve();
       await transactionQueue.transactions[0].promise;
-      expect(transactionQueue.status).toEqual(
-        TransactionQueueStatus.Running
-      );
+      expect(transactionQueue.status).toEqual(TransactionQueueStatus.Running);
       contract.fakeTxTwoPromiEvent.resolve();
       await transactionQueue.transactions[1].promise;
 
-      expect(transactionQueue.status).toEqual(
-        TransactionQueueStatus.Running
-      );
+      expect(transactionQueue.status).toEqual(TransactionQueueStatus.Running);
 
       await transactionQueue.promise;
 
-      expect(transactionQueue.status).toEqual(
-        TransactionQueueStatus.Succeeded
-      );
+      expect(transactionQueue.status).toEqual(TransactionQueueStatus.Succeeded);
     });
   });
 
@@ -130,8 +120,6 @@ describe('TransactionQueue', () => {
 
     await expect(transactionQueue.run()).rejects.toEqual(expect.any(Error));
 
-    expect(transactionQueue.status).toEqual(
-      TransactionQueueStatus.Failed
-    );
+    expect(transactionQueue.status).toEqual(TransactionQueueStatus.Failed);
   });
 });

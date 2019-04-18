@@ -142,7 +142,7 @@ a browser, make sure you have MetaMask installed and enabled.`
   };
 
   private getBrowserProvider = () => {
-    if (!window) {
+    if (typeof window === 'undefined') {
       return null;
     }
 
