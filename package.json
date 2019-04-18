@@ -57,7 +57,7 @@
     "@babel/preset-typescript": "^7.3.3",
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
-    "@semantic-release/git": "^7.0.8",
+    "@semantic-release/git": "^7.1.0-beta.3",
     "@types/jest": "^23.3.10",
     "@types/lodash": "^4.14.123",
     "@types/node": "^10.12.12",
