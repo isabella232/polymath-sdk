@@ -7,6 +7,7 @@ module.exports = {
     library: 'PolymathNetworkSdk',
     libraryTarget: 'umd',
     umdNamedDefine: true,
+    globalObject: this,
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
