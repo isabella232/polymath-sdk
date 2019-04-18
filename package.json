@@ -101,6 +101,7 @@
     "url": "git+https://github.com/PolymathNetwork/polymath-sdk.git"
   },
   "release": {
+    "repositoryUrl": "https://github.com/PolymathNetwork/polymath-sdk.git",
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
