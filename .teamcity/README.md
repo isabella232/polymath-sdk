@@ -66,13 +66,27 @@
 
 ## `$TAG_VERSION` only
 
-    ```
-    #!/bin/bash
+```
+#!/bin/bash
 
-    TAG_VERSION=`git describe --abbrev=0 %build.vcs.number% --tags`
+TAG_VERSION=`git describe --abbrev=0 %build.vcs.number% --tags`
 
-    echo "TAG_VERSION: $TAG_VERSION"
-    echo "##teamcity[buildNumber '$TAG_VERSION']"
+echo "TAG_VERSION: $TAG_VERSION"
+echo "##teamcity[buildNumber '$TAG_VERSION']"
 
-    exit 0
-    ```
+exit 0
+```
+
+## semantic-release
+
+- Custom script:
+
+  ```
+  VCSROOT_URL=%vcsroot.url%
+  VCSROOT_BRANCH=%vcsroot.branch%
+
+  echo "vcsroot.url: $VCSROOT_URL"
+  echo "vcsroot.branch: $VCSROOT_BRANCH"
+
+  yarn semantic-release --debug
+  ```
