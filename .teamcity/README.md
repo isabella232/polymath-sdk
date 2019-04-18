@@ -15,6 +15,20 @@
   - Commit Status Publisher
   - Pull Requests
 
+## Release
+
+- VCS Root: `polymathnetwork_polymath_sdk_https`
+  - Branch specification: `EMPTY`
+- VCS:
+  - Allow builds in the default branch: `TRUE`
+- Build Steps:
+  - ...
+- Triggers:
+  - VCS Trigger
+    - BranchFilter: `EMPTY`
+- Features:
+  - Swabra
+
 # Versioning Scripts
 
 ## `$TAG_VERSION-$GIT_HASH_SHORT.$BUILD_NUMBER`
