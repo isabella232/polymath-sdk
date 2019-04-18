@@ -4,12 +4,16 @@
 
 - VCS Root:
   - Branch specification: `EMPTY`
-- VCS Settings:
+- VCS:
   - Allow builds in the default branch: `FALSE`
 - Build Steps:
   - Command Line: Version Script (see below)
 - Triggers:
   - VCS Trigger
+    - BranchFilter: `EMPTY`
+- Features:
+  - Commit Status Publisher
+  - Pull Requests
 
 # Versioning Scripts
 
