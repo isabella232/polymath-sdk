@@ -1,16 +1,11 @@
 module.exports = {
   repositoryUrl: 'https://github.com/PolymathNetwork/polymath-sdk.git',
   branches: [
-    '+([1-9])?(.{+([1-9]),x}).x',
     'master',
     'next',
     'next-major',
     {
       name: 'beta',
-      prerelease: true,
-    },
-    {
-      name: 'alpha',
       prerelease: true,
     },
   ],
