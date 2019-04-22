@@ -1,5 +1,4 @@
 .DS_STORE
-build/
 node_modules/
 dist/
 yarn-error.log
