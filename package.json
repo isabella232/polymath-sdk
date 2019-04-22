@@ -1,6 +1,6 @@
 {
   "name": "@polymathnetwork/sdk",
-  "version": "1.0.4-beta.1",
+  "version": "1.0.4",
   "description": "A Javascript SDK for interacting with the Polymath network for the browser and Node.js",
   "bugs": {
     "url": "https://github.com/PolymathNetwork/polymath-sdk/issues"
