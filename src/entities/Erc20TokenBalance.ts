@@ -1,6 +1,6 @@
-import { Polymath } from '~/Polymath';
+import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
-import { serialize } from '~/utils';
+import { serialize } from '../utils';
 import BigNumber from 'bignumber.js';
 
 interface Params {

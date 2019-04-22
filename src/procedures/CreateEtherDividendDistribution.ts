@@ -1,5 +1,9 @@
 import { Procedure } from './Procedure';
-import { CreateEtherDividendDistributionProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
+import {
+  CreateEtherDividendDistributionProcedureArgs,
+  ProcedureTypes,
+  PolyTransactionTags,
+} from '../types';
 
 export class CreateEtherDividendDistribution extends Procedure<
   CreateEtherDividendDistributionProcedureArgs

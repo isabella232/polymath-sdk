@@ -1,9 +1,14 @@
 import { EventEmitter } from 'events';
-import { TransactionSpec, MaybeResolver, ProcedureTypes, TransactionQueueStatus } from '~/types';
+import {
+  TransactionSpec,
+  MaybeResolver,
+  ProcedureTypes,
+  TransactionQueueStatus,
+} from '../types';
 import { Entity } from './Entity';
 import { PolyTransaction } from './PolyTransaction';
-import { isPostTransactionResolver } from '~/PostTransactionResolver';
-import { serialize } from '~/utils';
+import { isPostTransactionResolver } from '../PostTransactionResolver';
+import { serialize } from '../utils';
 import v4 from 'uuid/v4';
 
 enum Events {
@@ -25,8 +30,7 @@ export class TransactionQueue<
   public uid: string;
   public transactions: PolyTransaction[];
   public promise: Promise<ReturnType | undefined>;
-  public status: TransactionQueueStatus =
-    TransactionQueueStatus.Idle;
+  public status: TransactionQueueStatus = TransactionQueueStatus.Idle;
   public args: Args;
   public error?: Error;
   private queue: PolyTransaction[] = [];

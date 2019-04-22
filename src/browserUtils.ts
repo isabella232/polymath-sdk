@@ -1,6 +1,6 @@
 import Web3 from 'web3';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCodes } from '~/types';
+import { PolymathError } from './PolymathError';
+import { ErrorCodes } from './types';
 import { HttpProvider } from 'web3/providers';
 import { delay } from './utils';
 

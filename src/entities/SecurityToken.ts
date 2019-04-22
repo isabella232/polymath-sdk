@@ -1,7 +1,7 @@
-import { OmitFromProcedureArgs } from '~/types';
-import { Polymath } from '~/Polymath';
-import { Entity } from '~/entities/Entity';
-import { serialize } from '~/utils';
+import { OmitFromProcedureArgs } from '../types';
+import { Polymath } from '../Polymath';
+import { Entity } from '../entities/Entity';
+import { serialize } from '../utils';
 
 interface Params {
   symbol: string;
@@ -47,10 +47,7 @@ export class SecurityToken extends Entity {
     });
 
   public enableDividendModules = (
-    args: OmitFromProcedureArgs<
-      Polymath['enableDividendModules'],
-      ExcludedArgs
-    >
+    args: OmitFromProcedureArgs<Polymath['enableDividendModules'], ExcludedArgs>
   ) =>
     this.polyClient.enableDividendModules({
       ...args,
@@ -58,10 +55,7 @@ export class SecurityToken extends Entity {
     });
 
   public getCheckpoints = (
-    args: OmitFromProcedureArgs<
-      Polymath['getCheckpoints'],
-      ExcludedArgs
-    >
+    args: OmitFromProcedureArgs<Polymath['getCheckpoints'], ExcludedArgs>
   ) =>
     this.polyClient.getCheckpoints({
       ...args,
@@ -69,10 +63,7 @@ export class SecurityToken extends Entity {
     });
 
   public getCheckpoint = (
-    args: OmitFromProcedureArgs<
-      Polymath['getCheckpoint'],
-      ExcludedArgs
-    >
+    args: OmitFromProcedureArgs<Polymath['getCheckpoint'], ExcludedArgs>
   ) =>
     this.polyClient.getCheckpoint({
       ...args,
@@ -80,10 +71,7 @@ export class SecurityToken extends Entity {
     });
 
   public createCheckpoint = (
-    args: OmitFromProcedureArgs<
-      Polymath['createCheckpoint'],
-      ExcludedArgs
-    >
+    args: OmitFromProcedureArgs<Polymath['createCheckpoint'], ExcludedArgs>
   ) => this.polyClient.createCheckpoint({ ...args, symbol: this.symbol });
 
   public createPolyDividendDistribution = (

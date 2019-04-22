@@ -1,6 +1,10 @@
 import { Procedure } from './Procedure';
-import { Approve } from '~/procedures/Approve';
-import { CreateSecurityTokenProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
+import { Approve } from '../procedures/Approve';
+import {
+  CreateSecurityTokenProcedureArgs,
+  ProcedureTypes,
+  PolyTransactionTags,
+} from '../types';
 
 export class CreateSecurityToken extends Procedure<
   CreateSecurityTokenProcedureArgs

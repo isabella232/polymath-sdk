@@ -1,6 +1,10 @@
 import { Procedure } from './Procedure';
 import { Approve } from './Approve';
-import { ReserveSecurityTokenProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
+import {
+  ReserveSecurityTokenProcedureArgs,
+  ProcedureTypes,
+  PolyTransactionTags,
+} from '../types';
 
 export class ReserveSecurityToken extends Procedure<
   ReserveSecurityTokenProcedureArgs

@@ -11,7 +11,7 @@ import {
 } from './types';
 import { fromDivisible, toDivisible, toAscii } from './utils';
 import BigNumber from 'bignumber.js';
-import { web3 } from '~/LowLevel/web3Client';
+import { web3 } from '../LowLevel/web3Client';
 
 interface Erc20Contract extends GenericContract {
   methods: {

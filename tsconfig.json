@@ -19,7 +19,6 @@
     "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,
-    "emitDeclarationOnly": true,
     "jsx": "react",
     "lib": ["es2017", "dom"]
   },

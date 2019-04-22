@@ -1,8 +1,8 @@
-import { Polymath } from '~/Polymath';
+import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
-import { serialize } from '~/utils';
+import { serialize } from '../utils';
 import BigNumber from 'bignumber.js';
-import { DividendModuleTypes, DividendInvestorStatus } from '~/types';
+import { DividendModuleTypes, DividendInvestorStatus } from '../types';
 
 interface Params {
   index: number;

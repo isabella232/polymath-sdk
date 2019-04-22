@@ -1,7 +1,11 @@
 import { Procedure } from './Procedure';
-import { DividendModuleTypes } from '~/LowLevel/types';
-import { DividendCheckpoint } from '~/LowLevel/DividendCheckpoint';
-import { WithdrawTaxesProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
+import { DividendModuleTypes } from '../LowLevel/types';
+import { DividendCheckpoint } from '../LowLevel/DividendCheckpoint';
+import {
+  WithdrawTaxesProcedureArgs,
+  ProcedureTypes,
+  PolyTransactionTags,
+} from '../types';
 
 export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
   public type = ProcedureTypes.WithdrawTaxes;

@@ -1,5 +1,5 @@
 import { SecurityToken } from '../SecurityToken';
-import { Polymath } from '~/Polymath';
+import { Polymath } from '../../Polymath';
 
 const params1 = {
   symbol: 'TEST1',

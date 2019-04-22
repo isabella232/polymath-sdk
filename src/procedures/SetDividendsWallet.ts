@@ -1,7 +1,11 @@
 import { Procedure } from './Procedure';
-import { DividendModuleTypes } from '~/LowLevel/types';
-import { DividendCheckpoint } from '~/LowLevel/DividendCheckpoint';
-import { SetDividendsWalletProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
+import { DividendModuleTypes } from '../LowLevel/types';
+import { DividendCheckpoint } from '../LowLevel/DividendCheckpoint';
+import {
+  SetDividendsWalletProcedureArgs,
+  ProcedureTypes,
+  PolyTransactionTags,
+} from '../types';
 
 export class SetDividendsWallet extends Procedure<
   SetDividendsWalletProcedureArgs
