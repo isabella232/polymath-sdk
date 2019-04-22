@@ -2,27 +2,35 @@
 
 ## Pull Request
 
-- VCS Root:
+- VCS Root: `git@github.com:PolymathNetwork/polymath-sdk.git`
   - Branch specification: `EMPTY`
 - VCS:
   - Allow builds in the default branch: `FALSE`
 - Build Steps:
-  - Command Line: Version Script (see below)
+  - Command Line: Version script (see below)
 - Triggers:
-  - VCS Trigger
+  - VCS Trigger:
     - BranchFilter: `EMPTY`
 - Features:
   - Commit Status Publisher
-  - Pull Requests
+  - Pull Requests:
+    - Filter Author Role: `EVERYBODY`
 
 ## Release
 
-- VCS Root: `polymathnetwork_polymath_sdk_https`
-  - Branch specification: `EMPTY`
+- VCS Root: `https://github.com/PolymathNetwork/polymath-sdk.git`
+  - Branch specification:
+    ```
+    +:refs/heads/(master)
+    +:refs/heads/(beta)
+    +:refs/heads/(next)
+    ```
 - VCS:
   - Allow builds in the default branch: `TRUE`
 - Build Steps:
-  - ...
+  - Command Line:
+    - Version scripts (see below)
+    - Build scripts
 - Triggers:
   - VCS Trigger
     - BranchFilter: `EMPTY`
