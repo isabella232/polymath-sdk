@@ -1,9 +1,20 @@
 import { Polymath } from '~/Polymath';
 import { Entity } from './Entity';
 
-export interface Params {
-  address: string;
+export interface UniqueIdentifiers {
   securityTokenSymbol: string;
+}
+
+export function isUniqueIdentifiers(
+  identifiers: any
+): identifiers is UniqueIdentifiers {
+  const { securityTokenSymbol } = identifiers;
+
+  return typeof securityTokenSymbol === 'string';
+}
+
+export interface Params extends UniqueIdentifiers {
+  address: string;
   securityTokenId: string;
   storageWalletAddress: string;
 }

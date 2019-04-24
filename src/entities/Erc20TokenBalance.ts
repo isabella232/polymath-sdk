@@ -1,20 +1,42 @@
 import { Polymath } from '~/Polymath';
 import { Entity } from './Entity';
-import { serialize } from '~/utils';
+import { serialize, unserialize } from '~/utils';
 import BigNumber from 'bignumber.js';
 
-interface Params {
-  tokenSymbol: string | null;
+interface UniqueIdentifiers {
   tokenAddress: string;
+}
+
+function isUniqueIdentifiers(
+  identifiers: any
+): identifiers is UniqueIdentifiers {
+  const { tokenAddress } = identifiers;
+
+  return typeof tokenAddress === 'string';
+}
+
+interface Params extends UniqueIdentifiers {
+  tokenSymbol: string | null;
   balance: BigNumber;
 }
 
 export class Erc20TokenBalance extends Entity {
-  public static generateId({ tokenAddress }: { tokenAddress: string }) {
+  public static generateId({ tokenAddress }: UniqueIdentifiers) {
     return serialize('erc20TokenBalance', {
       tokenAddress,
     });
   }
+
+  public static unserialize(serialized: any) {
+    const unserialized = unserialize(serialized);
+
+    if (!isUniqueIdentifiers(unserialized)) {
+      throw new Error('Wrong erc20 token balance ID format.');
+    }
+
+    return unserialized;
+  }
+
   public uid: string;
   public tokenSymbol: string | null;
   public tokenAddress: string;

@@ -1,13 +1,28 @@
 import { Polymath } from '~/Polymath';
 import { Entity } from './Entity';
-import { serialize } from '~/utils';
-import { DividendModuleTypes } from '~/types';
+import { serialize, unserialize } from '~/utils';
+import { DividendModuleTypes, isDividendModuleTypes } from '~/types';
 
-interface Params {
+interface UniqueIdentifiers {
   securityTokenSymbol: string;
-  securityTokenId: string;
   dividendType: DividendModuleTypes;
   investorAddress: string;
+}
+
+function isUniqueIdentifiers(
+  identifiers: any
+): identifiers is UniqueIdentifiers {
+  const { securityTokenSymbol, dividendType, investorAddress } = identifiers;
+
+  return (
+    typeof securityTokenSymbol === 'string' &&
+    isDividendModuleTypes(dividendType) &&
+    typeof investorAddress === 'string'
+  );
+}
+
+interface Params extends UniqueIdentifiers {
+  securityTokenId: string;
   percentage: number;
 }
 
@@ -16,17 +31,24 @@ export class TaxWithholding extends Entity {
     securityTokenSymbol,
     dividendType,
     investorAddress,
-  }: {
-    securityTokenSymbol: string;
-    dividendType: DividendModuleTypes;
-    investorAddress: string;
-  }) {
+  }: UniqueIdentifiers) {
     return serialize('taxWithholding', {
       securityTokenSymbol,
       dividendType,
       investorAddress,
     });
   }
+
+  public static unserialize(serialized: string) {
+    const unserialized = unserialize(serialized);
+
+    if (!isUniqueIdentifiers(unserialized)) {
+      throw new Error('Wrong tax withholding ID format.');
+    }
+
+    return unserialized;
+  }
+
   public uid: string;
   public securityTokenSymbol: string;
   public securityTokenId: string;
