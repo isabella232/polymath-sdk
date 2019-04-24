@@ -17,7 +17,7 @@ import {
   DividendInvestorStatus,
   SetDividendsWalletArgs,
 } from '~/LowLevel/types';
-import { isPlainObject } from 'lodash';
+import { isPlainObject } from 'lodash';
 
 // TODO @RafaelVidaurre: This type should come from LowLevel. Duplicating it
 // for now because of compilation issues
@@ -35,6 +35,10 @@ export interface DividendInvestorStatus {
 export enum DividendModuleTypes {
   Erc20 = 'erc20',
   Eth = 'eth',
+}
+
+export function isDividendModuleTypes(type: any): type is DividendModuleTypes {
+  return typeof type === 'string' && (type === 'erc20' || type === 'eth');
 }
 
 export interface TaxWithholdingEntry {
@@ -114,15 +118,9 @@ export type MapMaybeResolver<T> = { [K in keyof T]: MaybeResolver<T[K]> };
 
 export interface TransactionArguments {
   [PolyTransactionTags.Any]: {};
-  [PolyTransactionTags.SetErc20TaxWithholding]: Partial<
-    SetWithholdingArgs
-  >;
-  [PolyTransactionTags.SetEtherTaxWithholding]: Partial<
-    SetWithholdingArgs
-  >;
-  [PolyTransactionTags.ReclaimDividendFunds]: Partial<
-    ReclaimDividendArgs
-  >;
+  [PolyTransactionTags.SetErc20TaxWithholding]: Partial<SetWithholdingArgs>;
+  [PolyTransactionTags.SetEtherTaxWithholding]: Partial<SetWithholdingArgs>;
+  [PolyTransactionTags.ReclaimDividendFunds]: Partial<ReclaimDividendArgs>;
   [PolyTransactionTags.WithdrawTaxWithholdings]: Partial<
     WithdrawWithholdingArgs
   >;
@@ -136,15 +134,9 @@ export interface TransactionArguments {
   [PolyTransactionTags.Approve]: Partial<ApproveArgs>;
   [PolyTransactionTags.EnableDividends]: Partial<AddDividendsModuleArgs>;
   [PolyTransactionTags.ReserveSecurityToken]: Partial<RegisterTickerArgs>;
-  [PolyTransactionTags.CreateSecurityToken]: Partial<
-    GenerateSecurityTokenArgs
-  >;
-  [PolyTransactionTags.PushDividendPayment]: Partial<
-    PushDividendPaymentArgs
-  >;
-  [PolyTransactionTags.SetDividendsWallet]: Partial<
-    SetDividendsWalletArgs
-  >;
+  [PolyTransactionTags.CreateSecurityToken]: Partial<GenerateSecurityTokenArgs>;
+  [PolyTransactionTags.PushDividendPayment]: Partial<PushDividendPaymentArgs>;
+  [PolyTransactionTags.SetDividendsWallet]: Partial<SetDividendsWalletArgs>;
   [PolyTransactionTags.CreateCheckpoint]: {};
 }
 
@@ -236,19 +228,14 @@ export interface SetDividendsWalletProcedureArgs {
 export interface ProcedureArguments {
   [ProcedureTypes.Approve]: ApproveProcedureArgs;
   [ProcedureTypes.CreateCheckpoint]: CreateCheckpointProcedureArgs;
-  [ProcedureTypes
-    .CreateErc20DividendDistribution]: CreateErc20DividendDistributionProcedureArgs;
-  [ProcedureTypes
-    .CreateEtherDividendDistribution]: CreateEtherDividendDistributionProcedureArgs;
+  [ProcedureTypes.CreateErc20DividendDistribution]: CreateErc20DividendDistributionProcedureArgs;
+  [ProcedureTypes.CreateEtherDividendDistribution]: CreateEtherDividendDistributionProcedureArgs;
   [ProcedureTypes.CreateSecurityToken]: CreateSecurityTokenProcedureArgs;
-  [ProcedureTypes
-    .EnableDividendModules]: EnableDividendModulesProcedureArgs;
+  [ProcedureTypes.EnableDividendModules]: EnableDividendModulesProcedureArgs;
   [ProcedureTypes.ReclaimFunds]: ReclaimFundsProcedureArgs;
-  [ProcedureTypes
-    .ReserveSecurityToken]: ReserveSecurityTokenProcedureArgs;
+  [ProcedureTypes.ReserveSecurityToken]: ReserveSecurityTokenProcedureArgs;
   [ProcedureTypes.WithdrawTaxes]: WithdrawTaxesProcedureArgs;
-  [ProcedureTypes
-    .UpdateDividendsTaxWithholdingList]: UpdateDividendsTaxWithholdingListProcedureArgs;
+  [ProcedureTypes.UpdateDividendsTaxWithholdingList]: UpdateDividendsTaxWithholdingListProcedureArgs;
   [ProcedureTypes.PushDividendPayment]: PushDividendPaymentProcedureArgs;
   [ProcedureTypes.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
   [ProcedureTypes.UnnamedProcedure]: {};
