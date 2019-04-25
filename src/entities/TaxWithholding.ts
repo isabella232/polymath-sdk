@@ -7,17 +7,24 @@ interface UniqueIdentifiers {
   securityTokenSymbol: string;
   dividendType: DividendModuleTypes;
   investorAddress: string;
+  checkpointIndex: number;
 }
 
 function isUniqueIdentifiers(
   identifiers: any
 ): identifiers is UniqueIdentifiers {
-  const { securityTokenSymbol, dividendType, investorAddress } = identifiers;
+  const {
+    securityTokenSymbol,
+    dividendType,
+    investorAddress,
+    checkpointIndex,
+  } = identifiers;
 
   return (
     typeof securityTokenSymbol === 'string' &&
     isDividendModuleTypes(dividendType) &&
-    typeof investorAddress === 'string'
+    typeof investorAddress === 'string' &&
+    typeof checkpointIndex === 'number'
   );
 }
 
@@ -31,11 +38,13 @@ export class TaxWithholding extends Entity {
     securityTokenSymbol,
     dividendType,
     investorAddress,
+    checkpointIndex,
   }: UniqueIdentifiers) {
     return serialize('taxWithholding', {
       securityTokenSymbol,
       dividendType,
       investorAddress,
+      checkpointIndex,
     });
   }
 
@@ -54,6 +63,7 @@ export class TaxWithholding extends Entity {
   public securityTokenId: string;
   public dividendType: DividendModuleTypes;
   public investorAddress: string;
+  public checkpointIndex: number;
   public percentage: number;
 
   constructor(params: Params, polyClient?: Polymath) {
@@ -65,6 +75,7 @@ export class TaxWithholding extends Entity {
       dividendType,
       investorAddress,
       percentage,
+      checkpointIndex,
     } = params;
 
     this.securityTokenId = securityTokenId;
@@ -72,10 +83,12 @@ export class TaxWithholding extends Entity {
     this.dividendType = dividendType;
     this.investorAddress = investorAddress;
     this.percentage = percentage;
+    this.checkpointIndex = checkpointIndex;
     this.uid = TaxWithholding.generateId({
       securityTokenSymbol,
       investorAddress,
       dividendType,
+      checkpointIndex,
     });
   }
 
@@ -87,6 +100,7 @@ export class TaxWithholding extends Entity {
       dividendType,
       investorAddress,
       percentage,
+      checkpointIndex,
     } = this;
 
     return {
@@ -96,6 +110,7 @@ export class TaxWithholding extends Entity {
       dividendType,
       investorAddress,
       percentage,
+      checkpointIndex,
     };
   }
 }

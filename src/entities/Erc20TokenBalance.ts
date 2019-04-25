@@ -5,14 +5,15 @@ import BigNumber from 'bignumber.js';
 
 interface UniqueIdentifiers {
   tokenAddress: string;
+  walletAddress: string;
 }
 
 function isUniqueIdentifiers(
   identifiers: any
 ): identifiers is UniqueIdentifiers {
-  const { tokenAddress } = identifiers;
+  const { tokenAddress, walletAddress } = identifiers;
 
-  return typeof tokenAddress === 'string';
+  return typeof tokenAddress === 'string' && typeof walletAddress === 'string';
 }
 
 interface Params extends UniqueIdentifiers {
@@ -21,9 +22,10 @@ interface Params extends UniqueIdentifiers {
 }
 
 export class Erc20TokenBalance extends Entity {
-  public static generateId({ tokenAddress }: UniqueIdentifiers) {
+  public static generateId({ tokenAddress, walletAddress }: UniqueIdentifiers) {
     return serialize('erc20TokenBalance', {
       tokenAddress,
+      walletAddress,
     });
   }
 
@@ -40,29 +42,33 @@ export class Erc20TokenBalance extends Entity {
   public uid: string;
   public tokenSymbol: string | null;
   public tokenAddress: string;
+  public walletAddress: string;
   public balance: BigNumber;
 
   constructor(params: Params, polyClient?: Polymath) {
     super(polyClient);
 
-    const { tokenSymbol, tokenAddress, balance } = params;
+    const { tokenSymbol, tokenAddress, balance, walletAddress } = params;
 
     this.tokenSymbol = tokenSymbol;
     this.tokenAddress = tokenAddress;
     this.balance = balance;
+    this.walletAddress = walletAddress;
     this.uid = Erc20TokenBalance.generateId({
       tokenAddress,
+      walletAddress,
     });
   }
 
   public toPojo() {
-    const { uid, tokenSymbol, tokenAddress, balance } = this;
+    const { uid, tokenSymbol, tokenAddress, balance, walletAddress } = this;
 
     return {
       uid,
       tokenSymbol,
       tokenAddress,
       balance,
+      walletAddress,
     };
   }
 }

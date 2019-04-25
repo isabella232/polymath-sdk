@@ -1,4 +1,3 @@
-import { OmitFromProcedureArgs } from '~/types';
 import { Polymath } from '~/Polymath';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '~/utils';
@@ -54,18 +53,18 @@ export class SecurityTokenReservation extends Entity {
     this.uid = SecurityTokenReservation.generateId({ symbol });
   }
 
-  public reserve = (
-    args: OmitFromProcedureArgs<Polymath['reserveSecurityToken'], ExcludedArgs>
-  ) =>
+  public reserve = (args: { name: string }) =>
     this.polyClient.reserveSecurityToken({
       ...args,
       symbol: this.symbol,
       name: this.name,
     });
 
-  public createSecurityToken = (
-    args: OmitFromProcedureArgs<Polymath['createSecurityToken'], ExcludedArgs>
-  ) =>
+  public createSecurityToken = (args: {
+    name: string;
+    detailsUrl?: string;
+    divisible: boolean;
+  }) =>
     this.polyClient.createSecurityToken({
       ...args,
       symbol: this.symbol,

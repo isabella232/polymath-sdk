@@ -1,37 +1,45 @@
-import {
-  DividendsModule,
-  Params,
-  UniqueIdentifiers,
-  isUniqueIdentifiers,
-} from './DividendsModule';
+import { DividendsModule, Params, UniqueIdentifiers } from './DividendsModule';
 import { Polymath } from '~/Polymath';
-import { serialize, unserialize } from '~/utils';
+import { serialize } from '~/utils';
+import { DividendModuleTypes, Omit } from '~/types';
 
 export class Erc20DividendsModule extends DividendsModule {
-  public static generateId({ securityTokenSymbol }: UniqueIdentifiers) {
+  public static generateId({
+    securityTokenSymbol,
+    dividendType,
+  }: UniqueIdentifiers) {
     return serialize('erc20DividendsModule', {
       securityTokenSymbol,
+      dividendType,
     });
   }
 
-  public static unserialize(serialized: string) {
-    const unserialized = unserialize(serialized);
-
-    if (!isUniqueIdentifiers(unserialized)) {
-      throw new Error('Wrong erc20 dividends module ID format.');
-    }
-
-    return unserialized;
-  }
-
-  public entityType: string = 'erc20DividendsModule';
   public uid: string;
 
-  constructor(params: Params, polyClient?: Polymath) {
-    super(params, polyClient);
+  constructor(
+    {
+      securityTokenSymbol,
+      securityTokenId,
+      address,
+      storageWalletAddress,
+    }: Omit<Params, 'dividendType'>,
+    polyClient?: Polymath
+  ) {
+    const dividendType = DividendModuleTypes.Erc20;
+    super(
+      {
+        securityTokenId,
+        securityTokenSymbol,
+        address,
+        storageWalletAddress,
+        dividendType,
+      },
+      polyClient
+    );
 
     this.uid = Erc20DividendsModule.generateId({
-      securityTokenSymbol: params.securityTokenSymbol,
+      securityTokenSymbol,
+      dividendType,
     });
   }
 }
