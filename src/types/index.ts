@@ -38,7 +38,10 @@ export enum DividendModuleTypes {
 }
 
 export function isDividendModuleTypes(type: any): type is DividendModuleTypes {
-  return typeof type === 'string' && (type === 'erc20' || type === 'eth');
+  return (
+    typeof type === 'string' &&
+    (type === DividendModuleTypes.Erc20 || type === DividendModuleTypes.Eth)
+  );
 }
 
 export interface TaxWithholdingEntry {
