@@ -62,3 +62,4 @@ const myTokenReservation = await polyClient.getSecurityTokenReservation({
 **To be continued...**
 
 This is an alpha release
+Fixing some stuff in alpha
