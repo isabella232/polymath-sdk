@@ -33,7 +33,8 @@
       "**/__tests__/**/*.(ts|tsx)"
     ],
     "testPathIgnorePatterns": [
-      "build"
+      "build",
+      "dist"
     ],
     "moduleNameMapper": {
       "~/(.*)": "<rootDir>/src/$1"

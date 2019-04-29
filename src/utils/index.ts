@@ -11,21 +11,27 @@ export const delay = async (amount: number) => {
 };
 
 export function serialize(entityType: string, pojo: Pojo) {
-  return `${entityType}:${Buffer.from(stringify(pojo)).toString('base64')}`;
+  return Buffer.from(`${entityType}:${stringify(pojo)}`).toString('base64');
 }
 
 export function unserialize(id: string) {
-  const matched = id.match(/^.*:(.*)/);
+  const unserialized = Buffer.from(id, 'base64').toString('utf8');
+
+  const matched = unserialized.match(/^.*?:(.*)/);
+
+  const errorMsg = 'Wrong ID format.';
 
   if (!matched) {
-    throw new Error('Wrong ID format.');
+    throw new Error(errorMsg);
   }
 
-  const [, serialized] = matched;
+  const [, jsonString] = matched;
 
-  const jsonString = Buffer.from(serialized, 'base64').toString('utf8');
-
-  return JSON.parse(jsonString);
+  try {
+    return JSON.parse(jsonString);
+  } catch (err) {
+    throw new Error(errorMsg);
+  }
 }
 
 export function isValidAddress(address: string) {
