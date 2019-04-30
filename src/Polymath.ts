@@ -20,6 +20,10 @@ import {
   Erc20DividendsModule as Erc20DividendsModuleEntity,
   EthDividendsModule as EthDividendsModuleEntity,
   Erc20TokenBalance as Erc20TokenBalanceEntity,
+  Dividend,
+  Erc20TokenBalance,
+  Checkpoint,
+  TaxWithholding,
 } from '~/entities';
 
 import {
@@ -38,6 +42,7 @@ import { PolymathNetworkParams } from '~/types';
 import BigNumber from 'bignumber.js';
 import { includes } from 'lodash';
 import { SetDividendsWallet } from '~/procedures/SetDividendsWallet';
+import { DividendsModule } from './entities/DividendsModule';
 
 // TODO @RafaelVidaurre: Type this correctly. It should return a contextualized
 // version of T
@@ -317,13 +322,31 @@ export class Polymath {
    * Retrieve a list of investor addresses and their corresponding tax withholding
    * percentages
    */
-  public getDividendsTaxWithholdingList = async (args: {
-    symbol: string;
-    dividendType: DividendModuleTypes;
-    checkpointIndex: number;
-  }) => {
+  public getDividendsTaxWithholdingList = async (
+    args:
+      | {
+          symbol: string;
+          dividendType: DividendModuleTypes;
+          checkpointIndex: number;
+        }
+      | string
+  ) => {
     const { securityTokenRegistry } = this.context;
-    const { symbol: securityTokenSymbol, dividendType, checkpointIndex } = args;
+
+    let securityTokenSymbol: string,
+      dividendType: DividendModuleTypes,
+      checkpointIndex: number;
+
+    // fetch by UUID
+    if (typeof args === 'string') {
+      ({
+        securityTokenSymbol,
+        dividendType,
+        checkpointIndex,
+      } = TaxWithholding.unserialize(args));
+    } else {
+      ({ symbol: securityTokenSymbol, dividendType, checkpointIndex } = args);
+    }
 
     const securityToken = await securityTokenRegistry.getSecurityToken({
       ticker: securityTokenSymbol,
@@ -358,6 +381,7 @@ export class Polymath {
           securityTokenSymbol,
           securityTokenId,
           dividendType,
+          checkpointIndex,
         })
     );
   };
@@ -406,17 +430,29 @@ export class Polymath {
     });
   };
 
-  public getCheckpoint = async (args: {
-    symbol: string;
-    checkpointIndex: number;
-    dividendTypes?: DividendModuleTypes[];
-  }) => {
+  public getCheckpoint = async (
+    args:
+      | {
+          symbol: string;
+          checkpointIndex: number;
+          dividendTypes?: DividendModuleTypes[];
+        }
+      | string
+  ) => {
     const { securityTokenRegistry } = this.context;
-    const {
-      symbol: securityTokenSymbol,
-      checkpointIndex,
-      dividendTypes = [DividendModuleTypes.Erc20, DividendModuleTypes.Eth],
-    } = args;
+
+    let securityTokenSymbol: string,
+      checkpointIndex: number,
+      dividendTypes: DividendModuleTypes[] | undefined;
+
+    // fetch by UUID
+    if (typeof args === 'string') {
+      ({ securityTokenSymbol, index: checkpointIndex } = Checkpoint.unserialize(
+        args
+      ));
+    } else {
+      ({ symbol: securityTokenSymbol, checkpointIndex, dividendTypes } = args);
+    }
 
     const securityToken = await securityTokenRegistry.getSecurityToken({
       ticker: securityTokenSymbol,
@@ -486,12 +522,29 @@ export class Polymath {
     return dividends;
   };
 
-  public getDividend = async (args: {
-    symbol: string;
-    dividendType: DividendModuleTypes;
-    dividendIndex: number;
-  }) => {
-    const { symbol, dividendType, dividendIndex } = args;
+  public getDividend = async (
+    args:
+      | {
+          symbol: string;
+          dividendType: DividendModuleTypes;
+          dividendIndex: number;
+        }
+      | string
+  ) => {
+    let symbol: string,
+      dividendType: DividendModuleTypes,
+      dividendIndex: number;
+
+    // fetch by UUID
+    if (typeof args === 'string') {
+      ({
+        securityTokenSymbol: symbol,
+        index: dividendIndex,
+        dividendType,
+      } = Dividend.unserialize(args));
+    } else {
+      ({ symbol, dividendType, dividendIndex } = args);
+    }
 
     const checkpoints = await this.getCheckpoints({
       symbol,
@@ -515,12 +568,26 @@ export class Polymath {
     );
   };
 
-  public getDividendsModule = async (args: {
-    symbol: string;
-    dividendType: DividendModuleTypes;
-  }) => {
+  public getDividendsModule = async (
+    args:
+      | {
+          symbol: string;
+          dividendType: DividendModuleTypes;
+        }
+      | string
+  ) => {
     const { securityTokenRegistry } = this.context;
-    const { symbol: securityTokenSymbol, dividendType } = args;
+
+    let securityTokenSymbol: string, dividendType: DividendModuleTypes;
+
+    // fetch by UUID
+    if (typeof args === 'string') {
+      ({ securityTokenSymbol, dividendType } = DividendsModule.unserialize(
+        args
+      ));
+    } else {
+      ({ symbol: securityTokenSymbol, dividendType } = args);
+    }
 
     const securityToken = await securityTokenRegistry.getSecurityToken({
       ticker: securityTokenSymbol,
@@ -576,14 +643,26 @@ export class Polymath {
     return null;
   };
 
-  public getErc20DividendsModule = async (args: { symbol: string }) => {
+  public getErc20DividendsModule = async (
+    args: { symbol: string } | string
+  ) => {
+    // fetch by UUID
+    if (typeof args === 'string') {
+      return this.getDividendsModule(args);
+    }
+
     return this.getDividendsModule({
       symbol: args.symbol,
       dividendType: DividendModuleTypes.Erc20,
     });
   };
 
-  public getEthDividendsModule = async (args: { symbol: string }) => {
+  public getEthDividendsModule = async (args: { symbol: string } | string) => {
+    // fetch by UUID
+    if (typeof args === 'string') {
+      return this.getDividendsModule(args);
+    }
+
     return this.getDividendsModule({
       symbol: args.symbol,
       dividendType: DividendModuleTypes.Eth,
@@ -595,11 +674,23 @@ export class Polymath {
     return this.lowLevel.isValidErc20({ address });
   };
 
-  public getErc20TokenBalance = async (args: {
-    tokenAddress: string;
-    walletAddress: string;
-  }) => {
-    const { tokenAddress, walletAddress } = args;
+  public getErc20TokenBalance = async (
+    args:
+      | {
+          tokenAddress: string;
+          walletAddress: string;
+        }
+      | string
+  ) => {
+    let tokenAddress: string, walletAddress: string;
+
+    // fetch by UUID
+    if (typeof args === 'string') {
+      ({ tokenAddress, walletAddress } = Erc20TokenBalance.unserialize(args));
+    } else {
+      ({ tokenAddress, walletAddress } = args);
+    }
+
     const token = await this.lowLevel.getErc20Token({ address: tokenAddress });
     const [symbol, balance] = await Promise.all([
       token.symbol(),
@@ -610,6 +701,7 @@ export class Polymath {
       tokenSymbol: symbol,
       tokenAddress,
       balance,
+      walletAddress,
     });
   };
 

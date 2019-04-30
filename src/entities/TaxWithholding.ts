@@ -1,13 +1,35 @@
 import { Polymath } from '~/Polymath';
 import { Entity } from './Entity';
-import { serialize } from '~/utils';
-import { DividendModuleTypes } from '~/types';
+import { serialize, unserialize } from '~/utils';
+import { DividendModuleTypes, isDividendModuleTypes } from '~/types';
 
-interface Params {
+interface UniqueIdentifiers {
   securityTokenSymbol: string;
-  securityTokenId: string;
   dividendType: DividendModuleTypes;
   investorAddress: string;
+  checkpointIndex: number;
+}
+
+function isUniqueIdentifiers(
+  identifiers: any
+): identifiers is UniqueIdentifiers {
+  const {
+    securityTokenSymbol,
+    dividendType,
+    investorAddress,
+    checkpointIndex,
+  } = identifiers;
+
+  return (
+    typeof securityTokenSymbol === 'string' &&
+    isDividendModuleTypes(dividendType) &&
+    typeof investorAddress === 'string' &&
+    typeof checkpointIndex === 'number'
+  );
+}
+
+interface Params extends UniqueIdentifiers {
+  securityTokenId: string;
   percentage: number;
 }
 
@@ -16,22 +38,32 @@ export class TaxWithholding extends Entity {
     securityTokenSymbol,
     dividendType,
     investorAddress,
-  }: {
-    securityTokenSymbol: string;
-    dividendType: DividendModuleTypes;
-    investorAddress: string;
-  }) {
+    checkpointIndex,
+  }: UniqueIdentifiers) {
     return serialize('taxWithholding', {
       securityTokenSymbol,
       dividendType,
       investorAddress,
+      checkpointIndex,
     });
   }
+
+  public static unserialize(serialized: string) {
+    const unserialized = unserialize(serialized);
+
+    if (!isUniqueIdentifiers(unserialized)) {
+      throw new Error('Wrong tax withholding ID format.');
+    }
+
+    return unserialized;
+  }
+
   public uid: string;
   public securityTokenSymbol: string;
   public securityTokenId: string;
   public dividendType: DividendModuleTypes;
   public investorAddress: string;
+  public checkpointIndex: number;
   public percentage: number;
 
   constructor(params: Params, polyClient?: Polymath) {
@@ -43,6 +75,7 @@ export class TaxWithholding extends Entity {
       dividendType,
       investorAddress,
       percentage,
+      checkpointIndex,
     } = params;
 
     this.securityTokenId = securityTokenId;
@@ -50,10 +83,12 @@ export class TaxWithholding extends Entity {
     this.dividendType = dividendType;
     this.investorAddress = investorAddress;
     this.percentage = percentage;
+    this.checkpointIndex = checkpointIndex;
     this.uid = TaxWithholding.generateId({
       securityTokenSymbol,
       investorAddress,
       dividendType,
+      checkpointIndex,
     });
   }
 
@@ -65,6 +100,7 @@ export class TaxWithholding extends Entity {
       dividendType,
       investorAddress,
       percentage,
+      checkpointIndex,
     } = this;
 
     return {
@@ -74,6 +110,7 @@ export class TaxWithholding extends Entity {
       dividendType,
       investorAddress,
       percentage,
+      checkpointIndex,
     };
   }
 }
