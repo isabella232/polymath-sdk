@@ -435,15 +435,13 @@ export class Polymath {
       | {
           symbol: string;
           checkpointIndex: number;
-          dividendTypes?: DividendModuleTypes[];
         }
-      | string
+      | string,
+    opts: { dividendTypes?: DividendModuleTypes[] }
   ) => {
     const { securityTokenRegistry } = this.context;
 
-    let securityTokenSymbol: string,
-      checkpointIndex: number,
-      dividendTypes: DividendModuleTypes[] | undefined;
+    let securityTokenSymbol: string, checkpointIndex: number;
 
     // fetch by UUID
     if (typeof args === 'string') {
@@ -451,8 +449,10 @@ export class Polymath {
         args
       ));
     } else {
-      ({ symbol: securityTokenSymbol, checkpointIndex, dividendTypes } = args);
+      ({ symbol: securityTokenSymbol, checkpointIndex } = args);
     }
+
+    const { dividendTypes } = opts;
 
     const securityToken = await securityTokenRegistry.getSecurityToken({
       ticker: securityTokenSymbol,
