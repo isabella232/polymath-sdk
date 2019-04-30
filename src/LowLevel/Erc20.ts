@@ -126,19 +126,21 @@ export class Erc20 extends Contract<Erc20Contract> {
 
   public isValidErc20 = async () => {
     const { methods } = this.contract;
-    const { account } = this.context;
+    const dummyAccount = '0xf17f52151EbEF6C7334FAD080c5704D77216b732';
 
     const zeroValue = new BigNumber(0);
-    const callParams = { from: account };
+    const callParams = { from: dummyAccount };
 
     try {
       await Promise.all([
         methods.totalSupply().call(),
-        methods.approve(account, zeroValue).call(callParams),
-        methods.allowance(account, account).call(),
-        methods.transferFrom(account, account, zeroValue).call(callParams),
-        methods.transfer(account, zeroValue).call(callParams),
-        methods.balanceOf(account).call(),
+        methods.approve(dummyAccount, zeroValue).call(callParams),
+        methods.allowance(dummyAccount, dummyAccount).call(),
+        methods
+          .transferFrom(dummyAccount, dummyAccount, zeroValue)
+          .call(callParams),
+        methods.transfer(dummyAccount, zeroValue).call(callParams),
+        methods.balanceOf(dummyAccount).call(),
       ]);
     } catch (_err) {
       return false;

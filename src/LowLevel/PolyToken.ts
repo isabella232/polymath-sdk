@@ -67,12 +67,26 @@ export class PolyToken extends Contract<PolyTokenContract> {
     return fromWei(allowance);
   };
 
-  public approve = async ({ spender, amount }: ApproveArgs) => {
+  public approve = async ({ spender, amount, owner }: ApproveArgs) => {
     const amountInWei = toWei(amount);
+    let ownerAddress: string;
+
+    const { account } = this.context;
+
+    if (owner) {
+      ownerAddress = owner;
+    } else if (account) {
+      ownerAddress = account;
+    } else {
+      throw new Error(
+        "No default account set. You must pass the owner's address as a parameter"
+      );
+    }
+
     return () =>
       this.contract.methods
         .approve(spender, amountInWei)
-        .send({ from: this.context.account });
+        .send({ from: ownerAddress });
   };
 
   public symbol = async () => {
