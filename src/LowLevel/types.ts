@@ -196,6 +196,7 @@ export interface ApproveArgs {
   spender: string;
   amount: BigNumber;
   symbol: string | null;
+  owner?: string;
 }
 
 export interface AddDividendsModuleArgs {

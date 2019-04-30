@@ -32,7 +32,7 @@ export interface Context extends LowLevel {
   securityTokenRegistry: SecurityTokenRegistry;
   moduleRegistry: ModuleRegistry;
   isTestnet: () => boolean;
-  account: string;
+  account?: string;
 }
 
 /**

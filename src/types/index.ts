@@ -149,6 +149,7 @@ export interface ApproveProcedureArgs {
   amount: BigNumber;
   spender: string;
   tokenAddress?: string;
+  owner?: string;
 }
 
 export interface CreateCheckpointProcedureArgs {
@@ -207,6 +208,7 @@ export interface ReclaimFundsProcedureArgs {
 export interface ReserveSecurityTokenProcedureArgs {
   symbol: string;
   name: string;
+  owner?: string;
 }
 
 export interface WithdrawTaxesProcedureArgs {

@@ -139,13 +139,6 @@ export class Polymath {
       );
     }
 
-    if (!account) {
-      throw new Error(
-        "No account found. If you are using node, make sure you've not" +
-          ' forgotten to add a private key. If you are using Metamask make sure ethereum.enable() was called first'
-      );
-    }
-
     await lowLevel.initialize({ polymathRegistryAddress });
 
     this.context = new Context({
@@ -435,15 +428,13 @@ export class Polymath {
       | {
           symbol: string;
           checkpointIndex: number;
-          dividendTypes?: DividendModuleTypes[];
         }
-      | string
+      | string,
+    opts?: { dividendTypes?: DividendModuleTypes[] }
   ) => {
     const { securityTokenRegistry } = this.context;
 
-    let securityTokenSymbol: string,
-      checkpointIndex: number,
-      dividendTypes: DividendModuleTypes[] | undefined;
+    let securityTokenSymbol: string, checkpointIndex: number;
 
     // fetch by UUID
     if (typeof args === 'string') {
@@ -451,7 +442,13 @@ export class Polymath {
         args
       ));
     } else {
-      ({ symbol: securityTokenSymbol, checkpointIndex, dividendTypes } = args);
+      ({ symbol: securityTokenSymbol, checkpointIndex } = args);
+    }
+
+    let dividendTypes: DividendModuleTypes[] | undefined;
+
+    if (opts) {
+      ({ dividendTypes } = opts);
     }
 
     const securityToken = await securityTokenRegistry.getSecurityToken({
