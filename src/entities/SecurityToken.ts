@@ -1,12 +1,25 @@
-import { OmitFromProcedureArgs } from '../types';
 import { Polymath } from '../Polymath';
 import { Entity } from '../entities/Entity';
-import { serialize } from '../utils';
+import { serialize, unserialize } from '../utils';
+import { DividendModuleTypes } from '../LowLevel/types';
+import BigNumber from 'bignumber.js';
+import { TaxWithholdingEntry } from '../types';
 
-interface Params {
+interface UniqueIdentifiers {
+  address: string;
+}
+
+function isUniqueIdentifiers(
+  identifiers: any
+): identifiers is UniqueIdentifiers {
+  const { address } = identifiers;
+
+  return typeof address === 'string';
+}
+
+interface Params extends UniqueIdentifiers {
   symbol: string;
   name: string;
-  address: string;
 }
 
 interface ExcludedArgs {
@@ -14,11 +27,22 @@ interface ExcludedArgs {
 }
 
 export class SecurityToken extends Entity {
-  public static generateId({ address }: { address: string }) {
+  public static generateId({ address }: UniqueIdentifiers) {
     return serialize('securityToken', {
       address,
     });
   }
+
+  public static unserialize(serialized: string) {
+    const unserialized = unserialize(serialized);
+
+    if (!isUniqueIdentifiers(unserialized)) {
+      throw new Error('Wrong security token ID format.');
+    }
+
+    return unserialized;
+  }
+
   public uid: string;
   public symbol: string;
   public name: string;
@@ -35,73 +59,78 @@ export class SecurityToken extends Entity {
     this.uid = SecurityToken.generateId({ address });
   }
 
-  public getErc20DividendsModule = (
-    args: OmitFromProcedureArgs<
-      Polymath['getErc20DividendsModule'],
-      ExcludedArgs
-    >
-  ) =>
+  public getErc20DividendsModule = () =>
     this.polyClient.getErc20DividendsModule({
-      ...args,
       symbol: this.symbol,
     });
 
-  public enableDividendModules = (
-    args: OmitFromProcedureArgs<Polymath['enableDividendModules'], ExcludedArgs>
-  ) =>
+  public enableDividendModules = (args: {
+    storageWalletAddress: string;
+    types: DividendModuleTypes[];
+  }) =>
     this.polyClient.enableDividendModules({
       ...args,
       symbol: this.symbol,
     });
 
-  public getCheckpoints = (
-    args: OmitFromProcedureArgs<Polymath['getCheckpoints'], ExcludedArgs>
-  ) =>
+  public getCheckpoints = (args: { dividendTypes: DividendModuleTypes[] }) =>
     this.polyClient.getCheckpoints({
       ...args,
       symbol: this.symbol,
     });
 
-  public getCheckpoint = (
-    args: OmitFromProcedureArgs<Polymath['getCheckpoint'], ExcludedArgs>
-  ) =>
+  public getCheckpoint = (args: {
+    checkpointIndex: number;
+    dividendTypes: DividendModuleTypes[];
+  }) =>
     this.polyClient.getCheckpoint({
       ...args,
       symbol: this.symbol,
     });
 
-  public createCheckpoint = (
-    args: OmitFromProcedureArgs<Polymath['createCheckpoint'], ExcludedArgs>
-  ) => this.polyClient.createCheckpoint({ ...args, symbol: this.symbol });
+  public createCheckpoint = () =>
+    this.polyClient.createCheckpoint({ symbol: this.symbol });
 
-  public createPolyDividendDistribution = (
-    args: OmitFromProcedureArgs<
-      Polymath['createPolyDividendDistribution'],
-      ExcludedArgs
-    >
-  ) =>
+  public createPolyDividendDistribution = (args: {
+    maturityDate: Date;
+    expiryDate: Date;
+    amount: BigNumber;
+    checkpointIndex: number;
+    name: string;
+    excludedAddresses?: string[];
+    taxWithholdings?: TaxWithholdingEntry[];
+  }) =>
     this.polyClient.createPolyDividendDistribution({
       ...args,
       symbol: this.symbol,
     });
 
-  public createErc20DividendDistribution = (
-    args: OmitFromProcedureArgs<
-      Polymath['createErc20DividendDistribution'],
-      ExcludedArgs
-    >
-  ) =>
+  public createErc20DividendDistribution = (args: {
+    maturityDate: Date;
+    expiryDate: Date;
+    erc20Address: string;
+    amount: BigNumber;
+    checkpointIndex: number;
+    name: string;
+    excludedAddresses?: string[];
+    taxWithholdings?: TaxWithholdingEntry[];
+  }) =>
     this.polyClient.createErc20DividendDistribution({
       ...args,
       symbol: this.symbol,
     });
 
-  public createEthDividendDistribution = (
-    args: OmitFromProcedureArgs<
-      Polymath['createEthDividendDistribution'],
-      ExcludedArgs
-    >
-  ) =>
+  public createEthDividendDistribution = (args: {
+    symbol: string;
+    maturityDate: Date;
+    expiryDate: Date;
+    erc20Address: string;
+    amount: BigNumber;
+    checkpointIndex: number;
+    name: string;
+    excludedAddresses?: string[];
+    taxWithholdings?: TaxWithholdingEntry[];
+  }) =>
     this.polyClient.createEthDividendDistribution({
       ...args,
       symbol: this.symbol,

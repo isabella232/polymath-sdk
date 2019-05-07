@@ -37,6 +37,13 @@ export enum DividendModuleTypes {
   Eth = 'eth',
 }
 
+export function isDividendModuleTypes(type: any): type is DividendModuleTypes {
+  return (
+    typeof type === 'string' &&
+    (type === DividendModuleTypes.Erc20 || type === DividendModuleTypes.Eth)
+  );
+}
+
 export interface TaxWithholdingEntry {
   address: string;
   percentage: number;
@@ -142,6 +149,7 @@ export interface ApproveProcedureArgs {
   amount: BigNumber;
   spender: string;
   tokenAddress?: string;
+  owner?: string;
 }
 
 export interface CreateCheckpointProcedureArgs {
@@ -200,6 +208,7 @@ export interface ReclaimFundsProcedureArgs {
 export interface ReserveSecurityTokenProcedureArgs {
   symbol: string;
   name: string;
+  owner?: string;
 }
 
 export interface WithdrawTaxesProcedureArgs {
@@ -280,8 +289,3 @@ export function isPojo(pojo: any): pojo is Pojo {
 }
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-
-export type OmitFromProcedureArgs<
-  Procedure extends (...args: any[]) => any,
-  T
-> = Omit<Parameters<Procedure>[0], keyof T>;

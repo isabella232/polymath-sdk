@@ -1,13 +1,33 @@
 import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
-import { serialize } from '../utils';
+import { serialize, unserialize } from '../utils';
 import BigNumber from 'bignumber.js';
-import { DividendModuleTypes, DividendInvestorStatus } from '../types';
+import {
+  DividendModuleTypes,
+  DividendInvestorStatus,
+  isDividendModuleTypes,
+} from '../types';
 
-interface Params {
-  index: number;
-  checkpointId: string;
+interface UniqueIdentifiers {
+  securityTokenSymbol: string;
   dividendType: DividendModuleTypes;
+  index: number;
+}
+
+function isUniqueIdentifiers(
+  identifiers: any
+): identifiers is UniqueIdentifiers {
+  const { securityTokenSymbol, dividendType, index } = identifiers;
+
+  return (
+    typeof securityTokenSymbol === 'string' &&
+    typeof index === 'number' &&
+    isDividendModuleTypes(dividendType)
+  );
+}
+
+interface Params extends UniqueIdentifiers {
+  checkpointId: string;
   securityTokenSymbol: string;
   securityTokenId: string;
   created: Date;
@@ -29,17 +49,24 @@ export class Dividend extends Entity {
     securityTokenSymbol,
     dividendType,
     index,
-  }: {
-    securityTokenSymbol: string;
-    dividendType: DividendModuleTypes;
-    index: number;
-  }) {
+  }: UniqueIdentifiers) {
     return serialize('dividend', {
       securityTokenSymbol,
       dividendType,
       index,
     });
   }
+
+  public static unserialize(serialized: string) {
+    const unserialized = unserialize(serialized);
+
+    if (!isUniqueIdentifiers(unserialized)) {
+      throw new Error('Wrong dividend ID format.');
+    }
+
+    return unserialized;
+  }
+
   public uid: string;
   public index: number;
   public checkpointId: string;

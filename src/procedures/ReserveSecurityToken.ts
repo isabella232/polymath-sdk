@@ -4,15 +4,31 @@ import {
   ReserveSecurityTokenProcedureArgs,
   ProcedureTypes,
   PolyTransactionTags,
+  ErrorCodes,
 } from '../types';
+import { PolymathError } from '../PolymathError';
 
 export class ReserveSecurityToken extends Procedure<
   ReserveSecurityTokenProcedureArgs
 > {
   public type = ProcedureTypes.ReserveSecurityToken;
   public async prepareTransactions() {
-    const { symbol, name } = this.args;
+    const { symbol, name, owner } = this.args;
     const { securityTokenRegistry, currentWallet } = this.context;
+
+    let ownerAddress: string;
+
+    if (owner) {
+      ownerAddress = owner;
+    } else if (currentWallet) {
+      ({ address: ownerAddress } = currentWallet);
+    } else {
+      throw new PolymathError({
+        message:
+          "No default account set. You must pass the owner's address as a parameter",
+        code: ErrorCodes.ProcedureValidationError,
+      });
+    }
 
     // TODO @RafaelVidaurre: See if ticker is not already registered
 
@@ -21,10 +37,11 @@ export class ReserveSecurityToken extends Procedure<
     await this.addTransaction(Approve)({
       amount: fee,
       spender: securityTokenRegistry.address,
+      owner: ownerAddress,
     });
 
     await this.addTransaction(securityTokenRegistry.registerTicker, {
       tag: PolyTransactionTags.ReserveSecurityToken,
-    })({ owner: currentWallet.address, ticker: symbol, tokenName: name });
+    })({ owner: ownerAddress, ticker: symbol, tokenName: name });
   }
 }
