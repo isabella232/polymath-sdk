@@ -1,7 +1,7 @@
 import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
-import { unserialize } from '~/utils';
-import { DividendModuleTypes } from '~/types';
+import { unserialize } from '../utils';
+import { DividendModuleTypes } from '../types';
 
 export interface UniqueIdentifiers {
   securityTokenSymbol: string;
