@@ -10,6 +10,7 @@ import {
   GenerateSecurityTokenArgs,
   GetSecurityTokenArgs,
 } from './types';
+import { fromWei } from './utils';
 
 interface SecurityTokenRegistryContract extends GenericContract {
   methods: {
@@ -64,15 +65,14 @@ export class SecurityTokenRegistry extends Contract<
     const feeRes = await this.contract.methods
       .getTickerRegistrationFee()
       .call();
-    return new BigNumber(feeRes);
+    return fromWei(feeRes);
   }
 
   public async getSecurityTokenLaunchFee() {
     const feeRes = await this.contract.methods
       .getSecurityTokenLaunchFee()
       .call();
-
-    return new BigNumber(feeRes);
+    return fromWei(feeRes);
   }
 
   public async getSecurityToken({ ticker }: GetSecurityTokenArgs) {
