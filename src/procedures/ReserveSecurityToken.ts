@@ -30,10 +30,17 @@ export class ReserveSecurityToken extends Procedure<
       });
     }
 
-    // TODO @RafaelVidaurre: See if ticker is not already registered
+    const isAvailable = await securityTokenRegistry.isTickerAvailable({
+      ticker: symbol,
+    });
+    if (!isAvailable) {
+      throw new PolymathError({
+        message: `Ticker ${symbol} has already been registered`,
+        code: ErrorCodes.ProcedureValidationError,
+      });
+    }
 
     const fee = await securityTokenRegistry.getTickerRegistrationFee();
-
     await this.addTransaction(Approve)({
       amount: fee,
       spender: securityTokenRegistry.address,

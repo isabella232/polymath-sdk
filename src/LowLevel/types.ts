@@ -229,6 +229,14 @@ export interface GetSecurityTokenArgs {
   ticker: string;
 }
 
+export interface GetTickerDetailsArgs {
+  ticker: string;
+}
+
+export interface IsTickerAvailableArgs {
+  ticker: string;
+}
+
 export enum NetworkIds {
   Local = 15,
   LocalVm = 16,
