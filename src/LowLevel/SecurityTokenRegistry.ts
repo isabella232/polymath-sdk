@@ -11,11 +11,11 @@ import {
   GetSecurityTokenArgs,
   GetTickerDetailsArgs,
   IsTickerAvailableArgs,
-  TickerDetails,
 } from './types';
 import { fromWei } from './utils';
 import { PolymathError } from '../PolymathError';
 import { ErrorCodes } from '../types';
+import { ZERO_ADDRESS } from './constants';
 
 interface SecurityTokenRegistryContract extends GenericContract {
   methods: {
@@ -37,6 +37,29 @@ interface SecurityTokenRegistryContract extends GenericContract {
   };
 }
 
+export interface TickerDetails {
+  /**
+   * Owner
+   */
+  0: string;
+  /**
+   * Registration Date
+   */
+  1: string;
+  /**
+   * Expiry Date
+   */
+  2: string;
+  /**
+   * Name
+   */
+  3: string;
+  /**
+   * Registration status
+   */
+  4: boolean;
+}
+
 export class SecurityTokenRegistry extends Contract<
   SecurityTokenRegistryContract
 > {
@@ -56,9 +79,7 @@ export class SecurityTokenRegistry extends Contract<
   };
 
   public getTickerDetails = async ({ ticker }: GetTickerDetailsArgs) => {
-    const details = await this.contract.methods
-      .getTickerDetails(ticker)
-      .call({ from: this.context.account });
+    const details = await this.contract.methods.getTickerDetails(ticker).call();
 
     return details;
   };
@@ -78,7 +99,7 @@ export class SecurityTokenRegistry extends Contract<
         4: status,
       } = await this.getTickerDetails({ ticker });
       const intExpiryDate = parseInt(expiryDate);
-      if (owner !== '0x0000000000000000000000000000000000000000') {
+      if (owner !== ZERO_ADDRESS) {
         if (Date.now() > intExpiryDate * 1000 && !status) {
           return true;
         }

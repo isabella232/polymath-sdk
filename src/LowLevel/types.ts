@@ -237,14 +237,6 @@ export interface IsTickerAvailableArgs {
   ticker: string;
 }
 
-export interface TickerDetails {
-  0: string; // Owner
-  1: string; // Registration Date
-  2: string; // Expiry Date
-  3: string; // Name
-  4: boolean; // Registration status
-}
-
 export enum NetworkIds {
   Local = 15,
   LocalVm = 16,
