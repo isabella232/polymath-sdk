@@ -70,13 +70,7 @@ export class SecurityTokenRegistry extends Contract<
 
     // Convert the object returned by SecurityTokenRegistry.getTickerDetails to a TickerDetails object.
     try {
-      const initialValue = <TickerDetails>{
-        owner: '0x0000000000000000000000000000000000000000',
-        registrationDate: 0,
-        expiryDate: 0,
-        name: '',
-        status: false,
-      };
+      const initialValue = {} as TickerDetails;
       const labeledDetails: TickerDetails = Object.keys(details).reduce(
         (acc, cur: string) => {
           let val: string | number = details[cur];
