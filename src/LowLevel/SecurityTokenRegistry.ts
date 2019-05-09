@@ -14,6 +14,8 @@ import {
   TickerDetails,
 } from './types';
 import { fromWei } from './utils';
+import { PolymathError } from '../PolymathError';
+import { ErrorCodes } from '../types';
 
 interface SecurityTokenRegistryContract extends GenericContract {
   methods: {
@@ -22,9 +24,7 @@ interface SecurityTokenRegistryContract extends GenericContract {
       ticker: string,
       tokenName: string
     ): TransactionObject<void>;
-    getTickerDetails(
-      ticker: string
-    ): TransactionObject<{ [key: string]: string }>;
+    getTickerDetails(ticker: string): TransactionObject<TickerDetails>;
     getTickerRegistrationFee(): TransactionObject<string>;
     getSecurityTokenLaunchFee(): TransactionObject<string>;
     getSecurityTokenAddress(ticker: string): TransactionObject<string>;
@@ -56,39 +56,11 @@ export class SecurityTokenRegistry extends Contract<
   };
 
   public getTickerDetails = async ({ ticker }: GetTickerDetailsArgs) => {
-    const keysMap: { [key: string]: string } = {
-      '0': 'owner',
-      '1': 'registrationDate',
-      '2': 'expiryDate',
-      '3': 'name',
-      '4': 'status',
-    };
-
     const details = await this.contract.methods
       .getTickerDetails(ticker)
       .call({ from: this.context.account });
 
-    // Convert the object returned by SecurityTokenRegistry.getTickerDetails to a TickerDetails object.
-    try {
-      const initialValue = {} as TickerDetails;
-      const labeledDetails: TickerDetails = Object.keys(details).reduce(
-        (acc, cur: string) => {
-          let val: string | number = details[cur];
-          // Parse unix timestamps.
-          if (cur === '1' || cur === '2') {
-            val = parseInt(val);
-          }
-          const newKey: string = keysMap[cur];
-          acc[newKey] = val;
-          return acc;
-        },
-        initialValue
-      );
-
-      return labeledDetails;
-    } catch (error) {
-      throw new Error('Unexpected ticker details data.');
-    }
+    return details;
   };
 
   /**
@@ -99,16 +71,24 @@ export class SecurityTokenRegistry extends Contract<
   public isTickerAvailable = async ({
     ticker,
   }: IsTickerAvailableArgs): Promise<boolean> => {
-    const details = await this.getTickerDetails({ ticker });
-
-    if (details.owner !== '0x0000000000000000000000000000000000000000') {
-      if (Date.now() > details.expiryDate * 1000 && !details.status) {
-        return true;
+    try {
+      const {
+        0: owner,
+        2: expiryDate,
+        4: status,
+      } = await this.getTickerDetails({ ticker });
+      const intExpiryDate = parseInt(expiryDate);
+      if (owner !== '0x0000000000000000000000000000000000000000') {
+        if (Date.now() > intExpiryDate * 1000 && !status) {
+          return true;
+        }
+        return false;
       }
-      return false;
-    }
 
-    return true;
+      return true;
+    } catch (error) {
+      throw new PolymathError({ code: ErrorCodes.UnexpectedReturnData });
+    }
   };
 
   public generateSecurityToken = async ({

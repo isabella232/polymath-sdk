@@ -57,6 +57,7 @@ export enum ErrorCodes {
   TransactionRejectedByUser = 'TransactionRejectedByUser',
   TransactionReverted = 'TransactionReverted',
   FatalError = 'FatalError',
+  UnexpectedReturnData = 'UnexpectedReturnData',
 }
 
 export interface InvestorBalance {

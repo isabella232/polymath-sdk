@@ -238,12 +238,11 @@ export interface IsTickerAvailableArgs {
 }
 
 export interface TickerDetails {
-  [key: string]: any;
-  owner: string;
-  registrationDate: number;
-  expiryDate: number;
-  name: string;
-  status: boolean;
+  0: string; // Owner
+  1: string; // Registration Date
+  2: string; // Expiry Date
+  3: string; // Name
+  4: boolean; // Registration status
 }
 
 export enum NetworkIds {

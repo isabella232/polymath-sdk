@@ -33,7 +33,6 @@ export class ReserveSecurityToken extends Procedure<
     const isAvailable = await securityTokenRegistry.isTickerAvailable({
       ticker: symbol,
     });
-    // @TODO remon-nashid perhaps we should display an error message rather than throwing?
     if (!isAvailable) {
       throw new PolymathError({
         message: `Ticker ${symbol} has already been registered`,
