@@ -4,6 +4,8 @@ import { PolyTokenAbi } from './abis/PolyTokenAbi';
 import { PolyTokenFaucetAbi } from './abis/PolyTokenFaucetAbi';
 import { Contract } from './Contract';
 import { Context } from './LowLevel';
+import { fromWei, toWei, prepareAndSendTx } from './utils';
+
 import {
   GenericContract,
   AllowanceArgs,
@@ -11,7 +13,6 @@ import {
   BalanceOfArgs,
   ApproveArgs,
 } from './types';
-import { fromWei, toWei } from './utils';
 
 interface PolyTokenContract extends GenericContract {
   methods: {
@@ -84,9 +85,10 @@ export class PolyToken extends Contract<PolyTokenContract> {
     }
 
     return () =>
-      this.contract.methods
-        .approve(spender, amountInWei)
-        .send({ from: ownerAddress });
+      await prepareAndSendTx(
+        this.contract.methods.approve(spender, amountInWei),
+        { from: ownerAddress }
+      );
   };
 
   public symbol = async () => {

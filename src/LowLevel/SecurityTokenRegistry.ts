@@ -12,7 +12,8 @@ import {
   GetTickerDetailsArgs,
   IsTickerAvailableArgs,
 } from './types';
-import { fromWei } from './utils';
+import { fromWei, prepareAndSendTx } from './utils';
+
 import { PolymathError } from '../PolymathError';
 import { ErrorCodes } from '../types';
 import { ZERO_ADDRESS } from './constants';
@@ -73,9 +74,10 @@ export class SecurityTokenRegistry extends Contract<
     tokenName,
   }: RegisterTickerArgs) => {
     return () =>
-      this.contract.methods
-        .registerTicker(owner, ticker, tokenName)
-        .send({ from: this.context.account });
+      prepareAndSendTx(
+        this.contract.methods.registerTicker(owner, ticker, tokenName),
+        { from: this.context.account }
+      );
   };
 
   public getTickerDetails = async ({ ticker }: GetTickerDetailsArgs) => {

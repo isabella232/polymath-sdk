@@ -1,5 +1,7 @@
 import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
+import { web3 } from '../LowLevel/web3Client';
+import { Tx, TransactionObject } from 'web3/eth/types';
 
 const { utils } = Web3;
 
@@ -62,4 +64,26 @@ export function toAscii(value: string) {
 
 export function isAddress(value: string) {
   return utils.isAddress(value);
+}
+
+// @TODO add multiplier
+// @TODO add docs
+
+export async function prepareAndSendTx(
+  method: TransactionObject<any>,
+  options: Tx
+) {
+  const block = await web3.eth.getBlock('latest');
+  const networkGasLimit = block.gasLimit;
+  options.gasPrice = options.gasPrice || (await web3.eth.getGasPrice());
+  if (options.from) {
+    options.nonce =
+      options.nonce || (await web3.eth.getTransactionCount(options.from));
+  }
+  if (!options.gas) {
+    const gasLimit = await method.estimateGas(options);
+    // Do not exceed block gas limit.
+    if (gasLimit < networkGasLimit) options.gas = gasLimit;
+  }
+  return method.send(options);
 }
