@@ -8,6 +8,8 @@ export const ErrorMessagesPerCode: {
     'The wallet is locked, if Metamask extension is being used, the user needs to unlock it first',
   [ErrorCodes.UserDeniedAccess]: 'The user denied access',
   [ErrorCodes.TransactionRejectedByUser]: 'The user rejected the transaction',
+  [ErrorCodes.UnexpectedReturnData]:
+    'The data returned by the smart contract has an unexpected format. Please report this issue to the Polymath team',
 };
 
 export class PolymathError extends Error {

@@ -8,10 +8,9 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
-export class ReserveSecurityToken extends Procedure<
-  ReserveSecurityTokenProcedureArgs
-> {
+export class ReserveSecurityToken extends Procedure<ReserveSecurityTokenProcedureArgs> {
   public type = ProcedureTypes.ReserveSecurityToken;
+
   public async prepareTransactions() {
     const { symbol, name, owner } = this.args;
     const { securityTokenRegistry, currentWallet } = this.context;
@@ -24,16 +23,22 @@ export class ReserveSecurityToken extends Procedure<
       ({ address: ownerAddress } = currentWallet);
     } else {
       throw new PolymathError({
-        message:
-          "No default account set. You must pass the owner's address as a parameter",
+        message: "No default account set. You must pass the owner's address as a parameter",
         code: ErrorCodes.ProcedureValidationError,
       });
     }
 
-    // TODO @RafaelVidaurre: See if ticker is not already registered
+    const isAvailable = await securityTokenRegistry.isTickerAvailable({
+      ticker: symbol,
+    });
+    if (!isAvailable) {
+      throw new PolymathError({
+        message: `Ticker ${symbol} has already been registered`,
+        code: ErrorCodes.ProcedureValidationError,
+      });
+    }
 
     const fee = await securityTokenRegistry.getTickerRegistrationFee();
-
     await this.addTransaction(Approve)({
       amount: fee,
       spender: securityTokenRegistry.address,
