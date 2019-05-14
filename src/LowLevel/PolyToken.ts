@@ -10,10 +10,10 @@ import { GenericContract, AllowanceArgs, GetTokensArgs, BalanceOfArgs, ApproveAr
 
 interface PolyTokenContract extends GenericContract {
   methods: {
-    getTokens: (amount: BigNumber, recipient: string) => TransactionObject<boolean>;
+    getTokens: (amount: BigNumber, recipient: string) => TransactionObject<void>;
     balanceOf: (address: string) => TransactionObject<string>;
     allowance: (tokenOwner: string, spender: string) => TransactionObject<string>;
-    approve: (spender: string, amount: BigNumber) => TransactionObject<boolean>;
+    approve: (spender: string, amount: BigNumber) => TransactionObject<void>;
   };
 }
 
