@@ -1,18 +1,16 @@
+import BigNumber from 'bignumber.js';
 import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
 import { Dividend } from './Dividend';
 import { InvestorBalance } from '../types';
-import BigNumber from 'bignumber.js';
 
 interface UniqueIdentifiers {
-  securityTokenSymbol: string;
+  securityTokenId: string;
   index: number;
 }
 
-function isUniqueIdentifiers(
-  identifiers: any
-): identifiers is UniqueIdentifiers {
+function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { securityTokenSymbol, index } = identifiers;
 
   return typeof securityTokenSymbol === 'string' && typeof index === 'number';
@@ -20,16 +18,16 @@ function isUniqueIdentifiers(
 
 interface Params extends UniqueIdentifiers {
   dividends: Dividend[];
-  securityTokenId: string;
+  securityTokenSymbol: string;
   investorBalances: InvestorBalance[];
   totalSupply: BigNumber;
   createdAt: Date;
 }
 
 export class Checkpoint extends Entity {
-  public static generateId({ securityTokenSymbol, index }: UniqueIdentifiers) {
+  public static generateId({ securityTokenId, index }: UniqueIdentifiers) {
     return serialize('checkpoint', {
-      securityTokenSymbol,
+      securityTokenId,
       index,
     });
   }
@@ -45,12 +43,19 @@ export class Checkpoint extends Entity {
   }
 
   public uid: string;
+
   public dividends: Dividend[];
+
   public securityTokenSymbol: string;
+
   public securityTokenId: string;
+
   public index: number;
+
   public investorBalances: InvestorBalance[];
+
   public totalSupply: BigNumber;
+
   public createdAt: Date;
 
   constructor(params: Params, polyClient?: Polymath) {
@@ -73,7 +78,7 @@ export class Checkpoint extends Entity {
     this.investorBalances = investorBalances;
     this.totalSupply = totalSupply;
     this.createdAt = createdAt;
-    this.uid = Checkpoint.generateId({ securityTokenSymbol, index });
+    this.uid = Checkpoint.generateId({ securityTokenId, index });
   }
 
   public toPojo() {
