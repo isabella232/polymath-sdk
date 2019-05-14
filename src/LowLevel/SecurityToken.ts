@@ -14,7 +14,7 @@ import {
   GetCheckpointArgs,
 } from './types';
 import { Context } from './LowLevel';
-import { fromUnixTimestamp, fromWei } from './utils';
+import { fromUnixTimestamp, fromWei, getOptions } from './utils';
 import { Erc20DividendCheckpoint } from './Erc20DividendCheckpoint';
 import { EtherDividendCheckpoint } from './EtherDividendCheckpoint';
 import { SecurityTokenAbi } from './abis/SecurityTokenAbi';
@@ -73,7 +73,9 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
   }
 
   public createCheckpoint = async () => {
-    return () => this.contract.methods.createCheckpoint().send({ from: this.context.account });
+    const method = this.contract.methods.createCheckpoint();
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
   };
 
   public async currentCheckpointId() {
@@ -104,10 +106,14 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
 
     const configData = web3.eth.abi.encodeFunctionCall(configFunctionAbi, [wallet]);
 
-    return () =>
-      this.contract.methods
-        .addModule(factoryAddress, configData, new BigNumber(0), new BigNumber(0))
-        .send({ from: this.context.account });
+    const method = this.contract.methods.addModule(
+      factoryAddress,
+      configData,
+      new BigNumber(0),
+      new BigNumber(0)
+    );
+    const options = getOptions(method, { from: this.context.account });
+    return () => method.send();
   };
 
   public getErc20DividendModule = async () => {

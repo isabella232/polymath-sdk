@@ -6,25 +6,13 @@ import { Contract } from './Contract';
 import { Context } from './LowLevel';
 import { fromWei, toWei, getOptions } from './utils';
 
-import {
-  GenericContract,
-  AllowanceArgs,
-  GetTokensArgs,
-  BalanceOfArgs,
-  ApproveArgs,
-} from './types';
+import { GenericContract, AllowanceArgs, GetTokensArgs, BalanceOfArgs, ApproveArgs } from './types';
 
 interface PolyTokenContract extends GenericContract {
   methods: {
-    getTokens: (
-      amount: BigNumber,
-      recipient: string
-    ) => TransactionObject<boolean>;
+    getTokens: (amount: BigNumber, recipient: string) => TransactionObject<boolean>;
     balanceOf: (address: string) => TransactionObject<string>;
-    allowance: (
-      tokenOwner: string,
-      spender: string
-    ) => TransactionObject<string>;
+    allowance: (tokenOwner: string, spender: string) => TransactionObject<string>;
     approve: (spender: string, amount: BigNumber) => TransactionObject<boolean>;
   };
 }
@@ -48,10 +36,10 @@ export class PolyToken extends Contract<PolyTokenContract> {
       throw new Error('Cannot call "getTokens" in mainnet');
     }
     const amountInWei = toWei(amount);
-    return () =>
-      this.contract.methods
-        .getTokens(amountInWei, recipient)
-        .send({ from: this.context.account });
+
+    const method = this.contract.methods.getTokens(amountInWei, recipient);
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
   };
 
   public balanceOf = async ({ address }: BalanceOfArgs) => {
@@ -61,9 +49,7 @@ export class PolyToken extends Contract<PolyTokenContract> {
   };
 
   public allowance = async ({ tokenOwner, spender }: AllowanceArgs) => {
-    const allowance = await this.contract.methods
-      .allowance(tokenOwner, spender)
-      .call();
+    const allowance = await this.contract.methods.allowance(tokenOwner, spender).call();
 
     return fromWei(allowance);
   };
@@ -79,18 +65,13 @@ export class PolyToken extends Contract<PolyTokenContract> {
     } else if (account) {
       ownerAddress = account;
     } else {
-      throw new Error(
-        "No default account set. You must pass the owner's address as a parameter"
-      );
+      throw new Error("No default account set. You must pass the owner's address as a parameter");
     }
 
-    const options = await getOptions(
-      this.contract.methods.approve(spender, amountInWei),
-      { from: ownerAddress }
-    );
+    const method = this.contract.methods.approve(spender, amountInWei);
+    const options = await getOptions(method, { from: ownerAddress });
 
-    return () =>
-      this.contract.methods.approve(spender, amountInWei).send(options);
+    return () => method.send(options);
   };
 
   public symbol = async () => {

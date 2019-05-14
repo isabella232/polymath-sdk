@@ -102,10 +102,14 @@ export class SecurityTokenRegistry extends Contract<SecurityTokenRegistryContrac
     tokenDetails,
     divisible,
   }: GenerateSecurityTokenArgs) => {
-    return () =>
-      this.contract.methods
-        .generateSecurityToken(tokenName, ticker, tokenDetails, divisible)
-        .send({ from: this.context.account });
+    const method = this.contract.methods.generateSecurityToken(
+      tokenName,
+      ticker,
+      tokenDetails,
+      divisible
+    );
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
   };
 
   public async getTickerRegistrationFee() {
