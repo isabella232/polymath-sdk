@@ -45,6 +45,11 @@ export enum DividendModuleTypes {
   Eth = 'eth',
 }
 
+export enum StoModuleTypes {
+  Capped = 'capped',
+  UsdTiered = 'usdTiered',
+}
+
 export enum ModuleTypes {
   Permission = 1,
   Transfer,
@@ -83,6 +88,22 @@ export interface Dividend {
 export interface InvestorBalance {
   address: string;
   balance: BigNumber;
+}
+
+export interface CappedStoInvestment {
+  address: string;
+  tokenAmount: BigNumber;
+  investedFunds: BigNumber;
+  index: number;
+}
+
+// NOTE @monitz87: this is left as a separate type in case we wish
+// to include other information in the future (such as the tier price and tier index)
+export interface UsdTieredStoInvestment {
+  address: string;
+  tokenAmount: BigNumber;
+  investedFunds: BigNumber;
+  index: number;
 }
 
 export interface Checkpoint {
@@ -204,7 +225,11 @@ export interface AddDividendsModuleArgs {
   wallet: string;
 }
 
-export interface GetModuleAddressArgs {
+export interface GetFirstUnarchivedModuleAddressArgs {
+  name: string;
+}
+
+export interface GetUnarchivedModuleAddressesArgs {
   name: string;
 }
 
@@ -227,6 +252,12 @@ export interface GenerateSecurityTokenArgs {
 
 export interface GetSecurityTokenArgs {
   ticker: string;
+}
+
+export enum FundraiseTypes {
+  Poly = 'poly',
+  Usd = 'usd',
+  Ether = 'eth',
 }
 
 export interface GetTickerDetailsArgs {

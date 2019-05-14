@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js';
 import { HttpProvider, WebsocketProvider } from 'web3/providers';
-import { PostTransactionResolver } from '../PostTransactionResolver';
 import PromiEvent from 'web3/promiEvent';
+import { isPlainObject } from 'lodash';
+import { PostTransactionResolver } from '../PostTransactionResolver';
 import {
   SetWithholdingArgs,
   ReclaimDividendArgs,
@@ -17,7 +18,6 @@ import {
   DividendInvestorStatus,
   SetDividendsWalletArgs,
 } from '../LowLevel/types';
-import { isPlainObject } from 'lodash';
 
 // TODO @RafaelVidaurre: This type should come from LowLevel. Duplicating it
 // for now because of compilation issues
@@ -44,6 +44,20 @@ export function isDividendModuleTypes(type: any): type is DividendModuleTypes {
   );
 }
 
+// TODO @RafaelVidaurre: This type should come from LowLevel. Duplicating it
+// for now because of compilation issues
+export enum StoModuleTypes {
+  Capped = 'capped',
+  UsdTiered = 'usdTiered',
+}
+
+export function isStoModuleTypes(type: any): type is StoModuleTypes {
+  return (
+    typeof type === 'string' &&
+    (type === StoModuleTypes.UsdTiered || type === StoModuleTypes.Capped)
+  );
+}
+
 export interface TaxWithholdingEntry {
   address: string;
   percentage: number;
@@ -54,6 +68,7 @@ export enum ErrorCodes {
   UserDeniedAccess = 'UserDeniedAccess',
   WalletIsLocked = 'WalletIsLocked',
   ProcedureValidationError = 'ProcedureValidationError',
+  FetcherValidationError = 'FetcherValidationError',
   TransactionRejectedByUser = 'TransactionRejectedByUser',
   TransactionReverted = 'TransactionReverted',
   FatalError = 'FatalError',
@@ -125,15 +140,9 @@ export interface TransactionArguments {
   [PolyTransactionTags.SetErc20TaxWithholding]: Partial<SetWithholdingArgs>;
   [PolyTransactionTags.SetEtherTaxWithholding]: Partial<SetWithholdingArgs>;
   [PolyTransactionTags.ReclaimDividendFunds]: Partial<ReclaimDividendArgs>;
-  [PolyTransactionTags.WithdrawTaxWithholdings]: Partial<
-    WithdrawWithholdingArgs
-  >;
-  [PolyTransactionTags.CreateErc20DividendDistribution]: Partial<
-    CreateErc20DividendArgs
-  >;
-  [PolyTransactionTags.CreateEtherDividendDistribution]: Partial<
-    CreateEtherDividendArgs
-  >;
+  [PolyTransactionTags.WithdrawTaxWithholdings]: Partial<WithdrawWithholdingArgs>;
+  [PolyTransactionTags.CreateErc20DividendDistribution]: Partial<CreateErc20DividendArgs>;
+  [PolyTransactionTags.CreateEtherDividendDistribution]: Partial<CreateEtherDividendArgs>;
   [PolyTransactionTags.GetTokens]: Partial<GetTokensArgs>;
   [PolyTransactionTags.Approve]: Partial<ApproveArgs>;
   [PolyTransactionTags.EnableDividends]: Partial<AddDividendsModuleArgs>;
