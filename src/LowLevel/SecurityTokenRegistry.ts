@@ -12,7 +12,7 @@ import {
   GetTickerDetailsArgs,
   IsTickerAvailableArgs,
 } from './types';
-import { fromWei, prepareAndSendTx } from './utils';
+import { fromWei, getOptions } from './utils';
 
 import { PolymathError } from '../PolymathError';
 import { ErrorCodes } from '../types';
@@ -73,11 +73,13 @@ export class SecurityTokenRegistry extends Contract<
     ticker,
     tokenName,
   }: RegisterTickerArgs) => {
-    return () =>
-      prepareAndSendTx(
-        this.contract.methods.registerTicker(owner, ticker, tokenName),
-        { from: this.context.account }
-      );
+    const method = this.contract.methods.registerTicker(
+      owner,
+      ticker,
+      tokenName
+    );
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
   };
 
   public getTickerDetails = async ({ ticker }: GetTickerDetailsArgs) => {

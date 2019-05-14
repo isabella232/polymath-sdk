@@ -69,10 +69,7 @@ export function isAddress(value: string) {
 // @TODO add multiplier
 // @TODO add docs
 
-export async function prepareAndSendTx(
-  method: TransactionObject<any>,
-  options: Tx
-) {
+export async function getOptions(method: TransactionObject<any>, options: Tx) {
   const block = await web3.eth.getBlock('latest');
   const networkGasLimit = block.gasLimit;
   options.gasPrice = options.gasPrice || (await web3.eth.getGasPrice());
@@ -81,9 +78,9 @@ export async function prepareAndSendTx(
       options.nonce || (await web3.eth.getTransactionCount(options.from));
   }
   if (!options.gas) {
-    const gasLimit = await method.estimateGas(options);
+    const gasLimit = Math.floor((await method.estimateGas(options)) * 1.2);
     // Do not exceed block gas limit.
     if (gasLimit < networkGasLimit) options.gas = gasLimit;
   }
-  return method.send(options);
+  return options;
 }

@@ -4,7 +4,7 @@ import { PolyTokenAbi } from './abis/PolyTokenAbi';
 import { PolyTokenFaucetAbi } from './abis/PolyTokenFaucetAbi';
 import { Contract } from './Contract';
 import { Context } from './LowLevel';
-import { fromWei, toWei, prepareAndSendTx } from './utils';
+import { fromWei, toWei, getOptions } from './utils';
 
 import {
   GenericContract,
@@ -84,11 +84,13 @@ export class PolyToken extends Contract<PolyTokenContract> {
       );
     }
 
+    const options = await getOptions(
+      this.contract.methods.approve(spender, amountInWei),
+      { from: ownerAddress }
+    );
+
     return () =>
-      await prepareAndSendTx(
-        this.contract.methods.approve(spender, amountInWei),
-        { from: ownerAddress }
-      );
+      this.contract.methods.approve(spender, amountInWei).send(options);
   };
 
   public symbol = async () => {
