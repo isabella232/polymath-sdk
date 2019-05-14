@@ -1,30 +1,11 @@
 // eslint:disable
-export const ModuleFactoryAbi = {
-  contractName: 'ModuleFactory',
+export const CappedSTOAbi = {
+  contractName: 'CappedSTO',
   abi: [
-    {
-      constant: false,
-      inputs: [
-        {
-          name: '_data',
-          type: 'bytes',
-        },
-      ],
-      name: 'deploy',
-      outputs: [
-        {
-          name: '',
-          type: 'address',
-        },
-      ],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
     {
       constant: true,
       inputs: [],
-      name: 'monthlySubscriptionCost',
+      name: 'rate',
       outputs: [
         {
           name: '',
@@ -38,11 +19,11 @@ export const ModuleFactoryAbi = {
     {
       constant: true,
       inputs: [],
-      name: 'name',
+      name: 'allowBeneficialInvestments',
       outputs: [
         {
           name: '',
-          type: 'bytes32',
+          type: 'bool',
         },
       ],
       payable: false,
@@ -52,11 +33,11 @@ export const ModuleFactoryAbi = {
     {
       constant: true,
       inputs: [],
-      name: 'title',
+      name: 'endTime',
       outputs: [
         {
           name: '',
-          type: 'string',
+          type: 'uint256',
         },
       ],
       payable: false,
@@ -66,11 +47,100 @@ export const ModuleFactoryAbi = {
     {
       constant: true,
       inputs: [],
-      name: 'version',
+      name: 'cap',
       outputs: [
         {
           name: '',
-          type: 'string',
+          type: 'uint256',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      constant: false,
+      inputs: [],
+      name: 'unpause',
+      outputs: [],
+      payable: false,
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [],
+      name: 'wallet',
+      outputs: [
+        {
+          name: '',
+          type: 'address',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [],
+      name: 'paused',
+      outputs: [
+        {
+          name: '',
+          type: 'bool',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      constant: false,
+      inputs: [
+        {
+          name: '_amount',
+          type: 'uint256',
+        },
+      ],
+      name: 'takeFee',
+      outputs: [
+        {
+          name: '',
+          type: 'bool',
+        },
+      ],
+      payable: false,
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [],
+      name: 'totalTokensSold',
+      outputs: [
+        {
+          name: '',
+          type: 'uint256',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [
+        {
+          name: '',
+          type: 'address',
+        },
+      ],
+      name: 'investors',
+      outputs: [
+        {
+          name: '',
+          type: 'uint256',
         },
       ],
       payable: false,
@@ -92,22 +162,13 @@ export const ModuleFactoryAbi = {
       type: 'function',
     },
     {
-      constant: false,
-      inputs: [],
-      name: 'renounceOwnership',
-      outputs: [],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
       constant: true,
       inputs: [],
-      name: 'description',
+      name: 'startTime',
       outputs: [
         {
           name: '',
-          type: 'string',
+          type: 'uint256',
         },
       ],
       payable: false,
@@ -115,9 +176,37 @@ export const ModuleFactoryAbi = {
       type: 'function',
     },
     {
-      constant: true,
+      constant: false,
       inputs: [],
-      name: 'setupCost',
+      name: 'pause',
+      outputs: [],
+      payable: false,
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      constant: false,
+      inputs: [
+        {
+          name: '_tokenContract',
+          type: 'address',
+        },
+      ],
+      name: 'reclaimERC20',
+      outputs: [],
+      payable: false,
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [
+        {
+          name: '_fundRaiseType',
+          type: 'uint8',
+        },
+      ],
+      name: 'getRaised',
       outputs: [
         {
           name: '',
@@ -131,7 +220,21 @@ export const ModuleFactoryAbi = {
     {
       constant: true,
       inputs: [],
-      name: 'owner',
+      name: 'pausedTime',
+      outputs: [
+        {
+          name: '',
+          type: 'uint256',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [],
+      name: 'securityToken',
       outputs: [
         {
           name: '',
@@ -145,7 +248,300 @@ export const ModuleFactoryAbi = {
     {
       constant: true,
       inputs: [],
-      name: 'getTags',
+      name: 'factory',
+      outputs: [
+        {
+          name: '',
+          type: 'address',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [
+        {
+          name: '',
+          type: 'uint8',
+        },
+      ],
+      name: 'fundsRaised',
+      outputs: [
+        {
+          name: '',
+          type: 'uint256',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [
+        {
+          name: '',
+          type: 'uint8',
+        },
+      ],
+      name: 'fundRaiseTypes',
+      outputs: [
+        {
+          name: '',
+          type: 'bool',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [],
+      name: 'FEE_ADMIN',
+      outputs: [
+        {
+          name: '',
+          type: 'bytes32',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [],
+      name: 'investorCount',
+      outputs: [
+        {
+          name: '',
+          type: 'uint256',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          name: '_securityToken',
+          type: 'address',
+        },
+        {
+          name: '_polyAddress',
+          type: 'address',
+        },
+      ],
+      payable: false,
+      stateMutability: 'nonpayable',
+      type: 'constructor',
+    },
+    {
+      payable: true,
+      stateMutability: 'payable',
+      type: 'fallback',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          name: 'purchaser',
+          type: 'address',
+        },
+        {
+          indexed: true,
+          name: 'beneficiary',
+          type: 'address',
+        },
+        {
+          indexed: false,
+          name: 'value',
+          type: 'uint256',
+        },
+        {
+          indexed: false,
+          name: 'amount',
+          type: 'uint256',
+        },
+      ],
+      name: 'TokenPurchase',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          name: '_allowed',
+          type: 'bool',
+        },
+      ],
+      name: 'SetAllowBeneficialInvestments',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          name: '_fundRaiseTypes',
+          type: 'uint8[]',
+        },
+      ],
+      name: 'SetFundRaiseTypes',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          name: '_timestammp',
+          type: 'uint256',
+        },
+      ],
+      name: 'Pause',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          name: '_timestamp',
+          type: 'uint256',
+        },
+      ],
+      name: 'Unpause',
+      type: 'event',
+    },
+    {
+      constant: false,
+      inputs: [
+        {
+          name: '_startTime',
+          type: 'uint256',
+        },
+        {
+          name: '_endTime',
+          type: 'uint256',
+        },
+        {
+          name: '_cap',
+          type: 'uint256',
+        },
+        {
+          name: '_rate',
+          type: 'uint256',
+        },
+        {
+          name: '_fundRaiseTypes',
+          type: 'uint8[]',
+        },
+        {
+          name: '_fundsReceiver',
+          type: 'address',
+        },
+      ],
+      name: 'configure',
+      outputs: [],
+      payable: false,
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [],
+      name: 'getInitFunction',
+      outputs: [
+        {
+          name: '',
+          type: 'bytes4',
+        },
+      ],
+      payable: false,
+      stateMutability: 'pure',
+      type: 'function',
+    },
+    {
+      constant: false,
+      inputs: [
+        {
+          name: '_allowBeneficialInvestments',
+          type: 'bool',
+        },
+      ],
+      name: 'changeAllowBeneficialInvestments',
+      outputs: [],
+      payable: false,
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      constant: false,
+      inputs: [
+        {
+          name: '_beneficiary',
+          type: 'address',
+        },
+      ],
+      name: 'buyTokens',
+      outputs: [],
+      payable: true,
+      stateMutability: 'payable',
+      type: 'function',
+    },
+    {
+      constant: false,
+      inputs: [
+        {
+          name: '_investedPOLY',
+          type: 'uint256',
+        },
+      ],
+      name: 'buyTokensWithPoly',
+      outputs: [],
+      payable: false,
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [],
+      name: 'capReached',
+      outputs: [
+        {
+          name: '',
+          type: 'bool',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [],
+      name: 'getTokensSold',
+      outputs: [
+        {
+          name: '',
+          type: 'uint256',
+        },
+      ],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      constant: true,
+      inputs: [],
+      name: 'getPermissions',
       outputs: [
         {
           name: '',
@@ -159,407 +555,39 @@ export const ModuleFactoryAbi = {
     {
       constant: true,
       inputs: [],
-      name: 'getTypes',
-      outputs: [
-        {
-          name: '',
-          type: 'uint8[]',
-        },
-      ],
-      payable: false,
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      constant: true,
-      inputs: [],
-      name: 'usageCost',
+      name: 'getSTODetails',
       outputs: [
         {
           name: '',
           type: 'uint256',
         },
-      ],
-      payable: false,
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      constant: true,
-      inputs: [],
-      name: 'getInstructions',
-      outputs: [
-        {
-          name: '',
-          type: 'string',
-        },
-      ],
-      payable: false,
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      constant: false,
-      inputs: [
-        {
-          name: '_newOwner',
-          type: 'address',
-        },
-      ],
-      name: 'transferOwnership',
-      outputs: [],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          name: '_polyAddress',
-          type: 'address',
-        },
-        {
-          name: '_setupCost',
-          type: 'uint256',
-        },
-        {
-          name: '_usageCost',
-          type: 'uint256',
-        },
-        {
-          name: '_subscriptionCost',
-          type: 'uint256',
-        },
-      ],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'constructor',
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          name: 'previousOwner',
-          type: 'address',
-        },
-      ],
-      name: 'OwnershipRenounced',
-      type: 'event',
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          name: 'previousOwner',
-          type: 'address',
-        },
-        {
-          indexed: true,
-          name: 'newOwner',
-          type: 'address',
-        },
-      ],
-      name: 'OwnershipTransferred',
-      type: 'event',
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: false,
-          name: '_oldSetupCost',
-          type: 'uint256',
-        },
-        {
-          indexed: false,
-          name: '_newSetupCost',
-          type: 'uint256',
-        },
-        {
-          indexed: false,
-          name: '_moduleFactory',
-          type: 'address',
-        },
-      ],
-      name: 'ChangeFactorySetupFee',
-      type: 'event',
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: false,
-          name: '_oldUsageCost',
-          type: 'uint256',
-        },
-        {
-          indexed: false,
-          name: '_newUsageCost',
-          type: 'uint256',
-        },
-        {
-          indexed: false,
-          name: '_moduleFactory',
-          type: 'address',
-        },
-      ],
-      name: 'ChangeFactoryUsageFee',
-      type: 'event',
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: false,
-          name: '_oldSubscriptionCost',
-          type: 'uint256',
-        },
-        {
-          indexed: false,
-          name: '_newMonthlySubscriptionCost',
-          type: 'uint256',
-        },
-        {
-          indexed: false,
-          name: '_moduleFactory',
-          type: 'address',
-        },
-      ],
-      name: 'ChangeFactorySubscriptionFee',
-      type: 'event',
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: false,
-          name: '_module',
-          type: 'address',
-        },
-        {
-          indexed: true,
-          name: '_moduleName',
-          type: 'bytes32',
-        },
-        {
-          indexed: true,
-          name: '_moduleFactory',
-          type: 'address',
-        },
-        {
-          indexed: false,
-          name: '_creator',
-          type: 'address',
-        },
-        {
-          indexed: false,
-          name: '_setupCost',
-          type: 'uint256',
-        },
-        {
-          indexed: false,
-          name: '_timestamp',
-          type: 'uint256',
-        },
-      ],
-      name: 'GenerateModuleFromFactory',
-      type: 'event',
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: false,
-          name: '_boundType',
-          type: 'string',
-        },
-        {
-          indexed: false,
-          name: '_major',
-          type: 'uint8',
-        },
-        {
-          indexed: false,
-          name: '_minor',
-          type: 'uint8',
-        },
-        {
-          indexed: false,
-          name: '_patch',
-          type: 'uint8',
-        },
-      ],
-      name: 'ChangeSTVersionBound',
-      type: 'event',
-    },
-    {
-      constant: false,
-      inputs: [
-        {
-          name: '_newSetupCost',
-          type: 'uint256',
-        },
-      ],
-      name: 'changeFactorySetupFee',
-      outputs: [],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      constant: false,
-      inputs: [
-        {
-          name: '_newUsageCost',
-          type: 'uint256',
-        },
-      ],
-      name: 'changeFactoryUsageFee',
-      outputs: [],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      constant: false,
-      inputs: [
-        {
-          name: '_newSubscriptionCost',
-          type: 'uint256',
-        },
-      ],
-      name: 'changeFactorySubscriptionFee',
-      outputs: [],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      constant: false,
-      inputs: [
-        {
-          name: '_newTitle',
-          type: 'string',
-        },
-      ],
-      name: 'changeTitle',
-      outputs: [],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      constant: false,
-      inputs: [
-        {
-          name: '_newDesc',
-          type: 'string',
-        },
-      ],
-      name: 'changeDescription',
-      outputs: [],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      constant: false,
-      inputs: [
-        {
-          name: '_newName',
-          type: 'bytes32',
-        },
-      ],
-      name: 'changeName',
-      outputs: [],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      constant: false,
-      inputs: [
-        {
-          name: '_newVersion',
-          type: 'string',
-        },
-      ],
-      name: 'changeVersion',
-      outputs: [],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      constant: false,
-      inputs: [
-        {
-          name: '_boundType',
-          type: 'string',
-        },
-        {
-          name: '_newVersion',
-          type: 'uint8[]',
-        },
-      ],
-      name: 'changeSTVersionBounds',
-      outputs: [],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    {
-      constant: true,
-      inputs: [],
-      name: 'getLowerSTVersionBounds',
-      outputs: [
-        {
-          name: '',
-          type: 'uint8[]',
-        },
-      ],
-      payable: false,
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      constant: true,
-      inputs: [],
-      name: 'getUpperSTVersionBounds',
-      outputs: [
-        {
-          name: '',
-          type: 'uint8[]',
-        },
-      ],
-      payable: false,
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      constant: true,
-      inputs: [],
-      name: 'getSetupCost',
-      outputs: [
         {
           name: '',
           type: 'uint256',
         },
-      ],
-      payable: false,
-      stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      constant: true,
-      inputs: [],
-      name: 'getName',
-      outputs: [
         {
           name: '',
-          type: 'bytes32',
+          type: 'uint256',
+        },
+        {
+          name: '',
+          type: 'uint256',
+        },
+        {
+          name: '',
+          type: 'uint256',
+        },
+        {
+          name: '',
+          type: 'uint256',
+        },
+        {
+          name: '',
+          type: 'uint256',
+        },
+        {
+          name: '',
+          type: 'bool',
         },
       ],
       payable: false,

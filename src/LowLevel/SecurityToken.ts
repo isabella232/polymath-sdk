@@ -1,7 +1,7 @@
 import Web3 from 'web3';
-import { web3 } from './web3Client';
 import { TransactionObject } from 'web3/eth/types';
 import BigNumber from 'bignumber.js';
+import { web3 } from './web3Client';
 import {
   DividendModuleTypes,
   GenericContract,
@@ -9,7 +9,8 @@ import {
   InvestorBalance,
   ModuleTypes,
   AddDividendsModuleArgs,
-  GetModuleAddressArgs,
+  GetFirstUnarchivedModuleAddressArgs,
+  GetUnarchivedModuleAddressesArgs,
   GetCheckpointArgs,
 } from './types';
 import { Context } from './LowLevel';
@@ -19,6 +20,8 @@ import { EtherDividendCheckpoint } from './EtherDividendCheckpoint';
 import { SecurityTokenAbi } from './abis/SecurityTokenAbi';
 import { DividendCheckpointAbi } from './abis/DividendCheckpointAbi';
 import { Contract } from './Contract';
+import { CappedSto } from './CappedSto';
+import { UsdTieredSto } from './UsdTieredSto';
 
 interface ModuleData {
   /**
@@ -49,10 +52,7 @@ interface SecurityTokenContract extends GenericContract {
     createCheckpoint(): TransactionObject<void>;
     getCheckpointTimes(): TransactionObject<string[]>;
     totalSupplyAt(checkpointId: number): TransactionObject<string>;
-    balanceOfAt(
-      investorAddress: string,
-      checkpointId: number
-    ): TransactionObject<string>;
+    balanceOfAt(investorAddress: string, checkpointId: number): TransactionObject<string>;
     getInvestorsAt(checkpointId: number): TransactionObject<string[]>;
     currentCheckpointId(): TransactionObject<string>;
     addModule(
@@ -73,59 +73,40 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
   }
 
   public createCheckpoint = async () => {
-    return () =>
-      this.contract.methods
-        .createCheckpoint()
-        .send({ from: this.context.account });
+    return () => this.contract.methods.createCheckpoint().send({ from: this.context.account });
   };
 
   public async currentCheckpointId() {
-    const currentCheckpointId = await this.contract.methods
-      .currentCheckpointId()
-      .call();
+    const currentCheckpointId = await this.contract.methods.currentCheckpointId().call();
 
     return parseInt(currentCheckpointId, 10);
   }
 
-  public addDividendsModule = async ({
-    type,
-    wallet,
-  }: AddDividendsModuleArgs) => {
+  public addDividendsModule = async ({ type, wallet }: AddDividendsModuleArgs) => {
     const factoryMappings = {
       [DividendModuleTypes.Erc20]: 'ERC20DividendCheckpoint',
       [DividendModuleTypes.Eth]: 'EtherDividendCheckpoint',
     };
 
-    const factoryAddress = await this.context.moduleRegistry.getModuleFactoryAddress(
-      {
-        moduleName: factoryMappings[type],
-        moduleType: ModuleTypes.Dividends,
-        tokenAddress: this.address,
-      }
-    );
+    const factoryAddress = await this.context.moduleRegistry.getModuleFactoryAddress({
+      moduleName: factoryMappings[type],
+      moduleType: ModuleTypes.Dividends,
+      tokenAddress: this.address,
+    });
 
     const configFunctionAbi = DividendCheckpointAbi.abi.find(
       prop => prop.name === 'configure' && prop.type === 'function'
     );
 
     if (!configFunctionAbi) {
-      throw new Error(
-        'Corrupt DividendCheckpoint ABI. No "configure" function found.'
-      );
+      throw new Error('Corrupt DividendCheckpoint ABI. No "configure" function found.');
     }
 
-    const configData = web3.eth.abi.encodeFunctionCall(configFunctionAbi, [
-      wallet,
-    ]);
+    const configData = web3.eth.abi.encodeFunctionCall(configFunctionAbi, [wallet]);
 
     return () =>
       this.contract.methods
-        .addModule(
-          factoryAddress,
-          configData,
-          new BigNumber(0),
-          new BigNumber(0)
-        )
+        .addModule(factoryAddress, configData, new BigNumber(0), new BigNumber(0))
         .send({ from: this.context.account });
   };
 
@@ -151,6 +132,26 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     }
 
     return new EtherDividendCheckpoint({ address, context: this.context });
+  }
+
+  public async getCappedStoModules() {
+    const addresses = await this.getUnarchivedModuleAddresses({
+      name: 'CappedSTO',
+    });
+
+    const { context } = this;
+
+    return addresses.map(address => new CappedSto({ address, context }));
+  }
+
+  public async getUsdTieredStoModules() {
+    const addresses = await this.getUnarchivedModuleAddresses({
+      name: 'UsdTieredSTO',
+    });
+
+    const { context } = this;
+
+    return addresses.map(address => new UsdTieredSto({ address, context }));
   }
 
   public getCheckpoint = async ({ checkpointId }: GetCheckpointArgs) => {
@@ -187,14 +188,11 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     return this.contract.methods.name().call();
   }
 
-  private async getFirstUnarchivedModuleAddress({ name }: GetModuleAddressArgs) {
+  private async getFirstUnarchivedModuleAddress({ name }: GetFirstUnarchivedModuleAddressArgs) {
     const hexName = Web3.utils.asciiToHex(name);
     const { methods } = this.contract;
-    const moduleAddresses = await methods
-      .getModulesByName(hexName)
-      .call();
+    const moduleAddresses = await methods.getModulesByName(hexName).call();
 
-    
     for (const address of moduleAddresses) {
       const { 3: isArchived } = await methods.getModule(address).call();
 
@@ -204,6 +202,24 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     }
 
     return null;
+  }
+
+  private async getUnarchivedModuleAddresses({ name }: GetUnarchivedModuleAddressesArgs) {
+    const hexName = Web3.utils.asciiToHex(name);
+    const { methods } = this.contract;
+    const moduleAddresses = await methods.getModulesByName(hexName).call();
+
+    const addresses = [];
+
+    for (const address of moduleAddresses) {
+      const { 3: isArchived } = await methods.getModule(address).call();
+
+      if (!isArchived) {
+        addresses.push(address);
+      }
+    }
+
+    return addresses;
   }
 
   private getCheckpointData = async ({
@@ -247,6 +263,4 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
       address: investorAddress,
     };
   };
-
-
 }

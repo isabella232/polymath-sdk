@@ -4,12 +4,9 @@ import { serialize } from '../utils';
 import { DividendModuleTypes, Omit } from '../types';
 
 export class Erc20DividendsModule extends DividendsModule {
-  public static generateId({
-    securityTokenSymbol,
-    dividendType,
-  }: UniqueIdentifiers) {
+  public static generateId({ securityTokenId, dividendType }: UniqueIdentifiers) {
     return serialize('erc20DividendsModule', {
-      securityTokenSymbol,
+      securityTokenId,
       dividendType,
     });
   }
@@ -38,7 +35,7 @@ export class Erc20DividendsModule extends DividendsModule {
     );
 
     this.uid = Erc20DividendsModule.generateId({
-      securityTokenSymbol,
+      securityTokenId,
       dividendType,
     });
   }

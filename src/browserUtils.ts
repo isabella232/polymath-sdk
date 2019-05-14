@@ -1,7 +1,7 @@
 import Web3 from 'web3';
+import { HttpProvider } from 'web3/providers';
 import { PolymathError } from './PolymathError';
 import { ErrorCodes } from './types';
-import { HttpProvider } from 'web3/providers';
 import { delay } from './utils';
 
 export enum BrowserSupport {
@@ -148,13 +148,11 @@ export async function getCurrentAddress() {
 /**
  * Runs the callback anytime the wallet address changes in the browser
  */
-export function onAddressChange(
-  cb: (newAddress: string, previousAddress?: string) => any
-) {
+export function onAddressChange(cb: (newAddress: string, previousAddress?: string) => any) {
   const web3 = getWeb3() as InjectedWeb3;
   const support = getBrowserSupport();
   if (support === BrowserSupport.None) {
-    // tslint:disable-next-line no-console
+    // eslint:disable-next-line no-console
     console.warn(
       '"onAddressChange" Was called, but the current browser does not support Ethereum.'
     );
