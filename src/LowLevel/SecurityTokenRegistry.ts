@@ -12,7 +12,8 @@ import {
   GetTickerDetailsArgs,
   IsTickerAvailableArgs,
 } from './types';
-import { fromWei } from './utils';
+import { fromWei, getOptions } from './utils';
+
 import { PolymathError } from '../PolymathError';
 import { ErrorCodes } from '../types';
 import { ZERO_ADDRESS } from './constants';
@@ -62,10 +63,9 @@ export class SecurityTokenRegistry extends Contract<SecurityTokenRegistryContrac
   }
 
   public registerTicker = async ({ owner, ticker, tokenName }: RegisterTickerArgs) => {
-    return () =>
-      this.contract.methods
-        .registerTicker(owner, ticker, tokenName)
-        .send({ from: this.context.account });
+    const method = this.contract.methods.registerTicker(owner, ticker, tokenName);
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
   };
 
   public getTickerDetails = async ({ ticker }: GetTickerDetailsArgs) => {
@@ -102,10 +102,14 @@ export class SecurityTokenRegistry extends Contract<SecurityTokenRegistryContrac
     tokenDetails,
     divisible,
   }: GenerateSecurityTokenArgs) => {
-    return () =>
-      this.contract.methods
-        .generateSecurityToken(tokenName, ticker, tokenDetails, divisible)
-        .send({ from: this.context.account });
+    const method = this.contract.methods.generateSecurityToken(
+      tokenName,
+      ticker,
+      tokenDetails,
+      divisible
+    );
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
   };
 
   public async getTickerRegistrationFee() {

@@ -119,17 +119,18 @@ export class Polymath {
     polymathRegistryAddress,
     httpProvider,
     httpProviderUrl,
+    privateKey,
   }: PolymathNetworkParams) => {
     let lowLevel: LowLevel;
 
     if (httpProvider) {
       this.httpProvider = httpProvider;
-      lowLevel = new LowLevel({ provider: this.httpProvider });
+      lowLevel = new LowLevel({ provider: this.httpProvider, privateKey });
     } else if (httpProviderUrl) {
       this.httpProviderUrl = httpProviderUrl;
-      lowLevel = new LowLevel({ provider: this.httpProviderUrl });
+      lowLevel = new LowLevel({ provider: this.httpProviderUrl, privateKey });
     } else {
-      lowLevel = new LowLevel();
+      lowLevel = new LowLevel({ privateKey });
     }
 
     this.lowLevel = lowLevel;

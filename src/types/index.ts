@@ -95,6 +95,7 @@ export interface PolymathNetworkParams {
   wsProvider?: WebsocketProvider;
   wsProviderUrl?: string;
   polymathRegistryAddress: string;
+  privateKey?: string;
 }
 
 export enum ProcedureTypes {
