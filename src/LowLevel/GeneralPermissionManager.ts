@@ -1,25 +1,12 @@
-import BigNumber from 'bignumber.js';
 import { TransactionObject } from 'web3/eth/types';
 import { GeneralPermissionManagerAbi } from './abis/GeneralPermissionManagerAbi';
 import { Contract } from './Contract';
 import { Context } from './LowLevel';
-import { isAddress, getOptions, toUnixTimestamp } from './utils';
+import { isAddress, getOptions } from './utils';
 
 import { GenericContract } from './types';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCodes } from '~/types';
-
-// interface AddDelegateArgs {
-//   delegate: string;
-//   details: string;
-// }
-
-// interface ChangePermissionArgs {
-//   delegate: string;
-//   module: string;
-//   perm: string;
-//   valid: boolean;
-// }
 
 interface GeneralPermissionManagerContract extends GenericContract {
   methods: {
