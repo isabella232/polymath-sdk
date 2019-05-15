@@ -18,6 +18,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 interface Params extends UniqueIdentifiers {
   name: string;
   address: string;
+  owner: string;
 }
 
 export class SecurityToken extends Entity {
@@ -43,15 +44,18 @@ export class SecurityToken extends Entity {
 
   public name: string;
 
+  public owner: string;
+
   public address: string;
 
   constructor(params: Params, polyClient?: Polymath) {
     super(polyClient);
 
-    const { symbol, name, address } = params;
+    const { symbol, name, address, owner } = params;
 
     this.symbol = symbol;
     this.name = name;
+    this.owner = owner;
     this.address = address;
     this.uid = SecurityToken.generateId({ symbol });
   }

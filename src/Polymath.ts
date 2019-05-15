@@ -419,12 +419,14 @@ export class Polymath {
     });
 
     const name = await securityToken.name();
+    const owner = await securityToken.owner();
     const { address } = securityToken;
 
     return new this.SecurityToken({
       name,
       address,
       symbol,
+      owner,
     });
   };
 
