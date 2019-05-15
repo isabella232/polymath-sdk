@@ -105,15 +105,32 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     }
 
     const configData = web3.eth.abi.encodeFunctionCall(configFunctionAbi, [wallet]);
-
     const method = this.contract.methods.addModule(
       factoryAddress,
       configData,
       new BigNumber(0),
       new BigNumber(0)
     );
-    const options = getOptions(method, { from: this.context.account });
-    return () => method.send();
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
+  };
+
+  public addPermissionModule = async () => {
+    const factoryAddress = await this.context.moduleRegistry.getModuleFactoryAddress({
+      moduleName: 'GeneralPermissionManager',
+      moduleType: ModuleTypes.Permission,
+      tokenAddress: this.address,
+    });
+
+    const configData = web3.utils.asciiToHex('');
+    const method = this.contract.methods.addModule(
+      factoryAddress,
+      configData,
+      new BigNumber(0),
+      new BigNumber(0)
+    );
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
   };
 
   public getErc20DividendModule = async () => {

@@ -10,6 +10,7 @@ export const ErrorMessagesPerCode: {
   [ErrorCodes.TransactionRejectedByUser]: 'The user rejected the transaction',
   [ErrorCodes.UnexpectedReturnData]:
     'The data returned by the smart contract has an unexpected format. Please report this issue to the Polymath team',
+  [ErrorCodes.InvalidAddress]: 'Invalid Address',
 };
 
 export class PolymathError extends Error {

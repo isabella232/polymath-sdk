@@ -73,6 +73,7 @@ export enum ErrorCodes {
   TransactionReverted = 'TransactionReverted',
   FatalError = 'FatalError',
   UnexpectedReturnData = 'UnexpectedReturnData',
+  InvalidAddress = 'InvalidAddress',
 }
 
 export interface InvestorBalance {
@@ -103,6 +104,7 @@ export enum ProcedureTypes {
   Approve = 'Approve',
   CreateCheckpoint = 'CreateCheckpoint',
   EnableDividendModules = 'EnableDividendModules',
+  EnablePermissionModule = 'EnablePermissionModule',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
@@ -126,6 +128,7 @@ export enum PolyTransactionTags {
   SetErc20TaxWithholding = 'SetErc20TaxWithholding',
   SetEtherTaxWithholding = 'SetEtherTaxWithholding',
   EnableDividends = 'EnableDividends',
+  EnablePermissionModule = 'EnablePermissionModule',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
   PushDividendPayment = 'PushDividendPayment',
@@ -208,6 +211,10 @@ export interface EnableDividendModulesProcedureArgs {
   symbol: string;
   storageWalletAddress: string;
   types?: DividendModuleTypes[];
+}
+
+export interface EnablePermissionModuleProcedureArgs {
+  symbol: string;
 }
 
 export interface ReclaimFundsProcedureArgs {
