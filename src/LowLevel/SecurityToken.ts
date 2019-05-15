@@ -63,6 +63,7 @@ interface SecurityTokenContract extends GenericContract {
     ): TransactionObject<void>;
     getModulesByName(name: string): TransactionObject<string[]>;
     name(): TransactionObject<string>;
+    owner(): TransactionObject<string>;
     getModule(address: string): TransactionObject<ModuleData>;
   };
 }
@@ -192,6 +193,10 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
 
   public async name() {
     return this.contract.methods.name().call();
+  }
+
+  public async owner() {
+    return this.contract.methods.owner().call();
   }
 
   private async getFirstUnarchivedModuleAddress({ name }: GetFirstUnarchivedModuleAddressArgs) {
