@@ -114,6 +114,7 @@ export enum ProcedureTypes {
   UpdateDividendsTaxWithholdingList = 'UpdateDividendsTaxWithholdingList',
   SetDividendsWallet = 'SetDividendsWallet',
   PushDividendPayment = 'PushDividendPayment',
+  ChangeDelegatePerm = 'ChangeDelegatePerm',
 }
 
 export enum PolyTransactionTags {
@@ -133,6 +134,8 @@ export enum PolyTransactionTags {
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
+  ChangeDelegatePerm = 'ChangeDelegatePerm',
+  ChangeDelegatePermission = 'ChangeDelegatePermission',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -248,6 +251,14 @@ export interface SetDividendsWalletProcedureArgs {
   address: string;
 }
 
+export interface ChangeDelegatePermArgs {
+  symbol: string;
+  delegate: string;
+  op: string;
+  enabled: boolean;
+  details: string;
+}
+
 export interface ProcedureArguments {
   [ProcedureTypes.Approve]: ApproveProcedureArgs;
   [ProcedureTypes.CreateCheckpoint]: CreateCheckpointProcedureArgs;
@@ -278,6 +289,15 @@ export enum TransactionQueueStatus {
   Running = 'RUNNING',
   Failed = 'FAILED',
   Succeeded = 'SUCCEEDED',
+}
+
+export enum ModuleOperations {
+  // MODULE_COMPONENT_OP
+  GTM_WHITELIST_UPDATE = 'GTM_WHITELIST_UPDATE',
+}
+
+export enum ModulePermissions {
+  Whitelist = 'WHITELIST',
 }
 
 export interface Pojo {

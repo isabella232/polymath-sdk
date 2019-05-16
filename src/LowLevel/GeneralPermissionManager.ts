@@ -4,9 +4,14 @@ import { Contract } from './Contract';
 import { Context } from './LowLevel';
 import { isAddress, getOptions } from './utils';
 
-import { GenericContract } from './types';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCodes } from '~/types';
+import {
+  GenericContract,
+  AddDelegateArgs,
+  ChangePermissionArgs,
+  GetAllDelegatesWithPermArgs,
+} from './types';
+import { PolymathError } from '../PolymathError';
+import { ErrorCodes } from '../types';
 
 interface GeneralPermissionManagerContract extends GenericContract {
   methods: {
@@ -17,6 +22,8 @@ interface GeneralPermissionManagerContract extends GenericContract {
       perm: string,
       valid: boolean
     ) => TransactionObject<void>;
+    getAllDelegates: () => TransactionObject<string[]>;
+    getAllDelegatesWithPerm: (module: string, perm: string) => TransactionObject<string[]>;
   };
 }
 
@@ -29,7 +36,15 @@ export class GeneralPermissionManager extends Contract<GeneralPermissionManagerC
     });
   }
 
-  public addDelegate = async (delegate: string, details: string) => {
+  public getAllDelegates = async () => {
+    return await this.contract.methods.getAllDelegates().call();
+  };
+
+  public getAllDelegatesWithPerm = async ({ module, perm }: GetAllDelegatesWithPermArgs) => {
+    return await this.contract.methods.getAllDelegatesWithPerm(module, perm).call();
+  };
+
+  public addDelegate = async ({ delegate, details }: AddDelegateArgs) => {
     if (!isAddress(delegate))
       throw new PolymathError({
         code: ErrorCodes.InvalidAddress,
@@ -41,19 +56,14 @@ export class GeneralPermissionManager extends Contract<GeneralPermissionManagerC
     return () => method.send(options);
   };
 
-  public changePermission = async (
-    delegate: string,
-    module: string,
-    perm: string,
-    valid: boolean
-  ) => {
+  public changePermission = async ({ delegate, module, perm, enabled }: ChangePermissionArgs) => {
     if (!isAddress(delegate))
       throw new PolymathError({
         code: ErrorCodes.InvalidAddress,
         message: `Delegate address is invalid: $delegate = ${delegate}`,
       });
 
-    const method = this.contract.methods.changePermission(delegate, module, perm, valid);
+    const method = this.contract.methods.changePermission(delegate, module, perm, enabled);
     const options = await getOptions(method, { from: this.context.account });
     return () => method.send(options);
   };

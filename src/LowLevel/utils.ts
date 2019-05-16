@@ -66,9 +66,12 @@ export function isAddress(value: string) {
   return utils.isAddress(value);
 }
 
-// @TODO add multiplier
-// @TODO add docs
-
+/**
+ * Given web3 method and options object, this function will modify options with the following:
+ * - An incremented nonce
+ * - Current network gas price
+ * - Estimated gas limit
+ */
 export async function getOptions(method: TransactionObject<void>, options: Tx) {
   const block = await web3.eth.getBlock('latest');
   const networkGasLimit = block.gasLimit;

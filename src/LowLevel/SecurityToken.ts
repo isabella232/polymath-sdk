@@ -22,6 +22,8 @@ import { DividendCheckpointAbi } from './abis/DividendCheckpointAbi';
 import { Contract } from './Contract';
 import { CappedSto } from './CappedSto';
 import { UsdTieredSto } from './UsdTieredSto';
+import { GeneralPermissionManager } from './GeneralPermissionManager';
+import { GeneralTransferManager } from './GeneralTransferManager';
 
 interface ModuleData {
   /**
@@ -133,6 +135,8 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     return () => method.send(options);
   };
 
+  // @TODO remon-nashid: add a generic getAttachedModule(moduleName) method. It should still return properly typed module objects.
+
   public getErc20DividendModule = async () => {
     const address = await this.getFirstUnarchivedModuleAddress({
       name: 'ERC20DividendCheckpoint',
@@ -156,6 +160,30 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
 
     return new EtherDividendCheckpoint({ address, context: this.context });
   }
+
+  public getGeneralPermissionManagerModule = async () => {
+    const address = await this.getFirstUnarchivedModuleAddress({
+      name: 'GeneralPermissionManager',
+    });
+
+    if (!address) {
+      return null;
+    }
+
+    return new GeneralPermissionManager({ address, context: this.context });
+  };
+
+  public getGeneralTransferManagerModule = async () => {
+    const address = await this.getFirstUnarchivedModuleAddress({
+      name: 'GeneralTransferManager',
+    });
+
+    if (!address) {
+      return null;
+    }
+
+    return new GeneralTransferManager({ address, context: this.context });
+  };
 
   public async getCappedStoModules() {
     const addresses = await this.getUnarchivedModuleAddresses({
