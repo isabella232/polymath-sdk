@@ -114,7 +114,7 @@ export enum ProcedureTypes {
   UpdateDividendsTaxWithholdingList = 'UpdateDividendsTaxWithholdingList',
   SetDividendsWallet = 'SetDividendsWallet',
   PushDividendPayment = 'PushDividendPayment',
-  ChangeDelegatePerm = 'ChangeDelegatePerm',
+  ChangeDelegatePermission = 'ChangeDelegatePermission',
 }
 
 export enum PolyTransactionTags {
@@ -134,8 +134,8 @@ export enum PolyTransactionTags {
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
-  ChangeDelegatePerm = 'ChangeDelegatePerm',
   ChangeDelegatePermission = 'ChangeDelegatePermission',
+  ChangeDelegatePermissionission = 'ChangeDelegatePermissionission',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -251,7 +251,7 @@ export interface SetDividendsWalletProcedureArgs {
   address: string;
 }
 
-export interface ChangeDelegatePermArgs {
+export interface ChangeDelegatePermissionArgs {
   symbol: string;
   delegate: string;
   op: string;

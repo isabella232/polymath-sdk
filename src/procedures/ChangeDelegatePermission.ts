@@ -2,15 +2,15 @@ import { Procedure } from './Procedure';
 import {
   ProcedureTypes,
   PolyTransactionTags,
-  ChangeDelegatePermArgs,
+  ChangeDelegatePermissionArgs,
   ErrorCodes,
   ModuleOperations,
   ModulePermissions,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
-export class ChangeDelegatePerm extends Procedure<ChangeDelegatePermArgs> {
-  public type = ProcedureTypes.ChangeDelegatePerm;
+export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermissionArgs> {
+  public type = ProcedureTypes.ChangeDelegatePermission;
 
   public async prepareTransactions() {
     const { symbol, delegate, op, enabled, details } = this.args;
@@ -75,13 +75,13 @@ export class ChangeDelegatePerm extends Procedure<ChangeDelegatePermArgs> {
     } else {
       // Delegate not found. Add them here.
       await this.addTransaction(permissionModule.addDelegate, {
-        tag: PolyTransactionTags.ChangeDelegatePerm,
+        tag: PolyTransactionTags.ChangeDelegatePermission,
       })({ delegate, details });
     }
 
     // Change delegate permission
     await this.addTransaction(permissionModule.changePermission, {
-      tag: PolyTransactionTags.ChangeDelegatePermission,
+      tag: PolyTransactionTags.ChangeDelegatePermissionission,
     })({ delegate, module, perm, enabled });
   }
 }
