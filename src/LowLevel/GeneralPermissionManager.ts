@@ -44,7 +44,7 @@ export class GeneralPermissionManager extends Contract<GeneralPermissionManagerC
     return await this.contract.methods.getAllDelegatesWithPerm(module, perm).call();
   };
 
-  public addDelegate = async ({ delegate, details }: AddDelegateArgs) => {
+  public addDelegate = async ({ delegate, details = '' }: AddDelegateArgs) => {
     if (!isAddress(delegate))
       throw new PolymathError({
         code: ErrorCodes.InvalidAddress,
@@ -56,14 +56,14 @@ export class GeneralPermissionManager extends Contract<GeneralPermissionManagerC
     return () => method.send(options);
   };
 
-  public changePermission = async ({ delegate, module, perm, enabled }: ChangePermissionArgs) => {
+  public changePermission = async ({ delegate, module, perm, isGranted }: ChangePermissionArgs) => {
     if (!isAddress(delegate))
       throw new PolymathError({
         code: ErrorCodes.InvalidAddress,
         message: `Delegate address is invalid: $delegate = ${delegate}`,
       });
 
-    const method = this.contract.methods.changePermission(delegate, module, perm, enabled);
+    const method = this.contract.methods.changePermission(delegate, module, perm, isGranted);
     const options = await getOptions(method, { from: this.context.account });
     return () => method.send(options);
   };

@@ -13,7 +13,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
   public type = ProcedureTypes.ChangeDelegatePermission;
 
   public async prepareTransactions() {
-    const { symbol, delegate, op, enabled, details } = this.args;
+    const { symbol, delegate, op, isGranted, details } = this.args;
     const { securityTokenRegistry } = this.context;
     let module: string;
     let perm: string;
@@ -33,7 +33,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
           throw new PolymathError({
             code: ErrorCodes.FatalError,
             message:
-              "Fatal error: Transfer manager module haven't been enabled. Please report this issue to the Polymath team.",
+              "Fatal error: Transfer manager module haven't been isGranted. Please report this issue to the Polymath team.",
           });
         }
         module = attachedModule.address;
@@ -49,7 +49,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
     if (permissionModule === null)
       throw new PolymathError({
         code: ErrorCodes.ProcedureValidationError,
-        message: "Permission modules haven't been enabled.",
+        message: "Permission modules haven't been isGranted.",
       });
 
     const delegates = await permissionModule.getAllDelegates();
@@ -66,10 +66,10 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
 
       const permitted = permittedDelegates.filter(element => element === delegate).length > 0;
       // Upcoming permission equals existing one.
-      if (permitted === enabled) {
+      if (permitted === isGranted) {
         throw new PolymathError({
           code: ErrorCodes.ProcedureValidationError,
-          message: `Delegate\'s permission is already set to ${enabled}.`,
+          message: `Delegate\'s permission is already set to ${isGranted}.`,
         });
       }
     } else {
@@ -82,6 +82,6 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
     // Change delegate permission
     await this.addTransaction(permissionModule.changePermission, {
       tag: PolyTransactionTags.ChangeDelegatePermissionission,
-    })({ delegate, module, perm, enabled });
+    })({ delegate, module, perm, isGranted });
   }
 }

@@ -270,14 +270,14 @@ export interface IsTickerAvailableArgs {
 
 export interface AddDelegateArgs {
   delegate: string;
-  details: string;
+  details?: string;
 }
 
 export interface ChangePermissionArgs {
   delegate: string;
   module: string;
   perm: string;
-  enabled: boolean;
+  isGranted: boolean;
 }
 
 export interface GetAllDelegatesWithPermArgs {

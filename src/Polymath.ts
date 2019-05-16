@@ -8,7 +8,14 @@ import { SecurityTokenRegistry } from './LowLevel/SecurityTokenRegistry';
 import { SecurityToken } from './LowLevel/SecurityToken';
 import { Context } from './Context';
 import { ModuleRegistry } from './LowLevel/ModuleRegistry';
-import { TaxWithholdingEntry, PolymathNetworkParams, ErrorCodes } from './types';
+import {
+  TaxWithholdingEntry,
+  PolymathNetworkParams,
+  ErrorCodes,
+  ModulePermissions,
+  ModuleOperations,
+  ChangeDelegatePermissionArgs,
+} from './types';
 import {
   Dividend as LowLevelDividend,
   Checkpoint as LowLevelCheckpoint,
@@ -46,6 +53,7 @@ import { SetDividendsWallet } from './procedures/SetDividendsWallet';
 import { DividendsModule } from './entities/DividendsModule';
 import { StoModule } from './entities/StoModule';
 import { PolymathError } from './PolymathError';
+import { ChangeDelegatePermission } from './procedures/ChangeDelegatePermission';
 
 // TODO @RafaelVidaurre: Type this correctly. It should return a contextualized
 // version of T
@@ -391,6 +399,25 @@ export class Polymath {
       this.context
     );
     return await procedure.prepare();
+  };
+
+  /**
+   * Grant or revoke permission to a delegate address
+   */
+  public changeDelegatePermission = async (args: {
+    securityTokenId: string;
+    delegate: string;
+    op: ModuleOperations;
+    isGranted: boolean;
+    details?: string;
+  }) => {
+    const { securityTokenId, delegate, op, isGranted, details } = args;
+    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
+
+    const procedure = new ChangeDelegatePermission(
+      { symbol, delegate, op, isGranted, details },
+      this.context
+    );
   };
 
   /**

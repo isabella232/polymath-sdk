@@ -255,8 +255,8 @@ export interface ChangeDelegatePermissionArgs {
   symbol: string;
   delegate: string;
   op: string;
-  enabled: boolean;
-  details: string;
+  isGranted: boolean;
+  details?: string;
 }
 
 export interface ProcedureArguments {
