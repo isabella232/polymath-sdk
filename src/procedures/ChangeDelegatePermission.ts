@@ -81,7 +81,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
 
     // Change delegate permission
     await this.addTransaction(permissionModule.changePermission, {
-      tag: PolyTransactionTags.ChangeDelegatePermissionission,
+      tag: PolyTransactionTags.ChangeDelegatePermission,
     })({ delegate, module, perm, isGranted });
   }
 }

@@ -135,7 +135,6 @@ export enum PolyTransactionTags {
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
   ChangeDelegatePermission = 'ChangeDelegatePermission',
-  ChangeDelegatePermissionission = 'ChangeDelegatePermissionission',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
