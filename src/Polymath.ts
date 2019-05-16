@@ -418,6 +418,8 @@ export class Polymath {
       { symbol, delegate, op, isGranted, details },
       this.context
     );
+
+    return await procedure.prepare();
   };
 
   /**
