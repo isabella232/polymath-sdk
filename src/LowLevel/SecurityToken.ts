@@ -117,7 +117,7 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     return () => method.send(options);
   };
 
-  public addPermissionModule = async () => {
+  public addGeneralPermissionManager = async () => {
     const factoryAddress = await this.context.moduleRegistry.getModuleFactoryAddress({
       moduleName: 'GeneralPermissionManager',
       moduleType: ModuleTypes.Permission,

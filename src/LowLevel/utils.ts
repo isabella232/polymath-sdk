@@ -62,6 +62,14 @@ export function toAscii(value: string) {
   return utils.toAscii(value).replace(/\u0000/g, '');
 }
 
+export function fromAscii(value: string) {
+  return utils.fromAscii(value);
+}
+
+export function toChecksumAddress(value: string) {
+  return utils.toChecksumAddress(value);
+}
+
 export function isAddress(value: string) {
   return utils.isAddress(value);
 }

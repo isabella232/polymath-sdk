@@ -104,7 +104,7 @@ export enum ProcedureTypes {
   Approve = 'Approve',
   CreateCheckpoint = 'CreateCheckpoint',
   EnableDividendModules = 'EnableDividendModules',
-  EnablePermissionModule = 'EnablePermissionModule',
+  EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
@@ -129,7 +129,7 @@ export enum PolyTransactionTags {
   SetErc20TaxWithholding = 'SetErc20TaxWithholding',
   SetEtherTaxWithholding = 'SetEtherTaxWithholding',
   EnableDividends = 'EnableDividends',
-  EnablePermissionModule = 'EnablePermissionModule',
+  EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
   PushDividendPayment = 'PushDividendPayment',
@@ -215,7 +215,7 @@ export interface EnableDividendModulesProcedureArgs {
   types?: DividendModuleTypes[];
 }
 
-export interface EnablePermissionModuleProcedureArgs {
+export interface EnableGeneralPermissionManagerProcedureArgs {
   symbol: string;
 }
 
@@ -253,7 +253,7 @@ export interface SetDividendsWalletProcedureArgs {
 export interface ChangeDelegatePermissionArgs {
   symbol: string;
   delegate: string;
-  op: string;
+  op: ModuleOperations;
   isGranted: boolean;
   details?: string;
 }

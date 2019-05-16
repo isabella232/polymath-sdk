@@ -47,6 +47,7 @@ import { DividendsModule } from './entities/DividendsModule';
 import { StoModule } from './entities/StoModule';
 import { PolymathError } from './PolymathError';
 import { ChangeDelegatePermission } from './procedures/ChangeDelegatePermission';
+import { EnableGeneralPermissionManager } from './procedures/EnablePermissionModule';
 
 // TODO @RafaelVidaurre: Type this correctly. It should return a contextualized
 // version of T
@@ -205,6 +206,22 @@ export class Polymath {
       {
         symbol,
         ...rest,
+      },
+      this.context
+    );
+    return await procedure.prepare();
+  };
+
+  /**
+   * Enable General Permission Manager module
+   *
+   * @param securityTokenId token uuid
+   */
+  public enablePermissionsModule = async (args: { securityTokenId: string }) => {
+    const { symbol } = this.SecurityToken.unserialize(args.securityTokenId);
+    const procedure = new EnableGeneralPermissionManager(
+      {
+        symbol,
       },
       this.context
     );

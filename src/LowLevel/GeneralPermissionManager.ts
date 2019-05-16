@@ -2,7 +2,7 @@ import { TransactionObject } from 'web3/eth/types';
 import { GeneralPermissionManagerAbi } from './abis/GeneralPermissionManagerAbi';
 import { Contract } from './Contract';
 import { Context } from './LowLevel';
-import { isAddress, getOptions } from './utils';
+import { isAddress, getOptions, fromAscii } from './utils';
 
 import {
   GenericContract,
@@ -51,7 +51,7 @@ export class GeneralPermissionManager extends Contract<GeneralPermissionManagerC
         message: `Delegate address is invalid: $delegate = ${delegate}`,
       });
 
-    const method = this.contract.methods.addDelegate(delegate, details);
+    const method = this.contract.methods.addDelegate(delegate, fromAscii(details));
     const options = await getOptions(method, { from: this.context.account });
     return () => method.send(options);
   };
@@ -63,7 +63,12 @@ export class GeneralPermissionManager extends Contract<GeneralPermissionManagerC
         message: `Delegate address is invalid: $delegate = ${delegate}`,
       });
 
-    const method = this.contract.methods.changePermission(delegate, module, perm, isGranted);
+    const method = this.contract.methods.changePermission(
+      delegate,
+      module,
+      fromAscii(perm),
+      isGranted
+    );
     const options = await getOptions(method, { from: this.context.account });
     return () => method.send(options);
   };

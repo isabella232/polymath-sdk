@@ -8,12 +8,14 @@ import {
   ModulePermissions,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { toChecksumAddress } from '../LowLevel/utils';
 
 export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermissionArgs> {
   public type = ProcedureTypes.ChangeDelegatePermission;
 
   public async prepareTransactions() {
-    const { symbol, delegate, op, isGranted, details } = this.args;
+    const { symbol, op, isGranted, details } = this.args;
+    const delegate = toChecksumAddress(this.args.delegate);
     const { securityTokenRegistry } = this.context;
     let module: string;
     let perm: string;
@@ -53,6 +55,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
       });
 
     const delegates = await permissionModule.getAllDelegates();
+    console.log(delegates);
     const exists = delegates.filter(element => element === delegate).length > 0;
 
     // In the following block we attempt to:
