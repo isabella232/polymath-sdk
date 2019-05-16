@@ -49,7 +49,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
     if (permissionModule === null)
       throw new PolymathError({
         code: ErrorCodes.ProcedureValidationError,
-        message: "Permission modules haven't been isGranted.",
+        message: "Permission modules haven't been enabled.",
       });
 
     const delegates = await permissionModule.getAllDelegates();

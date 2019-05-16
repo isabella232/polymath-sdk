@@ -8,14 +8,7 @@ import { SecurityTokenRegistry } from './LowLevel/SecurityTokenRegistry';
 import { SecurityToken } from './LowLevel/SecurityToken';
 import { Context } from './Context';
 import { ModuleRegistry } from './LowLevel/ModuleRegistry';
-import {
-  TaxWithholdingEntry,
-  PolymathNetworkParams,
-  ErrorCodes,
-  ModulePermissions,
-  ModuleOperations,
-  ChangeDelegatePermissionArgs,
-} from './types';
+import { TaxWithholdingEntry, PolymathNetworkParams, ErrorCodes, ModuleOperations } from './types';
 import {
   Dividend as LowLevelDividend,
   Checkpoint as LowLevelCheckpoint,
