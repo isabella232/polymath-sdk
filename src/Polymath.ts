@@ -47,7 +47,7 @@ import { DividendsModule } from './entities/DividendsModule';
 import { StoModule } from './entities/StoModule';
 import { PolymathError } from './PolymathError';
 import { ChangeDelegatePermission } from './procedures/ChangeDelegatePermission';
-import { EnableGeneralPermissionManager } from './procedures/EnablePermissionModule';
+import { EnableGeneralPermissionManager } from './procedures/EnableGeneralPermissionManager';
 
 // TODO @RafaelVidaurre: Type this correctly. It should return a contextualized
 // version of T
