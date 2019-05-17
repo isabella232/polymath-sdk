@@ -35,7 +35,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
           throw new PolymathError({
             code: ErrorCodes.FatalError,
             message:
-              "Fatal error: Transfer manager module haven't been isGranted. Please report this issue to the Polymath team.",
+              "Fatal error: Transfer manager module haven't been enabled. Please report this issue to the Polymath team.",
           });
         }
         module = attachedModule.address;
