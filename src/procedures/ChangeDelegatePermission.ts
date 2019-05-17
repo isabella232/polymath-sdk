@@ -55,7 +55,6 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
       });
 
     const delegates = await permissionModule.getAllDelegates();
-    console.log(delegates);
     const exists = delegates.filter(element => element === delegate).length > 0;
 
     // In the following block we attempt to:
