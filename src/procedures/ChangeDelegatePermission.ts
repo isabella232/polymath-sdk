@@ -24,6 +24,13 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
       ticker: symbol,
     });
 
+    if (!securityToken) {
+      throw new PolymathError({
+        code: ErrorCodes.FetcherValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+
     // @TODO remon-nashid refactor into a map(op => {module, perm}).
     switch (op) {
       case ModuleOperations.GTM_WHITELIST_UPDATE:

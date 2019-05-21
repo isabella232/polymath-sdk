@@ -38,16 +38,15 @@ import {
   UpdateDividendsTaxWithholdingList,
   PushDividendPayment,
   WithdrawTaxes,
+  CreateSecurityToken,
+  SetDividendsWallet,
+  ChangeDelegatePermission,
+  EnableGeneralPermissionManager,
 } from './procedures';
-import { CreateSecurityToken } from './procedures/CreateSecurityToken';
 import { Entity } from './entities/Entity';
-
-import { SetDividendsWallet } from './procedures/SetDividendsWallet';
 import { DividendsModule } from './entities/DividendsModule';
 import { StoModule } from './entities/StoModule';
 import { PolymathError } from './PolymathError';
-import { ChangeDelegatePermission } from './procedures/ChangeDelegatePermission';
-import { EnableGeneralPermissionManager } from './procedures/EnableGeneralPermissionManager';
 
 // TODO @RafaelVidaurre: Type this correctly. It should return a contextualized
 // version of T
