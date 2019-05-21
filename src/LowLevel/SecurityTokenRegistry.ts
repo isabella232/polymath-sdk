@@ -125,6 +125,13 @@ export class SecurityTokenRegistry extends Contract<SecurityTokenRegistryContrac
   public async getSecurityToken({ ticker }: GetSecurityTokenArgs) {
     const address = await this.contract.methods.getSecurityTokenAddress(ticker).call();
 
+    if (address === ZERO_ADDRESS) {
+      throw new PolymathError({
+        code: ErrorCodes.ProcedureValidationError,
+        message: `Ticker "${ticker}" not found.`,
+      });
+    }
+
     return new SecurityToken({ address, context: this.context });
   }
 }

@@ -73,6 +73,7 @@ export enum ErrorCodes {
   TransactionReverted = 'TransactionReverted',
   FatalError = 'FatalError',
   UnexpectedReturnData = 'UnexpectedReturnData',
+  InvalidAddress = 'InvalidAddress',
 }
 
 export interface InvestorBalance {
@@ -103,6 +104,7 @@ export enum ProcedureTypes {
   Approve = 'Approve',
   CreateCheckpoint = 'CreateCheckpoint',
   EnableDividendModules = 'EnableDividendModules',
+  EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
@@ -112,6 +114,7 @@ export enum ProcedureTypes {
   UpdateDividendsTaxWithholdingList = 'UpdateDividendsTaxWithholdingList',
   SetDividendsWallet = 'SetDividendsWallet',
   PushDividendPayment = 'PushDividendPayment',
+  ChangeDelegatePermission = 'ChangeDelegatePermission',
 }
 
 export enum PolyTransactionTags {
@@ -126,10 +129,12 @@ export enum PolyTransactionTags {
   SetErc20TaxWithholding = 'SetErc20TaxWithholding',
   SetEtherTaxWithholding = 'SetEtherTaxWithholding',
   EnableDividends = 'EnableDividends',
+  EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
+  ChangeDelegatePermission = 'ChangeDelegatePermission',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -210,6 +215,10 @@ export interface EnableDividendModulesProcedureArgs {
   types?: DividendModuleTypes[];
 }
 
+export interface EnableGeneralPermissionManagerProcedureArgs {
+  symbol: string;
+}
+
 export interface ReclaimFundsProcedureArgs {
   symbol: string;
   dividendIndex: number;
@@ -239,6 +248,14 @@ export interface SetDividendsWalletProcedureArgs {
   symbol: string;
   dividendType: DividendModuleTypes;
   address: string;
+}
+
+export interface ChangeDelegatePermissionArgs {
+  symbol: string;
+  delegate: string;
+  op: ModuleOperations;
+  isGranted: boolean;
+  details?: string;
 }
 
 export interface ProcedureArguments {
@@ -271,6 +288,15 @@ export enum TransactionQueueStatus {
   Running = 'RUNNING',
   Failed = 'FAILED',
   Succeeded = 'SUCCEEDED',
+}
+
+export enum ModuleOperations {
+  // MODULE_COMPONENT_OP
+  GTM_WHITELIST_UPDATE = 'GTM_WHITELIST_UPDATE',
+}
+
+export enum ModulePermissions {
+  Whitelist = 'WHITELIST',
 }
 
 export interface Pojo {

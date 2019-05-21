@@ -10,9 +10,9 @@ interface UniqueIdentifiers {
 }
 
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
-  const { address } = identifiers;
+  const { symbol } = identifiers;
 
-  return typeof address === 'string';
+  return typeof symbol === 'string';
 }
 
 interface Params extends UniqueIdentifiers {

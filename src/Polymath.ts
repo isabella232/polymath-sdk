@@ -8,7 +8,7 @@ import { SecurityTokenRegistry } from './LowLevel/SecurityTokenRegistry';
 import { SecurityToken } from './LowLevel/SecurityToken';
 import { Context } from './Context';
 import { ModuleRegistry } from './LowLevel/ModuleRegistry';
-import { TaxWithholdingEntry, PolymathNetworkParams, ErrorCodes } from './types';
+import { TaxWithholdingEntry, PolymathNetworkParams, ErrorCodes, ModuleOperations } from './types';
 import {
   Dividend as LowLevelDividend,
   Checkpoint as LowLevelCheckpoint,
@@ -46,6 +46,8 @@ import { SetDividendsWallet } from './procedures/SetDividendsWallet';
 import { DividendsModule } from './entities/DividendsModule';
 import { StoModule } from './entities/StoModule';
 import { PolymathError } from './PolymathError';
+import { ChangeDelegatePermission } from './procedures/ChangeDelegatePermission';
+import { EnableGeneralPermissionManager } from './procedures/EnableGeneralPermissionManager';
 
 // TODO @RafaelVidaurre: Type this correctly. It should return a contextualized
 // version of T
@@ -204,6 +206,22 @@ export class Polymath {
       {
         symbol,
         ...rest,
+      },
+      this.context
+    );
+    return await procedure.prepare();
+  };
+
+  /**
+   * Enable General Permission Manager module
+   *
+   * @param securityTokenId token uuid
+   */
+  public enablePermissionsModule = async (args: { securityTokenId: string }) => {
+    const { symbol } = this.SecurityToken.unserialize(args.securityTokenId);
+    const procedure = new EnableGeneralPermissionManager(
+      {
+        symbol,
       },
       this.context
     );
@@ -394,6 +412,62 @@ export class Polymath {
   };
 
   /**
+   * Grant or revoke permission to a delegate address
+   */
+  public changeDelegatePermission = async (args: {
+    securityTokenId: string;
+    delegate: string;
+    op: ModuleOperations;
+    isGranted: boolean;
+    details?: string;
+  }) => {
+    const { securityTokenId, delegate, op, isGranted, details } = args;
+    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
+
+    const procedure = new ChangeDelegatePermission(
+      { symbol, delegate, op, isGranted, details },
+      this.context
+    );
+
+    return await procedure.prepare();
+  };
+
+  /**
+   * Retrieve a security token
+   */
+  public getSecurityToken = async (
+    args:
+      | {
+          symbol: string;
+        }
+      | string
+  ) => {
+    const { securityTokenRegistry } = this.context;
+
+    let symbol: string;
+
+    // fetch by UUID
+    if (typeof args === 'string') {
+      ({ symbol } = this.SecurityToken.unserialize(args));
+    } else {
+      ({ symbol } = args);
+    }
+
+    const securityToken = await securityTokenRegistry.getSecurityToken({
+      ticker: symbol,
+    });
+
+    const name = await securityToken.name();
+    const { address } = securityToken;
+
+    return new this.SecurityToken({
+      name,
+      address,
+      symbol,
+    });
+  };
+
+  /**
    * Retrieve a list of investor addresses and their corresponding tax withholding
    * percentages
    */
@@ -464,7 +538,6 @@ export class Polymath {
   public getCheckpoints = async (
     args: {
       securityTokenId: string;
-      dividendTypes?: DividendModuleTypes[];
     },
     opts?: { dividendTypes?: DividendModuleTypes[] }
   ): Promise<CheckpointEntity[]> => {
@@ -504,6 +577,9 @@ export class Polymath {
     });
   };
 
+  /**
+   * Retrieve a checkpoint from a security token
+   */
   public getCheckpoint = async (
     args:
       | {
@@ -555,6 +631,9 @@ export class Polymath {
     });
   };
 
+  /**
+   * Retrieve all dividend distributions at a certain checkpoint
+   */
   public getDividends = async (
     args: {
       securityTokenId: string;
@@ -598,6 +677,9 @@ export class Polymath {
     return dividends;
   };
 
+  /**
+   * Retrieve a particular dividend distribution at a certain checkpoint
+   */
   public getDividend = async (
     args:
       | {
@@ -618,10 +700,14 @@ export class Polymath {
       ({ securityTokenId, dividendType, dividendIndex } = args);
     }
 
-    const checkpoints = await this.getCheckpoints({
-      securityTokenId,
-      dividendTypes: [dividendType],
-    });
+    const checkpoints = await this.getCheckpoints(
+      {
+        securityTokenId,
+      },
+      {
+        dividendTypes: [dividendType],
+      }
+    );
 
     for (const checkpoint of checkpoints) {
       const { dividends } = checkpoint;
@@ -636,6 +722,9 @@ export class Polymath {
     throw new Error('There is no dividend of the specified type with that index.');
   };
 
+  /**
+   * Retrieve all STO modules attached to a security token
+   */
   public getStoModules = async (
     args: {
       securityTokenId: string;
@@ -733,6 +822,9 @@ export class Polymath {
     return stoModules;
   };
 
+  /**
+   * Retrieve a dividends module attached to a security token
+   */
   public getDividendsModule = async (
     args:
       | {
@@ -803,6 +895,9 @@ export class Polymath {
     return null;
   };
 
+  /**
+   * Retrieve the ERC20 dividends module attached to a security token
+   */
   public getErc20DividendsModule = async (args: { securityTokenId: string } | string) => {
     // fetch by UUID
     if (typeof args === 'string') {
@@ -815,6 +910,9 @@ export class Polymath {
     });
   };
 
+  /**
+   * Retrieve the ETH dividends module attached to a security token
+   */
   public getEthDividendsModule = async (args: { securityTokenId: string } | string) => {
     // fetch by UUID
     if (typeof args === 'string') {
@@ -827,6 +925,9 @@ export class Polymath {
     });
   };
 
+  /**
+   * Check if a token follows the ERC20 standard
+   */
   public isValidErc20 = async (args: { address: string }) => {
     const { address } = args;
     return this.lowLevel.isValidErc20({ address });
@@ -908,6 +1009,9 @@ export class Polymath {
     return this.entities.Investment;
   }
 
+  /**
+   * Auxiliary function to create a checkpoint entity
+   */
   private assembleCheckpoint = ({
     securityTokenId,
     securityTokenSymbol,
@@ -944,6 +1048,9 @@ export class Polymath {
     return checkpointEntity;
   };
 
+  /**
+   * Auxiliary function to fetch all dividend distributions
+   */
   private getAllDividends = async ({
     securityToken,
     checkpointIndex,

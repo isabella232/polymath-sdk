@@ -22,6 +22,8 @@ import { DividendCheckpointAbi } from './abis/DividendCheckpointAbi';
 import { Contract } from './Contract';
 import { CappedSto } from './CappedSto';
 import { UsdTieredSto } from './UsdTieredSto';
+import { GeneralPermissionManager } from './GeneralPermissionManager';
+import { GeneralTransferManager } from './GeneralTransferManager';
 
 interface ModuleData {
   /**
@@ -105,16 +107,35 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     }
 
     const configData = web3.eth.abi.encodeFunctionCall(configFunctionAbi, [wallet]);
-
     const method = this.contract.methods.addModule(
       factoryAddress,
       configData,
       new BigNumber(0),
       new BigNumber(0)
     );
-    const options = getOptions(method, { from: this.context.account });
-    return () => method.send();
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
   };
+
+  public addGeneralPermissionManager = async () => {
+    const factoryAddress = await this.context.moduleRegistry.getModuleFactoryAddress({
+      moduleName: 'GeneralPermissionManager',
+      moduleType: ModuleTypes.Permission,
+      tokenAddress: this.address,
+    });
+
+    const configData = web3.utils.asciiToHex('');
+    const method = this.contract.methods.addModule(
+      factoryAddress,
+      configData,
+      new BigNumber(0),
+      new BigNumber(0)
+    );
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
+  };
+
+  // @TODO remon-nashid: add a generic getAttachedModule(moduleName) method. It should still return properly typed module objects.
 
   public getErc20DividendModule = async () => {
     const address = await this.getFirstUnarchivedModuleAddress({
@@ -139,6 +160,30 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
 
     return new EtherDividendCheckpoint({ address, context: this.context });
   }
+
+  public getGeneralPermissionManagerModule = async () => {
+    const address = await this.getFirstUnarchivedModuleAddress({
+      name: 'GeneralPermissionManager',
+    });
+
+    if (!address) {
+      return null;
+    }
+
+    return new GeneralPermissionManager({ address, context: this.context });
+  };
+
+  public getGeneralTransferManagerModule = async () => {
+    const address = await this.getFirstUnarchivedModuleAddress({
+      name: 'GeneralTransferManager',
+    });
+
+    if (!address) {
+      return null;
+    }
+
+    return new GeneralTransferManager({ address, context: this.context });
+  };
 
   public async getCappedStoModules() {
     const addresses = await this.getUnarchivedModuleAddresses({

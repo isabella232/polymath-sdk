@@ -268,6 +268,23 @@ export interface IsTickerAvailableArgs {
   ticker: string;
 }
 
+export interface AddDelegateArgs {
+  delegate: string;
+  details?: string;
+}
+
+export interface ChangePermissionArgs {
+  delegate: string;
+  module: string;
+  perm: string;
+  isGranted: boolean;
+}
+
+export interface GetAllDelegatesWithPermArgs {
+  module: string;
+  perm: string;
+}
+
 export enum NetworkIds {
   Local = 15,
   LocalVm = 16,
