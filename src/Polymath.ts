@@ -457,6 +457,13 @@ export class Polymath {
       ticker: symbol,
     });
 
+    if (!securityToken) {
+      throw new PolymathError({
+        code: ErrorCodes.FetcherValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+
     const name = await securityToken.name();
     const owner = await securityToken.owner();
     const { address } = securityToken;
@@ -500,6 +507,13 @@ export class Polymath {
     const securityToken = await securityTokenRegistry.getSecurityToken({
       ticker: symbol,
     });
+
+    if (!securityToken) {
+      throw new PolymathError({
+        code: ErrorCodes.FetcherValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
 
     let dividendsModule;
     if (dividendType === DividendModuleTypes.Erc20) {
@@ -551,6 +565,13 @@ export class Polymath {
     const securityToken = await securityTokenRegistry.getSecurityToken({
       ticker: symbol,
     });
+
+    if (!securityToken) {
+      throw new PolymathError({
+        code: ErrorCodes.FetcherValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
 
     let dividendTypes: DividendModuleTypes[] | undefined;
 
@@ -615,6 +636,13 @@ export class Polymath {
       ticker: securityTokenSymbol,
     });
 
+    if (!securityToken) {
+      throw new PolymathError({
+        code: ErrorCodes.FetcherValidationError,
+        message: `There is no Security Token with symbol ${securityTokenSymbol}`,
+      });
+    }
+
     const checkpointDividends = await this.getAllDividends({
       securityToken,
       checkpointIndex,
@@ -651,6 +679,13 @@ export class Polymath {
     const securityToken = await securityTokenRegistry.getSecurityToken({
       ticker: symbol,
     });
+
+    if (!securityToken) {
+      throw new PolymathError({
+        code: ErrorCodes.FetcherValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
 
     const { index: checkpointIndex } = this.Checkpoint.unserialize(checkpointId);
 
@@ -746,6 +781,13 @@ export class Polymath {
     const securityToken = await securityTokenRegistry.getSecurityToken({
       ticker: securityTokenSymbol,
     });
+
+    if (!securityToken) {
+      throw new PolymathError({
+        code: ErrorCodes.FetcherValidationError,
+        message: `There is no Security Token with symbol ${securityTokenSymbol}`,
+      });
+    }
 
     const constructorData = {
       securityTokenSymbol,
@@ -852,6 +894,13 @@ export class Polymath {
     const securityToken = await securityTokenRegistry.getSecurityToken({
       ticker: symbol,
     });
+
+    if (!securityToken) {
+      throw new PolymathError({
+        code: ErrorCodes.FetcherValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
 
     const constructorData = {
       securityTokenSymbol: symbol,

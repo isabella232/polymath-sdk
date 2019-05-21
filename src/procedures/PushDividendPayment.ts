@@ -1,30 +1,34 @@
+import { chunk } from 'lodash';
 import { Procedure } from './Procedure';
 import {
   PushDividendPaymentProcedureArgs,
   DividendModuleTypes,
   ProcedureTypes,
   PolyTransactionTags,
+  ErrorCodes,
 } from '../types';
-import { chunk } from 'lodash';
+import { PolymathError } from '../PolymathError';
 
 const CHUNK_SIZE = 100;
 
-export class PushDividendPayment extends Procedure<
-  PushDividendPaymentProcedureArgs
-> {
+export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureArgs> {
   public type = ProcedureTypes.PushDividendPayment;
+
   public async prepareTransactions() {
-    const {
-      symbol,
-      dividendIndex,
-      investorAddresses,
-      dividendType,
-    } = this.args;
+    const { symbol, dividendIndex, investorAddresses, dividendType } = this.args;
     const { securityTokenRegistry } = this.context;
 
     const securityToken = await securityTokenRegistry.getSecurityToken({
       ticker: symbol,
     });
+
+    if (!securityToken) {
+      throw new PolymathError({
+        code: ErrorCodes.ProcedureValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+
     let dividendsModule;
 
     if (dividendType === DividendModuleTypes.Erc20) {
@@ -52,9 +56,7 @@ export class PushDividendPayment extends Procedure<
     const { investors: investorStatuses } = dividend;
 
     const unpaidInvestors = investors.filter(investorAddress => {
-      const investorStatus = investorStatuses.find(
-        status => status.address === investorAddress
-      );
+      const investorStatus = investorStatuses.find(status => status.address === investorAddress);
 
       return !!investorStatus && !investorStatus.paymentReceived;
     });
