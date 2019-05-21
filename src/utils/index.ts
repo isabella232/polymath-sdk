@@ -1,6 +1,6 @@
+import stringify from 'json-stable-stringify';
 import { isAddress } from '../LowLevel/utils';
 import { Pojo } from '../types';
-import stringify from 'json-stable-stringify';
 
 export const delay = async (amount: number) => {
   return new Promise(resolve => {
