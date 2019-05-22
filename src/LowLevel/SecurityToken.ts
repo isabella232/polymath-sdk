@@ -198,9 +198,8 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
 
   public async getUsdTieredStoModules() {
     const addresses = await this.getUnarchivedModuleAddresses({
-      name: 'UsdTieredSTO',
+      name: 'USDTieredSTO',
     });
-
     const { context } = this;
 
     return addresses.map(address => new UsdTieredSto({ address, context }));
