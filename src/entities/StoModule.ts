@@ -29,6 +29,8 @@ export interface Params extends UniqueIdentifiers {
   soldTokensAmount: BigNumber;
   investorAmount: BigNumber;
   investments: Investment[];
+  paused: boolean;
+  capReached: boolean;
 }
 
 export abstract class StoModule extends Entity {
@@ -56,6 +58,10 @@ export abstract class StoModule extends Entity {
 
   public fundraiseTypes: FundraiseTypes[];
 
+  public paused: boolean;
+
+  public capReached: boolean;
+
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
@@ -81,6 +87,8 @@ export abstract class StoModule extends Entity {
       soldTokensAmount,
       investorAmount,
       investments,
+      paused,
+      capReached,
     } = params;
 
     this.address = address;
@@ -94,6 +102,8 @@ export abstract class StoModule extends Entity {
     this.investorAmount = investorAmount;
     this.investments = investments;
     this.fundraiseTypes = fundraiseTypes;
+    this.paused = paused;
+    this.capReached = capReached;
   }
 
   public toPojo() {
