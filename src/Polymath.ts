@@ -806,6 +806,8 @@ export class Polymath {
           const details = await module.getDetails();
           const investments = await module.getInvestments();
           const { address } = module;
+          const paused = await module.paused();
+          const capReached = await module.capReached();
           const stoModuleId = this.CappedStoModule.generateId({
             securityTokenId,
             stoType,
@@ -822,6 +824,8 @@ export class Polymath {
               investments: investmentEntities,
               stoType,
               address,
+              paused,
+              capReached,
             })
           );
         }
@@ -832,6 +836,8 @@ export class Polymath {
           const { tokensPerTier, ratesPerTier, ...details } = await module.getDetails();
           const investments = await module.getInvestments();
           const { address } = module;
+          const paused = await module.paused();
+          const capReached = await module.capReached();
           const stoModuleId = this.UsdTieredStoModule.generateId({
             securityTokenId,
             stoType,
@@ -851,6 +857,8 @@ export class Polymath {
               investments: investmentEntities,
               stoType,
               address,
+              paused,
+              capReached,
             })
           );
         }
