@@ -60,7 +60,7 @@ export class CancelSto extends Procedure<CancelStoArgs> {
      */
 
     const tokenOwner = await securityToken.owner();
-    const logMessage = 'cancelling the STO';
+    const logMessage = 'canceling STO';
 
     await this.addTransaction(stoModule.pause, {
       tag: PolyTransactionTags.CancelSto,

@@ -74,7 +74,7 @@ export enum ErrorCodes {
   FatalError = 'FatalError',
   UnexpectedReturnData = 'UnexpectedReturnData',
   InvalidAddress = 'InvalidAddress',
-  InsufficientBalance = 'InsufficiantBalance',
+  InsufficientBalance = 'InsufficientBalance',
 }
 
 export interface InvestorBalance {
