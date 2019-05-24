@@ -43,7 +43,7 @@ import {
   SetDividendsWallet,
   ChangeDelegatePermission,
   EnableGeneralPermissionManager,
-  CancelSTO,
+  CancelSto,
 } from './procedures';
 import { Entity } from './entities/Entity';
 import { DividendsModule } from './entities/DividendsModule';
@@ -434,7 +434,7 @@ export class Polymath {
     return await procedure.prepare();
   };
 
-  public cancelSTO = async (args: {
+  public cancelSto = async (args: {
     moduleUid:
       | {
           securityTokenId: string;
@@ -445,7 +445,10 @@ export class Polymath {
     value: BigNumber;
     custodianAddress: string;
   }) => {
-    let securityTokenId: string; let stoType: StoModuleTypes; let address: string; let symbol: string;
+    let securityTokenId: string;
+    let stoType: StoModuleTypes;
+    let address: string;
+    let symbol: string;
     if (typeof args.moduleUid === 'string') {
       ({ securityTokenId, stoType, address } = this.StoModule.unserialize(args.moduleUid));
     } else {
@@ -455,7 +458,7 @@ export class Polymath {
     ({ symbol } = this.SecurityToken.unserialize(securityTokenId));
     const { custodianAddress, value } = args;
 
-    const procedure = new CancelSTO(
+    const procedure = new CancelSto(
       { symbol, stoType, stoModuleAddress: address, custodianAddress, value },
       this.context
     );

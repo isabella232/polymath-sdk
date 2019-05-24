@@ -14,7 +14,7 @@ import {
   GetCheckpointArgs,
   TokenForceTransferArgs,
   StoModuleTypes,
-  GetSTOModuleArgs,
+  GetStoModuleArgs,
 } from './types';
 import { Context } from './LowLevel';
 import { fromUnixTimestamp, fromWei, getOptions, toWei } from './utils';
@@ -242,7 +242,7 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
    *
    * @TODO remon-nashid: shouldn't module address be enough to fetch a module?
    */
-  public getSTOModule = async ({ address, stoType }: GetSTOModuleArgs): Promise<Sto | null> => {
+  public getStoModule = async ({ address, stoType }: GetStoModuleArgs): Promise<Sto | null> => {
     const { context } = this;
     const { methods } = this.contract;
 

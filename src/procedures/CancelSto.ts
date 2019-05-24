@@ -1,10 +1,10 @@
 import { Procedure } from './Procedure';
-import { ProcedureTypes, PolyTransactionTags, CancelSTOArgs, ErrorCodes } from '../types';
+import { ProcedureTypes, PolyTransactionTags, CancelStoArgs, ErrorCodes } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 
-export class CancelSTO extends Procedure<CancelSTOArgs> {
-  public type = ProcedureTypes.CancelSTO;
+export class CancelSto extends Procedure<CancelStoArgs> {
+  public type = ProcedureTypes.CancelSto;
 
   public async prepareTransactions() {
     const { symbol, stoType, stoModuleAddress, custodianAddress, value } = this.args;
@@ -47,7 +47,7 @@ export class CancelSTO extends Procedure<CancelSTOArgs> {
       });
     }
 
-    const stoModule = await securityToken.getSTOModule({ address: stoModuleAddress, stoType });
+    const stoModule = await securityToken.getStoModule({ address: stoModuleAddress, stoType });
     if (!stoModule) {
       throw new PolymathError({
         code: ErrorCodes.ProcedureValidationError,
@@ -63,11 +63,11 @@ export class CancelSTO extends Procedure<CancelSTOArgs> {
     const logMessage = 'cancelling the STO';
 
     await this.addTransaction(stoModule.pause, {
-      tag: PolyTransactionTags.CancelSTO,
+      tag: PolyTransactionTags.CancelSto,
     })();
 
     await this.addTransaction(securityToken.forceTransfer, {
-      tag: PolyTransactionTags.CancelSTO,
+      tag: PolyTransactionTags.CancelSto,
     })({ from: custodianAddress, to: tokenOwner, value, data: '', log: logMessage });
   }
 }

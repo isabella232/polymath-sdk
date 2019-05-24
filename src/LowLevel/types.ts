@@ -293,7 +293,7 @@ export interface TokenForceTransferArgs {
   log?: string;
 }
 
-export interface GetSTOModuleArgs {
+export interface GetStoModuleArgs {
   address: string;
   stoType: StoModuleTypes;
 }
