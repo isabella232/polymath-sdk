@@ -7,7 +7,7 @@ export class CancelSto extends Procedure<CancelStoArgs> {
   public type = ProcedureTypes.CancelSto;
 
   public async prepareTransactions() {
-    const { symbol, stoType, stoModuleAddress, custodianAddress, value } = this.args;
+    const { symbol, stoModuleAddress, custodianAddress, value } = this.args;
     const { securityTokenRegistry } = this.context;
 
     /**
@@ -47,11 +47,11 @@ export class CancelSto extends Procedure<CancelStoArgs> {
       });
     }
 
-    const stoModule = await securityToken.getStoModule({ address: stoModuleAddress, stoType });
+    const stoModule = await securityToken.getStoModule({ address: stoModuleAddress });
     if (!stoModule) {
       throw new PolymathError({
         code: ErrorCodes.ProcedureValidationError,
-        message: `${stoType} module is either archived or hasn't been enabled.`,
+        message: `module ${stoModuleAddress} is either archived or hasn't been enabled.`,
       });
     }
 

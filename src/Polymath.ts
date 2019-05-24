@@ -440,11 +440,11 @@ export class Polymath {
     custodianAddress: string;
   }) => {
     const { stoModuleId, custodianAddress, value } = args;
-    const { securityTokenId, stoType, address } = this.StoModule.unserialize(stoModuleId);
+    const { securityTokenId, address } = this.StoModule.unserialize(stoModuleId);
     const { symbol } = this.SecurityToken.unserialize(securityTokenId);
 
     const procedure = new CancelSto(
-      { symbol, stoType, stoModuleAddress: address, custodianAddress, value },
+      { symbol, stoModuleAddress: address, custodianAddress, value },
       this.context
     );
 

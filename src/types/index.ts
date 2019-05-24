@@ -263,7 +263,6 @@ export interface ChangeDelegatePermissionArgs {
 
 export interface CancelStoArgs {
   symbol: string;
-  stoType: StoModuleTypes;
   stoModuleAddress: string;
   custodianAddress: string;
   value: BigNumber;

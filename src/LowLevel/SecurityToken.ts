@@ -17,7 +17,7 @@ import {
   GetStoModuleArgs,
 } from './types';
 import { Context } from './LowLevel';
-import { fromUnixTimestamp, fromWei, getOptions, toWei } from './utils';
+import { fromUnixTimestamp, fromWei, getOptions, toWei, toAscii } from './utils';
 import { Erc20DividendCheckpoint } from './Erc20DividendCheckpoint';
 import { EtherDividendCheckpoint } from './EtherDividendCheckpoint';
 import { SecurityTokenAbi } from './abis/SecurityTokenAbi';
@@ -28,6 +28,9 @@ import { UsdTieredSto } from './UsdTieredSto';
 import { GeneralPermissionManager } from './GeneralPermissionManager';
 import { GeneralTransferManager } from './GeneralTransferManager';
 import { Sto } from './Sto';
+import { ZERO_ADDRESS } from './constants';
+import { PolymathError } from '../PolymathError';
+import { ErrorCodes } from '../types';
 
 interface ModuleData {
   /**
@@ -239,19 +242,26 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
 
   /**
    * Given STO module type and address, this function will return a generic, LowLevel Sto object.
-   *
-   * @TODO remon-nashid: shouldn't module address be enough to fetch a module?
    */
-  public getStoModule = async ({ address, stoType }: GetStoModuleArgs): Promise<Sto | null> => {
+  public getStoModule = async ({ address }: GetStoModuleArgs): Promise<Sto | null> => {
     const { context } = this;
     const { methods } = this.contract;
+    const { 0: moduleNameHex, 1: moduleAddress, 3: isArchived } = await methods
+      .getModule(address)
+      .call();
 
-    const { 3: isArchived } = await methods.getModule(address).call();
+    if (moduleAddress === ZERO_ADDRESS) {
+      throw new PolymathError({
+        code: ErrorCodes.ProcedureValidationError,
+        message: `module "${address}" is either invalid or hasn't been enabled.`,
+      });
+    }
     if (isArchived) return null;
 
-    if (stoType === StoModuleTypes.Capped) {
+    const moduleNameStr = toAscii(moduleNameHex);
+    if (moduleNameStr === StoModuleTypes.Capped) {
       return new CappedSto({ address, context });
-    } else if (stoType === StoModuleTypes.UsdTiered) {
+    } else if (moduleNameStr === StoModuleTypes.UsdTiered) {
       return new UsdTieredSto({ address, context });
     }
     return null;

@@ -295,7 +295,6 @@ export interface TokenForceTransferArgs {
 
 export interface GetStoModuleArgs {
   address: string;
-  stoType: StoModuleTypes;
 }
 
 export enum NetworkIds {
