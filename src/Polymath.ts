@@ -438,12 +438,15 @@ export class Polymath {
   public forceTransfer = async (args: {
     securityTokenId: string;
     value: BigNumber;
-    custodianAddress: string;
+    from: string;
+    to: string;
+    log: string;
+    data: string;
   }) => {
-    const { securityTokenId, custodianAddress, value } = args;
+    const { securityTokenId, value, from, to, log, data } = args;
     const { symbol } = this.SecurityToken.unserialize(securityTokenId);
 
-    const procedure = new ForceTransfer({ symbol, custodianAddress, value }, this.context);
+    const procedure = new ForceTransfer({ symbol, value, from, to, log, data }, this.context);
 
     return await procedure.prepare();
   };

@@ -267,7 +267,6 @@ export interface ForceTransferArgs {
   from: string;
   to: string;
   symbol: string;
-  custodianAddress: string;
   value: BigNumber;
   data?: string;
   log?: string;
