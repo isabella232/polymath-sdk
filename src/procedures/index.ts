@@ -12,3 +12,4 @@ export { PushDividendPayment } from './PushDividendPayment';
 export { SetDividendsWallet } from './SetDividendsWallet';
 export { ChangeDelegatePermission } from './ChangeDelegatePermission';
 export { EnableGeneralPermissionManager } from './EnableGeneralPermissionManager';
+export { CancelSTO } from './CancelSTO';

@@ -12,9 +12,12 @@ import {
   GetFirstUnarchivedModuleAddressArgs,
   GetUnarchivedModuleAddressesArgs,
   GetCheckpointArgs,
+  TokenForceTransferArgs,
+  StoModuleTypes,
+  GetSTOModuleArgs,
 } from './types';
 import { Context } from './LowLevel';
-import { fromUnixTimestamp, fromWei, getOptions } from './utils';
+import { fromUnixTimestamp, fromWei, getOptions, toWei } from './utils';
 import { Erc20DividendCheckpoint } from './Erc20DividendCheckpoint';
 import { EtherDividendCheckpoint } from './EtherDividendCheckpoint';
 import { SecurityTokenAbi } from './abis/SecurityTokenAbi';
@@ -24,6 +27,7 @@ import { CappedSto } from './CappedSto';
 import { UsdTieredSto } from './UsdTieredSto';
 import { GeneralPermissionManager } from './GeneralPermissionManager';
 import { GeneralTransferManager } from './GeneralTransferManager';
+import { Sto } from './Sto';
 
 interface ModuleData {
   /**
@@ -54,6 +58,7 @@ interface SecurityTokenContract extends GenericContract {
     createCheckpoint(): TransactionObject<void>;
     getCheckpointTimes(): TransactionObject<string[]>;
     totalSupplyAt(checkpointId: number): TransactionObject<string>;
+    balanceOf(address: string): TransactionObject<string>;
     balanceOfAt(investorAddress: string, checkpointId: number): TransactionObject<string>;
     getInvestorsAt(checkpointId: number): TransactionObject<string[]>;
     currentCheckpointId(): TransactionObject<string>;
@@ -62,6 +67,13 @@ interface SecurityTokenContract extends GenericContract {
       data: string,
       maxCost: BigNumber,
       budget: BigNumber
+    ): TransactionObject<void>;
+    forceTransfer(
+      from: string,
+      to: string,
+      value: BigNumber,
+      data: string,
+      log: string
     ): TransactionObject<void>;
     getModulesByName(name: string): TransactionObject<string[]>;
     name(): TransactionObject<string>;
@@ -74,6 +86,11 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
   constructor({ address, context }: { address: string; context: Context }) {
     super({ address, abi: SecurityTokenAbi.abi, context });
   }
+
+  public balanceOf = async ({ address }: { address: string }) => {
+    const balance = await this.contract.methods.balanceOf(address).call();
+    return fromWei(balance);
+  };
 
   public createCheckpoint = async () => {
     const method = this.contract.methods.createCheckpoint();
@@ -132,6 +149,21 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
       new BigNumber(0),
       new BigNumber(0)
     );
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
+  };
+
+  public forceTransfer = async ({
+    from,
+    to,
+    value,
+    data = '',
+    log = '',
+  }: TokenForceTransferArgs) => {
+    data = web3.utils.asciiToHex(data);
+    log = web3.utils.asciiToHex(log);
+    value = toWei(value);
+    const method = this.contract.methods.forceTransfer(from, to, value, data, log);
     const options = await getOptions(method, { from: this.context.account });
     return () => method.send(options);
   };
@@ -204,6 +236,26 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
 
     return addresses.map(address => new UsdTieredSto({ address, context }));
   }
+
+  /**
+   * Given STO module type and address, this function will return a generic, LowLevel Sto object.
+   *
+   * @TODO remon-nashid: shouldn't module address be enough to fetch a module?
+   */
+  public getSTOModule = async ({ address, stoType }: GetSTOModuleArgs): Promise<Sto | null> => {
+    const { context } = this;
+    const { methods } = this.contract;
+
+    const { 3: isArchived } = await methods.getModule(address).call();
+    if (isArchived) return null;
+
+    if (stoType === StoModuleTypes.Capped) {
+      return new CappedSto({ address, context });
+    } else if (stoType === StoModuleTypes.UsdTiered) {
+      return new UsdTieredSto({ address, context });
+    }
+    return null;
+  };
 
   public getCheckpoint = async ({ checkpointId }: GetCheckpointArgs) => {
     const { methods } = this.contract;

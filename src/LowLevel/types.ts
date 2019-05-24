@@ -285,6 +285,19 @@ export interface GetAllDelegatesWithPermArgs {
   perm: string;
 }
 
+export interface TokenForceTransferArgs {
+  from: string;
+  to: string;
+  value: BigNumber;
+  data?: string;
+  log?: string;
+}
+
+export interface GetSTOModuleArgs {
+  address: string;
+  stoType: StoModuleTypes;
+}
+
 export enum NetworkIds {
   Local = 15,
   LocalVm = 16,

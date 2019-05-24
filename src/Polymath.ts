@@ -27,6 +27,7 @@ import {
   CappedStoModule as CappedStoModuleEntity,
   UsdTieredStoModule as UsdTieredStoModuleEntity,
   Investment as InvestmentEntity,
+  StoModule as StoModuleEntity,
 } from './entities';
 
 import {
@@ -42,10 +43,10 @@ import {
   SetDividendsWallet,
   ChangeDelegatePermission,
   EnableGeneralPermissionManager,
+  CancelSTO,
 } from './procedures';
 import { Entity } from './entities/Entity';
 import { DividendsModule } from './entities/DividendsModule';
-import { StoModule } from './entities/StoModule';
 import { PolymathError } from './PolymathError';
 
 // TODO @RafaelVidaurre: Type this correctly. It should return a contextualized
@@ -75,6 +76,7 @@ interface ContextualizedEntities {
   CappedStoModule: typeof CappedStoModuleEntity;
   UsdTieredStoModule: typeof UsdTieredStoModuleEntity;
   Investment: typeof InvestmentEntity;
+  StoModule: typeof StoModuleEntity;
 }
 
 export class Polymath {
@@ -113,6 +115,7 @@ export class Polymath {
       CappedStoModule: createContextualizedEntity(CappedStoModuleEntity as any, this),
       UsdTieredStoModule: createContextualizedEntity(UsdTieredStoModuleEntity as any, this),
       Investment: createContextualizedEntity(InvestmentEntity as any, this),
+      StoModule: createContextualizedEntity(StoModuleEntity as any, this),
     };
   }
 
@@ -425,6 +428,35 @@ export class Polymath {
 
     const procedure = new ChangeDelegatePermission(
       { symbol, delegate, op, isGranted, details },
+      this.context
+    );
+
+    return await procedure.prepare();
+  };
+
+  public cancelSTO = async (args: {
+    moduleUid:
+      | {
+          securityTokenId: string;
+          stoType: StoModuleTypes;
+          address: string;
+        }
+      | string;
+    value: BigNumber;
+    custodianAddress: string;
+  }) => {
+    let securityTokenId: string; let stoType: StoModuleTypes; let address: string; let symbol: string;
+    if (typeof args.moduleUid === 'string') {
+      ({ securityTokenId, stoType, address } = this.StoModule.unserialize(args.moduleUid));
+    } else {
+      ({ securityTokenId, stoType, address } = args.moduleUid);
+    }
+
+    ({ symbol } = this.SecurityToken.unserialize(securityTokenId));
+    const { custodianAddress, value } = args;
+
+    const procedure = new CancelSTO(
+      { symbol, stoType, stoModuleAddress: address, custodianAddress, value },
       this.context
     );
 
@@ -1065,6 +1097,10 @@ export class Polymath {
 
   get Investment() {
     return this.entities.Investment;
+  }
+
+  get StoModule() {
+    return this.entities.StoModule;
   }
 
   /**

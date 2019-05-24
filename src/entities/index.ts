@@ -11,3 +11,4 @@ export { Erc20TokenBalance } from './Erc20TokenBalance';
 export { CappedStoModule } from './CappedStoModule';
 export { UsdTieredStoModule } from './UsdTieredStoModule';
 export { Investment } from './Investment';
+export { StoModule } from './StoModule';
