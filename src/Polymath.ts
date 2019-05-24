@@ -43,7 +43,8 @@ import {
   SetDividendsWallet,
   ChangeDelegatePermission,
   EnableGeneralPermissionManager,
-  CancelSto,
+  ForceTransfer,
+  PauseSto,
 } from './procedures';
 import { Entity } from './entities/Entity';
 import { DividendsModule } from './entities/DividendsModule';
@@ -434,19 +435,25 @@ export class Polymath {
     return await procedure.prepare();
   };
 
-  public cancelSto = async (args: {
-    stoModuleId: string;
+  public forceTransfer = async (args: {
+    securityTokenId: string;
     value: BigNumber;
     custodianAddress: string;
   }) => {
-    const { stoModuleId, custodianAddress, value } = args;
+    const { securityTokenId, custodianAddress, value } = args;
+    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
+
+    const procedure = new ForceTransfer({ symbol, custodianAddress, value }, this.context);
+
+    return await procedure.prepare();
+  };
+
+  public pauseSto = async (args: { stoModuleId: string }) => {
+    const { stoModuleId } = args;
     const { securityTokenId, address } = this.StoModule.unserialize(stoModuleId);
     const { symbol } = this.SecurityToken.unserialize(securityTokenId);
 
-    const procedure = new CancelSto(
-      { symbol, stoModuleAddress: address, custodianAddress, value },
-      this.context
-    );
+    const procedure = new PauseSto({ symbol, stoModuleAddress: address }, this.context);
 
     return await procedure.prepare();
   };

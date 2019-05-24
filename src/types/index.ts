@@ -116,7 +116,8 @@ export enum ProcedureTypes {
   SetDividendsWallet = 'SetDividendsWallet',
   PushDividendPayment = 'PushDividendPayment',
   ChangeDelegatePermission = 'ChangeDelegatePermission',
-  CancelSto = 'CancelSto',
+  ForceTransfer = 'ForceTransfer',
+  PauseSto = 'PauseSto',
 }
 
 export enum PolyTransactionTags {
@@ -137,7 +138,8 @@ export enum PolyTransactionTags {
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
   ChangeDelegatePermission = 'ChangeDelegatePermission',
-  CancelSto = 'CancelSto',
+  ForceTransfer = 'ForceTransfer',
+  PauseSto = 'PauseSto',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -261,11 +263,19 @@ export interface ChangeDelegatePermissionArgs {
   details?: string;
 }
 
-export interface CancelStoArgs {
+export interface ForceTransferArgs {
+  from: string;
+  to: string;
   symbol: string;
-  stoModuleAddress: string;
   custodianAddress: string;
   value: BigNumber;
+  data?: string;
+  log?: string;
+}
+
+export interface PauseStoArgs {
+  symbol: string;
+  stoModuleAddress: string;
 }
 
 export interface ProcedureArguments {
