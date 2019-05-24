@@ -435,28 +435,13 @@ export class Polymath {
   };
 
   public cancelSto = async (args: {
-    moduleUid:
-      | {
-          securityTokenId: string;
-          stoType: StoModuleTypes;
-          address: string;
-        }
-      | string;
+    stoModuleId: string;
     value: BigNumber;
     custodianAddress: string;
   }) => {
-    let securityTokenId: string;
-    let stoType: StoModuleTypes;
-    let address: string;
-    let symbol: string;
-    if (typeof args.moduleUid === 'string') {
-      ({ securityTokenId, stoType, address } = this.StoModule.unserialize(args.moduleUid));
-    } else {
-      ({ securityTokenId, stoType, address } = args.moduleUid);
-    }
-
-    ({ symbol } = this.SecurityToken.unserialize(securityTokenId));
-    const { custodianAddress, value } = args;
+    const { stoModuleId, custodianAddress, value } = args;
+    const { securityTokenId, stoType, address } = this.StoModule.unserialize(stoModuleId);
+    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
 
     const procedure = new CancelSto(
       { symbol, stoType, stoModuleAddress: address, custodianAddress, value },
