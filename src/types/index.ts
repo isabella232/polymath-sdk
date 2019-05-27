@@ -118,6 +118,7 @@ export enum ProcedureTypes {
   ChangeDelegatePermission = 'ChangeDelegatePermission',
   ForceTransfer = 'ForceTransfer',
   PauseSto = 'PauseSto',
+  SetController = 'SetController',
 }
 
 export enum PolyTransactionTags {
@@ -140,6 +141,7 @@ export enum PolyTransactionTags {
   ChangeDelegatePermission = 'ChangeDelegatePermission',
   ForceTransfer = 'ForceTransfer',
   PauseSto = 'PauseSto',
+  SetController = 'SetController',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -275,6 +277,11 @@ export interface ForceTransferArgs {
 export interface PauseStoArgs {
   symbol: string;
   stoModuleAddress: string;
+}
+
+export interface SetControllerArgs {
+  symbol: string;
+  controller: string;
 }
 
 export interface ProcedureArguments {

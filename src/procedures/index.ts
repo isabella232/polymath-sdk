@@ -14,3 +14,4 @@ export { ChangeDelegatePermission } from './ChangeDelegatePermission';
 export { EnableGeneralPermissionManager } from './EnableGeneralPermissionManager';
 export { ForceTransfer } from './ForceTransfer';
 export { PauseSto } from './PauseSto';
+export { SetController } from './SetController';

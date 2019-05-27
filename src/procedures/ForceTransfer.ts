@@ -8,7 +8,7 @@ export class ForceTransfer extends Procedure<ForceTransferArgs> {
 
   public async prepareTransactions() {
     const { symbol, value, from, to, log: log = '', data: data = '' } = this.args;
-    const { securityTokenRegistry } = this.context;
+    const { securityTokenRegistry, currentWallet } = this.context;
     const addresses: { [key: string]: string } = { from, to };
 
     /**
@@ -40,6 +40,26 @@ export class ForceTransfer extends Procedure<ForceTransferArgs> {
       throw new PolymathError({
         code: ErrorCodes.InsufficientBalance,
         message: `Sender's balance "${senderBalance}" is less than the requested amount "${value}."`,
+      });
+    }
+
+    const controller = await securityToken.controller();
+    let account: string;
+
+    if (currentWallet) {
+      ({ address: account } = currentWallet);
+    } else {
+      throw new PolymathError({
+        message:
+          "No default account set. You must pass token owner's private key to Polymath.connect()",
+        code: ErrorCodes.ProcedureValidationError,
+      });
+    }
+
+    if (account !== controller) {
+      throw new PolymathError({
+        code: ErrorCodes.ProcedureValidationError,
+        message: `Unauthorized`,
       });
     }
 

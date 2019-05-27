@@ -298,6 +298,10 @@ export interface TokenForceTransferArgs {
   log: string;
 }
 
+export interface TokenSetControllerArgs {
+  controller: string;
+}
+
 export interface GetStoModuleArgs {
   address: string;
 }

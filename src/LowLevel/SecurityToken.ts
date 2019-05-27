@@ -14,6 +14,7 @@ import {
   TokenForceTransferArgs,
   GetStoModuleArgs,
   StoModuleNames,
+  TokenSetControllerArgs,
 } from './types';
 import { Context } from './LowLevel';
 import { fromUnixTimestamp, fromWei, getOptions, toWei, toAscii, asciiToHex } from './utils';
@@ -77,9 +78,11 @@ interface SecurityTokenContract extends GenericContract {
       data: string,
       log: string
     ): TransactionObject<void>;
+    setController(controller: string): TransactionObject<void>;
     getModulesByName(name: string): TransactionObject<string[]>;
     name(): TransactionObject<string>;
     owner(): TransactionObject<string>;
+    controller(): TransactionObject<string>;
     getModule(address: string): TransactionObject<ModuleData>;
   };
 }
@@ -160,6 +163,12 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     log = asciiToHex(log);
     value = toWei(value);
     const method = this.contract.methods.forceTransfer(from, to, value, data, log);
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
+  };
+
+  public setController = async ({ controller }: TokenSetControllerArgs) => {
+    const method = this.contract.methods.setController(controller);
     const options = await getOptions(method, { from: this.context.account });
     return () => method.send(options);
   };
@@ -296,6 +305,10 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
 
   public async owner() {
     return this.contract.methods.owner().call();
+  }
+
+  public async controller() {
+    return this.contract.methods.controller().call();
   }
 
   private async getFirstUnarchivedModuleAddress({ name }: GetFirstUnarchivedModuleAddressArgs) {

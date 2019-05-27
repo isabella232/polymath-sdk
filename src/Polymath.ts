@@ -45,6 +45,7 @@ import {
   EnableGeneralPermissionManager,
   ForceTransfer,
   PauseSto,
+  SetController,
 } from './procedures';
 import { Entity } from './entities/Entity';
 import { DividendsModule } from './entities/DividendsModule';
@@ -450,6 +451,14 @@ export class Polymath {
       { symbol, value, from, to, log: reason, data },
       this.context
     );
+
+    return await procedure.prepare();
+  };
+
+  public setTokenController = async (args: { securityTokenId: string; controller: string }) => {
+    const { securityTokenId, controller } = args;
+    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
+    const procedure = new SetController({ symbol, controller }, this.context);
 
     return await procedure.prepare();
   };
