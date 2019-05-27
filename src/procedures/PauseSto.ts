@@ -27,7 +27,7 @@ export class PauseSto extends Procedure<PauseStoArgs> {
 
     if (!securityToken) {
       throw new PolymathError({
-        code: ErrorCodes.FetcherValidationError,
+        code: ErrorCodes.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
