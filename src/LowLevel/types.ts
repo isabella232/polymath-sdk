@@ -50,6 +50,11 @@ export enum StoModuleTypes {
   UsdTiered = 'usdTiered',
 }
 
+export enum StoModuleNames {
+  Capped = 'capped',
+  UsdTiered = 'usdTiered',
+}
+
 export enum ModuleTypes {
   Permission = 1,
   Transfer,

@@ -12,8 +12,8 @@ import {
   GetUnarchivedModuleAddressesArgs,
   GetCheckpointArgs,
   TokenForceTransferArgs,
-  StoModuleTypes,
   GetStoModuleArgs,
+  StoModuleNames,
 } from './types';
 import { Context } from './LowLevel';
 import { fromUnixTimestamp, fromWei, getOptions, toWei, toAscii, asciiToHex } from './utils';
@@ -252,9 +252,9 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     if (isArchived) return null;
 
     const moduleNameStr = toAscii(moduleNameHex);
-    if (moduleNameStr === StoModuleTypes.Capped) {
+    if (moduleNameStr === StoModuleNames.Capped) {
       return new CappedSto({ address, context });
-    } else if (moduleNameStr === StoModuleTypes.UsdTiered) {
+    } else if (moduleNameStr === StoModuleNames.UsdTiered) {
       return new UsdTieredSto({ address, context });
     }
     return null;
