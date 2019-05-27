@@ -7,7 +7,7 @@ export class ForceTransfer extends Procedure<ForceTransferArgs> {
   public type = ProcedureTypes.ForceTransfer;
 
   public async prepareTransactions() {
-    const { symbol, value, from, to, log, data } = this.args;
+    const { symbol, value, from, to, log: log = '', data: data = '' } = this.args;
     const { securityTokenRegistry } = this.context;
     const addresses: { [key: string]: string } = { from, to };
 

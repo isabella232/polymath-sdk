@@ -155,13 +155,7 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     return () => method.send(options);
   };
 
-  public forceTransfer = async ({
-    from,
-    to,
-    value,
-    data = '',
-    log = '',
-  }: TokenForceTransferArgs) => {
+  public forceTransfer = async ({ from, to, value, data, log }: TokenForceTransferArgs) => {
     data = asciiToHex(data);
     log = asciiToHex(log);
     value = toWei(value);

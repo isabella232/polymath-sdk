@@ -440,13 +440,16 @@ export class Polymath {
     value: BigNumber;
     from: string;
     to: string;
-    log: string;
-    data: string;
+    reason?: string;
+    data?: string;
   }) => {
-    const { securityTokenId, value, from, to, log, data } = args;
+    const { securityTokenId, value, from, to, reason: reason = '', data: data = '' } = args;
     const { symbol } = this.SecurityToken.unserialize(securityTokenId);
 
-    const procedure = new ForceTransfer({ symbol, value, from, to, log, data }, this.context);
+    const procedure = new ForceTransfer(
+      { symbol, value, from, to, log: reason, data },
+      this.context
+    );
 
     return await procedure.prepare();
   };

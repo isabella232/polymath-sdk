@@ -289,8 +289,8 @@ export interface TokenForceTransferArgs {
   from: string;
   to: string;
   value: BigNumber;
-  data?: string;
-  log?: string;
+  data: string;
+  log: string;
 }
 
 export interface GetStoModuleArgs {
