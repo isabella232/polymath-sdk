@@ -1,4 +1,3 @@
-import Web3 from 'web3';
 import { TransactionObject } from 'web3/eth/types';
 import BigNumber from 'bignumber.js';
 import { web3 } from './web3Client';
@@ -17,7 +16,7 @@ import {
   GetStoModuleArgs,
 } from './types';
 import { Context } from './LowLevel';
-import { fromUnixTimestamp, fromWei, getOptions, toWei, toAscii } from './utils';
+import { fromUnixTimestamp, fromWei, getOptions, toWei, toAscii, asciiToHex } from './utils';
 import { Erc20DividendCheckpoint } from './Erc20DividendCheckpoint';
 import { EtherDividendCheckpoint } from './EtherDividendCheckpoint';
 import { SecurityTokenAbi } from './abis/SecurityTokenAbi';
@@ -163,8 +162,8 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     data = '',
     log = '',
   }: TokenForceTransferArgs) => {
-    data = web3.utils.asciiToHex(data);
-    log = web3.utils.asciiToHex(log);
+    data = asciiToHex(data);
+    log = asciiToHex(log);
     value = toWei(value);
     const method = this.contract.methods.forceTransfer(from, to, value, data, log);
     const options = await getOptions(method, { from: this.context.account });
@@ -306,7 +305,7 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
   }
 
   private async getFirstUnarchivedModuleAddress({ name }: GetFirstUnarchivedModuleAddressArgs) {
-    const hexName = Web3.utils.asciiToHex(name);
+    const hexName = asciiToHex(name);
     const { methods } = this.contract;
     const moduleAddresses = await methods.getModulesByName(hexName).call();
 
@@ -322,7 +321,7 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
   }
 
   private async getUnarchivedModuleAddresses({ name }: GetUnarchivedModuleAddressesArgs) {
-    const hexName = Web3.utils.asciiToHex(name);
+    const hexName = asciiToHex(name);
     const { methods } = this.contract;
     const moduleAddresses = await methods.getModulesByName(hexName).call();
 
