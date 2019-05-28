@@ -22,7 +22,7 @@ export class EnableGeneralPermissionManager extends Procedure<
 
     if (!securityToken) {
       throw new PolymathError({
-        code: ErrorCodes.FetcherValidationError,
+        code: ErrorCodes.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }

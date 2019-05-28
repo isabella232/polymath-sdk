@@ -1,4 +1,3 @@
-import Web3 from 'web3';
 import { TransactionObject } from 'web3/eth/types';
 import BigNumber from 'bignumber.js';
 import { web3 } from './web3Client';
@@ -12,9 +11,13 @@ import {
   GetFirstUnarchivedModuleAddressArgs,
   GetUnarchivedModuleAddressesArgs,
   GetCheckpointArgs,
+  TokenForceTransferArgs,
+  GetStoModuleArgs,
+  StoModuleNames,
+  TokenSetControllerArgs,
 } from './types';
 import { Context } from './LowLevel';
-import { fromUnixTimestamp, fromWei, getOptions } from './utils';
+import { fromUnixTimestamp, fromWei, getOptions, toWei, toAscii, asciiToHex } from './utils';
 import { Erc20DividendCheckpoint } from './Erc20DividendCheckpoint';
 import { EtherDividendCheckpoint } from './EtherDividendCheckpoint';
 import { SecurityTokenAbi } from './abis/SecurityTokenAbi';
@@ -24,6 +27,10 @@ import { CappedSto } from './CappedSto';
 import { UsdTieredSto } from './UsdTieredSto';
 import { GeneralPermissionManager } from './GeneralPermissionManager';
 import { GeneralTransferManager } from './GeneralTransferManager';
+import { Sto } from './Sto';
+import { ZERO_ADDRESS } from './constants';
+import { PolymathError } from '../PolymathError';
+import { ErrorCodes } from '../types';
 
 interface ModuleData {
   /**
@@ -54,6 +61,7 @@ interface SecurityTokenContract extends GenericContract {
     createCheckpoint(): TransactionObject<void>;
     getCheckpointTimes(): TransactionObject<string[]>;
     totalSupplyAt(checkpointId: number): TransactionObject<string>;
+    balanceOf(address: string): TransactionObject<string>;
     balanceOfAt(investorAddress: string, checkpointId: number): TransactionObject<string>;
     getInvestorsAt(checkpointId: number): TransactionObject<string[]>;
     currentCheckpointId(): TransactionObject<string>;
@@ -63,9 +71,18 @@ interface SecurityTokenContract extends GenericContract {
       maxCost: BigNumber,
       budget: BigNumber
     ): TransactionObject<void>;
+    forceTransfer(
+      from: string,
+      to: string,
+      value: BigNumber,
+      data: string,
+      log: string
+    ): TransactionObject<void>;
+    setController(controller: string): TransactionObject<void>;
     getModulesByName(name: string): TransactionObject<string[]>;
     name(): TransactionObject<string>;
     owner(): TransactionObject<string>;
+    controller(): TransactionObject<string>;
     getModule(address: string): TransactionObject<ModuleData>;
   };
 }
@@ -74,6 +91,11 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
   constructor({ address, context }: { address: string; context: Context }) {
     super({ address, abi: SecurityTokenAbi.abi, context });
   }
+
+  public balanceOf = async ({ address }: { address: string }) => {
+    const balance = await this.contract.methods.balanceOf(address).call();
+    return fromWei(balance);
+  };
 
   public createCheckpoint = async () => {
     const method = this.contract.methods.createCheckpoint();
@@ -132,6 +154,21 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
       new BigNumber(0),
       new BigNumber(0)
     );
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
+  };
+
+  public forceTransfer = async ({ from, to, value, data, log }: TokenForceTransferArgs) => {
+    data = asciiToHex(data);
+    log = asciiToHex(log);
+    value = toWei(value);
+    const method = this.contract.methods.forceTransfer(from, to, value, data, log);
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
+  };
+
+  public setController = async ({ controller }: TokenSetControllerArgs) => {
+    const method = this.contract.methods.setController(controller);
     const options = await getOptions(method, { from: this.context.account });
     return () => method.send(options);
   };
@@ -205,6 +242,33 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     return addresses.map(address => new UsdTieredSto({ address, context }));
   }
 
+  /**
+   * Given STO module type and address, this function will return a generic, LowLevel Sto object.
+   */
+  public getStoModule = async ({ address }: GetStoModuleArgs): Promise<Sto | null> => {
+    const { context } = this;
+    const { methods } = this.contract;
+    const { 0: moduleNameHex, 1: moduleAddress, 3: isArchived } = await methods
+      .getModule(address)
+      .call();
+
+    if (moduleAddress === ZERO_ADDRESS) {
+      throw new PolymathError({
+        code: ErrorCodes.ProcedureValidationError,
+        message: `module "${address}" is either invalid or hasn't been enabled.`,
+      });
+    }
+    if (isArchived) return null;
+
+    const moduleNameStr = toAscii(moduleNameHex);
+    if (moduleNameStr === StoModuleNames.Capped) {
+      return new CappedSto({ address, context });
+    } else if (moduleNameStr === StoModuleNames.UsdTiered) {
+      return new UsdTieredSto({ address, context });
+    }
+    return null;
+  };
+
   public getCheckpoint = async ({ checkpointId }: GetCheckpointArgs) => {
     const { methods } = this.contract;
 
@@ -243,8 +307,12 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     return this.contract.methods.owner().call();
   }
 
+  public async controller() {
+    return this.contract.methods.controller().call();
+  }
+
   private async getFirstUnarchivedModuleAddress({ name }: GetFirstUnarchivedModuleAddressArgs) {
-    const hexName = Web3.utils.asciiToHex(name);
+    const hexName = asciiToHex(name);
     const { methods } = this.contract;
     const moduleAddresses = await methods.getModulesByName(hexName).call();
 
@@ -260,7 +328,7 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
   }
 
   private async getUnarchivedModuleAddresses({ name }: GetUnarchivedModuleAddressesArgs) {
-    const hexName = Web3.utils.asciiToHex(name);
+    const hexName = asciiToHex(name);
     const { methods } = this.contract;
     const moduleAddresses = await methods.getModulesByName(hexName).call();
 

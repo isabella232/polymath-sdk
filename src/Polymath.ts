@@ -27,6 +27,7 @@ import {
   CappedStoModule as CappedStoModuleEntity,
   UsdTieredStoModule as UsdTieredStoModuleEntity,
   Investment as InvestmentEntity,
+  StoModule as StoModuleEntity,
 } from './entities';
 
 import {
@@ -42,10 +43,12 @@ import {
   SetDividendsWallet,
   ChangeDelegatePermission,
   EnableGeneralPermissionManager,
+  ForceTransfer,
+  PauseSto,
+  SetController,
 } from './procedures';
 import { Entity } from './entities/Entity';
 import { DividendsModule } from './entities/DividendsModule';
-import { StoModule } from './entities/StoModule';
 import { PolymathError } from './PolymathError';
 
 // TODO @RafaelVidaurre: Type this correctly. It should return a contextualized
@@ -75,6 +78,7 @@ interface ContextualizedEntities {
   CappedStoModule: typeof CappedStoModuleEntity;
   UsdTieredStoModule: typeof UsdTieredStoModuleEntity;
   Investment: typeof InvestmentEntity;
+  StoModule: typeof StoModuleEntity;
 }
 
 export class Polymath {
@@ -113,6 +117,7 @@ export class Polymath {
       CappedStoModule: createContextualizedEntity(CappedStoModuleEntity as any, this),
       UsdTieredStoModule: createContextualizedEntity(UsdTieredStoModuleEntity as any, this),
       Investment: createContextualizedEntity(InvestmentEntity as any, this),
+      StoModule: createContextualizedEntity(StoModuleEntity as any, this),
     };
   }
 
@@ -427,6 +432,43 @@ export class Polymath {
       { symbol, delegate, op, isGranted, details },
       this.context
     );
+
+    return await procedure.prepare();
+  };
+
+  public forceTransfer = async (args: {
+    securityTokenId: string;
+    value: BigNumber;
+    from: string;
+    to: string;
+    reason?: string;
+    data?: string;
+  }) => {
+    const { securityTokenId, value, from, to, reason: reason = '', data: data = '' } = args;
+    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
+
+    const procedure = new ForceTransfer(
+      { symbol, value, from, to, log: reason, data },
+      this.context
+    );
+
+    return await procedure.prepare();
+  };
+
+  public setTokenController = async (args: { securityTokenId: string; controller: string }) => {
+    const { securityTokenId, controller } = args;
+    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
+    const procedure = new SetController({ symbol, controller }, this.context);
+
+    return await procedure.prepare();
+  };
+
+  public pauseSto = async (args: { stoModuleId: string }) => {
+    const { stoModuleId } = args;
+    const { securityTokenId, address } = this.StoModule.unserialize(stoModuleId);
+    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
+
+    const procedure = new PauseSto({ symbol, stoModuleAddress: address }, this.context);
 
     return await procedure.prepare();
   };
@@ -1065,6 +1107,10 @@ export class Polymath {
 
   get Investment() {
     return this.entities.Investment;
+  }
+
+  get StoModule() {
+    return this.entities.StoModule;
   }
 
   /**

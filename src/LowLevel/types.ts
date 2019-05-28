@@ -50,6 +50,11 @@ export enum StoModuleTypes {
   UsdTiered = 'usdTiered',
 }
 
+export enum StoModuleNames {
+  Capped = 'CappedSTO',
+  UsdTiered = 'USDTieredSTO',
+}
+
 export enum ModuleTypes {
   Permission = 1,
   Transfer,
@@ -283,6 +288,22 @@ export interface ChangePermissionArgs {
 export interface GetAllDelegatesWithPermArgs {
   module: string;
   perm: string;
+}
+
+export interface TokenForceTransferArgs {
+  from: string;
+  to: string;
+  value: BigNumber;
+  data: string;
+  log: string;
+}
+
+export interface TokenSetControllerArgs {
+  controller: string;
+}
+
+export interface GetStoModuleArgs {
+  address: string;
 }
 
 export enum NetworkIds {

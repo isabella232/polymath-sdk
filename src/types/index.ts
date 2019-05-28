@@ -74,6 +74,7 @@ export enum ErrorCodes {
   FatalError = 'FatalError',
   UnexpectedReturnData = 'UnexpectedReturnData',
   InvalidAddress = 'InvalidAddress',
+  InsufficientBalance = 'InsufficientBalance',
 }
 
 export interface InvestorBalance {
@@ -115,6 +116,9 @@ export enum ProcedureTypes {
   SetDividendsWallet = 'SetDividendsWallet',
   PushDividendPayment = 'PushDividendPayment',
   ChangeDelegatePermission = 'ChangeDelegatePermission',
+  ForceTransfer = 'ForceTransfer',
+  PauseSto = 'PauseSto',
+  SetController = 'SetController',
 }
 
 export enum PolyTransactionTags {
@@ -135,6 +139,9 @@ export enum PolyTransactionTags {
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
   ChangeDelegatePermission = 'ChangeDelegatePermission',
+  ForceTransfer = 'ForceTransfer',
+  PauseSto = 'PauseSto',
+  SetController = 'SetController',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -256,6 +263,25 @@ export interface ChangeDelegatePermissionArgs {
   op: ModuleOperations;
   isGranted: boolean;
   details?: string;
+}
+
+export interface ForceTransferArgs {
+  from: string;
+  to: string;
+  symbol: string;
+  value: BigNumber;
+  data?: string;
+  log?: string;
+}
+
+export interface PauseStoArgs {
+  symbol: string;
+  stoModuleAddress: string;
+}
+
+export interface SetControllerArgs {
+  symbol: string;
+  controller: string;
 }
 
 export interface ProcedureArguments {

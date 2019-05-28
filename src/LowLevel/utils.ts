@@ -74,6 +74,10 @@ export function isAddress(value: string) {
   return utils.isAddress(value);
 }
 
+export function asciiToHex(value: string) {
+  return utils.asciiToHex(value);
+}
+
 /**
  * Given web3 method and options object, this function will modify options with the following:
  * - An incremented nonce
