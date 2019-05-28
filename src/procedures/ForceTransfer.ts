@@ -59,7 +59,7 @@ export class ForceTransfer extends Procedure<ForceTransferArgs> {
     if (account !== controller) {
       throw new PolymathError({
         code: ErrorCodes.ProcedureValidationError,
-        message: `Unauthorized`,
+        message: `You must be the controller of this Security Token to perform forced transfers. Did you remember to call "setController"?`,
       });
     }
 

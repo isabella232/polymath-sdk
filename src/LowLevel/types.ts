@@ -51,8 +51,8 @@ export enum StoModuleTypes {
 }
 
 export enum StoModuleNames {
-  Capped = 'capped',
-  UsdTiered = 'usdTiered',
+  Capped = 'CappedSTO',
+  UsdTiered = 'USDTieredSTO',
 }
 
 export enum ModuleTypes {

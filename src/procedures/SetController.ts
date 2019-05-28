@@ -48,7 +48,7 @@ export class SetController extends Procedure<SetControllerArgs> {
     if (account !== owner) {
       throw new PolymathError({
         code: ErrorCodes.ProcedureValidationError,
-        message: `Unauthorized`,
+        message: `You must be the owner of this Security Token to set the controller`,
       });
     }
 
