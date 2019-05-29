@@ -1,35 +1,30 @@
-import { Polymath } from '~/Polymath';
-import { Entity } from '~/entities/Entity';
-import { serialize, unserialize } from '~/utils';
-import { DividendModuleTypes } from '~/LowLevel/types';
 import BigNumber from 'bignumber.js';
-import { TaxWithholdingEntry } from '~/types';
+import { Polymath } from '../Polymath';
+import { Entity } from '../entities/Entity';
+import { serialize, unserialize } from '../utils';
+import { DividendModuleTypes } from '../LowLevel/types';
+import { TaxWithholdingEntry } from '../types';
 
 interface UniqueIdentifiers {
-  address: string;
+  symbol: string;
 }
 
-function isUniqueIdentifiers(
-  identifiers: any
-): identifiers is UniqueIdentifiers {
-  const { address } = identifiers;
+function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
+  const { symbol } = identifiers;
 
-  return typeof address === 'string';
+  return typeof symbol === 'string';
 }
 
 interface Params extends UniqueIdentifiers {
-  symbol: string;
   name: string;
-}
-
-interface ExcludedArgs {
-  symbol: string;
+  address: string;
+  owner: string;
 }
 
 export class SecurityToken extends Entity {
-  public static generateId({ address }: UniqueIdentifiers) {
+  public static generateId({ symbol }: UniqueIdentifiers) {
     return serialize('securityToken', {
-      address,
+      symbol,
     });
   }
 
@@ -44,24 +39,30 @@ export class SecurityToken extends Entity {
   }
 
   public uid: string;
+
   public symbol: string;
+
   public name: string;
+
+  public owner: string;
+
   public address: string;
 
   constructor(params: Params, polyClient?: Polymath) {
     super(polyClient);
 
-    const { symbol, name, address } = params;
+    const { symbol, name, address, owner } = params;
 
     this.symbol = symbol;
     this.name = name;
+    this.owner = owner;
     this.address = address;
-    this.uid = SecurityToken.generateId({ address });
+    this.uid = SecurityToken.generateId({ symbol });
   }
 
   public getErc20DividendsModule = () =>
     this.polyClient.getErc20DividendsModule({
-      symbol: this.symbol,
+      securityTokenId: this.uid,
     });
 
   public enableDividendModules = (args: {
@@ -70,13 +71,13 @@ export class SecurityToken extends Entity {
   }) =>
     this.polyClient.enableDividendModules({
       ...args,
-      symbol: this.symbol,
+      securityTokenId: this.uid,
     });
 
   public getCheckpoints = (args: { dividendTypes: DividendModuleTypes[] }) =>
     this.polyClient.getCheckpoints({
       ...args,
-      symbol: this.symbol,
+      securityTokenId: this.uid,
     });
 
   public getCheckpoint = (args: {
@@ -85,24 +86,23 @@ export class SecurityToken extends Entity {
   }) =>
     this.polyClient.getCheckpoint({
       ...args,
-      symbol: this.symbol,
+      securityTokenId: this.uid,
     });
 
-  public createCheckpoint = () =>
-    this.polyClient.createCheckpoint({ symbol: this.symbol });
+  public createCheckpoint = () => this.polyClient.createCheckpoint({ securityTokenId: this.uid });
 
   public createPolyDividendDistribution = (args: {
     maturityDate: Date;
     expiryDate: Date;
     amount: BigNumber;
-    checkpointIndex: number;
+    checkpointId: string;
     name: string;
     excludedAddresses?: string[];
     taxWithholdings?: TaxWithholdingEntry[];
   }) =>
     this.polyClient.createPolyDividendDistribution({
       ...args,
-      symbol: this.symbol,
+      securityTokenId: this.uid,
     });
 
   public createErc20DividendDistribution = (args: {
@@ -110,14 +110,14 @@ export class SecurityToken extends Entity {
     expiryDate: Date;
     erc20Address: string;
     amount: BigNumber;
-    checkpointIndex: number;
+    checkpointId: string;
     name: string;
     excludedAddresses?: string[];
     taxWithholdings?: TaxWithholdingEntry[];
   }) =>
     this.polyClient.createErc20DividendDistribution({
       ...args,
-      symbol: this.symbol,
+      securityTokenId: this.uid,
     });
 
   public createEthDividendDistribution = (args: {
@@ -126,14 +126,14 @@ export class SecurityToken extends Entity {
     expiryDate: Date;
     erc20Address: string;
     amount: BigNumber;
-    checkpointIndex: number;
+    checkpointId: string;
     name: string;
     excludedAddresses?: string[];
     taxWithholdings?: TaxWithholdingEntry[];
   }) =>
     this.polyClient.createEthDividendDistribution({
       ...args,
-      symbol: this.symbol,
+      securityTokenId: this.uid,
     });
 
   public toPojo() {

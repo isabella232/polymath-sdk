@@ -81,8 +81,8 @@ a browser, make sure you have MetaMask installed and enabled.`
   public getAccount = async () => {
     const nodeAccounts = await web3.eth.getAccounts();
     const walletAccount = (web3.eth.accounts.wallet as Web3Wallet)[0] || {};
-
-    return nodeAccounts[0] || walletAccount.address;
+    const account = walletAccount.address || nodeAccounts[0];
+    return account;
   };
 
   public initialize = async ({
@@ -142,7 +142,7 @@ a browser, make sure you have MetaMask installed and enabled.`
   };
 
   private getBrowserProvider = () => {
-    if (!window) {
+    if (typeof window === 'undefined') {
       return null;
     }
 

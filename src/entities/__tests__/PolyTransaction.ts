@@ -1,8 +1,8 @@
-import { PolyTransaction } from '~/entities/PolyTransaction';
-import { TransactionQueue } from '~/entities/TransactionQueue';
-import { PolyTransactionTags, TransactionStatus, isPojo } from '~/types';
-import { MockedContract, getMockTransactionSpec } from '~/testUtils';
-import { delay } from '~/utils';
+import { PolyTransaction } from '../../entities/PolyTransaction';
+import { TransactionQueue } from '../../entities/TransactionQueue';
+import { PolyTransactionTags, TransactionStatus, isPojo } from '../../types';
+import { MockedContract, getMockTransactionSpec } from '../../testUtils';
+import { delay } from '../../utils';
 
 describe('PolyTransaction', () => {
   describe('.constructor', () => {
@@ -29,10 +29,7 @@ describe('PolyTransaction', () => {
         {} as TransactionQueue
       );
 
-      expect(polyTransaction).toHaveProperty(
-        'tag',
-        PolyTransactionTags.Any
-      );
+      expect(polyTransaction).toHaveProperty('tag', PolyTransactionTags.Any);
     });
 
     test('starts as Idle', () => {

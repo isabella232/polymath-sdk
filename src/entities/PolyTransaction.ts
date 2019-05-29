@@ -3,13 +3,18 @@ import { EventEmitter } from 'events';
 import {
   PostTransactionResolver,
   isPostTransactionResolver,
-} from '~/PostTransactionResolver';
-import { TransactionSpec, ErrorCodes, TransactionStatus, PolyTransactionTags } from '~/types';
-import { PolymathError } from '~/PolymathError';
+} from '../PostTransactionResolver';
+import {
+  TransactionSpec,
+  ErrorCodes,
+  TransactionStatus,
+  PolyTransactionTags,
+} from '../types';
+import { PolymathError } from '../PolymathError';
 import { TransactionReceipt } from 'web3/types';
-import { Entity } from '~/entities/Entity';
-import { TransactionQueue } from '~/entities/TransactionQueue';
-import { serialize } from '~/utils';
+import { Entity } from '../entities/Entity';
+import { TransactionQueue } from '../entities/TransactionQueue';
+import { serialize } from '../utils';
 import v4 from 'uuid/v4';
 
 enum Events {

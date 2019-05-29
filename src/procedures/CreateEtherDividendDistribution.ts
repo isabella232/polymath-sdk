@@ -1,10 +1,17 @@
 import { Procedure } from './Procedure';
-import { CreateEtherDividendDistributionProcedureArgs, ProcedureTypes, PolyTransactionTags } from '~/types';
+import {
+  CreateEtherDividendDistributionProcedureArgs,
+  ProcedureTypes,
+  PolyTransactionTags,
+  ErrorCodes,
+} from '../types';
+import { PolymathError } from '../PolymathError';
 
 export class CreateEtherDividendDistribution extends Procedure<
   CreateEtherDividendDistributionProcedureArgs
 > {
   public type = ProcedureTypes.CreateEtherDividendDistribution;
+
   public async prepareTransactions() {
     const {
       symbol,
@@ -21,6 +28,14 @@ export class CreateEtherDividendDistribution extends Procedure<
     const securityToken = await securityTokenRegistry.getSecurityToken({
       ticker: symbol,
     });
+
+    if (!securityToken) {
+      throw new PolymathError({
+        code: ErrorCodes.ProcedureValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+
     const etherModule = await securityToken.getEtherDividendModule();
 
     if (!etherModule) {

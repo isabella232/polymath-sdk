@@ -1,6 +1,6 @@
 import Web3PromiEvent from 'web3-core-promievent';
-import { GenericContract } from '~/LowLevel/types';
-import { PostTransactionResolver } from '~/PostTransactionResolver';
+import { GenericContract } from '../LowLevel/types';
+import { PostTransactionResolver } from '../PostTransactionResolver';
 
 const originalWindow = {
   ...window,
@@ -68,7 +68,6 @@ export function mockEthereumBrowser({
     },
   };
 }
-
 
 export class MockedContract<T extends GenericContract> {
   public autoResolve: boolean;

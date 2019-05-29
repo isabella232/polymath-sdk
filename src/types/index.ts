@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js';
 import { HttpProvider, WebsocketProvider } from 'web3/providers';
-import { PostTransactionResolver } from '~/PostTransactionResolver';
 import PromiEvent from 'web3/promiEvent';
+import { isPlainObject } from 'lodash';
+import { PostTransactionResolver } from '../PostTransactionResolver';
 import {
   SetWithholdingArgs,
   ReclaimDividendArgs,
@@ -16,8 +17,7 @@ import {
   PushDividendPaymentArgs,
   DividendInvestorStatus,
   SetDividendsWalletArgs,
-} from '~/LowLevel/types';
-import { isPlainObject } from 'lodash';
+} from '../LowLevel/types';
 
 // TODO @RafaelVidaurre: This type should come from LowLevel. Duplicating it
 // for now because of compilation issues
@@ -44,6 +44,20 @@ export function isDividendModuleTypes(type: any): type is DividendModuleTypes {
   );
 }
 
+// TODO @RafaelVidaurre: This type should come from LowLevel. Duplicating it
+// for now because of compilation issues
+export enum StoModuleTypes {
+  Capped = 'capped',
+  UsdTiered = 'usdTiered',
+}
+
+export function isStoModuleTypes(type: any): type is StoModuleTypes {
+  return (
+    typeof type === 'string' &&
+    (type === StoModuleTypes.UsdTiered || type === StoModuleTypes.Capped)
+  );
+}
+
 export interface TaxWithholdingEntry {
   address: string;
   percentage: number;
@@ -54,9 +68,13 @@ export enum ErrorCodes {
   UserDeniedAccess = 'UserDeniedAccess',
   WalletIsLocked = 'WalletIsLocked',
   ProcedureValidationError = 'ProcedureValidationError',
+  FetcherValidationError = 'FetcherValidationError',
   TransactionRejectedByUser = 'TransactionRejectedByUser',
   TransactionReverted = 'TransactionReverted',
   FatalError = 'FatalError',
+  UnexpectedReturnData = 'UnexpectedReturnData',
+  InvalidAddress = 'InvalidAddress',
+  InsufficientBalance = 'InsufficientBalance',
 }
 
 export interface InvestorBalance {
@@ -79,6 +97,7 @@ export interface PolymathNetworkParams {
   wsProvider?: WebsocketProvider;
   wsProviderUrl?: string;
   polymathRegistryAddress: string;
+  privateKey?: string;
 }
 
 export enum ProcedureTypes {
@@ -86,6 +105,7 @@ export enum ProcedureTypes {
   Approve = 'Approve',
   CreateCheckpoint = 'CreateCheckpoint',
   EnableDividendModules = 'EnableDividendModules',
+  EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
@@ -95,6 +115,10 @@ export enum ProcedureTypes {
   UpdateDividendsTaxWithholdingList = 'UpdateDividendsTaxWithholdingList',
   SetDividendsWallet = 'SetDividendsWallet',
   PushDividendPayment = 'PushDividendPayment',
+  ChangeDelegatePermission = 'ChangeDelegatePermission',
+  ForceTransfer = 'ForceTransfer',
+  PauseSto = 'PauseSto',
+  SetController = 'SetController',
 }
 
 export enum PolyTransactionTags {
@@ -109,10 +133,15 @@ export enum PolyTransactionTags {
   SetErc20TaxWithholding = 'SetErc20TaxWithholding',
   SetEtherTaxWithholding = 'SetEtherTaxWithholding',
   EnableDividends = 'EnableDividends',
+  EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
+  ChangeDelegatePermission = 'ChangeDelegatePermission',
+  ForceTransfer = 'ForceTransfer',
+  PauseSto = 'PauseSto',
+  SetController = 'SetController',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -124,15 +153,9 @@ export interface TransactionArguments {
   [PolyTransactionTags.SetErc20TaxWithholding]: Partial<SetWithholdingArgs>;
   [PolyTransactionTags.SetEtherTaxWithholding]: Partial<SetWithholdingArgs>;
   [PolyTransactionTags.ReclaimDividendFunds]: Partial<ReclaimDividendArgs>;
-  [PolyTransactionTags.WithdrawTaxWithholdings]: Partial<
-    WithdrawWithholdingArgs
-  >;
-  [PolyTransactionTags.CreateErc20DividendDistribution]: Partial<
-    CreateErc20DividendArgs
-  >;
-  [PolyTransactionTags.CreateEtherDividendDistribution]: Partial<
-    CreateEtherDividendArgs
-  >;
+  [PolyTransactionTags.WithdrawTaxWithholdings]: Partial<WithdrawWithholdingArgs>;
+  [PolyTransactionTags.CreateErc20DividendDistribution]: Partial<CreateErc20DividendArgs>;
+  [PolyTransactionTags.CreateEtherDividendDistribution]: Partial<CreateEtherDividendArgs>;
   [PolyTransactionTags.GetTokens]: Partial<GetTokensArgs>;
   [PolyTransactionTags.Approve]: Partial<ApproveArgs>;
   [PolyTransactionTags.EnableDividends]: Partial<AddDividendsModuleArgs>;
@@ -199,6 +222,10 @@ export interface EnableDividendModulesProcedureArgs {
   types?: DividendModuleTypes[];
 }
 
+export interface EnableGeneralPermissionManagerProcedureArgs {
+  symbol: string;
+}
+
 export interface ReclaimFundsProcedureArgs {
   symbol: string;
   dividendIndex: number;
@@ -228,6 +255,33 @@ export interface SetDividendsWalletProcedureArgs {
   symbol: string;
   dividendType: DividendModuleTypes;
   address: string;
+}
+
+export interface ChangeDelegatePermissionArgs {
+  symbol: string;
+  delegate: string;
+  op: ModuleOperations;
+  isGranted: boolean;
+  details?: string;
+}
+
+export interface ForceTransferArgs {
+  from: string;
+  to: string;
+  symbol: string;
+  value: BigNumber;
+  data?: string;
+  log?: string;
+}
+
+export interface PauseStoArgs {
+  symbol: string;
+  stoModuleAddress: string;
+}
+
+export interface SetControllerArgs {
+  symbol: string;
+  controller: string;
 }
 
 export interface ProcedureArguments {
@@ -260,6 +314,15 @@ export enum TransactionQueueStatus {
   Running = 'RUNNING',
   Failed = 'FAILED',
   Succeeded = 'SUCCEEDED',
+}
+
+export enum ModuleOperations {
+  // MODULE_COMPONENT_OP
+  GTM_WHITELIST_UPDATE = 'GTM_WHITELIST_UPDATE',
+}
+
+export enum ModulePermissions {
+  Whitelist = 'WHITELIST',
 }
 
 export interface Pojo {

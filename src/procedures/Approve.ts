@@ -4,8 +4,8 @@ import {
   ErrorCodes,
   ProcedureTypes,
   PolyTransactionTags,
-} from '~/types';
-import { PolymathError } from '~/PolymathError';
+} from '../types';
+import { PolymathError } from '../PolymathError';
 import { BigNumber } from 'bignumber.js';
 
 export class Approve extends Procedure<ApproveProcedureArgs> {

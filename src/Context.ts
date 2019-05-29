@@ -1,9 +1,9 @@
-import { PolyToken } from '~/LowLevel/PolyToken';
-import { PolymathRegistry } from '~/LowLevel/PolymathRegistry';
-import { SecurityTokenRegistry } from '~/LowLevel/SecurityTokenRegistry';
-import { ModuleRegistry } from '~/LowLevel/ModuleRegistry';
-import { Erc20 } from '~/LowLevel/Erc20';
-import { Wallet } from '~/Wallet';
+import { PolyToken } from './LowLevel/PolyToken';
+import { PolymathRegistry } from './LowLevel/PolymathRegistry';
+import { SecurityTokenRegistry } from './LowLevel/SecurityTokenRegistry';
+import { ModuleRegistry } from './LowLevel/ModuleRegistry';
+import { Erc20 } from './LowLevel/Erc20';
+import { Wallet } from './Wallet';
 
 interface Params {
   polyToken: PolyToken;

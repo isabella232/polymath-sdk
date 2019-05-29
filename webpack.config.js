@@ -5,12 +5,12 @@ module.exports = {
   output: {
     filename: 'index.js',
     library: 'PolymathNetworkSdk',
-    libraryTarget: 'umd',
+    libraryTarget: 'commonjs2',
     umdNamedDefine: true,
     globalObject: 'this',
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.ts', '.js'],
     plugins: [new TsconfigPathsPlugin()],
   },
   module: {

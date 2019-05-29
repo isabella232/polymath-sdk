@@ -1,7 +1,6 @@
-import Web3 from 'web3';
-import { web3 } from './web3Client';
 import { TransactionObject } from 'web3/eth/types';
 import BigNumber from 'bignumber.js';
+import { web3 } from './web3Client';
 import {
   DividendModuleTypes,
   GenericContract,
@@ -9,16 +8,29 @@ import {
   InvestorBalance,
   ModuleTypes,
   AddDividendsModuleArgs,
-  GetModuleAddressArgs,
+  GetFirstUnarchivedModuleAddressArgs,
+  GetUnarchivedModuleAddressesArgs,
   GetCheckpointArgs,
+  TokenForceTransferArgs,
+  GetStoModuleArgs,
+  StoModuleNames,
+  TokenSetControllerArgs,
 } from './types';
 import { Context } from './LowLevel';
-import { fromUnixTimestamp, fromWei } from './utils';
+import { fromUnixTimestamp, fromWei, getOptions, toWei, toAscii, asciiToHex } from './utils';
 import { Erc20DividendCheckpoint } from './Erc20DividendCheckpoint';
 import { EtherDividendCheckpoint } from './EtherDividendCheckpoint';
 import { SecurityTokenAbi } from './abis/SecurityTokenAbi';
 import { DividendCheckpointAbi } from './abis/DividendCheckpointAbi';
 import { Contract } from './Contract';
+import { CappedSto } from './CappedSto';
+import { UsdTieredSto } from './UsdTieredSto';
+import { GeneralPermissionManager } from './GeneralPermissionManager';
+import { GeneralTransferManager } from './GeneralTransferManager';
+import { Sto } from './Sto';
+import { ZERO_ADDRESS } from './constants';
+import { PolymathError } from '../PolymathError';
+import { ErrorCodes } from '../types';
 
 interface ModuleData {
   /**
@@ -49,10 +61,8 @@ interface SecurityTokenContract extends GenericContract {
     createCheckpoint(): TransactionObject<void>;
     getCheckpointTimes(): TransactionObject<string[]>;
     totalSupplyAt(checkpointId: number): TransactionObject<string>;
-    balanceOfAt(
-      investorAddress: string,
-      checkpointId: number
-    ): TransactionObject<string>;
+    balanceOf(address: string): TransactionObject<string>;
+    balanceOfAt(investorAddress: string, checkpointId: number): TransactionObject<string>;
     getInvestorsAt(checkpointId: number): TransactionObject<string[]>;
     currentCheckpointId(): TransactionObject<string>;
     addModule(
@@ -61,8 +71,18 @@ interface SecurityTokenContract extends GenericContract {
       maxCost: BigNumber,
       budget: BigNumber
     ): TransactionObject<void>;
+    forceTransfer(
+      from: string,
+      to: string,
+      value: BigNumber,
+      data: string,
+      log: string
+    ): TransactionObject<void>;
+    setController(controller: string): TransactionObject<void>;
     getModulesByName(name: string): TransactionObject<string[]>;
     name(): TransactionObject<string>;
+    owner(): TransactionObject<string>;
+    controller(): TransactionObject<string>;
     getModule(address: string): TransactionObject<ModuleData>;
   };
 }
@@ -72,62 +92,88 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     super({ address, abi: SecurityTokenAbi.abi, context });
   }
 
+  public balanceOf = async ({ address }: { address: string }) => {
+    const balance = await this.contract.methods.balanceOf(address).call();
+    return fromWei(balance);
+  };
+
   public createCheckpoint = async () => {
-    return () =>
-      this.contract.methods
-        .createCheckpoint()
-        .send({ from: this.context.account });
+    const method = this.contract.methods.createCheckpoint();
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
   };
 
   public async currentCheckpointId() {
-    const currentCheckpointId = await this.contract.methods
-      .currentCheckpointId()
-      .call();
+    const currentCheckpointId = await this.contract.methods.currentCheckpointId().call();
 
     return parseInt(currentCheckpointId, 10);
   }
 
-  public addDividendsModule = async ({
-    type,
-    wallet,
-  }: AddDividendsModuleArgs) => {
+  public addDividendsModule = async ({ type, wallet }: AddDividendsModuleArgs) => {
     const factoryMappings = {
       [DividendModuleTypes.Erc20]: 'ERC20DividendCheckpoint',
       [DividendModuleTypes.Eth]: 'EtherDividendCheckpoint',
     };
 
-    const factoryAddress = await this.context.moduleRegistry.getModuleFactoryAddress(
-      {
-        moduleName: factoryMappings[type],
-        moduleType: ModuleTypes.Dividends,
-        tokenAddress: this.address,
-      }
-    );
+    const factoryAddress = await this.context.moduleRegistry.getModuleFactoryAddress({
+      moduleName: factoryMappings[type],
+      moduleType: ModuleTypes.Dividends,
+      tokenAddress: this.address,
+    });
 
     const configFunctionAbi = DividendCheckpointAbi.abi.find(
       prop => prop.name === 'configure' && prop.type === 'function'
     );
 
     if (!configFunctionAbi) {
-      throw new Error(
-        'Corrupt DividendCheckpoint ABI. No "configure" function found.'
-      );
+      throw new Error('Corrupt DividendCheckpoint ABI. No "configure" function found.');
     }
 
-    const configData = web3.eth.abi.encodeFunctionCall(configFunctionAbi, [
-      wallet,
-    ]);
-
-    return () =>
-      this.contract.methods
-        .addModule(
-          factoryAddress,
-          configData,
-          new BigNumber(0),
-          new BigNumber(0)
-        )
-        .send({ from: this.context.account });
+    const configData = web3.eth.abi.encodeFunctionCall(configFunctionAbi, [wallet]);
+    const method = this.contract.methods.addModule(
+      factoryAddress,
+      configData,
+      new BigNumber(0),
+      new BigNumber(0)
+    );
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
   };
+
+  public addGeneralPermissionManager = async () => {
+    const factoryAddress = await this.context.moduleRegistry.getModuleFactoryAddress({
+      moduleName: 'GeneralPermissionManager',
+      moduleType: ModuleTypes.Permission,
+      tokenAddress: this.address,
+    });
+
+    const configData = web3.utils.asciiToHex('');
+    const method = this.contract.methods.addModule(
+      factoryAddress,
+      configData,
+      new BigNumber(0),
+      new BigNumber(0)
+    );
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
+  };
+
+  public forceTransfer = async ({ from, to, value, data, log }: TokenForceTransferArgs) => {
+    data = asciiToHex(data);
+    log = asciiToHex(log);
+    value = toWei(value);
+    const method = this.contract.methods.forceTransfer(from, to, value, data, log);
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
+  };
+
+  public setController = async ({ controller }: TokenSetControllerArgs) => {
+    const method = this.contract.methods.setController(controller);
+    const options = await getOptions(method, { from: this.context.account });
+    return () => method.send(options);
+  };
+
+  // @TODO remon-nashid: add a generic getAttachedModule(moduleName) method. It should still return properly typed module objects.
 
   public getErc20DividendModule = async () => {
     const address = await this.getFirstUnarchivedModuleAddress({
@@ -152,6 +198,76 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
 
     return new EtherDividendCheckpoint({ address, context: this.context });
   }
+
+  public getGeneralPermissionManagerModule = async () => {
+    const address = await this.getFirstUnarchivedModuleAddress({
+      name: 'GeneralPermissionManager',
+    });
+
+    if (!address) {
+      return null;
+    }
+
+    return new GeneralPermissionManager({ address, context: this.context });
+  };
+
+  public getGeneralTransferManagerModule = async () => {
+    const address = await this.getFirstUnarchivedModuleAddress({
+      name: 'GeneralTransferManager',
+    });
+
+    if (!address) {
+      return null;
+    }
+
+    return new GeneralTransferManager({ address, context: this.context });
+  };
+
+  public async getCappedStoModules() {
+    const addresses = await this.getUnarchivedModuleAddresses({
+      name: 'CappedSTO',
+    });
+
+    const { context } = this;
+
+    return addresses.map(address => new CappedSto({ address, context }));
+  }
+
+  public async getUsdTieredStoModules() {
+    const addresses = await this.getUnarchivedModuleAddresses({
+      name: 'USDTieredSTO',
+    });
+    const { context } = this;
+
+    return addresses.map(address => new UsdTieredSto({ address, context }));
+  }
+
+  /**
+   * Given STO module type and address, this function will return a generic, LowLevel Sto object.
+   */
+  public getStoModule = async ({ address }: GetStoModuleArgs): Promise<Sto | null> => {
+    const { context } = this;
+    const { methods } = this.contract;
+    const { 0: moduleNameHex, 1: moduleAddress, 3: isArchived } = await methods
+      .getModule(address)
+      .call();
+
+    if (moduleAddress === ZERO_ADDRESS) {
+      throw new PolymathError({
+        code: ErrorCodes.ProcedureValidationError,
+        message: `module "${address}" is either invalid or hasn't been enabled.`,
+      });
+    }
+    if (isArchived) return null;
+
+    const moduleNameStr = toAscii(moduleNameHex);
+    if (moduleNameStr === StoModuleNames.Capped) {
+      return new CappedSto({ address, context });
+    } else if (moduleNameStr === StoModuleNames.UsdTiered) {
+      return new UsdTieredSto({ address, context });
+    }
+    return null;
+  };
 
   public getCheckpoint = async ({ checkpointId }: GetCheckpointArgs) => {
     const { methods } = this.contract;
@@ -187,14 +303,19 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     return this.contract.methods.name().call();
   }
 
-  private async getFirstUnarchivedModuleAddress({ name }: GetModuleAddressArgs) {
-    const hexName = Web3.utils.asciiToHex(name);
-    const { methods } = this.contract;
-    const moduleAddresses = await methods
-      .getModulesByName(hexName)
-      .call();
+  public async owner() {
+    return this.contract.methods.owner().call();
+  }
 
-    
+  public async controller() {
+    return this.contract.methods.controller().call();
+  }
+
+  private async getFirstUnarchivedModuleAddress({ name }: GetFirstUnarchivedModuleAddressArgs) {
+    const hexName = asciiToHex(name);
+    const { methods } = this.contract;
+    const moduleAddresses = await methods.getModulesByName(hexName).call();
+
     for (const address of moduleAddresses) {
       const { 3: isArchived } = await methods.getModule(address).call();
 
@@ -204,6 +325,24 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     }
 
     return null;
+  }
+
+  private async getUnarchivedModuleAddresses({ name }: GetUnarchivedModuleAddressesArgs) {
+    const hexName = asciiToHex(name);
+    const { methods } = this.contract;
+    const moduleAddresses = await methods.getModulesByName(hexName).call();
+
+    const addresses = [];
+
+    for (const address of moduleAddresses) {
+      const { 3: isArchived } = await methods.getModule(address).call();
+
+      if (!isArchived) {
+        addresses.push(address);
+      }
+    }
+
+    return addresses;
   }
 
   private getCheckpointData = async ({
@@ -247,6 +386,4 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
       address: investorAddress,
     };
   };
-
-
 }

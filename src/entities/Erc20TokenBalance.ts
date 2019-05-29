@@ -1,6 +1,6 @@
-import { Polymath } from '~/Polymath';
+import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
-import { serialize, unserialize } from '~/utils';
+import { serialize, unserialize } from '../utils';
 import BigNumber from 'bignumber.js';
 
 interface UniqueIdentifiers {

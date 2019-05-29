@@ -1,15 +1,12 @@
-import { Polymath } from '~/Polymath';
-import { serialize } from '~/utils';
+import { Polymath } from '../Polymath';
+import { serialize } from '../utils';
 import { DividendsModule, Params, UniqueIdentifiers } from './DividendsModule';
-import { DividendModuleTypes, Omit } from '~/types';
+import { DividendModuleTypes, Omit } from '../types';
 
 export class EthDividendsModule extends DividendsModule {
-  public static generateId({
-    securityTokenSymbol,
-    dividendType,
-  }: UniqueIdentifiers) {
+  public static generateId({ securityTokenId, dividendType }: UniqueIdentifiers) {
     return serialize('ethDividendsModule', {
-      securityTokenSymbol,
+      securityTokenId,
       dividendType,
     });
   }
@@ -38,7 +35,7 @@ export class EthDividendsModule extends DividendsModule {
     );
 
     this.uid = EthDividendsModule.generateId({
-      securityTokenSymbol,
+      securityTokenId,
       dividendType,
     });
   }

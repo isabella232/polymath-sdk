@@ -1,33 +1,36 @@
-import { Polymath } from '~/Polymath';
+import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
-import { unserialize } from '~/utils';
-import { DividendModuleTypes } from '~/types';
+import { unserialize } from '../utils';
+import { DividendModuleTypes, isDividendModuleTypes } from '../types';
 
 export interface UniqueIdentifiers {
-  securityTokenSymbol: string;
+  securityTokenId: string;
   dividendType: DividendModuleTypes;
 }
 
-function isUniqueIdentifiers(
-  identifiers: any
-): identifiers is UniqueIdentifiers {
-  const { securityTokenSymbol } = identifiers;
+function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
+  const { securityTokenId, dividendType } = identifiers;
 
-  return typeof securityTokenSymbol === 'string';
+  return typeof securityTokenId === 'string' && isDividendModuleTypes(dividendType);
 }
 
 export interface Params extends UniqueIdentifiers {
   address: string;
-  securityTokenId: string;
+  securityTokenSymbol: string;
   storageWalletAddress: string;
 }
 
 export abstract class DividendsModule extends Entity {
   public abstract uid: string;
+
   public address: string;
+
   public securityTokenSymbol: string;
+
   public securityTokenId: string;
+
   public storageWalletAddress: string;
+
   public dividendType: DividendModuleTypes;
 
   public static unserialize(serialized: string) {

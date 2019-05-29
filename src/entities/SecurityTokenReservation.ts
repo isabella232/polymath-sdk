@@ -1,14 +1,12 @@
-import { Polymath } from '~/Polymath';
+import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
-import { serialize, unserialize } from '~/utils';
+import { serialize, unserialize } from '../utils';
 
 interface UniqueIdentifiers {
   symbol: string;
 }
 
-function isUniqueIdentifiers(
-  identifiers: any
-): identifiers is UniqueIdentifiers {
+function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { symbol } = identifiers;
 
   return typeof symbol === 'string';
@@ -16,10 +14,6 @@ function isUniqueIdentifiers(
 
 interface Params extends UniqueIdentifiers {
   name: string;
-}
-
-interface ExcludedArgs {
-  symbol: string;
 }
 
 export class SecurityTokenReservation extends Entity {
@@ -40,7 +34,9 @@ export class SecurityTokenReservation extends Entity {
   }
 
   public uid: string;
+
   public symbol: string;
+
   public name: string;
 
   constructor(params: Params, polyClient?: Polymath) {
@@ -60,14 +56,10 @@ export class SecurityTokenReservation extends Entity {
       name: this.name,
     });
 
-  public createSecurityToken = (args: {
-    name: string;
-    detailsUrl?: string;
-    divisible: boolean;
-  }) =>
+  public createSecurityToken = (args: { name: string; detailsUrl?: string; divisible: boolean }) =>
     this.polyClient.createSecurityToken({
       ...args,
-      symbol: this.symbol,
+      securityTokenReservationId: this.uid,
       name: this.name,
     });
 

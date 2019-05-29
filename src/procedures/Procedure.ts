@@ -5,13 +5,13 @@ import {
   MapMaybeResolver,
   MaybeResolver,
   ProcedureTypes,
-  PolyTransactionTags
-} from '~/types';
-import { TransactionQueue } from '~/entities/TransactionQueue';
-import { Context } from '~/Context';
-import { PostTransactionResolver } from '~/PostTransactionResolver';
+  PolyTransactionTags,
+} from '../types';
+import { TransactionQueue } from '../entities/TransactionQueue';
+import { Context } from '../Context';
+import { PostTransactionResolver } from '../PostTransactionResolver';
 import { TransactionReceipt } from 'web3/types';
-import { PolymathError } from '~/PolymathError';
+import { PolymathError } from '../PolymathError';
 
 function isProcedure<T>(value: any): value is ProcedureType<T> {
   return value.prototype instanceof Procedure;
