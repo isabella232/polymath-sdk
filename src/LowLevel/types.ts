@@ -290,7 +290,7 @@ export interface GetAllDelegatesWithPermArgs {
   perm: string;
 }
 
-export interface TokenForceTransferArgs {
+export interface TokenControllerTransferArgs {
   from: string;
   to: string;
   value: BigNumber;

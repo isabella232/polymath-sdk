@@ -1,6 +1,6 @@
 import { TransactionObject } from 'web3/eth/types';
 import BigNumber from 'bignumber.js';
-import { web3 } from './web3Client';
+import { web3 } from '../web3Client';
 import {
   DividendModuleTypes,
   GenericContract,
@@ -11,26 +11,27 @@ import {
   GetFirstUnarchivedModuleAddressArgs,
   GetUnarchivedModuleAddressesArgs,
   GetCheckpointArgs,
-  TokenForceTransferArgs,
+  TokenControllerTransferArgs,
   GetStoModuleArgs,
   StoModuleNames,
   TokenSetControllerArgs,
-} from './types';
-import { Context } from './LowLevel';
-import { fromUnixTimestamp, fromWei, getOptions, toWei, toAscii, asciiToHex } from './utils';
-import { Erc20DividendCheckpoint } from './Erc20DividendCheckpoint';
-import { EtherDividendCheckpoint } from './EtherDividendCheckpoint';
-import { SecurityTokenAbi } from './abis/SecurityTokenAbi';
-import { DividendCheckpointAbi } from './abis/DividendCheckpointAbi';
-import { Contract } from './Contract';
-import { CappedSto } from './CappedSto';
-import { UsdTieredSto } from './UsdTieredSto';
-import { GeneralPermissionManager } from './GeneralPermissionManager';
-import { GeneralTransferManager } from './GeneralTransferManager';
-import { Sto } from './Sto';
-import { ZERO_ADDRESS } from './constants';
-import { PolymathError } from '../PolymathError';
-import { ErrorCodes } from '../types';
+} from '../types';
+
+import SecurityTokenAbi from './3.0.0.abi';
+import { Context } from '../LowLevel';
+import { fromUnixTimestamp, fromWei, getOptions, toWei, toAscii, asciiToHex } from '../utils';
+import { Erc20DividendCheckpoint } from '../Erc20DividendCheckpoint';
+import { EtherDividendCheckpoint } from '../EtherDividendCheckpoint';
+import { DividendCheckpointAbi } from '../abis/DividendCheckpointAbi';
+import { Contract } from '../Contract';
+import { CappedSto } from '../CappedSto';
+import { UsdTieredSto } from '../UsdTieredSto';
+import { GeneralPermissionManager } from '../GeneralPermissionManager';
+import { GeneralTransferManager } from '../GeneralTransferManager';
+import { Sto } from '../Sto';
+import { ZERO_ADDRESS } from '../constants';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCodes } from '../../types';
 
 interface ModuleData {
   /**
@@ -71,7 +72,7 @@ interface SecurityTokenContract extends GenericContract {
       maxCost: BigNumber,
       budget: BigNumber
     ): TransactionObject<void>;
-    forceTransfer(
+    controllerTransfer(
       from: string,
       to: string,
       value: BigNumber,
@@ -84,12 +85,13 @@ interface SecurityTokenContract extends GenericContract {
     owner(): TransactionObject<string>;
     controller(): TransactionObject<string>;
     getModule(address: string): TransactionObject<ModuleData>;
+    getVersion(): TransactionObject<number[]>;
   };
 }
 
-export class SecurityToken extends Contract<SecurityTokenContract> {
+export default class SecurityToken extends Contract<SecurityTokenContract> {
   constructor({ address, context }: { address: string; context: Context }) {
-    super({ address, abi: SecurityTokenAbi.abi, context });
+    super({ address, abi: SecurityTokenAbi, context });
   }
 
   public balanceOf = async ({ address }: { address: string }) => {
@@ -158,11 +160,17 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
     return () => method.send(options);
   };
 
-  public forceTransfer = async ({ from, to, value, data, log }: TokenForceTransferArgs) => {
+  public controllerTransfer = async ({
+    from,
+    to,
+    value,
+    data,
+    log,
+  }: TokenControllerTransferArgs) => {
     data = asciiToHex(data);
     log = asciiToHex(log);
     value = toWei(value);
-    const method = this.contract.methods.forceTransfer(from, to, value, data, log);
+    const method = this.contract.methods.controllerTransfer(from, to, value, data, log);
     const options = await getOptions(method, { from: this.context.account });
     return () => method.send(options);
   };
@@ -310,6 +318,10 @@ export class SecurityToken extends Contract<SecurityTokenContract> {
   public async controller() {
     return this.contract.methods.controller().call();
   }
+
+  public getVersion = async () => {
+    return this.contract.methods.getVersion().call();
+  };
 
   private async getFirstUnarchivedModuleAddress({ name }: GetFirstUnarchivedModuleAddressArgs) {
     const hexName = asciiToHex(name);

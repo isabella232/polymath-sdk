@@ -43,7 +43,7 @@ import {
   SetDividendsWallet,
   ChangeDelegatePermission,
   EnableGeneralPermissionManager,
-  ForceTransfer,
+  ControllerTransfer,
   PauseSto,
   SetController,
 } from './procedures';
@@ -436,7 +436,7 @@ export class Polymath {
     return await procedure.prepare();
   };
 
-  public forceTransfer = async (args: {
+  public controllerTransfer = async (args: {
     securityTokenId: string;
     value: BigNumber;
     from: string;
@@ -447,7 +447,7 @@ export class Polymath {
     const { securityTokenId, value, from, to, reason: reason = '', data: data = '' } = args;
     const { symbol } = this.SecurityToken.unserialize(securityTokenId);
 
-    const procedure = new ForceTransfer(
+    const procedure = new ControllerTransfer(
       { symbol, value, from, to, log: reason, data },
       this.context
     );

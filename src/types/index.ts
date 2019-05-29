@@ -116,7 +116,7 @@ export enum ProcedureTypes {
   SetDividendsWallet = 'SetDividendsWallet',
   PushDividendPayment = 'PushDividendPayment',
   ChangeDelegatePermission = 'ChangeDelegatePermission',
-  ForceTransfer = 'ForceTransfer',
+  ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
 }
@@ -139,7 +139,7 @@ export enum PolyTransactionTags {
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
   ChangeDelegatePermission = 'ChangeDelegatePermission',
-  ForceTransfer = 'ForceTransfer',
+  ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
 }
@@ -265,7 +265,7 @@ export interface ChangeDelegatePermissionArgs {
   details?: string;
 }
 
-export interface ForceTransferArgs {
+export interface ControllerTransferArgs {
   from: string;
   to: string;
   symbol: string;
