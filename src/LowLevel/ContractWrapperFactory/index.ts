@@ -1,3 +1,1 @@
-import ContractWrapperFactory from './ContractWrapperFactory';
-
-export default ContractWrapperFactory;
+export { ContractWrapperFactory } from './ContractWrapperFactory';

@@ -1,4 +1,4 @@
-export default [
+export const SecurityTokenAbi = [
   {
     constant: true,
     inputs: [],

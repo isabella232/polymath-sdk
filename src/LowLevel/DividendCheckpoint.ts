@@ -20,7 +20,7 @@ import {
   DividendModuleTypes,
 } from './types';
 import { fromUnixTimestamp, fromWei, toWei, fromDivisible, toAscii, getOptions } from './utils';
-import ContractWrapperFactory from './ContractWrapperFactory';
+import { ContractWrapperFactory } from './ContractWrapperFactory';
 
 interface InternalDividend {
   checkpointId: string;

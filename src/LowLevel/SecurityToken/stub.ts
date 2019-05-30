@@ -3,13 +3,13 @@ import { GenericContract } from '../types';
 import { Context } from '../LowLevel';
 import { Contract } from '../Contract';
 
-interface SecurityTokenContract extends GenericContract {
+interface StubContract extends GenericContract {
   methods: {
     getVersion(): TransactionObject<number[]>;
   };
 }
 
-export default class SecurityToken extends Contract<SecurityTokenContract> {
+export class Stub extends Contract<StubContract> {
   constructor({ address, abi, context }: { address: string; abi: any; context: Context }) {
     super({ address, abi, context });
   }

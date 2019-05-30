@@ -15,7 +15,7 @@ import { fromWei, getOptions } from './utils';
 import { PolymathError } from '../PolymathError';
 import { ErrorCodes } from '../types';
 import { ZERO_ADDRESS } from './constants';
-import ContractWrapperFactory from './ContractWrapperFactory';
+import { ContractWrapperFactory } from './ContractWrapperFactory';
 
 interface SecurityTokenRegistryContract extends GenericContract {
   methods: {

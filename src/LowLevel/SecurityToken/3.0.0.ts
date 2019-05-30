@@ -17,7 +17,7 @@ import {
   TokenSetControllerArgs,
 } from '../types';
 
-import SecurityTokenAbi from './3.0.0.abi';
+import { SecurityTokenAbi } from './3.0.0.abi';
 import { Context } from '../LowLevel';
 import { fromUnixTimestamp, fromWei, getOptions, toWei, toAscii, asciiToHex } from '../utils';
 import { Erc20DividendCheckpoint } from '../Erc20DividendCheckpoint';
@@ -89,7 +89,7 @@ interface SecurityTokenContract extends GenericContract {
   };
 }
 
-export default class SecurityToken extends Contract<SecurityTokenContract> {
+export class SecurityToken extends Contract<SecurityTokenContract> {
   constructor({ address, context }: { address: string; context: Context }) {
     super({ address, abi: SecurityTokenAbi, context });
   }
