@@ -1,10 +1,10 @@
 import { Procedure } from './Procedure';
-import { ProcedureTypes, PolyTransactionTags, ForceTransferArgs, ErrorCodes } from '../types';
+import { ProcedureTypes, PolyTransactionTags, ControllerTransferArgs, ErrorCodes } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 
-export class ForceTransfer extends Procedure<ForceTransferArgs> {
-  public type = ProcedureTypes.ForceTransfer;
+export class ControllerTransfer extends Procedure<ControllerTransferArgs> {
+  public type = ProcedureTypes.ControllerTransfer;
 
   public async prepareTransactions() {
     const { symbol, value, from, to, log: log = '', data: data = '' } = this.args;
@@ -67,8 +67,8 @@ export class ForceTransfer extends Procedure<ForceTransferArgs> {
      * Transactions
      */
 
-    await this.addTransaction(securityToken.forceTransfer, {
-      tag: PolyTransactionTags.ForceTransfer,
+    await this.addTransaction(securityToken.controllerTransfer, {
+      tag: PolyTransactionTags.ControllerTransfer,
     })({ from, to, value, data, log });
   }
 }

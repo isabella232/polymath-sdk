@@ -1,7 +1,6 @@
 import { TransactionObject } from 'web3/eth/types';
 import { SecurityTokenRegistryAbi } from './abis/SecurityTokenRegistryAbi';
 import { Contract } from './Contract';
-import { SecurityToken } from './SecurityToken';
 import { Context } from './LowLevel';
 import {
   GenericContract,
@@ -16,6 +15,7 @@ import { fromWei, getOptions } from './utils';
 import { PolymathError } from '../PolymathError';
 import { ErrorCodes } from '../types';
 import { ZERO_ADDRESS } from './constants';
+import { ContractWrapperFactory } from './ContractWrapperFactory';
 
 interface SecurityTokenRegistryContract extends GenericContract {
   methods: {
@@ -128,6 +128,6 @@ export class SecurityTokenRegistry extends Contract<SecurityTokenRegistryContrac
       return null;
     }
 
-    return new SecurityToken({ address, context: this.context });
+    return await ContractWrapperFactory.getSecurityToken(address, this.context);
   }
 }
