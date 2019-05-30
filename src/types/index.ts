@@ -13,7 +13,7 @@ import {
   ApproveArgs,
   AddDividendsModuleArgs,
   RegisterTickerArgs,
-  GenerateSecurityTokenArgs,
+  GenerateNewSecurityTokenArgs,
   PushDividendPaymentArgs,
   DividendInvestorStatus,
   SetDividendsWalletArgs,
@@ -160,7 +160,7 @@ export interface TransactionArguments {
   [PolyTransactionTags.Approve]: Partial<ApproveArgs>;
   [PolyTransactionTags.EnableDividends]: Partial<AddDividendsModuleArgs>;
   [PolyTransactionTags.ReserveSecurityToken]: Partial<RegisterTickerArgs>;
-  [PolyTransactionTags.CreateSecurityToken]: Partial<GenerateSecurityTokenArgs>;
+  [PolyTransactionTags.CreateSecurityToken]: Partial<GenerateNewSecurityTokenArgs>;
   [PolyTransactionTags.PushDividendPayment]: Partial<PushDividendPaymentArgs>;
   [PolyTransactionTags.SetDividendsWallet]: Partial<SetDividendsWalletArgs>;
   [PolyTransactionTags.CreateCheckpoint]: {};

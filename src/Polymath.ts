@@ -1065,6 +1065,10 @@ export class Polymath {
     });
   };
 
+  public getLatestProtocolVersion = async () => {
+    return await this.context.securityTokenRegistry.getLatestProtocolVersion();
+  };
+
   get SecurityToken() {
     return this.entities.SecurityToken;
   }
