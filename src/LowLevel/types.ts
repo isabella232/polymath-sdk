@@ -248,7 +248,7 @@ export interface RegisterTickerArgs {
   tokenName: string;
 }
 
-export interface GenerateSecurityTokenArgs {
+export interface GenerateNewSecurityTokenArgs {
   tokenName: string;
   ticker: string;
   tokenDetails: string;

@@ -1,8 +1,9 @@
 import { Context } from '../LowLevel';
 import { SecurityToken } from '../SecurityToken';
+import { SecurityTokenRegistry } from '../SecurityTokenRegistry';
 
 export class ContractWrapperFactory {
-  static packVersion(versions: number[]) {
+  static concatVersion(versions: number[]) {
     return versions.join('.');
   }
 
@@ -16,10 +17,10 @@ export class ContractWrapperFactory {
     const stubLowLevelContract = new stubClass({ address, abi: stubAbi, context });
 
     const versionArray = await stubLowLevelContract.getVersion();
-    const packedVersion = ContractWrapperFactory.packVersion(versionArray);
+    const version = ContractWrapperFactory.concatVersion(versionArray);
 
     // Now that we know deployed contract version, we'll wrap it with a version specific contract wrapper.
-    const ContractWrapper = (await import(`../${contractName}/${packedVersion}`))[contractName];
+    const ContractWrapper = (await import(`../${contractName}/${version}`))[contractName];
     const wrappedContract = new ContractWrapper({ address, context });
     return wrappedContract;
   };
@@ -30,5 +31,13 @@ export class ContractWrapperFactory {
       address,
       context
     )) as SecurityToken;
+  };
+
+  static getSecurityTokenRegistry = async (address: string, context: Context) => {
+    return (await ContractWrapperFactory.wrapContract(
+      'SecurityTokenRegistry',
+      address,
+      context
+    )) as SecurityTokenRegistry;
   };
 }

@@ -1,21 +1,21 @@
 import { TransactionObject } from 'web3/eth/types';
-import { SecurityTokenRegistryAbi } from './abis/SecurityTokenRegistryAbi';
-import { Contract } from './Contract';
-import { Context } from './LowLevel';
+import { SecurityTokenRegistryAbi } from './2.0.0.abi';
+import { Contract } from '../Contract';
+import { Context } from '../LowLevel';
 import {
   GenericContract,
   RegisterTickerArgs,
-  GenerateSecurityTokenArgs,
+  GenerateNewSecurityTokenArgs,
   GetSecurityTokenArgs,
   GetTickerDetailsArgs,
   IsTickerAvailableArgs,
-} from './types';
-import { fromWei, getOptions } from './utils';
+} from '../types';
+import { fromWei, getOptions } from '../utils';
 
-import { PolymathError } from '../PolymathError';
-import { ErrorCodes } from '../types';
-import { ZERO_ADDRESS } from './constants';
-import { ContractWrapperFactory } from './ContractWrapperFactory';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCodes } from '../../types';
+import { ZERO_ADDRESS } from '../constants';
+import { ContractWrapperFactory } from '../ContractWrapperFactory';
 
 interface SecurityTokenRegistryContract extends GenericContract {
   methods: {
@@ -24,6 +24,7 @@ interface SecurityTokenRegistryContract extends GenericContract {
     getTickerRegistrationFee(): TransactionObject<string>;
     getSecurityTokenLaunchFee(): TransactionObject<string>;
     getSecurityTokenAddress(ticker: string): TransactionObject<string>;
+    getProtocolVersion(): TransactionObject<number[]>;
     generateSecurityToken(
       name: string,
       ticker: string,
@@ -58,7 +59,7 @@ export interface TickerDetails {
 
 export class SecurityTokenRegistry extends Contract<SecurityTokenRegistryContract> {
   constructor({ address, context }: { address: string; context: Context }) {
-    super({ address, abi: SecurityTokenRegistryAbi.abi, context });
+    super({ address, abi: SecurityTokenRegistryAbi, context });
   }
 
   public registerTicker = async ({ owner, ticker, tokenName }: RegisterTickerArgs) => {
@@ -95,12 +96,12 @@ export class SecurityTokenRegistry extends Contract<SecurityTokenRegistryContrac
     }
   };
 
-  public generateSecurityToken = async ({
+  public generateNewSecurityToken = async ({
     tokenName,
     ticker,
     tokenDetails,
     divisible,
-  }: GenerateSecurityTokenArgs) => {
+  }: GenerateNewSecurityTokenArgs) => {
     const method = this.contract.methods.generateSecurityToken(
       tokenName,
       ticker,
@@ -119,6 +120,10 @@ export class SecurityTokenRegistry extends Contract<SecurityTokenRegistryContrac
   public async getSecurityTokenLaunchFee() {
     const feeRes = await this.contract.methods.getSecurityTokenLaunchFee().call();
     return fromWei(feeRes);
+  }
+
+  public async getLatestProtocolVersion() {
+    return await this.contract.methods.getProtocolVersion().call();
   }
 
   public async getSecurityToken({ ticker }: GetSecurityTokenArgs) {

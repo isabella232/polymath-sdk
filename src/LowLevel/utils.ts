@@ -78,6 +78,13 @@ export function asciiToHex(value: string) {
   return utils.asciiToHex(value);
 }
 
+export const version = {
+  pack: (major: number, minor: number, patch: number) => {
+    const packedVersion = (major << 16) | (minor << 8) | patch;
+    return packedVersion;
+  },
+};
+
 /**
  * Given web3 method and options object, this function will modify options with the following:
  * - An incremented nonce
