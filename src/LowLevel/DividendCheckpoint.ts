@@ -16,9 +16,11 @@ import {
   GetDividendsByCheckpointArgs,
   GetDividendArgs,
   SetDividendsWalletArgs,
- TaxWithholding, DividendModuleTypes } from './types';
+  TaxWithholding,
+  DividendModuleTypes,
+} from './types';
 import { fromUnixTimestamp, fromWei, toWei, fromDivisible, toAscii, getOptions } from './utils';
-
+import { ContractWrapperFactory } from './ContractWrapperFactory';
 
 interface InternalDividend {
   checkpointId: string;
@@ -144,10 +146,7 @@ export abstract class DividendCheckpoint<
 
   public async getDividends() {
     const stAddress = await this.securityTokenAddress();
-    const securityToken = new SecurityToken({
-      address: stAddress,
-      context: this.context,
-    });
+    const securityToken = await ContractWrapperFactory.getSecurityToken(stAddress, this.context);
 
     const currentCheckpointIndex = await securityToken.currentCheckpointId();
     const checkpointIndexes = range(1, currentCheckpointIndex + 1);

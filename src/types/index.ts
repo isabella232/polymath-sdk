@@ -13,7 +13,7 @@ import {
   ApproveArgs,
   AddDividendsModuleArgs,
   RegisterTickerArgs,
-  GenerateSecurityTokenArgs,
+  GenerateNewSecurityTokenArgs,
   PushDividendPaymentArgs,
   DividendInvestorStatus,
   SetDividendsWalletArgs,
@@ -116,7 +116,7 @@ export enum ProcedureTypes {
   SetDividendsWallet = 'SetDividendsWallet',
   PushDividendPayment = 'PushDividendPayment',
   ChangeDelegatePermission = 'ChangeDelegatePermission',
-  ForceTransfer = 'ForceTransfer',
+  ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
 }
@@ -139,7 +139,7 @@ export enum PolyTransactionTags {
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
   ChangeDelegatePermission = 'ChangeDelegatePermission',
-  ForceTransfer = 'ForceTransfer',
+  ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
 }
@@ -160,7 +160,7 @@ export interface TransactionArguments {
   [PolyTransactionTags.Approve]: Partial<ApproveArgs>;
   [PolyTransactionTags.EnableDividends]: Partial<AddDividendsModuleArgs>;
   [PolyTransactionTags.ReserveSecurityToken]: Partial<RegisterTickerArgs>;
-  [PolyTransactionTags.CreateSecurityToken]: Partial<GenerateSecurityTokenArgs>;
+  [PolyTransactionTags.CreateSecurityToken]: Partial<GenerateNewSecurityTokenArgs>;
   [PolyTransactionTags.PushDividendPayment]: Partial<PushDividendPaymentArgs>;
   [PolyTransactionTags.SetDividendsWallet]: Partial<SetDividendsWalletArgs>;
   [PolyTransactionTags.CreateCheckpoint]: {};
@@ -265,7 +265,7 @@ export interface ChangeDelegatePermissionArgs {
   details?: string;
 }
 
-export interface ForceTransferArgs {
+export interface ControllerTransferArgs {
   from: string;
   to: string;
   symbol: string;
