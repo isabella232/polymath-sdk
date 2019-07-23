@@ -1,40 +1,51 @@
+import {
+  ERC20DividendCheckpoint,
+  EtherDividendCheckpoint,
+  ModuleName,
+} from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
-import { DividendModuleTypes } from '../LowLevel/types';
-import { DividendCheckpoint } from '../LowLevel/DividendCheckpoint';
 import {
   ReclaimFundsProcedureArgs,
-  ProcedureTypes,
-  PolyTransactionTags,
-  ErrorCodes,
+  ProcedureType,
+  PolyTransactionTag,
+  ErrorCode,
+  DividendModuleType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
 export class ReclaimFunds extends Procedure<ReclaimFundsProcedureArgs> {
-  public type = ProcedureTypes.ReclaimFunds;
+  public type = ProcedureType.ReclaimFunds;
 
   public async prepareTransactions() {
     const { symbol, dividendIndex, dividendType } = this.args;
-    const { securityTokenRegistry } = this.context;
+    const { contractWrappers } = this.context;
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
-
-    if (!securityToken) {
+    try {
+      await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
-    let dividendModule: DividendCheckpoint | null = null;
+    let dividendModule: ERC20DividendCheckpoint | EtherDividendCheckpoint | null = null;
 
     switch (dividendType) {
-      case DividendModuleTypes.Erc20:
-        dividendModule = await securityToken.getErc20DividendModule();
+      case DividendModuleType.Erc20: {
+        dividendModule = (await contractWrappers.getAttachedModules(
+          { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
+          { unarchived: true }
+        ))[0];
         break;
-      case DividendModuleTypes.Eth:
-        dividendModule = await securityToken.getEtherDividendModule();
+      }
+      case DividendModuleType.Eth: {
+        dividendModule = (await contractWrappers.getAttachedModules(
+          { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
+          { unarchived: true }
+        ))[0];
+        break;
+      }
     }
 
     if (!dividendModule) {
@@ -42,7 +53,7 @@ export class ReclaimFunds extends Procedure<ReclaimFundsProcedureArgs> {
     }
 
     await this.addTransaction(dividendModule.reclaimDividend, {
-      tag: PolyTransactionTags.ReclaimDividendFunds,
+      tag: PolyTransactionTag.ReclaimDividendFunds,
     })({ dividendIndex });
   }
 }

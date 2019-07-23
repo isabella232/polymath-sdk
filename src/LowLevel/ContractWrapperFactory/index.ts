@@ -1,1 +1,0 @@
-export { ContractWrapperFactory } from './ContractWrapperFactory';

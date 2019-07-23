@@ -1,12 +1,12 @@
 import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
-import { DividendModuleTypes, isDividendModuleTypes } from '../types';
+import { DividendModuleType, isDividendModuleType } from '../types';
 
 interface UniqueIdentifiers {
   securityTokenId: string;
   checkpointId: string;
-  dividendType: DividendModuleTypes;
+  dividendType: DividendModuleType;
   investorAddress: string;
 }
 
@@ -15,7 +15,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 
   return (
     typeof securityTokenId === 'string' &&
-    isDividendModuleTypes(dividendType) &&
+    isDividendModuleType(dividendType) &&
     typeof investorAddress === 'string' &&
     typeof checkpointIndex === 'number'
   );
@@ -58,7 +58,7 @@ export class TaxWithholding extends Entity {
 
   public securityTokenId: string;
 
-  public dividendType: DividendModuleTypes;
+  public dividendType: DividendModuleType;
 
   public investorAddress: string;
 

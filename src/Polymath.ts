@@ -1,20 +1,25 @@
-import { HttpProvider } from 'web3/providers';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@0x/utils';
 import { includes, zipWith } from 'lodash';
-import { PolyToken } from './LowLevel/PolyToken';
-import { LowLevel } from './LowLevel';
-import { PolymathRegistry } from './LowLevel/PolymathRegistry';
-import { SecurityTokenRegistry } from './LowLevel/SecurityTokenRegistry';
-import { SecurityToken } from './LowLevel/SecurityToken';
-import { Context } from './Context';
-import { ModuleRegistry } from './LowLevel/ModuleRegistry';
-import { TaxWithholdingEntry, PolymathNetworkParams, ErrorCodes, ModuleOperations } from './types';
+import { ModuleName, conversionUtils } from '@polymathnetwork/contract-wrappers';
 import {
-  Dividend as LowLevelDividend,
-  Checkpoint as LowLevelCheckpoint,
-  DividendModuleTypes,
-  StoModuleTypes,
-} from './LowLevel/types';
+  Web3ProviderEngine,
+  PrivateKeyWalletSubprovider,
+  RedundantSubprovider,
+  RPCSubprovider,
+} from '@0x/subproviders';
+import { Provider, BlockParamLiteral } from 'ethereum-types';
+import { CappedSTOEvents, USDTieredSTOEvents } from '@polymathnetwork/abi-wrappers';
+import { Context } from './Context';
+import { getInjectedProvider } from './browserUtils';
+import {
+  TaxWithholdingEntry,
+  PolymathNetworkParams,
+  ErrorCode,
+  ModuleOperation,
+  DividendModuleType,
+  FundraiseType,
+  StoModuleType,
+} from './types';
 import {
   Dividend as DividendEntity,
   Checkpoint as CheckpointEntity,
@@ -50,6 +55,10 @@ import {
 import { Entity } from './entities/Entity';
 import { DividendsModule } from './entities/DividendsModule';
 import { PolymathError } from './PolymathError';
+import { PolymathBase, BaseCheckpoint, BaseDividend } from './PolymathBase';
+
+const { weiToValue } = conversionUtils;
+const fullDecimals = new BigNumber(18);
 
 // TODO @RafaelVidaurre: Type this correctly. It should return a contextualized
 // version of T
@@ -82,10 +91,6 @@ interface ContextualizedEntities {
 }
 
 export class Polymath {
-  public httpProvider: HttpProvider = (null as any) as HttpProvider;
-
-  public httpProviderUrl: string = '';
-
   public networkId: number = -1;
 
   public isUnsupported: boolean = false;
@@ -94,7 +99,7 @@ export class Polymath {
 
   public polymathRegistryAddress: string = '';
 
-  private lowLevel: LowLevel = {} as LowLevel;
+  private contractWrappers: PolymathBase = {} as PolymathBase;
 
   private context: Context = {} as Context;
 
@@ -123,41 +128,36 @@ export class Polymath {
 
   public connect = async ({
     polymathRegistryAddress,
-    httpProvider,
-    httpProviderUrl,
+    providerUrl,
     privateKey,
   }: PolymathNetworkParams) => {
-    let lowLevel: LowLevel;
+    let contractWrappers: PolymathBase;
+    let provider: Provider;
+    const providerEngine = new Web3ProviderEngine();
+    const injectedProvider = await getInjectedProvider();
 
-    if (httpProvider) {
-      this.httpProvider = httpProvider;
-      lowLevel = new LowLevel({ provider: this.httpProvider, privateKey });
-    } else if (httpProviderUrl) {
-      this.httpProviderUrl = httpProviderUrl;
-      lowLevel = new LowLevel({ provider: this.httpProviderUrl, privateKey });
+    if (providerUrl && privateKey) {
+      providerEngine.addProvider(new PrivateKeyWalletSubprovider(privateKey));
+      providerEngine.addProvider(new RedundantSubprovider([new RPCSubprovider(providerUrl)]));
+      provider = providerEngine;
+    } else if (injectedProvider) {
+      provider = injectedProvider;
     } else {
-      lowLevel = new LowLevel({ privateKey });
+      throw new PolymathError({
+        code: ErrorCode.FatalError,
+        message:
+          "You must supply a provider URL and private key to the connect method if you're not using Polymath SDK in a browser environment",
+      });
     }
 
-    this.lowLevel = lowLevel;
-    this.polymathRegistryAddress = polymathRegistryAddress;
+    contractWrappers = new PolymathBase({ provider, polymathRegistryAddress });
 
-    this.networkId = await lowLevel.getNetworkId();
-    const account = await lowLevel.getAccount();
+    this.contractWrappers = contractWrappers;
 
-    if (!polymathRegistryAddress) {
-      throw new Error(`Polymath registry address for network id "${this.networkId}" was not found`);
-    }
-
-    await lowLevel.initialize({ polymathRegistryAddress });
+    const account = await contractWrappers.getAccount();
 
     this.context = new Context({
-      polyToken: lowLevel.polyToken as PolyToken,
-      polymathRegistry: lowLevel.polymathRegistry as PolymathRegistry,
-      securityTokenRegistry: lowLevel.securityTokenRegistry as SecurityTokenRegistry,
-      moduleRegistry: lowLevel.moduleRegistry as ModuleRegistry,
-      isTestnet: lowLevel.isTestnet(),
-      getErc20Token: lowLevel.getErc20Token,
+      contractWrappers,
       accountAddress: account,
     });
 
@@ -202,7 +202,7 @@ export class Polymath {
   public enableDividendModules = async (args: {
     securityTokenId: string;
     storageWalletAddress: string;
-    types?: DividendModuleTypes[];
+    types?: DividendModuleType[];
   }) => {
     const { securityTokenId, ...rest } = args;
     const { symbol } = this.SecurityToken.unserialize(securityTokenId);
@@ -261,7 +261,7 @@ export class Polymath {
     excludedAddresses?: string[];
     taxWithholdings?: TaxWithholdingEntry[];
   }) => {
-    const polyAddress = this.context.polyToken.address;
+    const polyAddress = await this.context.contractWrappers.polyToken.address();
     const { securityTokenId, checkpointId, ...rest } = args;
     const { symbol } = this.SecurityToken.unserialize(securityTokenId);
     const { index: checkpointIndex } = this.Checkpoint.unserialize(checkpointId);
@@ -339,7 +339,7 @@ export class Polymath {
    */
   public updateDividendsTaxWithholdingList = async (args: {
     securityTokenId: string;
-    dividendType: DividendModuleTypes;
+    dividendType: DividendModuleType;
     investorAddresses: string[];
     percentages: number[];
   }) => {
@@ -360,7 +360,7 @@ export class Polymath {
    */
   public pushDividendPayment = async (args: {
     securityTokenId: string;
-    dividendType: DividendModuleTypes;
+    dividendType: DividendModuleType;
     dividendIndex: number;
   }) => {
     const { securityTokenId, ...rest } = args;
@@ -380,7 +380,7 @@ export class Polymath {
    */
   public setDividendsWallet = async (args: {
     securityTokenId: string;
-    dividendType: DividendModuleTypes;
+    dividendType: DividendModuleType;
     address: string;
   }) => {
     const { securityTokenId, ...rest } = args;
@@ -400,7 +400,7 @@ export class Polymath {
    */
   public withdrawTaxes = async (args: {
     securityTokenId: string;
-    dividendType: DividendModuleTypes;
+    dividendType: DividendModuleType;
     dividendIndex: number;
   }) => {
     const { securityTokenId, ...rest } = args;
@@ -421,7 +421,7 @@ export class Polymath {
   public changeDelegatePermission = async (args: {
     securityTokenId: string;
     delegate: string;
-    op: ModuleOperations;
+    op: ModuleOperation;
     isGranted: boolean;
     details?: string;
   }) => {
@@ -465,10 +465,9 @@ export class Polymath {
 
   public pauseSto = async (args: { stoModuleId: string }) => {
     const { stoModuleId } = args;
-    const { securityTokenId, address } = this.StoModule.unserialize(stoModuleId);
-    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
+    const { address } = this.StoModule.unserialize(stoModuleId);
 
-    const procedure = new PauseSto({ symbol, stoModuleAddress: address }, this.context);
+    const procedure = new PauseSto({ stoModuleAddress: address }, this.context);
 
     return await procedure.prepare();
   };
@@ -483,8 +482,6 @@ export class Polymath {
         }
       | string
   ) => {
-    const { securityTokenRegistry } = this.context;
-
     let symbol: string;
 
     // fetch by UUID
@@ -494,20 +491,22 @@ export class Polymath {
       ({ symbol } = args);
     }
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
+    let securityToken;
 
-    if (!securityToken) {
+    try {
+      securityToken = await this.contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.FetcherValidationError,
+        code: ErrorCode.FetcherValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
     const name = await securityToken.name();
     const owner = await securityToken.owner();
-    const { address } = securityToken;
+    const address = await securityToken.address();
 
     return new this.SecurityToken({
       name,
@@ -526,15 +525,17 @@ export class Polymath {
       | {
           securityTokenId: string;
           checkpointId: string;
-          dividendType: DividendModuleTypes;
+          dividendType: DividendModuleType;
         }
       | string
   ) => {
-    const { securityTokenRegistry } = this.context;
+    const {
+      contractWrappers: { tokenFactory, getAttachedModules },
+    } = this;
 
     let securityTokenId: string;
     let checkpointId: string;
-    let dividendType: DividendModuleTypes;
+    let dividendType: DividendModuleType;
 
     // fetch by UUID
     if (typeof args === 'string') {
@@ -545,39 +546,43 @@ export class Polymath {
 
     const { symbol } = this.SecurityToken.unserialize(securityTokenId);
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
-
-    if (!securityToken) {
+    try {
+      await tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.FetcherValidationError,
+        code: ErrorCode.FetcherValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
     let dividendsModule;
-    if (dividendType === DividendModuleTypes.Erc20) {
-      dividendsModule = await securityToken.getErc20DividendModule();
-    } else if (dividendType === DividendModuleTypes.Eth) {
-      dividendsModule = await securityToken.getEtherDividendModule();
+    if (dividendType === DividendModuleType.Erc20) {
+      dividendsModule = (await getAttachedModules(
+        { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
+        { unarchived: true }
+      ))[0];
+    } else if (dividendType === DividendModuleType.Eth) {
+      dividendsModule = (await getAttachedModules(
+        { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
+        { unarchived: true }
+      ))[0];
     }
 
     if (!dividendsModule) {
-      throw new Error('There is no attached dividend module of the specified type');
+      throw new Error('There is no attached dividends module of the specified type');
     }
 
     const { index: checkpointIndex } = this.Checkpoint.unserialize(checkpointId);
 
-    const taxWithholdings = await dividendsModule.getTaxWithholdingList({
-      checkpointIndex,
+    const checkpointData = await dividendsModule.getCheckpointData({
+      checkpointId: checkpointIndex,
     });
 
-    return taxWithholdings.map(
-      ({ address: investorAddress, percentage }) =>
+    return checkpointData.map(
+      ({ investor, withheld }) =>
         new this.TaxWithholding({
-          investorAddress,
-          percentage,
+          investorAddress: investor,
+          percentage: withheld.toNumber(),
           securityTokenSymbol: symbol,
           checkpointId,
           securityTokenId,
@@ -596,36 +601,38 @@ export class Polymath {
     args: {
       securityTokenId: string;
     },
-    opts?: { dividendTypes?: DividendModuleTypes[] }
+    opts?: { dividendTypes?: DividendModuleType[] }
   ): Promise<CheckpointEntity[]> => {
-    const { securityTokenRegistry } = this.context;
+    const { contractWrappers } = this;
     const { securityTokenId } = args;
 
     const { symbol } = this.SecurityToken.unserialize(securityTokenId);
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
+    let securityToken;
 
-    if (!securityToken) {
+    try {
+      securityToken = await this.contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.FetcherValidationError,
+        code: ErrorCode.FetcherValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
-    let dividendTypes: DividendModuleTypes[] | undefined;
+    let dividendTypes: DividendModuleType[] | undefined;
 
     if (opts) {
       ({ dividendTypes } = opts);
     }
 
     const allDividends = await this.getAllDividends({
-      securityToken,
+      securityTokenSymbol: symbol,
       dividendTypes,
     });
 
-    const checkpoints: LowLevelCheckpoint[] = await securityToken.getCheckpoints();
+    const checkpoints: BaseCheckpoint[] = await contractWrappers.getCheckpoints({ securityToken });
 
     return checkpoints.map(checkpoint => {
       const checkpointDividends = allDividends.filter(
@@ -651,10 +658,8 @@ export class Polymath {
           checkpointIndex: number;
         }
       | string,
-    opts?: { dividendTypes?: DividendModuleTypes[] }
+    opts?: { dividendTypes?: DividendModuleType[] }
   ) => {
-    const { securityTokenRegistry } = this.context;
-
     let securityTokenId: string;
     let checkpointIndex: number;
 
@@ -665,7 +670,7 @@ export class Polymath {
       ({ securityTokenId, checkpointIndex } = args);
     }
 
-    let dividendTypes: DividendModuleTypes[] | undefined;
+    let dividendTypes: DividendModuleType[] | undefined;
 
     if (opts) {
       ({ dividendTypes } = opts);
@@ -673,25 +678,28 @@ export class Polymath {
 
     const { symbol: securityTokenSymbol } = this.SecurityToken.unserialize(securityTokenId);
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: securityTokenSymbol,
-    });
+    let securityToken;
 
-    if (!securityToken) {
+    try {
+      securityToken = await this.contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        securityTokenSymbol
+      );
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.FetcherValidationError,
+        code: ErrorCode.FetcherValidationError,
         message: `There is no Security Token with symbol ${securityTokenSymbol}`,
       });
     }
 
     const checkpointDividends = await this.getAllDividends({
-      securityToken,
+      securityTokenSymbol,
       checkpointIndex,
       dividendTypes,
     });
 
-    const checkpoint: LowLevelCheckpoint = await securityToken.getCheckpoint({
+    const checkpoint = await this.contractWrappers.getCheckpoint({
       checkpointId: checkpointIndex,
+      securityToken,
     });
 
     return this.assembleCheckpoint({
@@ -710,34 +718,31 @@ export class Polymath {
       securityTokenId: string;
       checkpointId: string;
     },
-    opts?: { dividendTypes?: DividendModuleTypes[] }
+    opts?: { dividendTypes?: DividendModuleType[] }
   ) => {
-    const { securityTokenRegistry } = this.context;
     const { securityTokenId, checkpointId } = args;
 
     const { symbol } = this.SecurityToken.unserialize(securityTokenId);
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
-
-    if (!securityToken) {
+    try {
+      await this.contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.FetcherValidationError,
+        code: ErrorCode.FetcherValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
     const { index: checkpointIndex } = this.Checkpoint.unserialize(checkpointId);
 
-    let dividendTypes: DividendModuleTypes[] | undefined;
+    let dividendTypes: DividendModuleType[] | undefined;
 
     if (opts) {
       ({ dividendTypes } = opts);
     }
 
     const checkpointDividends = await this.getAllDividends({
-      securityToken,
+      securityTokenSymbol: symbol,
       checkpointIndex,
       dividendTypes,
     });
@@ -762,13 +767,13 @@ export class Polymath {
     args:
       | {
           securityTokenId: string;
-          dividendType: DividendModuleTypes;
+          dividendType: DividendModuleType;
           dividendIndex: number;
         }
       | string
   ) => {
     let securityTokenId: string;
-    let dividendType: DividendModuleTypes;
+    let dividendType: DividendModuleType;
     let dividendIndex: number;
 
     // fetch by UUID
@@ -808,24 +813,24 @@ export class Polymath {
       securityTokenId: string;
     },
     opts: {
-      stoModuleTypes: StoModuleTypes[];
+      stoModuleTypes: StoModuleType[];
     } = {
-      stoModuleTypes: [StoModuleTypes.Capped, StoModuleTypes.UsdTiered],
+      stoModuleTypes: [StoModuleType.Capped, StoModuleType.UsdTiered],
     }
   ) => {
-    const { securityTokenRegistry } = this.context;
+    const { contractWrappers } = this;
 
     const { securityTokenId } = args;
 
     const { symbol: securityTokenSymbol } = this.SecurityToken.unserialize(securityTokenId);
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: securityTokenSymbol,
-    });
-
-    if (!securityToken) {
+    try {
+      await this.contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        securityTokenSymbol
+      );
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.FetcherValidationError,
+        code: ErrorCode.FetcherValidationError,
         message: `There is no Security Token with symbol ${securityTokenSymbol}`,
       });
     }
@@ -841,13 +846,37 @@ export class Polymath {
 
     for (const stoType of stoModuleTypes) {
       let fetchedModules;
-      if (stoType === StoModuleTypes.Capped) {
-        fetchedModules = await securityToken.getCappedStoModules();
+      if (stoType === StoModuleType.Capped) {
+        fetchedModules = await contractWrappers.getAttachedModules(
+          { symbol: securityTokenSymbol, moduleName: ModuleName.CappedSTO },
+          { unarchived: true }
+        );
 
         for (const module of fetchedModules) {
-          const details = await module.getDetails();
-          const investments = await module.getInvestments();
-          const { address } = module;
+          const {
+            fundsRaised,
+            investorCount,
+            totalTokensSold,
+            isRaisedInPoly,
+            ...details
+          } = await module.getSTODetails();
+          const tokenPurchases = await module.getLogsAsync({
+            eventName: CappedSTOEvents.TokenPurchase,
+            blockRange: {
+              fromBlock: BlockParamLiteral.Earliest,
+              toBlock: BlockParamLiteral.Latest,
+            },
+            indexFilterValues: {},
+          });
+          const investments = tokenPurchases.map(
+            ({ args: { beneficiary, amount, value } }, index) => ({
+              address: beneficiary,
+              tokenAmount: weiToValue(amount, fullDecimals),
+              investedFunds: weiToValue(value, fullDecimals),
+              index,
+            })
+          );
+          const address = await module.address();
           const paused = await module.paused();
           const capReached = await module.capReached();
           const stoModuleId = this.CappedStoModule.generateId({
@@ -861,6 +890,10 @@ export class Polymath {
 
           stoModules.push(
             new this.CappedStoModule({
+              fundraiseTypes: isRaisedInPoly ? [FundraiseType.Poly] : [FundraiseType.Ether],
+              raisedAmount: fundsRaised,
+              soldTokensAmount: totalTokensSold,
+              investorAmount: investorCount,
               ...details,
               ...constructorData,
               investments: investmentEntities,
@@ -871,13 +904,41 @@ export class Polymath {
             })
           );
         }
-      } else if (stoType === StoModuleTypes.UsdTiered) {
-        fetchedModules = await securityToken.getUsdTieredStoModules();
+      } else if (stoType === StoModuleType.UsdTiered) {
+        fetchedModules = await contractWrappers.getAttachedModules(
+          { symbol: securityTokenSymbol, moduleName: ModuleName.UsdTieredSTO },
+          { unarchived: true }
+        );
 
         for (const module of fetchedModules) {
-          const { tokensPerTier, ratesPerTier, ...details } = await module.getDetails();
-          const investments = await module.getInvestments();
-          const { address } = module;
+          const {
+            tokensSold,
+            capPerTier,
+            ratePerTier,
+            fundsRaised,
+            investorCount,
+            isRaisedInETH,
+            isRaisedInPOLY,
+            isRaisedInSC,
+            ...details
+          } = await module.getSTODetails();
+          const tokenPurchases = await module.getLogsAsync({
+            eventName: USDTieredSTOEvents.TokenPurchase,
+            blockRange: {
+              fromBlock: BlockParamLiteral.Earliest,
+              toBlock: BlockParamLiteral.Latest,
+            },
+            indexFilterValues: {},
+          });
+          const investments = tokenPurchases.map(
+            ({ args: { _usdAmount, _beneficiary, _tokens } }, index) => ({
+              address: _beneficiary,
+              tokenAmount: weiToValue(_tokens, fullDecimals),
+              investedFunds: weiToValue(_usdAmount, fullDecimals),
+              index,
+            })
+          );
+          const address = await module.address();
           const paused = await module.paused();
           const capReached = await module.capReached();
           const stoModuleId = this.UsdTieredStoModule.generateId({
@@ -889,10 +950,28 @@ export class Polymath {
             investment => new this.Investment({ ...investment, ...constructorData, stoModuleId })
           );
 
-          const tiers = zipWith(tokensPerTier, ratesPerTier, (cap, rate) => ({ cap, rate }));
+          const tiers = zipWith(capPerTier, ratePerTier, (cap, rate) => ({ cap, rate }));
+
+          const fundraiseTypes = [];
+
+          if (isRaisedInETH) {
+            fundraiseTypes.push(FundraiseType.Ether);
+          }
+
+          if (isRaisedInPOLY) {
+            fundraiseTypes.push(FundraiseType.Poly);
+          }
+
+          if (isRaisedInSC) {
+            fundraiseTypes.push(FundraiseType.Usd);
+          }
 
           stoModules.push(
             new this.UsdTieredStoModule({
+              fundraiseTypes,
+              raisedAmount: fundsRaised,
+              investorAmount: investorCount,
+              soldTokensAmount: tokensSold,
               ...details,
               ...constructorData,
               tiers,
@@ -907,7 +986,7 @@ export class Polymath {
       } else {
         throw new PolymathError({
           message: `Invalid STO module type ${stoType} requested.`,
-          code: ErrorCodes.FetcherValidationError,
+          code: ErrorCode.FetcherValidationError,
         });
       }
     }
@@ -922,14 +1001,14 @@ export class Polymath {
     args:
       | {
           securityTokenId: string;
-          dividendType: DividendModuleTypes;
+          dividendType: DividendModuleType;
         }
       | string
   ) => {
-    const { securityTokenRegistry } = this.context;
+    const { contractWrappers } = this;
 
     let securityTokenId: string;
-    let dividendType: DividendModuleTypes;
+    let dividendType: DividendModuleType;
 
     // fetch by UUID
     if (typeof args === 'string') {
@@ -940,13 +1019,11 @@ export class Polymath {
 
     const { symbol } = this.SecurityToken.unserialize(securityTokenId);
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
-
-    if (!securityToken) {
+    try {
+      await this.contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.FetcherValidationError,
+        code: ErrorCode.FetcherValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
@@ -959,13 +1036,16 @@ export class Polymath {
     let dividendsModule;
 
     switch (dividendType) {
-      case DividendModuleTypes.Erc20: {
-        dividendsModule = await securityToken.getErc20DividendModule();
+      case DividendModuleType.Erc20: {
+        dividendsModule = (await contractWrappers.getAttachedModules(
+          { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
+          { unarchived: true }
+        ))[0];
 
         if (dividendsModule) {
-          const storageWalletAddress = await dividendsModule.getStorageWallet();
+          const storageWalletAddress = await dividendsModule.wallet();
           return new this.Erc20DividendsModule({
-            address: dividendsModule.address,
+            address: await dividendsModule.address(),
             storageWalletAddress,
             ...constructorData,
           });
@@ -973,13 +1053,16 @@ export class Polymath {
 
         break;
       }
-      case DividendModuleTypes.Erc20: {
-        dividendsModule = await securityToken.getEtherDividendModule();
+      case DividendModuleType.Erc20: {
+        dividendsModule = (await contractWrappers.getAttachedModules(
+          { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
+          { unarchived: true }
+        ))[0];
 
         if (dividendsModule) {
-          const storageWalletAddress = await dividendsModule.getStorageWallet();
+          const storageWalletAddress = await dividendsModule.wallet();
           return new this.EthDividendsModule({
-            address: dividendsModule.address,
+            address: await dividendsModule.address(),
             storageWalletAddress,
             ...constructorData,
           });
@@ -1006,7 +1089,7 @@ export class Polymath {
 
     return this.getDividendsModule({
       securityTokenId: args.securityTokenId,
-      dividendType: DividendModuleTypes.Erc20,
+      dividendType: DividendModuleType.Erc20,
     });
   };
 
@@ -1021,7 +1104,7 @@ export class Polymath {
 
     return this.getDividendsModule({
       securityTokenId: args.securityTokenId,
-      dividendType: DividendModuleTypes.Eth,
+      dividendType: DividendModuleType.Eth,
     });
   };
 
@@ -1030,7 +1113,10 @@ export class Polymath {
    */
   public isValidErc20 = async (args: { address: string }) => {
     const { address } = args;
-    return this.lowLevel.isValidErc20({ address });
+    const erc20Token = await this.contractWrappers.tokenFactory.getERC20TokenInstanceFromAddress(
+      address
+    );
+    return await erc20Token.isValidContract();
   };
 
   public getErc20TokenBalance = async (
@@ -1051,10 +1137,12 @@ export class Polymath {
       ({ tokenAddress, walletAddress } = args);
     }
 
-    const token = await this.lowLevel.getErc20Token({ address: tokenAddress });
+    const token = await this.contractWrappers.tokenFactory.getERC20TokenInstanceFromAddress(
+      tokenAddress
+    );
     const [symbol, balance] = await Promise.all([
       token.symbol(),
-      token.balanceOf({ address: walletAddress }),
+      token.balanceOf({ owner: walletAddress }),
     ]);
 
     return new this.Erc20TokenBalance({
@@ -1066,7 +1154,7 @@ export class Polymath {
   };
 
   public getLatestProtocolVersion = async () => {
-    return await this.context.securityTokenRegistry.getLatestProtocolVersion();
+    return await this.contractWrappers.securityTokenRegistry.getProtocolVersion();
   };
 
   get SecurityToken() {
@@ -1128,8 +1216,8 @@ export class Polymath {
   }: {
     securityTokenId: string;
     securityTokenSymbol: string;
-    checkpoint: LowLevelCheckpoint;
-    checkpointDividends: LowLevelDividend[];
+    checkpoint: BaseCheckpoint;
+    checkpointDividends: BaseDividend[];
   }) => {
     const checkpointId = this.Checkpoint.generateId({
       securityTokenId,
@@ -1160,34 +1248,54 @@ export class Polymath {
    * Auxiliary function to fetch all dividend distributions
    */
   private getAllDividends = async ({
-    securityToken,
+    securityTokenSymbol,
     checkpointIndex,
-    dividendTypes = [DividendModuleTypes.Erc20, DividendModuleTypes.Eth],
+    dividendTypes = [DividendModuleType.Erc20, DividendModuleType.Eth],
   }: {
-    securityToken: SecurityToken;
+    securityTokenSymbol: string;
     checkpointIndex?: number;
-    dividendTypes?: DividendModuleTypes[];
+    dividendTypes?: DividendModuleType[];
   }) => {
     const dividends = [];
 
-    if (includes(dividendTypes, DividendModuleTypes.Erc20)) {
-      const erc20Module = await securityToken.getErc20DividendModule();
+    const { contractWrappers } = this;
+
+    if (includes(dividendTypes, DividendModuleType.Erc20)) {
+      const erc20Module = (await contractWrappers.getAttachedModules(
+        {
+          moduleName: ModuleName.ERC20DividendCheckpoint,
+          symbol: securityTokenSymbol,
+        },
+        { unarchived: true }
+      ))[0];
 
       if (erc20Module) {
         const erc20Dividends = await (checkpointIndex !== undefined
-          ? erc20Module.getDividendsByCheckpoint({ checkpointIndex })
-          : erc20Module.getDividends());
+          ? contractWrappers.getDividendsByCheckpoint({
+              checkpointId: checkpointIndex,
+              dividendsModule: erc20Module,
+            })
+          : contractWrappers.getDividends({ dividendsModule: erc20Module }));
         dividends.push(...erc20Dividends);
       }
     }
 
-    if (includes(dividendTypes, DividendModuleTypes.Eth)) {
-      const etherModule = await securityToken.getEtherDividendModule();
+    if (includes(dividendTypes, DividendModuleType.Eth)) {
+      const etherModule = (await contractWrappers.getAttachedModules(
+        {
+          moduleName: ModuleName.EtherDividendCheckpoint,
+          symbol: securityTokenSymbol,
+        },
+        { unarchived: true }
+      ))[0];
 
       if (etherModule) {
         const etherDividends = await (checkpointIndex !== undefined
-          ? etherModule.getDividendsByCheckpoint({ checkpointIndex })
-          : etherModule.getDividends());
+          ? contractWrappers.getDividendsByCheckpoint({
+              checkpointId: checkpointIndex,
+              dividendsModule: etherModule,
+            })
+          : contractWrappers.getDividends({ dividendsModule: etherModule }));
         dividends.push(...etherDividends);
       }
     }

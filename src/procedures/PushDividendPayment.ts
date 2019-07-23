@@ -1,40 +1,51 @@
 import { chunk } from 'lodash';
+import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   PushDividendPaymentProcedureArgs,
-  DividendModuleTypes,
-  ProcedureTypes,
-  PolyTransactionTags,
-  ErrorCodes,
+  DividendModuleType,
+  ProcedureType,
+  PolyTransactionTag,
+  ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
 const CHUNK_SIZE = 100;
 
 export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureArgs> {
-  public type = ProcedureTypes.PushDividendPayment;
+  public type = ProcedureType.PushDividendPayment;
 
   public async prepareTransactions() {
     const { symbol, dividendIndex, investorAddresses, dividendType } = this.args;
-    const { securityTokenRegistry } = this.context;
+    const { contractWrappers } = this.context;
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
-
-    if (!securityToken) {
+    try {
+      await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
     let dividendsModule;
 
-    if (dividendType === DividendModuleTypes.Erc20) {
-      dividendsModule = await securityToken.getErc20DividendModule();
-    } else if (dividendType === DividendModuleTypes.Eth) {
-      dividendsModule = await securityToken.getEtherDividendModule();
+    if (dividendType === DividendModuleType.Erc20) {
+      dividendsModule = (await contractWrappers.getAttachedModules(
+        {
+          moduleName: ModuleName.ERC20DividendCheckpoint,
+          symbol,
+        },
+        { unarchived: true }
+      ))[0];
+    } else if (dividendType === DividendModuleType.Eth) {
+      dividendsModule = (await contractWrappers.getAttachedModules(
+        {
+          moduleName: ModuleName.EtherDividendCheckpoint,
+          symbol,
+        },
+        { unarchived: true }
+      ))[0];
     }
 
     if (!dividendsModule) {
@@ -42,33 +53,28 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
         "Dividend modules haven't been enabled. Did you forget to call .enableDividendModules()?"
       );
     }
-    let investors: string[];
+
+    const dividend = await contractWrappers.getDividend({ dividendIndex, dividendsModule });
+    let { investors: investorStatuses } = dividend;
 
     if (investorAddresses) {
-      investors = investorAddresses;
-    } else {
-      investors = await dividendsModule.getInvestors({
-        dividendIndex,
-      });
+      investorStatuses = investorStatuses.filter(
+        status => !!investorAddresses.find(address => address === status.address)
+      );
     }
 
-    const dividend = await dividendsModule.getDividend({ dividendIndex });
-    const { investors: investorStatuses } = dividend;
-
-    const unpaidInvestors = investors.filter(investorAddress => {
-      const investorStatus = investorStatuses.find(status => status.address === investorAddress);
-
-      return !!investorStatus && !investorStatus.paymentReceived;
-    });
+    const unpaidInvestors = investorStatuses
+      .filter(status => status.paymentReceived)
+      .map(status => status.address);
 
     const investorAddressChunks = chunk(unpaidInvestors, CHUNK_SIZE);
 
     for (const addresses of investorAddressChunks) {
-      await this.addTransaction(dividendsModule.pushDividendPayment, {
-        tag: PolyTransactionTags.PushDividendPayment,
+      await this.addTransaction(dividendsModule.pushDividendPaymentToAddresses, {
+        tag: PolyTransactionTag.PushDividendPayment,
       })({
         dividendIndex,
-        investorAddresses: addresses,
+        payees: addresses,
       });
     }
   }

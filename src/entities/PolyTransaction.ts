@@ -1,21 +1,13 @@
 import { mapValues, isPlainObject, pickBy } from 'lodash';
 import { EventEmitter } from 'events';
-import {
-  PostTransactionResolver,
-  isPostTransactionResolver,
-} from '../PostTransactionResolver';
-import {
-  TransactionSpec,
-  ErrorCodes,
-  TransactionStatus,
-  PolyTransactionTags,
-} from '../types';
+import v4 from 'uuid/v4';
+import { TransactionReceiptWithDecodedLogs } from 'ethereum-types';
+import { PostTransactionResolver, isPostTransactionResolver } from '../PostTransactionResolver';
+import { TransactionSpec, ErrorCode, TransactionStatus, PolyTransactionTag } from '../types';
 import { PolymathError } from '../PolymathError';
-import { TransactionReceipt } from 'web3/types';
 import { Entity } from '../entities/Entity';
 import { TransactionQueue } from '../entities/TransactionQueue';
 import { serialize } from '../utils';
-import v4 from 'uuid/v4';
 
 enum Events {
   StatusChange = 'StatusChange',
@@ -26,9 +18,7 @@ const mapValuesDeep = (
   obj: { [key: string]: any },
   fn: (...args: any[]) => any
 ): { [key: string]: any } =>
-  mapValues(obj, (val, key) =>
-    isPlainObject(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)
-  );
+  mapValues(obj, (val, key) => (isPlainObject(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)));
 
 export class PolyTransaction<Args = any, R = any> extends Entity {
   public static generateId() {
@@ -36,25 +26,32 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
       random: v4(),
     });
   }
+
   public uid: string;
+
   public status: TransactionStatus = TransactionStatus.Idle;
+
   public transactionQueue: TransactionQueue;
+
   public promise: Promise<any>;
+
   public error?: PolymathError;
-  public receipt?: TransactionReceipt;
-  public tag: PolyTransactionTags;
+
+  public receipt?: TransactionReceiptWithDecodedLogs;
+
+  public tag: PolyTransactionTag;
+
   public txHash?: string;
+
   public args: TransactionSpec<Args, R>['args'];
+
   protected method: TransactionSpec<Args, R>['method'];
-  private postResolver: PostTransactionResolver<
-    R
-  > = new PostTransactionResolver<R>();
+
+  private postResolver: PostTransactionResolver<R> = new PostTransactionResolver<R>();
+
   private emitter: EventEmitter;
 
-  constructor(
-    transaction: TransactionSpec<Args, R>,
-    transactionQueue: TransactionQueue
-  ) {
+  constructor(transaction: TransactionSpec<Args, R>, transactionQueue: TransactionQueue) {
     super(undefined, false);
 
     if (transaction.postTransactionResolver) {
@@ -62,7 +59,7 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
     }
 
     this.emitter = new EventEmitter();
-    this.tag = transaction.tag || PolyTransactionTags.Any;
+    this.tag = transaction.tag || PolyTransactionTag.Any;
     this.method = transaction.method;
     this.args = transaction.args;
     this.transactionQueue = transactionQueue;
@@ -74,16 +71,7 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
   }
 
   public toPojo() {
-    const {
-      uid,
-      status,
-      tag,
-      receipt,
-      error,
-      txHash,
-      transactionQueue,
-      args,
-    } = this;
+    const { uid, status, tag, receipt, error, txHash, transactionQueue, args } = this;
     const transactionQueueUid = transactionQueue.uid;
 
     // do not expose arguments that haven't been resolved
@@ -114,7 +102,7 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
       this.updateStatus(TransactionStatus.Succeeded);
       this.resolve(receipt);
     } catch (err) {
-      if (err.code === ErrorCodes.TransactionRejectedByUser) {
+      if (err.code === ErrorCode.TransactionRejectedByUser) {
         this.updateStatus(TransactionStatus.Rejected);
       } else {
         this.updateStatus(TransactionStatus.Failed);
@@ -134,32 +122,32 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
   };
 
   protected resolve: (val?: any) => void = () => {};
+
   protected reject: (reason?: any) => void = () => {};
 
   private async internalRun() {
     this.updateStatus(TransactionStatus.Unapproved);
 
     const unwrappedArgs = this.unwrapArgs(this.args);
-    const promiEvent = (await this.method(unwrappedArgs))();
-    // Set the Transaction as Running once it is approved by the user
-    promiEvent.on('transactionHash', txHash => {
-      this.txHash = txHash;
-      this.updateStatus(TransactionStatus.Running);
-    });
+    const polyResponse = await this.method(unwrappedArgs);
 
-    let result: TransactionReceipt;
+    // Set the Transaction as Running once it is approved by the user
+    this.txHash = polyResponse.txHash;
+    this.updateStatus(TransactionStatus.Running);
+
+    let result: TransactionReceiptWithDecodedLogs;
 
     try {
-      result = await promiEvent;
+      result = await polyResponse.receiptAsync;
     } catch (err) {
       // Wrap with PolymathError
       if (err.message.indexOf('MetaMask Tx Signature') > -1) {
         this.error = new PolymathError({
-          code: ErrorCodes.TransactionRejectedByUser,
+          code: ErrorCode.TransactionRejectedByUser,
         });
       } else {
         this.error = new PolymathError({
-          code: ErrorCodes.FatalError,
+          code: ErrorCode.FatalError,
           message: err.message,
         });
       }

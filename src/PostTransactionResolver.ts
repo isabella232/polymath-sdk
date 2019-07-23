@@ -1,18 +1,17 @@
-import { TransactionReceipt } from 'web3/types';
+import { TransactionReceiptWithDecodedLogs } from 'ethereum-types';
 
-export function isPostTransactionResolver<T = any>(
-  val: any
-): val is PostTransactionResolver<T> {
+export function isPostTransactionResolver<T = any>(val: any): val is PostTransactionResolver<T> {
   return val instanceof PostTransactionResolver;
 }
 
 export class PostTransactionResolver<Value extends any> {
   public result?: Value;
+
   private resolver: (
-    receipt: TransactionReceipt
+    receipt: TransactionReceiptWithDecodedLogs
   ) => Promise<Value> | Promise<undefined>;
 
-  constructor(resolver?: (receipt: TransactionReceipt) => Promise<Value>) {
+  constructor(resolver?: (receipt: TransactionReceiptWithDecodedLogs) => Promise<Value>) {
     if (!resolver) {
       this.resolver = async () => undefined;
       return;
@@ -21,7 +20,7 @@ export class PostTransactionResolver<Value extends any> {
     this.resolver = resolver;
   }
 
-  public async run(receipt: TransactionReceipt) {
+  public async run(receipt: TransactionReceiptWithDecodedLogs) {
     const result = await this.resolver(receipt);
 
     this.result = result;

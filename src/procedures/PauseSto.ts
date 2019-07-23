@@ -1,41 +1,36 @@
+import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
-import { ProcedureTypes, PolyTransactionTags, PauseStoArgs, ErrorCodes } from '../types';
+import { ProcedureType, PolyTransactionTag, PauseStoArgs, ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 
 export class PauseSto extends Procedure<PauseStoArgs> {
-  public type = ProcedureTypes.PauseSto;
+  public type = ProcedureType.PauseSto;
 
   public async prepareTransactions() {
-    const { symbol, stoModuleAddress } = this.args;
-    const { securityTokenRegistry } = this.context;
+    const { stoModuleAddress } = this.args;
+    const { contractWrappers } = this.context;
 
     /**
      * Validation
      */
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
-
     if (!isValidAddress(stoModuleAddress)) {
       throw new PolymathError({
-        code: ErrorCodes.InvalidAddress,
+        code: ErrorCode.InvalidAddress,
         message: `Invalid module address ${stoModuleAddress}`,
       });
     }
 
-    if (!securityToken) {
-      throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
-        message: `There is no Security Token with symbol ${symbol}`,
-      });
-    }
+    // here we can use any STO wrapper because they all implement the pause method
+    const stoModule = await contractWrappers.moduleFactory.getModuleInstance({
+      name: ModuleName.CappedSTO,
+      address: stoModuleAddress,
+    });
 
-    const stoModule = await securityToken.getStoModule({ address: stoModuleAddress });
     if (!stoModule) {
       throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
         message: `module ${stoModuleAddress} is either archived or hasn't been enabled.`,
       });
     }
@@ -45,7 +40,7 @@ export class PauseSto extends Procedure<PauseStoArgs> {
      */
 
     await this.addTransaction(stoModule.pause, {
-      tag: PolyTransactionTags.PauseSto,
-    })();
+      tag: PolyTransactionTag.PauseSto,
+    })({});
   }
 }

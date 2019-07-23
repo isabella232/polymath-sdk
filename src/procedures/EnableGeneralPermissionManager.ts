@@ -1,33 +1,48 @@
+import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
-  ProcedureTypes,
-  PolyTransactionTags,
+  ProcedureType,
+  PolyTransactionTag,
   EnableGeneralPermissionManagerProcedureArgs,
-  ErrorCodes,
+  ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
 export class EnableGeneralPermissionManager extends Procedure<
   EnableGeneralPermissionManagerProcedureArgs
 > {
-  public type = ProcedureTypes.EnableGeneralPermissionManager;
+  public type = ProcedureType.EnableGeneralPermissionManager;
 
   public async prepareTransactions() {
     const { symbol } = this.args;
-    const { securityTokenRegistry } = this.context;
+    const { contractWrappers } = this.context;
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
+    let securityToken;
 
-    if (!securityToken) {
+    try {
+      securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
-    await this.addTransaction(securityToken.addGeneralPermissionManager, {
-      tag: PolyTransactionTags.EnableGeneralPermissionManager,
-    })();
+
+    const tokenAddress = await securityToken.address();
+    const moduleName = ModuleName.GeneralPermissionManager;
+
+    const moduleAddress = await contractWrappers.getModuleFactoryAddress({
+      tokenAddress,
+      moduleName,
+    });
+
+    await this.addTransaction(securityToken.addModule, {
+      tag: PolyTransactionTag.EnableGeneralPermissionManager,
+    })({
+      moduleName,
+      address: moduleAddress,
+    });
   }
 }

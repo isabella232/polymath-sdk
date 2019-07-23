@@ -1,17 +1,17 @@
 import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
-import { DividendModuleTypes, isDividendModuleTypes } from '../types';
+import { DividendModuleType, isDividendModuleType } from '../types';
 
 export interface UniqueIdentifiers {
   securityTokenId: string;
-  dividendType: DividendModuleTypes;
+  dividendType: DividendModuleType;
 }
 
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { securityTokenId, dividendType } = identifiers;
 
-  return typeof securityTokenId === 'string' && isDividendModuleTypes(dividendType);
+  return typeof securityTokenId === 'string' && isDividendModuleType(dividendType);
 }
 
 export interface Params extends UniqueIdentifiers {
@@ -31,7 +31,7 @@ export abstract class DividendsModule extends Entity {
 
   public storageWalletAddress: string;
 
-  public dividendType: DividendModuleTypes;
+  public dividendType: DividendModuleType;
 
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);

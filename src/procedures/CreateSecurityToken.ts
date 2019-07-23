@@ -1,26 +1,28 @@
 import { Procedure } from './Procedure';
 import { Approve } from '../procedures/Approve';
-import { CreateSecurityTokenProcedureArgs, ProcedureTypes, PolyTransactionTags } from '../types';
+import { CreateSecurityTokenProcedureArgs, ProcedureType, PolyTransactionTag } from '../types';
 
 export class CreateSecurityToken extends Procedure<CreateSecurityTokenProcedureArgs> {
-  public type = ProcedureTypes.CreateSecurityToken;
+  public type = ProcedureType.CreateSecurityToken;
 
   public async prepareTransactions() {
     const { name, symbol, detailsUrl = '', divisible } = this.args;
-    const { securityTokenRegistry } = this.context;
+    const {
+      contractWrappers: { securityTokenRegistry },
+    } = this.context;
     const fee = await securityTokenRegistry.getSecurityTokenLaunchFee();
 
-    await this.addTransaction(Approve)({
+    await this.addProcedure(Approve)({
       amount: fee,
-      spender: securityTokenRegistry.address,
+      spender: await securityTokenRegistry.address(),
     });
 
-    await this.addTransaction(securityTokenRegistry.generateNewSecurityToken, {
-      tag: PolyTransactionTags.CreateSecurityToken,
+    await this.addTransaction(securityTokenRegistry.generateSecurityToken, {
+      tag: PolyTransactionTag.CreateSecurityToken,
     })({
-      tokenName: name,
+      name,
       ticker: symbol,
-      tokenDetails: detailsUrl,
+      details: detailsUrl,
       divisible,
     });
   }

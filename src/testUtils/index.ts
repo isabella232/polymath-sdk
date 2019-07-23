@@ -1,5 +1,5 @@
-import Web3PromiEvent from 'web3-core-promievent';
-import { GenericContract } from '../LowLevel/types';
+import { PolyResponse } from '@polymathnetwork/contract-wrappers';
+import { TransactionReceiptWithDecodedLogs } from 'ethereum-types';
 import { PostTransactionResolver } from '../PostTransactionResolver';
 
 const originalWindow = {
@@ -69,44 +69,142 @@ export function mockEthereumBrowser({
   };
 }
 
-export class MockedContract<T extends GenericContract> {
+class MockPolyResponse extends PolyResponse {
+  public resolve: () => void;
+
+  public reject: (err: any) => void;
+
+  constructor(args: { txHash: string }) {
+    const { txHash } = args;
+    const values = {
+      from: 'from',
+      to: 'to',
+      status: '0',
+      cumulativeGasUsed: 0,
+      gasUsed: 0,
+      contractAddress: 'contractAddress',
+      logs: [],
+      logIndex: null,
+      transactionIndex: 1,
+      transactionHash: txHash,
+      blockHash: 'blockHash',
+      blockNumber: 1,
+      address: 'address',
+      data: 'data',
+      topics: ['topic1'],
+    };
+
+    super(txHash, Promise.resolve(values));
+
+    this.resolve = () => {};
+    this.reject = () => {};
+
+    const promise = new Promise<typeof values>((resolve, reject) => {
+      this.resolve = () => resolve(values);
+      this.reject = err => reject(err);
+    });
+
+    this.receiptAsync = promise;
+  }
+}
+
+function getMockedPolyResponse(
+  args: { txHash: string },
+  opts: { autoResolve: boolean; rejected?: string }
+): PolyResponse {
+  const { txHash } = args;
+  const { autoResolve, rejected } = opts;
+  const values = {
+    from: 'from',
+    to: 'to',
+    status: '0',
+    cumulativeGasUsed: 0,
+    gasUsed: 0,
+    contractAddress: 'contractAddress',
+    logs: [],
+    logIndex: null,
+    transactionIndex: 1,
+    transactionHash: txHash,
+    blockHash: 'blockHash',
+    blockNumber: 1,
+    address: 'address',
+    data: 'data',
+    topics: ['topic1'],
+  };
+
+  let promise;
+
+  if (autoResolve) {
+    if (rejected) {
+      promise = Promise.reject(new Error(rejected));
+    } else {
+      promise = Promise.resolve(values);
+    }
+  } else {
+    promise = new Promise<typeof values>((resolve, reject) => {
+      setTimeout(() => {
+        if (rejected) {
+          reject(new Error(rejected));
+        } else {
+          resolve(values);
+        }
+      }, 1000);
+    });
+  }
+
+  return new PolyResponse(txHash, promise);
+}
+
+export class MockedContract {
   public autoResolve: boolean;
+
   public errorMsg?: string;
-  public fakeTxOnePromiEvent = new Web3PromiEvent();
-  public fakeTxTwoPromiEvent = new Web3PromiEvent();
-  public failureTxPromiEvent = new Web3PromiEvent();
+
+  public fakeTxOnePolyResponse: MockPolyResponse;
+
+  public fakeTxTwoPolyResponse: MockPolyResponse;
+
+  public failureTxPolyResponse: MockPolyResponse;
 
   public fakeTxOne = jest.fn(async () => {
-    return () => {
-      if (this.autoResolve) {
-        this.fakeTxOnePromiEvent.resolve();
-      }
-      return this.fakeTxOnePromiEvent.eventEmitter;
-    };
+    if (this.autoResolve) {
+      this.fakeTxOnePolyResponse.resolve();
+    }
+
+    return this.fakeTxOnePolyResponse;
   });
+
   public fakeTxTwo = jest.fn(async () => {
-    return () => {
-      if (this.autoResolve) {
-        this.fakeTxTwoPromiEvent.resolve();
-      }
-      return this.fakeTxTwoPromiEvent.eventEmitter;
-    };
+    if (this.autoResolve) {
+      this.fakeTxTwoPolyResponse.resolve();
+    }
+
+    return this.fakeTxTwoPolyResponse;
   });
 
   public failureTx = jest.fn(async () => {
-    return () => {
-      const err = this.errorMsg || 'Test error';
-      this.failureTxPromiEvent.reject(new Error(err));
-      return this.failureTxPromiEvent.eventEmitter;
-    };
+    if (this.autoResolve) {
+      this.failureTxPolyResponse.reject(new Error(this.errorMsg || 'Test Error'));
+    }
+
+    return this.failureTxPolyResponse;
   });
 
   constructor({
     autoResolve = true,
     errorMsg,
-  }: { autoResolve?: boolean; errorMsg?: string } = {}) {
+    txHashes = [],
+  }: {
+    autoResolve?: boolean;
+    errorMsg?: string;
+    txHashes?: [] | [string] | [string, string] | [string, string, string];
+  } = {}) {
     this.autoResolve = autoResolve;
     this.errorMsg = errorMsg;
+
+    this.fakeTxOnePolyResponse = new MockPolyResponse({ txHash: txHashes[0] || '0x1' });
+    this.fakeTxTwoPolyResponse = new MockPolyResponse({ txHash: txHashes[1] || '0x2' });
+    this.failureTxPolyResponse = new MockPolyResponse({ txHash: txHashes[2] || '0x3' });
   }
 }
 

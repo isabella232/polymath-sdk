@@ -1,14 +1,13 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@0x/utils';
 import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
-import { StoModuleTypes, isStoModuleTypes } from '../types';
-import { FundraiseTypes } from '~/LowLevel/types';
+import { StoModuleType, isStoModuleType, FundraiseType } from '../types';
 import { Investment } from './Investment';
 
 export interface UniqueIdentifiers {
   securityTokenId: string;
-  stoType: StoModuleTypes;
+  stoType: StoModuleType;
   address: string;
 }
 
@@ -16,7 +15,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   const { securityTokenId, stoType, address } = identifiers;
 
   return (
-    typeof securityTokenId === 'string' && typeof address === 'string' && isStoModuleTypes(stoType)
+    typeof securityTokenId === 'string' && typeof address === 'string' && isStoModuleType(stoType)
   );
 }
 
@@ -24,10 +23,10 @@ export interface Params extends UniqueIdentifiers {
   securityTokenSymbol: string;
   startTime: Date;
   endTime: Date;
-  fundraiseTypes: FundraiseTypes[];
+  fundraiseTypes: FundraiseType[];
   raisedAmount: BigNumber;
   soldTokensAmount: BigNumber;
-  investorAmount: BigNumber;
+  investorAmount: number;
   investments: Investment[];
   paused: boolean;
   capReached: boolean;
@@ -42,7 +41,7 @@ export abstract class StoModule extends Entity {
 
   public securityTokenId: string;
 
-  public stoType: StoModuleTypes;
+  public stoType: StoModuleType;
 
   public startTime: Date;
 
@@ -52,11 +51,11 @@ export abstract class StoModule extends Entity {
 
   public soldTokensAmount: BigNumber;
 
-  public investorAmount: BigNumber;
+  public investorAmount: number;
 
   public investments: Investment[];
 
-  public fundraiseTypes: FundraiseTypes[];
+  public fundraiseTypes: FundraiseType[];
 
   public paused: boolean;
 
