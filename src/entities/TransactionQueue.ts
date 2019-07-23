@@ -1,45 +1,48 @@
 import { EventEmitter } from 'events';
-import {
-  TransactionSpec,
-  MaybeResolver,
-  ProcedureTypes,
-  TransactionQueueStatus,
-} from '../types';
+import v4 from 'uuid/v4';
+import { TransactionSpec, MaybeResolver, ProcedureType, TransactionQueueStatus } from '../types';
 import { Entity } from './Entity';
 import { PolyTransaction } from './PolyTransaction';
 import { isPostTransactionResolver } from '../PostTransactionResolver';
 import { serialize } from '../utils';
-import v4 from 'uuid/v4';
 
 enum Events {
   StatusChange = 'StatusChange',
   TransactionStatusChange = 'TransactionStatusChange',
 }
 
-export class TransactionQueue<
-  Args extends any = any,
-  ReturnType = any
-> extends Entity {
+export class TransactionQueue<Args extends any = any, ReturnType = any> extends Entity {
   public static generateId() {
     return serialize('transaction', {
       random: v4(),
     });
   }
+
   public readonly entityType: string = 'transactionQueue';
-  public procedureType: ProcedureTypes;
+
+  public procedureType: ProcedureType;
+
   public uid: string;
+
   public transactions: PolyTransaction[];
+
   public promise: Promise<ReturnType | undefined>;
+
   public status: TransactionQueueStatus = TransactionQueueStatus.Idle;
+
   public args: Args;
+
   public error?: Error;
+
   private queue: PolyTransaction[] = [];
+
   private returnValue?: MaybeResolver<ReturnType | undefined>;
+
   private emitter: EventEmitter;
 
   constructor(
     transactions: TransactionSpec[],
-    procedureType: ProcedureTypes = ProcedureTypes.UnnamedProcedure,
+    procedureType: ProcedureType = ProcedureType.UnnamedProcedure,
     args: Args = {} as Args,
     returnValue?: MaybeResolver<ReturnType | undefined>
   ) {
@@ -55,17 +58,10 @@ export class TransactionQueue<
     this.returnValue = returnValue;
 
     this.transactions = transactions.map(transaction => {
-      const txn = new PolyTransaction<typeof transaction.args>(
-        transaction,
-        this
-      );
+      const txn = new PolyTransaction<typeof transaction.args>(transaction, this);
 
       txn.onStatusChange(updatedTransaction => {
-        this.emitter.emit(
-          Events.TransactionStatusChange,
-          updatedTransaction,
-          this
-        );
+        this.emitter.emit(Events.TransactionStatusChange, updatedTransaction, this);
       });
 
       return txn;
@@ -131,6 +127,7 @@ export class TransactionQueue<
   }
 
   protected resolve: (val?: ReturnType) => void = () => {};
+
   protected reject: (reason?: any) => void = () => {};
 
   private updateStatus = (status: TransactionQueueStatus) => {
@@ -147,7 +144,6 @@ export class TransactionQueue<
       }
       case TransactionQueueStatus.Failed: {
         this.emitter.emit(Events.StatusChange, this, this.error);
-        return;
       }
     }
   };

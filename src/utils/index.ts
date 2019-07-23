@@ -1,5 +1,16 @@
 import stringify from 'json-stable-stringify';
-import { isAddress } from '../LowLevel/utils';
+import { LogEntry, LogWithDecodedArgs, DecodedLogArgs } from 'ethereum-types';
+import {
+  ContractEvents,
+  SecurityTokenCheckpointCreatedEventArgs,
+  SecurityTokenEvents,
+  ERC20DividendCheckpointEvents,
+  ERC20DividendCheckpointERC20DividendDepositedEventArgs,
+  EtherDividendCheckpointEvents,
+  EtherDividendCheckpointEtherDividendDepositedEventArgs,
+} from '@polymathnetwork/contract-wrappers';
+import { isAddress } from 'ethereum-address';
+
 import { Pojo } from '../types';
 
 export const delay = async (amount: number) => {
@@ -37,3 +48,48 @@ export function unserialize(id: string) {
 export function isValidAddress(address: string) {
   return isAddress(address);
 }
+
+interface FindEventParams {
+  logs: (LogEntry | LogWithDecodedArgs<DecodedLogArgs>)[];
+  eventName: ContractEvents;
+}
+
+interface FindSecurityTokenCheckpointCreatedParams extends FindEventParams {
+  eventName: SecurityTokenEvents.CheckpointCreated;
+}
+
+interface FindERC20DividendDepositedParams extends FindEventParams {
+  eventName: ERC20DividendCheckpointEvents.ERC20DividendDeposited;
+}
+
+interface FindEtherDividendDepositedParams extends FindEventParams {
+  eventName: EtherDividendCheckpointEvents.EtherDividendDeposited;
+}
+
+interface FindEvent {
+  (params: FindSecurityTokenCheckpointCreatedParams):
+    | LogWithDecodedArgs<SecurityTokenCheckpointCreatedEventArgs>
+    | undefined;
+  (params: FindERC20DividendDepositedParams):
+    | LogWithDecodedArgs<ERC20DividendCheckpointERC20DividendDepositedEventArgs>
+    | undefined;
+  (params: FindEtherDividendDepositedParams):
+    | LogWithDecodedArgs<EtherDividendCheckpointEtherDividendDepositedEventArgs>
+    | undefined;
+}
+
+export const findEvent: FindEvent = ({
+  logs,
+  eventName,
+}: {
+  logs: (LogEntry | LogWithDecodedArgs<DecodedLogArgs>)[];
+  eventName: ContractEvents;
+}): any => {
+  const log = logs.find(log => {
+    const l = log as LogWithDecodedArgs<DecodedLogArgs>;
+
+    return l.event === eventName;
+  });
+
+  return log;
+};

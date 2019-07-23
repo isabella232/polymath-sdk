@@ -1,39 +1,70 @@
+import { ModuleName, ModuleType } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
-import { DividendModuleTypes } from '../LowLevel/types';
 import {
   EnableDividendModulesProcedureArgs,
-  ProcedureTypes,
-  PolyTransactionTags,
-  ErrorCodes,
+  ProcedureType,
+  PolyTransactionTag,
+  ErrorCode,
+  DividendModuleType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+interface AddDividendCheckpointParams {
+  moduleName: ModuleName.ERC20DividendCheckpoint | ModuleName.EtherDividendCheckpoint;
+  address: string;
+  data: {
+    wallet: string;
+  };
+}
+
 export class EnableDividendModules extends Procedure<EnableDividendModulesProcedureArgs> {
-  public type = ProcedureTypes.EnableDividendModules;
+  public type = ProcedureType.EnableDividendModules;
 
   public async prepareTransactions() {
     const {
       symbol,
       storageWalletAddress,
-      types = [DividendModuleTypes.Erc20, DividendModuleTypes.Eth],
+      types = [DividendModuleType.Erc20, DividendModuleType.Eth],
     } = this.args;
-    const { securityTokenRegistry } = this.context;
+    const { contractWrappers } = this.context;
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
+    let securityToken;
 
-    if (!securityToken) {
+    try {
+      securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
+    const tokenAddress = await securityToken.address();
+
+    const moduleNames: {
+      [DividendModuleType.Erc20]: ModuleName.ERC20DividendCheckpoint;
+      [DividendModuleType.Eth]: ModuleName.EtherDividendCheckpoint;
+    } = {
+      [DividendModuleType.Erc20]: ModuleName.ERC20DividendCheckpoint,
+      [DividendModuleType.Eth]: ModuleName.EtherDividendCheckpoint,
+    };
+
     for (const type of types) {
-      await this.addTransaction(securityToken.addDividendsModule, {
-        tag: PolyTransactionTags.EnableDividends,
-      })({ type, wallet: storageWalletAddress });
+      const moduleName = moduleNames[type];
+      const moduleAddress = await contractWrappers.getModuleFactoryAddress({
+        tokenAddress,
+        moduleName,
+      });
+
+      await this.addTransaction<AddDividendCheckpointParams>(securityToken.addModule, {
+        tag: PolyTransactionTag.EnableDividends,
+      })({
+        moduleName,
+        address: moduleAddress,
+        data: { wallet: storageWalletAddress },
+      });
     }
   }
 }

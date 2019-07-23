@@ -1,9 +1,8 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@0x/utils';
 import { Polymath } from '../Polymath';
 import { Entity } from '../entities/Entity';
 import { serialize, unserialize } from '../utils';
-import { DividendModuleTypes } from '../LowLevel/types';
-import { TaxWithholdingEntry } from '../types';
+import { TaxWithholdingEntry, DividendModuleType } from '../types';
 
 interface UniqueIdentifiers {
   symbol: string;
@@ -67,23 +66,20 @@ export class SecurityToken extends Entity {
 
   public enableDividendModules = (args: {
     storageWalletAddress: string;
-    types: DividendModuleTypes[];
+    types: DividendModuleType[];
   }) =>
     this.polyClient.enableDividendModules({
       ...args,
       securityTokenId: this.uid,
     });
 
-  public getCheckpoints = (args: { dividendTypes: DividendModuleTypes[] }) =>
+  public getCheckpoints = (args: { dividendTypes: DividendModuleType[] }) =>
     this.polyClient.getCheckpoints({
       ...args,
       securityTokenId: this.uid,
     });
 
-  public getCheckpoint = (args: {
-    checkpointIndex: number;
-    dividendTypes: DividendModuleTypes[];
-  }) =>
+  public getCheckpoint = (args: { checkpointIndex: number; dividendTypes: DividendModuleType[] }) =>
     this.polyClient.getCheckpoint({
       ...args,
       securityTokenId: this.uid,

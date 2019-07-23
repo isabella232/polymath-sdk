@@ -1,50 +1,49 @@
+import { SecurityTokenEvents } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   CreateCheckpointProcedureArgs,
-  ProcedureTypes,
-  PolyTransactionTags,
-  ErrorCodes,
+  ProcedureType,
+  PolyTransactionTag,
+  ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { findEvent } from '~/utils';
 
 export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs> {
-  public type = ProcedureTypes.CreateCheckpoint;
+  public type = ProcedureType.CreateCheckpoint;
 
   public async prepareTransactions() {
     const { symbol } = this.args;
-    const { securityTokenRegistry } = this.context;
+    const { contractWrappers } = this.context;
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
+    let securityToken;
 
-    if (!securityToken) {
+    try {
+      securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
     const checkpointIndex = await this.addTransaction(securityToken.createCheckpoint, {
-      tag: PolyTransactionTags.CreateCheckpoint,
-      // TODO @monitz87: replace this with the correct receipt type when we integrate the SDK with
-      // the contract-wrappers package
+      tag: PolyTransactionTag.CreateCheckpoint,
       resolver: async receipt => {
-        const { events } = receipt;
+        const { logs } = receipt;
 
-        if (events) {
-          const { CheckpointCreated } = events;
+        const event = findEvent({ logs, eventName: SecurityTokenEvents.CheckpointCreated });
+        if (event) {
+          const { args } = event;
 
-          const {
-            _checkpointId,
-          }: {
-            _checkpointId: string;
-          } = CheckpointCreated.returnValues;
+          const { _checkpointId } = args;
 
-          return parseInt(_checkpointId, 10);
+          return _checkpointId.toNumber();
         }
       },
-    })();
+    })({});
 
     return checkpointIndex;
   }

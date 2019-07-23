@@ -1,16 +1,14 @@
+import { BigNumber } from '@0x/utils';
 import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
-import BigNumber from 'bignumber.js';
 
 interface UniqueIdentifiers {
   tokenAddress: string;
   walletAddress: string;
 }
 
-function isUniqueIdentifiers(
-  identifiers: any
-): identifiers is UniqueIdentifiers {
+function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { tokenAddress, walletAddress } = identifiers;
 
   return typeof tokenAddress === 'string' && typeof walletAddress === 'string';
@@ -40,9 +38,13 @@ export class Erc20TokenBalance extends Entity {
   }
 
   public uid: string;
+
   public tokenSymbol: string | null;
+
   public tokenAddress: string;
+
   public walletAddress: string;
+
   public balance: BigNumber;
 
   constructor(params: Params, polyClient?: Polymath) {

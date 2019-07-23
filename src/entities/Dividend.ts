@@ -1,13 +1,13 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@0x/utils';
 import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
-import { DividendModuleTypes, DividendInvestorStatus, isDividendModuleTypes } from '../types';
+import { DividendModuleType, DividendInvestorStatus, isDividendModuleType } from '../types';
 
 interface UniqueIdentifiers {
   securityTokenId: string;
   checkpointId: string;
-  dividendType: DividendModuleTypes;
+  dividendType: DividendModuleType;
   index: number;
 }
 
@@ -18,7 +18,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
     typeof securityTokenId === 'string' &&
     typeof checkpointId === 'string' &&
     typeof index === 'number' &&
-    isDividendModuleTypes(dividendType)
+    isDividendModuleType(dividendType)
   );
 }
 
@@ -69,7 +69,7 @@ export class Dividend extends Entity {
 
   public checkpointId: string;
 
-  public dividendType: DividendModuleTypes;
+  public dividendType: DividendModuleType;
 
   public securityTokenSymbol: string;
 

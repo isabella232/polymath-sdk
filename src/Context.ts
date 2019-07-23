@@ -1,47 +1,29 @@
-import { PolyToken } from './LowLevel/PolyToken';
-import { PolymathRegistry } from './LowLevel/PolymathRegistry';
-import { SecurityTokenRegistry } from './LowLevel/SecurityTokenRegistry';
-import { ModuleRegistry } from './LowLevel/ModuleRegistry';
-import { Erc20 } from './LowLevel/Erc20';
 import { Wallet } from './Wallet';
+import { PolymathBase } from './PolymathBase';
 
-interface Params {
-  polyToken: PolyToken;
-  polymathRegistry: PolymathRegistry;
-  securityTokenRegistry: SecurityTokenRegistry;
-  moduleRegistry: ModuleRegistry;
-  isTestnet: boolean;
-  getErc20Token: (args: { address: string }) => Erc20;
+interface ConstructorParams {
+  contractWrappers: PolymathBase;
   accountAddress?: string;
 }
 
+/**
+ * Context in which the SDK is being used
+ *
+ * - Holds the current instance of the contract wrappers
+ * - Holds the current wallet
+ */
 export class Context {
-  public polyToken: PolyToken;
-  public polymathRegistry: PolymathRegistry;
-  public securityTokenRegistry: SecurityTokenRegistry;
-  public moduleRegistry: ModuleRegistry;
-  public isTestnet: boolean;
-  public currentWallet?: Wallet;
-  public getErc20Token: (args: { address: string }) => Erc20;
-  constructor(params: Params) {
-    const {
-      polyToken,
-      polymathRegistry,
-      securityTokenRegistry,
-      moduleRegistry,
-      isTestnet,
-      accountAddress,
-      getErc20Token,
-    } = params;
+  public contractWrappers: PolymathBase;
 
-    this.polyToken = polyToken;
-    this.polymathRegistry = polymathRegistry;
-    this.securityTokenRegistry = securityTokenRegistry;
-    this.moduleRegistry = moduleRegistry;
-    this.isTestnet = isTestnet;
+  public currentWallet?: Wallet;
+
+  constructor(params: ConstructorParams) {
+    const { contractWrappers, accountAddress } = params;
+
+    this.contractWrappers = contractWrappers;
+
     if (accountAddress) {
       this.currentWallet = new Wallet({ address: accountAddress });
     }
-    this.getErc20Token = getErc20Token;
   }
 }

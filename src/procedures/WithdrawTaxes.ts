@@ -1,40 +1,47 @@
+import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
-import { DividendModuleTypes } from '../LowLevel/types';
-import { DividendCheckpoint } from '../LowLevel/DividendCheckpoint';
 import {
   WithdrawTaxesProcedureArgs,
-  ProcedureTypes,
-  PolyTransactionTags,
-  ErrorCodes,
+  ProcedureType,
+  PolyTransactionTag,
+  ErrorCode,
+  DividendModuleType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
 export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
-  public type = ProcedureTypes.WithdrawTaxes;
+  public type = ProcedureType.WithdrawTaxes;
 
   public async prepareTransactions() {
     const { symbol, dividendIndex, dividendType } = this.args;
-    const { securityTokenRegistry } = this.context;
+    const { contractWrappers } = this.context;
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
-
-    if (!securityToken) {
+    try {
+      await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
-    let dividendModule: DividendCheckpoint | null = null;
+    let dividendModule;
 
     switch (dividendType) {
-      case DividendModuleTypes.Erc20:
-        dividendModule = await securityToken.getErc20DividendModule();
+      case DividendModuleType.Erc20: {
+        dividendModule = (await contractWrappers.getAttachedModules(
+          { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
+          { unarchived: true }
+        ))[0];
         break;
-      case DividendModuleTypes.Eth:
-        dividendModule = await securityToken.getEtherDividendModule();
+      }
+      case DividendModuleType.Eth: {
+        dividendModule = (await contractWrappers.getAttachedModules({
+          moduleName: ModuleName.EtherDividendCheckpoint,
+          symbol,
+        }))[0];
+        break;
+      }
     }
 
     if (!dividendModule) {
@@ -42,7 +49,7 @@ export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
     }
 
     await this.addTransaction(dividendModule.withdrawWithholding, {
-      tag: PolyTransactionTags.WithdrawTaxWithholdings,
+      tag: PolyTransactionTag.WithdrawTaxWithholdings,
     })({ dividendIndex });
   }
 }

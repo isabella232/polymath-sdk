@@ -1,16 +1,19 @@
+import { ModuleName, EtherDividendCheckpointEvents } from '@polymathnetwork/contract-wrappers';
+import { BigNumber } from '@0x/utils';
 import { Procedure } from './Procedure';
 import {
   CreateEtherDividendDistributionProcedureArgs,
-  ProcedureTypes,
-  PolyTransactionTags,
-  ErrorCodes,
+  ProcedureType,
+  PolyTransactionTag,
+  ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { findEvent } from '../utils';
 
 export class CreateEtherDividendDistribution extends Procedure<
   CreateEtherDividendDistributionProcedureArgs
 > {
-  public type = ProcedureTypes.CreateEtherDividendDistribution;
+  public type = ProcedureType.CreateEtherDividendDistribution;
 
   public async prepareTransactions() {
     const {
@@ -20,23 +23,27 @@ export class CreateEtherDividendDistribution extends Procedure<
       amount,
       checkpointIndex,
       name,
-      excludedAddresses,
+      excludedAddresses = [],
       taxWithholdings = [],
     } = this.args;
-    const { securityTokenRegistry } = this.context;
+    const { contractWrappers } = this.context;
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
-
-    if (!securityToken) {
+    try {
+      await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
-    const etherModule = await securityToken.getEtherDividendModule();
+    const etherModule = (await contractWrappers.getAttachedModules(
+      {
+        moduleName: ModuleName.EtherDividendCheckpoint,
+        symbol,
+      },
+      { unarchived: true }
+    ))[0];
 
     if (!etherModule) {
       throw new Error(
@@ -44,29 +51,50 @@ export class CreateEtherDividendDistribution extends Procedure<
       );
     }
 
-    await this.addTransaction(etherModule.createDividend, {
-      tag: PolyTransactionTags.CreateEtherDividendDistribution,
-    })({
-      maturityDate,
-      expiryDate,
-      amount,
+    const dividendIndex = await this.addTransaction(
+      etherModule.createDividendWithCheckpointAndExclusions,
+      {
+        tag: PolyTransactionTag.CreateEtherDividendDistribution,
+        resolver: async receipt => {
+          const { logs } = receipt;
+
+          const event = findEvent({
+            eventName: EtherDividendCheckpointEvents.EtherDividendDeposited,
+            logs,
+          });
+
+          if (event) {
+            const { args } = event;
+
+            const { _dividendIndex } = args;
+
+            return _dividendIndex.toNumber();
+          }
+        },
+      }
+    )({
+      maturity: maturityDate,
+      expiry: expiryDate,
+      value: amount,
       checkpointId: checkpointIndex,
       name,
-      excludedAddresses,
+      excluded: excludedAddresses,
     });
 
     if (taxWithholdings.length > 0) {
       const investors: string[] = [];
-      const percentages: number[] = [];
+      const percentages: BigNumber[] = [];
 
       taxWithholdings.forEach(({ address, percentage }) => {
         investors.push(address);
-        percentages.push(percentage);
+        percentages.push(new BigNumber(percentage));
       });
 
       await this.addTransaction(etherModule.setWithholding, {
-        tag: PolyTransactionTags.SetEtherTaxWithholding,
-      })({ investors, percentages });
+        tag: PolyTransactionTag.SetEtherTaxWithholding,
+      })({ investors, withholding: percentages });
     }
+
+    return dividendIndex;
   }
 }

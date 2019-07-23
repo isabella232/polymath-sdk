@@ -1,38 +1,36 @@
 import { Procedure } from './Procedure';
-import { ProcedureTypes, PolyTransactionTags, SetControllerArgs, ErrorCodes } from '../types';
+import { ProcedureType, PolyTransactionTag, SetControllerArgs, ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 
 export class SetController extends Procedure<SetControllerArgs> {
-  public type = ProcedureTypes.SetController;
+  public type = ProcedureType.SetController;
 
   public async prepareTransactions() {
     const { symbol, controller } = this.args;
-    const { securityTokenRegistry, currentWallet } = this.context;
+    const { contractWrappers, currentWallet } = this.context;
 
-    const token = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
+    let securityToken;
 
-    /**
-     * Validation
-     */
-
-    if (!token) {
+    try {
+      securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
     if (!isValidAddress(controller)) {
       throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
         message: `Controller address "${controller}" is invalid.`,
       });
     }
 
-    const owner = await token.owner();
+    const owner = await securityToken.owner();
     let account: string;
 
     if (currentWallet) {
@@ -41,13 +39,13 @@ export class SetController extends Procedure<SetControllerArgs> {
       throw new PolymathError({
         message:
           "No default account set. You must pass token owner's private key to Polymath.connect()",
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
       });
     }
 
     if (account !== owner) {
       throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
         message: `You must be the owner of this Security Token to set the controller`,
       });
     }
@@ -56,8 +54,8 @@ export class SetController extends Procedure<SetControllerArgs> {
      * Transactions
      */
 
-    await this.addTransaction(token.setController, {
-      tag: PolyTransactionTags.SetController,
+    await this.addTransaction(securityToken.setController, {
+      tag: PolyTransactionTag.SetController,
     })({ controller });
   }
 }

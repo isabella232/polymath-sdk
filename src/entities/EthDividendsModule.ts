@@ -1,7 +1,7 @@
 import { Polymath } from '../Polymath';
 import { serialize } from '../utils';
 import { DividendsModule, Params, UniqueIdentifiers } from './DividendsModule';
-import { DividendModuleTypes, Omit } from '../types';
+import { DividendModuleType, Omit } from '../types';
 
 export class EthDividendsModule extends DividendsModule {
   public static generateId({ securityTokenId, dividendType }: UniqueIdentifiers) {
@@ -22,7 +22,7 @@ export class EthDividendsModule extends DividendsModule {
     }: Omit<Params, 'dividendType'>,
     polyClient?: Polymath
   ) {
-    const dividendType = DividendModuleTypes.Eth;
+    const dividendType = DividendModuleType.Eth;
     super(
       {
         securityTokenId,

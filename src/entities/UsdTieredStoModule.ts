@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@0x/utils';
 import { Polymath } from '../Polymath';
 import { serialize } from '../utils';
 import { StoModule, UniqueIdentifiers, Params as StoParams } from './StoModule';

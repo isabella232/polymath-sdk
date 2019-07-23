@@ -1,33 +1,30 @@
+import { TransactionReceiptWithDecodedLogs } from 'ethereum-types';
 import {
   TransactionSpec,
-  ErrorCodes,
+  ErrorCode,
   LowLevelMethod,
   MapMaybeResolver,
   MaybeResolver,
-  ProcedureTypes,
-  PolyTransactionTags,
+  ProcedureType,
+  PolyTransactionTag,
 } from '../types';
 import { TransactionQueue } from '../entities/TransactionQueue';
 import { Context } from '../Context';
 import { PostTransactionResolver } from '../PostTransactionResolver';
-import { TransactionReceipt } from 'web3/types';
 import { PolymathError } from '../PolymathError';
 
-function isProcedure<T>(value: any): value is ProcedureType<T> {
-  return value.prototype instanceof Procedure;
-}
-
-export interface ProcedureType<Args = any> {
+export interface ProcedureClass<Args = any> {
   new (args: Args, context: Context): Procedure<Args>;
 }
 
-type MethodOrProcedure<A> = LowLevelMethod<A> | ProcedureType<A>;
-
 // NOTE @RafaelVidaurre: We could add a preparation state cache to avoid repeated transactions and bad validations
 export abstract class Procedure<Args, ReturnType = any> {
-  public type: ProcedureTypes = ProcedureTypes.UnnamedProcedure;
+  public type: ProcedureType = ProcedureType.UnnamedProcedure;
+
   protected args: Args;
+
   protected context: Context;
+
   private transactions: TransactionSpec[] = [];
 
   constructor(args: Args, context: Context) {
@@ -54,54 +51,72 @@ export abstract class Procedure<Args, ReturnType = any> {
   };
 
   /**
-   * Appends a Procedure or method into the TransactionQueue's queue. This defines
+   * Appends a Procedure into the TransactionQueue's queue. This defines
    * what will be run by the TransactionQueue when it is started.
    *
-   * @param Enqueueable A Procedure or method that will be run in the Procedure's TransactionQueue
+   * @param Proc A Procedure that will be run in the Procedure's TransactionQueue
+   * @param options.resolver An asynchronous callback used to provide runtime data after
+   * the added transaction has finished successfully
+   */
+  public addProcedure<A, R extends any = any>(
+    Proc: ProcedureClass<A>,
+    {
+      resolver = (() => {}) as () => Promise<R>,
+    }: {
+      resolver?: (receipt: TransactionReceiptWithDecodedLogs) => Promise<R>;
+    } = {}
+  ) {
+    return async (args: A) => {
+      const postTransactionResolver = new PostTransactionResolver(resolver);
+
+      // TODO @RafaelVidaurre: remove type assertion when Procedures support unwrapping resolvers
+      const operation = new Proc(args, this.context);
+
+      try {
+        await operation.prepareTransactions();
+      } catch (err) {
+        // Only throw if this is a validation error, otherwise it will have
+        // already propagated on the outside
+        if (err.code === ErrorCode.ProcedureValidationError) {
+          throw err;
+        } else if (!err.code) {
+          throw new PolymathError({
+            code: ErrorCode.FatalError,
+            message: err.message,
+          });
+        }
+      }
+      const { transactions } = operation;
+      this.transactions = [...this.transactions, ...transactions];
+      return postTransactionResolver;
+    };
+  }
+
+  /**
+   * Appends a method into the TransactionQueue's queue. This defines
+   * what will be run by the TransactionQueue when it is started.
+   *
+   * @param method A method that will be run in the Procedure's TransactionQueue
    * @param option.tag An optional tag for SDK users to identify this transaction, this
    * can be used for doing things such as mapping descriptions to tags in the UI
    * @param options.resolver An asynchronous callback used to provide runtime data after
-   * the transaction added has finished successfully
+   * the added transaction has finished successfully
    */
-  public addTransaction<A, R extends any>(
-    Enqueueable: MethodOrProcedure<A>,
+  public addTransaction<A, R extends any = any>(
+    method: LowLevelMethod<A>,
     {
       tag,
       resolver = (() => {}) as () => Promise<R>,
     }: {
-      tag?: PolyTransactionTags;
-      resolver?: (receipt: TransactionReceipt) => Promise<R>;
+      tag?: PolyTransactionTag;
+      resolver?: (receipt: TransactionReceiptWithDecodedLogs) => Promise<R>;
     } = {}
   ) {
-    return async (args: MapMaybeResolver<A> = {} as A) => {
+    return async (args: MapMaybeResolver<A>) => {
       const postTransactionResolver = new PostTransactionResolver(resolver);
 
-      // If method is a Procedure, get its Transactions and push those
-      if (isProcedure<A>(Enqueueable)) {
-        // TODO @RafaelVidaurre: remove type assertion when Procedures support unwrapping resolvers
-        const operation = new Enqueueable(args as A, this.context);
-
-        try {
-          await operation.prepareTransactions();
-        } catch (err) {
-          // Only throw if this is a validation error, otherwise it will have
-          // already propagated on the outside
-          if (err.code === ErrorCodes.ProcedureValidationError) {
-            throw err;
-          } else if (!err.code) {
-            throw new PolymathError({
-              code: ErrorCodes.FatalError,
-              message: err.message,
-            });
-          }
-        }
-        const transactions = operation.transactions;
-        this.transactions = [...this.transactions, ...transactions];
-        return postTransactionResolver;
-      }
-
       const transaction = {
-        method: Enqueueable,
+        method,
         args,
         postTransactionResolver,
         tag,

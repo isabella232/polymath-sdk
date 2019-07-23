@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@0x/utils';
 import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';

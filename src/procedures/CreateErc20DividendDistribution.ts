@@ -1,18 +1,21 @@
+import { ModuleName, ERC20DividendCheckpointEvents } from '@polymathnetwork/contract-wrappers';
+import { BigNumber } from '@0x/utils';
 import { Procedure } from './Procedure';
 import {
   CreateErc20DividendDistributionProcedureArgs,
-  ProcedureTypes,
-  PolyTransactionTags,
-  ErrorCodes,
+  ProcedureType,
+  PolyTransactionTag,
+  ErrorCode,
 } from '../types';
 import { Approve } from '../procedures/Approve';
 import { PolymathError } from '../PolymathError';
+import { findEvent } from '../utils';
 
 export class CreateErc20DividendDistribution extends Procedure<
   CreateErc20DividendDistributionProcedureArgs,
   number
 > {
-  public type = ProcedureTypes.CreateErc20DividendDistribution;
+  public type = ProcedureType.CreateErc20DividendDistribution;
 
   public async prepareTransactions() {
     const {
@@ -23,23 +26,24 @@ export class CreateErc20DividendDistribution extends Procedure<
       amount,
       checkpointIndex,
       name,
-      excludedAddresses,
+      excludedAddresses = [],
       taxWithholdings = [],
     } = this.args;
-    const { securityTokenRegistry } = this.context;
+    const { contractWrappers } = this.context;
 
-    const securityToken = await securityTokenRegistry.getSecurityToken({
-      ticker: symbol,
-    });
-
-    if (!securityToken) {
+    try {
+      await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
+    } catch (err) {
       throw new PolymathError({
-        code: ErrorCodes.ProcedureValidationError,
+        code: ErrorCode.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
-    const erc20Module = await securityToken.getErc20DividendModule();
+    const erc20Module = (await contractWrappers.getAttachedModules({
+      moduleName: ModuleName.ERC20DividendCheckpoint,
+      symbol,
+    }))[0];
 
     if (!erc20Module) {
       throw new Error(
@@ -47,53 +51,55 @@ export class CreateErc20DividendDistribution extends Procedure<
       );
     }
 
-    await this.addTransaction(Approve)({
+    await this.addProcedure(Approve)({
       amount,
-      spender: erc20Module.address,
+      spender: await erc20Module.address(),
       tokenAddress: erc20Address,
     });
 
-    const dividendIndex = await this.addTransaction(erc20Module.createDividend, {
-      tag: PolyTransactionTags.CreateErc20DividendDistribution,
-      // TODO @monitz87: replace this with the correct receipt type when we integrate the SDK with
-      // the contract-wrappers package
-      resolver: async receipt => {
-        const { events } = receipt;
+    const dividendIndex = await this.addTransaction(
+      erc20Module.createDividendWithCheckpointAndExclusions,
+      {
+        tag: PolyTransactionTag.CreateErc20DividendDistribution,
+        resolver: async receipt => {
+          const { logs } = receipt;
 
-        if (events) {
-          const { ERC20DividendDeposited } = events;
+          const event = findEvent({
+            eventName: ERC20DividendCheckpointEvents.ERC20DividendDeposited,
+            logs,
+          });
 
-          const {
-            _dividendIndex,
-          }: {
-            _dividendIndex: string;
-          } = ERC20DividendDeposited.returnValues;
+          if (event) {
+            const { args } = event;
 
-          return parseInt(_dividendIndex, 10);
-        }
-      },
-    })({
-      maturityDate,
-      expiryDate,
-      tokenAddress: erc20Address,
+            const { _dividendIndex } = args;
+
+            return _dividendIndex.toNumber();
+          }
+        },
+      }
+    )({
+      maturity: maturityDate,
+      expiry: expiryDate,
+      token: erc20Address,
       amount,
       checkpointId: checkpointIndex,
       name,
-      excludedAddresses,
+      excluded: excludedAddresses,
     });
 
     if (taxWithholdings.length > 0) {
       const investors: string[] = [];
-      const percentages: number[] = [];
+      const percentages: BigNumber[] = [];
 
       taxWithholdings.forEach(({ address, percentage }) => {
         investors.push(address);
-        percentages.push(percentage);
+        percentages.push(new BigNumber(percentage));
       });
 
       await this.addTransaction(erc20Module.setWithholding, {
-        tag: PolyTransactionTags.SetErc20TaxWithholding,
-      })({ investors, percentages });
+        tag: PolyTransactionTag.SetErc20TaxWithholding,
+      })({ investors, withholding: percentages });
     }
 
     return dividendIndex;
