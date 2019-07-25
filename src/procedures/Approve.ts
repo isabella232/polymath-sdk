@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import { ApproveProcedureArgs, ErrorCode, ProcedureType, PolyTransactionTag } from '../types';
 import { PolymathError } from '../PolymathError';

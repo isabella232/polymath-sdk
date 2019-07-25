@@ -1,5 +1,8 @@
-import { ModuleName, ERC20DividendCheckpointEvents } from '@polymathnetwork/contract-wrappers';
-import { BigNumber } from '@0x/utils';
+import {
+  ModuleName,
+  ERC20DividendCheckpointEvents,
+  BigNumber,
+} from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   CreateErc20DividendDistributionProcedureArgs,

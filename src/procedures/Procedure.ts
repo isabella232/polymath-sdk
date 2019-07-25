@@ -1,4 +1,4 @@
-import { TransactionReceiptWithDecodedLogs } from 'ethereum-types';
+import { TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import {
   TransactionSpec,
   ErrorCode,

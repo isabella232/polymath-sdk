@@ -1,7 +1,7 @@
 import { mapValues, isPlainObject, pickBy } from 'lodash';
 import { EventEmitter } from 'events';
 import v4 from 'uuid/v4';
-import { TransactionReceiptWithDecodedLogs } from 'ethereum-types';
+import { TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import { PostTransactionResolver, isPostTransactionResolver } from '../PostTransactionResolver';
 import { TransactionSpec, ErrorCode, TransactionStatus, PolyTransactionTag } from '../types';
 import { PolymathError } from '../PolymathError';

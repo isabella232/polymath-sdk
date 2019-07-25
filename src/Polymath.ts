@@ -1,14 +1,19 @@
-import { BigNumber } from '@0x/utils';
 import { includes, zipWith } from 'lodash';
-import { ModuleName, conversionUtils } from '@polymathnetwork/contract-wrappers';
+import {
+  ModuleName,
+  conversionUtils,
+  Provider,
+  BlockParamLiteral,
+  CappedSTOEvents,
+  USDTieredSTOEvents,
+  BigNumber,
+} from '@polymathnetwork/contract-wrappers';
 import {
   Web3ProviderEngine,
   PrivateKeyWalletSubprovider,
   RedundantSubprovider,
   RPCSubprovider,
 } from '@0x/subproviders';
-import { Provider, BlockParamLiteral } from 'ethereum-types';
-import { CappedSTOEvents, USDTieredSTOEvents } from '@polymathnetwork/abi-wrappers';
 import { Context } from './Context';
 import { getInjectedProvider } from './browserUtils';
 import {

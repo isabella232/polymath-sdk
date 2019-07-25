@@ -1,5 +1,4 @@
 import stringify from 'json-stable-stringify';
-import { LogEntry, LogWithDecodedArgs, DecodedLogArgs } from 'ethereum-types';
 import {
   ContractEvents,
   SecurityTokenCheckpointCreatedEventArgs,
@@ -8,6 +7,9 @@ import {
   ERC20DividendCheckpointERC20DividendDepositedEventArgs,
   EtherDividendCheckpointEvents,
   EtherDividendCheckpointEtherDividendDepositedEventArgs,
+  LogEntry,
+  LogWithDecodedArgs,
+  DecodedLogArgs,
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
 

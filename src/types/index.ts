@@ -1,5 +1,4 @@
-import { BigNumber } from '@0x/utils';
-import { PolyResponse } from '@polymathnetwork/contract-wrappers';
+import { PolyResponse, BigNumber } from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
 
