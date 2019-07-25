@@ -7,7 +7,7 @@ export class ControllerTransfer extends Procedure<ControllerTransferArgs> {
   public type = ProcedureType.ControllerTransfer;
 
   public async prepareTransactions() {
-    const { symbol, value, from, to, log: log = '', data: data = '' } = this.args;
+    const { symbol, value, from, to, log = '', data = '' } = this.args;
     const { contractWrappers, currentWallet } = this.context;
     const addresses: { [key: string]: string } = { from, to };
 
@@ -69,8 +69,8 @@ export class ControllerTransfer extends Procedure<ControllerTransferArgs> {
      * Transactions
      */
 
-    await this.addTransaction(securityToken.forceTransfer, {
+    await this.addTransaction(securityToken.controllerTransfer, {
       tag: PolyTransactionTag.ControllerTransfer,
-    })({ from, to, value, data, log });
+    })({ from, to, value, data, operatorData: log });
   }
 }

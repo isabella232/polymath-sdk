@@ -1,5 +1,4 @@
-import { Web3Wrapper } from '@0x/web3-wrapper';
-import { Provider } from 'ethereum-types';
+import { Web3Wrapper, Provider } from '@polymathnetwork/contract-wrappers';
 import { PolymathError } from './PolymathError';
 import { ErrorCode } from './types';
 import { delay } from './utils';

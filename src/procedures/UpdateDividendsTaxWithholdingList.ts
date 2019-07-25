@@ -1,6 +1,5 @@
 import { chunk } from 'lodash';
-import { ModuleName } from '@polymathnetwork/contract-wrappers';
-import { BigNumber } from '@0x/utils';
+import { ModuleName, BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   UpdateDividendsTaxWithholdingListProcedureArgs,

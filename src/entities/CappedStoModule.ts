@@ -1,4 +1,4 @@
-import { BigNumber } from '@0x/utils';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Polymath } from '../Polymath';
 import { serialize } from '../utils';
 import { StoModule, UniqueIdentifiers, Params as StoParams } from './StoModule';

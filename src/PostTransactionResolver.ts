@@ -1,4 +1,4 @@
-import { TransactionReceiptWithDecodedLogs } from 'ethereum-types';
+import { TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 
 export function isPostTransactionResolver<T = any>(val: any): val is PostTransactionResolver<T> {
   return val instanceof PostTransactionResolver;

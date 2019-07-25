@@ -1,5 +1,4 @@
-import { BigNumber } from '@0x/utils';
-import { PolyResponse } from '@polymathnetwork/contract-wrappers';
+import { PolyResponse, BigNumber } from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
 
@@ -302,10 +301,6 @@ export enum TransactionQueueStatus {
 export enum ModuleOperation {
   // MODULE_COMPONENT_OP
   GtmWhitelistUpdate = 'GTM_WHITELIST_UPDATE',
-}
-
-export enum ModulePermission {
-  Whitelist = 'WHITELIST',
 }
 
 export interface Pojo {

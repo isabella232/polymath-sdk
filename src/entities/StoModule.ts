@@ -1,4 +1,4 @@
-import { BigNumber } from '@0x/utils';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';

@@ -1,5 +1,8 @@
-import { ModuleName, EtherDividendCheckpointEvents } from '@polymathnetwork/contract-wrappers';
-import { BigNumber } from '@0x/utils';
+import {
+  ModuleName,
+  EtherDividendCheckpointEvents,
+  BigNumber,
+} from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   CreateEtherDividendDistributionProcedureArgs,

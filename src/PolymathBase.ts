@@ -13,9 +13,9 @@ import {
   EtherDividendCheckpoint,
   SecurityToken,
   ModuleType,
+  BigNumber,
+  Provider,
 } from '@polymathnetwork/contract-wrappers';
-import { BigNumber } from '@0x/utils';
-import { Provider } from 'ethereum-types';
 import { range, flatten } from 'lodash';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';

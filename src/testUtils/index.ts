@@ -1,5 +1,4 @@
 import { PolyResponse } from '@polymathnetwork/contract-wrappers';
-import { TransactionReceiptWithDecodedLogs } from 'ethereum-types';
 import { PostTransactionResolver } from '../PostTransactionResolver';
 
 const originalWindow = {
@@ -106,53 +105,6 @@ class MockPolyResponse extends PolyResponse {
 
     this.receiptAsync = promise;
   }
-}
-
-function getMockedPolyResponse(
-  args: { txHash: string },
-  opts: { autoResolve: boolean; rejected?: string }
-): PolyResponse {
-  const { txHash } = args;
-  const { autoResolve, rejected } = opts;
-  const values = {
-    from: 'from',
-    to: 'to',
-    status: '0',
-    cumulativeGasUsed: 0,
-    gasUsed: 0,
-    contractAddress: 'contractAddress',
-    logs: [],
-    logIndex: null,
-    transactionIndex: 1,
-    transactionHash: txHash,
-    blockHash: 'blockHash',
-    blockNumber: 1,
-    address: 'address',
-    data: 'data',
-    topics: ['topic1'],
-  };
-
-  let promise;
-
-  if (autoResolve) {
-    if (rejected) {
-      promise = Promise.reject(new Error(rejected));
-    } else {
-      promise = Promise.resolve(values);
-    }
-  } else {
-    promise = new Promise<typeof values>((resolve, reject) => {
-      setTimeout(() => {
-        if (rejected) {
-          reject(new Error(rejected));
-        } else {
-          resolve(values);
-        }
-      }, 1000);
-    });
-  }
-
-  return new PolyResponse(txHash, promise);
 }
 
 export class MockedContract {
