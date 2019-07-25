@@ -1159,7 +1159,7 @@ export class Polymath {
   };
 
   public getLatestProtocolVersion = async () => {
-    return await this.contractWrappers.securityTokenRegistry.getProtocolVersion();
+    return await this.contractWrappers.securityTokenRegistry.getLatestProtocolVersion();
   };
 
   get SecurityToken() {

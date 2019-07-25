@@ -43,6 +43,7 @@ export class EnableGeneralPermissionManager extends Procedure<
     })({
       moduleName,
       address: moduleAddress,
+      archived: false,
     });
   }
 }

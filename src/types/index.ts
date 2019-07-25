@@ -303,10 +303,6 @@ export enum ModuleOperation {
   GtmWhitelistUpdate = 'GTM_WHITELIST_UPDATE',
 }
 
-export enum ModulePermission {
-  Whitelist = 'WHITELIST',
-}
-
 export interface Pojo {
   [key: string]:
     | string

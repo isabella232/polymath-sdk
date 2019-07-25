@@ -1,4 +1,4 @@
-import { ModuleName, ModuleType } from '@polymathnetwork/contract-wrappers';
+import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   EnableDividendModulesProcedureArgs,
@@ -15,6 +15,8 @@ interface AddDividendCheckpointParams {
   data: {
     wallet: string;
   };
+  archived: boolean;
+  label?: string;
 }
 
 export class EnableDividendModules extends Procedure<EnableDividendModulesProcedureArgs> {
@@ -58,12 +60,13 @@ export class EnableDividendModules extends Procedure<EnableDividendModulesProced
         moduleName,
       });
 
-      await this.addTransaction<AddDividendCheckpointParams>(securityToken.addModule, {
+      await this.addTransaction<AddDividendCheckpointParams>(securityToken.addModuleWithLabel, {
         tag: PolyTransactionTag.EnableDividends,
       })({
         moduleName,
         address: moduleAddress,
         data: { wallet: storageWalletAddress },
+        archived: false,
       });
     }
   }

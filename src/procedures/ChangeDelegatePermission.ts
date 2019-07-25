@@ -1,4 +1,4 @@
-import { ModuleName, conversionUtils } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, conversionUtils, Perm } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,
@@ -6,7 +6,6 @@ import {
   ChangeDelegatePermissionArgs,
   ErrorCode,
   ModuleOperation,
-  ModulePermission,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
@@ -18,7 +17,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
     const delegate = conversionUtils.checksumAddress(this.args.delegate);
     const { contractWrappers } = this.context;
     let moduleAddress: string;
-    let perm: ModulePermission;
+    let perm: Perm;
 
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
@@ -32,7 +31,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
     // @TODO remon-nashid refactor into a map(op => {module, perm}).
     switch (op) {
       case ModuleOperation.GtmWhitelistUpdate:
-        perm = ModulePermission.Whitelist;
+        perm = Perm.Admin;
         const attachedModule = (await contractWrappers.getAttachedModules(
           { moduleName: ModuleName.GeneralTransferManager, symbol },
           { unarchived: true }
@@ -42,8 +41,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
           // then something very wrong is happening.
           throw new PolymathError({
             code: ErrorCode.FatalError,
-            message:
-              "Fatal error: Transfer manager module hasn't been enabled. Please report this issue to the Polymath team",
+            message: `Fatal error: Transfer manager module for token "${symbol}" hasn't been enabled. Please report this issue to the Polymath team`,
           });
         }
         moduleAddress = await attachedModule.address();
@@ -77,7 +75,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
         perm,
       });
 
-      const permitted = permittedDelegates.filter(element => element === delegate).length > 0;
+      const permitted = !!permittedDelegates.find(element => element === delegate);
       // Upcoming permission equals existing one.
       if (permitted === isGranted) {
         throw new PolymathError({
