@@ -24,6 +24,7 @@ import {
   DividendModuleType,
   FundraiseType,
   StoModuleType,
+  CappedStoFundraiseType,
 } from './types';
 import {
   Dividend as DividendEntity,
@@ -56,6 +57,7 @@ import {
   ControllerTransfer,
   PauseSto,
   SetController,
+  LaunchCappedSto,
 } from './procedures';
 import { Entity } from './entities/Entity';
 import { DividendsModule } from './entities/DividendsModule';
@@ -199,8 +201,42 @@ export class Polymath {
   };
 
   /**
+   * Launch a Capped STO
+   *
+   * @param securityTokenId token uuid
+   * @param startTime date when the STO should start
+   * @param endTime date when the STO should end
+   * @param cap amount to be raised
+   * @param rate amount of tokens an investor can purchase per unit of currency spent
+   * @param fundRaiseType currency in which the funds will be raised (ETH, POLY)
+   * @param fundsReceiver wallet address that will receive the funds that are being raised
+   *
+   */
+  public launchCappedSto = async (args: {
+    securityTokenId: string;
+    startTime: Date;
+    endTime: Date;
+    cap: BigNumber;
+    rate: BigNumber;
+    fundRaiseType: CappedStoFundraiseType;
+    fundsReceiver: string;
+  }) => {
+    const { securityTokenId, ...rest } = args;
+    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
+    const procedure = new LaunchCappedSto(
+      {
+        symbol,
+        ...rest,
+      },
+      this.context
+    );
+    return await procedure.prepare();
+  };
+
+  /**
    * Enable dividend modules (ERC20, ETH or both)
    *
+   * @param securityTokenId token uuid
    * @param storageWalletAddress wallet that will receive reclaimed dividends and withheld taxes
    * @param types array containing the types of dividend modules to enable (will enable all if not present)
    */
@@ -895,7 +931,7 @@ export class Polymath {
 
           stoModules.push(
             new this.CappedStoModule({
-              fundraiseTypes: isRaisedInPoly ? [FundraiseType.Poly] : [FundraiseType.Ether],
+              fundraiseTypes: isRaisedInPoly ? [FundraiseType.POLY] : [FundraiseType.ETH],
               raisedAmount: fundsRaised,
               soldTokensAmount: totalTokensSold,
               investorAmount: investorCount,
@@ -960,15 +996,15 @@ export class Polymath {
           const fundraiseTypes = [];
 
           if (isRaisedInETH) {
-            fundraiseTypes.push(FundraiseType.Ether);
+            fundraiseTypes.push(FundraiseType.ETH);
           }
 
           if (isRaisedInPOLY) {
-            fundraiseTypes.push(FundraiseType.Poly);
+            fundraiseTypes.push(FundraiseType.POLY);
           }
 
           if (isRaisedInSC) {
-            fundraiseTypes.push(FundraiseType.Usd);
+            fundraiseTypes.push(FundraiseType.StableCoin);
           }
 
           stoModules.push(

@@ -38,7 +38,7 @@ export class EnableGeneralPermissionManager extends Procedure<
       moduleName,
     });
 
-    await this.addTransaction(securityToken.addModule, {
+    await this.addTransaction(securityToken.addModuleWithLabel, {
       tag: PolyTransactionTag.EnableGeneralPermissionManager,
     })({
       moduleName,

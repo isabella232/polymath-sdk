@@ -1,6 +1,13 @@
-import { PolyResponse, BigNumber } from '@polymathnetwork/contract-wrappers';
+import {
+  PolyResponse,
+  BigNumber,
+  FundRaiseType,
+  CappedSTOFundRaiseType,
+} from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
+
+export { CappedSTOFundRaiseType as CappedStoFundraiseType, FundRaiseType as FundraiseType };
 
 export interface DividendInvestorStatus {
   address: string;
@@ -32,12 +39,6 @@ export function isStoModuleType(type: any): type is StoModuleType {
   return (
     typeof type === 'string' && (type === StoModuleType.UsdTiered || type === StoModuleType.Capped)
   );
-}
-
-export enum FundraiseType {
-  Poly = 'Poly',
-  Usd = 'Usd',
-  Ether = 'Eth',
 }
 
 export interface TaxWithholdingEntry {
@@ -88,6 +89,7 @@ export enum ProcedureType {
   CreateCheckpoint = 'CreateCheckpoint',
   EnableDividendModules = 'EnableDividendModules',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
+  LaunchCappedSto = 'LaunchCappedSto',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
@@ -107,6 +109,7 @@ export enum PolyTransactionTag {
   Any = 'Any',
   Approve = 'Approve',
   GetTokens = 'GetTokens',
+  Transfer = 'Transfer',
   ReserveSecurityToken = 'ReserveSecurityToken',
   CreateSecurityToken = 'CreateSecurityToken',
   CreateCheckpoint = 'CreateCheckpoint',
@@ -115,6 +118,7 @@ export enum PolyTransactionTag {
   SetErc20TaxWithholding = 'SetErc20TaxWithholding',
   SetEtherTaxWithholding = 'SetEtherTaxWithholding',
   EnableDividends = 'EnableDividends',
+  EnableCappedSto = 'EnableCappedSto',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
@@ -207,6 +211,16 @@ export interface EnableDividendModulesProcedureArgs {
 
 export interface EnableGeneralPermissionManagerProcedureArgs {
   symbol: string;
+}
+
+export interface LaunchCappedStoProcedureArgs {
+  symbol: string;
+  startTime: Date;
+  endTime: Date;
+  cap: BigNumber;
+  rate: BigNumber;
+  fundRaiseType: CappedSTOFundRaiseType;
+  fundsReceiver: string;
 }
 
 export interface ReclaimFundsProcedureArgs {
