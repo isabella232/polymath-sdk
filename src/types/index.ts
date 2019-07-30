@@ -1,6 +1,13 @@
-import { PolyResponse, BigNumber } from '@polymathnetwork/contract-wrappers';
+import {
+  PolyResponse,
+  BigNumber,
+  FundRaiseType as Currency,
+  CappedSTOFundRaiseType as CappedStoCurrency,
+} from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
+
+export { CappedStoCurrency, Currency };
 
 export interface DividendInvestorStatus {
   address: string;
@@ -32,12 +39,6 @@ export function isStoModuleType(type: any): type is StoModuleType {
   return (
     typeof type === 'string' && (type === StoModuleType.UsdTiered || type === StoModuleType.Capped)
   );
-}
-
-export enum FundraiseType {
-  Poly = 'Poly',
-  Usd = 'Usd',
-  Ether = 'Eth',
 }
 
 export interface TaxWithholdingEntry {
@@ -88,6 +89,8 @@ export enum ProcedureType {
   CreateCheckpoint = 'CreateCheckpoint',
   EnableDividendModules = 'EnableDividendModules',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
+  LaunchCappedSto = 'LaunchCappedSto',
+  LaunchUsdTieredSto = 'LaunchUsdTieredSto',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
@@ -105,8 +108,9 @@ export enum ProcedureType {
 
 export enum PolyTransactionTag {
   Any = 'Any',
-  Approve = 'Approve',
   GetTokens = 'GetTokens',
+  ApprovePoly = 'ApprovePoly',
+  TransferPoly = 'TransferPoly',
   ReserveSecurityToken = 'ReserveSecurityToken',
   CreateSecurityToken = 'CreateSecurityToken',
   CreateCheckpoint = 'CreateCheckpoint',
@@ -115,6 +119,8 @@ export enum PolyTransactionTag {
   SetErc20TaxWithholding = 'SetErc20TaxWithholding',
   SetEtherTaxWithholding = 'SetEtherTaxWithholding',
   EnableDividends = 'EnableDividends',
+  EnableCappedSto = 'EnableCappedSto',
+  EnableUsdTieredSto = 'EnableUsdTieredSto',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
@@ -140,7 +146,7 @@ export type MapMaybeResolver<T> = { [K in keyof T]: MaybeResolver<T[K]> };
 //   [PolyTransactionTag.CreateErc20DividendDistribution]: Partial<CreateErc20DividendArgs>;
 //   [PolyTransactionTag.CreateEtherDividendDistribution]: Partial<CreateEtherDividendArgs>;
 //   [PolyTransactionTag.GetTokens]: Partial<GetTokensArgs>;
-//   [PolyTransactionTag.Approve]: Partial<ApproveArgs>;
+//   [PolyTransactionTag.ApprovePoly]: Partial<ApproveArgs>;
 //   [PolyTransactionTag.EnableDividends]: Partial<AddDividendsModuleArgs>;
 //   [PolyTransactionTag.ReserveSecurityToken]: Partial<RegisterTickerArgs>;
 //   [PolyTransactionTag.CreateSecurityToken]: Partial<GenerateNewSecurityTokenArgs>;
@@ -207,6 +213,49 @@ export interface EnableDividendModulesProcedureArgs {
 
 export interface EnableGeneralPermissionManagerProcedureArgs {
   symbol: string;
+}
+
+export interface LaunchCappedStoProcedureArgs {
+  symbol: string;
+  startDate: Date;
+  endDate: Date;
+  tokensOnSale: BigNumber;
+  rate: BigNumber;
+  currency: CappedStoCurrency;
+  storageWallet: string;
+}
+
+export interface StoTier {
+  /**
+   * Amount of tokens to sell in this tier
+   */
+  tokensOnSale: BigNumber;
+  /**
+   * Price of each token in this tier in USD
+   */
+  price: BigNumber;
+  /**
+   * Amount of tokens to sell at a discount if paid in POLY.
+   * Must be less than the amount of tokens on sale
+   */
+  tokensWithDiscount?: BigNumber;
+  /**
+   * Price of tokens sold at a discount
+   */
+  discountedPrice?: BigNumber;
+}
+
+export interface LaunchUsdTieredStoProcedureArgs {
+  symbol: string;
+  startDate: Date;
+  endDate: Date;
+  tiers: StoTier[];
+  nonAccreditedInvestmentLimit: BigNumber;
+  minimumInvestment: BigNumber;
+  currencies: Currency[];
+  storageWallet: string;
+  treasuryWallet: string;
+  usdTokenAddresses: string[];
 }
 
 export interface ReclaimFundsProcedureArgs {

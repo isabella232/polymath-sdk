@@ -2,7 +2,7 @@ import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
-import { StoModuleType, isStoModuleType, FundraiseType } from '../types';
+import { StoModuleType, isStoModuleType, Currency } from '../types';
 import { Investment } from './Investment';
 
 export interface UniqueIdentifiers {
@@ -23,7 +23,7 @@ export interface Params extends UniqueIdentifiers {
   securityTokenSymbol: string;
   startTime: Date;
   endTime: Date;
-  fundraiseTypes: FundraiseType[];
+  fundraiseTypes: Currency[];
   raisedAmount: BigNumber;
   soldTokensAmount: BigNumber;
   investorAmount: number;
@@ -55,7 +55,7 @@ export abstract class StoModule extends Entity {
 
   public investments: Investment[];
 
-  public fundraiseTypes: FundraiseType[];
+  public fundraiseTypes: Currency[];
 
   public paused: boolean;
 
