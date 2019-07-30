@@ -27,7 +27,7 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs> {
   public type = ProcedureType.LaunchCappedSto;
 
   public async prepareTransactions() {
-    const { symbol, ...data } = this.args;
+    const { symbol, startDate, endDate, tokensOnSale, rate, currency, storageWallet } = this.args;
     const { contractWrappers } = this.context;
 
     let securityToken;
@@ -55,7 +55,7 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs> {
     const cost = await moduleFactory.setupCostInPoly();
 
     await this.addTransaction(contractWrappers.polyToken.transfer, {
-      tag: PolyTransactionTag.Transfer,
+      tag: PolyTransactionTag.TransferPoly,
     })({
       to: tokenAddress,
       value: cost,
@@ -66,7 +66,14 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs> {
     })({
       moduleName,
       address: factoryAddress,
-      data,
+      data: {
+        startTime: startDate,
+        endTime: endDate,
+        cap: tokensOnSale,
+        rate,
+        fundRaiseType: currency,
+        fundsReceiver: storageWallet,
+      },
       archived: false,
     });
   }

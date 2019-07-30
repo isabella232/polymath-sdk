@@ -16,3 +16,4 @@ export { ControllerTransfer } from './ControllerTransfer';
 export { PauseSto } from './PauseSto';
 export { SetController } from './SetController';
 export { LaunchCappedSto } from './LaunchCappedSto';
+export { LaunchUsdTieredSto } from './LaunchUsdTieredSto';

@@ -22,9 +22,10 @@ import {
   ErrorCode,
   ModuleOperation,
   DividendModuleType,
-  FundraiseType,
+  Currency,
+  CappedStoCurrency,
   StoModuleType,
-  CappedStoFundraiseType,
+  StoTier,
 } from './types';
 import {
   Dividend as DividendEntity,
@@ -58,6 +59,7 @@ import {
   PauseSto,
   SetController,
   LaunchCappedSto,
+  LaunchUsdTieredSto,
 } from './procedures';
 import { Entity } from './entities/Entity';
 import { DividendsModule } from './entities/DividendsModule';
@@ -204,26 +206,69 @@ export class Polymath {
    * Launch a Capped STO
    *
    * @param securityTokenId token uuid
-   * @param startTime date when the STO should start
-   * @param endTime date when the STO should end
-   * @param cap amount to be raised
+   * @param startDate date when the STO should start
+   * @param endDate date when the STO should end
+   * @param tokensOnSale amount of tokens to be sold
    * @param rate amount of tokens an investor can purchase per unit of currency spent
-   * @param fundRaiseType currency in which the funds will be raised (ETH, POLY)
-   * @param fundsReceiver wallet address that will receive the funds that are being raised
+   * @param currency currency in which the funds will be raised (ETH or POLY)
+   * @param storageWallet wallet address that will receive the funds that are being raised
    *
    */
   public launchCappedSto = async (args: {
     securityTokenId: string;
-    startTime: Date;
-    endTime: Date;
-    cap: BigNumber;
+    startDate: Date;
+    endDate: Date;
+    tokensOnSale: BigNumber;
     rate: BigNumber;
-    fundRaiseType: CappedStoFundraiseType;
-    fundsReceiver: string;
+    currency: CappedStoCurrency;
+    storageWallet: string;
   }) => {
     const { securityTokenId, ...rest } = args;
     const { symbol } = this.SecurityToken.unserialize(securityTokenId);
     const procedure = new LaunchCappedSto(
+      {
+        symbol,
+        ...rest,
+      },
+      this.context
+    );
+    return await procedure.prepare();
+  };
+
+  /**
+   * Launch a USD Tiered STO
+   *
+   * @param securityTokenId token uuid
+   * @param startDate date when the STO should start
+   * @param endDate date when the STO should end
+   * @param tiers tier information
+   * @param tiers[].tokensOnSale amount of tokens to be sold on that tier
+   * @param tiers[].price price of each token on that tier in USD
+   * @param tiers[].tokensWithDiscount amount of tokens to be sold on that tier at a discount if paid in POLY (must be less than tokensOnSale)
+   * @param tiers[].discountedPrice price of discounted tokens on that tier
+   * @param nonAccreditedInvestmentLimit maximum investment for non-accredited investors
+   * @param minimumInvestment minimum investment amount
+   * @param currencies array of currencies in which the funds will be raised (ETH, POLY, StableCoin)
+   * @param storageWallet wallet address that will receive the funds that are being raised
+   * @param treasuryWallet wallet address that will receive unsold tokens when the end date is reached
+   * @param usdTokenAddresses array of USD stable coins that the offering supports
+   *
+   */
+  public launchUsdTieredSto = async (args: {
+    securityTokenId: string;
+    startDate: Date;
+    endDate: Date;
+    tiers: StoTier[];
+    nonAccreditedInvestmentLimit: BigNumber;
+    minimumInvestment: BigNumber;
+    currencies: Currency[];
+    storageWallet: string;
+    treasuryWallet: string;
+    usdTokenAddresses: string[];
+  }) => {
+    const { securityTokenId, ...rest } = args;
+    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
+    const procedure = new LaunchUsdTieredSto(
       {
         symbol,
         ...rest,
@@ -931,7 +976,7 @@ export class Polymath {
 
           stoModules.push(
             new this.CappedStoModule({
-              fundraiseTypes: isRaisedInPoly ? [FundraiseType.POLY] : [FundraiseType.ETH],
+              fundraiseTypes: isRaisedInPoly ? [Currency.POLY] : [Currency.ETH],
               raisedAmount: fundsRaised,
               soldTokensAmount: totalTokensSold,
               investorAmount: investorCount,
@@ -996,15 +1041,15 @@ export class Polymath {
           const fundraiseTypes = [];
 
           if (isRaisedInETH) {
-            fundraiseTypes.push(FundraiseType.ETH);
+            fundraiseTypes.push(Currency.ETH);
           }
 
           if (isRaisedInPOLY) {
-            fundraiseTypes.push(FundraiseType.POLY);
+            fundraiseTypes.push(Currency.POLY);
           }
 
           if (isRaisedInSC) {
-            fundraiseTypes.push(FundraiseType.StableCoin);
+            fundraiseTypes.push(Currency.StableCoin);
           }
 
           stoModules.push(

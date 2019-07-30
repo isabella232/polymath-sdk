@@ -76,7 +76,7 @@ export class Approve extends Procedure<ApproveProcedureArgs> {
     }
 
     await this.addTransaction(token.approve, {
-      tag: PolyTransactionTag.Approve,
+      tag: PolyTransactionTag.ApprovePoly,
     })({ spender, value: amount });
   }
 }
