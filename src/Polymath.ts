@@ -244,8 +244,8 @@ export class Polymath {
    * @param tiers tier information
    * @param tiers[].tokensOnSale amount of tokens to be sold on that tier
    * @param tiers[].price price of each token on that tier in USD
-   * @param tiers[].tokensWithDiscount amount of tokens to be sold on that tier at a discount if paid in POLY (must be less than tokensOnSale)
-   * @param tiers[].discountedPrice price of discounted tokens on that tier
+   * @param tiers[].tokensWithDiscount amount of tokens to be sold on that tier at a discount if paid in POLY (must be less than tokensOnSale, defaults to 0)
+   * @param tiers[].discountedPrice price of discounted tokens on that tier (defaults to 0)
    * @param nonAccreditedInvestmentLimit maximum investment for non-accredited investors
    * @param minimumInvestment minimum investment amount
    * @param currencies array of currencies in which the funds will be raised (ETH, POLY, StableCoin)
