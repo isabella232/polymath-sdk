@@ -1,5 +1,5 @@
 import { Procedure } from './Procedure';
-import { Approve } from './Approve';
+import { ApproveErc20 } from './ApproveErc20';
 import {
   ReserveSecurityTokenProcedureArgs,
   ProcedureType,
@@ -42,7 +42,7 @@ export class ReserveSecurityToken extends Procedure<ReserveSecurityTokenProcedur
     }
 
     const fee = await securityTokenRegistry.getTickerRegistrationFee();
-    await this.addProcedure(Approve)({
+    await this.addProcedure(ApproveErc20)({
       amount: fee,
       spender: await securityTokenRegistry.address(),
       owner: ownerAddress,

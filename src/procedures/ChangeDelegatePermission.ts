@@ -3,13 +3,13 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  ChangeDelegatePermissionArgs,
+  ChangeDelegatePermissionProcedureArgs,
   ErrorCode,
   ModuleOperation,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
-export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermissionArgs> {
+export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermissionProcedureArgs> {
   public type = ProcedureType.ChangeDelegatePermission;
 
   public async prepareTransactions() {

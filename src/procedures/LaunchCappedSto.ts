@@ -7,6 +7,7 @@ import {
   LaunchCappedStoProcedureArgs,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { TransferErc20 } from './TransferErc20';
 
 interface AddCappedSTOParams {
   moduleName: ModuleName.CappedSTO;
@@ -43,22 +44,20 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs> {
       });
     }
 
-    const tokenAddress = await securityToken.address();
+    const securityTokenAddress = await securityToken.address();
     const moduleName = ModuleName.CappedSTO;
 
     const factoryAddress = await contractWrappers.getModuleFactoryAddress({
-      tokenAddress,
+      tokenAddress: securityTokenAddress,
       moduleName,
     });
 
     const moduleFactory = await contractWrappers.moduleFactory.getModuleFactory(factoryAddress);
     const cost = await moduleFactory.setupCostInPoly();
 
-    await this.addTransaction(contractWrappers.polyToken.transfer, {
-      tag: PolyTransactionTag.TransferPoly,
-    })({
-      to: tokenAddress,
-      value: cost,
+    await this.addProcedure(TransferErc20)({
+      receiver: securityTokenAddress,
+      amount: cost,
     });
 
     await this.addTransaction<AddCappedSTOParams>(securityToken.addModuleWithLabel, {

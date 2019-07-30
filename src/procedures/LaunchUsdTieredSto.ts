@@ -7,6 +7,7 @@ import {
   LaunchUsdTieredStoProcedureArgs,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { TransferErc20 } from './TransferErc20';
 
 interface AddUSDTieredSTOParams {
   moduleName: ModuleName.UsdTieredSTO;
@@ -60,22 +61,20 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
       });
     }
 
-    const tokenAddress = await securityToken.address();
+    const securityTokenAddress = await securityToken.address();
     const moduleName = ModuleName.UsdTieredSTO;
 
     const factoryAddress = await contractWrappers.getModuleFactoryAddress({
-      tokenAddress,
+      tokenAddress: securityTokenAddress,
       moduleName,
     });
 
     const moduleFactory = await contractWrappers.moduleFactory.getModuleFactory(factoryAddress);
     const cost = await moduleFactory.setupCostInPoly();
 
-    await this.addTransaction(contractWrappers.polyToken.transfer, {
-      tag: PolyTransactionTag.TransferPoly,
-    })({
-      to: tokenAddress,
-      value: cost,
+    await this.addProcedure(TransferErc20)({
+      receiver: securityTokenAddress,
+      amount: cost,
     });
 
     const ratePerTier: BigNumber[] = [];

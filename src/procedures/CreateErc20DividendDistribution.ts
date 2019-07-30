@@ -10,7 +10,7 @@ import {
   PolyTransactionTag,
   ErrorCode,
 } from '../types';
-import { Approve } from '../procedures/Approve';
+import { ApproveErc20 } from './ApproveErc20';
 import { PolymathError } from '../PolymathError';
 import { findEvent } from '../utils';
 
@@ -54,7 +54,7 @@ export class CreateErc20DividendDistribution extends Procedure<
       );
     }
 
-    await this.addProcedure(Approve)({
+    await this.addProcedure(ApproveErc20)({
       amount,
       spender: await erc20Module.address(),
       tokenAddress: erc20Address,

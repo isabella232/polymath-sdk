@@ -1,10 +1,10 @@
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
-import { ProcedureType, PolyTransactionTag, PauseStoArgs, ErrorCode } from '../types';
+import { ProcedureType, PolyTransactionTag, PauseStoProcedureArgs, ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 
-export class PauseSto extends Procedure<PauseStoArgs> {
+export class PauseSto extends Procedure<PauseStoProcedureArgs> {
   public type = ProcedureType.PauseSto;
 
   public async prepareTransactions() {

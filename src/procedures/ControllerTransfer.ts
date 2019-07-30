@@ -1,9 +1,14 @@
 import { Procedure } from './Procedure';
-import { ProcedureType, PolyTransactionTag, ControllerTransferArgs, ErrorCode } from '../types';
+import {
+  ProcedureType,
+  PolyTransactionTag,
+  ControllerTransferProcedureArgs,
+  ErrorCode,
+} from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 
-export class ControllerTransfer extends Procedure<ControllerTransferArgs> {
+export class ControllerTransfer extends Procedure<ControllerTransferProcedureArgs> {
   public type = ProcedureType.ControllerTransfer;
 
   public async prepareTransactions() {
