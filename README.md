@@ -2,6 +2,10 @@
 
 A Javascript SDK for interacting with the Polymath network for the browser and Node.js
 
+# Supported Polymath Protocol versions
+
+- 3.0
+
 # Usage
 
 First, configure your Polymath Client:
