@@ -26,6 +26,7 @@ import {
   CappedStoCurrency,
   StoModuleType,
   StoTier,
+  InvestorDataEntry,
 } from './types';
 import {
   Dividend as DividendEntity,
@@ -60,6 +61,7 @@ import {
   SetController,
   LaunchCappedSto,
   LaunchUsdTieredSto,
+  ModifyInvestorData,
 } from './procedures';
 import { Entity } from './entities/Entity';
 import { DividendsModule } from './entities/DividendsModule';
@@ -203,6 +205,35 @@ export class Polymath {
   };
 
   /**
+   * Add/modify investor data. For an investor to be able to hold, sell or purchase tokens, his address (and other KYC data)
+   * must be added/modified via this method
+   *
+   * @param securityTokenId token uuid
+   * @param investorData array of investor data to add/modify
+   * @param investorData[].address address of the investor whose data will be added/modified
+   * @param investorData[].canSendAfter date after which the investor can transfer tokens
+   * @param investorData[].canReceiveAfter date after which the investor can receive tokens
+   * @param investorData[].kycExpiry date at which the investor's KYC expires
+   * @param investorData[].isAccredited whether the investor is accredited (defaults to false)
+   * @param investorData[].canBuyFromSto whether the investor is allowed to purchase tokens in an STO (defaults to true)
+   */
+  public modifyInvestorData = async (args: {
+    securityTokenId: string;
+    investorData: InvestorDataEntry[];
+  }) => {
+    const { securityTokenId, ...rest } = args;
+    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
+    const procedure = new ModifyInvestorData(
+      {
+        symbol,
+        ...rest,
+      },
+      this.context
+    );
+    return await procedure.prepare();
+  };
+
+  /**
    * Launch a Capped STO
    *
    * @param securityTokenId token uuid
@@ -242,7 +273,7 @@ export class Polymath {
    * @param startDate date when the STO should start
    * @param endDate date when the STO should end
    * @param tiers tier information
-   * @param tiers[].tokensOnSale amount of tokens to be sold on that tier
+   * @param tiers[].tokensOnSale amount of tokens to be sold on that tier
    * @param tiers[].price price of each token on that tier in USD
    * @param tiers[].tokensWithDiscount amount of tokens to be sold on that tier at a discount if paid in POLY (must be less than tokensOnSale, defaults to 0)
    * @param tiers[].discountedPrice price of discounted tokens on that tier (defaults to 0)

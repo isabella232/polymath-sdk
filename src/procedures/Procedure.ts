@@ -68,8 +68,6 @@ export abstract class Procedure<Args, ReturnType = any> {
   ) {
     return async (args: A) => {
       const postTransactionResolver = new PostTransactionResolver(resolver);
-
-      // TODO @RafaelVidaurre: remove type assertion when Procedures support unwrapping resolvers
       const operation = new Proc(args, this.context);
 
       try {

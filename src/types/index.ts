@@ -105,7 +105,7 @@ export enum ProcedureType {
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
-  ModifyWhitelist = 'ModifyWhitelist',
+  ModifyInvestorData = 'ModifyInvestorData',
 }
 
 export enum PolyTransactionTag {
@@ -132,6 +132,8 @@ export enum PolyTransactionTag {
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
+  ModifyKycDataMulti = 'ModifyKycDataMulti',
+  ModifyInvestorFlagMulti = 'ModifyInvestorFlagMulti',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -324,8 +326,36 @@ export interface SetControllerProcedureArgs {
   controller: string;
 }
 
-export interface ModifyWhitelistProcedureArgs {
+export interface InvestorDataEntry {
+  /**
+   * investor wallet address to whitelist
+   */
+  address: string;
+  /**
+   * date from which the investor can transfer tokens
+   */
+  canSendAfter: Date;
+  /**
+   * date from which the investor can receive tokens
+   */
+  canReceiveAfter: Date;
+  /**
+   * date at which the investor's KYC expires
+   */
+  kycExpiry: Date;
+  /**
+   * whether the investor is accredited
+   */
+  isAccredited?: boolean;
+  /**
+   * whether the investor is allowed to purchase tokens in an STO
+   */
+  canBuyFromSto?: boolean;
+}
+
+export interface ModifyInvestorDataProcedureArgs {
   symbol: string;
+  investorData: InvestorDataEntry[];
 }
 
 export interface ProcedureArguments {
@@ -348,7 +378,7 @@ export interface ProcedureArguments {
   [ProcedureType.ControllerTransfer]: ControllerTransferProcedureArgs;
   [ProcedureType.SetController]: SetControllerProcedureArgs;
   [ProcedureType.ChangeDelegatePermission]: ChangeDelegatePermissionProcedureArgs;
-  [ProcedureType.ModifyWhitelist]: ModifyWhitelistProcedureArgs;
+  [ProcedureType.ModifyInvestorData]: ModifyInvestorDataProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 

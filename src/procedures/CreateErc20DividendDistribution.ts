@@ -43,15 +43,20 @@ export class CreateErc20DividendDistribution extends Procedure<
       });
     }
 
-    const erc20Module = (await contractWrappers.getAttachedModules({
-      moduleName: ModuleName.ERC20DividendCheckpoint,
-      symbol,
-    }))[0];
+    const erc20Module = (await contractWrappers.getAttachedModules(
+      {
+        moduleName: ModuleName.ERC20DividendCheckpoint,
+        symbol,
+      },
+      { unarchived: true }
+    ))[0];
 
     if (!erc20Module) {
-      throw new Error(
-        "Dividend modules haven't been enabled. Did you forget to call .enableDividendModules()?"
-      );
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message:
+          "The ERC20 Dividend module hasn't been enabled. Did you forget to call .enableDividendModules()?",
+      });
     }
 
     await this.addProcedure(ApproveErc20)({

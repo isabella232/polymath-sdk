@@ -49,9 +49,11 @@ export class CreateEtherDividendDistribution extends Procedure<
     ))[0];
 
     if (!etherModule) {
-      throw new Error(
-        "Dividend modules haven't been enabled. Did you forget to call .enableDividendModules()?"
-      );
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message:
+          "The ERC20 Dividend module hasn't been enabled. Did you forget to call .enableDividendModules()?",
+      });
     }
 
     const dividendIndex = await this.addTransaction(

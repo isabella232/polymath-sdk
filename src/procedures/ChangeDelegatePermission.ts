@@ -41,7 +41,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
           // then something very wrong is happening.
           throw new PolymathError({
             code: ErrorCode.FatalError,
-            message: `Fatal error: Transfer manager module for token "${symbol}" hasn't been enabled. Please report this issue to the Polymath team`,
+            message: `General Transfer manager module for token "${symbol}" isn't enabled. Please report this issue to the Polymath team`,
           });
         }
         moduleAddress = await attachedModule.address();
