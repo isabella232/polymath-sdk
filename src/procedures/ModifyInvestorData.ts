@@ -11,6 +11,7 @@ import { PolymathError } from '../PolymathError';
 export class ModifyInvestorData extends Procedure<ModifyInvestorDataProcedureArgs> {
   public type = ProcedureType.CreateErc20DividendDistribution;
 
+  // TODO @monitz87: consider returning the updated whitelist
   public async prepareTransactions() {
     const { symbol, investorData } = this.args;
     const { contractWrappers } = this.context;
@@ -87,7 +88,10 @@ export class ModifyInvestorData extends Procedure<ModifyInvestorDataProcedureArg
       expiryTime,
     });
 
-    // TODO @monitz87: consider returning the updated whitelist
+    if (investorsForFlags.length === 0) {
+      return;
+    }
+
     await this.addTransaction(gtmModule.modifyInvestorFlagMulti, {
       tag: PolyTransactionTag.ModifyInvestorFlagMulti,
     })({
