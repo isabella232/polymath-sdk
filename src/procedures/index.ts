@@ -1,4 +1,5 @@
-export { Approve } from './Approve';
+export { ApproveErc20 } from './ApproveErc20';
+export { TransferErc20 } from './TransferErc20';
 export { ReserveSecurityToken } from './ReserveSecurityToken';
 export { CreateSecurityToken } from './CreateSecurityToken';
 export { EnableDividendModules } from './EnableDividendModules';
@@ -17,3 +18,4 @@ export { PauseSto } from './PauseSto';
 export { SetController } from './SetController';
 export { LaunchCappedSto } from './LaunchCappedSto';
 export { LaunchUsdTieredSto } from './LaunchUsdTieredSto';
+export { ModifyInvestorData } from './ModifyInvestorData';

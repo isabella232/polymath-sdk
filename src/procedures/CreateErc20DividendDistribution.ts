@@ -10,7 +10,7 @@ import {
   PolyTransactionTag,
   ErrorCode,
 } from '../types';
-import { Approve } from '../procedures/Approve';
+import { ApproveErc20 } from './ApproveErc20';
 import { PolymathError } from '../PolymathError';
 import { findEvent } from '../utils';
 
@@ -43,18 +43,23 @@ export class CreateErc20DividendDistribution extends Procedure<
       });
     }
 
-    const erc20Module = (await contractWrappers.getAttachedModules({
-      moduleName: ModuleName.ERC20DividendCheckpoint,
-      symbol,
-    }))[0];
+    const erc20Module = (await contractWrappers.getAttachedModules(
+      {
+        moduleName: ModuleName.ERC20DividendCheckpoint,
+        symbol,
+      },
+      { unarchived: true }
+    ))[0];
 
     if (!erc20Module) {
-      throw new Error(
-        "Dividend modules haven't been enabled. Did you forget to call .enableDividendModules()?"
-      );
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message:
+          "The ERC20 Dividend module hasn't been enabled. Did you forget to call .enableDividendModules()?",
+      });
     }
 
-    await this.addProcedure(Approve)({
+    await this.addProcedure(ApproveErc20)({
       amount,
       spender: await erc20Module.address(),
       tokenAddress: erc20Address,

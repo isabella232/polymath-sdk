@@ -26,6 +26,7 @@ import {
   CappedStoCurrency,
   StoModuleType,
   StoTier,
+  InvestorDataEntry,
 } from './types';
 import {
   Dividend as DividendEntity,
@@ -40,6 +41,9 @@ import {
   UsdTieredStoModule as UsdTieredStoModuleEntity,
   Investment as InvestmentEntity,
   StoModule as StoModuleEntity,
+  InvestorData as InvestorDataEntity,
+  DividendsModule,
+  Entity,
 } from './entities';
 
 import {
@@ -60,9 +64,8 @@ import {
   SetController,
   LaunchCappedSto,
   LaunchUsdTieredSto,
+  ModifyInvestorData,
 } from './procedures';
-import { Entity } from './entities/Entity';
-import { DividendsModule } from './entities/DividendsModule';
 import { PolymathError } from './PolymathError';
 import { PolymathBase, BaseCheckpoint, BaseDividend } from './PolymathBase';
 
@@ -97,6 +100,7 @@ interface ContextualizedEntities {
   UsdTieredStoModule: typeof UsdTieredStoModuleEntity;
   Investment: typeof InvestmentEntity;
   StoModule: typeof StoModuleEntity;
+  InvestorData: typeof InvestorDataEntity;
 }
 
 export class Polymath {
@@ -132,6 +136,7 @@ export class Polymath {
       UsdTieredStoModule: createContextualizedEntity(UsdTieredStoModuleEntity as any, this),
       Investment: createContextualizedEntity(InvestmentEntity as any, this),
       StoModule: createContextualizedEntity(StoModuleEntity as any, this),
+      InvestorData: createContextualizedEntity(InvestorDataEntity as any, this),
     };
   }
 
@@ -203,6 +208,35 @@ export class Polymath {
   };
 
   /**
+   * Add/modify investor data. For an investor to be able to hold, sell or purchase tokens, his address (and other KYC data)
+   * must be added/modified via this method
+   *
+   * @param securityTokenId token uuid
+   * @param investorData array of investor data to add/modify
+   * @param investorData[].address address of the investor whose data will be added/modified
+   * @param investorData[].canSendAfter date after which the investor can transfer tokens
+   * @param investorData[].canReceiveAfter date after which the investor can receive tokens
+   * @param investorData[].kycExpiry date at which the investor's KYC expires
+   * @param investorData[].isAccredited whether the investor is accredited (defaults to false)
+   * @param investorData[].canBuyFromSto whether the investor is allowed to purchase tokens in an STO (defaults to true)
+   */
+  public modifyInvestorData = async (args: {
+    securityTokenId: string;
+    investorData: InvestorDataEntry[];
+  }) => {
+    const { securityTokenId, ...rest } = args;
+    const { symbol } = this.SecurityToken.unserialize(securityTokenId);
+    const procedure = new ModifyInvestorData(
+      {
+        symbol,
+        ...rest,
+      },
+      this.context
+    );
+    return await procedure.prepare();
+  };
+
+  /**
    * Launch a Capped STO
    *
    * @param securityTokenId token uuid
@@ -242,7 +276,7 @@ export class Polymath {
    * @param startDate date when the STO should start
    * @param endDate date when the STO should end
    * @param tiers tier information
-   * @param tiers[].tokensOnSale amount of tokens to be sold on that tier
+   * @param tiers[].tokensOnSale amount of tokens to be sold on that tier
    * @param tiers[].price price of each token on that tier in USD
    * @param tiers[].tokensWithDiscount amount of tokens to be sold on that tier at a discount if paid in POLY (must be less than tokensOnSale, defaults to 0)
    * @param tiers[].discountedPrice price of discounted tokens on that tier (defaults to 0)
@@ -892,6 +926,66 @@ export class Polymath {
   };
 
   /**
+   * Get data for all investors associated to a Security Token
+   *
+   * @param securityTokenId token uuid
+   */
+  public getInvestorData = async (args: { securityTokenId: string }) => {
+    const { contractWrappers } = this;
+
+    const { securityTokenId } = args;
+
+    const { symbol: securityTokenSymbol } = this.SecurityToken.unserialize(securityTokenId);
+
+    let securityToken;
+
+    try {
+      securityToken = await this.contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        securityTokenSymbol
+      );
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message: `There is no Security Token with symbol ${securityTokenSymbol}`,
+      });
+    }
+
+    const generalTransferManager = (await contractWrappers.getAttachedModules(
+      { moduleName: ModuleName.GeneralTransferManager, symbol: securityTokenSymbol },
+      { unarchived: true }
+    ))[0];
+
+    const [allKycData, allFlags] = await Promise.all([
+      generalTransferManager.getAllKYCData(),
+      generalTransferManager.getAllInvestorFlags(),
+    ]);
+
+    const investorData = [];
+
+    for (let i = 0; i < allKycData.length; ++i) {
+      const { investor: address, canSendAfter, canReceiveAfter, expiryTime } = allKycData[i];
+      const { isAccredited, canNotBuyFromSTO } = allFlags[i];
+      const balance = await securityToken.balanceOf({ owner: address });
+
+      const data = new this.InvestorData({
+        balance,
+        address,
+        canSendAfter,
+        canReceiveAfter,
+        kycExpiry: expiryTime,
+        isAccredited,
+        canBuyFromSto: !canNotBuyFromSTO,
+        securityTokenId,
+        securityTokenSymbol,
+      });
+
+      investorData.push(data);
+    }
+
+    return investorData;
+  };
+
+  /**
    * Retrieve all STO modules attached to a security token
    */
   public getStoModules = async (
@@ -1289,6 +1383,10 @@ export class Polymath {
 
   get StoModule() {
     return this.entities.StoModule;
+  }
+
+  get InvestorData() {
+    return this.entities.InvestorData;
   }
 
   /**

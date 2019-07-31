@@ -85,7 +85,8 @@ export interface PolymathNetworkParams {
 
 export enum ProcedureType {
   UnnamedProcedure = 'UnnamedProcedure',
-  Approve = 'Approve',
+  ApproveErc20 = 'ApproveErc20',
+  TransferErc20 = 'TransferErc20',
   CreateCheckpoint = 'CreateCheckpoint',
   EnableDividendModules = 'EnableDividendModules',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
@@ -104,13 +105,14 @@ export enum ProcedureType {
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
+  ModifyInvestorData = 'ModifyInvestorData',
 }
 
 export enum PolyTransactionTag {
   Any = 'Any',
   GetTokens = 'GetTokens',
-  ApprovePoly = 'ApprovePoly',
-  TransferPoly = 'TransferPoly',
+  ApproveErc20 = 'ApproveErc20',
+  TransferErc20 = 'TransferErc20',
   ReserveSecurityToken = 'ReserveSecurityToken',
   CreateSecurityToken = 'CreateSecurityToken',
   CreateCheckpoint = 'CreateCheckpoint',
@@ -130,6 +132,8 @@ export enum PolyTransactionTag {
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
+  ModifyKycDataMulti = 'ModifyKycDataMulti',
+  ModifyInvestorFlagMulti = 'ModifyInvestorFlagMulti',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -157,9 +161,16 @@ export type MapMaybeResolver<T> = { [K in keyof T]: MaybeResolver<T[K]> };
 
 // Procedure arguments
 
-export interface ApproveProcedureArgs {
+export interface ApproveErc20ProcedureArgs {
   amount: BigNumber;
   spender: string;
+  tokenAddress?: string;
+  owner?: string;
+}
+
+export interface TransferErc20ProcedureArgs {
+  amount: BigNumber;
+  receiver: string;
   tokenAddress?: string;
   owner?: string;
 }
@@ -289,7 +300,7 @@ export interface SetDividendsWalletProcedureArgs {
   address: string;
 }
 
-export interface ChangeDelegatePermissionArgs {
+export interface ChangeDelegatePermissionProcedureArgs {
   symbol: string;
   delegate: string;
   op: ModuleOperation;
@@ -297,7 +308,7 @@ export interface ChangeDelegatePermissionArgs {
   details?: string;
 }
 
-export interface ControllerTransferArgs {
+export interface ControllerTransferProcedureArgs {
   from: string;
   to: string;
   symbol: string;
@@ -306,17 +317,50 @@ export interface ControllerTransferArgs {
   log?: string;
 }
 
-export interface PauseStoArgs {
+export interface PauseStoProcedureArgs {
   stoModuleAddress: string;
 }
 
-export interface SetControllerArgs {
+export interface SetControllerProcedureArgs {
   symbol: string;
   controller: string;
 }
 
+export interface InvestorDataEntry {
+  /**
+   * investor wallet address to whitelist
+   */
+  address: string;
+  /**
+   * date from which the investor can transfer tokens
+   */
+  canSendAfter: Date;
+  /**
+   * date from which the investor can receive tokens
+   */
+  canReceiveAfter: Date;
+  /**
+   * date at which the investor's KYC expires
+   */
+  kycExpiry: Date;
+  /**
+   * whether the investor is accredited
+   */
+  isAccredited?: boolean;
+  /**
+   * whether the investor is allowed to purchase tokens in an STO
+   */
+  canBuyFromSto?: boolean;
+}
+
+export interface ModifyInvestorDataProcedureArgs {
+  symbol: string;
+  investorData: InvestorDataEntry[];
+}
+
 export interface ProcedureArguments {
-  [ProcedureType.Approve]: ApproveProcedureArgs;
+  [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
+  [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
   [ProcedureType.CreateCheckpoint]: CreateCheckpointProcedureArgs;
   [ProcedureType.CreateErc20DividendDistribution]: CreateErc20DividendDistributionProcedureArgs;
   [ProcedureType.CreateEtherDividendDistribution]: CreateEtherDividendDistributionProcedureArgs;
@@ -328,6 +372,13 @@ export interface ProcedureArguments {
   [ProcedureType.UpdateDividendsTaxWithholdingList]: UpdateDividendsTaxWithholdingListProcedureArgs;
   [ProcedureType.PushDividendPayment]: PushDividendPaymentProcedureArgs;
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
+  [ProcedureType.LaunchCappedSto]: LaunchCappedStoProcedureArgs;
+  [ProcedureType.LaunchUsdTieredSto]: LaunchUsdTieredStoProcedureArgs;
+  [ProcedureType.PauseSto]: PauseStoProcedureArgs;
+  [ProcedureType.ControllerTransfer]: ControllerTransferProcedureArgs;
+  [ProcedureType.SetController]: SetControllerProcedureArgs;
+  [ProcedureType.ChangeDelegatePermission]: ChangeDelegatePermissionProcedureArgs;
+  [ProcedureType.ModifyInvestorData]: ModifyInvestorDataProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 

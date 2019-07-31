@@ -3,13 +3,13 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  ChangeDelegatePermissionArgs,
+  ChangeDelegatePermissionProcedureArgs,
   ErrorCode,
   ModuleOperation,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
-export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermissionArgs> {
+export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermissionProcedureArgs> {
   public type = ProcedureType.ChangeDelegatePermission;
 
   public async prepareTransactions() {
@@ -41,7 +41,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
           // then something very wrong is happening.
           throw new PolymathError({
             code: ErrorCode.FatalError,
-            message: `Fatal error: Transfer manager module for token "${symbol}" hasn't been enabled. Please report this issue to the Polymath team`,
+            message: `General Transfer manager module for token "${symbol}" isn't enabled. Please report this issue to the Polymath team`,
           });
         }
         moduleAddress = await attachedModule.address();

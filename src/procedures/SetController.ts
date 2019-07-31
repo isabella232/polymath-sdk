@@ -1,9 +1,9 @@
 import { Procedure } from './Procedure';
-import { ProcedureType, PolyTransactionTag, SetControllerArgs, ErrorCode } from '../types';
+import { ProcedureType, PolyTransactionTag, SetControllerProcedureArgs, ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 
-export class SetController extends Procedure<SetControllerArgs> {
+export class SetController extends Procedure<SetControllerProcedureArgs> {
   public type = ProcedureType.SetController;
 
   public async prepareTransactions() {

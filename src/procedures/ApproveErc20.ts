@@ -1,10 +1,13 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
-import { ApproveProcedureArgs, ErrorCode, ProcedureType, PolyTransactionTag } from '../types';
+import { ApproveErc20ProcedureArgs, ErrorCode, ProcedureType, PolyTransactionTag } from '../types';
 import { PolymathError } from '../PolymathError';
 
-export class Approve extends Procedure<ApproveProcedureArgs> {
-  public type = ProcedureType.Approve;
+/**
+ * Procedure to approve spending funds on an ERC20 token. If no token address is specified, it defaults to POLY
+ */
+export class ApproveErc20 extends Procedure<ApproveErc20ProcedureArgs> {
+  public type = ProcedureType.ApproveErc20;
 
   public async prepareTransactions() {
     const { amount, spender, tokenAddress, owner } = this.args;
@@ -48,15 +51,13 @@ export class Approve extends Procedure<ApproveProcedureArgs> {
     const isTestnet = await contractWrappers.isTestnet();
 
     if (balance.lt(amount)) {
-      if (isTestnet) {
-        if (address.toUpperCase() === polyTokenAddress.toUpperCase()) {
-          await this.addTransaction(contractWrappers.getPolyTokens, {
-            tag: PolyTransactionTag.GetTokens,
-          })({
-            amount: amount.minus(balance).decimalPlaces(0, BigNumber.ROUND_HALF_UP),
-            address: ownerAddress,
-          });
-        }
+      if (isTestnet && address.toUpperCase() === polyTokenAddress.toUpperCase()) {
+        await this.addTransaction(contractWrappers.getPolyTokens, {
+          tag: PolyTransactionTag.GetTokens,
+        })({
+          amount: amount.minus(balance).decimalPlaces(0, BigNumber.ROUND_HALF_UP),
+          address: ownerAddress,
+        });
       } else {
         throw new PolymathError({
           code: ErrorCode.ProcedureValidationError,
@@ -76,7 +77,7 @@ export class Approve extends Procedure<ApproveProcedureArgs> {
     }
 
     await this.addTransaction(token.approve, {
-      tag: PolyTransactionTag.ApprovePoly,
+      tag: PolyTransactionTag.ApproveErc20,
     })({ spender, value: amount });
   }
 }
