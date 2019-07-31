@@ -41,6 +41,9 @@ import {
   UsdTieredStoModule as UsdTieredStoModuleEntity,
   Investment as InvestmentEntity,
   StoModule as StoModuleEntity,
+  InvestorData as InvestorDataEntity,
+  DividendsModule,
+  Entity,
 } from './entities';
 
 import {
@@ -63,8 +66,6 @@ import {
   LaunchUsdTieredSto,
   ModifyInvestorData,
 } from './procedures';
-import { Entity } from './entities/Entity';
-import { DividendsModule } from './entities/DividendsModule';
 import { PolymathError } from './PolymathError';
 import { PolymathBase, BaseCheckpoint, BaseDividend } from './PolymathBase';
 
@@ -99,6 +100,7 @@ interface ContextualizedEntities {
   UsdTieredStoModule: typeof UsdTieredStoModuleEntity;
   Investment: typeof InvestmentEntity;
   StoModule: typeof StoModuleEntity;
+  InvestorData: typeof InvestorDataEntity;
 }
 
 export class Polymath {
@@ -134,6 +136,7 @@ export class Polymath {
       UsdTieredStoModule: createContextualizedEntity(UsdTieredStoModuleEntity as any, this),
       Investment: createContextualizedEntity(InvestmentEntity as any, this),
       StoModule: createContextualizedEntity(StoModuleEntity as any, this),
+      InvestorData: createContextualizedEntity(InvestorDataEntity as any, this),
     };
   }
 
@@ -923,6 +926,66 @@ export class Polymath {
   };
 
   /**
+   * Get data for all investors associated to a Security Token
+   *
+   * @param securityTokenId token uuid
+   */
+  public getInvestorData = async (args: { securityTokenId: string }) => {
+    const { contractWrappers } = this;
+
+    const { securityTokenId } = args;
+
+    const { symbol: securityTokenSymbol } = this.SecurityToken.unserialize(securityTokenId);
+
+    let securityToken;
+
+    try {
+      securityToken = await this.contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        securityTokenSymbol
+      );
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message: `There is no Security Token with symbol ${securityTokenSymbol}`,
+      });
+    }
+
+    const generalTransferManager = (await contractWrappers.getAttachedModules(
+      { moduleName: ModuleName.GeneralTransferManager, symbol: securityTokenSymbol },
+      { unarchived: true }
+    ))[0];
+
+    const [allKycData, allFlags] = await Promise.all([
+      generalTransferManager.getAllKYCData(),
+      generalTransferManager.getAllInvestorFlags(),
+    ]);
+
+    const investorData = [];
+
+    for (let i = 0; i < allKycData.length; ++i) {
+      const { investor: address, canSendAfter, canReceiveAfter, expiryTime } = allKycData[i];
+      const { isAccredited, canNotBuyFromSTO } = allFlags[i];
+      const balance = await securityToken.balanceOf({ owner: address });
+
+      const data = new this.InvestorData({
+        balance,
+        address,
+        canSendAfter,
+        canReceiveAfter,
+        kycExpiry: expiryTime,
+        isAccredited,
+        canBuyFromSto: !canNotBuyFromSTO,
+        securityTokenId,
+        securityTokenSymbol,
+      });
+
+      investorData.push(data);
+    }
+
+    return investorData;
+  };
+
+  /**
    * Retrieve all STO modules attached to a security token
    */
   public getStoModules = async (
@@ -1320,6 +1383,10 @@ export class Polymath {
 
   get StoModule() {
     return this.entities.StoModule;
+  }
+
+  get InvestorData() {
+    return this.entities.InvestorData;
   }
 
   /**

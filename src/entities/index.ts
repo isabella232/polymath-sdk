@@ -1,7 +1,9 @@
+export { Entity } from './Entity';
 export { SecurityTokenReservation } from './SecurityTokenReservation';
 export { SecurityToken } from './SecurityToken';
 export { Erc20DividendsModule } from './Erc20DividendsModule';
 export { EthDividendsModule } from './EthDividendsModule';
+export { DividendsModule } from './DividendsModule';
 export { Dividend } from './Dividend';
 export { Checkpoint } from './Checkpoint';
 export { TaxWithholding } from './TaxWithholding';
@@ -12,3 +14,4 @@ export { CappedStoModule } from './CappedStoModule';
 export { UsdTieredStoModule } from './UsdTieredStoModule';
 export { Investment } from './Investment';
 export { StoModule } from './StoModule';
+export { InvestorData } from './InvestorData';
