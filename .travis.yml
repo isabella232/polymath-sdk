@@ -14,4 +14,4 @@ jobs:
         - yarn
         - yarn build:ci
         - yarn test
-#        - yarn semantic-release
+        - yarn semantic-release
