@@ -35,7 +35,6 @@
       "**/__tests__/**/*.(ts|tsx)"
     ],
     "testPathIgnorePatterns": [
-      "build",
       "dist"
     ],
     "moduleNameMapper": {
