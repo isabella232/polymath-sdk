@@ -14,7 +14,8 @@ import { PolymathError } from '../PolymathError';
 import { findEvent } from '../utils';
 
 export class CreateEtherDividendDistribution extends Procedure<
-  CreateEtherDividendDistributionProcedureArgs
+  CreateEtherDividendDistributionProcedureArgs,
+  number
 > {
   public type = ProcedureType.CreateEtherDividendDistribution;
 
@@ -52,7 +53,7 @@ export class CreateEtherDividendDistribution extends Procedure<
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message:
-          "The ERC20 Dividend module hasn't been enabled. Did you forget to call .enableDividendModules()?",
+          "The ETH Dividends Manager hasn't been enabled. Did you forget to call dividends.enable() on the Security Token?",
       });
     }
 
@@ -74,6 +75,12 @@ export class CreateEtherDividendDistribution extends Procedure<
             const { _dividendIndex } = args;
 
             return _dividendIndex.toNumber();
+          } else {
+            throw new PolymathError({
+              code: ErrorCode.UnexpectedEventLogs,
+              message:
+                "The ETH Dividend Distribution was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+            });
           }
         },
       }

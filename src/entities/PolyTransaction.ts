@@ -52,7 +52,7 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
   private emitter: EventEmitter;
 
   constructor(transaction: TransactionSpec<Args, R>, transactionQueue: TransactionQueue) {
-    super(undefined, false);
+    super();
 
     if (transaction.postTransactionResolver) {
       this.postResolver = transaction.postTransactionResolver;

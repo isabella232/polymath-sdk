@@ -9,7 +9,7 @@ import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
-  DividendModuleType,
+  DividendType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
@@ -32,14 +32,14 @@ export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArg
     let dividendModule: ERC20DividendCheckpoint | EtherDividendCheckpoint | null = null;
 
     switch (dividendType) {
-      case DividendModuleType.Erc20: {
+      case DividendType.Erc20: {
         dividendModule = (await contractWrappers.getAttachedModules(
           { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
           { unarchived: true }
         ))[0];
         break;
       }
-      case DividendModuleType.Eth: {
+      case DividendType.Eth: {
         dividendModule = (await contractWrappers.getAttachedModules(
           { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
           { unarchived: true }
@@ -49,7 +49,11 @@ export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArg
     }
 
     if (!dividendModule) {
-      throw new Error('There is no attached dividend module of the specified type');
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message:
+          "Dividends of the specified type haven't been enabled. Did you forget to call dividends.enable() on your Security Token?",
+      });
     }
 
     await this.addTransaction(dividendModule.changeWallet, {

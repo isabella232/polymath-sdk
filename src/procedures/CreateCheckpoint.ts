@@ -7,7 +7,7 @@ import {
   ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-import { findEvent } from '~/utils';
+import { findEvent } from '../utils';
 
 export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs> {
   public type = ProcedureType.CreateCheckpoint;
@@ -41,6 +41,12 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs> {
           const { _checkpointId } = args;
 
           return _checkpointId.toNumber();
+        } else {
+          throw new PolymathError({
+            code: ErrorCode.UnexpectedEventLogs,
+            message:
+              "The Checkpoint was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+          });
         }
       },
     })({});

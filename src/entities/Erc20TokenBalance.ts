@@ -1,7 +1,8 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
+import { PolymathError } from '../PolymathError';
+import { ErrorCode } from '../types';
 
 interface UniqueIdentifiers {
   tokenAddress: string;
@@ -31,7 +32,10 @@ export class Erc20TokenBalance extends Entity {
     const unserialized = unserialize(serialized);
 
     if (!isUniqueIdentifiers(unserialized)) {
-      throw new Error('Wrong erc20 token balance ID format.');
+      throw new PolymathError({
+        code: ErrorCode.InvalidUuid,
+        message: 'Wrong ERC20 Token Balance ID format.',
+      });
     }
 
     return unserialized;
@@ -47,8 +51,8 @@ export class Erc20TokenBalance extends Entity {
 
   public balance: BigNumber;
 
-  constructor(params: Params, polyClient?: Polymath) {
-    super(polyClient);
+  constructor(params: Params) {
+    super();
 
     const { tokenSymbol, tokenAddress, balance, walletAddress } = params;
 

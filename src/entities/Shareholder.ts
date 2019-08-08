@@ -1,7 +1,8 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
+import { PolymathError } from '../PolymathError';
+import { ErrorCode } from '../types';
 
 interface UniqueIdentifiers {
   securityTokenId: string;
@@ -24,9 +25,9 @@ interface Params extends UniqueIdentifiers {
   balance: BigNumber;
 }
 
-export class InvestorData extends Entity {
+export class Shareholder extends Entity {
   public static generateId({ securityTokenId, address }: UniqueIdentifiers) {
-    return serialize('investorData', {
+    return serialize('shareholder', {
       securityTokenId,
       address,
     });
@@ -36,7 +37,10 @@ export class InvestorData extends Entity {
     const unserialized = unserialize(serialized);
 
     if (!isUniqueIdentifiers(unserialized)) {
-      throw new Error('Wrong investor data ID format.');
+      throw new PolymathError({
+        code: ErrorCode.InvalidUuid,
+        message: 'Wrong Shareholder ID format.',
+      });
     }
 
     return unserialized;
@@ -62,8 +66,8 @@ export class InvestorData extends Entity {
 
   public address: string;
 
-  constructor(params: Params, polyClient?: Polymath) {
-    super(polyClient);
+  constructor(params: Params) {
+    super();
 
     const {
       securityTokenId,
@@ -86,7 +90,7 @@ export class InvestorData extends Entity {
     this.isAccredited = isAccredited;
     this.canBuyFromSto = canBuyFromSto;
     this.balance = balance;
-    this.uid = InvestorData.generateId({
+    this.uid = Shareholder.generateId({
       securityTokenId,
       address,
     });

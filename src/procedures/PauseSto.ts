@@ -8,30 +8,30 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
   public type = ProcedureType.PauseSto;
 
   public async prepareTransactions() {
-    const { stoModuleAddress } = this.args;
+    const { stoAddress } = this.args;
     const { contractWrappers } = this.context;
 
     /**
      * Validation
      */
 
-    if (!isValidAddress(stoModuleAddress)) {
+    if (!isValidAddress(stoAddress)) {
       throw new PolymathError({
         code: ErrorCode.InvalidAddress,
-        message: `Invalid module address ${stoModuleAddress}`,
+        message: `Invalid STO address ${stoAddress}`,
       });
     }
 
     // here we can use any STO wrapper because they all implement the pause method
     const stoModule = await contractWrappers.moduleFactory.getModuleInstance({
       name: ModuleName.CappedSTO,
-      address: stoModuleAddress,
+      address: stoAddress,
     });
 
     if (!stoModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `module ${stoModuleAddress} is either archived or hasn't been enabled.`,
+        message: `STO ${stoAddress} is either archived or hasn't been launched.`,
       });
     }
 

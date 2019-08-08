@@ -1,6 +1,9 @@
-import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
+import { Context } from '../Context';
+import { CreateSecurityToken } from '../procedures';
+import { PolymathError } from '../PolymathError';
+import { ErrorCode } from '../types';
 
 interface UniqueIdentifiers {
   symbol: string;
@@ -12,9 +15,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof symbol === 'string';
 }
 
-interface Params extends UniqueIdentifiers {
-  name: string;
-}
+interface Params extends UniqueIdentifiers {}
 
 export class SecurityTokenReservation extends Entity {
   public static generateId({ symbol }: UniqueIdentifiers) {
@@ -27,7 +28,10 @@ export class SecurityTokenReservation extends Entity {
     const unserialized = unserialize(serialized);
 
     if (!isUniqueIdentifiers(unserialized)) {
-      throw new Error('Wrong security token reservation ID format.');
+      throw new PolymathError({
+        code: ErrorCode.InvalidUuid,
+        message: 'Wrong Security Token Reservation ID format.',
+      });
     }
 
     return unserialized;
@@ -37,35 +41,45 @@ export class SecurityTokenReservation extends Entity {
 
   public symbol: string;
 
-  public name: string;
+  protected context: Context;
 
-  constructor(params: Params, polyClient?: Polymath) {
-    super(polyClient);
+  constructor(params: Params, context: Context) {
+    super();
 
-    const { symbol, name } = params;
+    const { symbol } = params;
 
     this.symbol = symbol;
-    this.name = name;
+    this.context = context;
     this.uid = SecurityTokenReservation.generateId({ symbol });
   }
 
-  public reserve = (args: { name: string }) =>
-    this.polyClient.reserveSecurityToken({
-      ...args,
-      symbol: this.symbol,
-      name: this.name,
-    });
-
-  public createSecurityToken = (args: { name: string; detailsUrl?: string; divisible: boolean }) =>
-    this.polyClient.createSecurityToken({
-      ...args,
-      securityTokenReservationId: this.uid,
-      name: this.name,
-    });
+  /**
+   * Creates a security token with the reserved symbol
+   *
+   * @param name name of the security token
+   * @param detailsUrl URL containing information about the security
+   * @param divisible whether the token should be divisible or not
+   * @param treasuryWallet address of a wallet to be used to store tokens for some operations (defaults to)
+   */
+  public createSecurityToken = async (args: {
+    name: string;
+    detailsUrl?: string;
+    divisible: boolean;
+    treasuryWallet?: string;
+  }) => {
+    const procedure = new CreateSecurityToken(
+      {
+        symbol: this.symbol,
+        ...args,
+      },
+      this.context
+    );
+    return await procedure.prepare();
+  };
 
   public toPojo() {
-    const { uid, symbol, name } = this;
+    const { uid, symbol } = this;
 
-    return { uid, symbol, name };
+    return { uid, symbol };
   }
 }

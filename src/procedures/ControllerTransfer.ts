@@ -12,7 +12,7 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
   public type = ProcedureType.ControllerTransfer;
 
   public async prepareTransactions() {
-    const { symbol, value, from, to, log = '', data = '' } = this.args;
+    const { symbol, amount, from, to, log = '', data = '' } = this.args;
     const { contractWrappers, currentWallet } = this.context;
     const addresses: { [key: string]: string } = { from, to };
 
@@ -43,25 +43,16 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
     }
 
     const senderBalance = await securityToken.balanceOf({ owner: from });
-    if (senderBalance.lt(value)) {
+    if (senderBalance.lt(amount)) {
       throw new PolymathError({
         code: ErrorCode.InsufficientBalance,
-        message: `Sender's balance "${senderBalance}" is less than the requested amount "${value}."`,
+        message: `Sender's balance of ${senderBalance} is less than the requested amount of ${amount}`,
       });
     }
 
     const controller = await securityToken.controller();
-    let account: string;
 
-    if (currentWallet) {
-      ({ address: account } = currentWallet);
-    } else {
-      throw new PolymathError({
-        message:
-          "No default account set. You must pass the token owner's private key to Polymath.connect()",
-        code: ErrorCode.ProcedureValidationError,
-      });
-    }
+    const { address: account } = currentWallet;
 
     if (account !== controller) {
       throw new PolymathError({
@@ -76,6 +67,6 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
 
     await this.addTransaction(securityToken.controllerTransfer, {
       tag: PolyTransactionTag.ControllerTransfer,
-    })({ from, to, value, data, operatorData: log });
+    })({ from, to, value: amount, data, operatorData: log });
   }
 }

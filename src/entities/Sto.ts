@@ -1,22 +1,22 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
-import { StoModuleType, isStoModuleType, Currency } from '../types';
+import { StoType, isStoType, Currency, ErrorCode } from '../types';
 import { Investment } from './Investment';
+import { PolymathError } from '../PolymathError';
+import { Context } from '../Context';
+import { PauseSto } from '../procedures';
 
 export interface UniqueIdentifiers {
   securityTokenId: string;
-  stoType: StoModuleType;
+  stoType: StoType;
   address: string;
 }
 
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { securityTokenId, stoType, address } = identifiers;
 
-  return (
-    typeof securityTokenId === 'string' && typeof address === 'string' && isStoModuleType(stoType)
-  );
+  return typeof securityTokenId === 'string' && typeof address === 'string' && isStoType(stoType);
 }
 
 export interface Params extends UniqueIdentifiers {
@@ -32,7 +32,7 @@ export interface Params extends UniqueIdentifiers {
   capReached: boolean;
 }
 
-export abstract class StoModule extends Entity {
+export abstract class Sto extends Entity {
   public abstract uid: string;
 
   public address: string;
@@ -41,7 +41,7 @@ export abstract class StoModule extends Entity {
 
   public securityTokenId: string;
 
-  public stoType: StoModuleType;
+  public stoType: StoType;
 
   public startTime: Date;
 
@@ -61,18 +61,23 @@ export abstract class StoModule extends Entity {
 
   public capReached: boolean;
 
+  protected context: Context;
+
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
     if (!isUniqueIdentifiers(unserialized)) {
-      throw new Error('Wrong STO module ID format.');
+      throw new PolymathError({
+        code: ErrorCode.InvalidUuid,
+        message: 'Wrong STO ID format.',
+      });
     }
 
     return unserialized;
   }
 
-  constructor(params: Params, polyClient?: Polymath) {
-    super(polyClient);
+  constructor(params: Params, context: Context) {
+    super();
 
     const {
       address,
@@ -103,7 +108,16 @@ export abstract class StoModule extends Entity {
     this.fundraiseTypes = fundraiseTypes;
     this.paused = paused;
     this.capReached = capReached;
+    this.context = context;
   }
+
+  public pause = async () => {
+    const { address: stoAddress } = this;
+
+    const procedure = new PauseSto({ stoAddress }, this.context);
+
+    return await procedure.prepare();
+  };
 
   public toPojo() {
     const {

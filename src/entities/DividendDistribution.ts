@@ -1,13 +1,15 @@
-import { BigNumber } from '@0x/utils';
-import { Polymath } from '../Polymath';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
-import { DividendModuleType, DividendInvestorStatus, isDividendModuleType } from '../types';
+import { DividendType, DividendShareholderStatus, isDividendType, ErrorCode } from '../types';
+import { PushDividendPayment, WithdrawTaxes } from '../procedures';
+import { Context } from '../Context';
+import { PolymathError } from '../PolymathError';
 
 interface UniqueIdentifiers {
   securityTokenId: string;
   checkpointId: string;
-  dividendType: DividendModuleType;
+  dividendType: DividendType;
   index: number;
 }
 
@@ -18,7 +20,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
     typeof securityTokenId === 'string' &&
     typeof checkpointId === 'string' &&
     typeof index === 'number' &&
-    isDividendModuleType(dividendType)
+    isDividendType(dividendType)
   );
 }
 
@@ -33,12 +35,12 @@ interface Params extends UniqueIdentifiers {
   reclaimed: boolean;
   totalWithheld: BigNumber;
   totalWithheldWithdrawn: BigNumber;
-  investors: DividendInvestorStatus[];
+  shareholders: DividendShareholderStatus[];
   name: string;
   currency: string | null;
 }
 
-export class Dividend extends Entity {
+export class DividendDistribution extends Entity {
   public static generateId({
     securityTokenId,
     checkpointId,
@@ -57,7 +59,10 @@ export class Dividend extends Entity {
     const unserialized = unserialize(serialized);
 
     if (!isUniqueIdentifiers(unserialized)) {
-      throw new Error('Wrong dividend ID format.');
+      throw new PolymathError({
+        code: ErrorCode.InvalidUuid,
+        message: 'Wrong Dividend Distribution ID format.',
+      });
     }
 
     return unserialized;
@@ -69,7 +74,7 @@ export class Dividend extends Entity {
 
   public checkpointId: string;
 
-  public dividendType: DividendModuleType;
+  public dividendType: DividendType;
 
   public securityTokenSymbol: string;
 
@@ -93,14 +98,16 @@ export class Dividend extends Entity {
 
   public totalWithheldWithdrawn: BigNumber;
 
-  public investors: DividendInvestorStatus[];
+  public shareholders: DividendShareholderStatus[];
 
   public name: string;
 
   public currency: string | null;
 
-  constructor(params: Params, polyClient?: Polymath) {
-    super(polyClient);
+  protected context: Context;
+
+  constructor(params: Params, context: Context) {
+    super();
 
     const {
       index,
@@ -117,7 +124,7 @@ export class Dividend extends Entity {
       reclaimed,
       totalWithheld,
       totalWithheldWithdrawn,
-      investors,
+      shareholders,
       name,
       currency,
     } = params;
@@ -137,16 +144,49 @@ export class Dividend extends Entity {
     this.totalWithheld = totalWithheld;
     this.totalWithheldWithdrawn = totalWithheldWithdrawn;
     this.name = name;
-    this.investors = investors;
+    this.shareholders = shareholders;
     this.currency = currency;
+    this.context = context;
 
-    this.uid = Dividend.generateId({
+    this.uid = DividendDistribution.generateId({
       securityTokenId,
       checkpointId,
       dividendType,
       index,
     });
   }
+
+  /**
+   * Push payment for this dividend distribution
+   */
+  public pushPayment = async () => {
+    const { securityTokenSymbol: symbol, dividendType, index: dividendIndex } = this;
+    const procedure = new PushDividendPayment(
+      {
+        symbol,
+        dividendType,
+        dividendIndex,
+      },
+      this.context
+    );
+    return await procedure.prepare();
+  };
+
+  /**
+   * Withdraw collected taxes from this dividend distribution
+   */
+  public withdrawTaxes = async () => {
+    const { securityTokenSymbol: symbol, dividendType, index: dividendIndex } = this;
+    const procedure = new WithdrawTaxes(
+      {
+        symbol,
+        dividendType,
+        dividendIndex,
+      },
+      this.context
+    );
+    return await procedure.prepare();
+  };
 
   public toPojo() {
     const {
@@ -165,7 +205,7 @@ export class Dividend extends Entity {
       reclaimed,
       totalWithheld,
       totalWithheldWithdrawn,
-      investors,
+      shareholders,
       name,
       currency,
     } = this;
@@ -186,7 +226,7 @@ export class Dividend extends Entity {
       reclaimed,
       totalWithheld,
       totalWithheldWithdrawn,
-      investors,
+      shareholders,
       name,
       currency,
     };

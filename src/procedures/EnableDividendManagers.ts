@@ -1,11 +1,11 @@
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
-  EnableDividendModulesProcedureArgs,
+  EnableDividendManagersProcedureArgs,
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
-  DividendModuleType,
+  DividendType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
@@ -19,14 +19,14 @@ interface AddDividendCheckpointParams {
   label?: string;
 }
 
-export class EnableDividendModules extends Procedure<EnableDividendModulesProcedureArgs> {
-  public type = ProcedureType.EnableDividendModules;
+export class EnableDividendManagers extends Procedure<EnableDividendManagersProcedureArgs> {
+  public type = ProcedureType.EnableDividendManagers;
 
   public async prepareTransactions() {
     const {
       symbol,
       storageWalletAddress,
-      types = [DividendModuleType.Erc20, DividendModuleType.Eth],
+      types = [DividendType.Erc20, DividendType.Eth],
     } = this.args;
     const { contractWrappers } = this.context;
 
@@ -46,11 +46,11 @@ export class EnableDividendModules extends Procedure<EnableDividendModulesProced
     const tokenAddress = await securityToken.address();
 
     const moduleNames: {
-      [DividendModuleType.Erc20]: ModuleName.ERC20DividendCheckpoint;
-      [DividendModuleType.Eth]: ModuleName.EtherDividendCheckpoint;
+      [DividendType.Erc20]: ModuleName.ERC20DividendCheckpoint;
+      [DividendType.Eth]: ModuleName.EtherDividendCheckpoint;
     } = {
-      [DividendModuleType.Erc20]: ModuleName.ERC20DividendCheckpoint,
-      [DividendModuleType.Eth]: ModuleName.EtherDividendCheckpoint,
+      [DividendType.Erc20]: ModuleName.ERC20DividendCheckpoint,
+      [DividendType.Eth]: ModuleName.EtherDividendCheckpoint,
     };
 
     for (const type of types) {

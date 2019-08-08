@@ -4,16 +4,16 @@ import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
-  ModifyInvestorDataProcedureArgs,
+  ModifyShareholderDataProcedureArgs,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
-export class ModifyInvestorData extends Procedure<ModifyInvestorDataProcedureArgs> {
+export class ModifyShareholderData extends Procedure<ModifyShareholderDataProcedureArgs> {
   public type = ProcedureType.CreateErc20DividendDistribution;
 
   // TODO @monitz87: consider returning the updated whitelist
   public async prepareTransactions() {
-    const { symbol, investorData } = this.args;
+    const { symbol, shareholderData } = this.args;
     const { contractWrappers } = this.context;
 
     try {
@@ -36,7 +36,7 @@ export class ModifyInvestorData extends Procedure<ModifyInvestorDataProcedureArg
     if (!gtmModule) {
       throw new PolymathError({
         code: ErrorCode.FatalError,
-        message: `Transfer manager module for token "${symbol}" isn't enabled. Please report this issue to the Polymath team`,
+        message: `General Transfer Manager for token "${symbol}" isn't enabled. Please report this issue to the Polymath team`,
       });
     }
 
@@ -49,7 +49,7 @@ export class ModifyInvestorData extends Procedure<ModifyInvestorDataProcedureArg
     const flag: FlagsType[] = [];
     const value: boolean[] = [];
 
-    investorData.forEach(
+    shareholderData.forEach(
       ({
         address,
         canSendAfter: sendDate,
@@ -63,8 +63,8 @@ export class ModifyInvestorData extends Procedure<ModifyInvestorDataProcedureArg
         canReceiveAfter.push(receiveDate);
         expiryTime.push(kycExpiry);
 
-        // one investor entry per modified flag
-        // we will sometimes have the same investor twice in the array
+        // one shareholder entry per modified flag
+        // we will sometimes have the same shareholder twice in the array
         if (isAccredited !== undefined) {
           investorsForFlags.push(address);
           flag.push(FlagsType.IsAccredited);

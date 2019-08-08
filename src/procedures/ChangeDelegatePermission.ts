@@ -5,7 +5,7 @@ import {
   PolyTransactionTag,
   ChangeDelegatePermissionProcedureArgs,
   ErrorCode,
-  ModuleOperation,
+  PermissibleOperation,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
@@ -30,7 +30,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
 
     // @TODO remon-nashid refactor into a map(op => {module, perm}).
     switch (op) {
-      case ModuleOperation.GtmWhitelistUpdate:
+      case PermissibleOperation.ModifyShareholderData:
         perm = Perm.Admin;
         const attachedModule = (await contractWrappers.getAttachedModules(
           { moduleName: ModuleName.GeneralTransferManager, symbol },
@@ -41,7 +41,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
           // then something very wrong is happening.
           throw new PolymathError({
             code: ErrorCode.FatalError,
-            message: `General Transfer manager module for token "${symbol}" isn't enabled. Please report this issue to the Polymath team`,
+            message: `General Transfer Manager for token "${symbol}" isn't enabled. Please report this issue to the Polymath team`,
           });
         }
         moduleAddress = await attachedModule.address();
@@ -60,7 +60,8 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
     if (!permissionModule)
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: "Permission module hasn't been enabled",
+        message:
+          "Permissions haven't been enabled. Please call permissions.enable() on your Security Token.",
       });
 
     const delegates = await permissionModule.getAllDelegates();

@@ -10,21 +10,10 @@ export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
   public type = ProcedureType.TransferErc20;
 
   public async prepareTransactions() {
-    const { amount, receiver, tokenAddress, owner } = this.args;
+    const { amount, receiver, tokenAddress } = this.args;
     const { contractWrappers, currentWallet } = this.context;
 
-    let ownerAddress: string;
-
-    if (owner) {
-      ownerAddress = owner;
-    } else if (currentWallet) {
-      ({ address: ownerAddress } = currentWallet);
-    } else {
-      throw new PolymathError({
-        message: "No default account set. You must pass the owner's address as a parameter",
-        code: ErrorCode.ProcedureValidationError,
-      });
-    }
+    const { address: ownerAddress } = currentWallet;
 
     const { polyToken } = contractWrappers;
 

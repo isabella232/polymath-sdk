@@ -1,3 +1,4 @@
+import { SecurityTokenRegistryEvents } from '@polymathnetwork/abi-wrappers';
 import { Procedure } from './Procedure';
 import { ApproveErc20 } from './ApproveErc20';
 import {
@@ -7,28 +8,29 @@ import {
   ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { SecurityTokenReservation } from '../entities';
+import { findEvent } from '../utils';
 
-export class ReserveSecurityToken extends Procedure<ReserveSecurityTokenProcedureArgs> {
+export class ReserveSecurityToken extends Procedure<
+  ReserveSecurityTokenProcedureArgs,
+  SecurityTokenReservation
+> {
   public type = ProcedureType.ReserveSecurityToken;
 
   public async prepareTransactions() {
-    const { symbol, name, owner } = this.args;
+    const { args, context, addProcedure, addTransaction } = this;
+    const { symbol, owner } = args;
     const {
       contractWrappers: { securityTokenRegistry },
       currentWallet,
-    } = this.context;
+    } = context;
 
     let ownerAddress: string;
 
     if (owner) {
       ownerAddress = owner;
-    } else if (currentWallet) {
-      ({ address: ownerAddress } = currentWallet);
     } else {
-      throw new PolymathError({
-        message: "No default account set. You must pass the owner's address as a parameter",
-        code: ErrorCode.ProcedureValidationError,
-      });
+      ({ address: ownerAddress } = currentWallet);
     }
 
     const isAvailable = await securityTokenRegistry.isTickerAvailable({
@@ -42,14 +44,34 @@ export class ReserveSecurityToken extends Procedure<ReserveSecurityTokenProcedur
     }
 
     const fee = await securityTokenRegistry.getTickerRegistrationFee();
-    await this.addProcedure(ApproveErc20)({
+    await addProcedure(ApproveErc20)({
       amount: fee,
       spender: await securityTokenRegistry.address(),
-      owner: ownerAddress,
     });
 
-    await this.addTransaction(securityTokenRegistry.registerTicker, {
+    const reservation = await addTransaction(securityTokenRegistry.registerTicker, {
       tag: PolyTransactionTag.ReserveSecurityToken,
-    })({ owner: ownerAddress, ticker: symbol, tokenName: name });
+      resolver: async receipt => {
+        const { logs } = receipt;
+
+        const event = findEvent({ logs, eventName: SecurityTokenRegistryEvents.RegisterTicker });
+
+        if (event) {
+          const { args } = event;
+
+          const { _ticker } = args;
+
+          return new SecurityTokenReservation({ symbol: _ticker }, context);
+        } else {
+          throw new PolymathError({
+            code: ErrorCode.UnexpectedEventLogs,
+            message:
+              "The Security Token was successfully reserved but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+          });
+        }
+      },
+    })({ owner: ownerAddress, ticker: symbol, tokenName: '' });
+
+    return reservation;
   }
 }
