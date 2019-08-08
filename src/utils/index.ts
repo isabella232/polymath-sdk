@@ -10,6 +10,8 @@ import {
   LogEntry,
   LogWithDecodedArgs,
   DecodedLogArgs,
+  SecurityTokenRegistryEvents,
+  SecurityTokenRegistryRegisterTickerEventArgs,
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
 
@@ -56,7 +58,11 @@ interface FindEventParams {
   eventName: ContractEvents;
 }
 
-interface FindSecurityTokenCheckpointCreatedParams extends FindEventParams {
+interface FindTickerRegisteredParams extends FindEventParams {
+  eventName: SecurityTokenRegistryEvents.RegisterTicker;
+}
+
+interface FindCheckpointCreatedParams extends FindEventParams {
   eventName: SecurityTokenEvents.CheckpointCreated;
 }
 
@@ -69,7 +75,10 @@ interface FindEtherDividendDepositedParams extends FindEventParams {
 }
 
 interface FindEvent {
-  (params: FindSecurityTokenCheckpointCreatedParams):
+  (params: FindTickerRegisteredParams):
+    | LogWithDecodedArgs<SecurityTokenRegistryRegisterTickerEventArgs>
+    | undefined;
+  (params: FindCheckpointCreatedParams):
     | LogWithDecodedArgs<SecurityTokenCheckpointCreatedEventArgs>
     | undefined;
   (params: FindERC20DividendDepositedParams):

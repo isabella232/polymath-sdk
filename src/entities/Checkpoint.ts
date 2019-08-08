@@ -1,9 +1,10 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
-import { Dividend } from './Dividend';
-import { InvestorBalance } from '../types';
+import { DividendDistribution } from './DividendDistribution';
+import { ShareholderBalance, ErrorCode } from '../types';
+import { Context } from '../Context';
+import { PolymathError } from '../PolymathError';
 
 interface UniqueIdentifiers {
   securityTokenId: string;
@@ -17,9 +18,9 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 interface Params extends UniqueIdentifiers {
-  dividends: Dividend[];
+  dividends: DividendDistribution[];
   securityTokenSymbol: string;
-  investorBalances: InvestorBalance[];
+  shareholderBalances: ShareholderBalance[];
   totalSupply: BigNumber;
   createdAt: Date;
 }
@@ -36,7 +37,10 @@ export class Checkpoint extends Entity {
     const unserialized = unserialize(serialized);
 
     if (!isUniqueIdentifiers(unserialized)) {
-      throw new Error('Wrong checkpoint ID format.');
+      throw new PolymathError({
+        code: ErrorCode.InvalidUuid,
+        message: 'Wrong Checkpoint ID format.',
+      });
     }
 
     return unserialized;
@@ -44,7 +48,7 @@ export class Checkpoint extends Entity {
 
   public uid: string;
 
-  public dividends: Dividend[];
+  public dividends: DividendDistribution[];
 
   public securityTokenSymbol: string;
 
@@ -52,21 +56,21 @@ export class Checkpoint extends Entity {
 
   public index: number;
 
-  public investorBalances: InvestorBalance[];
+  public shareholderBalances: ShareholderBalance[];
 
   public totalSupply: BigNumber;
 
   public createdAt: Date;
 
-  constructor(params: Params, polyClient?: Polymath) {
-    super(polyClient);
+  constructor(params: Params) {
+    super();
 
     const {
       dividends,
       securityTokenSymbol,
       securityTokenId,
       index,
-      investorBalances,
+      shareholderBalances,
       totalSupply,
       createdAt,
     } = params;
@@ -75,7 +79,7 @@ export class Checkpoint extends Entity {
     this.securityTokenSymbol = securityTokenSymbol;
     this.securityTokenId = securityTokenId;
     this.index = index;
-    this.investorBalances = investorBalances;
+    this.shareholderBalances = shareholderBalances;
     this.totalSupply = totalSupply;
     this.createdAt = createdAt;
     this.uid = Checkpoint.generateId({ securityTokenId, index });
@@ -88,7 +92,7 @@ export class Checkpoint extends Entity {
       securityTokenSymbol,
       securityTokenId,
       index,
-      investorBalances,
+      shareholderBalances,
       totalSupply,
       createdAt,
     } = this;
@@ -99,7 +103,7 @@ export class Checkpoint extends Entity {
       securityTokenSymbol,
       securityTokenId,
       index,
-      investorBalances,
+      shareholderBalances,
       totalSupply,
       createdAt,
     };

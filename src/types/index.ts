@@ -9,7 +9,7 @@ import { PostTransactionResolver } from '../PostTransactionResolver';
 
 export { CappedStoCurrency, Currency };
 
-export interface DividendInvestorStatus {
+export interface DividendShareholderStatus {
   address: string;
   paymentReceived: boolean;
   excluded: boolean;
@@ -18,27 +18,22 @@ export interface DividendInvestorStatus {
   balance: BigNumber;
 }
 
-export enum DividendModuleType {
+export enum DividendType {
   Erc20 = 'Erc20',
   Eth = 'Eth',
 }
 
-export function isDividendModuleType(type: any): type is DividendModuleType {
-  return (
-    typeof type === 'string' &&
-    (type === DividendModuleType.Erc20 || type === DividendModuleType.Eth)
-  );
+export function isDividendType(type: any): type is DividendType {
+  return typeof type === 'string' && (type === DividendType.Erc20 || type === DividendType.Eth);
 }
 
-export enum StoModuleType {
+export enum StoType {
   Capped = 'Capped',
   UsdTiered = 'UsdTiered',
 }
 
-export function isStoModuleType(type: any): type is StoModuleType {
-  return (
-    typeof type === 'string' && (type === StoModuleType.UsdTiered || type === StoModuleType.Capped)
-  );
+export function isStoType(type: any): type is StoType {
+  return typeof type === 'string' && (type === StoType.UsdTiered || type === StoType.Capped);
 }
 
 export interface TaxWithholdingEntry {
@@ -58,12 +53,14 @@ export enum ErrorCode {
   TransactionReverted = 'TransactionReverted',
   FatalError = 'FatalError',
   UnexpectedReturnData = 'UnexpectedReturnData',
+  UnexpectedEventLogs = 'UnexpectedEventLogs',
+  InvalidUuid = 'InvalidUuid',
   InvalidAddress = 'InvalidAddress',
   InsufficientBalance = 'InsufficientBalance',
   InexistentModule = 'InexistentModule',
 }
 
-export interface InvestorBalance {
+export interface ShareholderBalance {
   address: string;
   balance: BigNumber;
 }
@@ -88,7 +85,7 @@ export enum ProcedureType {
   ApproveErc20 = 'ApproveErc20',
   TransferErc20 = 'TransferErc20',
   CreateCheckpoint = 'CreateCheckpoint',
-  EnableDividendModules = 'EnableDividendModules',
+  EnableDividendManagers = 'EnableDividendManagers',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   LaunchCappedSto = 'LaunchCappedSto',
   LaunchUsdTieredSto = 'LaunchUsdTieredSto',
@@ -105,7 +102,7 @@ export enum ProcedureType {
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
-  ModifyInvestorData = 'ModifyInvestorData',
+  ModifyShareholderData = 'ModifyShareholderData',
 }
 
 export enum PolyTransactionTag {
@@ -165,14 +162,12 @@ export interface ApproveErc20ProcedureArgs {
   amount: BigNumber;
   spender: string;
   tokenAddress?: string;
-  owner?: string;
 }
 
 export interface TransferErc20ProcedureArgs {
   amount: BigNumber;
   receiver: string;
   tokenAddress?: string;
-  owner?: string;
 }
 
 export interface CreateCheckpointProcedureArgs {
@@ -205,8 +200,8 @@ export interface CreateEtherDividendDistributionProcedureArgs {
 export interface PushDividendPaymentProcedureArgs {
   symbol: string;
   dividendIndex: number;
-  dividendType: DividendModuleType;
-  investorAddresses?: string[];
+  dividendType: DividendType;
+  shareholderAddresses?: string[];
 }
 
 export interface CreateSecurityTokenProcedureArgs {
@@ -214,12 +209,13 @@ export interface CreateSecurityTokenProcedureArgs {
   symbol: string;
   detailsUrl?: string;
   divisible: boolean;
+  treasuryWallet?: string;
 }
 
-export interface EnableDividendModulesProcedureArgs {
+export interface EnableDividendManagersProcedureArgs {
   symbol: string;
   storageWalletAddress: string;
-  types?: DividendModuleType[];
+  types?: DividendType[];
 }
 
 export interface EnableGeneralPermissionManagerProcedureArgs {
@@ -272,38 +268,37 @@ export interface LaunchUsdTieredStoProcedureArgs {
 export interface ReclaimFundsProcedureArgs {
   symbol: string;
   dividendIndex: number;
-  dividendType: DividendModuleType;
+  dividendType: DividendType;
 }
 
 export interface ReserveSecurityTokenProcedureArgs {
   symbol: string;
-  name: string;
   owner?: string;
 }
 
 export interface WithdrawTaxesProcedureArgs {
   symbol: string;
   dividendIndex: number;
-  dividendType: DividendModuleType;
+  dividendType: DividendType;
 }
 
 export interface UpdateDividendsTaxWithholdingListProcedureArgs {
   symbol: string;
-  dividendType: DividendModuleType;
-  investorAddresses: string[];
+  dividendType: DividendType;
+  shareholderAddresses: string[];
   percentages: number[];
 }
 
 export interface SetDividendsWalletProcedureArgs {
   symbol: string;
-  dividendType: DividendModuleType;
+  dividendType: DividendType;
   address: string;
 }
 
 export interface ChangeDelegatePermissionProcedureArgs {
   symbol: string;
   delegate: string;
-  op: ModuleOperation;
+  op: PermissibleOperation;
   isGranted: boolean;
   details?: string;
 }
@@ -312,13 +307,13 @@ export interface ControllerTransferProcedureArgs {
   from: string;
   to: string;
   symbol: string;
-  value: BigNumber;
+  amount: BigNumber;
   data?: string;
   log?: string;
 }
 
 export interface PauseStoProcedureArgs {
-  stoModuleAddress: string;
+  stoAddress: string;
 }
 
 export interface SetControllerProcedureArgs {
@@ -326,36 +321,36 @@ export interface SetControllerProcedureArgs {
   controller: string;
 }
 
-export interface InvestorDataEntry {
+export interface ShareholderDataEntry {
   /**
-   * investor wallet address to whitelist
+   * shareholder wallet address to whitelist
    */
   address: string;
   /**
-   * date from which the investor can transfer tokens
+   * date from which the shareholder can transfer tokens
    */
   canSendAfter: Date;
   /**
-   * date from which the investor can receive tokens
+   * date from which the shareholder can receive tokens
    */
   canReceiveAfter: Date;
   /**
-   * date at which the investor's KYC expires
+   * date at which the shareholder's KYC expires
    */
   kycExpiry: Date;
   /**
-   * whether the investor is accredited
+   * whether the shareholder is accredited
    */
   isAccredited?: boolean;
   /**
-   * whether the investor is allowed to purchase tokens in an STO
+   * whether the shareholder is allowed to purchase tokens in an STO
    */
   canBuyFromSto?: boolean;
 }
 
-export interface ModifyInvestorDataProcedureArgs {
+export interface ModifyShareholderDataProcedureArgs {
   symbol: string;
-  investorData: InvestorDataEntry[];
+  shareholderData: ShareholderDataEntry[];
 }
 
 export interface ProcedureArguments {
@@ -365,7 +360,7 @@ export interface ProcedureArguments {
   [ProcedureType.CreateErc20DividendDistribution]: CreateErc20DividendDistributionProcedureArgs;
   [ProcedureType.CreateEtherDividendDistribution]: CreateEtherDividendDistributionProcedureArgs;
   [ProcedureType.CreateSecurityToken]: CreateSecurityTokenProcedureArgs;
-  [ProcedureType.EnableDividendModules]: EnableDividendModulesProcedureArgs;
+  [ProcedureType.EnableDividendManagers]: EnableDividendManagersProcedureArgs;
   [ProcedureType.ReclaimFunds]: ReclaimFundsProcedureArgs;
   [ProcedureType.ReserveSecurityToken]: ReserveSecurityTokenProcedureArgs;
   [ProcedureType.WithdrawTaxes]: WithdrawTaxesProcedureArgs;
@@ -378,7 +373,7 @@ export interface ProcedureArguments {
   [ProcedureType.ControllerTransfer]: ControllerTransferProcedureArgs;
   [ProcedureType.SetController]: SetControllerProcedureArgs;
   [ProcedureType.ChangeDelegatePermission]: ChangeDelegatePermissionProcedureArgs;
-  [ProcedureType.ModifyInvestorData]: ModifyInvestorDataProcedureArgs;
+  [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 
@@ -398,9 +393,9 @@ export enum TransactionQueueStatus {
   Succeeded = 'Succeeded',
 }
 
-export enum ModuleOperation {
+export enum PermissibleOperation {
   // MODULE_COMPONENT_OP
-  GtmWhitelistUpdate = 'GTM_WHITELIST_UPDATE',
+  ModifyShareholderData = 'GTM_WHITELIST_UPDATE',
 }
 
 export interface Pojo {

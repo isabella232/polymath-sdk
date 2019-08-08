@@ -1,20 +1,21 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
+import { PolymathError } from '../PolymathError';
+import { ErrorCode } from '../types';
 
 interface UniqueIdentifiers {
   securityTokenSymbol: string;
-  stoModuleId: string;
+  stoId: string;
   index: number;
 }
 
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
-  const { securityTokenSymbol, stoModuleId, index } = identifiers;
+  const { securityTokenSymbol, stoId, index } = identifiers;
 
   return (
     typeof securityTokenSymbol === 'string' &&
-    typeof stoModuleId === 'string' &&
+    typeof stoId === 'string' &&
     typeof index === 'number'
   );
 }
@@ -27,10 +28,10 @@ interface Params extends UniqueIdentifiers {
 }
 
 export class Investment extends Entity {
-  public static generateId({ securityTokenSymbol, stoModuleId, index }: UniqueIdentifiers) {
+  public static generateId({ securityTokenSymbol, stoId, index }: UniqueIdentifiers) {
     return serialize('investment', {
       securityTokenSymbol,
-      stoModuleId,
+      stoId,
       index,
     });
   }
@@ -39,7 +40,10 @@ export class Investment extends Entity {
     const unserialized = unserialize(serialized);
 
     if (!isUniqueIdentifiers(unserialized)) {
-      throw new Error('Wrong investment ID format.');
+      throw new PolymathError({
+        code: ErrorCode.InvalidUuid,
+        message: 'Wrong Investment ID format.',
+      });
     }
 
     return unserialized;
@@ -51,7 +55,7 @@ export class Investment extends Entity {
 
   public securityTokenId: string;
 
-  public stoModuleId: string;
+  public stoId: string;
 
   public address: string;
 
@@ -61,13 +65,13 @@ export class Investment extends Entity {
 
   public investedFunds: BigNumber;
 
-  constructor(params: Params, polyClient?: Polymath) {
-    super(polyClient);
+  constructor(params: Params) {
+    super();
 
     const {
       securityTokenId,
       securityTokenSymbol,
-      stoModuleId,
+      stoId,
       address,
       index,
       tokenAmount,
@@ -76,14 +80,14 @@ export class Investment extends Entity {
 
     this.securityTokenId = securityTokenId;
     this.securityTokenSymbol = securityTokenSymbol;
-    this.stoModuleId = stoModuleId;
+    this.stoId = stoId;
     this.address = address;
     this.index = index;
     this.tokenAmount = tokenAmount;
     this.investedFunds = investedFunds;
     this.uid = Investment.generateId({
       securityTokenSymbol,
-      stoModuleId,
+      stoId,
       index,
     });
   }
@@ -93,7 +97,7 @@ export class Investment extends Entity {
       uid,
       securityTokenId,
       securityTokenSymbol,
-      stoModuleId,
+      stoId,
       address,
       index,
       tokenAmount,
@@ -104,7 +108,7 @@ export class Investment extends Entity {
       uid,
       securityTokenId,
       securityTokenSymbol,
-      stoModuleId,
+      stoId,
       address,
       index,
       tokenAmount,

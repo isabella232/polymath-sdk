@@ -1,7 +1,7 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import { Polymath } from '../Polymath';
 import { serialize } from '../utils';
-import { StoModule, UniqueIdentifiers, Params as StoParams } from './StoModule';
+import { Sto, UniqueIdentifiers, Params as StoParams } from './Sto';
+import { Context } from '../Context';
 
 export interface Tier {
   cap: BigNumber;
@@ -13,9 +13,9 @@ interface Params extends StoParams {
   tiers: Tier[];
 }
 
-export class UsdTieredStoModule extends StoModule {
+export class UsdTieredSto extends Sto {
   public static generateId({ securityTokenId, stoType, address }: UniqueIdentifiers) {
-    return serialize('usdTieredStoModule', {
+    return serialize('usdTieredSto', {
       securityTokenId,
       stoType,
       address,
@@ -28,16 +28,16 @@ export class UsdTieredStoModule extends StoModule {
 
   public tiers: Tier[];
 
-  constructor(params: Params, polyClient?: Polymath) {
+  constructor(params: Params, context: Context) {
     const { currentTier, tiers, ...rest } = params;
 
-    super(rest, polyClient);
+    super(rest, context);
 
     const { securityTokenId, address, stoType } = rest;
 
     this.currentTier = currentTier;
     this.tiers = tiers;
-    this.uid = UsdTieredStoModule.generateId({ address, stoType, securityTokenId });
+    this.uid = UsdTieredSto.generateId({ address, stoType, securityTokenId });
   }
 
   public toPojo() {

@@ -1,5 +1,5 @@
 import { SecurityToken } from '../SecurityToken';
-import { Polymath } from '../../Polymath';
+import { Context } from '../../Context';
 
 const params1 = {
   symbol: 'TEST1',
@@ -15,7 +15,7 @@ const params2 = {
   owner: '0x4',
 };
 
-const polyClient = {} as Polymath;
+const context = {} as Context;
 
 describe('SecurityToken', () => {
   let st1: SecurityToken = {} as SecurityToken;
@@ -23,9 +23,9 @@ describe('SecurityToken', () => {
   let st1Copy: SecurityToken = {} as SecurityToken;
 
   beforeEach(() => {
-    st1 = new SecurityToken(params1, polyClient);
-    st2 = new SecurityToken(params2, polyClient);
-    st1Copy = new SecurityToken(params1, polyClient);
+    st1 = new SecurityToken(params1, context);
+    st2 = new SecurityToken(params2, context);
+    st1Copy = new SecurityToken(params1, context);
   });
 
   describe('constructor', () => {
@@ -41,12 +41,6 @@ describe('SecurityToken', () => {
 
     test('generates different uids for two instances with differen addresses', () => {
       expect(st1.uid).not.toBe(st2.uid);
-    });
-
-    test('throws if polyClient is not passed', () => {
-      expect(() => {
-        const st = new SecurityToken(params1);
-      }).toThrow();
     });
   });
 

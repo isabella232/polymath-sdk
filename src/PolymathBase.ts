@@ -16,10 +16,10 @@ import {
   BigNumber,
   Provider,
 } from '@polymathnetwork/contract-wrappers';
-import { range, flatten } from 'lodash';
+import { range, flatten, includes } from 'lodash';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';
-import { ErrorCode, DividendModuleType } from './types';
+import { ErrorCode, DividendType } from './types';
 
 interface GetAttachedModulesParams {
   symbol: string;
@@ -105,7 +105,7 @@ interface GetModuleFactoryAddressArgs {
   tokenAddress: string;
 }
 
-export interface InvestorBalance {
+export interface ShareholderBalance {
   balance: BigNumber;
   address: string;
 }
@@ -113,11 +113,11 @@ export interface InvestorBalance {
 export interface BaseCheckpoint {
   index: number;
   totalSupply: BigNumber;
-  investorBalances: InvestorBalance[];
+  shareholderBalances: ShareholderBalance[];
   createdAt: Date;
 }
 
-export interface DividendInvestorStatus {
+export interface DividendShareholderStatus {
   address: string;
   paymentReceived: boolean;
   excluded: boolean;
@@ -129,7 +129,7 @@ export interface DividendInvestorStatus {
 export interface BaseDividend {
   index: number;
   checkpointId: number;
-  dividendType: DividendModuleType;
+  dividendType: DividendType;
   created: Date;
   maturity: Date;
   expiry: Date;
@@ -141,7 +141,7 @@ export interface BaseDividend {
   totalWithheldWithdrawn: BigNumber;
   name: string;
   currency: string | null;
-  investors: DividendInvestorStatus[];
+  shareholders: DividendShareholderStatus[];
 }
 
 export class PolymathBase extends PolymathAPI {
@@ -196,7 +196,10 @@ export class PolymathBase extends PolymathAPI {
       return address;
     }
 
-    throw new Error(`Module factory for "${moduleName}" was not found.`);
+    throw new PolymathError({
+      code: ErrorCode.InexistentModule,
+      message: `Module factory for "${moduleName}" was not found.`,
+    });
   };
 
   public getAttachedModules: GetAttachedModules = async (
@@ -378,18 +381,18 @@ export class PolymathBase extends PolymathAPI {
     securityToken: SecurityToken;
   }): Promise<BaseCheckpoint> => {
     const totalSupply = await securityToken.totalSupplyAt({ checkpointId });
-    const investorAddresses = await securityToken.getInvestorsAt({ checkpointId });
+    const shareholderAddresses = await securityToken.getInvestorsAt({ checkpointId });
 
-    const investorBalances = await Promise.all(
-      investorAddresses.map(async investorAddress => {
+    const shareholderBalances = await Promise.all(
+      shareholderAddresses.map(async shareholderAddress => {
         const balance = await securityToken.balanceOfAt({
           checkpointId,
-          investor: investorAddress,
+          investor: shareholderAddress,
         });
 
         return {
           balance,
-          address: investorAddress,
+          address: shareholderAddress,
         };
       })
     );
@@ -397,7 +400,7 @@ export class PolymathBase extends PolymathAPI {
     return {
       index: checkpointId,
       totalSupply,
-      investorBalances,
+      shareholderBalances,
       createdAt: time,
     };
   };
@@ -410,7 +413,7 @@ export class PolymathBase extends PolymathAPI {
     dividendsModule: ERC20DividendCheckpoint | EtherDividendCheckpoint;
   }): Promise<BaseDividend> => {
     let symbol: string;
-    let dividendType: DividendModuleType;
+    let dividendType: DividendType;
 
     if (dividendsModule instanceof ERC20DividendCheckpoint) {
       const tokenAddress = await dividendsModule.dividendTokens({ dividendIndex });
@@ -418,17 +421,17 @@ export class PolymathBase extends PolymathAPI {
       const token = await this.tokenFactory.getERC20TokenInstanceFromAddress(tokenAddress);
 
       symbol = await token.symbol();
-      dividendType = DividendModuleType.Erc20;
+      dividendType = DividendType.Erc20;
     } else {
       symbol = 'ETH';
-      dividendType = DividendModuleType.Eth;
+      dividendType = DividendType.Eth;
     }
 
     const dividend = await dividendsModule.dividends({ dividendIndex });
 
     const dividendProgressList = await dividendsModule.getDividendProgress({ dividendIndex });
 
-    const investors = dividendProgressList.map(
+    const shareholders = dividendProgressList.map(
       ({ investor, claimed, excluded, withheld, amount, balance }) => ({
         address: investor,
         paymentReceived: claimed,
@@ -468,7 +471,7 @@ export class PolymathBase extends PolymathAPI {
       totalWithheldWithdrawn,
       name,
       currency: symbol,
-      investors,
+      shareholders,
     };
   };
 
@@ -507,5 +510,62 @@ export class PolymathBase extends PolymathAPI {
     );
 
     return flatten(dividends).sort((a, b) => a.index - b.index);
+  };
+
+  /**
+   * Auxiliary function to fetch all dividend distributions
+   */
+  public getAllDividends = async ({
+    securityTokenSymbol,
+    checkpointId,
+    dividendTypes = [DividendType.Erc20, DividendType.Eth],
+  }: {
+    securityTokenSymbol: string;
+    checkpointId?: number;
+    dividendTypes?: DividendType[];
+  }) => {
+    const dividends = [];
+
+    if (includes(dividendTypes, DividendType.Erc20)) {
+      const erc20Module = (await this.getAttachedModules(
+        {
+          moduleName: ModuleName.ERC20DividendCheckpoint,
+          symbol: securityTokenSymbol,
+        },
+        { unarchived: true }
+      ))[0];
+
+      if (erc20Module) {
+        const erc20Dividends = await (checkpointId !== undefined
+          ? this.getDividendsByCheckpoint({
+              checkpointId,
+              dividendsModule: erc20Module,
+            })
+          : this.getDividends({ dividendsModule: erc20Module }));
+        dividends.push(...erc20Dividends);
+      }
+    }
+
+    if (includes(dividendTypes, DividendType.Eth)) {
+      const etherModule = (await this.getAttachedModules(
+        {
+          moduleName: ModuleName.EtherDividendCheckpoint,
+          symbol: securityTokenSymbol,
+        },
+        { unarchived: true }
+      ))[0];
+
+      if (etherModule) {
+        const etherDividends = await (checkpointId !== undefined
+          ? this.getDividendsByCheckpoint({
+              checkpointId,
+              dividendsModule: etherModule,
+            })
+          : this.getDividends({ dividendsModule: etherModule }));
+        dividends.push(...etherDividends);
+      }
+    }
+
+    return dividends;
   };
 }

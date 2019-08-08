@@ -1,17 +1,17 @@
-import { Polymath } from '../Polymath';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
-import { DividendModuleType, isDividendModuleType } from '../types';
+import { DividendType, isDividendType, ErrorCode } from '../types';
+import { PolymathError } from '../PolymathError';
 
 export interface UniqueIdentifiers {
   securityTokenId: string;
-  dividendType: DividendModuleType;
+  dividendType: DividendType;
 }
 
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { securityTokenId, dividendType } = identifiers;
 
-  return typeof securityTokenId === 'string' && isDividendModuleType(dividendType);
+  return typeof securityTokenId === 'string' && isDividendType(dividendType);
 }
 
 export interface Params extends UniqueIdentifiers {
@@ -20,7 +20,7 @@ export interface Params extends UniqueIdentifiers {
   storageWalletAddress: string;
 }
 
-export abstract class DividendsModule extends Entity {
+export abstract class DividendsManager extends Entity {
   public abstract uid: string;
 
   public address: string;
@@ -31,20 +31,23 @@ export abstract class DividendsModule extends Entity {
 
   public storageWalletAddress: string;
 
-  public dividendType: DividendModuleType;
+  public dividendType: DividendType;
 
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
     if (!isUniqueIdentifiers(unserialized)) {
-      throw new Error('Wrong dividends module ID format.');
+      throw new PolymathError({
+        code: ErrorCode.InvalidUuid,
+        message: 'Wrong Dividends Manager ID format.',
+      });
     }
 
     return unserialized;
   }
 
-  constructor(params: Params, polyClient?: Polymath) {
-    super(polyClient);
+  constructor(params: Params) {
+    super();
 
     const {
       address,

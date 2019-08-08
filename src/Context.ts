@@ -6,6 +6,10 @@ interface ConstructorParams {
   accountAddress?: string;
 }
 
+export interface ContextWithWallet extends Context {
+  currentWallet: Wallet;
+}
+
 /**
  * Context in which the SDK is being used
  *

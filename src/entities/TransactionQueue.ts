@@ -46,7 +46,7 @@ export class TransactionQueue<Args extends any = any, ReturnType = any> extends 
     args: Args = {} as Args,
     returnValue?: MaybeResolver<ReturnType | undefined>
   ) {
-    super(undefined, false);
+    super();
 
     this.emitter = new EventEmitter();
     this.procedureType = procedureType;

@@ -3,7 +3,7 @@ import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   PushDividendPaymentProcedureArgs,
-  DividendModuleType,
+  DividendType,
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
@@ -16,7 +16,7 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
   public type = ProcedureType.PushDividendPayment;
 
   public async prepareTransactions() {
-    const { symbol, dividendIndex, investorAddresses, dividendType } = this.args;
+    const { symbol, dividendIndex, shareholderAddresses, dividendType } = this.args;
     const { contractWrappers } = this.context;
 
     try {
@@ -30,7 +30,7 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
 
     let dividendsModule;
 
-    if (dividendType === DividendModuleType.Erc20) {
+    if (dividendType === DividendType.Erc20) {
       dividendsModule = (await contractWrappers.getAttachedModules(
         {
           moduleName: ModuleName.ERC20DividendCheckpoint,
@@ -38,7 +38,7 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
         },
         { unarchived: true }
       ))[0];
-    } else if (dividendType === DividendModuleType.Eth) {
+    } else if (dividendType === DividendType.Eth) {
       dividendsModule = (await contractWrappers.getAttachedModules(
         {
           moduleName: ModuleName.EtherDividendCheckpoint,
@@ -49,27 +49,29 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
     }
 
     if (!dividendsModule) {
-      throw new Error(
-        "Dividend modules haven't been enabled. Did you forget to call .enableDividendModules()?"
-      );
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message:
+          "Dividends of the specified type haven't been enabled. Did you forget to call dividends.enable() on your Security Token?",
+      });
     }
 
     const dividend = await contractWrappers.getDividend({ dividendIndex, dividendsModule });
-    let { investors: investorStatuses } = dividend;
+    let { shareholders: shareholderStatuses } = dividend;
 
-    if (investorAddresses) {
-      investorStatuses = investorStatuses.filter(
-        status => !!investorAddresses.find(address => address === status.address)
+    if (shareholderAddresses) {
+      shareholderStatuses = shareholderStatuses.filter(
+        status => !!shareholderAddresses.find(address => address === status.address)
       );
     }
 
-    const unpaidInvestors = investorStatuses
+    const unpaidShareholders = shareholderStatuses
       .filter(status => status.paymentReceived)
       .map(status => status.address);
 
-    const investorAddressChunks = chunk(unpaidInvestors, CHUNK_SIZE);
+    const shareholderAddressChunks = chunk(unpaidShareholders, CHUNK_SIZE);
 
-    for (const addresses of investorAddressChunks) {
+    for (const addresses of shareholderAddressChunks) {
       await this.addTransaction(dividendsModule.pushDividendPaymentToAddresses, {
         tag: PolyTransactionTag.PushDividendPayment,
       })({

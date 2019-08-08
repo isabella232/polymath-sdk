@@ -55,7 +55,7 @@ export class CreateErc20DividendDistribution extends Procedure<
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message:
-          "The ERC20 Dividend module hasn't been enabled. Did you forget to call .enableDividendModules()?",
+          "The ERC20 Dividends Manager hasn't been enabled. Did you forget to call dividends.enable() on the Security Token?",
       });
     }
 
@@ -83,6 +83,12 @@ export class CreateErc20DividendDistribution extends Procedure<
             const { _dividendIndex } = args;
 
             return _dividendIndex.toNumber();
+          } else {
+            throw new PolymathError({
+              code: ErrorCode.UnexpectedEventLogs,
+              message:
+                "The ERC20 Dividend Distribution was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+            });
           }
         },
       }

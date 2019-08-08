@@ -5,7 +5,7 @@ import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
-  DividendModuleType,
+  DividendType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
@@ -28,14 +28,14 @@ export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
     let dividendModule;
 
     switch (dividendType) {
-      case DividendModuleType.Erc20: {
+      case DividendType.Erc20: {
         dividendModule = (await contractWrappers.getAttachedModules(
           { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
           { unarchived: true }
         ))[0];
         break;
       }
-      case DividendModuleType.Eth: {
+      case DividendType.Eth: {
         dividendModule = (await contractWrappers.getAttachedModules({
           moduleName: ModuleName.EtherDividendCheckpoint,
           symbol,
@@ -45,7 +45,11 @@ export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
     }
 
     if (!dividendModule) {
-      throw new Error('There is no attached dividend module of the specified type');
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message:
+          "Dividends of the specified type haven't been enabled. Did you forget to call dividends.enable() on your Security Token?",
+      });
     }
 
     await this.addTransaction(dividendModule.withdrawWithholding, {

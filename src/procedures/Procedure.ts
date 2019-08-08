@@ -9,7 +9,7 @@ import {
   PolyTransactionTag,
 } from '../types';
 import { TransactionQueue } from '../entities/TransactionQueue';
-import { Context } from '../Context';
+import { Context, ContextWithWallet } from '../Context';
 import { PostTransactionResolver } from '../PostTransactionResolver';
 import { PolymathError } from '../PolymathError';
 
@@ -23,13 +23,21 @@ export abstract class Procedure<Args, ReturnType = any> {
 
   protected args: Args;
 
-  protected context: Context;
+  protected context: ContextWithWallet;
 
   private transactions: TransactionSpec[] = [];
 
   constructor(args: Args, context: Context) {
+    if (!context.currentWallet) {
+      throw new PolymathError({
+        message:
+          "No default account set. You must pass the token owner's private key to Polymath.connect()",
+        code: ErrorCode.ProcedureValidationError,
+      });
+    }
+
     this.args = args;
-    this.context = context;
+    this.context = context as ContextWithWallet;
   }
 
   /**
