@@ -14,6 +14,7 @@ import { DividendDistribution } from '../DividendDistribution';
 import { DividendsManager } from '../DividendsManager';
 import { Erc20DividendsManager } from '../Erc20DividendsManager';
 import { EthDividendsManager } from '../EthDividendsManager';
+import { TaxWithholding } from '../TaxWithholding';
 
 interface GetManager {
   (args: { dividendType: DividendType.Erc20 }): Promise<Erc20DividendsManager | null>;
@@ -201,6 +202,68 @@ export class Dividends extends SubModule {
       this.context
     );
     return await procedure.prepare();
+  };
+
+  /**
+   * Retrieve a list of investor addresses and their corresponding tax withholding
+   * percentages
+   */
+  public getTaxWithholdingList = async (args: { dividendType: DividendType }) => {
+    const {
+      contractWrappers: { tokenFactory, getAttachedModules },
+    } = this.context;
+
+    const { dividendType } = args;
+    const { symbol, uid: securityTokenId } = this.securityToken;
+
+    let securityToken;
+
+    try {
+      securityToken = await tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+
+    let dividendsModule;
+    if (dividendType === DividendType.Erc20) {
+      dividendsModule = (await getAttachedModules(
+        { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
+        { unarchived: true }
+      ))[0];
+    } else if (dividendType === DividendType.Eth) {
+      dividendsModule = (await getAttachedModules(
+        { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
+        { unarchived: true }
+      ))[0];
+    }
+
+    if (!dividendsModule) {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message:
+          "Dividends of the specified type haven't been enabled. Did you forget to call dividends.enable() on your Security Token?",
+      });
+    }
+
+    const checkpointIndex = await securityToken.currentCheckpointId();
+
+    const checkpointData = await dividendsModule.getCheckpointData({
+      checkpointId: checkpointIndex.toNumber(),
+    });
+
+    return checkpointData.map(
+      ({ investor, withheld }) =>
+        new TaxWithholding({
+          investorAddress: investor,
+          percentage: withheld.toNumber(),
+          securityTokenSymbol: symbol,
+          securityTokenId,
+          dividendType,
+        })
+    );
   };
 
   /**
