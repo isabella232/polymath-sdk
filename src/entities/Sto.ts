@@ -116,7 +116,7 @@ export abstract class Sto extends Entity {
 
     const procedure = new PauseSto({ stoAddress }, this.context);
 
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   public toPojo() {

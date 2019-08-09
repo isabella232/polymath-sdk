@@ -9,17 +9,21 @@ import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
+  DividendType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { findEvent } from '../utils';
+import { SecurityToken, DividendDistribution } from '../entities';
 
 export class CreateEtherDividendDistribution extends Procedure<
   CreateEtherDividendDistributionProcedureArgs,
-  number
+  SecurityToken,
+  DividendDistribution
 > {
   public type = ProcedureType.CreateEtherDividendDistribution;
 
   public async prepareTransactions() {
+    const { args, context, caller } = this;
     const {
       symbol,
       maturityDate,
@@ -29,8 +33,8 @@ export class CreateEtherDividendDistribution extends Procedure<
       name,
       excludedAddresses = [],
       taxWithholdings = [],
-    } = this.args;
-    const { contractWrappers } = this.context;
+    } = args;
+    const { contractWrappers } = context;
 
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
@@ -57,7 +61,7 @@ export class CreateEtherDividendDistribution extends Procedure<
       });
     }
 
-    const dividendIndex = await this.addTransaction(
+    const distribution = await this.addTransaction(
       etherModule.createDividendWithCheckpointAndExclusions,
       {
         tag: PolyTransactionTag.CreateEtherDividendDistribution,
@@ -70,18 +74,20 @@ export class CreateEtherDividendDistribution extends Procedure<
           });
 
           if (event) {
-            const { args } = event;
+            const { args: eventArgs } = event;
 
-            const { _dividendIndex } = args;
+            const { _dividendIndex } = eventArgs;
 
-            return _dividendIndex.toNumber();
-          } else {
-            throw new PolymathError({
-              code: ErrorCode.UnexpectedEventLogs,
-              message:
-                "The ETH Dividend Distribution was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+            return caller.dividends.getDistribution({
+              dividendIndex: _dividendIndex.toNumber(),
+              dividendType: DividendType.Eth,
             });
           }
+          throw new PolymathError({
+            code: ErrorCode.UnexpectedEventLogs,
+            message:
+              "The ETH Dividend Distribution was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+          });
         },
       }
     )({
@@ -107,6 +113,6 @@ export class CreateEtherDividendDistribution extends Procedure<
       })({ investors, withholding: percentages });
     }
 
-    return dividendIndex;
+    return distribution;
   }
 }

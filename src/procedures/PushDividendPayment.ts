@@ -1,5 +1,10 @@
 import { chunk } from 'lodash';
-import { ModuleName } from '@polymathnetwork/contract-wrappers';
+import {
+  ModuleName,
+  ERC20DividendCheckpoint,
+  EtherDividendCheckpoint,
+} from '@polymathnetwork/contract-wrappers';
+import P from 'bluebird';
 import { Procedure } from './Procedure';
 import {
   PushDividendPaymentProcedureArgs,
@@ -28,24 +33,24 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
       });
     }
 
-    let dividendsModule;
+    let dividendsModule: ERC20DividendCheckpoint | EtherDividendCheckpoint | undefined;
 
     if (dividendType === DividendType.Erc20) {
-      dividendsModule = (await contractWrappers.getAttachedModules(
+      [dividendsModule] = await contractWrappers.getAttachedModules(
         {
           moduleName: ModuleName.ERC20DividendCheckpoint,
           symbol,
         },
         { unarchived: true }
-      ))[0];
+      );
     } else if (dividendType === DividendType.Eth) {
-      dividendsModule = (await contractWrappers.getAttachedModules(
+      [dividendsModule] = await contractWrappers.getAttachedModules(
         {
           moduleName: ModuleName.EtherDividendCheckpoint,
           symbol,
         },
         { unarchived: true }
-      ))[0];
+      );
     }
 
     if (!dividendsModule) {
@@ -56,7 +61,10 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
       });
     }
 
-    const dividend = await contractWrappers.getDividend({ dividendIndex, dividendsModule });
+    const dividend = await contractWrappers.getDividend({
+      dividendIndex,
+      dividendsModule,
+    });
     let { shareholders: shareholderStatuses } = dividend;
 
     if (shareholderAddresses) {
@@ -71,13 +79,13 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
 
     const shareholderAddressChunks = chunk(unpaidShareholders, CHUNK_SIZE);
 
-    for (const addresses of shareholderAddressChunks) {
-      await this.addTransaction(dividendsModule.pushDividendPaymentToAddresses, {
+    await P.each(shareholderAddressChunks, async addresses => {
+      await this.addTransaction(dividendsModule!.pushDividendPaymentToAddresses, {
         tag: PolyTransactionTag.PushDividendPayment,
       })({
         dividendIndex,
         payees: addresses,
       });
-    }
+    });
   }
 }

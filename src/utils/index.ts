@@ -12,6 +12,8 @@ import {
   DecodedLogArgs,
   SecurityTokenRegistryEvents,
   SecurityTokenRegistryRegisterTickerEventArgs,
+  SecurityTokenRegistryNewSecurityTokenEventArgs,
+  SecurityTokenModuleAddedEventArgs,
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
 
@@ -62,6 +64,10 @@ interface FindTickerRegisteredParams extends FindEventParams {
   eventName: SecurityTokenRegistryEvents.RegisterTicker;
 }
 
+interface FindNewSecurityTokenParams extends FindEventParams {
+  eventName: SecurityTokenRegistryEvents.NewSecurityToken;
+}
+
 interface FindCheckpointCreatedParams extends FindEventParams {
   eventName: SecurityTokenEvents.CheckpointCreated;
 }
@@ -74,9 +80,19 @@ interface FindEtherDividendDepositedParams extends FindEventParams {
   eventName: EtherDividendCheckpointEvents.EtherDividendDeposited;
 }
 
+interface FindModuleAddedParams extends FindEventParams {
+  eventName: SecurityTokenEvents.ModuleAdded;
+}
+
 interface FindEvent {
   (params: FindTickerRegisteredParams):
     | LogWithDecodedArgs<SecurityTokenRegistryRegisterTickerEventArgs>
+    | undefined;
+  (params: FindNewSecurityTokenParams):
+    | LogWithDecodedArgs<SecurityTokenRegistryNewSecurityTokenEventArgs>
+    | undefined;
+  (params: FindModuleAddedParams):
+    | LogWithDecodedArgs<SecurityTokenModuleAddedEventArgs>
     | undefined;
   (params: FindCheckpointCreatedParams):
     | LogWithDecodedArgs<SecurityTokenCheckpointCreatedEventArgs>
@@ -96,11 +112,11 @@ export const findEvent: FindEvent = ({
   logs: (LogEntry | LogWithDecodedArgs<DecodedLogArgs>)[];
   eventName: ContractEvents;
 }): any => {
-  const log = logs.find(log => {
+  const foundLog = logs.find(log => {
     const l = log as LogWithDecodedArgs<DecodedLogArgs>;
 
     return l.event === eventName;
   });
 
-  return log;
+  return foundLog;
 };

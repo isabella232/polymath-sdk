@@ -169,7 +169,7 @@ export class DividendDistribution extends Entity {
       },
       this.context
     );
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   /**
@@ -185,7 +185,7 @@ export class DividendDistribution extends Entity {
       },
       this.context
     );
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   public toPojo() {

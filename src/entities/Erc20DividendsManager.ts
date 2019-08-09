@@ -1,7 +1,6 @@
 import { DividendsManager, Params, UniqueIdentifiers } from './DividendsManager';
 import { serialize } from '../utils';
 import { DividendType, Omit } from '../types';
-import { Context } from '../Context';
 
 export class Erc20DividendsManager extends DividendsManager {
   public static generateId({ securityTokenId, dividendType }: UniqueIdentifiers) {

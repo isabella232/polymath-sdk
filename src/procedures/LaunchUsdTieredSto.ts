@@ -1,13 +1,21 @@
-import { ModuleName, BigNumber, FundRaiseType } from '@polymathnetwork/contract-wrappers';
+import {
+  ModuleName,
+  BigNumber,
+  FundRaiseType,
+  SecurityTokenEvents,
+} from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
   LaunchUsdTieredStoProcedureArgs,
+  StoType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { TransferErc20 } from './TransferErc20';
+import { findEvent } from '../utils';
+import { SecurityToken, UsdTieredSto } from '../entities';
 
 interface AddUSDTieredSTOParams {
   moduleName: ModuleName.UsdTieredSTO;
@@ -30,10 +38,15 @@ interface AddUSDTieredSTOParams {
   label?: string;
 }
 
-export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArgs> {
+export class LaunchUsdTieredSto extends Procedure<
+  LaunchUsdTieredStoProcedureArgs,
+  SecurityToken,
+  UsdTieredSto
+> {
   public type = ProcedureType.LaunchUsdTieredSto;
 
   public async prepareTransactions() {
+    const { args, context, caller } = this;
     const {
       symbol,
       startDate,
@@ -45,8 +58,8 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
       storageWallet,
       treasuryWallet,
       usdTokenAddresses,
-    } = this.args;
-    const { contractWrappers } = this.context;
+    } = args;
+    const { contractWrappers } = context;
 
     let securityToken;
 
@@ -96,9 +109,33 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
       }
     );
 
-    await this.addTransaction<AddUSDTieredSTOParams>(securityToken.addModuleWithLabel, {
-      tag: PolyTransactionTag.EnableCappedSto,
-    })({
+    const newSto = await this.addTransaction<AddUSDTieredSTOParams, UsdTieredSto>(
+      securityToken.addModuleWithLabel,
+      {
+        tag: PolyTransactionTag.EnableUsdTieredSto,
+        resolver: async receipt => {
+          const { logs } = receipt;
+
+          const event = findEvent({
+            eventName: SecurityTokenEvents.ModuleAdded,
+            logs,
+          });
+
+          if (event) {
+            const { args: eventArgs } = event;
+
+            const { _module } = eventArgs;
+
+            return caller.offerings.getSto({ stoType: StoType.UsdTiered, address: _module });
+          }
+          throw new PolymathError({
+            code: ErrorCode.UnexpectedEventLogs,
+            message:
+              "The Capped STO was successfully launched but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+          });
+        },
+      }
+    )({
       moduleName,
       address: factoryAddress,
       data: {
@@ -117,5 +154,7 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
       },
       archived: false,
     });
+
+    return newSto;
   }
 }

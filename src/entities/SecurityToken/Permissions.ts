@@ -15,7 +15,7 @@ export class Permissions extends SubModule {
       },
       this.context
     );
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   /**
@@ -42,6 +42,6 @@ export class Permissions extends SubModule {
       this.context
     );
 
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 }

@@ -1,5 +1,5 @@
-import { PolyTransaction } from '../../entities/PolyTransaction';
-import { TransactionQueue } from '../../entities/TransactionQueue';
+import { PolyTransaction } from '../PolyTransaction';
+import { TransactionQueue } from '../TransactionQueue';
 import { PolyTransactionTag, TransactionStatus, isPojo } from '../../types';
 import { MockedContract, getMockTransactionSpec } from '../../testUtils';
 import { delay } from '../../utils';

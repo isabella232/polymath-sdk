@@ -15,7 +15,10 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof symbol === 'string';
 }
 
-interface Params extends UniqueIdentifiers {}
+interface Params extends UniqueIdentifiers {
+  expiry: Date;
+  securityTokenAddress?: string;
+}
 
 export class SecurityTokenReservation extends Entity {
   public static generateId({ symbol }: UniqueIdentifiers) {
@@ -41,15 +44,27 @@ export class SecurityTokenReservation extends Entity {
 
   public symbol: string;
 
+  /**
+   * Date at which this reservation expires
+   */
+  public expiry: Date;
+
+  /**
+   * Address of the Security Token if it has already been launched, undefined if not
+   */
+  public securityTokenAddress?: string;
+
   protected context: Context;
 
   constructor(params: Params, context: Context) {
     super();
 
-    const { symbol } = params;
+    const { symbol, expiry, securityTokenAddress } = params;
 
     this.symbol = symbol;
     this.context = context;
+    this.expiry = expiry;
+    this.securityTokenAddress = securityTokenAddress;
     this.uid = SecurityTokenReservation.generateId({ symbol });
   }
 
@@ -74,12 +89,21 @@ export class SecurityTokenReservation extends Entity {
       },
       this.context
     );
-    return await procedure.prepare();
+    return procedure.prepare();
+  };
+
+  /**
+   * Returns true if the Security Token associated to this reservation has already been launched
+   */
+  public isLaunched = async () => {
+    const { context, symbol } = this;
+
+    return context.contractWrappers.securityTokenRegistry.isTokenLaunched({ ticker: symbol });
   };
 
   public toPojo() {
-    const { uid, symbol } = this;
+    const { uid, symbol, expiry } = this;
 
-    return { uid, symbol };
+    return { uid, symbol, expiry };
   }
 }

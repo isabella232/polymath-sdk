@@ -39,13 +39,36 @@ interface WindowWithWeb3 extends ExtendedWindow {
   web3: InjectedWeb3;
 }
 
-export async function getWeb3() {
-  const provider = await getInjectedProvider();
-  if (!provider) {
-    throw new PolymathError({ code: ErrorCode.NonBrowserEnvironment });
+/**
+ * Returns the browser support for Ethereum
+ */
+export function getBrowserSupport() {
+  const win = window as ExtendedWindow;
+  if (!win) {
+    return BrowserSupport.None;
   }
-  return new Web3Wrapper(provider);
+  if (win.ethereum) {
+    return BrowserSupport.MetamaskModern;
+  }
+  if (win.web3) {
+    return BrowserSupport.MetamaskLegacy;
+  }
+  return BrowserSupport.NoMetamask;
 }
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+function isModern(obj: any): obj is WindowWithEthereum {
+  return getBrowserSupport() === BrowserSupport.MetamaskModern;
+}
+
+function isLegacy(obj: any): obj is WindowWithWeb3 {
+  return getBrowserSupport() === BrowserSupport.MetamaskLegacy;
+}
+
+function isUnsupported(obj: any): obj is ExtendedWindow {
+  return getBrowserSupport() === BrowserSupport.NoMetamask;
+}
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
 export async function getInjectedProvider(): Promise<Provider | undefined> {
   const win = (window as any) as ExtendedWindow | undefined;
@@ -69,34 +92,12 @@ export async function getInjectedProvider(): Promise<Provider | undefined> {
   }
 }
 
-function isModern(obj: any): obj is WindowWithEthereum {
-  return getBrowserSupport() === BrowserSupport.MetamaskModern;
-}
-
-function isLegacy(obj: any): obj is WindowWithWeb3 {
-  return getBrowserSupport() === BrowserSupport.MetamaskLegacy;
-}
-
-function isUnsupported(obj: any): obj is ExtendedWindow {
-  return getBrowserSupport() === BrowserSupport.NoMetamask;
-}
-
-/**
- * Returns the browser support for Ethereum
- */
-export function getBrowserSupport() {
-  const win = window as ExtendedWindow;
-  if (!win) {
-    return BrowserSupport.None;
+export async function getWeb3() {
+  const provider = await getInjectedProvider();
+  if (!provider) {
+    throw new PolymathError({ code: ErrorCode.NonBrowserEnvironment });
   }
-  if (win.ethereum) {
-    return BrowserSupport.MetamaskModern;
-  }
-  if (win.web3) {
-    return BrowserSupport.MetamaskLegacy;
-  } else {
-    return BrowserSupport.NoMetamask;
-  }
+  return new Web3Wrapper(provider);
 }
 
 /**
@@ -155,10 +156,8 @@ export async function getCurrentAddress() {
  * Runs the callback anytime the wallet address changes in the browser
  */
 export function onAddressChange(cb: (newAddress: string, previousAddress?: string) => void) {
-  const web3 = getWeb3();
-  const support = getBrowserSupport();
   if (isUnsupported(window as ExtendedWindow)) {
-    // eslint:disable-next-line no-console
+    // eslint-disable-next-line no-console
     console.warn(
       '"onAddressChange" Was called, but the current browser does not support Ethereum.'
     );

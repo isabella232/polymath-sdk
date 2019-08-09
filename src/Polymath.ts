@@ -5,11 +5,11 @@ import {
   RedundantSubprovider,
   RPCSubprovider,
 } from '@0x/subproviders';
+import P from 'bluebird';
 import { Context } from './Context';
 import { getInjectedProvider } from './browserUtils';
 import { PolymathNetworkParams, ErrorCode } from './types';
-import { Erc20TokenBalance, SecurityToken } from './entities';
-
+import { Erc20TokenBalance, SecurityToken, SecurityTokenReservation } from './entities';
 import { ReserveSecurityToken } from './procedures';
 import { PolymathError } from './PolymathError';
 import { PolymathBase } from './PolymathBase';
@@ -32,7 +32,6 @@ export class Polymath {
     providerUrl,
     privateKey,
   }: PolymathNetworkParams) => {
-    let contractWrappers: PolymathBase;
     let provider: Provider;
     const providerEngine = new Web3ProviderEngine();
     const injectedProvider = await getInjectedProvider();
@@ -51,7 +50,7 @@ export class Polymath {
       });
     }
 
-    contractWrappers = new PolymathBase({ provider, polymathRegistryAddress });
+    const contractWrappers = new PolymathBase({ provider, polymathRegistryAddress });
 
     this.contractWrappers = contractWrappers;
 
@@ -74,9 +73,110 @@ export class Polymath {
    * @param owner address that will own the reservation (optional, use this if you want to reserve a token on behalf of someone else)
    */
   public reserveSecurityToken = async (args: { symbol: string; owner?: string }) => {
-    const procedure = new ReserveSecurityToken(args, this.context);
+    const procedure = new ReserveSecurityToken(args, this.context, this);
     const transactionQueue = await procedure.prepare();
     return transactionQueue;
+  };
+
+  /**
+   * Retrieve all Security Token Reservations currently owned by an issuer. This includes
+   * Security Tokens that have already been launched
+   *
+   * @param owner issuer's address (defaults to current address)
+   */
+  public getSecurityTokenReservations = async (args?: { owner: string }) => {
+    const {
+      context: { currentWallet, contractWrappers },
+    } = this;
+    let owner: string;
+    if (args) {
+      ({ owner } = args);
+    } else if (currentWallet) {
+      ({ address: owner } = currentWallet);
+    } else {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message:
+          "No default account set. You must pass the token owner's private key to Polymath.connect()",
+      });
+    }
+
+    const symbols = await contractWrappers.securityTokenRegistry.getTickersByOwner({ owner });
+
+    return P.map(symbols, symbol => {
+      return this.getSecurityTokenReservation({ symbol });
+    });
+  };
+
+  /**
+   * Retrieve a Security Token Reservation by symbol or UUID
+   *
+   * @param symbol Security Token symbol
+   */
+  public getSecurityTokenReservation = async (args: { symbol: string } | string) => {
+    let symbol: string;
+
+    // fetch by UUID
+    if (typeof args === 'string') {
+      ({ symbol } = SecurityTokenReservation.unserialize(args));
+    } else {
+      ({ symbol } = args);
+    }
+
+    const {
+      contractWrappers: { securityTokenRegistry, tokenFactory },
+    } = this;
+
+    const { status, expiryDate } = await securityTokenRegistry.getTickerDetails({ ticker: symbol });
+
+    if (!status) {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message: `There is no reservation for token symbol ${symbol}`,
+      });
+    }
+
+    let securityTokenAddress;
+    try {
+      const securityToken = await tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
+      securityTokenAddress = await securityToken.address();
+    } catch (e) {
+      // we reach this point if the token hasn't been launched, so we just ignore it
+    }
+
+    return new SecurityTokenReservation(
+      { symbol, expiry: expiryDate, securityTokenAddress },
+      this.context
+    );
+  };
+
+  /**
+   * Retrieve all launched Security Tokens currently owned by an issuer
+   *
+   * @param owner issuer's address (defaults to current address)
+   */
+  public getSecurityTokens = async (args?: { owner: string }) => {
+    const {
+      context: { currentWallet, contractWrappers },
+    } = this;
+    let owner: string;
+    if (args) {
+      ({ owner } = args);
+    } else if (currentWallet) {
+      ({ address: owner } = currentWallet);
+    } else {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message:
+          "No default account set. You must pass the token owner's private key to Polymath.connect()",
+      });
+    }
+
+    const symbols = await contractWrappers.securityTokenRegistry.getTokensByOwner({ owner });
+
+    return P.map(symbols, symbol => {
+      return this.getSecurityToken({ symbol });
+    });
   };
 
   /**
@@ -138,7 +238,7 @@ export class Polymath {
     const erc20Token = await this.contractWrappers.tokenFactory.getERC20TokenInstanceFromAddress(
       address
     );
-    return await erc20Token.isValidContract();
+    await erc20Token.isValidContract();
   };
 
   /**
@@ -185,6 +285,15 @@ export class Polymath {
    * Get the current version of the Polymath Protocol
    */
   public getLatestProtocolVersion = async () => {
-    return await this.contractWrappers.securityTokenRegistry.getLatestProtocolVersion();
+    await this.contractWrappers.securityTokenRegistry.getLatestProtocolVersion();
+  };
+
+  /**
+   * Returns the wallet address of the current user if it exists
+   */
+  public getCurrentAddress = () => {
+    const { currentWallet } = this.context;
+
+    return currentWallet ? currentWallet.address : undefined;
   };
 }

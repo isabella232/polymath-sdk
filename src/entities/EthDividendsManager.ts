@@ -1,7 +1,6 @@
 import { serialize } from '../utils';
 import { DividendsManager, Params, UniqueIdentifiers } from './DividendsManager';
 import { DividendType, Omit } from '../types';
-import { Context } from '../Context';
 
 export class EthDividendsManager extends DividendsManager {
   public static generateId({ securityTokenId, dividendType }: UniqueIdentifiers) {

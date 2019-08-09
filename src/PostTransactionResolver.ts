@@ -1,9 +1,5 @@
 import { TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 
-export function isPostTransactionResolver<T = any>(val: any): val is PostTransactionResolver<T> {
-  return val instanceof PostTransactionResolver;
-}
-
 export class PostTransactionResolver<Value extends any> {
   public result?: Value;
 
@@ -25,4 +21,8 @@ export class PostTransactionResolver<Value extends any> {
 
     this.result = result;
   }
+}
+
+export function isPostTransactionResolver<T = any>(val: any): val is PostTransactionResolver<T> {
+  return val instanceof PostTransactionResolver;
 }

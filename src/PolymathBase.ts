@@ -14,9 +14,9 @@ import {
   SecurityToken,
   ModuleType,
   BigNumber,
-  Provider,
 } from '@polymathnetwork/contract-wrappers';
-import { range, flatten, includes } from 'lodash';
+import { range, flatten, includes, compact } from 'lodash';
+import P from 'bluebird';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';
 import { ErrorCode, DividendType } from './types';
@@ -145,14 +145,6 @@ export interface BaseDividend {
 }
 
 export class PolymathBase extends PolymathAPI {
-  constructor(params: {
-    provider: Provider;
-    polymathRegistryAddress?: string;
-    defaultGasPrice?: BigNumber;
-  }) {
-    super(params);
-  }
-
   public getModuleFactoryAddress = async ({
     moduleName,
     tokenAddress,
@@ -176,7 +168,7 @@ export class PolymathBase extends PolymathAPI {
     });
 
     let address: string | null = null;
-    let latestVersion: string = '0.0.0';
+    let latestVersion = '0.0.0';
 
     // Get latest version of the module factory
     for (const moduleAddress of availableModules) {
@@ -206,126 +198,128 @@ export class PolymathBase extends PolymathAPI {
     { symbol, moduleName }: GetAttachedModulesParams,
     opts?: GetAttachedModulesOpts
   ): Promise<any[]> => {
-    const securityToken = await this.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
+    const { tokenFactory, moduleFactory } = this;
+
+    const securityToken = await tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
 
     const moduleAddresses = await securityToken.getModulesByName({ moduleName });
 
-    let filteredModuleAddresses: string[] = [];
+    let filteredModuleAddresses: string[];
 
     if (opts && opts.unarchived) {
       // only return unarchived modules
-      for (const moduleAddress of moduleAddresses) {
+      filteredModuleAddresses = await P.filter(moduleAddresses, async moduleAddress => {
         const { archived } = await securityToken.getModule({ moduleAddress });
 
-        if (!archived) {
-          filteredModuleAddresses.push(moduleAddress);
-        }
-      }
+        return !archived;
+      });
     } else {
       filteredModuleAddresses = moduleAddresses;
     }
 
+    const { getModuleInstance } = moduleFactory;
+
     // This has to be done this way because of typescript limitations
-    const wrappedModules = [];
+    let wrappedModules;
     switch (moduleName) {
       case ModuleName.GeneralPermissionManager: {
-        for (const moduleAddress of filteredModuleAddresses) {
-          const wrappedModule = await this.moduleFactory.getModuleInstance({
+        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+          getModuleInstance({
             address: moduleAddress,
             name: moduleName,
-          });
-          wrappedModules.push(wrappedModule);
-        }
+          })
+        );
+
         return wrappedModules;
       }
       case ModuleName.CountTransferManager: {
-        for (const moduleAddress of filteredModuleAddresses) {
-          const wrappedModule = await this.moduleFactory.getModuleInstance({
+        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+          getModuleInstance({
             address: moduleAddress,
             name: moduleName,
-          });
-          wrappedModules.push(wrappedModule);
-        }
+          })
+        );
+
         return wrappedModules;
       }
       case ModuleName.GeneralTransferManager: {
-        for (const moduleAddress of filteredModuleAddresses) {
-          const wrappedModule = await this.moduleFactory.getModuleInstance({
+        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+          getModuleInstance({
             address: moduleAddress,
             name: moduleName,
-          });
-          wrappedModules.push(wrappedModule);
-        }
+          })
+        );
+
         return wrappedModules;
       }
       case ModuleName.ManualApprovalTransferManager: {
-        for (const moduleAddress of filteredModuleAddresses) {
-          const wrappedModule = await this.moduleFactory.getModuleInstance({
+        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+          getModuleInstance({
             address: moduleAddress,
             name: moduleName,
-          });
-          wrappedModules.push(wrappedModule);
-        }
+          })
+        );
+
         return wrappedModules;
       }
       case ModuleName.PercentageTransferManager: {
-        for (const moduleAddress of filteredModuleAddresses) {
-          const wrappedModule = await this.moduleFactory.getModuleInstance({
+        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+          getModuleInstance({
             address: moduleAddress,
             name: moduleName,
-          });
-          wrappedModules.push(wrappedModule);
-        }
+          })
+        );
+
         return wrappedModules;
       }
       case ModuleName.VolumeRestrictionTM: {
-        for (const moduleAddress of filteredModuleAddresses) {
-          const wrappedModule = await this.moduleFactory.getModuleInstance({
+        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+          getModuleInstance({
             address: moduleAddress,
             name: moduleName,
-          });
-          wrappedModules.push(wrappedModule);
-        }
+          })
+        );
+
         return wrappedModules;
       }
       case ModuleName.CappedSTO: {
-        for (const moduleAddress of filteredModuleAddresses) {
-          const wrappedModule = await this.moduleFactory.getModuleInstance({
+        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+          getModuleInstance({
             address: moduleAddress,
             name: moduleName,
-          });
-          wrappedModules.push(wrappedModule);
-        }
+          })
+        );
+
         return wrappedModules;
       }
       case ModuleName.UsdTieredSTO: {
-        for (const moduleAddress of filteredModuleAddresses) {
-          const wrappedModule = await this.moduleFactory.getModuleInstance({
+        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+          getModuleInstance({
             address: moduleAddress,
             name: moduleName,
-          });
-          wrappedModules.push(wrappedModule);
-        }
+          })
+        );
+
         return wrappedModules;
       }
       case ModuleName.ERC20DividendCheckpoint: {
-        for (const moduleAddress of filteredModuleAddresses) {
-          const wrappedModule = await this.moduleFactory.getModuleInstance({
+        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+          getModuleInstance({
             address: moduleAddress,
             name: moduleName,
-          });
-          wrappedModules.push(wrappedModule);
-        }
+          })
+        );
+
         return wrappedModules;
       }
       case ModuleName.EtherDividendCheckpoint: {
-        for (const moduleAddress of filteredModuleAddresses) {
-          const wrappedModule = await this.moduleFactory.getModuleInstance({
+        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+          getModuleInstance({
             address: moduleAddress,
             name: moduleName,
-          });
-          wrappedModules.push(wrappedModule);
-        }
+          })
+        );
+
         return wrappedModules;
       }
       default: {
@@ -356,14 +350,12 @@ export class PolymathBase extends PolymathAPI {
   public getCheckpoints = async ({ securityToken }: { securityToken: SecurityToken }) => {
     const checkpointTimes = await securityToken.getCheckpointTimes();
 
-    const checkpoints = await Promise.all(
-      checkpointTimes.map((time, index) =>
-        this.getCheckpointData({
-          checkpointId: index + 1,
-          time,
-          securityToken,
-        })
-      )
+    const checkpoints = await P.map(checkpointTimes, (time, index) =>
+      this.getCheckpointData({
+        checkpointId: index + 1,
+        time,
+        securityToken,
+      })
     );
 
     return checkpoints.sort((a, b) => {
@@ -383,19 +375,17 @@ export class PolymathBase extends PolymathAPI {
     const totalSupply = await securityToken.totalSupplyAt({ checkpointId });
     const shareholderAddresses = await securityToken.getInvestorsAt({ checkpointId });
 
-    const shareholderBalances = await Promise.all(
-      shareholderAddresses.map(async shareholderAddress => {
-        const balance = await securityToken.balanceOfAt({
-          checkpointId,
-          investor: shareholderAddress,
-        });
+    const shareholderBalances = await P.map(shareholderAddresses, async shareholderAddress => {
+      const balance = await securityToken.balanceOfAt({
+        checkpointId,
+        investor: shareholderAddress,
+      });
 
-        return {
-          balance,
-          address: shareholderAddress,
-        };
-      })
-    );
+      return {
+        balance,
+        address: shareholderAddress,
+      };
+    });
 
     return {
       index: checkpointId,
@@ -484,10 +474,8 @@ export class PolymathBase extends PolymathAPI {
   }) => {
     const dividendIndexes = await dividendsModule.getDividendIndex({ checkpointId });
 
-    const dividends = await Promise.all(
-      dividendIndexes.map(dividendIndex =>
-        this.getDividend({ dividendIndex: dividendIndex.toNumber(), dividendsModule })
-      )
+    const dividends = await P.map(dividendIndexes, dividendIndex =>
+      this.getDividend({ dividendIndex: dividendIndex.toNumber(), dividendsModule })
     );
 
     return dividends.sort((a, b) => a.index - b.index);
@@ -503,10 +491,8 @@ export class PolymathBase extends PolymathAPI {
 
     const currentCheckpointIndex = await securityToken.currentCheckpointId();
     const checkpointIndexes = range(1, currentCheckpointIndex.toNumber() + 1);
-    const dividends = await Promise.all(
-      checkpointIndexes.map(checkpointId =>
-        this.getDividendsByCheckpoint({ checkpointId, dividendsModule })
-      )
+    const dividends = await P.map(checkpointIndexes, checkpointId =>
+      this.getDividendsByCheckpoint({ checkpointId, dividendsModule })
     );
 
     return flatten(dividends).sort((a, b) => a.index - b.index);
