@@ -12,22 +12,30 @@ import { TransactionQueue } from '../entities/TransactionQueue';
 import { Context, ContextWithWallet } from '../Context';
 import { PostTransactionResolver } from '../PostTransactionResolver';
 import { PolymathError } from '../PolymathError';
+import { Entity } from '../entities';
+import { Polymath } from '../Polymath';
 
-export interface ProcedureClass<Args = any> {
-  new (args: Args, context: Context): Procedure<Args>;
+export interface ProcedureClass<Args = any, Caller extends Entity | Polymath | void = void> {
+  new (args: Args, context: Context, caller: Caller): Procedure<Args>;
 }
 
 // NOTE @RafaelVidaurre: We could add a preparation state cache to avoid repeated transactions and bad validations
-export abstract class Procedure<Args, ReturnType = any> {
+export abstract class Procedure<
+  Args,
+  Caller extends Entity | Polymath | void = void,
+  ReturnType = void
+> {
   public type: ProcedureType = ProcedureType.UnnamedProcedure;
 
   protected args: Args;
 
   protected context: ContextWithWallet;
 
+  protected caller: Caller;
+
   private transactions: TransactionSpec[] = [];
 
-  constructor(args: Args, context: Context) {
+  constructor(args: Args, context: Context, caller: Caller) {
     if (!context.currentWallet) {
       throw new PolymathError({
         message:
@@ -38,6 +46,7 @@ export abstract class Procedure<Args, ReturnType = any> {
 
     this.args = args;
     this.context = context as ContextWithWallet;
+    this.caller = caller;
   }
 
   /**

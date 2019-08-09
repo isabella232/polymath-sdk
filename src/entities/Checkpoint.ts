@@ -3,7 +3,6 @@ import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
 import { DividendDistribution } from './DividendDistribution';
 import { ShareholderBalance, ErrorCode } from '../types';
-import { Context } from '../Context';
 import { PolymathError } from '../PolymathError';
 
 interface UniqueIdentifiers {
@@ -18,7 +17,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 interface Params extends UniqueIdentifiers {
-  dividends: DividendDistribution[];
+  dividendDistributions: DividendDistribution[];
   securityTokenSymbol: string;
   shareholderBalances: ShareholderBalance[];
   totalSupply: BigNumber;
@@ -48,7 +47,7 @@ export class Checkpoint extends Entity {
 
   public uid: string;
 
-  public dividends: DividendDistribution[];
+  public dividendDistributions: DividendDistribution[];
 
   public securityTokenSymbol: string;
 
@@ -66,7 +65,7 @@ export class Checkpoint extends Entity {
     super();
 
     const {
-      dividends,
+      dividendDistributions,
       securityTokenSymbol,
       securityTokenId,
       index,
@@ -75,7 +74,7 @@ export class Checkpoint extends Entity {
       createdAt,
     } = params;
 
-    this.dividends = dividends;
+    this.dividendDistributions = dividendDistributions;
     this.securityTokenSymbol = securityTokenSymbol;
     this.securityTokenId = securityTokenId;
     this.index = index;
@@ -88,7 +87,7 @@ export class Checkpoint extends Entity {
   public toPojo() {
     const {
       uid,
-      dividends,
+      dividendDistributions,
       securityTokenSymbol,
       securityTokenId,
       index,
@@ -99,7 +98,7 @@ export class Checkpoint extends Entity {
 
     return {
       uid,
-      dividends: dividends.map(dividend => dividend.toPojo()),
+      dividendDistributions: dividendDistributions.map(distribution => distribution.toPojo()),
       securityTokenSymbol,
       securityTokenId,
       index,

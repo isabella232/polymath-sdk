@@ -8,13 +8,19 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { findEvent } from '../utils';
+import { SecurityToken, Checkpoint } from '../entities';
 
-export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs> {
+export class CreateCheckpoint extends Procedure<
+  CreateCheckpointProcedureArgs,
+  SecurityToken,
+  Checkpoint
+> {
   public type = ProcedureType.CreateCheckpoint;
 
   public async prepareTransactions() {
-    const { symbol } = this.args;
-    const { contractWrappers } = this.context;
+    const { args, context, caller } = this;
+    const { symbol } = args;
+    const { contractWrappers } = context;
 
     let securityToken;
 
@@ -29,28 +35,27 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs> {
       });
     }
 
-    const checkpointIndex = await this.addTransaction(securityToken.createCheckpoint, {
+    const checkpoint = await this.addTransaction(securityToken.createCheckpoint, {
       tag: PolyTransactionTag.CreateCheckpoint,
       resolver: async receipt => {
         const { logs } = receipt;
 
         const event = findEvent({ logs, eventName: SecurityTokenEvents.CheckpointCreated });
         if (event) {
-          const { args } = event;
+          const { args: eventArgs } = event;
 
-          const { _checkpointId } = args;
+          const { _checkpointId } = eventArgs;
 
-          return _checkpointId.toNumber();
-        } else {
-          throw new PolymathError({
-            code: ErrorCode.UnexpectedEventLogs,
-            message:
-              "The Checkpoint was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
-          });
+          return caller.shareholders.getCheckpoint({ checkpointIndex: _checkpointId.toNumber() });
         }
+        throw new PolymathError({
+          code: ErrorCode.UnexpectedEventLogs,
+          message:
+            "The Checkpoint was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+        });
       },
     })({});
 
-    return checkpointIndex;
+    return checkpoint;
   }
 }

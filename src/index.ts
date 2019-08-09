@@ -4,16 +4,8 @@ export * from './utils';
 export { Polymath } from './Polymath';
 export { PolymathError } from './PolymathError';
 
-let isNode = false;
-if (typeof window === 'undefined') {
-  isNode = true;
-}
+const isNode = typeof window === 'undefined';
 
-let browserUtils;
-if (!isNode) {
-  browserUtils = require('./browserUtils');
-} else {
-  browserUtils = null;
-}
+const browserUtils = isNode ? null : require('./browserUtils');
 
 export { browserUtils };

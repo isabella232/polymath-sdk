@@ -1,3 +1,4 @@
+import { SecurityTokenRegistryEvents } from '@polymathnetwork/abi-wrappers';
 import { Procedure } from './Procedure';
 import { ApproveErc20 } from './ApproveErc20';
 import {
@@ -7,16 +8,23 @@ import {
   ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { SecurityToken } from '../entities';
+import { findEvent } from '../utils';
 
-export class CreateSecurityToken extends Procedure<CreateSecurityTokenProcedureArgs> {
+export class CreateSecurityToken extends Procedure<
+  CreateSecurityTokenProcedureArgs,
+  void,
+  SecurityToken
+> {
   public type = ProcedureType.CreateSecurityToken;
 
   public async prepareTransactions() {
-    const { name, symbol, detailsUrl = '', divisible, treasuryWallet } = this.args;
+    const { args, context } = this;
+    const { name, symbol, detailsUrl = '', divisible, treasuryWallet } = args;
     const {
       contractWrappers: { securityTokenRegistry },
       currentWallet,
-    } = this.context;
+    } = context;
 
     let wallet: string;
     const { address: currentAddress } = currentWallet;
@@ -29,14 +37,16 @@ export class CreateSecurityToken extends Procedure<CreateSecurityTokenProcedureA
 
     const [isAvailable, isRegisteredByCurrentIssuer, isLaunched] = await Promise.all([
       securityTokenRegistry.isTickerAvailable({ ticker: symbol }),
-      securityTokenRegistry.isTickerRegisteredByCurrentIssuer({ ticker: symbol }),
+      securityTokenRegistry.isTickerRegisteredByCurrentIssuer({
+        ticker: symbol,
+      }),
       securityTokenRegistry.isTokenLaunched({ ticker: symbol }),
     ]);
 
     if (isAvailable) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `The security token symbol ${symbol} hasn\'t been reserved. You need to call "reserveSecurityToken" first.`,
+        message: `The security token symbol ${symbol} hasn't been reserved. You need to call "reserveSecurityToken" first.`,
       });
     }
 
@@ -61,8 +71,37 @@ export class CreateSecurityToken extends Procedure<CreateSecurityTokenProcedureA
       spender: await securityTokenRegistry.address(),
     });
 
-    await this.addTransaction(securityTokenRegistry.generateNewSecurityToken, {
+    const newToken = await this.addTransaction(securityTokenRegistry.generateNewSecurityToken, {
       tag: PolyTransactionTag.CreateSecurityToken,
+      resolver: async receipt => {
+        const { logs } = receipt;
+
+        const event = findEvent({
+          eventName: SecurityTokenRegistryEvents.NewSecurityToken,
+          logs,
+        });
+
+        if (event) {
+          const { args: eventArgs } = event;
+
+          const { _ticker, _securityTokenAddress, _name, _owner } = eventArgs;
+
+          return new SecurityToken(
+            {
+              symbol: _ticker,
+              address: _securityTokenAddress,
+              name: _name,
+              owner: _owner,
+            },
+            context
+          );
+        }
+        throw new PolymathError({
+          code: ErrorCode.UnexpectedEventLogs,
+          message:
+            "The Security Token was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+        });
+      },
     })({
       name,
       ticker: symbol,
@@ -71,5 +110,7 @@ export class CreateSecurityToken extends Procedure<CreateSecurityTokenProcedureA
       protocolVersion: '0',
       treasuryWallet: wallet,
     });
+
+    return newToken;
   }
 }

@@ -38,7 +38,7 @@ export class Dividends extends SubModule {
       },
       this.context
     );
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   /**
@@ -63,9 +63,10 @@ export class Dividends extends SubModule {
     excludedAddresses?: string[];
     taxWithholdings?: TaxWithholdingEntry[];
   }) => {
-    const polyAddress = await this.context.contractWrappers.polyToken.address();
+    const { context, securityToken } = this;
+    const polyAddress = await context.contractWrappers.polyToken.address();
     const { checkpointId, ...rest } = args;
-    const { symbol } = this.securityToken;
+    const { symbol } = securityToken;
     const { index: checkpointIndex } = Checkpoint.unserialize(checkpointId);
     const procedure = new CreateErc20DividendDistribution(
       {
@@ -74,10 +75,11 @@ export class Dividends extends SubModule {
         checkpointIndex,
         ...rest,
       },
-      this.context
+      context,
+      securityToken
     );
 
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   /**
@@ -104,8 +106,9 @@ export class Dividends extends SubModule {
     excludedAddresses?: string[];
     taxWithholdings?: TaxWithholdingEntry[];
   }) => {
+    const { context, securityToken } = this;
     const { checkpointId, ...rest } = args;
-    const { symbol } = this.securityToken;
+    const { symbol } = securityToken;
     const { index: checkpointIndex } = Checkpoint.unserialize(checkpointId);
     const procedure = new CreateErc20DividendDistribution(
       {
@@ -113,9 +116,10 @@ export class Dividends extends SubModule {
         checkpointIndex,
         ...rest,
       },
-      this.context
+      context,
+      securityToken
     );
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   /**
@@ -140,8 +144,9 @@ export class Dividends extends SubModule {
     excludedAddresses?: string[];
     taxWithholdings?: TaxWithholdingEntry[];
   }) => {
+    const { context, securityToken } = this;
     const { checkpointId, ...rest } = args;
-    const { symbol } = this.securityToken;
+    const { symbol } = securityToken;
     const { index: checkpointIndex } = Checkpoint.unserialize(checkpointId);
     const procedure = new CreateEtherDividendDistribution(
       {
@@ -149,9 +154,10 @@ export class Dividends extends SubModule {
         checkpointIndex,
         ...rest,
       },
-      this.context
+      context,
+      securityToken
     );
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   /**
@@ -183,7 +189,7 @@ export class Dividends extends SubModule {
       },
       this.context
     );
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   /**
@@ -201,7 +207,7 @@ export class Dividends extends SubModule {
       },
       this.context
     );
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   /**
@@ -229,15 +235,15 @@ export class Dividends extends SubModule {
 
     let dividendsModule;
     if (dividendType === DividendType.Erc20) {
-      dividendsModule = (await getAttachedModules(
+      [dividendsModule] = await getAttachedModules(
         { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
         { unarchived: true }
-      ))[0];
+      );
     } else if (dividendType === DividendType.Eth) {
-      dividendsModule = (await getAttachedModules(
+      [dividendsModule] = await getAttachedModules(
         { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
         { unarchived: true }
-      ))[0];
+      );
     }
 
     if (!dividendsModule) {
@@ -341,10 +347,11 @@ export class Dividends extends SubModule {
     const checkpoints = await securityToken.shareholders.getCheckpoints();
 
     for (const checkpoint of checkpoints) {
-      const { dividends } = checkpoint;
+      const { dividendDistributions } = checkpoint;
 
-      const result = dividends.find(
-        dividend => dividend.index === dividendIndex && dividend.dividendType === dividendType
+      const result = dividendDistributions.find(
+        distribution =>
+          distribution.index === dividendIndex && distribution.dividendType === dividendType
       );
 
       if (result) {
@@ -393,10 +400,10 @@ export class Dividends extends SubModule {
 
     switch (dividendType) {
       case DividendType.Erc20: {
-        dividendsModule = (await contractWrappers.getAttachedModules(
+        [dividendsModule] = await contractWrappers.getAttachedModules(
           { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
           { unarchived: true }
-        ))[0];
+        );
 
         if (dividendsModule) {
           const storageWalletAddress = await dividendsModule.wallet();
@@ -409,11 +416,11 @@ export class Dividends extends SubModule {
 
         break;
       }
-      case DividendType.Erc20: {
-        dividendsModule = (await contractWrappers.getAttachedModules(
+      case DividendType.Eth: {
+        [dividendsModule] = await contractWrappers.getAttachedModules(
           { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
           { unarchived: true }
-        ))[0];
+        );
 
         if (dividendsModule) {
           const storageWalletAddress = await dividendsModule.wallet();

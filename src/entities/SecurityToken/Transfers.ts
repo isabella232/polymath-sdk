@@ -11,7 +11,7 @@ export class Transfers extends SubModule {
     const { symbol } = this.securityToken;
     const procedure = new SetController({ symbol, controller }, this.context);
 
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   /**
@@ -39,6 +39,6 @@ export class Transfers extends SubModule {
       this.context
     );
 
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 }

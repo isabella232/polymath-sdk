@@ -30,7 +30,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
 
     // @TODO remon-nashid refactor into a map(op => {module, perm}).
     switch (op) {
-      case PermissibleOperation.ModifyShareholderData:
+      case PermissibleOperation.ModifyShareholderData: {
         perm = Perm.Admin;
         const attachedModule = (await contractWrappers.getAttachedModules(
           { moduleName: ModuleName.GeneralTransferManager, symbol },
@@ -46,11 +46,13 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
         }
         moduleAddress = await attachedModule.address();
         break;
-      default:
+      }
+      default: {
         throw new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `Unkown operation "${op}"`,
         });
+      }
     }
 
     const permissionModule = (await contractWrappers.getAttachedModules(
@@ -81,7 +83,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
       if (permitted === isGranted) {
         throw new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `Delegate\'s permission is already set to ${isGranted}.`,
+          message: `Delegate's permission is already set to ${isGranted}.`,
         });
       }
     } else {

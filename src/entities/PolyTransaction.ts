@@ -5,8 +5,8 @@ import { TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wra
 import { PostTransactionResolver, isPostTransactionResolver } from '../PostTransactionResolver';
 import { TransactionSpec, ErrorCode, TransactionStatus, PolyTransactionTag } from '../types';
 import { PolymathError } from '../PolymathError';
-import { Entity } from '../entities/Entity';
-import { TransactionQueue } from '../entities/TransactionQueue';
+import { Entity } from './Entity';
+import { TransactionQueue } from './TransactionQueue';
 import { serialize } from '../utils';
 
 enum Events {
@@ -163,6 +163,7 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
   private updateStatus = (status: TransactionStatus) => {
     this.status = status;
 
+    /* eslint-disable default-case */
     switch (status) {
       case TransactionStatus.Unapproved: {
         this.emitter.emit(Events.StatusChange, this);
@@ -184,6 +185,7 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
         this.emitter.emit(Events.StatusChange, this);
       }
     }
+    /* eslint-enable default-case */
   };
 
   private unwrapArg<T>(arg: PostTransactionResolver<T> | T) {

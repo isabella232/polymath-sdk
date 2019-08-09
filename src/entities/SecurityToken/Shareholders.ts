@@ -1,4 +1,4 @@
-import { ModuleName } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, SecurityToken } from '@polymathnetwork/contract-wrappers';
 import { ShareholderDataEntry, DividendType, ErrorCode } from '../../types';
 import { ModifyShareholderData, CreateCheckpoint } from '../../procedures';
 import { SubModule } from './SubModule';
@@ -29,21 +29,23 @@ export class Shareholders extends SubModule {
       },
       this.context
     );
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   /**
    * Create a snapshot of the balances of every shareholder at the current date
    */
   public createCheckpoint = async () => {
-    const { symbol } = this.securityToken;
+    const { context, securityToken } = this;
+    const { symbol } = securityToken;
     const procedure = new CreateCheckpoint(
       {
         symbol,
       },
-      this.context
+      context,
+      securityToken
     );
-    return await procedure.prepare();
+    return procedure.prepare();
   };
 
   /**
@@ -170,11 +172,11 @@ export class Shareholders extends SubModule {
       index: checkpoint.index,
     });
 
-    const dividends = checkpointDividends.map(
-      dividend =>
+    const dividendDistributions = checkpointDividends.map(
+      distribution =>
         new DividendDistribution(
           {
-            ...dividend,
+            ...distribution,
             checkpointId,
             securityTokenSymbol,
             securityTokenId,
@@ -187,7 +189,7 @@ export class Shareholders extends SubModule {
       ...checkpoint,
       securityTokenId,
       securityTokenSymbol,
-      dividends,
+      dividendDistributions,
     });
 
     return checkpointEntity;
@@ -201,7 +203,7 @@ export class Shareholders extends SubModule {
 
     const { symbol: securityTokenSymbol, uid: securityTokenId } = this.securityToken;
 
-    let securityToken;
+    let securityToken: SecurityToken;
 
     try {
       securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
@@ -226,10 +228,14 @@ export class Shareholders extends SubModule {
 
     const shareholders = [];
 
+    const balances = await Promise.all(
+      allKycData.map(({ investor }) => securityToken.balanceOf({ owner: investor }))
+    );
+
     for (let i = 0; i < allKycData.length; ++i) {
       const { investor: address, canSendAfter, canReceiveAfter, expiryTime } = allKycData[i];
       const { isAccredited, canNotBuyFromSTO } = allFlags[i];
-      const balance = await securityToken.balanceOf({ owner: address });
+      const balance = balances[i];
 
       const data = new Shareholder({
         balance,

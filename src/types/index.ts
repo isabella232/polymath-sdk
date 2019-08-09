@@ -407,7 +407,7 @@ export interface Pojo {
     | Pojo
     | BigNumber
     | Date
-    | Array<string | number | boolean | null | Pojo | BigNumber | Date>;
+    | (string | number | boolean | null | Pojo | BigNumber | Date)[];
 }
 
 export function isPojo(pojo: any): pojo is Pojo {

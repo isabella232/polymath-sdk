@@ -29,17 +29,17 @@ export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
 
     switch (dividendType) {
       case DividendType.Erc20: {
-        dividendModule = (await contractWrappers.getAttachedModules(
+        [dividendModule] = await contractWrappers.getAttachedModules(
           { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
           { unarchived: true }
-        ))[0];
+        );
         break;
       }
       case DividendType.Eth: {
-        dividendModule = (await contractWrappers.getAttachedModules({
+        [dividendModule] = await contractWrappers.getAttachedModules({
           moduleName: ModuleName.EtherDividendCheckpoint,
           symbol,
-        }))[0];
+        });
         break;
       }
     }

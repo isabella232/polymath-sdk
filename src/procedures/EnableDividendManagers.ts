@@ -1,4 +1,5 @@
-import { ModuleName } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, SecurityToken } from '@polymathnetwork/contract-wrappers';
+import P from 'bluebird';
 import { Procedure } from './Procedure';
 import {
   EnableDividendManagersProcedureArgs,
@@ -30,7 +31,7 @@ export class EnableDividendManagers extends Procedure<EnableDividendManagersProc
     } = this.args;
     const { contractWrappers } = this.context;
 
-    let securityToken;
+    let securityToken: SecurityToken;
 
     try {
       securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
@@ -53,7 +54,7 @@ export class EnableDividendManagers extends Procedure<EnableDividendManagersProc
       [DividendType.Eth]: ModuleName.EtherDividendCheckpoint,
     };
 
-    for (const type of types) {
+    await P.each(types, async type => {
       const moduleName = moduleNames[type];
       const moduleAddress = await contractWrappers.getModuleFactoryAddress({
         tokenAddress,
@@ -68,6 +69,6 @@ export class EnableDividendManagers extends Procedure<EnableDividendManagersProc
         data: { wallet: storageWalletAddress },
         archived: false,
       });
-    }
+    });
   }
 }

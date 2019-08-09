@@ -1,13 +1,21 @@
-import { ModuleName, BigNumber, CappedSTOFundRaiseType } from '@polymathnetwork/contract-wrappers';
+import {
+  ModuleName,
+  BigNumber,
+  CappedSTOFundRaiseType,
+  SecurityTokenEvents,
+} from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
   LaunchCappedStoProcedureArgs,
+  StoType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { TransferErc20 } from './TransferErc20';
+import { SecurityToken, CappedSto } from '../entities';
+import { findEvent } from '../utils';
 
 interface AddCappedSTOParams {
   moduleName: ModuleName.CappedSTO;
@@ -24,12 +32,17 @@ interface AddCappedSTOParams {
   label?: string;
 }
 
-export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs> {
+export class LaunchCappedSto extends Procedure<
+  LaunchCappedStoProcedureArgs,
+  SecurityToken,
+  CappedSto
+> {
   public type = ProcedureType.LaunchCappedSto;
 
   public async prepareTransactions() {
-    const { symbol, startDate, endDate, tokensOnSale, rate, currency, storageWallet } = this.args;
-    const { contractWrappers } = this.context;
+    const { args, context, caller } = this;
+    const { symbol, startDate, endDate, tokensOnSale, rate, currency, storageWallet } = args;
+    const { contractWrappers } = context;
 
     let securityToken;
 
@@ -60,9 +73,33 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs> {
       amount: cost,
     });
 
-    await this.addTransaction<AddCappedSTOParams>(securityToken.addModuleWithLabel, {
-      tag: PolyTransactionTag.EnableCappedSto,
-    })({
+    const newSto = await this.addTransaction<AddCappedSTOParams, CappedSto>(
+      securityToken.addModuleWithLabel,
+      {
+        tag: PolyTransactionTag.EnableCappedSto,
+        resolver: async receipt => {
+          const { logs } = receipt;
+
+          const event = findEvent({
+            eventName: SecurityTokenEvents.ModuleAdded,
+            logs,
+          });
+
+          if (event) {
+            const { args: eventArgs } = event;
+
+            const { _module } = eventArgs;
+
+            return caller.offerings.getSto({ stoType: StoType.Capped, address: _module });
+          }
+          throw new PolymathError({
+            code: ErrorCode.UnexpectedEventLogs,
+            message:
+              "The Capped STO was successfully launched but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+          });
+        },
+      }
+    )({
       moduleName,
       address: factoryAddress,
       data: {
@@ -75,5 +112,7 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs> {
       },
       archived: false,
     });
+
+    return newSto;
   }
 }

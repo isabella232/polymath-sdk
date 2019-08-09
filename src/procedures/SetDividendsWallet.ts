@@ -33,17 +33,17 @@ export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArg
 
     switch (dividendType) {
       case DividendType.Erc20: {
-        dividendModule = (await contractWrappers.getAttachedModules(
+        [dividendModule] = await contractWrappers.getAttachedModules(
           { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
           { unarchived: true }
-        ))[0];
+        );
         break;
       }
       case DividendType.Eth: {
-        dividendModule = (await contractWrappers.getAttachedModules(
+        [dividendModule] = await contractWrappers.getAttachedModules(
           { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
           { unarchived: true }
-        ))[0];
+        );
         break;
       }
     }
