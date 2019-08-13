@@ -1,13 +1,9 @@
 import { Wallet } from './Wallet';
 import { PolymathBase } from './PolymathBase';
+import { onAddressChange } from './browserUtils';
 
 interface ConstructorParams {
   contractWrappers: PolymathBase;
-  accountAddress?: string;
-}
-
-export interface ContextWithWallet extends Context {
-  currentWallet: Wallet;
 }
 
 /**
@@ -19,15 +15,13 @@ export interface ContextWithWallet extends Context {
 export class Context {
   public contractWrappers: PolymathBase;
 
-  public currentWallet?: Wallet;
+  public currentWallet: Wallet;
 
   constructor(params: ConstructorParams) {
-    const { contractWrappers, accountAddress } = params;
+    const { contractWrappers } = params;
 
     this.contractWrappers = contractWrappers;
 
-    if (accountAddress) {
-      this.currentWallet = new Wallet({ address: accountAddress });
-    }
+    this.currentWallet = new Wallet({ address: () => contractWrappers.getAccount() });
   }
 }

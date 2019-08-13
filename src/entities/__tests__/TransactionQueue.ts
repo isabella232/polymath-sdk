@@ -1,3 +1,4 @@
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { TransactionQueueStatus, isPojo } from '../../types';
 import { MockedContract, getMockTransactionSpec } from '../../testUtils';
 import { TransactionQueue } from '../TransactionQueue';
@@ -12,7 +13,7 @@ describe('TransactionQueue', () => {
   describe('constructor', () => {
     test('initializes properly', () => {
       const transaction = getMockTransactionSpec(testContract.fakeTxOne, []);
-      const transactionQueue = new TransactionQueue([transaction]);
+      const transactionQueue = new TransactionQueue([transaction], new BigNumber(0));
       expect(transactionQueue).toBeInstanceOf(TransactionQueue);
       expect(transactionQueue.run()).toBeInstanceOf(Promise);
     });
@@ -24,7 +25,7 @@ describe('TransactionQueue', () => {
 
       const tx1 = getMockTransactionSpec(contract.fakeTxOne, []);
       const tx2 = getMockTransactionSpec(contract.fakeTxTwo, []);
-      const transactionQueue = new TransactionQueue([tx1, tx2]);
+      const transactionQueue = new TransactionQueue([tx1, tx2], new BigNumber(0));
 
       const polyTx1 = transactionQueue.transactions[0];
       const polyTx2 = transactionQueue.transactions[1];
@@ -55,7 +56,7 @@ describe('TransactionQueue', () => {
     test('returns a plain object representing the entity', () => {
       const txOne = getMockTransactionSpec(testContract.fakeTxOne, ['stringOne']);
 
-      const transactionQueue = new TransactionQueue([txOne]);
+      const transactionQueue = new TransactionQueue([txOne], new BigNumber(0));
 
       expect(isPojo(transactionQueue.toPojo())).toBeTruthy();
     });
@@ -65,7 +66,7 @@ describe('TransactionQueue', () => {
     test('runs the queue sequentially and resolves when done', async () => {
       const txOne = getMockTransactionSpec(testContract.fakeTxOne, ['stringOne']);
       const txTwo = getMockTransactionSpec(testContract.fakeTxTwo, ['stringTwo']);
-      const transactionQueue = new TransactionQueue([txOne, txTwo]);
+      const transactionQueue = new TransactionQueue([txOne, txTwo], new BigNumber(0));
       const t1Promise = transactionQueue.transactions[0].promise;
       const t2Promise = transactionQueue.transactions[1].promise;
 
@@ -77,9 +78,8 @@ describe('TransactionQueue', () => {
         expect(txTwo.method).toHaveBeenCalled();
       });
 
-      transactionQueue.run();
+      await transactionQueue.run();
 
-      await transactionQueue.promise;
       await Promise.all([t1Promise, t2Promise]);
     });
 
@@ -88,10 +88,10 @@ describe('TransactionQueue', () => {
       const txOne = getMockTransactionSpec(contract.fakeTxOne, ['stringOne']);
       const txTwo = getMockTransactionSpec(contract.fakeTxTwo, ['stringTwo']);
 
-      const transactionQueue = new TransactionQueue([txOne, txTwo]);
+      const transactionQueue = new TransactionQueue([txOne, txTwo], new BigNumber(0));
 
       expect(transactionQueue.status).toEqual(TransactionQueueStatus.Idle);
-      transactionQueue.run();
+      const promise = transactionQueue.run();
       expect(transactionQueue.status).toEqual(TransactionQueueStatus.Running);
       contract.fakeTxOnePolyResponse.resolve();
       await transactionQueue.transactions[0].promise;
@@ -101,7 +101,7 @@ describe('TransactionQueue', () => {
 
       expect(transactionQueue.status).toEqual(TransactionQueueStatus.Running);
 
-      await transactionQueue.promise;
+      await promise;
 
       expect(transactionQueue.status).toEqual(TransactionQueueStatus.Succeeded);
     });
@@ -110,7 +110,7 @@ describe('TransactionQueue', () => {
   test('sets error and status as failed if any transaction fails', async () => {
     const contract = new MockedContract({ autoResolve: true });
     const failureTx = getMockTransactionSpec(contract.failureTx, []);
-    const transactionQueue = new TransactionQueue([failureTx]);
+    const transactionQueue = new TransactionQueue([failureTx], new BigNumber(0));
 
     await expect(transactionQueue.run()).rejects.toEqual(expect.any(Error));
 

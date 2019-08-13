@@ -74,12 +74,6 @@ export interface TransactionSpec<Args = any, R = any> {
   tag?: PolyTransactionTag;
 }
 
-export interface PolymathNetworkParams {
-  providerUrl?: string;
-  polymathRegistryAddress: string;
-  privateKey?: string;
-}
-
 export enum ProcedureType {
   UnnamedProcedure = 'UnnamedProcedure',
   ApproveErc20 = 'ApproveErc20',

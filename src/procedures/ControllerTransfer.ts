@@ -52,7 +52,7 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
 
     const controller = await securityToken.controller();
 
-    const { address: account } = currentWallet;
+    const account = await currentWallet.address();
 
     if (account !== controller) {
       throw new PolymathError({

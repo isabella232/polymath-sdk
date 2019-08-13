@@ -32,12 +32,13 @@ export class ReserveSecurityToken extends Procedure<
     if (owner) {
       ownerAddress = owner;
     } else {
-      ({ address: ownerAddress } = currentWallet);
+      ownerAddress = await currentWallet.address();
     }
 
-    const isAvailable = await securityTokenRegistry.isTickerAvailable({
+    const isAvailable = await securityTokenRegistry.tickerAvailable({
       ticker: symbol,
     });
+
     if (!isAvailable) {
       throw new PolymathError({
         message: `Ticker ${symbol} has already been registered`,
@@ -51,8 +52,9 @@ export class ReserveSecurityToken extends Procedure<
       spender: await securityTokenRegistry.address(),
     });
 
-    const reservation = await addTransaction(securityTokenRegistry.registerTicker, {
+    const reservation = await addTransaction(securityTokenRegistry.registerNewTicker, {
       tag: PolyTransactionTag.ReserveSecurityToken,
+      fee,
       resolver: async receipt => {
         const { logs } = receipt;
 
@@ -77,7 +79,7 @@ export class ReserveSecurityToken extends Procedure<
             "The Security Token was successfully reserved but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
         });
       },
-    })({ owner: ownerAddress, ticker: symbol, tokenName: '' });
+    })({ owner: ownerAddress, ticker: symbol });
 
     return reservation;
   }

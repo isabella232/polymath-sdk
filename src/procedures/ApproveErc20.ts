@@ -13,7 +13,7 @@ export class ApproveErc20 extends Procedure<ApproveErc20ProcedureArgs> {
     const { amount, spender, tokenAddress } = this.args;
     const { contractWrappers, currentWallet } = this.context;
 
-    const { address: ownerAddress } = currentWallet;
+    const ownerAddress = await currentWallet.address();
 
     const { polyToken } = contractWrappers;
 

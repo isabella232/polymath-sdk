@@ -31,17 +31,7 @@ export class SetController extends Procedure<SetControllerProcedureArgs> {
     }
 
     const owner = await securityToken.owner();
-    let account: string;
-
-    if (currentWallet) {
-      ({ address: account } = currentWallet);
-    } else {
-      throw new PolymathError({
-        message:
-          "No default account set. You must pass token owner's private key to Polymath.connect()",
-        code: ErrorCode.ProcedureValidationError,
-      });
-    }
+    const account = await currentWallet.address();
 
     if (account !== owner) {
       throw new PolymathError({

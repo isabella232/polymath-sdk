@@ -13,7 +13,7 @@ export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
     const { amount, receiver, tokenAddress } = this.args;
     const { contractWrappers, currentWallet } = this.context;
 
-    const { address: ownerAddress } = currentWallet;
+    const ownerAddress = await currentWallet.address();
 
     const { polyToken } = contractWrappers;
 

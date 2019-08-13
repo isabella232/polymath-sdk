@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events';
 import v4 from 'uuid/v4';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { TransactionSpec, MaybeResolver, ProcedureType, TransactionQueueStatus } from '../types';
 import { Entity } from './Entity';
 import { PolyTransaction } from './PolyTransaction';
@@ -26,13 +27,15 @@ export class TransactionQueue<Args extends any = any, ReturnType = any> extends 
 
   public transactions: PolyTransaction[];
 
-  public promise: Promise<ReturnType | undefined>;
-
   public status: TransactionQueueStatus = TransactionQueueStatus.Idle;
 
   public args: Args;
 
   public error?: Error;
+
+  public fees: BigNumber;
+
+  private promise: Promise<ReturnType | undefined>;
 
   private queue: PolyTransaction[] = [];
 
@@ -42,6 +45,7 @@ export class TransactionQueue<Args extends any = any, ReturnType = any> extends 
 
   constructor(
     transactions: TransactionSpec[],
+    fees: BigNumber,
     procedureType: ProcedureType = ProcedureType.UnnamedProcedure,
     args: Args = {} as Args,
     returnValue?: MaybeResolver<ReturnType | undefined>
@@ -55,6 +59,7 @@ export class TransactionQueue<Args extends any = any, ReturnType = any> extends 
       this.reject = rej;
     });
     this.args = args;
+    this.fees = fees;
     this.returnValue = returnValue;
 
     this.transactions = transactions.map(transaction => {
