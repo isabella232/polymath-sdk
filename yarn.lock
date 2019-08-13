@@ -1337,10 +1337,10 @@
   resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-artifacts/-/contract-artifacts-3.0.0-beta.5.tgz#b3bf6c7f40eb036402237d08d98f4f11cc230c87"
   integrity sha512-YS6VXPqEgv69SEUJHArNLrN93psfPZSRFBxX0TnLPiNC/9wsvdDUXhE0a3RhokEMjYBmD4Yi+CDB71Faxg3jpQ==
 
-"@polymathnetwork/contract-wrappers@2.0.0-beta.23":
-  version "2.0.0-beta.23"
-  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-wrappers/-/contract-wrappers-2.0.0-beta.23.tgz#b1f501b9f06bcff6f1717444e0ee32cabb05c8aa"
-  integrity sha512-JzH+BdCCXaXLDQFx0R8OwZP9+sEXpIQGELXksfw+epIwFw51FkgdvYhljTYUR11BtrDoZV/dkJXw+jSqR8+bKw==
+"@polymathnetwork/contract-wrappers@2.0.0-beta.25":
+  version "2.0.0-beta.25"
+  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-wrappers/-/contract-wrappers-2.0.0-beta.25.tgz#70c58deacfa7e277354069563982c6102c741eb1"
+  integrity sha512-uI/3lNnQxfnQSKhfP6KJVSZX7NfLfMEcVOyOGqEWzd86n8dQuO2jfwCsVy4FDw5TcF1J72YIkHV27By+T2Y+aQ==
   dependencies:
     "@0x/assert" "^2.1.0"
     "@0x/json-schemas" "^3.0.11"

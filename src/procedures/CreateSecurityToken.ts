@@ -35,7 +35,7 @@ export class CreateSecurityToken extends Procedure<
     }
 
     const [isAvailable, isRegisteredByCurrentIssuer, isLaunched] = await Promise.all([
-      securityTokenRegistry.isTickerAvailable({ ticker: symbol }),
+      securityTokenRegistry.tickerAvailable({ ticker: symbol }),
       securityTokenRegistry.isTickerRegisteredByCurrentIssuer({
         ticker: symbol,
       }),
@@ -72,6 +72,7 @@ export class CreateSecurityToken extends Procedure<
 
     const newToken = await this.addTransaction(securityTokenRegistry.generateNewSecurityToken, {
       tag: PolyTransactionTag.CreateSecurityToken,
+      fee,
       resolver: async receipt => {
         const { logs } = receipt;
 
