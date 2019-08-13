@@ -8,11 +8,30 @@ import {
 import P from 'bluebird';
 import { Context } from './Context';
 import { getInjectedProvider } from './browserUtils';
-import { PolymathNetworkParams, ErrorCode } from './types';
+import { ErrorCode } from './types';
 import { Erc20TokenBalance, SecurityToken, SecurityTokenReservation } from './entities';
 import { ReserveSecurityToken } from './procedures';
 import { PolymathError } from './PolymathError';
 import { PolymathBase } from './PolymathBase';
+
+interface PolymathNetworkParams {
+  polymathRegistryAddress: string;
+}
+
+interface PolymathNetworkNodeParams extends PolymathNetworkParams {
+  providerUrl: string;
+  privateKey: string;
+}
+
+interface ConnectParams extends PolymathNetworkParams {
+  providerUrl?: string;
+  privateKey?: string;
+}
+
+interface Connect {
+  (params: PolymathNetworkParams): Promise<Polymath>;
+  (params: PolymathNetworkNodeParams): Promise<Polymath>;
+}
 
 export class Polymath {
   public networkId: number = -1;
@@ -27,11 +46,11 @@ export class Polymath {
 
   private context: Context = {} as Context;
 
-  public connect = async ({
+  public connect: Connect = async ({
     polymathRegistryAddress,
     providerUrl,
     privateKey,
-  }: PolymathNetworkParams) => {
+  }: ConnectParams) => {
     let provider: Provider;
     const providerEngine = new Web3ProviderEngine();
     const injectedProvider = await getInjectedProvider();
@@ -39,6 +58,7 @@ export class Polymath {
     if (providerUrl && privateKey) {
       providerEngine.addProvider(new PrivateKeyWalletSubprovider(privateKey));
       providerEngine.addProvider(new RedundantSubprovider([new RPCSubprovider(providerUrl)]));
+      providerEngine.start();
       provider = providerEngine;
     } else if (injectedProvider) {
       provider = injectedProvider;
@@ -54,11 +74,8 @@ export class Polymath {
 
     this.contractWrappers = contractWrappers;
 
-    const account = await contractWrappers.getAccount();
-
     this.context = new Context({
       contractWrappers,
-      accountAddress: account,
     });
 
     this.isConnected = true;
@@ -88,17 +105,12 @@ export class Polymath {
     const {
       context: { currentWallet, contractWrappers },
     } = this;
+
     let owner: string;
     if (args) {
       ({ owner } = args);
-    } else if (currentWallet) {
-      ({ address: owner } = currentWallet);
     } else {
-      throw new PolymathError({
-        code: ErrorCode.FetcherValidationError,
-        message:
-          "No default account set. You must pass the token owner's private key to Polymath.connect()",
-      });
+      owner = await currentWallet.address();
     }
 
     const symbols = await contractWrappers.securityTokenRegistry.getTickersByOwner({ owner });
@@ -159,17 +171,12 @@ export class Polymath {
     const {
       context: { currentWallet, contractWrappers },
     } = this;
+
     let owner: string;
     if (args) {
       ({ owner } = args);
-    } else if (currentWallet) {
-      ({ address: owner } = currentWallet);
     } else {
-      throw new PolymathError({
-        code: ErrorCode.FetcherValidationError,
-        message:
-          "No default account set. You must pass the token owner's private key to Polymath.connect()",
-      });
+      owner = await currentWallet.address();
     }
 
     const symbols = await contractWrappers.securityTokenRegistry.getTokensByOwner({ owner });
@@ -289,11 +296,11 @@ export class Polymath {
   };
 
   /**
-   * Returns the wallet address of the current user if it exists
+   * Returns the wallet address of the current user
    */
-  public getCurrentAddress = () => {
+  public getCurrentAddress = async () => {
     const { currentWallet } = this.context;
 
-    return currentWallet ? currentWallet.address : undefined;
+    return currentWallet.address();
   };
 }

@@ -1,16 +1,11 @@
 interface Args {
-  address: string;
+  address: () => Promise<string>;
 }
 
-// TODO @RafaelVidaurre: Implement caching strategies and dedupe-ing transactions
 export class Wallet {
-  public address: string;
+  public address: () => Promise<string>;
 
   constructor({ address }: Args) {
     this.address = address;
-  }
-
-  public toString() {
-    return this.address;
   }
 }

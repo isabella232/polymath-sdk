@@ -1318,10 +1318,10 @@
     universal-user-agent "^2.0.0"
     url-template "^2.0.8"
 
-"@polymathnetwork/abi-wrappers@3.0.0-beta.4":
-  version "3.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@polymathnetwork/abi-wrappers/-/abi-wrappers-3.0.0-beta.4.tgz#fe096e7a0b6751be7d5a66a52271f946fe2254ff"
-  integrity sha512-xvqk00oAUrQDO7y/TD4uu8khVjV2YfiXdw+14cRTVHNOt6KL56ESbLH6o94OGwfNN1MeyqXFczVQv8z2Q3D7OA==
+"@polymathnetwork/abi-wrappers@3.0.0-beta.5":
+  version "3.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@polymathnetwork/abi-wrappers/-/abi-wrappers-3.0.0-beta.5.tgz#3f1c7dceccdb28c6d894437735ef1e50d688a458"
+  integrity sha512-bcdJfN+BTlYb/B1GdS/Px2QeA//852WvfgrRkqFp/fvP4SdnqOyxRtNwixfO9q0dQChEdosApZO45pHFGZ21BQ==
   dependencies:
     "@0x/base-contract" "^5.1.1"
     "@0x/utils" "^4.4.0"
@@ -1337,22 +1337,24 @@
   resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-artifacts/-/contract-artifacts-3.0.0-beta.5.tgz#b3bf6c7f40eb036402237d08d98f4f11cc230c87"
   integrity sha512-YS6VXPqEgv69SEUJHArNLrN93psfPZSRFBxX0TnLPiNC/9wsvdDUXhE0a3RhokEMjYBmD4Yi+CDB71Faxg3jpQ==
 
-"@polymathnetwork/contract-wrappers@2.0.0-beta.7":
-  version "2.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-wrappers/-/contract-wrappers-2.0.0-beta.7.tgz#780488002a2de5c68dd07da5af4b204b5aa8e98e"
-  integrity sha512-DoCZAs4vG/y5UFu/okBF096JFoc33z1BiYCkjxf7y+M9MHeFFJZu8IqOTXm7l+JLGSieMDGTUQwy7bm1n+k96w==
+"@polymathnetwork/contract-wrappers@2.0.0-beta.20":
+  version "2.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-wrappers/-/contract-wrappers-2.0.0-beta.20.tgz#614f9032e1049c96e6811dc19631276ca6edb440"
+  integrity sha512-Gsbpgcu9/gq9RpLcvt9x8g2lkUtNyfBscGJzPU/75ZkjohWnGPoQzbeSyQyJeKt6ZqZ3LR+VPpPtfXfkC/VsPA==
   dependencies:
     "@0x/assert" "^2.1.0"
     "@0x/json-schemas" "^3.0.11"
     "@0x/subproviders" "^4.1.1"
     "@0x/types" "^2.4.0"
     "@0x/typescript-typings" "^4.2.3"
-    "@polymathnetwork/abi-wrappers" "3.0.0-beta.4"
+    "@polymathnetwork/abi-wrappers" "3.0.0-beta.5"
+    "@types/semver" "^6.0.1"
     ethereumjs-blockstream "6.0.0"
     ethereumjs-util "^6.1.0"
     js-sha3 "^0.8.0"
     lodash "^4.17.5"
     moment "^2.24.0"
+    semver "^6.3.0"
     uuid "^3.3.2"
 
 "@samverschueren/stream-to-observable@^0.3.0":
@@ -1628,6 +1630,11 @@
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-5.5.0.tgz#146c2a29ee7d3bae4bf2fcb274636e264c813c45"
   integrity sha512-41qEJgBH/TWgo5NFSvBCJ1qkoi3Q6ONSF2avrHq1LVEZfYpdHmj0y9SuTK+u9ZhG1sYQKBL1AWXKyLWP4RaUoQ==
+
+"@types/semver@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-6.0.1.tgz#a984b405c702fa5a7ec6abc56b37f2ba35ef5af6"
+  integrity sha512-ffCdcrEE5h8DqVxinQjo+2d1q+FV5z7iNtPofw3JsrltSoSVlOGaW0rY8XxtO9XukdTn8TaCGWmk2VFGhI70mg==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
@@ -12691,7 +12698,7 @@ semver@6.0.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.0.0.tgz#05e359ee571e5ad7ed641a6eec1e547ba52dea65"
   integrity sha512-0UewU+9rFapKFnlbirLi3byoOuhrSsli/z/ihNnvM24vgF+8sNBiI1LZPBSH9wJKUwaUbw+s3hToDLCXkrghrQ==
 
-semver@^6.2.0:
+semver@^6.2.0, semver@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.0.tgz#ee0a64c8af5e8ceea67687b133761e1becbd1d3d"
   integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==

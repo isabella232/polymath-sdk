@@ -32,7 +32,7 @@ export class ReserveSecurityToken extends Procedure<
     if (owner) {
       ownerAddress = owner;
     } else {
-      ({ address: ownerAddress } = currentWallet);
+      ownerAddress = await currentWallet.address();
     }
 
     const isAvailable = await securityTokenRegistry.isTickerAvailable({

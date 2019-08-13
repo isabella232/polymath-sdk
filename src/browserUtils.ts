@@ -43,10 +43,14 @@ interface WindowWithWeb3 extends ExtendedWindow {
  * Returns the browser support for Ethereum
  */
 export function getBrowserSupport() {
-  const win = window as ExtendedWindow;
-  if (!win) {
+  const isClient = typeof window !== 'undefined';
+
+  if (!isClient) {
     return BrowserSupport.None;
   }
+
+  const win = window as ExtendedWindow;
+
   if (win.ethereum) {
     return BrowserSupport.MetamaskModern;
   }
@@ -71,10 +75,14 @@ function isUnsupported(obj: any): obj is ExtendedWindow {
 /* eslint-enable @typescript-eslint/no-unused-vars */
 
 export async function getInjectedProvider(): Promise<Provider | undefined> {
-  const win = (window as any) as ExtendedWindow | undefined;
-  if (!win) {
+  const isClient = typeof window !== 'undefined';
+
+  if (!isClient) {
     return undefined;
   }
+
+  const win = (window as any) as ExtendedWindow;
+
   if (isModern(win)) {
     const injectedProvider = win.ethereum;
     try {

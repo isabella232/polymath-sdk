@@ -9,7 +9,7 @@ import {
   PolyTransactionTag,
 } from '../types';
 import { TransactionQueue } from '../entities/TransactionQueue';
-import { Context, ContextWithWallet } from '../Context';
+import { Context } from '../Context';
 import { PostTransactionResolver } from '../PostTransactionResolver';
 import { PolymathError } from '../PolymathError';
 import { Entity } from '../entities';
@@ -29,23 +29,15 @@ export abstract class Procedure<
 
   protected args: Args;
 
-  protected context: ContextWithWallet;
+  protected context: Context;
 
   protected caller: Caller;
 
   private transactions: TransactionSpec[] = [];
 
   constructor(args: Args, context: Context, caller: Caller) {
-    if (!context.currentWallet) {
-      throw new PolymathError({
-        message:
-          "No default account set. You must pass the token owner's private key to Polymath.connect()",
-        code: ErrorCode.ProcedureValidationError,
-      });
-    }
-
     this.args = args;
-    this.context = context as ContextWithWallet;
+    this.context = context;
     this.caller = caller;
   }
 
@@ -75,14 +67,14 @@ export abstract class Procedure<
    * @param options.resolver An asynchronous callback used to provide runtime data after
    * the added transaction has finished successfully
    */
-  public addProcedure<A, R extends any = any>(
+  public addProcedure = <A, R extends any = any>(
     Proc: ProcedureClass<A>,
     {
       resolver = (() => {}) as () => Promise<R>,
     }: {
       resolver?: (receipt: TransactionReceiptWithDecodedLogs) => Promise<R>;
     } = {}
-  ) {
+  ) => {
     return async (args: A) => {
       const postTransactionResolver = new PostTransactionResolver(resolver);
       const operation = new Proc(args, this.context);
@@ -105,7 +97,7 @@ export abstract class Procedure<
       this.transactions = [...this.transactions, ...transactions];
       return postTransactionResolver;
     };
-  }
+  };
 
   /**
    * Appends a method into the TransactionQueue's queue. This defines
@@ -117,7 +109,7 @@ export abstract class Procedure<
    * @param options.resolver An asynchronous callback used to provide runtime data after
    * the added transaction has finished successfully
    */
-  public addTransaction<A, R extends any = any>(
+  public addTransaction = <A, R extends any = any>(
     method: LowLevelMethod<A>,
     {
       tag,
@@ -126,7 +118,7 @@ export abstract class Procedure<
       tag?: PolyTransactionTag;
       resolver?: (receipt: TransactionReceiptWithDecodedLogs) => Promise<R>;
     } = {}
-  ) {
+  ) => {
     return async (args: MapMaybeResolver<A>) => {
       const postTransactionResolver = new PostTransactionResolver(resolver);
 
@@ -141,7 +133,7 @@ export abstract class Procedure<
 
       return postTransactionResolver;
     };
-  }
+  };
 
   protected abstract prepareTransactions(): Promise<
     MaybeResolver<ReturnType | undefined> | undefined

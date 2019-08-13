@@ -27,12 +27,11 @@ export class CreateSecurityToken extends Procedure<
     } = context;
 
     let wallet: string;
-    const { address: currentAddress } = currentWallet;
 
     if (treasuryWallet) {
       wallet = treasuryWallet;
     } else {
-      wallet = currentAddress;
+      wallet = await currentWallet.address();
     }
 
     const [isAvailable, isRegisteredByCurrentIssuer, isLaunched] = await Promise.all([
