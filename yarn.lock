@@ -1318,10 +1318,10 @@
     universal-user-agent "^2.0.0"
     url-template "^2.0.8"
 
-"@polymathnetwork/abi-wrappers@3.0.0-beta.5":
-  version "3.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@polymathnetwork/abi-wrappers/-/abi-wrappers-3.0.0-beta.5.tgz#3f1c7dceccdb28c6d894437735ef1e50d688a458"
-  integrity sha512-bcdJfN+BTlYb/B1GdS/Px2QeA//852WvfgrRkqFp/fvP4SdnqOyxRtNwixfO9q0dQChEdosApZO45pHFGZ21BQ==
+"@polymathnetwork/abi-wrappers@3.0.0-beta.6":
+  version "3.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/@polymathnetwork/abi-wrappers/-/abi-wrappers-3.0.0-beta.6.tgz#65188f96ec752421ece4337d3ed00721c46b8313"
+  integrity sha512-Db3D0rDNuxWiN+xyJ6J8H7FZ+ypZJ27gMoBUUH6lMf5p7NPDfRnegUtlkuq/QYG8H6b/yCHocaiVJrO9C1HfOA==
   dependencies:
     "@0x/base-contract" "^5.1.1"
     "@0x/utils" "^4.4.0"
@@ -1337,17 +1337,17 @@
   resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-artifacts/-/contract-artifacts-3.0.0-beta.5.tgz#b3bf6c7f40eb036402237d08d98f4f11cc230c87"
   integrity sha512-YS6VXPqEgv69SEUJHArNLrN93psfPZSRFBxX0TnLPiNC/9wsvdDUXhE0a3RhokEMjYBmD4Yi+CDB71Faxg3jpQ==
 
-"@polymathnetwork/contract-wrappers@2.0.0-beta.20":
-  version "2.0.0-beta.20"
-  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-wrappers/-/contract-wrappers-2.0.0-beta.20.tgz#614f9032e1049c96e6811dc19631276ca6edb440"
-  integrity sha512-Gsbpgcu9/gq9RpLcvt9x8g2lkUtNyfBscGJzPU/75ZkjohWnGPoQzbeSyQyJeKt6ZqZ3LR+VPpPtfXfkC/VsPA==
+"@polymathnetwork/contract-wrappers@2.0.0-beta.23":
+  version "2.0.0-beta.23"
+  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-wrappers/-/contract-wrappers-2.0.0-beta.23.tgz#b1f501b9f06bcff6f1717444e0ee32cabb05c8aa"
+  integrity sha512-JzH+BdCCXaXLDQFx0R8OwZP9+sEXpIQGELXksfw+epIwFw51FkgdvYhljTYUR11BtrDoZV/dkJXw+jSqR8+bKw==
   dependencies:
     "@0x/assert" "^2.1.0"
     "@0x/json-schemas" "^3.0.11"
     "@0x/subproviders" "^4.1.1"
     "@0x/types" "^2.4.0"
     "@0x/typescript-typings" "^4.2.3"
-    "@polymathnetwork/abi-wrappers" "3.0.0-beta.5"
+    "@polymathnetwork/abi-wrappers" "3.0.0-beta.6"
     "@types/semver" "^6.0.1"
     ethereumjs-blockstream "6.0.0"
     ethereumjs-util "^6.1.0"
