@@ -1,6 +1,5 @@
 import { Wallet } from './Wallet';
 import { PolymathBase } from './PolymathBase';
-import { onAddressChange } from './browserUtils';
 
 interface ConstructorParams {
   contractWrappers: PolymathBase;
