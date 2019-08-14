@@ -179,7 +179,7 @@ export class Polymath {
       owner = await currentWallet.address();
     }
 
-    const symbols = await contractWrappers.securityTokenRegistry.getTokensByOwner({ owner });
+    const symbols = await contractWrappers.securityTokenRegistry.getTickersByOwner({ owner });
 
     return P.map(symbols, symbol => {
       return this.getSecurityToken({ symbol });
