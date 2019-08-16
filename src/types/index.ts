@@ -67,7 +67,7 @@ export interface ShareholderBalance {
 
 export type LowLevelMethod<A> = (args: A) => Promise<PolyResponse>;
 
-export interface TransactionSpec<Args = any, R = any> {
+export interface TransactionSpec<Args = any, R extends any = any> {
   method: LowLevelMethod<Args>;
   args: MapMaybeResolver<Args>;
   postTransactionResolver?: PostTransactionResolver<R>;

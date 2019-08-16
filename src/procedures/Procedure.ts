@@ -56,12 +56,12 @@ export abstract class Procedure<
     const returnValue = await this.prepareTransactions();
     const totalFees = this.fees.reduce((total, fee) => total.plus(fee), new BigNumber(0));
 
-    const transactionQueue = new TransactionQueue<Args, ReturnType>(
+    const transactionQueue = new TransactionQueue(
       this.transactions,
       totalFees,
-      this.type,
+      returnValue,
       this.args,
-      returnValue
+      this.type
     );
 
     return transactionQueue;
@@ -147,7 +147,5 @@ export abstract class Procedure<
     };
   };
 
-  protected abstract prepareTransactions(): Promise<
-    MaybeResolver<ReturnType | undefined> | undefined
-  >;
+  protected abstract prepareTransactions(): Promise<MaybeResolver<ReturnType>>;
 }

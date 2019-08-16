@@ -21,7 +21,7 @@ const mapValuesDeep = (
   mapValues(obj, (val, key) => (isPlainObject(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)));
 
 // TODO @monitz87: Make properties private where appliccable
-export class PolyTransaction<Args = any, R = any> extends Entity {
+export class PolyTransaction<Args = any, R extends any = void> extends Entity {
   public static generateId() {
     return serialize('transaction', {
       random: v4(),
@@ -52,7 +52,7 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
 
   private emitter: EventEmitter;
 
-  constructor(transaction: TransactionSpec<Args, R>, transactionQueue: TransactionQueue) {
+  constructor(transaction: TransactionSpec<Args, R>, transactionQueue: TransactionQueue<any, any>) {
     super();
 
     if (transaction.postTransactionResolver) {
