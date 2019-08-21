@@ -1,3 +1,6 @@
+Polymath SDK Docs
+========================================
+
 .. toctree::
    :maxdepth: 1
 
