@@ -18,13 +18,12 @@ import { SecurityToken, DividendDistribution } from '../entities';
 
 export class CreateErc20DividendDistribution extends Procedure<
   CreateErc20DividendDistributionProcedureArgs,
-  SecurityToken,
   DividendDistribution
 > {
   public type = ProcedureType.CreateErc20DividendDistribution;
 
   public async prepareTransactions() {
-    const { args, context, caller } = this;
+    const { args, context } = this;
     const {
       symbol,
       maturityDate,
@@ -36,7 +35,7 @@ export class CreateErc20DividendDistribution extends Procedure<
       excludedAddresses = [],
       taxWithholdings = [],
     } = args;
-    const { contractWrappers } = context;
+    const { contractWrappers, factories } = context;
 
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
@@ -86,10 +85,13 @@ export class CreateErc20DividendDistribution extends Procedure<
 
             const { _dividendIndex } = eventArgs;
 
-            return caller.dividends.getDistribution({
-              dividendIndex: _dividendIndex.toNumber(),
-              dividendType: DividendType.Erc20,
-            });
+            return factories.dividendDistributionFactory.fetch(
+              DividendDistribution.generateId({
+                securityTokenId: SecurityToken.generateId({ symbol }),
+                dividendType: DividendType.Erc20,
+                index: _dividendIndex.toNumber(),
+              })
+            );
           }
           throw new PolymathError({
             code: ErrorCode.UnexpectedEventLogs,

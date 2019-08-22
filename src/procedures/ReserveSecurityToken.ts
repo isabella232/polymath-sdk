@@ -12,9 +12,10 @@ import { SecurityTokenReservation } from '../entities';
 import { findEvent } from '../utils';
 import { Polymath } from '../Polymath';
 
+const { bigNumberToDate } = conversionUtils;
+
 export class ReserveSecurityToken extends Procedure<
   ReserveSecurityTokenProcedureArgs,
-  Polymath,
   SecurityTokenReservation
 > {
   public type = ProcedureType.ReserveSecurityToken;
@@ -25,6 +26,7 @@ export class ReserveSecurityToken extends Procedure<
     const {
       contractWrappers: { securityTokenRegistry },
       currentWallet,
+      factories: { securityTokenReservationFactory },
     } = context;
 
     let ownerAddress: string;
@@ -68,9 +70,11 @@ export class ReserveSecurityToken extends Procedure<
 
           const { _ticker, _expiryDate } = eventArgs;
 
-          return new SecurityTokenReservation(
-            { symbol: _ticker, expiry: conversionUtils.bigNumberToDate(_expiryDate) },
-            context
+          return securityTokenReservationFactory.create(
+            SecurityTokenReservation.generateId({ symbol: _ticker }),
+            {
+              expiry: bigNumberToDate(_expiryDate),
+            }
           );
         }
         throw new PolymathError({

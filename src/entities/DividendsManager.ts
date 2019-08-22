@@ -14,13 +14,13 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof securityTokenId === 'string' && isDividendType(dividendType);
 }
 
-export interface Params extends UniqueIdentifiers {
+export interface Params {
   address: string;
   securityTokenSymbol: string;
   storageWalletAddress: string;
 }
 
-export abstract class DividendsManager extends Entity {
+export abstract class DividendsManager<P> extends Entity<P> {
   public abstract uid: string;
 
   public address: string;
@@ -46,7 +46,7 @@ export abstract class DividendsManager extends Entity {
     return unserialized;
   }
 
-  constructor(params: Params) {
+  constructor(params: Params & UniqueIdentifiers) {
     super();
 
     const {
@@ -82,5 +82,21 @@ export abstract class DividendsManager extends Entity {
       storageWalletAddress,
       dividendType,
     };
+  }
+
+  public _refresh(params: Partial<Params>) {
+    const { address, securityTokenSymbol, storageWalletAddress } = params;
+
+    if (address) {
+      this.address = address;
+    }
+
+    if (securityTokenSymbol) {
+      this.securityTokenSymbol = securityTokenSymbol;
+    }
+
+    if (storageWalletAddress) {
+      this.storageWalletAddress = storageWalletAddress;
+    }
   }
 }

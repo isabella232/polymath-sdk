@@ -6,9 +6,8 @@ import { PushDividendPayment, WithdrawTaxes } from '../procedures';
 import { Context } from '../Context';
 import { PolymathError } from '../PolymathError';
 
-interface UniqueIdentifiers {
+export interface UniqueIdentifiers {
   securityTokenId: string;
-  checkpointId: string;
   dividendType: DividendType;
   index: number;
 }
@@ -24,8 +23,9 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   );
 }
 
-interface Params extends UniqueIdentifiers {
+export interface Params {
   securityTokenSymbol: string;
+  checkpointId: string;
   created: Date;
   maturity: Date;
   expiry: Date;
@@ -40,16 +40,10 @@ interface Params extends UniqueIdentifiers {
   currency: string | null;
 }
 
-export class DividendDistribution extends Entity {
-  public static generateId({
-    securityTokenId,
-    checkpointId,
-    dividendType,
-    index,
-  }: UniqueIdentifiers) {
+export class DividendDistribution extends Entity<Params> {
+  public static generateId({ securityTokenId, dividendType, index }: UniqueIdentifiers) {
     return serialize('dividend', {
       securityTokenId,
-      checkpointId,
       dividendType,
       index,
     });
@@ -106,7 +100,7 @@ export class DividendDistribution extends Entity {
 
   protected context: Context;
 
-  constructor(params: Params, context: Context) {
+  constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
     const {
@@ -150,7 +144,6 @@ export class DividendDistribution extends Entity {
 
     this.uid = DividendDistribution.generateId({
       securityTokenId,
-      checkpointId,
       dividendType,
       index,
     });
@@ -230,5 +223,80 @@ export class DividendDistribution extends Entity {
       name,
       currency,
     };
+  }
+
+  public _refresh(params: Partial<Params>) {
+    const {
+      securityTokenSymbol,
+      checkpointId,
+      created,
+      maturity,
+      expiry,
+      amount,
+      claimedAmount,
+      totalSupply,
+      reclaimed,
+      totalWithheld,
+      totalWithheldWithdrawn,
+      shareholders,
+      name,
+      currency,
+    } = params;
+
+    if (securityTokenSymbol) {
+      this.securityTokenSymbol = securityTokenSymbol;
+    }
+
+    if (checkpointId) {
+      this.checkpointId = checkpointId;
+    }
+
+    if (created) {
+      this.created = created;
+    }
+
+    if (maturity) {
+      this.maturity = maturity;
+    }
+
+    if (expiry) {
+      this.expiry = expiry;
+    }
+
+    if (amount) {
+      this.amount = amount;
+    }
+
+    if (claimedAmount) {
+      this.claimedAmount = claimedAmount;
+    }
+
+    if (totalSupply) {
+      this.totalSupply = totalSupply;
+    }
+
+    if (reclaimed) {
+      this.reclaimed = reclaimed;
+    }
+
+    if (totalWithheld) {
+      this.totalWithheld = totalWithheld;
+    }
+
+    if (totalWithheldWithdrawn) {
+      this.totalWithheldWithdrawn = totalWithheldWithdrawn;
+    }
+
+    if (shareholders) {
+      this.shareholders = shareholders;
+    }
+
+    if (name) {
+      this.name = name;
+    }
+
+    if (currency) {
+      this.currency = currency;
+    }
   }
 }

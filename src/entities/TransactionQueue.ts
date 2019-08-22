@@ -12,10 +12,9 @@ enum Events {
   TransactionStatusChange = 'TransactionStatusChange',
 }
 
-export class TransactionQueue<
-  Args extends any = any,
-  ReturnType extends any = void
-> extends Entity {
+export class TransactionQueue<Args extends any = any, ReturnType extends any = void> extends Entity<
+  void
+> {
   public static generateId() {
     return serialize('transaction', {
       random: v4(),
@@ -167,4 +166,6 @@ export class TransactionQueue<
 
     await this.executeTransactionQueue();
   }
+
+  public _refresh(_params: Partial<void>) {}
 }

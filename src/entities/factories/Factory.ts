@@ -1,0 +1,99 @@
+import { merge } from 'lodash';
+import { Entity } from '../Entity';
+import { Context } from '../../Context';
+
+export interface EntityClass<T, U> {
+  new (params: T & U, context: Context): Entity<T>;
+  unserialize(uid: string): U;
+  generateId(identifiers: U): string;
+}
+
+export abstract class Factory<EntityType extends Entity<T>, T extends any, U extends any> {
+  public cache: {
+    [key: string]: EntityType | undefined;
+  } = {};
+
+  public context: Context;
+
+  public Entity: EntityClass<T, U>;
+
+  protected abstract generateProperties(uid: string): Promise<T>;
+
+  constructor(eClass: EntityClass<T, U>, context: Context) {
+    this.Entity = eClass;
+    this.context = context;
+  }
+
+  /**
+   * Gets an entity from the cache. Fetches the necessary data to create it if it isn't cached
+   *
+   * @param uid unique identifier for the entity
+   */
+  public async fetch(uid: string) {
+    const { cache, context } = this;
+    let instance = cache[uid];
+
+    if (!instance) {
+      const identifiers = this.Entity.unserialize(uid);
+      const props = await this.generateProperties(uid);
+      instance = new this.Entity(merge(identifiers, props), context) as EntityType;
+
+      cache[uid] = instance;
+    }
+
+    return instance;
+  }
+
+  /**
+   * Gets an entity from the cache. Creates it if it isn't cached
+   *
+   * @param uid unique identifier for the entity
+   * @param params constructor data for the entity
+   */
+  public create(uid: string, params: T) {
+    const { cache, context } = this;
+    let instance = cache[uid];
+
+    if (!instance) {
+      const identifiers = this.Entity.unserialize(uid);
+      instance = new this.Entity(merge(identifiers, params), context) as EntityType;
+
+      cache[uid] = instance;
+    }
+
+    return instance;
+  }
+
+  /**
+   * Fetches the data for an entity and updates its properties
+   *
+   * @param uid unique identifier for the entity
+   */
+  public async refresh(uid: string) {
+    const instance = this.cache[uid];
+
+    if (!instance) {
+      return;
+    }
+
+    const props = await this.generateProperties(uid);
+
+    instance._refresh(props);
+  }
+
+  /**
+   * Updates an entity's properties in place
+   *
+   * @param uid unique identifier for the entity
+   * @param params properties that should be updated
+   */
+  public async update(uid: string, params: Partial<T>) {
+    const instance = this.cache[uid];
+
+    if (!instance) {
+      return;
+    }
+
+    instance._refresh(params);
+  }
+}

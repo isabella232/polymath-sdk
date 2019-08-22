@@ -3,12 +3,14 @@ import { serialize } from '../utils';
 import { Sto, UniqueIdentifiers, Params as StoParams } from './Sto';
 import { Context } from '../Context';
 
-interface Params extends StoParams {
+export interface Params extends StoParams {
   cap: BigNumber;
   rate: BigNumber;
 }
 
-export class CappedSto extends Sto {
+export { UniqueIdentifiers };
+
+export class CappedSto extends Sto<Params> {
   public static generateId({ securityTokenId, stoType, address }: UniqueIdentifiers) {
     return serialize('cappedSto', {
       securityTokenId,
@@ -23,7 +25,7 @@ export class CappedSto extends Sto {
 
   public rate: BigNumber;
 
-  constructor(params: Params, context: Context) {
+  constructor(params: Params & UniqueIdentifiers, context: Context) {
     const { cap, rate, ...rest } = params;
 
     super(rest, context);
@@ -44,5 +46,19 @@ export class CappedSto extends Sto {
       cap,
       rate,
     };
+  }
+
+  public _refresh(params: Partial<Params>) {
+    const { cap, rate, ...rest } = params;
+
+    if (cap) {
+      this.cap = cap;
+    }
+
+    if (rate) {
+      this.rate = rate;
+    }
+
+    super._refresh(rest);
   }
 }

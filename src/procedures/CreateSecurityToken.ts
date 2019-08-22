@@ -13,7 +13,6 @@ import { findEvent } from '../utils';
 
 export class CreateSecurityToken extends Procedure<
   CreateSecurityTokenProcedureArgs,
-  void,
   SecurityToken
 > {
   public type = ProcedureType.CreateSecurityToken;
@@ -24,6 +23,7 @@ export class CreateSecurityToken extends Procedure<
     const {
       contractWrappers: { securityTokenRegistry },
       currentWallet,
+      factories,
     } = context;
 
     let wallet: string;
@@ -84,16 +84,15 @@ export class CreateSecurityToken extends Procedure<
         if (event) {
           const { args: eventArgs } = event;
 
-          const { _ticker, _securityTokenAddress, _name, _owner } = eventArgs;
+          const { _ticker, _name, _owner, _securityTokenAddress } = eventArgs;
 
-          return new SecurityToken(
+          return factories.securityTokenFactory.create(
+            SecurityToken.generateId({ symbol: _ticker }),
             {
-              symbol: _ticker,
-              address: _securityTokenAddress,
               name: _name,
               owner: _owner,
-            },
-            context
+              address: _securityTokenAddress,
+            }
           );
         }
         throw new PolymathError({

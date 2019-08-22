@@ -4,7 +4,7 @@ import { serialize, unserialize } from '../utils';
 import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
-interface UniqueIdentifiers {
+export interface UniqueIdentifiers {
   tokenAddress: string;
   walletAddress: string;
 }
@@ -15,12 +15,12 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof tokenAddress === 'string' && typeof walletAddress === 'string';
 }
 
-interface Params extends UniqueIdentifiers {
+export interface Params {
   tokenSymbol: string | null;
   balance: BigNumber;
 }
 
-export class Erc20TokenBalance extends Entity {
+export class Erc20TokenBalance extends Entity<Params> {
   public static generateId({ tokenAddress, walletAddress }: UniqueIdentifiers) {
     return serialize('erc20TokenBalance', {
       tokenAddress,
@@ -51,7 +51,7 @@ export class Erc20TokenBalance extends Entity {
 
   public balance: BigNumber;
 
-  constructor(params: Params) {
+  constructor(params: Params & UniqueIdentifiers) {
     super();
 
     const { tokenSymbol, tokenAddress, balance, walletAddress } = params;
@@ -76,5 +76,17 @@ export class Erc20TokenBalance extends Entity {
       balance,
       walletAddress,
     };
+  }
+
+  public _refresh(params: Partial<Params>) {
+    const { tokenSymbol, balance } = params;
+
+    if (tokenSymbol !== undefined) {
+      this.tokenSymbol = tokenSymbol;
+    }
+
+    if (balance) {
+      this.balance = balance;
+    }
   }
 }

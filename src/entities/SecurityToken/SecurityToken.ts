@@ -8,7 +8,7 @@ import { Permissions } from './Permissions';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 
-interface UniqueIdentifiers {
+export interface UniqueIdentifiers {
   symbol: string;
 }
 
@@ -18,7 +18,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof symbol === 'string';
 }
 
-interface Params extends UniqueIdentifiers {
+export interface Params {
   name: string;
   address: string;
   owner: string;
@@ -37,7 +37,7 @@ export const unserialize = (serialized: string) => {
   return unserialized;
 };
 
-export class SecurityToken extends Entity {
+export class SecurityToken extends Entity<Params> {
   public static generateId({ symbol }: UniqueIdentifiers) {
     return serialize('securityToken', {
       symbol,
@@ -64,7 +64,7 @@ export class SecurityToken extends Entity {
 
   public permissions: Permissions;
 
-  constructor(params: Params, context: Context) {
+  constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
     const { symbol, name, address, owner } = params;
@@ -84,5 +84,19 @@ export class SecurityToken extends Entity {
     const { uid, symbol, name, address } = this;
 
     return { uid, symbol, name, address };
+  }
+
+  public _refresh(params: Partial<Params>) {
+    const { name, address, owner } = params;
+
+    if (name) {
+      this.name = name;
+    }
+    if (address) {
+      this.address = address;
+    }
+    if (owner) {
+      this.owner = owner;
+    }
   }
 }

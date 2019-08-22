@@ -42,8 +42,6 @@ export class Polymath {
 
   public polymathRegistryAddress: string = '';
 
-  private contractWrappers: PolymathBase = {} as PolymathBase;
-
   private context: Context = {} as Context;
 
   public connect: Connect = async ({
@@ -72,8 +70,6 @@ export class Polymath {
 
     const contractWrappers = new PolymathBase({ provider, polymathRegistryAddress });
 
-    this.contractWrappers = contractWrappers;
-
     this.context = new Context({
       contractWrappers,
     });
@@ -90,7 +86,7 @@ export class Polymath {
    * @param owner address that will own the reservation (optional, use this if you want to reserve a token on behalf of someone else)
    */
   public reserveSecurityToken = async (args: { symbol: string; owner?: string }) => {
-    const procedure = new ReserveSecurityToken(args, this.context, this);
+    const procedure = new ReserveSecurityToken(args, this.context);
     const transactionQueue = await procedure.prepare();
     return transactionQueue;
   };
@@ -126,40 +122,16 @@ export class Polymath {
    * @param symbol Security Token symbol
    */
   public getSecurityTokenReservation = async (args: { symbol: string } | string) => {
-    let symbol: string;
+    let uid: string;
 
     // fetch by UUID
     if (typeof args === 'string') {
-      ({ symbol } = SecurityTokenReservation.unserialize(args));
+      uid = args;
     } else {
-      ({ symbol } = args);
+      uid = SecurityToken.generateId(args);
     }
 
-    const {
-      contractWrappers: { securityTokenRegistry, tokenFactory },
-    } = this;
-
-    const { status, expiryDate } = await securityTokenRegistry.getTickerDetails({ ticker: symbol });
-
-    if (!status) {
-      throw new PolymathError({
-        code: ErrorCode.FetcherValidationError,
-        message: `There is no reservation for token symbol ${symbol}`,
-      });
-    }
-
-    let securityTokenAddress;
-    try {
-      const securityToken = await tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
-      securityTokenAddress = await securityToken.address();
-    } catch (e) {
-      // we reach this point if the token hasn't been launched, so we just ignore it
-    }
-
-    return new SecurityTokenReservation(
-      { symbol, expiry: expiryDate, securityTokenAddress },
-      this.context
-    );
+    return this.context.factories.securityTokenReservationFactory.fetch(uid);
   };
 
   /**
@@ -198,41 +170,16 @@ export class Polymath {
         }
       | string
   ) => {
-    let symbol: string;
+    let uid: string;
 
     // fetch by UUID
     if (typeof args === 'string') {
-      ({ symbol } = SecurityToken.unserialize(args));
+      uid = args;
     } else {
-      ({ symbol } = args);
+      uid = SecurityToken.generateId(args);
     }
 
-    let securityToken;
-
-    try {
-      securityToken = await this.contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
-        symbol
-      );
-    } catch (err) {
-      throw new PolymathError({
-        code: ErrorCode.FetcherValidationError,
-        message: `There is no Security Token with symbol ${symbol}`,
-      });
-    }
-
-    const name = await securityToken.name();
-    const owner = await securityToken.owner();
-    const address = await securityToken.address();
-
-    return new SecurityToken(
-      {
-        name,
-        address,
-        symbol,
-        owner,
-      },
-      this.context
-    );
+    return this.context.factories.securityTokenFactory.fetch(uid);
   };
 
   /**
@@ -242,7 +189,7 @@ export class Polymath {
    */
   public isValidErc20 = async (args: { address: string }) => {
     const { address } = args;
-    const erc20Token = await this.contractWrappers.tokenFactory.getERC20TokenInstanceFromAddress(
+    const erc20Token = await this.context.contractWrappers.tokenFactory.getERC20TokenInstanceFromAddress(
       address
     );
     await erc20Token.isValidContract();
@@ -262,37 +209,23 @@ export class Polymath {
         }
       | string
   ) => {
-    let tokenAddress: string;
-    let walletAddress: string;
+    let uid: string;
 
     // fetch by UUID
     if (typeof args === 'string') {
-      ({ tokenAddress, walletAddress } = Erc20TokenBalance.unserialize(args));
+      uid = args;
     } else {
-      ({ tokenAddress, walletAddress } = args);
+      uid = Erc20TokenBalance.generateId(args);
     }
 
-    const token = await this.contractWrappers.tokenFactory.getERC20TokenInstanceFromAddress(
-      tokenAddress
-    );
-    const [symbol, balance] = await Promise.all([
-      token.symbol(),
-      token.balanceOf({ owner: walletAddress }),
-    ]);
-
-    return new Erc20TokenBalance({
-      tokenSymbol: symbol,
-      tokenAddress,
-      balance,
-      walletAddress,
-    });
+    return this.context.factories.erc20TokenBalanceFactory.fetch(uid);
   };
 
   /**
    * Get the current version of the Polymath Protocol
    */
   public getLatestProtocolVersion = async () => {
-    await this.contractWrappers.securityTokenRegistry.getLatestProtocolVersion();
+    await this.context.contractWrappers.securityTokenRegistry.getLatestProtocolVersion();
   };
 
   /**

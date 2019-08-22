@@ -1,1 +1,1 @@
-export { SecurityToken } from './SecurityToken';
+export { SecurityToken, Params, UniqueIdentifiers } from './SecurityToken';

@@ -32,17 +32,16 @@ interface AddCappedSTOParams {
   label?: string;
 }
 
-export class LaunchCappedSto extends Procedure<
-  LaunchCappedStoProcedureArgs,
-  SecurityToken,
-  CappedSto
-> {
+export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, CappedSto> {
   public type = ProcedureType.LaunchCappedSto;
 
   public async prepareTransactions() {
-    const { args, context, caller } = this;
+    const { args, context } = this;
     const { symbol, startDate, endDate, tokensOnSale, rate, currency, storageWallet } = args;
-    const { contractWrappers } = context;
+    const {
+      contractWrappers,
+      factories: { cappedStoFactory },
+    } = context;
 
     let securityToken;
 
@@ -90,7 +89,13 @@ export class LaunchCappedSto extends Procedure<
 
             const { _module } = eventArgs;
 
-            return caller.offerings.getSto({ stoType: StoType.Capped, address: _module });
+            return cappedStoFactory.fetch(
+              CappedSto.generateId({
+                securityTokenId: SecurityToken.generateId({ symbol }),
+                stoType: StoType.Capped,
+                address: _module,
+              })
+            );
           }
           throw new PolymathError({
             code: ErrorCode.UnexpectedEventLogs,

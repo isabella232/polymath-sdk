@@ -4,7 +4,7 @@ import { serialize, unserialize } from '../utils';
 import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
-interface UniqueIdentifiers {
+export interface UniqueIdentifiers {
   securityTokenId: string;
   address: string;
 }
@@ -15,7 +15,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof securityTokenId === 'string' && typeof address === 'string';
 }
 
-interface Params extends UniqueIdentifiers {
+export interface Params {
   securityTokenSymbol: string;
   canSendAfter: Date;
   canReceiveAfter: Date;
@@ -25,7 +25,7 @@ interface Params extends UniqueIdentifiers {
   balance: BigNumber;
 }
 
-export class Shareholder extends Entity {
+export class Shareholder extends Entity<Params> {
   public static generateId({ securityTokenId, address }: UniqueIdentifiers) {
     return serialize('shareholder', {
       securityTokenId,
@@ -66,7 +66,7 @@ export class Shareholder extends Entity {
 
   public address: string;
 
-  constructor(params: Params) {
+  constructor(params: Params & UniqueIdentifiers) {
     super();
 
     const {
@@ -122,5 +122,45 @@ export class Shareholder extends Entity {
       canBuyFromSto,
       balance,
     };
+  }
+
+  public _refresh(params: Partial<Params>) {
+    const {
+      securityTokenSymbol,
+      canSendAfter,
+      canReceiveAfter,
+      kycExpiry,
+      isAccredited,
+      canBuyFromSto,
+      balance,
+    } = params;
+
+    if (securityTokenSymbol) {
+      this.securityTokenSymbol = securityTokenSymbol;
+    }
+
+    if (canSendAfter) {
+      this.canSendAfter = canSendAfter;
+    }
+
+    if (canReceiveAfter) {
+      this.canReceiveAfter = canReceiveAfter;
+    }
+
+    if (kycExpiry) {
+      this.kycExpiry = kycExpiry;
+    }
+
+    if (isAccredited) {
+      this.isAccredited = isAccredited;
+    }
+
+    if (canBuyFromSto) {
+      this.canBuyFromSto = canBuyFromSto;
+    }
+
+    if (balance) {
+      this.balance = balance;
+    }
   }
 }
