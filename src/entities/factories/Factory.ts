@@ -25,7 +25,7 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
   }
 
   /**
-   * Gets an entity from the cache. Fetches the necessary data to create it if it isn't cached
+   * Gets an entity from the cache. Fetches the necessary data to create it if it isn't cached, refreshes it if it is
    *
    * @param uid unique identifier for the entity
    */
@@ -39,13 +39,20 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
       instance = new this.Entity(merge(identifiers, props), context) as EntityType;
 
       cache[uid] = instance;
+    } else {
+      // TODO @monitz87: remove this as soon as we implement event-based refreshing of entities
+      // This line basically fetches the data again and again every time an entity is fetched,
+      // making the cache only good for having one central copy of each entity, but not for reducing
+      // the amount of requests. Once we start subscribing to relevant events in each factory and refreshing
+      // entities when they fire, this won't be necessary
+      await this.refresh(uid);
     }
 
     return instance;
   }
 
   /**
-   * Gets an entity from the cache. Creates it if it isn't cached
+   * Gets an entity from the cache. Creates it if it isn't cached, updates it if it is
    *
    * @param uid unique identifier for the entity
    * @param params constructor data for the entity
@@ -59,6 +66,8 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
       instance = new this.Entity(merge(identifiers, params), context) as EntityType;
 
       cache[uid] = instance;
+    } else {
+      instance._refresh(params);
     }
 
     return instance;
