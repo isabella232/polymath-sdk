@@ -19,7 +19,7 @@ Follow ``npm init`` wizard to initialize your project. Then install the SDK, whi
 
 ::
 
-    npm add @polymathnetwork/sdk@"2.0.x"
+    npm add @polymathnetwork/sdk@2.0.1-beta.24
 
 Finally, add an entry js file such as ``index.js``, which imports the SDK API as well as some browser utils that we're going to use later.
 
