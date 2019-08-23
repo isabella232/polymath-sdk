@@ -7,13 +7,14 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
+import { SecurityToken, Shareholder } from '../entities';
 
 export class ControllerTransfer extends Procedure<ControllerTransferProcedureArgs> {
   public type = ProcedureType.ControllerTransfer;
 
   public async prepareTransactions() {
     const { symbol, amount, from, to, log = '', data = '' } = this.args;
-    const { contractWrappers, currentWallet } = this.context;
+    const { contractWrappers, currentWallet, factories } = this.context;
     const addresses: { [key: string]: string } = { from, to };
 
     /**
@@ -67,6 +68,23 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
 
     await this.addTransaction(securityToken.controllerTransfer, {
       tag: PolyTransactionTag.ControllerTransfer,
+      resolver: async () => {
+        const refreshingFrom = factories.shareholderFactory.refresh(
+          Shareholder.generateId({
+            securityTokenId: SecurityToken.generateId({ symbol }),
+            address: from,
+          })
+        );
+
+        const refreshingTo = factories.shareholderFactory.refresh(
+          Shareholder.generateId({
+            securityTokenId: SecurityToken.generateId({ symbol }),
+            address: to,
+          })
+        );
+
+        return Promise.all([refreshingFrom, refreshingTo]);
+      },
     })({ from, to, value: amount, data, operatorData: log });
   }
 }

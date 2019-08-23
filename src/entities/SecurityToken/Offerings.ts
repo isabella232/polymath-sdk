@@ -1,30 +1,15 @@
-import {
-  BigNumber,
-  ModuleName,
-  CappedSTOEvents,
-  BlockParamLiteral,
-  conversionUtils,
-  FULL_DECIMALS,
-  USDTieredSTOEvents,
-  USDTieredSTO,
-  CappedSTO,
-} from '@polymathnetwork/contract-wrappers';
-import { zipWith, includes } from 'lodash';
+import { BigNumber, ModuleName } from '@polymathnetwork/contract-wrappers';
+import { includes } from 'lodash';
 import { SubModule } from './SubModule';
 import { CappedStoCurrency, StoTier, Currency, StoType, ErrorCode } from '../../types';
 import { LaunchCappedSto, LaunchUsdTieredSto } from '../../procedures';
-import { CappedSto } from '../CappedSto';
-import { Investment } from '../Investment';
-import { UsdTieredSto } from '../UsdTieredSto';
-import { Sto } from '../Sto';
+import { CappedSto, UsdTieredSto, Sto } from '..';
 import { PolymathError } from '../../PolymathError';
-
-const { weiToValue } = conversionUtils;
 
 interface GetSto {
   (args: { stoType: StoType.Capped; address: string }): Promise<CappedSto>;
   (args: { stoType: StoType.UsdTiered; address: string }): Promise<UsdTieredSto>;
-  (args: string): Promise<Sto>;
+  (args: string): Promise<CappedSto | UsdTieredSto>;
 }
 
 export class Offerings extends SubModule {
@@ -54,8 +39,7 @@ export class Offerings extends SubModule {
         symbol,
         ...args,
       },
-      context,
-      securityToken
+      context
     );
     return procedure.prepare();
   };
@@ -96,8 +80,7 @@ export class Offerings extends SubModule {
         symbol,
         ...args,
       },
-      context,
-      securityToken
+      context
     );
     return procedure.prepare();
   };
@@ -127,23 +110,18 @@ export class Offerings extends SubModule {
     }
 
     const {
-      context: { contractWrappers },
+      context: { factories },
+      securityToken: { uid },
     } = this;
 
     if (stoType === StoType.Capped) {
-      const module = await contractWrappers.moduleFactory.getModuleInstance({
-        name: ModuleName.CappedSTO,
-        address,
-      });
-
-      return this.getCappedStoEntity(module);
+      return factories.cappedStoFactory.fetch(
+        CappedSto.generateId({ securityTokenId: uid, stoType, address })
+      );
     } else if (stoType === StoType.UsdTiered) {
-      const module = await contractWrappers.moduleFactory.getModuleInstance({
-        name: ModuleName.UsdTieredSTO,
-        address,
-      });
-
-      return this.getUsdTieredStoEntity(module);
+      return factories.usdTieredStoFactory.fetch(
+        UsdTieredSto.generateId({ securityTokenId: uid, stoType, address })
+      );
     } else {
       throw new PolymathError({
         code: ErrorCode.FetcherValidationError,
@@ -164,21 +142,29 @@ export class Offerings extends SubModule {
       stoTypes: [StoType.Capped, StoType.UsdTiered],
     }
   ) => {
-    const { contractWrappers } = this.context;
+    const { contractWrappers, factories } = this.context;
 
-    const { symbol: securityTokenSymbol } = this.securityToken;
+    const { symbol: securityTokenSymbol, uid } = this.securityToken;
 
     const { stoTypes } = opts;
 
-    let stos: Sto[] = [];
+    let stos: Promise<CappedSto | UsdTieredSto>[] = [];
 
     if (includes(stoTypes, StoType.Capped)) {
       const fetchedModules = await contractWrappers.getAttachedModules(
         { symbol: securityTokenSymbol, moduleName: ModuleName.CappedSTO },
         { unarchived: true }
       );
-      const cappedStos = await Promise.all(fetchedModules.map(this.getCappedStoEntity));
-      stos = stos.concat(cappedStos);
+
+      const addresses = await Promise.all(fetchedModules.map(module => module.address()));
+
+      stos = stos.concat(
+        addresses.map(address =>
+          factories.cappedStoFactory.fetch(
+            CappedSto.generateId({ address, stoType: StoType.Capped, securityTokenId: uid })
+          )
+        )
+      );
     }
 
     if (includes(stoTypes, StoType.UsdTiered)) {
@@ -187,149 +173,17 @@ export class Offerings extends SubModule {
         { unarchived: true }
       );
 
-      const usdTieredStos = await Promise.all(fetchedModules.map(this.getUsdTieredStoEntity));
-      stos = stos.concat(usdTieredStos);
+      const addresses = await Promise.all(fetchedModules.map(module => module.address()));
+
+      stos = stos.concat(
+        addresses.map(address =>
+          factories.usdTieredStoFactory.fetch(
+            UsdTieredSto.generateId({ address, stoType: StoType.Capped, securityTokenId: uid })
+          )
+        )
+      );
     }
 
-    return stos;
-  };
-
-  /**
-   * Auxiliary function to assemble a Capped STO entity
-   */
-  private getCappedStoEntity = async (module: CappedSTO) => {
-    const stoType = StoType.Capped;
-    const { uid: securityTokenId, symbol: securityTokenSymbol } = this.securityToken;
-    const {
-      fundsRaised,
-      investorCount,
-      totalTokensSold,
-      isRaisedInPoly,
-      ...details
-    } = await module.getSTODetails();
-    const tokenPurchases = await module.getLogsAsync({
-      eventName: CappedSTOEvents.TokenPurchase,
-      blockRange: {
-        fromBlock: BlockParamLiteral.Earliest,
-        toBlock: BlockParamLiteral.Latest,
-      },
-      indexFilterValues: {},
-    });
-    const investments = tokenPurchases.map(({ args: { beneficiary, amount, value } }, index) => ({
-      address: beneficiary,
-      tokenAmount: weiToValue(amount, FULL_DECIMALS),
-      investedFunds: weiToValue(value, FULL_DECIMALS),
-      index,
-    }));
-    const address = await module.address();
-    const paused = await module.paused();
-    const capReached = await module.capReached();
-    const stoId = CappedSto.generateId({
-      securityTokenId,
-      stoType,
-      address,
-    });
-    const investmentEntities = investments.map(
-      investment => new Investment({ ...investment, securityTokenId, securityTokenSymbol, stoId })
-    );
-
-    return new CappedSto(
-      {
-        fundraiseTypes: isRaisedInPoly ? [Currency.POLY] : [Currency.ETH],
-        raisedAmount: fundsRaised,
-        soldTokensAmount: totalTokensSold,
-        investorAmount: investorCount,
-        ...details,
-        securityTokenId,
-        securityTokenSymbol,
-        investments: investmentEntities,
-        stoType,
-        address,
-        paused,
-        capReached,
-      },
-      this.context
-    );
-  };
-
-  /**
-   * Auxiliary function to assemble a Capped STO entity
-   */
-  private getUsdTieredStoEntity = async (module: USDTieredSTO) => {
-    const stoType = StoType.UsdTiered;
-    const { uid: securityTokenId, symbol: securityTokenSymbol } = this.securityToken;
-    const {
-      tokensSold,
-      capPerTier,
-      ratePerTier,
-      fundsRaised,
-      investorCount,
-      isRaisedInETH,
-      isRaisedInPOLY,
-      isRaisedInSC,
-      ...details
-    } = await module.getSTODetails();
-    const tokenPurchases = await module.getLogsAsync({
-      eventName: USDTieredSTOEvents.TokenPurchase,
-      blockRange: {
-        fromBlock: BlockParamLiteral.Earliest,
-        toBlock: BlockParamLiteral.Latest,
-      },
-      indexFilterValues: {},
-    });
-    const investments = tokenPurchases.map(
-      ({ args: { _usdAmount, _beneficiary, _tokens } }, index) => ({
-        address: _beneficiary,
-        tokenAmount: weiToValue(_tokens, FULL_DECIMALS),
-        investedFunds: weiToValue(_usdAmount, FULL_DECIMALS),
-        index,
-      })
-    );
-    const address = await module.address();
-    const paused = await module.paused();
-    const capReached = await module.capReached();
-    const stoId = UsdTieredSto.generateId({
-      securityTokenId,
-      stoType,
-      address,
-    });
-    const investmentEntities = investments.map(
-      investment => new Investment({ ...investment, securityTokenId, securityTokenSymbol, stoId })
-    );
-
-    const tiers = zipWith(capPerTier, ratePerTier, (cap, rate) => ({ cap, rate }));
-
-    const fundraiseTypes = [];
-
-    if (isRaisedInETH) {
-      fundraiseTypes.push(Currency.ETH);
-    }
-
-    if (isRaisedInPOLY) {
-      fundraiseTypes.push(Currency.POLY);
-    }
-
-    if (isRaisedInSC) {
-      fundraiseTypes.push(Currency.StableCoin);
-    }
-
-    return new UsdTieredSto(
-      {
-        fundraiseTypes,
-        raisedAmount: fundsRaised,
-        investorAmount: investorCount,
-        soldTokensAmount: tokensSold,
-        ...details,
-        securityTokenId,
-        securityTokenSymbol,
-        tiers,
-        investments: investmentEntities,
-        stoType,
-        address,
-        paused,
-        capReached,
-      },
-      this.context
-    );
+    return Promise.all(stos);
   };
 }

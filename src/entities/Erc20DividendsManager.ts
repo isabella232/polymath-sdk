@@ -2,7 +2,9 @@ import { DividendsManager, Params, UniqueIdentifiers } from './DividendsManager'
 import { serialize } from '../utils';
 import { DividendType, Omit } from '../types';
 
-export class Erc20DividendsManager extends DividendsManager {
+export { Params, UniqueIdentifiers };
+
+export class Erc20DividendsManager extends DividendsManager<Params> {
   public static generateId({ securityTokenId, dividendType }: UniqueIdentifiers) {
     return serialize('erc20DividendsManager', {
       securityTokenId,
@@ -17,7 +19,7 @@ export class Erc20DividendsManager extends DividendsManager {
     securityTokenId,
     address,
     storageWalletAddress,
-  }: Omit<Params, 'dividendType'>) {
+  }: Omit<Params & UniqueIdentifiers, 'dividendType'>) {
     const dividendType = DividendType.Erc20;
     super({
       securityTokenId,

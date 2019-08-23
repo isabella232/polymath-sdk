@@ -7,20 +7,16 @@ import {
   ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-import { findEvent } from '../utils';
+import { findEvents } from '../utils';
 import { SecurityToken, Checkpoint } from '../entities';
 
-export class CreateCheckpoint extends Procedure<
-  CreateCheckpointProcedureArgs,
-  SecurityToken,
-  Checkpoint
-> {
+export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint> {
   public type = ProcedureType.CreateCheckpoint;
 
   public async prepareTransactions() {
-    const { args, context, caller } = this;
+    const { args, context } = this;
     const { symbol } = args;
-    const { contractWrappers } = context;
+    const { contractWrappers, factories } = context;
 
     let securityToken;
 
@@ -40,18 +36,23 @@ export class CreateCheckpoint extends Procedure<
       resolver: async receipt => {
         const { logs } = receipt;
 
-        const event = findEvent({ logs, eventName: SecurityTokenEvents.CheckpointCreated });
+        const [event] = findEvents({ logs, eventName: SecurityTokenEvents.CheckpointCreated });
         if (event) {
           const { args: eventArgs } = event;
 
           const { _checkpointId } = eventArgs;
 
-          return caller.shareholders.getCheckpoint({ checkpointIndex: _checkpointId.toNumber() });
+          return factories.checkpointFactory.fetch(
+            Checkpoint.generateId({
+              securityTokenId: SecurityToken.generateId({ symbol }),
+              index: _checkpointId.toNumber(),
+            })
+          );
         }
         throw new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
-            "The Checkpoint was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+            "The Checkpoint was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
         });
       },
     })({});

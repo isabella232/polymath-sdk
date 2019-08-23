@@ -1,10 +1,13 @@
-import { ModuleName, SecurityToken } from '@polymathnetwork/contract-wrappers';
+import {
+  ModuleName,
+  SecurityToken as SecurityTokenWrapper,
+} from '@polymathnetwork/contract-wrappers';
 import { ShareholderDataEntry, DividendType, ErrorCode } from '../../types';
 import { ModifyShareholderData, CreateCheckpoint } from '../../procedures';
 import { SubModule } from './SubModule';
 import { Checkpoint } from '../Checkpoint';
 import { PolymathError } from '../../PolymathError';
-import { BaseCheckpoint, BaseDividend } from '../../PolymathBase';
+import { BaseCheckpoint } from '../../PolymathBase';
 import { DividendDistribution } from '../DividendDistribution';
 import { Shareholder } from '../Shareholder';
 
@@ -42,8 +45,7 @@ export class Shareholders extends SubModule {
       {
         symbol,
       },
-      context,
-      securityToken
+      context
     );
     return procedure.prepare();
   };
@@ -52,7 +54,7 @@ export class Shareholders extends SubModule {
    * Retrieve list of checkpoints and their corresponding dividend distributions of every type
    */
   public getCheckpoints = async (): Promise<Checkpoint[]> => {
-    const { contractWrappers } = this.context;
+    const { contractWrappers, factories } = this.context;
 
     const { symbol, uid } = this.securityToken;
 
@@ -75,16 +77,30 @@ export class Shareholders extends SubModule {
 
     const checkpoints: BaseCheckpoint[] = await contractWrappers.getCheckpoints({ securityToken });
 
-    return checkpoints.map(checkpoint => {
-      const checkpointDividends = allDividends.filter(
-        dividend => dividend.checkpointId === checkpoint.index
+    return checkpoints.map(({ index, ...checkpoint }) => {
+      const checkpointId = Checkpoint.generateId({ securityTokenId: uid, index });
+
+      const checkpointDividends = allDividends.filter(dividend => dividend.checkpointId === index);
+
+      const dividendDistributions = checkpointDividends.map(({ dividendType, ...distribution }) =>
+        factories.dividendDistributionFactory.create(
+          DividendDistribution.generateId({
+            securityTokenId: uid,
+            dividendType,
+            index,
+          }),
+          {
+            ...distribution,
+            checkpointId,
+            securityTokenSymbol: symbol,
+          }
+        )
       );
 
-      return this.assembleCheckpoint({
-        securityTokenId: uid,
+      return factories.checkpointFactory.create(checkpointId, {
+        ...checkpoint,
+        dividendDistributions,
         securityTokenSymbol: symbol,
-        checkpoint,
-        checkpointDividends,
       });
     });
   };
@@ -99,111 +115,32 @@ export class Shareholders extends SubModule {
       | {
           checkpointIndex: number;
         }
-      | string,
-    opts?: { dividendTypes?: DividendType[] }
+      | string
   ) => {
-    const { contractWrappers } = this.context;
+    const { factories } = this.context;
+    const { uid: securityTokenId } = this.securityToken;
 
-    let checkpointIndex: number;
+    let uid: string;
 
     // fetch by UUID
     if (typeof args === 'string') {
-      ({ index: checkpointIndex } = Checkpoint.unserialize(args));
+      uid = args;
     } else {
-      ({ checkpointIndex } = args);
+      uid = Checkpoint.generateId({ index: args.checkpointIndex, securityTokenId });
     }
 
-    let dividendTypes: DividendType[] | undefined;
-
-    if (opts) {
-      ({ dividendTypes } = opts);
-    }
-
-    const { symbol: securityTokenSymbol, uid: securityTokenId } = this.securityToken;
-
-    let securityToken;
-
-    try {
-      securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
-        securityTokenSymbol
-      );
-    } catch (err) {
-      throw new PolymathError({
-        code: ErrorCode.FetcherValidationError,
-        message: `There is no Security Token with symbol ${securityTokenSymbol}`,
-      });
-    }
-
-    const checkpointDividends = await contractWrappers.getAllDividends({
-      securityTokenSymbol,
-      checkpointId: checkpointIndex,
-      dividendTypes,
-    });
-
-    const checkpoint = await contractWrappers.getCheckpoint({
-      checkpointId: checkpointIndex,
-      securityToken,
-    });
-
-    return this.assembleCheckpoint({
-      securityTokenId,
-      securityTokenSymbol,
-      checkpoint,
-      checkpointDividends,
-    });
-  };
-
-  /**
-   * Auxiliary function to create a checkpoint entity
-   */
-  private assembleCheckpoint = ({
-    securityTokenId,
-    securityTokenSymbol,
-    checkpoint,
-    checkpointDividends,
-  }: {
-    securityTokenId: string;
-    securityTokenSymbol: string;
-    checkpoint: BaseCheckpoint;
-    checkpointDividends: BaseDividend[];
-  }) => {
-    const checkpointId = Checkpoint.generateId({
-      securityTokenId,
-      index: checkpoint.index,
-    });
-
-    const dividendDistributions = checkpointDividends.map(
-      distribution =>
-        new DividendDistribution(
-          {
-            ...distribution,
-            checkpointId,
-            securityTokenSymbol,
-            securityTokenId,
-          },
-          this.context
-        )
-    );
-
-    const checkpointEntity = new Checkpoint({
-      ...checkpoint,
-      securityTokenId,
-      securityTokenSymbol,
-      dividendDistributions,
-    });
-
-    return checkpointEntity;
+    return factories.checkpointFactory.fetch(uid);
   };
 
   /**
    * Get data for all shareholders associated to the Security Token
    */
   public getShareholders = async () => {
-    const { contractWrappers } = this.context;
+    const { contractWrappers, factories } = this.context;
 
     const { symbol: securityTokenSymbol, uid: securityTokenId } = this.securityToken;
 
-    let securityToken: SecurityToken;
+    let securityToken: SecurityTokenWrapper;
 
     try {
       securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
@@ -237,17 +174,18 @@ export class Shareholders extends SubModule {
       const { isAccredited, canNotBuyFromSTO } = allFlags[i];
       const balance = balances[i];
 
-      const data = new Shareholder({
-        balance,
-        address,
-        canSendAfter,
-        canReceiveAfter,
-        kycExpiry: expiryTime,
-        isAccredited,
-        canBuyFromSto: !canNotBuyFromSTO,
-        securityTokenId,
-        securityTokenSymbol,
-      });
+      const data = factories.shareholderFactory.create(
+        Shareholder.generateId({ securityTokenId, address }),
+        {
+          balance,
+          canSendAfter,
+          canReceiveAfter,
+          kycExpiry: expiryTime,
+          isAccredited,
+          canBuyFromSto: !canNotBuyFromSTO,
+          securityTokenSymbol,
+        }
+      );
 
       shareholders.push(data);
     }

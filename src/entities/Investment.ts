@@ -4,33 +4,31 @@ import { serialize, unserialize } from '../utils';
 import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
-interface UniqueIdentifiers {
-  securityTokenSymbol: string;
+export interface UniqueIdentifiers {
+  securityTokenId: string;
   stoId: string;
   index: number;
 }
 
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
-  const { securityTokenSymbol, stoId, index } = identifiers;
+  const { securityTokenId, stoId, index } = identifiers;
 
   return (
-    typeof securityTokenSymbol === 'string' &&
-    typeof stoId === 'string' &&
-    typeof index === 'number'
+    typeof securityTokenId === 'string' && typeof stoId === 'string' && typeof index === 'number'
   );
 }
 
-interface Params extends UniqueIdentifiers {
-  securityTokenId: string;
+export interface Params {
+  securityTokenSymbol: string;
   address: string;
   tokenAmount: BigNumber;
   investedFunds: BigNumber;
 }
 
-export class Investment extends Entity {
-  public static generateId({ securityTokenSymbol, stoId, index }: UniqueIdentifiers) {
+export class Investment extends Entity<Params> {
+  public static generateId({ securityTokenId, stoId, index }: UniqueIdentifiers) {
     return serialize('investment', {
-      securityTokenSymbol,
+      securityTokenId,
       stoId,
       index,
     });
@@ -51,11 +49,11 @@ export class Investment extends Entity {
 
   public uid: string;
 
-  public securityTokenSymbol: string;
-
   public securityTokenId: string;
 
   public stoId: string;
+
+  public securityTokenSymbol: string;
 
   public address: string;
 
@@ -65,7 +63,7 @@ export class Investment extends Entity {
 
   public investedFunds: BigNumber;
 
-  constructor(params: Params) {
+  constructor(params: Params & UniqueIdentifiers) {
     super();
 
     const {
@@ -86,7 +84,7 @@ export class Investment extends Entity {
     this.tokenAmount = tokenAmount;
     this.investedFunds = investedFunds;
     this.uid = Investment.generateId({
-      securityTokenSymbol,
+      securityTokenId,
       stoId,
       index,
     });
@@ -114,5 +112,25 @@ export class Investment extends Entity {
       tokenAmount,
       investedFunds,
     };
+  }
+
+  public _refresh(params: Partial<Params>) {
+    const { securityTokenSymbol, address, investedFunds, tokenAmount } = params;
+
+    if (securityTokenSymbol) {
+      this.securityTokenSymbol = securityTokenSymbol;
+    }
+
+    if (address) {
+      this.address = address;
+    }
+
+    if (investedFunds) {
+      this.investedFunds = investedFunds;
+    }
+
+    if (tokenAmount) {
+      this.tokenAmount = tokenAmount;
+    }
   }
 }

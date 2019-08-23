@@ -9,12 +9,12 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { SecurityTokenReservation } from '../entities';
-import { findEvent } from '../utils';
-import { Polymath } from '../Polymath';
+import { findEvents } from '../utils';
+
+const { bigNumberToDate } = conversionUtils;
 
 export class ReserveSecurityToken extends Procedure<
   ReserveSecurityTokenProcedureArgs,
-  Polymath,
   SecurityTokenReservation
 > {
   public type = ProcedureType.ReserveSecurityToken;
@@ -25,6 +25,7 @@ export class ReserveSecurityToken extends Procedure<
     const {
       contractWrappers: { securityTokenRegistry },
       currentWallet,
+      factories: { securityTokenReservationFactory },
     } = context;
 
     let ownerAddress: string;
@@ -58,7 +59,7 @@ export class ReserveSecurityToken extends Procedure<
       resolver: async receipt => {
         const { logs } = receipt;
 
-        const event = findEvent({
+        const [event] = findEvents({
           logs,
           eventName: SecurityTokenRegistryEvents.RegisterTicker,
         });
@@ -68,15 +69,17 @@ export class ReserveSecurityToken extends Procedure<
 
           const { _ticker, _expiryDate } = eventArgs;
 
-          return new SecurityTokenReservation(
-            { symbol: _ticker, expiry: conversionUtils.bigNumberToDate(_expiryDate) },
-            context
+          return securityTokenReservationFactory.create(
+            SecurityTokenReservation.generateId({ symbol: _ticker }),
+            {
+              expiry: bigNumberToDate(_expiryDate),
+            }
           );
         }
         throw new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
-            "The Security Token was successfully reserved but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+            "The Security Token was successfully reserved but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
         });
       },
     })({ owner: ownerAddress, ticker: symbol });

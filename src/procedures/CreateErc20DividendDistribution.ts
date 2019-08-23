@@ -13,18 +13,17 @@ import {
 } from '../types';
 import { ApproveErc20 } from './ApproveErc20';
 import { PolymathError } from '../PolymathError';
-import { findEvent } from '../utils';
+import { findEvents } from '../utils';
 import { SecurityToken, DividendDistribution } from '../entities';
 
 export class CreateErc20DividendDistribution extends Procedure<
   CreateErc20DividendDistributionProcedureArgs,
-  SecurityToken,
   DividendDistribution
 > {
   public type = ProcedureType.CreateErc20DividendDistribution;
 
   public async prepareTransactions() {
-    const { args, context, caller } = this;
+    const { args, context } = this;
     const {
       symbol,
       maturityDate,
@@ -36,7 +35,7 @@ export class CreateErc20DividendDistribution extends Procedure<
       excludedAddresses = [],
       taxWithholdings = [],
     } = args;
-    const { contractWrappers } = context;
+    const { contractWrappers, factories } = context;
 
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
@@ -76,7 +75,7 @@ export class CreateErc20DividendDistribution extends Procedure<
         resolver: async receipt => {
           const { logs } = receipt;
 
-          const event = findEvent({
+          const [event] = findEvents({
             eventName: ERC20DividendCheckpointEvents.ERC20DividendDeposited,
             logs,
           });
@@ -86,15 +85,18 @@ export class CreateErc20DividendDistribution extends Procedure<
 
             const { _dividendIndex } = eventArgs;
 
-            return caller.dividends.getDistribution({
-              dividendIndex: _dividendIndex.toNumber(),
-              dividendType: DividendType.Erc20,
-            });
+            return factories.dividendDistributionFactory.fetch(
+              DividendDistribution.generateId({
+                securityTokenId: SecurityToken.generateId({ symbol }),
+                dividendType: DividendType.Erc20,
+                index: _dividendIndex.toNumber(),
+              })
+            );
           }
           throw new PolymathError({
             code: ErrorCode.UnexpectedEventLogs,
             message:
-              "The ERC20 Dividend Distribution was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+              "The ERC20 Dividend Distribution was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
           });
         },
       }

@@ -12,13 +12,14 @@ import {
   DividendType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { SecurityToken, Erc20DividendsManager, EthDividendsManager } from '../entities';
 
 export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArgs> {
   public type = ProcedureType.SetDividendsWallet;
 
   public async prepareTransactions() {
     const { symbol, dividendType, address } = this.args;
-    const { contractWrappers } = this.context;
+    const { contractWrappers, factories } = this.context;
 
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
@@ -58,6 +59,26 @@ export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArg
 
     await this.addTransaction(dividendModule.changeWallet, {
       tag: PolyTransactionTag.SetDividendsWallet,
+      resolver: async () => {
+        switch (dividendType) {
+          case DividendType.Erc20: {
+            return factories.erc20DividendsManagerFactory.refresh(
+              Erc20DividendsManager.generateId({
+                securityTokenId: SecurityToken.generateId({ symbol }),
+                dividendType,
+              })
+            );
+          }
+          case DividendType.Eth: {
+            return factories.ethDividendsManagerFactory.refresh(
+              EthDividendsManager.generateId({
+                securityTokenId: SecurityToken.generateId({ symbol }),
+                dividendType,
+              })
+            );
+          }
+        }
+      },
     })({ wallet: address });
   }
 }

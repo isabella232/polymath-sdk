@@ -14,6 +14,7 @@ import {
   ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { DividendDistribution, SecurityToken } from '../entities';
 
 const CHUNK_SIZE = 100;
 
@@ -22,7 +23,7 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
 
   public async prepareTransactions() {
     const { symbol, dividendIndex, shareholderAddresses, dividendType } = this.args;
-    const { contractWrappers } = this.context;
+    const { contractWrappers, factories } = this.context;
 
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
@@ -79,9 +80,22 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
 
     const shareholderAddressChunks = chunk(unpaidShareholders, CHUNK_SIZE);
 
-    await P.each(shareholderAddressChunks, async addresses => {
+    await P.each(shareholderAddressChunks, async (addresses, index) => {
       await this.addTransaction(dividendsModule!.pushDividendPaymentToAddresses, {
         tag: PolyTransactionTag.PushDividendPayment,
+        // Only add resolver to the last transaction
+        resolver:
+          index < shareholderAddressChunks.length - 1
+            ? undefined
+            : async () => {
+                return factories.dividendDistributionFactory.refresh(
+                  DividendDistribution.generateId({
+                    securityTokenId: SecurityToken.generateId({ symbol }),
+                    dividendType,
+                    index,
+                  })
+                );
+              },
       })({
         dividendIndex,
         payees: addresses,

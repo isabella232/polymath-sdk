@@ -156,10 +156,13 @@ export class PolymathBase extends PolymathAPI {
       [ModuleName.CountTransferManager]: ModuleType.TransferManager,
       [ModuleName.PercentageTransferManager]: ModuleType.TransferManager,
       [ModuleName.ManualApprovalTransferManager]: ModuleType.TransferManager,
+      [ModuleName.BlacklistTransferManager]: ModuleType.TransferManager,
+      [ModuleName.LockUpTransferManager]: ModuleType.TransferManager,
       [ModuleName.VolumeRestrictionTM]: ModuleType.TransferManager,
       [ModuleName.ERC20DividendCheckpoint]: ModuleType.Dividends,
       [ModuleName.EtherDividendCheckpoint]: ModuleType.Dividends,
       [ModuleName.GeneralPermissionManager]: ModuleType.PermissionManager,
+      [ModuleName.VestingEscrowWallet]: ModuleType.Wallet,
     };
 
     const availableModules = await this.moduleRegistry.getModulesByTypeAndToken({

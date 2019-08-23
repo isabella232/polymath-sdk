@@ -12,7 +12,9 @@ enum Events {
   TransactionStatusChange = 'TransactionStatusChange',
 }
 
-export class TransactionQueue<Args extends any = any, ReturnType = any> extends Entity {
+export class TransactionQueue<Args extends any = any, ReturnType extends any = void> extends Entity<
+  void
+> {
   public static generateId() {
     return serialize('transaction', {
       random: v4(),
@@ -35,20 +37,20 @@ export class TransactionQueue<Args extends any = any, ReturnType = any> extends 
 
   public fees: BigNumber;
 
-  private promise: Promise<ReturnType | undefined>;
+  private promise: Promise<ReturnType>;
 
   private queue: PolyTransaction[] = [];
 
-  private returnValue?: MaybeResolver<ReturnType | undefined>;
+  private returnValue: MaybeResolver<ReturnType>;
 
   private emitter: EventEmitter;
 
   constructor(
     transactions: TransactionSpec[],
     fees: BigNumber,
-    procedureType: ProcedureType = ProcedureType.UnnamedProcedure,
-    args: Args = {} as Args,
-    returnValue?: MaybeResolver<ReturnType | undefined>
+    returnValue: MaybeResolver<ReturnType>,
+    args: Args,
+    procedureType: ProcedureType = ProcedureType.UnnamedProcedure
   ) {
     super();
 
@@ -164,4 +166,6 @@ export class TransactionQueue<Args extends any = any, ReturnType = any> extends 
 
     await this.executeTransactionQueue();
   }
+
+  public _refresh(_params: Partial<void>) {}
 }

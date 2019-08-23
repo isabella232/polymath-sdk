@@ -19,7 +19,7 @@ import { TaxWithholding } from '../TaxWithholding';
 interface GetManager {
   (args: { dividendType: DividendType.Erc20 }): Promise<Erc20DividendsManager | null>;
   (args: { dividendType: DividendType.Eth }): Promise<EthDividendsManager | null>;
-  (args: string): Promise<DividendsManager | null>;
+  (args: string): Promise<Erc20DividendsManager | EthDividendsManager | null>;
 }
 
 export class Dividends extends SubModule {
@@ -75,8 +75,7 @@ export class Dividends extends SubModule {
         checkpointIndex,
         ...rest,
       },
-      context,
-      securityToken
+      context
     );
 
     return procedure.prepare();
@@ -116,8 +115,7 @@ export class Dividends extends SubModule {
         checkpointIndex,
         ...rest,
       },
-      context,
-      securityToken
+      context
     );
     return procedure.prepare();
   };
@@ -154,8 +152,7 @@ export class Dividends extends SubModule {
         checkpointIndex,
         ...rest,
       },
-      context,
-      securityToken
+      context
     );
     return procedure.prepare();
   };
@@ -217,6 +214,7 @@ export class Dividends extends SubModule {
   public getTaxWithholdingList = async (args: { dividendType: DividendType }) => {
     const {
       contractWrappers: { tokenFactory, getAttachedModules },
+      factories,
     } = this.context;
 
     const { dividendType } = args;
@@ -260,15 +258,18 @@ export class Dividends extends SubModule {
       checkpointId: checkpointIndex.toNumber(),
     });
 
-    return checkpointData.map(
-      ({ investor, withheld }) =>
-        new TaxWithholding({
-          investorAddress: investor,
-          percentage: withheld.toNumber(),
-          securityTokenSymbol: symbol,
+    return checkpointData.map(({ investor, withheld }) =>
+      factories.taxWithholdingFactory.create(
+        TaxWithholding.generateId({
+          shareholderAddress: investor,
           securityTokenId,
           dividendType,
-        })
+        }),
+        {
+          percentage: withheld.toNumber(),
+          securityTokenSymbol: symbol,
+        }
+      )
     );
   };
 
@@ -283,7 +284,7 @@ export class Dividends extends SubModule {
     },
     opts?: { dividendTypes?: DividendType[] }
   ) => {
-    const { contractWrappers } = this.context;
+    const { contractWrappers, factories } = this.context;
     const { checkpointId } = args;
 
     const { symbol, uid: securityTokenId } = this.securityToken;
@@ -302,17 +303,15 @@ export class Dividends extends SubModule {
       dividendTypes,
     });
 
-    const dividends = checkpointDividends.map(
-      dividend =>
-        new DividendDistribution(
-          {
-            ...dividend,
-            checkpointId,
-            securityTokenSymbol: symbol,
-            securityTokenId,
-          },
-          this.context
-        )
+    const dividends = checkpointDividends.map(({ index, dividendType, ...dividend }) =>
+      factories.dividendDistributionFactory.create(
+        DividendDistribution.generateId({ securityTokenId, dividendType, index }),
+        {
+          ...dividend,
+          checkpointId,
+          securityTokenSymbol: symbol,
+        }
+      )
     );
 
     return dividends;
@@ -334,40 +333,30 @@ export class Dividends extends SubModule {
   ) => {
     let dividendType: DividendType;
     let dividendIndex: number;
+    let uid: string;
 
     // fetch by UUID
     if (typeof args === 'string') {
-      ({ index: dividendIndex, dividendType } = DividendDistribution.unserialize(args));
+      uid = args;
     } else {
       ({ dividendType, dividendIndex } = args);
+      const {
+        securityToken: { uid: securityTokenId },
+      } = this;
+      uid = DividendDistribution.generateId({
+        securityTokenId,
+        dividendType,
+        index: dividendIndex,
+      });
     }
 
-    const { securityToken } = this;
-
-    const checkpoints = await securityToken.shareholders.getCheckpoints();
-
-    for (const checkpoint of checkpoints) {
-      const { dividendDistributions } = checkpoint;
-
-      const result = dividendDistributions.find(
-        distribution =>
-          distribution.index === dividendIndex && distribution.dividendType === dividendType
-      );
-
-      if (result) {
-        return result;
-      }
-    }
-
-    throw new PolymathError({
-      code: ErrorCode.FetcherValidationError,
-      message: 'There is no Dividend Distribution of the specified type with that index',
-    });
+    return this.context.factories.dividendDistributionFactory.fetch(uid);
   };
 
   /**
    * Retrieve a Dividends Manager related to the Security Token by UUID or type.
-   * Returns null if dividends of that type haven't been enabled
+   *
+   * @throws if dividends of that type haven't been enabled
    *
    * @param dividendType type of manager
    */
@@ -378,9 +367,10 @@ export class Dividends extends SubModule {
         }
       | string
   ) => {
-    const { contractWrappers } = this.context;
+    const { factories } = this.context;
 
     let dividendType: DividendType;
+    let uid: string;
 
     // fetch by UUID
     if (typeof args === 'string') {
@@ -389,49 +379,16 @@ export class Dividends extends SubModule {
       ({ dividendType } = args);
     }
 
-    const { symbol, uid: securityTokenId } = this.securityToken;
-
-    const constructorData = {
-      securityTokenSymbol: symbol,
-      securityTokenId,
-    };
-
-    let dividendsModule;
+    const { uid: securityTokenId } = this.securityToken;
 
     switch (dividendType) {
       case DividendType.Erc20: {
-        [dividendsModule] = await contractWrappers.getAttachedModules(
-          { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
-          { unarchived: true }
-        );
-
-        if (dividendsModule) {
-          const storageWalletAddress = await dividendsModule.wallet();
-          return new Erc20DividendsManager({
-            address: await dividendsModule.address(),
-            storageWalletAddress,
-            ...constructorData,
-          });
-        }
-
-        break;
+        uid = Erc20DividendsManager.generateId({ securityTokenId, dividendType });
+        return factories.erc20DividendsManagerFactory.fetch(uid);
       }
       case DividendType.Eth: {
-        [dividendsModule] = await contractWrappers.getAttachedModules(
-          { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
-          { unarchived: true }
-        );
-
-        if (dividendsModule) {
-          const storageWalletAddress = await dividendsModule.wallet();
-          return new EthDividendsManager({
-            address: await dividendsModule.address(),
-            storageWalletAddress,
-            ...constructorData,
-          });
-        }
-
-        break;
+        uid = EthDividendsManager.generateId({ securityTokenId, dividendType });
+        return factories.ethDividendsManagerFactory.fetch(uid);
       }
       default: {
         throw new PolymathError({
@@ -440,7 +397,5 @@ export class Dividends extends SubModule {
         });
       }
     }
-
-    return null;
   };
 }

@@ -8,6 +8,13 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+interface AddGeneralPermissionManagerParams {
+  moduleName: ModuleName.GeneralPermissionManager;
+  address: string;
+  archived: boolean;
+  label?: string;
+}
+
 export class EnableGeneralPermissionManager extends Procedure<
   EnableGeneralPermissionManagerProcedureArgs
 > {
@@ -38,7 +45,7 @@ export class EnableGeneralPermissionManager extends Procedure<
       moduleName,
     });
 
-    await this.addTransaction(securityToken.addModuleWithLabel, {
+    await this.addTransaction<AddGeneralPermissionManagerParams>(securityToken.addModuleWithLabel, {
       tag: PolyTransactionTag.EnableGeneralPermissionManager,
     })({
       moduleName,

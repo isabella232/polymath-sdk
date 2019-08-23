@@ -3,17 +3,19 @@ import { serialize } from '../utils';
 import { Sto, UniqueIdentifiers, Params as StoParams } from './Sto';
 import { Context } from '../Context';
 
+export { UniqueIdentifiers };
+
 export interface Tier {
   cap: BigNumber;
   rate: BigNumber;
 }
 
-interface Params extends StoParams {
+export interface Params extends StoParams {
   currentTier: number;
   tiers: Tier[];
 }
 
-export class UsdTieredSto extends Sto {
+export class UsdTieredSto extends Sto<Params> {
   public static generateId({ securityTokenId, stoType, address }: UniqueIdentifiers) {
     return serialize('usdTieredSto', {
       securityTokenId,
@@ -28,7 +30,7 @@ export class UsdTieredSto extends Sto {
 
   public tiers: Tier[];
 
-  constructor(params: Params, context: Context) {
+  constructor(params: Params & UniqueIdentifiers, context: Context) {
     const { currentTier, tiers, ...rest } = params;
 
     super(rest, context);
@@ -49,5 +51,19 @@ export class UsdTieredSto extends Sto {
       currentTier,
       tiers,
     };
+  }
+
+  public _refresh(params: Partial<Params>) {
+    const { currentTier, tiers, ...rest } = params;
+
+    if (currentTier) {
+      this.currentTier = currentTier;
+    }
+
+    if (tiers) {
+      this.tiers = tiers;
+    }
+
+    super._refresh(rest);
   }
 }

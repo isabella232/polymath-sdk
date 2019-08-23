@@ -19,7 +19,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof securityTokenId === 'string' && typeof address === 'string' && isStoType(stoType);
 }
 
-export interface Params extends UniqueIdentifiers {
+export interface Params {
   securityTokenSymbol: string;
   startTime: Date;
   endTime: Date;
@@ -32,7 +32,7 @@ export interface Params extends UniqueIdentifiers {
   capReached: boolean;
 }
 
-export abstract class Sto extends Entity {
+export abstract class Sto<P> extends Entity<P> {
   public abstract uid: string;
 
   public address: string;
@@ -76,7 +76,7 @@ export abstract class Sto extends Entity {
     return unserialized;
   }
 
-  constructor(params: Params, context: Context) {
+  constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
     const {
@@ -112,9 +112,9 @@ export abstract class Sto extends Entity {
   }
 
   public pause = async () => {
-    const { address: stoAddress } = this;
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
-    const procedure = new PauseSto({ stoAddress }, this.context);
+    const procedure = new PauseSto({ stoAddress, stoType, symbol }, this.context);
 
     return procedure.prepare();
   };
@@ -145,5 +145,60 @@ export abstract class Sto extends Entity {
       endTime,
       investments: investments.map(investment => investment.toPojo()),
     };
+  }
+
+  public _refresh(params: Partial<Params>) {
+    const {
+      securityTokenSymbol,
+      startTime,
+      endTime,
+      fundraiseTypes,
+      raisedAmount,
+      soldTokensAmount,
+      investorAmount,
+      investments,
+      paused,
+      capReached,
+    } = params;
+
+    if (securityTokenSymbol) {
+      this.securityTokenSymbol = securityTokenSymbol;
+    }
+
+    if (startTime) {
+      this.startTime = startTime;
+    }
+
+    if (endTime) {
+      this.endTime = endTime;
+    }
+
+    if (fundraiseTypes) {
+      this.fundraiseTypes = fundraiseTypes;
+    }
+
+    if (raisedAmount) {
+      this.raisedAmount = raisedAmount;
+    }
+
+    if (soldTokensAmount) {
+      this.soldTokensAmount = soldTokensAmount;
+    }
+
+    if (investorAmount) {
+      this.investorAmount = investorAmount;
+    }
+
+    if (investments) {
+      this.investments = investments;
+    }
+
+    if (paused !== undefined) {
+      this.paused = paused;
+    }
+
+    if (capReached !== undefined) {
+      this.capReached = capReached;
+    }
   }
 }

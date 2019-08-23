@@ -5,7 +5,7 @@ import { DividendDistribution } from './DividendDistribution';
 import { ShareholderBalance, ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
 
-interface UniqueIdentifiers {
+export interface UniqueIdentifiers {
   securityTokenId: string;
   index: number;
 }
@@ -16,7 +16,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof securityTokenSymbol === 'string' && typeof index === 'number';
 }
 
-interface Params extends UniqueIdentifiers {
+export interface Params {
   dividendDistributions: DividendDistribution[];
   securityTokenSymbol: string;
   shareholderBalances: ShareholderBalance[];
@@ -24,7 +24,7 @@ interface Params extends UniqueIdentifiers {
   createdAt: Date;
 }
 
-export class Checkpoint extends Entity {
+export class Checkpoint extends Entity<Params> {
   public static generateId({ securityTokenId, index }: UniqueIdentifiers) {
     return serialize('checkpoint', {
       securityTokenId,
@@ -61,7 +61,7 @@ export class Checkpoint extends Entity {
 
   public createdAt: Date;
 
-  constructor(params: Params) {
+  constructor(params: Params & UniqueIdentifiers) {
     super();
 
     const {
@@ -106,5 +106,35 @@ export class Checkpoint extends Entity {
       totalSupply,
       createdAt,
     };
+  }
+
+  public _refresh(params: Partial<Params>) {
+    const {
+      dividendDistributions,
+      securityTokenSymbol,
+      shareholderBalances,
+      totalSupply,
+      createdAt,
+    } = params;
+
+    if (dividendDistributions) {
+      this.dividendDistributions = dividendDistributions;
+    }
+
+    if (securityTokenSymbol) {
+      this.securityTokenSymbol = securityTokenSymbol;
+    }
+
+    if (shareholderBalances) {
+      this.shareholderBalances = shareholderBalances;
+    }
+
+    if (totalSupply) {
+      this.totalSupply = totalSupply;
+    }
+
+    if (createdAt) {
+      this.createdAt = createdAt;
+    }
   }
 }

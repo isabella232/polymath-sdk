@@ -3,34 +3,38 @@ import { serialize, unserialize } from '../utils';
 import { DividendType, isDividendType, ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
 
-interface UniqueIdentifiers {
+export interface UniqueIdentifiers {
   securityTokenId: string;
   dividendType: DividendType;
-  investorAddress: string;
+  shareholderAddress: string;
 }
 
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
-  const { securityTokenId, dividendType, investorAddress, checkpointIndex } = identifiers;
+  const { securityTokenId, dividendType, shareholderAddress, checkpointIndex } = identifiers;
 
   return (
     typeof securityTokenId === 'string' &&
     isDividendType(dividendType) &&
-    typeof investorAddress === 'string' &&
+    typeof shareholderAddress === 'string' &&
     typeof checkpointIndex === 'number'
   );
 }
 
-interface Params extends UniqueIdentifiers {
+export interface Params {
   securityTokenSymbol: string;
   percentage: number;
 }
 
-export class TaxWithholding extends Entity {
-  public static generateId({ securityTokenId, dividendType, investorAddress }: UniqueIdentifiers) {
+export class TaxWithholding extends Entity<Params> {
+  public static generateId({
+    securityTokenId,
+    dividendType,
+    shareholderAddress,
+  }: UniqueIdentifiers) {
     return serialize('taxWithholding', {
       securityTokenId,
       dividendType,
-      investorAddress,
+      shareholderAddress,
     });
   }
 
@@ -55,29 +59,29 @@ export class TaxWithholding extends Entity {
 
   public dividendType: DividendType;
 
-  public investorAddress: string;
+  public shareholderAddress: string;
 
   public percentage: number;
 
-  constructor(params: Params) {
+  constructor(params: Params & UniqueIdentifiers) {
     super();
 
     const {
       securityTokenId,
       securityTokenSymbol,
       dividendType,
-      investorAddress,
+      shareholderAddress,
       percentage,
     } = params;
 
     this.securityTokenId = securityTokenId;
     this.securityTokenSymbol = securityTokenSymbol;
     this.dividendType = dividendType;
-    this.investorAddress = investorAddress;
+    this.shareholderAddress = shareholderAddress;
     this.percentage = percentage;
     this.uid = TaxWithholding.generateId({
       securityTokenId,
-      investorAddress,
+      shareholderAddress,
       dividendType,
     });
   }
@@ -88,7 +92,7 @@ export class TaxWithholding extends Entity {
       securityTokenId,
       securityTokenSymbol,
       dividendType,
-      investorAddress,
+      shareholderAddress,
       percentage,
     } = this;
 
@@ -97,8 +101,20 @@ export class TaxWithholding extends Entity {
       securityTokenId,
       securityTokenSymbol,
       dividendType,
-      investorAddress,
+      shareholderAddress,
       percentage,
     };
+  }
+
+  public _refresh(params: Partial<Params>) {
+    const { securityTokenSymbol, percentage } = params;
+
+    if (securityTokenSymbol) {
+      this.securityTokenSymbol = securityTokenSymbol;
+    }
+
+    if (percentage) {
+      this.percentage = percentage;
+    }
   }
 }

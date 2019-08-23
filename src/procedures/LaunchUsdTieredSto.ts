@@ -14,7 +14,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { TransferErc20 } from './TransferErc20';
-import { findEvent } from '../utils';
+import { findEvents } from '../utils';
 import { SecurityToken, UsdTieredSto } from '../entities';
 
 interface AddUSDTieredSTOParams {
@@ -38,15 +38,11 @@ interface AddUSDTieredSTOParams {
   label?: string;
 }
 
-export class LaunchUsdTieredSto extends Procedure<
-  LaunchUsdTieredStoProcedureArgs,
-  SecurityToken,
-  UsdTieredSto
-> {
+export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArgs, UsdTieredSto> {
   public type = ProcedureType.LaunchUsdTieredSto;
 
   public async prepareTransactions() {
-    const { args, context, caller } = this;
+    const { args, context } = this;
     const {
       symbol,
       startDate,
@@ -59,7 +55,10 @@ export class LaunchUsdTieredSto extends Procedure<
       treasuryWallet,
       usdTokenAddresses,
     } = args;
-    const { contractWrappers } = context;
+    const {
+      contractWrappers,
+      factories: { usdTieredStoFactory },
+    } = context;
 
     let securityToken;
 
@@ -116,7 +115,7 @@ export class LaunchUsdTieredSto extends Procedure<
         resolver: async receipt => {
           const { logs } = receipt;
 
-          const event = findEvent({
+          const [event] = findEvents({
             eventName: SecurityTokenEvents.ModuleAdded,
             logs,
           });
@@ -126,12 +125,18 @@ export class LaunchUsdTieredSto extends Procedure<
 
             const { _module } = eventArgs;
 
-            return caller.offerings.getSto({ stoType: StoType.UsdTiered, address: _module });
+            return usdTieredStoFactory.fetch(
+              UsdTieredSto.generateId({
+                securityTokenId: SecurityToken.generateId({ symbol }),
+                stoType: StoType.UsdTiered,
+                address: _module,
+              })
+            );
           }
           throw new PolymathError({
             code: ErrorCode.UnexpectedEventLogs,
             message:
-              "The Capped STO was successfully launched but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+              "The USD Tiered STO was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
           });
         },
       }

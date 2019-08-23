@@ -12,40 +12,26 @@ import { TransactionQueue } from '../entities/TransactionQueue';
 import { Context } from '../Context';
 import { PostTransactionResolver } from '../PostTransactionResolver';
 import { PolymathError } from '../PolymathError';
-import { Entity } from '../entities';
-import { Polymath } from '../Polymath';
 
-export interface ProcedureClass<
-  Args = any,
-  Caller extends Entity | Polymath | void = void,
-  ReturnType extends any = any
-> {
-  new (args: Args, context: Context, caller: Caller): Procedure<Args, Caller, ReturnType>;
+export interface ProcedureClass<Args = any, ReturnType extends any = any> {
+  new (args: Args, context: Context): Procedure<Args, ReturnType>;
 }
 
 // NOTE @RafaelVidaurre: We could add a preparation state cache to avoid repeated transactions and bad validations
-// TODO @monitz87 remove all caller related code once entities can build themselves
-export abstract class Procedure<
-  Args,
-  Caller extends Entity | Polymath | void = void,
-  ReturnType = void
-> {
+export abstract class Procedure<Args, ReturnType = void> {
   public type: ProcedureType = ProcedureType.UnnamedProcedure;
 
   protected args: Args;
 
   protected context: Context;
 
-  protected caller: Caller;
-
   private transactions: TransactionSpec[] = [];
 
   private fees: Array<BigNumber> = [];
 
-  constructor(args: Args, context: Context, caller: Caller) {
+  constructor(args: Args, context: Context) {
     this.args = args;
     this.context = context;
-    this.caller = caller;
   }
 
   /**
@@ -56,12 +42,12 @@ export abstract class Procedure<
     const returnValue = await this.prepareTransactions();
     const totalFees = this.fees.reduce((total, fee) => total.plus(fee), new BigNumber(0));
 
-    const transactionQueue = new TransactionQueue<Args, ReturnType>(
+    const transactionQueue = new TransactionQueue(
       this.transactions,
       totalFees,
-      this.type,
+      returnValue,
       this.args,
-      returnValue
+      this.type
     );
 
     return transactionQueue;
@@ -75,7 +61,7 @@ export abstract class Procedure<
    *
    * @returns whichever value is returned by the Procedure
    */
-  public addProcedure = <A, R extends any = any>(Proc: ProcedureClass<A, void, R>) => {
+  public addProcedure = <A, R extends any = any>(Proc: ProcedureClass<A, R>) => {
     return async (args: A) => {
       const operation = new Proc(args, this.context);
       let returnValue: MaybeResolver<R | undefined>;
@@ -107,9 +93,9 @@ export abstract class Procedure<
    * what will be run by the TransactionQueue when it is started.
    *
    * @param method A method that will be run in the Procedure's TransactionQueue
-   * @param option.tag An optional tag for SDK users to identify this transaction, this
+   * @param options.tag An optional tag for SDK users to identify this transaction, this
    * can be used for doing things such as mapping descriptions to tags in the UI
-   * @param option.fee Value in POLY of the transaction (defaults to 0)
+   * @param options.fee Value in POLY of the transaction (defaults to 0)
    * @param options.resolver An asynchronous callback used to provide runtime data after
    * the added transaction has finished successfully
    *
@@ -147,7 +133,5 @@ export abstract class Procedure<
     };
   };
 
-  protected abstract prepareTransactions(): Promise<
-    MaybeResolver<ReturnType | undefined> | undefined
-  >;
+  protected abstract prepareTransactions(): Promise<MaybeResolver<ReturnType>>;
 }

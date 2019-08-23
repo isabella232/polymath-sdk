@@ -9,7 +9,7 @@ import { Entity } from './Entity';
 import { TransactionQueue } from './TransactionQueue';
 import { serialize } from '../utils';
 
-enum Events {
+enum Event {
   StatusChange = 'StatusChange',
 }
 
@@ -21,7 +21,7 @@ const mapValuesDeep = (
   mapValues(obj, (val, key) => (isPlainObject(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)));
 
 // TODO @monitz87: Make properties private where appliccable
-export class PolyTransaction<Args = any, R = any> extends Entity {
+export class PolyTransaction<Args = any, R extends any = void> extends Entity<void> {
   public static generateId() {
     return serialize('transaction', {
       random: v4(),
@@ -52,7 +52,7 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
 
   private emitter: EventEmitter;
 
-  constructor(transaction: TransactionSpec<Args, R>, transactionQueue: TransactionQueue) {
+  constructor(transaction: TransactionSpec<Args, R>, transactionQueue: TransactionQueue<any, any>) {
     super();
 
     if (transaction.postTransactionResolver) {
@@ -115,10 +115,10 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
   }
 
   public onStatusChange = (listener: (transaction: this) => void) => {
-    this.emitter.on(Events.StatusChange, listener);
+    this.emitter.on(Event.StatusChange, listener);
 
     return () => {
-      this.emitter.removeListener(Events.StatusChange, listener);
+      this.emitter.removeListener(Event.StatusChange, listener);
     };
   };
 
@@ -167,23 +167,23 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
     /* eslint-disable default-case */
     switch (status) {
       case TransactionStatus.Unapproved: {
-        this.emitter.emit(Events.StatusChange, this);
+        this.emitter.emit(Event.StatusChange, this);
         return;
       }
       case TransactionStatus.Running: {
-        this.emitter.emit(Events.StatusChange, this);
+        this.emitter.emit(Event.StatusChange, this);
         return;
       }
       case TransactionStatus.Succeeded: {
-        this.emitter.emit(Events.StatusChange, this);
+        this.emitter.emit(Event.StatusChange, this);
         return;
       }
       case TransactionStatus.Failed: {
-        this.emitter.emit(Events.StatusChange, this, this.error);
+        this.emitter.emit(Event.StatusChange, this, this.error);
         return;
       }
       case TransactionStatus.Rejected: {
-        this.emitter.emit(Events.StatusChange, this);
+        this.emitter.emit(Event.StatusChange, this);
       }
     }
     /* eslint-enable default-case */
@@ -208,4 +208,6 @@ export class PolyTransaction<Args = any, R = any> extends Entity {
         : this.unwrapArg(arg);
     }) as T;
   }
+
+  public _refresh(_params: Partial<void>) {}
 }

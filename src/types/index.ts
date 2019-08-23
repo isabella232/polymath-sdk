@@ -67,7 +67,7 @@ export interface ShareholderBalance {
 
 export type LowLevelMethod<A> = (args: A) => Promise<PolyResponse>;
 
-export interface TransactionSpec<Args = any, R = any> {
+export interface TransactionSpec<Args = any, R extends any = any> {
   method: LowLevelMethod<Args>;
   args: MapMaybeResolver<Args>;
   postTransactionResolver?: PostTransactionResolver<R>;
@@ -307,7 +307,9 @@ export interface ControllerTransferProcedureArgs {
 }
 
 export interface PauseStoProcedureArgs {
+  symbol: string;
   stoAddress: string;
+  stoType: StoType;
 }
 
 export interface SetControllerProcedureArgs {
@@ -335,11 +337,11 @@ export interface ShareholderDataEntry {
   /**
    * whether the shareholder is accredited
    */
-  isAccredited?: boolean;
+  isAccredited: boolean;
   /**
    * whether the shareholder is allowed to purchase tokens in an STO
    */
-  canBuyFromSto?: boolean;
+  canBuyFromSto: boolean;
 }
 
 export interface ModifyShareholderDataProcedureArgs {

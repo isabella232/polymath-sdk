@@ -5,7 +5,7 @@ import { CreateSecurityToken } from '../procedures';
 import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
-interface UniqueIdentifiers {
+export interface UniqueIdentifiers {
   symbol: string;
 }
 
@@ -15,12 +15,12 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof symbol === 'string';
 }
 
-interface Params extends UniqueIdentifiers {
+export interface Params {
   expiry: Date;
   securityTokenAddress?: string;
 }
 
-export class SecurityTokenReservation extends Entity {
+export class SecurityTokenReservation extends Entity<Params> {
   public static generateId({ symbol }: UniqueIdentifiers) {
     return serialize('securityTokenReservation', {
       symbol,
@@ -56,7 +56,7 @@ export class SecurityTokenReservation extends Entity {
 
   protected context: Context;
 
-  constructor(params: Params, context: Context) {
+  constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
     const { symbol, expiry, securityTokenAddress } = params;
@@ -102,8 +102,20 @@ export class SecurityTokenReservation extends Entity {
   };
 
   public toPojo() {
-    const { uid, symbol, expiry } = this;
+    const { uid, symbol, expiry, securityTokenAddress } = this;
 
-    return { uid, symbol, expiry };
+    return { uid, symbol, expiry, securityTokenAddress };
+  }
+
+  public _refresh(params: Partial<Params>) {
+    const { expiry, securityTokenAddress } = params;
+
+    if (expiry) {
+      this.expiry = expiry;
+    }
+
+    if (securityTokenAddress) {
+      this.securityTokenAddress = securityTokenAddress;
+    }
   }
 }
