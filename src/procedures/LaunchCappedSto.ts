@@ -15,7 +15,7 @@ import {
 import { PolymathError } from '../PolymathError';
 import { TransferErc20 } from './TransferErc20';
 import { SecurityToken, CappedSto } from '../entities';
-import { findEvent } from '../utils';
+import { findEvents } from '../utils';
 
 interface AddCappedSTOParams {
   moduleName: ModuleName.CappedSTO;
@@ -79,7 +79,7 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
         resolver: async receipt => {
           const { logs } = receipt;
 
-          const event = findEvent({
+          const [event] = findEvents({
             eventName: SecurityTokenEvents.ModuleAdded,
             logs,
           });
@@ -100,7 +100,7 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
           throw new PolymathError({
             code: ErrorCode.UnexpectedEventLogs,
             message:
-              "The Capped STO was successfully launched but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+              "The Capped STO was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
           });
         },
       }

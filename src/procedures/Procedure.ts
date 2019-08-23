@@ -93,9 +93,9 @@ export abstract class Procedure<Args, ReturnType = void> {
    * what will be run by the TransactionQueue when it is started.
    *
    * @param method A method that will be run in the Procedure's TransactionQueue
-   * @param option.tag An optional tag for SDK users to identify this transaction, this
+   * @param options.tag An optional tag for SDK users to identify this transaction, this
    * can be used for doing things such as mapping descriptions to tags in the UI
-   * @param option.fee Value in POLY of the transaction (defaults to 0)
+   * @param options.fee Value in POLY of the transaction (defaults to 0)
    * @param options.resolver An asynchronous callback used to provide runtime data after
    * the added transaction has finished successfully
    *

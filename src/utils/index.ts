@@ -14,6 +14,22 @@ import {
   SecurityTokenRegistryRegisterTickerEventArgs,
   SecurityTokenRegistryNewSecurityTokenEventArgs,
   SecurityTokenModuleAddedEventArgs,
+  GeneralTransferManagerEvents,
+  GeneralTransferManagerModifyKYCDataEventArgs,
+  GeneralTransferManagerModifyInvestorFlagEventArgs,
+  SecurityTokenControllerTransferEventArgs,
+  CappedSTOEvents,
+  USDTieredSTOEvents,
+  CappedSTOPauseEventArgs,
+  USDTieredSTOPauseEventArgs,
+  ERC20DividendCheckpointERC20DividendClaimedEventArgs,
+  EtherDividendCheckpointEtherDividendClaimedEventArgs,
+  ERC20DividendCheckpointERC20DividendReclaimedEventArgs,
+  EtherDividendCheckpointEtherDividendReclaimedEventArgs,
+  ERC20DividendCheckpointSetWalletEventArgs,
+  EtherDividendCheckpointSetWalletEventArgs,
+  ERC20DividendCheckpointSetWithholdingEventArgs,
+  EtherDividendCheckpointSetWithholdingEventArgs,
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
 
@@ -72,7 +88,7 @@ interface FindCheckpointCreatedParams extends FindEventParams {
   eventName: SecurityTokenEvents.CheckpointCreated;
 }
 
-interface FindERC20DividendDepositedParams extends FindEventParams {
+interface FindErc20DividendDepositedParams extends FindEventParams {
   eventName: ERC20DividendCheckpointEvents.ERC20DividendDeposited;
 }
 
@@ -84,39 +100,120 @@ interface FindModuleAddedParams extends FindEventParams {
   eventName: SecurityTokenEvents.ModuleAdded;
 }
 
-interface FindEvent {
-  (params: FindTickerRegisteredParams):
-    | LogWithDecodedArgs<SecurityTokenRegistryRegisterTickerEventArgs>
-    | undefined;
-  (params: FindNewSecurityTokenParams):
-    | LogWithDecodedArgs<SecurityTokenRegistryNewSecurityTokenEventArgs>
-    | undefined;
-  (params: FindModuleAddedParams):
-    | LogWithDecodedArgs<SecurityTokenModuleAddedEventArgs>
-    | undefined;
-  (params: FindCheckpointCreatedParams):
-    | LogWithDecodedArgs<SecurityTokenCheckpointCreatedEventArgs>
-    | undefined;
-  (params: FindERC20DividendDepositedParams):
-    | LogWithDecodedArgs<ERC20DividendCheckpointERC20DividendDepositedEventArgs>
-    | undefined;
-  (params: FindEtherDividendDepositedParams):
-    | LogWithDecodedArgs<EtherDividendCheckpointEtherDividendDepositedEventArgs>
-    | undefined;
+interface FindControllerTransferParams extends FindEventParams {
+  eventName: SecurityTokenEvents.ControllerTransfer;
 }
 
-export const findEvent: FindEvent = ({
+interface FindModifyKycDataParams extends FindEventParams {
+  eventName: GeneralTransferManagerEvents.ModifyKYCData;
+}
+
+interface FindModifyInvestorFlagParams extends FindEventParams {
+  eventName: GeneralTransferManagerEvents.ModifyInvestorFlag;
+}
+
+interface FindCappedStoPauseParams extends FindEventParams {
+  eventName: CappedSTOEvents.Pause;
+}
+
+interface FindUsdTieredStoPauseParams extends FindEventParams {
+  eventName: USDTieredSTOEvents.Pause;
+}
+
+interface FindErc20DividendClaimedParams extends FindEventParams {
+  eventName: ERC20DividendCheckpointEvents.ERC20DividendClaimed;
+}
+
+interface FindEthDividendClaimedParams extends FindEventParams {
+  eventName: EtherDividendCheckpointEvents.EtherDividendClaimed;
+}
+
+interface FindErc20DividendReclaimedParams extends FindEventParams {
+  eventName: ERC20DividendCheckpointEvents.ERC20DividendReclaimed;
+}
+
+interface FindEthDividendReclaimedParams extends FindEventParams {
+  eventName: EtherDividendCheckpointEvents.EtherDividendReclaimed;
+}
+
+interface FindErc20SetWallet extends FindEventParams {
+  eventName: ERC20DividendCheckpointEvents.SetWallet;
+}
+
+interface FindEthSetWallet extends FindEventParams {
+  eventName: EtherDividendCheckpointEvents.SetWallet;
+}
+
+interface FindErc20SetWithholding extends FindEventParams {
+  eventName: ERC20DividendCheckpointEvents.SetWithholding;
+}
+
+interface FindEthSetWithholding extends FindEventParams {
+  eventName: EtherDividendCheckpointEvents.SetWithholding;
+}
+
+interface FindEvents {
+  (params: FindTickerRegisteredParams): LogWithDecodedArgs<
+    SecurityTokenRegistryRegisterTickerEventArgs
+  >[];
+  (params: FindNewSecurityTokenParams): LogWithDecodedArgs<
+    SecurityTokenRegistryNewSecurityTokenEventArgs
+  >[];
+  (params: FindModuleAddedParams): LogWithDecodedArgs<SecurityTokenModuleAddedEventArgs>[];
+  (params: FindCheckpointCreatedParams): LogWithDecodedArgs<
+    SecurityTokenCheckpointCreatedEventArgs
+  >[];
+  (params: FindControllerTransferParams): LogWithDecodedArgs<
+    SecurityTokenControllerTransferEventArgs
+  >[];
+  (params: FindErc20DividendDepositedParams): LogWithDecodedArgs<
+    ERC20DividendCheckpointERC20DividendDepositedEventArgs
+  >[];
+  (params: FindEtherDividendDepositedParams): LogWithDecodedArgs<
+    EtherDividendCheckpointEtherDividendDepositedEventArgs
+  >[];
+  (params: FindModifyKycDataParams): LogWithDecodedArgs<
+    GeneralTransferManagerModifyKYCDataEventArgs
+  >[];
+  (params: FindModifyInvestorFlagParams): LogWithDecodedArgs<
+    GeneralTransferManagerModifyInvestorFlagEventArgs
+  >[];
+  (params: FindCappedStoPauseParams): LogWithDecodedArgs<CappedSTOPauseEventArgs>[];
+  (params: FindUsdTieredStoPauseParams): LogWithDecodedArgs<USDTieredSTOPauseEventArgs>[];
+  (params: FindErc20DividendClaimedParams): LogWithDecodedArgs<
+    ERC20DividendCheckpointERC20DividendClaimedEventArgs
+  >[];
+  (params: FindEthDividendClaimedParams): LogWithDecodedArgs<
+    EtherDividendCheckpointEtherDividendClaimedEventArgs
+  >[];
+  (params: FindErc20DividendReclaimedParams): LogWithDecodedArgs<
+    ERC20DividendCheckpointERC20DividendReclaimedEventArgs
+  >[];
+  (params: FindEthDividendReclaimedParams): LogWithDecodedArgs<
+    EtherDividendCheckpointEtherDividendReclaimedEventArgs
+  >[];
+  (params: FindErc20SetWallet): LogWithDecodedArgs<ERC20DividendCheckpointSetWalletEventArgs>[];
+  (params: FindEthSetWallet): LogWithDecodedArgs<EtherDividendCheckpointSetWalletEventArgs>[];
+  (params: FindErc20SetWithholding): LogWithDecodedArgs<
+    ERC20DividendCheckpointSetWithholdingEventArgs
+  >[];
+  (params: FindEthSetWithholding): LogWithDecodedArgs<
+    EtherDividendCheckpointSetWithholdingEventArgs
+  >[];
+}
+
+export const findEvents: FindEvents = ({
   logs,
   eventName,
 }: {
   logs: (LogEntry | LogWithDecodedArgs<DecodedLogArgs>)[];
   eventName: ContractEvents;
 }): any => {
-  const foundLog = logs.find(log => {
+  const foundLogs = logs.filter(log => {
     const l = log as LogWithDecodedArgs<DecodedLogArgs>;
 
     return l.event === eventName;
   });
 
-  return foundLog;
+  return foundLogs;
 };

@@ -12,7 +12,7 @@ import {
   DividendType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-import { findEvent } from '../utils';
+import { findEvents } from '../utils';
 import { SecurityToken, DividendDistribution } from '../entities';
 
 export class CreateEtherDividendDistribution extends Procedure<
@@ -67,7 +67,7 @@ export class CreateEtherDividendDistribution extends Procedure<
         resolver: async receipt => {
           const { logs } = receipt;
 
-          const event = findEvent({
+          const [event] = findEvents({
             eventName: EtherDividendCheckpointEvents.EtherDividendDeposited,
             logs,
           });
@@ -88,7 +88,7 @@ export class CreateEtherDividendDistribution extends Procedure<
           throw new PolymathError({
             code: ErrorCode.UnexpectedEventLogs,
             message:
-              "The ETH Dividend Distribution was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+              "The ETH Dividend Distribution was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
           });
         },
       }

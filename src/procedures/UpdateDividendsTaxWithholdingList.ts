@@ -1,5 +1,11 @@
 import { chunk } from 'lodash';
-import { ModuleName, BigNumber } from '@polymathnetwork/contract-wrappers';
+import {
+  ModuleName,
+  BigNumber,
+  ERC20DividendCheckpoint,
+  EtherDividendCheckpoint,
+} from '@polymathnetwork/contract-wrappers';
+import P from 'bluebird';
 import { Procedure } from './Procedure';
 import {
   UpdateDividendsTaxWithholdingListProcedureArgs,
@@ -9,6 +15,7 @@ import {
   DividendType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { TaxWithholding, SecurityToken } from '../entities';
 
 const CHUNK_SIZE = 200;
 
@@ -19,7 +26,7 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
 
   public async prepareTransactions() {
     const { symbol, dividendType, shareholderAddresses: investors, percentages } = this.args;
-    const { contractWrappers } = this.context;
+    const { contractWrappers, factories } = this.context;
 
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
@@ -30,26 +37,26 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
       });
     }
 
-    let dividendModule;
+    let dividendsModule: ERC20DividendCheckpoint | EtherDividendCheckpoint | undefined;
 
     switch (dividendType) {
       case DividendType.Erc20: {
-        dividendModule = (await contractWrappers.getAttachedModules(
+        [dividendsModule] = await contractWrappers.getAttachedModules(
           { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
           { unarchived: true }
-        ))[0];
+        );
         break;
       }
       case DividendType.Eth: {
-        dividendModule = (await contractWrappers.getAttachedModules(
+        [dividendsModule] = await contractWrappers.getAttachedModules(
           { moduleName: ModuleName.EtherDividendCheckpoint, symbol },
           { unarchived: true }
-        ))[0];
+        );
         break;
       }
     }
 
-    if (!dividendModule) {
+    if (!dividendsModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message:
@@ -57,16 +64,32 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
       });
     }
 
-    const investorAddressChunks = chunk(investors, CHUNK_SIZE);
+    const shareholderAddressChunks = chunk(investors, CHUNK_SIZE);
     const percentageChunks = chunk(percentages, CHUNK_SIZE);
 
-    for (let index = 0; index < investorAddressChunks.length; index += 1) {
-      await this.addTransaction(dividendModule.setWithholding, {
+    await P.each(shareholderAddressChunks, async (addresses, chunkIndex) => {
+      const percentageChunk = percentageChunks[chunkIndex];
+      await this.addTransaction(dividendsModule!.setWithholding, {
         tag: PolyTransactionTag.SetErc20TaxWithholding,
+        // Update all affected tax withholding entities.
+        // We do this without fetching the data from the contracts
+        // because it would take too many requests and it's only one value that changes
+        resolver: async () => {
+          addresses.forEach((address, addressIndex) => {
+            factories.taxWithholdingFactory.update(
+              TaxWithholding.generateId({
+                securityTokenId: SecurityToken.generateId({ symbol }),
+                dividendType,
+                shareholderAddress: address,
+              }),
+              { percentage: percentageChunk[addressIndex] }
+            );
+          });
+        },
       })({
-        investors: investorAddressChunks[index],
-        withholding: percentageChunks[index].map(percentage => new BigNumber(percentage)),
+        investors: addresses,
+        withholding: percentageChunk.map(percentage => new BigNumber(percentage)),
       });
-    }
+    });
   }
 }

@@ -2,7 +2,7 @@ import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Factory } from './Factory';
 import { Context } from '../../Context';
 import { SecurityToken } from '../SecurityToken';
-import { PolymathError } from '~/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import { ErrorCode, DividendType } from '../../types';
 import { TaxWithholding, Params, UniqueIdentifiers } from '../TaxWithholding';
 

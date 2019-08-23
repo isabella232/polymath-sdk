@@ -13,7 +13,7 @@ import {
 } from '../types';
 import { ApproveErc20 } from './ApproveErc20';
 import { PolymathError } from '../PolymathError';
-import { findEvent } from '../utils';
+import { findEvents } from '../utils';
 import { SecurityToken, DividendDistribution } from '../entities';
 
 export class CreateErc20DividendDistribution extends Procedure<
@@ -75,7 +75,7 @@ export class CreateErc20DividendDistribution extends Procedure<
         resolver: async receipt => {
           const { logs } = receipt;
 
-          const event = findEvent({
+          const [event] = findEvents({
             eventName: ERC20DividendCheckpointEvents.ERC20DividendDeposited,
             logs,
           });
@@ -96,7 +96,7 @@ export class CreateErc20DividendDistribution extends Procedure<
           throw new PolymathError({
             code: ErrorCode.UnexpectedEventLogs,
             message:
-              "The ERC20 Dividend Distribution was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+              "The ERC20 Dividend Distribution was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
           });
         },
       }

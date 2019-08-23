@@ -9,7 +9,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { SecurityToken } from '../entities';
-import { findEvent } from '../utils';
+import { findEvents } from '../utils';
 
 export class CreateSecurityToken extends Procedure<
   CreateSecurityTokenProcedureArgs,
@@ -76,7 +76,7 @@ export class CreateSecurityToken extends Procedure<
       resolver: async receipt => {
         const { logs } = receipt;
 
-        const event = findEvent({
+        const [event] = findEvents({
           eventName: SecurityTokenRegistryEvents.NewSecurityToken,
           logs,
         });
@@ -98,7 +98,7 @@ export class CreateSecurityToken extends Procedure<
         throw new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
-            "The Security Token was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+            "The Security Token was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
         });
       },
     })({

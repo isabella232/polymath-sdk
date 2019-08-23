@@ -7,7 +7,7 @@ import {
   ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-import { findEvent } from '../utils';
+import { findEvents } from '../utils';
 import { SecurityToken, Checkpoint } from '../entities';
 
 export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint> {
@@ -36,7 +36,7 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
       resolver: async receipt => {
         const { logs } = receipt;
 
-        const event = findEvent({ logs, eventName: SecurityTokenEvents.CheckpointCreated });
+        const [event] = findEvents({ logs, eventName: SecurityTokenEvents.CheckpointCreated });
         if (event) {
           const { args: eventArgs } = event;
 
@@ -52,7 +52,7 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
         throw new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
-            "The Checkpoint was successfully created but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+            "The Checkpoint was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
         });
       },
     })({});

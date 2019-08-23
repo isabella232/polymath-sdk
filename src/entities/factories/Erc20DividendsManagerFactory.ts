@@ -3,7 +3,7 @@ import { Factory } from './Factory';
 import { Context } from '../../Context';
 import { Erc20DividendsManager, Params, UniqueIdentifiers } from '../Erc20DividendsManager';
 import { SecurityToken } from '../SecurityToken';
-import { PolymathError } from '~/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 
 export class Erc20DividendsManagerFactory extends Factory<

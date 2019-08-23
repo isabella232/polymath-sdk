@@ -14,7 +14,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { TransferErc20 } from './TransferErc20';
-import { findEvent } from '../utils';
+import { findEvents } from '../utils';
 import { SecurityToken, UsdTieredSto } from '../entities';
 
 interface AddUSDTieredSTOParams {
@@ -115,7 +115,7 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
         resolver: async receipt => {
           const { logs } = receipt;
 
-          const event = findEvent({
+          const [event] = findEvents({
             eventName: SecurityTokenEvents.ModuleAdded,
             logs,
           });
@@ -136,7 +136,7 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
           throw new PolymathError({
             code: ErrorCode.UnexpectedEventLogs,
             message:
-              "The USD Tiered STO was successfully launched but the corresponding event wasn't fired. Please repot this issue to the Polymath team.",
+              "The USD Tiered STO was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
           });
         },
       }

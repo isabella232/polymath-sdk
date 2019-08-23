@@ -112,9 +112,9 @@ export abstract class Sto<P> extends Entity<P> {
   }
 
   public pause = async () => {
-    const { address: stoAddress } = this;
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
-    const procedure = new PauseSto({ stoAddress }, this.context);
+    const procedure = new PauseSto({ stoAddress, stoType, symbol }, this.context);
 
     return procedure.prepare();
   };
