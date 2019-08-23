@@ -33,6 +33,30 @@ interface Connect {
   (params: PolymathNetworkNodeParams): Promise<Polymath>;
 }
 
+/**
+ * @param symbol Security Token symbol
+ */
+interface SymbolParams {
+  symbol: string;
+}
+
+/**
+ * @param address Address of the Security Token contract
+ */
+interface AddressParams {
+  address: string;
+}
+
+interface GetSecurityToken {
+  (params: SymbolParams): Promise<SecurityToken>;
+  (params: AddressParams): Promise<SecurityToken>;
+  (params: string): Promise<SecurityToken>;
+}
+
+function isSymbolParams(params: any): params is SymbolParams {
+  return typeof params === 'object' && typeof params.symbol === 'string';
+}
+
 export class Polymath {
   public networkId: number = -1;
 
@@ -151,30 +175,50 @@ export class Polymath {
       owner = await currentWallet.address();
     }
 
-    const symbols = await contractWrappers.securityTokenRegistry.getTokensByOwner({ owner });
+    const addresses = await contractWrappers.securityTokenRegistry.getTokensByOwner({ owner });
 
-    return P.map(symbols, symbol => {
-      return this.getSecurityToken({ symbol });
+    return P.map(addresses, address => {
+      return this.getSecurityToken({ address });
     });
   };
 
   /**
-   * Retrieve a security token by symbol or UUID
-   *
-   * @param symbol Security Token symbol
+   * Retrieve a security token by symbol, address or UUID
    */
-  public getSecurityToken = async (
+  public getSecurityToken: GetSecurityToken = async (
     args:
       | {
           symbol: string;
+        }
+      | {
+          address: string;
         }
       | string
   ) => {
     let uid: string;
 
+    const isAddressArgs = (a: any): a is { address: string } => {
+      return typeof a.address === 'string';
+    };
+
     // fetch by UUID
     if (typeof args === 'string') {
       uid = args;
+    } else if (isAddressArgs(args)) {
+      const { address } = args;
+      try {
+        const securityToken = await this.context.contractWrappers.tokenFactory.getSecurityTokenInstanceFromAddress(
+          address
+        );
+
+        const symbol = await securityToken.symbol();
+        uid = SecurityToken.generateId({ symbol });
+      } catch (err) {
+        throw new PolymathError({
+          code: ErrorCode.FetcherValidationError,
+          message: `There is no Security Token with address ${address}`,
+        });
+      }
     } else {
       uid = SecurityToken.generateId(args);
     }
