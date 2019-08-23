@@ -59,14 +59,14 @@ Before we use Polymath SDK, we need to `connect` to the deployed smart contracts
 - ``httpProviderUrl``, which is an Ethereum network client that enables you to view and interact with the blockchain, via HTTP. That node can be a local ``geth`` or ``parity`` network client, or a 3rd-party provider such a ``Infura``.
 - ``privateKey`` this is the private key used to sign transactions sent from the SDK. 
 
-**On browsers**, some plugins such as Metamask, automatically injects a Web3 instance for your webpage to use. In that case, you can omit passing `httpProviderUrl`, and the SDK will use the injected provider behind the scenes.
+**On browsers**, some plugins such as Metamask, automatically injects a Web3 instance for your webpage to use. In that case, you can omit passing `httpProviderUrl` and `privateKey`. The SDK will use the injected provider behind the scenes.
 
 Additionally, you can detect the currently selected network using ``browserUtils.getNetworkId()``, which returns network's ID. e.g `1` for mainnet.
 
 Deploying your first security token
 -----------------------------------
 
-There's a multitude of modules and features provided by Polymath smart contracts contracts. Many of them are abstracted by the SDK for simpler usage. In this section, we are going to interact with ``SecurityTokenRegistry`` contract to create our first token.
+There's a multitude of modules and features provided by Polymath smart contracts. Many of them are abstracted by the SDK for simpler usage. In this section, we are going to interact with ``SecurityTokenRegistry`` contract to create our first token.
 
 ::
 
@@ -92,9 +92,9 @@ There's a multitude of modules and features provided by Polymath smart contracts
         console.error(error);
     }
 
-A successful ``reserveSecurityToken()`` call will reserve a symbol to the current user addres. Reserving a symbol means that no one else will be able to take it, while you complete the necessary steps to deploy the actual token.
+A successful ``reserveSecurityToken()`` call reserves a symbol to the current user address. Reserving a symbol means that no one else will be able to take it, while you complete the necessary steps to deploy the actual token.
 
-Once ``reservation.run()`` resolve, we can proceed with token creation. Method ``createSecurityToken()`` accepts four parameters.
+Once ``reservation.run()`` resolves, we can proceed with token creation. Method ``createSecurityToken()`` accepts four parameters.
 
 - ``symbol``: the symbol we've just reserved.
 - ``name``: this name will override the name supplied during the reservation.
@@ -103,7 +103,7 @@ Once ``reservation.run()`` resolve, we can proceed with token creation. Method `
 
 **NB** symbols are reserved for a determined period `e.g 15 days`, after which, it can be claimed by other issuers.
 
-As you might have noticed, all SDK  `write` operations are represented as transaction queues. For each operation, the SDK will create as many transactions as needed to complete that operation. Upon a call to `queue.run()`, the SDK will execute these transactions, sequentially, until completion.
+As you might have noticed, all SDK  `write` operations are represented as transaction queues. For each operation, the SDK creates as many transactions as needed to complete that operation. Upon calling `queue.run()`, the SDK executes these transactions, sequentially, until completion.
 
 Reading your tokens' data
 -------------------------
@@ -128,7 +128,7 @@ Finally, you can retrieve the token you've created, either by symbol or by your 
     //  uid: "c2VjdXJpdHlUb2tlbjp7InN5bWJvbCI6IktPVkFOM1RFU1QifQ=="
     ...
 
-``SecurityToken`` entity is a JS object representation of your deployed SecurityToken_ contract. Besides bringing token properties such as name, symbol and divisibility, it allows you to manage all aspects of your Security token. Aspects such as user permissions, shareholders management and eventually, launching your first Security token offering. We will discuss those features in upcoming user guides.
+``SecurityToken`` entity is a JS object representation of your deployed SecurityToken_ contract. Besides bringing token properties such as name, symbol and divisibility, it allows you to manage all aspects of your Security token. Aspects such as user permissions, shareholders management, and launching your first Security token offering, amongst others. We will discuss those features in upcoming user guides.
 
 
 
