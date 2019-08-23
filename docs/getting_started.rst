@@ -6,7 +6,7 @@ In this guide, we're going to setup a simple project that utilizes the SDK. The 
 Setup your project
 ------------------
 
-The SDK works well both on browsers, and Node.js applications. In this guide we're going to setup a simple Node.js project. In case that setup steps differ for the browser, we're going to highlight that below.
+The SDK works equally well on browsers as well as Node.js applications. For sake of simplicity, we're going to setup Node.js project. In case that setup steps differ for browsers, we're going to highlight that below.
 
 First, create a new Node.js project:
 
@@ -32,29 +32,32 @@ Instantiate and initialize Polymath client
 
 Before we use Polymath SDK, we need to `connect` to the deployed smart contracts on the desired Ethereum network. 
 
-There are two main connection parameters; ``PolymathRegistry`` contract address,  which is the main registry that keeps track of core components of the system, including the addresses of other contract registries. 
-And ``httpProviderUrl``, which is an Ethereum network client that enables you to view and interact with the blockchain, via HTTP. That node can be a local ``geth`` or ``parity`` network client, or a 3rd-party provider such a ``Infura``.
-
-**NB** make sure you local node "account" is unlocked (i.e private key decrypted), and have enough Eth balance on the network in question. Like any Ethereum transaction, interacting with Polymath smart contracts, through the SDK, costs gas and requires a signature. 
-
 ::
 
+    const privateKey = process.env.PRIVATE_KEY;
     const networkId = 1; // Or browserUtils.getNetworkId()
     const networkConfigs = {
         1: {
             polymathRegistryAddress: '0xdfabf3e4793cd30affb47ab6fa4cf4eef26bbc27',
-            httpProviderUrl: 'http://localhost:8545',
+            httpProviderUrl: 'https://mainnet.infura.io/v3/[INFURA_PRODUCT_ID]',
+            privateKey
         },
         42: {
             polymathRegistryAddress: '0x5b215a7d39ee305ad28da29bf2f0425c6c2a00b3',
-            httpProviderUrl: 'http://localhost:8545',
+            httpProviderUrl: 'https://kovan.infura.io/v3/[INFURA_PRODUCT_ID]',
+            privateKey
         },
     };
     const config = networkConfigs[networkId];
     const polyClient = new Polymath();
     await polyClient.connect(config);
 
-Alternatively, you can pass an instance of Web3.providers.HttpProvider_ object, which in turn, accepts provider's Url.
+
+``PolyClient.connect()`` accepts three parameters:
+
+- ``PolymathRegistryAddress``, which is the address of the main registry that keeps track of core components of the system, including the addresses of other registries. 
+- ``httpProviderUrl``, which is an Ethereum network client that enables you to view and interact with the blockchain, via HTTP. That node can be a local ``geth`` or ``parity`` network client, or a 3rd-party provider such a ``Infura``.
+- ``privateKey`` this is the private key used to sign transactions sent from the SDK. 
 
 **On browsers**, some plugins such as Metamask, automatically injects a Web3 instance for your webpage to use. In that case, you can omit passing `httpProviderUrl`, and the SDK will use the injected provider behind the scenes.
 
@@ -93,12 +96,12 @@ A successful ``reserveSecurityToken()`` call will reserve a symbol to the curren
 
 Once ``reservation.run()`` resolve, we can proceed with token creation. Method ``createSecurityToken()`` accepts four parameters.
 
-- **symbol**: the symbol we've just reserved.
-- **name**: this name will override the name supplied during the reservation.
-- **detailsUrl**: is an offchain (i.e a webpage) resource about the token.
-- **divisible**: whether or not the token is divisible.
+- ``symbol``: the symbol we've just reserved.
+- ``name``: this name will override the name supplied during the reservation.
+- ``detailsUrl``: is an offchain (i.e a webpage) resource about the token.
+- ``divisible``: whether or not the token is divisible.
 
-**NB** symbols are reserved for a determined period `e.g 15 days`. After which, it can be claimed by other issuers.
+**NB** symbols are reserved for a determined period `e.g 15 days`, after which, it can be claimed by other issuers.
 
 As you might have noticed, all SDK  `write` operations are represented as transaction queues. For each operation, the SDK will create as many transactions as needed to complete that operation. Upon a call to `queue.run()`, the SDK will execute these transactions, sequentially, until completion.
 
@@ -113,7 +116,7 @@ Finally, you can retrieve the token you've created, either by symbol or by your 
 
     // or 
 
-    const token = (await polyClient.getSecurityTokens({owner: [ISSUER_ADDRESS]}))[0];
+    const token = (await polyClient.getSecurityTokens({owner: ISSUER_ADDRESS}))[0];
 
     console.log(token);
     // => 
