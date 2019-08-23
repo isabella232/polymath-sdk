@@ -5,6 +5,7 @@ import { Shareholders } from './Shareholders';
 import { Dividends } from './Dividends';
 import { Offerings } from './Offerings';
 import { Permissions } from './Permissions';
+import { Transfers } from './Transfers';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 
@@ -64,6 +65,8 @@ export class SecurityToken extends Entity<Params> {
 
   public permissions: Permissions;
 
+  public transfers: Transfers;
+
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
@@ -78,6 +81,7 @@ export class SecurityToken extends Entity<Params> {
     this.dividends = new Dividends(this, context);
     this.offerings = new Offerings(this, context);
     this.permissions = new Permissions(this, context);
+    this.transfers = new Transfers(this, context);
   }
 
   public toPojo() {
