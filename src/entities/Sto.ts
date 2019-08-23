@@ -193,11 +193,11 @@ export abstract class Sto<P> extends Entity<P> {
       this.investments = investments;
     }
 
-    if (paused) {
+    if (paused !== undefined) {
       this.paused = paused;
     }
 
-    if (capReached) {
+    if (capReached !== undefined) {
       this.capReached = capReached;
     }
   }

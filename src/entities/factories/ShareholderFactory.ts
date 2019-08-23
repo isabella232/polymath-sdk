@@ -44,7 +44,6 @@ export class ShareholderFactory extends Factory<Shareholder, Params, UniqueIdent
 
     return {
       balance,
-      address,
       canSendAfter,
       canReceiveAfter,
       kycExpiry: expiryTime,

@@ -275,7 +275,7 @@ export class DividendDistribution extends Entity<Params> {
       this.totalSupply = totalSupply;
     }
 
-    if (reclaimed) {
+    if (reclaimed !== undefined) {
       this.reclaimed = reclaimed;
     }
 

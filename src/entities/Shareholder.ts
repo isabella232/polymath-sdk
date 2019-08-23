@@ -151,11 +151,11 @@ export class Shareholder extends Entity<Params> {
       this.kycExpiry = kycExpiry;
     }
 
-    if (isAccredited) {
+    if (isAccredited !== undefined) {
       this.isAccredited = isAccredited;
     }
 
-    if (canBuyFromSto) {
+    if (canBuyFromSto !== undefined) {
       this.canBuyFromSto = canBuyFromSto;
     }
 

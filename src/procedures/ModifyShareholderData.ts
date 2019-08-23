@@ -1,4 +1,4 @@
-import { ModuleName, FlagsType } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, FlagsType, conversionUtils } from '@polymathnetwork/contract-wrappers';
 import { uniq } from 'lodash';
 import { Procedure } from './Procedure';
 import {
@@ -10,13 +10,14 @@ import {
 import { PolymathError } from '../PolymathError';
 import { Shareholder, SecurityToken } from '../entities';
 
+const { dateToBigNumber } = conversionUtils;
+
 export class ModifyShareholderData extends Procedure<
   ModifyShareholderDataProcedureArgs,
   Shareholder[]
 > {
   public type = ProcedureType.CreateErc20DividendDistribution;
 
-  // TODO @monitz87: consider returning the updated whitelist
   public async prepareTransactions() {
     const { symbol, shareholderData } = this.args;
     const { contractWrappers, factories } = this.context;
@@ -73,12 +74,11 @@ export class ModifyShareholderData extends Procedure<
           ({ address: shareholderAddress }) => shareholderAddress === address
         );
 
-        // Only update KYC data that will actually change
         if (
           !thisShareholder ||
-          thisShareholder.canSendAfter.getTime() !== sendDate.getTime() ||
-          thisShareholder.canReceiveAfter.getTime() !== receiveDate.getTime() ||
-          thisShareholder.kycExpiry.getTime() !== kycExpiry.getTime()
+          !dateToBigNumber(thisShareholder.canSendAfter).eq(dateToBigNumber(sendDate)) ||
+          !dateToBigNumber(thisShareholder.canReceiveAfter).eq(dateToBigNumber(receiveDate)) ||
+          !dateToBigNumber(thisShareholder.kycExpiry).eq(dateToBigNumber(kycExpiry))
         ) {
           investors.push(address);
           canSendAfter.push(sendDate);
@@ -103,27 +103,43 @@ export class ModifyShareholderData extends Procedure<
       }
     );
 
-    if (investors.length === 0 && investorsForFlags.length === 0) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: 'Modify shareholder data failed: Nothing to modify',
-      });
-    }
+    const uniqueInvestorsForFlags = uniq(investorsForFlags);
+
+    const allAffectedShareholders = uniq([...investors, ...uniqueInvestorsForFlags]);
+
+    const securityTokenId = SecurityToken.generateId({ symbol });
+
+    let newShareholders;
 
     if (investors.length > 0) {
-      await this.addTransaction(gtmModule.modifyKYCDataMulti, {
+      newShareholders = await this.addTransaction(gtmModule.modifyKYCDataMulti, {
         tag: PolyTransactionTag.ModifyKycDataMulti,
         resolver: async () => {
           const refreshingShareholders = investors.map(investor => {
             return factories.shareholderFactory.refresh(
               Shareholder.generateId({
-                securityTokenId: SecurityToken.generateId({ symbol }),
+                securityTokenId,
                 address: investor,
               })
             );
           });
 
-          return Promise.all(refreshingShareholders);
+          await Promise.all(refreshingShareholders);
+
+          if (investorsForFlags.length === 0) {
+            const fetchingShareholders = allAffectedShareholders.map(shareholder => {
+              return factories.shareholderFactory.fetch(
+                Shareholder.generateId({
+                  securityTokenId,
+                  address: shareholder,
+                })
+              );
+            });
+
+            return Promise.all(fetchingShareholders);
+          }
+
+          return [];
         },
       })({
         investors,
@@ -134,20 +150,31 @@ export class ModifyShareholderData extends Procedure<
     }
 
     if (investorsForFlags.length > 0) {
-      await this.addTransaction(gtmModule.modifyInvestorFlagMulti, {
+      newShareholders = await this.addTransaction(gtmModule.modifyInvestorFlagMulti, {
         tag: PolyTransactionTag.ModifyInvestorFlagMulti,
         resolver: async () => {
           // Only consider one occurence of each investor address
-          const refreshingShareholders = uniq(investorsForFlags).map(investor => {
+          const refreshingShareholders = uniqueInvestorsForFlags.map(investor => {
             return factories.shareholderFactory.refresh(
               Shareholder.generateId({
-                securityTokenId: SecurityToken.generateId({ symbol }),
+                securityTokenId,
                 address: investor,
               })
             );
           });
 
-          return Promise.all(refreshingShareholders);
+          await Promise.all(refreshingShareholders);
+
+          const fetchingShareholders = allAffectedShareholders.map(shareholder => {
+            return factories.shareholderFactory.fetch(
+              Shareholder.generateId({
+                securityTokenId,
+                address: shareholder,
+              })
+            );
+          });
+
+          return Promise.all(fetchingShareholders);
         },
       })({
         investors: investorsForFlags,
@@ -156,6 +183,13 @@ export class ModifyShareholderData extends Procedure<
       });
     }
 
-    return shareholders;
+    if (!newShareholders) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: 'Modify shareholder data failed: Nothing to modify',
+      });
+    }
+
+    return newShareholders;
   }
 }

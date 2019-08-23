@@ -53,10 +53,6 @@ interface GetSecurityToken {
   (params: string): Promise<SecurityToken>;
 }
 
-function isSymbolParams(params: any): params is SymbolParams {
-  return typeof params === 'object' && typeof params.symbol === 'string';
-}
-
 export class Polymath {
   public networkId: number = -1;
 
