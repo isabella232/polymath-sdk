@@ -35,16 +35,16 @@ Before we use Polymath SDK, we need to `connect` to the deployed smart contracts
 ::
 
     const privateKey = process.env.PRIVATE_KEY;
-    const networkId = 1; // Or browserUtils.getNetworkId()
+    const networkId = 1; // Or you can detect the current network in browser environments via browserUtils.getNetworkId()
     const networkConfigs = {
         1: {
             polymathRegistryAddress: '0xdfabf3e4793cd30affb47ab6fa4cf4eef26bbc27',
-            httpProviderUrl: 'https://mainnet.infura.io/v3/[INFURA_PRODUCT_ID]',
+            providerUrl: 'https://mainnet.infura.io/v3/[INFURA_PRODUCT_ID]',
             privateKey
         },
         42: {
             polymathRegistryAddress: '0x5b215a7d39ee305ad28da29bf2f0425c6c2a00b3',
-            httpProviderUrl: 'https://kovan.infura.io/v3/[INFURA_PRODUCT_ID]',
+            providerUrl: 'https://kovan.infura.io/v3/[INFURA_PRODUCT_ID]',
             privateKey
         },
     };
@@ -80,14 +80,17 @@ There's a multitude of modules and features provided by Polymath smart contracts
             symbol: 'ABC123',
             name: 'ABC 123 Inc.',
             detailsUrl: 'http://example.com',
-            divisible: true,
-        }).
+            divisible: true
+        });
         const token = await creationQueue.run();
         // Ta-da!! you've deployed your first security token!
 
     } catch(error) {
-        // Transaction reverted, transaction has been rejected by user, network issues..etc
-        console.error(error);
+      // Transaction has reverted, transaction has been rejected by app user, network issues...etc
+      console.error(error);
+      if (error.message.contains('has already been registered')) {
+        // Symbol 'ABC123' had been registered by someone else. Handle accordingly.
+      }
     }
 
 A successful ``reserveSecurityToken()`` call reserves a symbol to the current user address. Reserving a symbol means that no one else will be able to take it, while you complete the necessary steps to deploy the actual token.
@@ -99,9 +102,26 @@ Once ``reservation.run()`` has resolved, it will return a reservation entity. We
 - ``detailsUrl``: is an offchain (i.e a webpage) resource about the token.
 - ``divisible``: whether or not the token is divisible.
 
+Note that ``reserveSecurityToken()``, as well as all SDK functions, typically expect one object called ``args``. That object wraps all required params such as ``symbol`` and ``name``.
+
 **NB** symbols are reserved for a determined period `e.g 15 days`, after which, it can be claimed by other issuers.
 
 As you might have noticed, all SDK  `write` operations are represented as transaction queues. For each operation, the SDK creates as many transactions as needed to complete that operation. Upon calling `queue.run()`, the SDK executes these transactions, sequentially, until completion. Then it will resolve and return the relevant entity, if any.
+
+**Note on transaction errors**. In a perfect world, your token reservation and creation transactions will go through just fine. However, there are many reasons why a transaction might fail. Some errors are *operational*, for example, you've lost internet connection during script execution, or the ethereum account resposible for signing said transactions, had ran out of Ether.
+Another kind of errors represent `exceptions` thrown during smart contract execution (i.e ``revert``). One typical reason for reverts is when we attempt to reserve a token symbol that's been reserved before. We catch that error in the example above, as follows:
+
+::
+
+    ...
+    } catch(error) {
+      // Transaction has reverted, transaction has been rejected by app user, network issues...etc
+      console.error(error);
+      if (error.message.contains('has already been registered')) {
+      // Symbol 'ABC123' had been registered by someone else. Handle accordingly.
+    }
+
+
 
 Reading your tokens' data
 -------------------------
