@@ -71,20 +71,18 @@ There's a multitude of modules and features provided by Polymath smart contracts
 ::
 
     try {
-        const reservation = await polyClient.reserveSecurityToken({
+        const reservationQueue = await polyClient.reserveSecurityToken({
             symbol: 'ABC123',
-            name: 'ABC 123 Inc.',
         });
-        await reservation.run(); // Will run sequentially every transaction required
+        const reservation = await reservationQueue.run(); // Will run sequentially every transaction required
 
-        const creation = await polyClient.createSecurityToken({
+        const creationQueue = await reservation.createSecurityToken({
             symbol: 'ABC123',
             name: 'ABC 123 Inc.',
             detailsUrl: 'http://example.com',
             divisible: true,
         }).
-        await creation.run();
-
+        const token = await creationQueue.run();
         // Ta-da!! you've deployed your first security token!
 
     } catch(error) {
@@ -94,16 +92,16 @@ There's a multitude of modules and features provided by Polymath smart contracts
 
 A successful ``reserveSecurityToken()`` call reserves a symbol to the current user address. Reserving a symbol means that no one else will be able to take it, while you complete the necessary steps to deploy the actual token.
 
-Once ``reservation.run()`` resolves, we can proceed with token creation. Method ``createSecurityToken()`` accepts four parameters.
+Once ``reservation.run()`` has resolved, it will return a reservation entity. We can use that entity to proceed with the token creation. Method ``createSecurityToken()`` accepts four parameters:
 
 - ``symbol``: the symbol we've just reserved.
-- ``name``: this name will override the name supplied during the reservation.
+- ``name``: the human-friendly name.
 - ``detailsUrl``: is an offchain (i.e a webpage) resource about the token.
 - ``divisible``: whether or not the token is divisible.
 
 **NB** symbols are reserved for a determined period `e.g 15 days`, after which, it can be claimed by other issuers.
 
-As you might have noticed, all SDK  `write` operations are represented as transaction queues. For each operation, the SDK creates as many transactions as needed to complete that operation. Upon calling `queue.run()`, the SDK executes these transactions, sequentially, until completion.
+As you might have noticed, all SDK  `write` operations are represented as transaction queues. For each operation, the SDK creates as many transactions as needed to complete that operation. Upon calling `queue.run()`, the SDK executes these transactions, sequentially, until completion. Then it will resolve and return the relevant entity, if any.
 
 Reading your tokens' data
 -------------------------
