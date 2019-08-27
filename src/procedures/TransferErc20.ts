@@ -16,11 +16,23 @@ export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
 
     const ownerAddress = await currentWallet.address();
 
-    const { polyToken } = contractWrappers;
+    const { polyToken, securityTokenRegistry } = contractWrappers;
 
     let token;
 
     if (tokenAddress) {
+      const isSecurityToken = await securityTokenRegistry.isSecurityToken({
+        securityTokenAddress: tokenAddress,
+      });
+
+      if (isSecurityToken) {
+        throw new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message:
+            "This address belongs to a Security Token. To transfer Security Tokens, use the functions in the Security Token's transfers namespace",
+        });
+      }
+
       try {
         token = await contractWrappers.getERC20TokenWrapper({ address: tokenAddress });
       } catch (err) {
@@ -58,7 +70,7 @@ export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
 
     await this.addTransaction(token.transfer, {
       tag: PolyTransactionTag.TransferErc20,
-      resolver: _receipt => {
+      resolver: async _receipt => {
         return factories.erc20TokenBalanceFactory.refresh(
           Erc20TokenBalance.generateId({ tokenAddress: address, walletAddress: receiver })
         );
