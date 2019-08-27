@@ -9,7 +9,7 @@ import P from 'bluebird';
 import { Context } from './Context';
 import { getInjectedProvider } from './browserUtils';
 import { ErrorCode } from './types';
-import { Erc20TokenBalance, SecurityToken, SecurityTokenReservation } from './entities';
+import { Erc20TokenBalance, SecurityToken } from './entities';
 import { ReserveSecurityToken } from './procedures';
 import { PolymathError } from './PolymathError';
 import { PolymathBase } from './PolymathBase';
@@ -223,6 +223,17 @@ export class Polymath {
   };
 
   /**
+   * Check if a token symbol (ticker) is available for reservation
+   *
+   * @param symbol security token symbol for which to check availability
+   */
+  public isSymbolAvailable = async (args: { symbol: string }) => {
+    const { symbol } = args;
+
+    return this.context.contractWrappers.securityTokenRegistry.tickerAvailable({ ticker: symbol });
+  };
+
+  /**
    * Check if a token follows the ERC20 standard
    *
    * @param address address of the token contract
@@ -263,9 +274,13 @@ export class Polymath {
 
   /**
    * Get the current version of the Polymath Protocol
+   *
+   * @returns version string (i.e. 3.0.0)
    */
   public getLatestProtocolVersion = async () => {
-    await this.context.contractWrappers.securityTokenRegistry.getLatestProtocolVersion();
+    const version = await this.context.contractWrappers.securityTokenRegistry.getLatestProtocolVersion();
+
+    return version.map(vNum => vNum.toNumber()).join('.');
   };
 
   /**
