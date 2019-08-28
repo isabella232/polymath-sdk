@@ -7,6 +7,7 @@ import {
   MaybeResolver,
   ProcedureType,
   PolyTransactionTag,
+  Fees,
 } from '../types';
 import { TransactionQueue } from '../entities/TransactionQueue';
 import { Context } from '../Context';
@@ -27,7 +28,7 @@ export abstract class Procedure<Args, ReturnType = void> {
 
   private transactions: TransactionSpec[] = [];
 
-  private fees: Array<BigNumber> = [];
+  private fees: Array<Fees> = [];
 
   constructor(args: Args, context: Context) {
     this.args = args;
@@ -40,7 +41,23 @@ export abstract class Procedure<Args, ReturnType = void> {
    */
   public prepare = async () => {
     const returnValue = await this.prepareTransactions();
-    const totalFees = this.fees.reduce((total, fee) => total.plus(fee), new BigNumber(0));
+    const totalFees = this.fees.reduce(
+      ({ usd, poly }, { usd: newUsd, poly: newPoly }) => {
+        const polySum = poly.plus(newPoly);
+        let usdSum;
+        if (usd === null && newUsd === null) {
+          usdSum = null;
+        } else {
+          usdSum = (usd || new BigNumber(0)).plus(newUsd || new BigNumber(0));
+        }
+
+        return {
+          usd: usdSum,
+          poly: polySum,
+        };
+      },
+      { usd: null, poly: new BigNumber(0) }
+    );
 
     const transactionQueue = new TransactionQueue(
       this.transactions,
@@ -105,19 +122,19 @@ export abstract class Procedure<Args, ReturnType = void> {
     method: LowLevelMethod<A>,
     {
       tag,
-      fee,
+      fees,
       resolver = (() => {}) as () => Promise<R>,
     }: {
       tag?: PolyTransactionTag;
-      fee?: BigNumber;
+      fees?: Fees;
       resolver?: (receipt: TransactionReceiptWithDecodedLogs) => Promise<R>;
     } = {}
   ) => {
     return async (args: MapMaybeResolver<A>) => {
       const postTransactionResolver = new PostTransactionResolver(resolver);
 
-      if (fee) {
-        this.fees.push(fee);
+      if (fees) {
+        this.fees.push(fees);
       }
 
       const transaction = {

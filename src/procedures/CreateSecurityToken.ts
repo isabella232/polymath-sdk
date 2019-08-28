@@ -1,4 +1,5 @@
 import { SecurityTokenRegistryEvents } from '@polymathnetwork/abi-wrappers';
+import { FeeType } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import { ApproveErc20 } from './ApproveErc20';
 import {
@@ -63,16 +64,19 @@ export class CreateSecurityToken extends Procedure<
       });
     }
 
-    const fee = await securityTokenRegistry.getSecurityTokenLaunchFee();
+    const [usdFee, polyFee] = await securityTokenRegistry.getFees({ feeType: FeeType.stLaunchFee });
 
     await this.addProcedure(ApproveErc20)({
-      amount: fee,
+      amount: polyFee,
       spender: await securityTokenRegistry.address(),
     });
 
     const newToken = await this.addTransaction(securityTokenRegistry.generateNewSecurityToken, {
       tag: PolyTransactionTag.CreateSecurityToken,
-      fee,
+      fees: {
+        usd: usdFee,
+        poly: polyFee,
+      },
       resolver: async receipt => {
         const { logs } = receipt;
 
