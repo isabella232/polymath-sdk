@@ -52,7 +52,7 @@ export class ReserveSecurityToken extends Procedure<
     }
 
     const [usdFee, polyFee] = await securityTokenRegistry.getFees({
-      feeType: FeeType.tickerRegFee,
+      feeType: FeeType.TickerRegFee,
     });
     await addProcedure(ApproveErc20)({
       amount: polyFee,

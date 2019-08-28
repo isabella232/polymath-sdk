@@ -19,3 +19,4 @@ export { SetController } from './SetController';
 export { LaunchCappedSto } from './LaunchCappedSto';
 export { LaunchUsdTieredSto } from './LaunchUsdTieredSto';
 export { ModifyShareholderData } from './ModifyShareholderData';
+export { RevokeKyc } from './RevokeKyc';

@@ -64,7 +64,7 @@ export class CreateSecurityToken extends Procedure<
       });
     }
 
-    const [usdFee, polyFee] = await securityTokenRegistry.getFees({ feeType: FeeType.stLaunchFee });
+    const [usdFee, polyFee] = await securityTokenRegistry.getFees({ feeType: FeeType.StLaunchFee });
 
     await this.addProcedure(ApproveErc20)({
       amount: polyFee,
