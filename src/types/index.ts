@@ -97,6 +97,7 @@ export enum ProcedureType {
   PauseSto = 'PauseSto',
   SetController = 'SetController',
   ModifyShareholderData = 'ModifyShareholderData',
+  RevokeKyc = 'RevokeKyc',
 }
 
 export enum PolyTransactionTag {
@@ -349,6 +350,11 @@ export interface ModifyShareholderDataProcedureArgs {
   shareholderData: ShareholderDataEntry[];
 }
 
+export interface RevokeKycProcedureArgs {
+  symbol: string;
+  shareholderAddresses: string[];
+}
+
 export interface ProcedureArguments {
   [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
   [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
@@ -370,6 +376,7 @@ export interface ProcedureArguments {
   [ProcedureType.SetController]: SetControllerProcedureArgs;
   [ProcedureType.ChangeDelegatePermission]: ChangeDelegatePermissionProcedureArgs;
   [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
+  [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 

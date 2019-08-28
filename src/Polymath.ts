@@ -54,8 +54,6 @@ interface GetSecurityToken {
 }
 
 export class Polymath {
-  public networkId: number = -1;
-
   public isUnsupported: boolean = false;
 
   public isConnected: boolean = false;

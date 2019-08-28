@@ -2,8 +2,8 @@ import {
   ModuleName,
   SecurityToken as SecurityTokenWrapper,
 } from '@polymathnetwork/contract-wrappers';
-import { ShareholderDataEntry, DividendType, ErrorCode } from '../../types';
-import { ModifyShareholderData, CreateCheckpoint } from '../../procedures';
+import { ShareholderDataEntry, ErrorCode } from '../../types';
+import { ModifyShareholderData, CreateCheckpoint, RevokeKyc } from '../../procedures';
 import { SubModule } from './SubModule';
 import { Checkpoint } from '../Checkpoint';
 import { PolymathError } from '../../PolymathError';
@@ -26,6 +26,22 @@ export class Shareholders extends SubModule {
    */
   public modifyData = async (args: { shareholderData: ShareholderDataEntry[] }) => {
     const procedure = new ModifyShareholderData(
+      {
+        symbol: this.securityToken.symbol,
+        ...args,
+      },
+      this.context
+    );
+    return procedure.prepare();
+  };
+
+  /**
+   * Revokes KYC for a group of shareholder addresses. Supplied addresses must have valid KYC
+   *
+   * @param shareholderAddresses array of shareholder addresses
+   */
+  public revokeKyc = async (args: { shareholderAddresses: string[] }) => {
+    const procedure = new RevokeKyc(
       {
         symbol: this.securityToken.symbol,
         ...args,
