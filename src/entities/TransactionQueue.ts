@@ -1,7 +1,12 @@
 import { EventEmitter } from 'events';
 import v4 from 'uuid/v4';
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import { TransactionSpec, MaybeResolver, ProcedureType, TransactionQueueStatus } from '../types';
+import {
+  TransactionSpec,
+  MaybeResolver,
+  ProcedureType,
+  TransactionQueueStatus,
+  Fees,
+} from '../types';
 import { Entity } from './Entity';
 import { PolyTransaction } from './PolyTransaction';
 import { isPostTransactionResolver } from '../PostTransactionResolver';
@@ -35,7 +40,7 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
 
   public error?: Error;
 
-  public fees: BigNumber;
+  public fees: Fees;
 
   private promise: Promise<ReturnType>;
 
@@ -47,7 +52,7 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
 
   constructor(
     transactions: TransactionSpec[],
-    fees: BigNumber,
+    fees: Fees,
     returnValue: MaybeResolver<ReturnType>,
     args: Args,
     procedureType: ProcedureType = ProcedureType.UnnamedProcedure
@@ -78,12 +83,13 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
   }
 
   public toPojo() {
-    const { uid, transactions, status, procedureType, args } = this;
+    const { uid, transactions, status, procedureType, args, fees } = this;
 
     return {
       uid,
       transactions: transactions.map(transaction => transaction.toPojo()),
       status,
+      fees,
       procedureType,
       args,
     };

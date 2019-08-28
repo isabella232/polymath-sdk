@@ -65,17 +65,30 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
     });
 
     const moduleFactory = await contractWrappers.moduleFactory.getModuleFactory(factoryAddress);
-    const cost = await moduleFactory.setupCostInPoly();
+    let usdCost: BigNumber | null = null;
+    const [polyCost, isCostInPoly, cost] = await Promise.all([
+      moduleFactory.setupCostInPoly(),
+      moduleFactory.isCostInPoly(),
+      moduleFactory.setupCost(),
+    ]);
+
+    if (!isCostInPoly) {
+      usdCost = cost;
+    }
 
     await this.addProcedure(TransferErc20)({
       receiver: securityTokenAddress,
-      amount: cost,
+      amount: polyCost,
     });
 
     const newSto = await this.addTransaction<AddCappedSTOParams, CappedSto>(
       securityToken.addModuleWithLabel,
       {
         tag: PolyTransactionTag.EnableCappedSto,
+        fees: {
+          usd: usdCost,
+          poly: polyCost,
+        },
         resolver: async receipt => {
           const { logs } = receipt;
 

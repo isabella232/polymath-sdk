@@ -394,6 +394,11 @@ export enum PermissibleOperation {
   ModifyShareholderData = 'GTM_WHITELIST_UPDATE',
 }
 
+export interface Fees {
+  usd: BigNumber | null;
+  poly: BigNumber;
+}
+
 export interface Pojo {
   [key: string]:
     | string

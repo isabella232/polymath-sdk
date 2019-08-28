@@ -82,11 +82,20 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
     });
 
     const moduleFactory = await contractWrappers.moduleFactory.getModuleFactory(factoryAddress);
-    const cost = await moduleFactory.setupCostInPoly();
+    let usdCost: BigNumber | null = null;
+    const [polyCost, isCostInPoly, cost] = await Promise.all([
+      moduleFactory.setupCostInPoly(),
+      moduleFactory.isCostInPoly(),
+      moduleFactory.setupCost(),
+    ]);
+
+    if (!isCostInPoly) {
+      usdCost = cost;
+    }
 
     await this.addProcedure(TransferErc20)({
       receiver: securityTokenAddress,
-      amount: cost,
+      amount: polyCost,
     });
 
     const ratePerTier: BigNumber[] = [];
@@ -112,6 +121,10 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
       securityToken.addModuleWithLabel,
       {
         tag: PolyTransactionTag.EnableUsdTieredSto,
+        fees: {
+          usd: usdCost,
+          poly: polyCost,
+        },
         resolver: async receipt => {
           const { logs } = receipt;
 
