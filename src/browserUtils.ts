@@ -162,6 +162,10 @@ export async function getCurrentAddress() {
 
 /**
  * Runs the callback anytime the wallet address changes in the browser
+ *
+ * @param cb callback that receives the new address and the previous one
+ *
+ * @returns an unsubscribe function
  */
 export function onAddressChange(cb: (newAddress: string, previousAddress?: string) => void) {
   if (isUnsupported(window as ExtendedWindow)) {
@@ -177,14 +181,49 @@ export function onAddressChange(cb: (newAddress: string, previousAddress?: strin
   const checkAddress = async () => {
     const newAddress = await getCurrentAddress();
 
-    if (previousAddress && previousAddress !== newAddress) {
+    if (previousAddress !== newAddress) {
       previousAddress = newAddress;
       cb(newAddress, previousAddress);
     }
   };
 
-  checkAddress();
   const interval = setInterval(checkAddress, 1000);
+
+  const unsubscribe = () => {
+    clearInterval(interval);
+  };
+
+  return unsubscribe;
+}
+
+/**
+ * Runs the callback anytime the current network changes in the browser
+ *
+ * @param cb callback that receives the new network id and the previous one
+ *
+ * @returns an unsubscribe function
+ */
+export function onNetworkChange(cb: (newNetwork: number, previousNetwork?: number) => void) {
+  if (isUnsupported(window as ExtendedWindow)) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      '"onNetworkChange" Was called, but the current browser does not support Ethereum.'
+    );
+    return () => {};
+  }
+
+  let previousNetwork: number;
+
+  const checkNetwork = async () => {
+    const newNetwork = await getNetworkId();
+
+    if (previousNetwork !== newNetwork) {
+      previousNetwork = newNetwork!;
+      cb(newNetwork!, previousNetwork);
+    }
+  };
+
+  const interval = setInterval(checkNetwork, 1000);
 
   const unsubscribe = () => {
     clearInterval(interval);
