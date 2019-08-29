@@ -96,6 +96,20 @@ export class Shareholder extends Entity<Params> {
     });
   }
 
+  /**
+   * Checks if this shareholder's KYC has been manually revoked
+   */
+  public isRevoked() {
+    const { canReceiveAfter, canSendAfter, kycExpiry } = this;
+
+    const datesAreZero = [canReceiveAfter, canSendAfter, kycExpiry].every(
+      date => date.getTime() === 0
+    );
+
+    //
+    return datesAreZero;
+  }
+
   public toPojo() {
     const {
       uid,

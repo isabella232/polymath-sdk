@@ -33,17 +33,16 @@ export class RevokeKyc extends Procedure<RevokeKycProcedureArgs, Shareholder[]> 
     );
 
     const shareholders = await securityToken.shareholders.getShareholders();
-    const now = new Date();
 
-    const currentNonExpiredShareholderAddresses = shareholders
-      .filter(({ kycExpiry }) => kycExpiry > now)
+    const currentNonRevokedShareholderAddresses = shareholders
+      .filter(shareholder => !shareholder.isRevoked())
       .map(({ address }) => address);
-    const diff = difference(shareholderAddresses, currentNonExpiredShareholderAddresses);
+    const diff = difference(shareholderAddresses, currentNonRevokedShareholderAddresses);
 
     if (diff.length) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `KYC for "${diff.join(', ')}" has already expired`,
+        message: `"${diff.join(', ')}" already revoked`,
       });
     }
 
