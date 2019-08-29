@@ -190,7 +190,7 @@ export class Shareholders extends SubModule {
       const { isAccredited, canNotBuyFromSTO } = allFlags[i];
       const balance = balances[i];
 
-      const data = factories.shareholderFactory.create(
+      const shareholder = factories.shareholderFactory.create(
         Shareholder.generateId({ securityTokenId, address }),
         {
           balance,
@@ -203,7 +203,9 @@ export class Shareholders extends SubModule {
         }
       );
 
-      shareholders.push(data);
+      if (!shareholder.isRevoked() || shareholder.balance.isGreaterThan(0)) {
+        shareholders.push(shareholder);
+      }
     }
 
     return shareholders;

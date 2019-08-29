@@ -22,6 +22,18 @@ export class ModifyShareholderData extends Procedure<
     const { symbol, shareholderData } = this.args;
     const { contractWrappers, factories } = this.context;
 
+    if (
+      shareholderData.some(({ canReceiveAfter, canSendAfter, kycExpiry }) =>
+        [canReceiveAfter, canSendAfter, kycExpiry].some(date => date.getTime() === 0)
+      )
+    ) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message:
+          "Cannot set dates to epoch. If you're trying to revoke a shareholder's KYC, use .revokeKyc()",
+      });
+    }
+
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
     } catch (err) {
