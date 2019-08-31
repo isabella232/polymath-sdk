@@ -89,33 +89,9 @@ export class Polymath {
       });
     }
 
-    // we use 5 gwei as a sensible default for testnets
-    let defaultGasPrice = new BigNumber(5000000000);
-
-    switch (speed) {
-      case TransactionSpeed.Slow: {
-        defaultGasPrice = defaultGasPrice.dividedBy(5);
-        break;
-      }
-      case TransactionSpeed.Medium: {
-        defaultGasPrice = defaultGasPrice.dividedBy(3 / 5);
-        break;
-      }
-      case TransactionSpeed.Fast: {
-        break;
-      }
-      default: {
-        throw new PolymathError({
-          code: ErrorCode.FatalError,
-          message: 'Invalid transaction speed parameter',
-        });
-      }
-    }
-
     let contractWrappers = new PolymathBase({
       provider,
       polymathRegistryAddress,
-      defaultGasPrice,
     });
 
     const isTestnet = await contractWrappers.isTestnet();
@@ -158,6 +134,54 @@ export class Polymath {
       } catch (err) {
         // if the request fails, we simply use the previous default
       }
+    } else {
+      let defaultGasPrice = await new Promise<BigNumber>((resolve, reject) => {
+        provider.sendAsync(
+          {
+            jsonrpc: '2.0',
+            id: new Date().getTime(),
+            params: [],
+            method: 'eth_gasPrice',
+          },
+          (err, resp) => {
+            if (err) {
+              reject(err);
+            } else if (!resp) {
+              // we use 1 gwei as a sensible slow default for testnets
+              resolve(new BigNumber(1000000000));
+            } else {
+              const price = parseInt(resp.result, 16);
+              resolve(new BigNumber(price));
+            }
+          }
+        );
+      });
+
+      switch (speed) {
+        case TransactionSpeed.Slow: {
+          break;
+        }
+        case TransactionSpeed.Medium: {
+          defaultGasPrice = defaultGasPrice.multipliedBy(3);
+          break;
+        }
+        case TransactionSpeed.Fast: {
+          defaultGasPrice = defaultGasPrice.multipliedBy(5);
+          break;
+        }
+        default: {
+          throw new PolymathError({
+            code: ErrorCode.FatalError,
+            message: 'Invalid transaction speed parameter',
+          });
+        }
+      }
+
+      contractWrappers = new PolymathBase({
+        provider,
+        polymathRegistryAddress,
+        defaultGasPrice,
+      });
     }
 
     this.context = new Context({
