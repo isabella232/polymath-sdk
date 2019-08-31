@@ -1511,6 +1511,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/centra@*":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@types/centra/-/centra-2.2.0.tgz#ceb4d966dcd1c5c53023b3ff322db729cea36524"
+  integrity sha512-TUpM1QoIgXa2VL1LnWbTgde39+rRnsOtvb0v8ZrX8t51g8K1Wwu4HAEXcBg5a56GV5Vm/KazyE5+g4AW8YbKNg==
+  dependencies:
+    "@types/node" "*"
+
 "@types/eth-lightwallet@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/eth-lightwallet/-/eth-lightwallet-3.0.0.tgz#9be5b59dc6fb3fcdb01e65c2c2a79cd601f72dd4"
@@ -1607,6 +1614,14 @@
   version "12.6.8"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.6.8.tgz#e469b4bf9d1c9832aee4907ba8a051494357c12c"
   integrity sha512-aX+gFgA5GHcDi89KG5keey2zf0WfZk/HAQotEamsK2kbey+8yGKcson0hbK8E+v0NArlCJQCqMP161YhV6ZXLg==
+
+"@types/phin@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@types/phin/-/phin-3.3.0.tgz#4eee5871d1780f35afdcac2e90061428dafa1637"
+  integrity sha512-CDGxG1z6two4AdPpT7rTRO/svP3VVJn3EvNUsbUPuKv/ANJJlzbIJq/YH9tmdSElXNkuxbotZ4v5xP/S1iVuMw==
+  dependencies:
+    "@types/centra" "*"
+    "@types/node" "*"
 
 "@types/prop-types@*":
   version "15.7.1"
@@ -3717,6 +3732,11 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
+
+centra@^2.2.1:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/centra/-/centra-2.4.0.tgz#53846f97db27705e9f90c46e0f824f6eb697e2d1"
+  integrity sha512-AWmF3EHNe/noJHviynZOrdnUuQzT5AMgl9nJPXGvnzGXrI2ZvNDrEcdqskc4EtQwt2Q1IggXb0OXy7zZ1Xvvew==
 
 chalk@2.3.0:
   version "2.3.0"
@@ -11232,6 +11252,13 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
+
+phin@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/phin/-/phin-3.4.0.tgz#479df2ecfbbc2b8a6039852970b8b15a78da5169"
+  integrity sha512-wueoW9X6HbzBN4AqV3Etv9kkgYyaObwPTsIYsUEmgDWiLI6SzYozEsOZ5e3Hd/9H0mrIUbqUuvOTA6SCqErJrQ==
+  dependencies:
+    centra "^2.2.1"
 
 pify@^2.0.0, pify@^2.3.0:
   version "2.3.0"

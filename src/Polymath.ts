@@ -1,4 +1,4 @@
-import { Provider } from '@polymathnetwork/contract-wrappers';
+import { Provider, BigNumber } from '@polymathnetwork/contract-wrappers';
 import {
   Web3ProviderEngine,
   PrivateKeyWalletSubprovider,
@@ -6,6 +6,7 @@ import {
   RPCSubprovider,
 } from '@0x/subproviders';
 import P from 'bluebird';
+import phin from 'phin';
 import { Context } from './Context';
 import { getInjectedProvider } from './browserUtils';
 import { ErrorCode } from './types';
@@ -86,7 +87,40 @@ export class Polymath {
       });
     }
 
-    const contractWrappers = new PolymathBase({ provider, polymathRegistryAddress });
+    let contractWrappers = new PolymathBase({
+      provider,
+      polymathRegistryAddress,
+      defaultGasPrice: new BigNumber(5000000000), // we use 5 gwei as a sensible default for testnets
+    });
+
+    const isTestnet = await contractWrappers.isTestnet();
+
+    if (!isTestnet) {
+      try {
+        const gasResponse = await phin({
+          url: 'https://ethgasstation.info/json/ethgasAPI.json',
+          parse: 'json',
+        });
+
+        const body = gasResponse.body as {
+          fast: number;
+          fastest: number;
+          safeLow: number;
+          average: number;
+        };
+
+        contractWrappers = new PolymathBase({
+          provider,
+          polymathRegistryAddress,
+          // we multiply by 10^8 because ethgasstation's API returns gas prices in gwei multiplied by 10
+          defaultGasPrice: new BigNumber(body.fastest).multipliedBy(
+            new BigNumber(10).exponentiatedBy(8)
+          ),
+        });
+      } catch (err) {
+        // if the request fails, we simply use the previous default
+      }
+    }
 
     this.context = new Context({
       contractWrappers,
