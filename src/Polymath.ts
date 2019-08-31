@@ -9,7 +9,7 @@ import P from 'bluebird';
 import phin from 'phin';
 import { Context } from './Context';
 import { getInjectedProvider } from './browserUtils';
-import { ErrorCode } from './types';
+import { ErrorCode, TransactionSpeed } from './types';
 import { Erc20TokenBalance, SecurityToken } from './entities';
 import { ReserveSecurityToken } from './procedures';
 import { PolymathError } from './PolymathError';
@@ -17,6 +17,7 @@ import { PolymathBase } from './PolymathBase';
 
 interface PolymathNetworkParams {
   polymathRegistryAddress: string;
+  speed?: TransactionSpeed;
 }
 
 interface PolymathNetworkNodeParams extends PolymathNetworkParams {
@@ -67,6 +68,7 @@ export class Polymath {
     polymathRegistryAddress,
     providerUrl,
     privateKey,
+    speed = TransactionSpeed.Fast,
   }: ConnectParams) => {
     let provider: Provider;
     const providerEngine = new Web3ProviderEngine();
@@ -87,10 +89,33 @@ export class Polymath {
       });
     }
 
+    // we use 5 gwei as a sensible default for testnets
+    let defaultGasPrice = new BigNumber(5000000000);
+
+    switch (speed) {
+      case TransactionSpeed.Slow: {
+        defaultGasPrice = defaultGasPrice.dividedBy(5);
+        break;
+      }
+      case TransactionSpeed.Medium: {
+        defaultGasPrice = defaultGasPrice.dividedBy(3 / 5);
+        break;
+      }
+      case TransactionSpeed.Fast: {
+        break;
+      }
+      default: {
+        throw new PolymathError({
+          code: ErrorCode.FatalError,
+          message: 'Invalid transaction speed parameter',
+        });
+      }
+    }
+
     let contractWrappers = new PolymathBase({
       provider,
       polymathRegistryAddress,
-      defaultGasPrice: new BigNumber(5000000000), // we use 5 gwei as a sensible default for testnets
+      defaultGasPrice,
     });
 
     const isTestnet = await contractWrappers.isTestnet();
@@ -109,11 +134,24 @@ export class Polymath {
           average: number;
         };
 
+        let gasPrice = body.fastest;
+
+        switch (speed) {
+          case TransactionSpeed.Slow: {
+            gasPrice = body.safeLow;
+            break;
+          }
+          case TransactionSpeed.Medium: {
+            gasPrice = body.average;
+            break;
+          }
+        }
+
         contractWrappers = new PolymathBase({
           provider,
           polymathRegistryAddress,
           // we multiply by 10^8 because ethgasstation's API returns gas prices in gwei multiplied by 10
-          defaultGasPrice: new BigNumber(body.fastest).multipliedBy(
+          defaultGasPrice: new BigNumber(gasPrice).multipliedBy(
             new BigNumber(10).exponentiatedBy(8)
           ),
         });

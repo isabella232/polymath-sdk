@@ -433,3 +433,9 @@ export function isPojo(pojo: any): pojo is Pojo {
 }
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+export enum TransactionSpeed {
+  Slow = 'slow',
+  Medium = 'medium',
+  Fast = 'fast',
+}
