@@ -89,9 +89,12 @@ export class Polymath {
       });
     }
 
+    const slowDefaultGasPrice = new BigNumber(10).exponentiatedBy(9);
+
     let contractWrappers = new PolymathBase({
       provider,
       polymathRegistryAddress,
+      defaultGasPrice: slowDefaultGasPrice.multipliedBy(5),
     });
 
     const isTestnet = await contractWrappers.isTestnet();
@@ -136,25 +139,28 @@ export class Polymath {
       }
     } else {
       let defaultGasPrice = await new Promise<BigNumber>((resolve, reject) => {
-        provider.sendAsync(
-          {
-            jsonrpc: '2.0',
-            id: new Date().getTime(),
-            params: [],
-            method: 'eth_gasPrice',
-          },
-          (err, resp) => {
-            if (err) {
-              reject(err);
-            } else if (!resp) {
-              // we use 1 gwei as a sensible slow default for testnets
-              resolve(new BigNumber(1000000000));
-            } else {
-              const price = parseInt(resp.result, 16);
-              resolve(new BigNumber(price));
+        try {
+          provider.sendAsync(
+            {
+              jsonrpc: '2.0',
+              id: new Date().getTime(),
+              params: [],
+              method: 'eth_gasPrice',
+            },
+            (err, resp) => {
+              if (err) {
+                reject(err);
+              } else if (!resp) {
+                resolve(slowDefaultGasPrice);
+              } else {
+                const price = parseInt(resp.result, 16);
+                resolve(new BigNumber(price));
+              }
             }
-          }
-        );
+          );
+        } catch (err) {
+          resolve(slowDefaultGasPrice);
+        }
       });
 
       switch (speed) {
