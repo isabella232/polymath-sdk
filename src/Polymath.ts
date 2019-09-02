@@ -267,10 +267,21 @@ export class Polymath {
   };
 
   /**
+   * Get the balance of ETH in a wallet
+   *
+   * @param walletAddress wallet to check for balance
+   */
+  public getEthBalance = async (args: { walletAddress: string }) => {
+    const { walletAddress } = args;
+
+    return this.context.contractWrappers.getBalance({ address: walletAddress });
+  };
+
+  /**
    * Get the balance of a specific ERC20 token in a wallet
    *
    * @param tokenAddress address of the ERC20 token
-   * @param wallet wallet to check for balance
+   * @param walletAddress wallet to check for balance
    */
   public getErc20TokenBalance = async (
     args:

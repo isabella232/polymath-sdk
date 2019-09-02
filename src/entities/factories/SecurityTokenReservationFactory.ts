@@ -16,7 +16,12 @@ export class SecurityTokenReservationFactory extends Factory<
       contractWrappers: { securityTokenRegistry, tokenFactory },
     } = this.context;
 
-    const { status, expiryDate } = await securityTokenRegistry.getTickerDetails({ ticker: symbol });
+    const {
+      status,
+      expiryDate,
+      owner,
+      registrationDate,
+    } = await securityTokenRegistry.getTickerDetails({ ticker: symbol });
 
     if (!status) {
       throw new PolymathError({
@@ -33,7 +38,12 @@ export class SecurityTokenReservationFactory extends Factory<
       // we reach this point if the token hasn't been launched, so we just ignore it
     }
 
-    return { expiry: expiryDate, securityTokenAddress };
+    return {
+      expiry: expiryDate,
+      reservedAt: registrationDate,
+      ownerAddress: owner,
+      securityTokenAddress,
+    };
   };
 
   constructor(context: Context) {
