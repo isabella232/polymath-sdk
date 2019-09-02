@@ -116,13 +116,13 @@ export class SecurityTokenReservation extends Entity<Params> {
   };
 
   public toPojo() {
-    const { uid, symbol, expiry, securityTokenAddress } = this;
+    const { uid, symbol, expiry, securityTokenAddress, reservedAt, ownerAddress } = this;
 
-    return { uid, symbol, expiry, securityTokenAddress };
+    return { uid, symbol, expiry, securityTokenAddress, reservedAt, ownerAddress };
   }
 
   public _refresh(params: Partial<Params>) {
-    const { expiry, securityTokenAddress } = params;
+    const { expiry, securityTokenAddress, reservedAt, ownerAddress } = params;
 
     if (expiry) {
       this.expiry = expiry;
@@ -130,6 +130,14 @@ export class SecurityTokenReservation extends Entity<Params> {
 
     if (securityTokenAddress) {
       this.securityTokenAddress = securityTokenAddress;
+    }
+
+    if (reservedAt) {
+      this.reservedAt = reservedAt;
+    }
+
+    if (ownerAddress) {
+      this.ownerAddress = ownerAddress;
     }
   }
 }
