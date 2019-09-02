@@ -1,4 +1,4 @@
-import { Provider } from '@polymathnetwork/contract-wrappers';
+import { Provider, BigNumber } from '@polymathnetwork/contract-wrappers';
 import {
   Web3ProviderEngine,
   PrivateKeyWalletSubprovider,
@@ -6,9 +6,10 @@ import {
   RPCSubprovider,
 } from '@0x/subproviders';
 import P from 'bluebird';
+import phin from 'phin';
 import { Context } from './Context';
 import { getInjectedProvider } from './browserUtils';
-import { ErrorCode } from './types';
+import { ErrorCode, TransactionSpeed } from './types';
 import { Erc20TokenBalance, SecurityToken } from './entities';
 import { ReserveSecurityToken } from './procedures';
 import { PolymathError } from './PolymathError';
@@ -16,6 +17,7 @@ import { PolymathBase } from './PolymathBase';
 
 interface PolymathNetworkParams {
   polymathRegistryAddress: string;
+  speed?: TransactionSpeed;
 }
 
 interface PolymathNetworkNodeParams extends PolymathNetworkParams {
@@ -66,6 +68,7 @@ export class Polymath {
     polymathRegistryAddress,
     providerUrl,
     privateKey,
+    speed = TransactionSpeed.Fast,
   }: ConnectParams) => {
     let provider: Provider;
     const providerEngine = new Web3ProviderEngine();
@@ -86,7 +89,26 @@ export class Polymath {
       });
     }
 
-    const contractWrappers = new PolymathBase({ provider, polymathRegistryAddress });
+    const slowDefaultGasPrice = new BigNumber(10).exponentiatedBy(9);
+
+    let contractWrappers = new PolymathBase({
+      provider,
+      polymathRegistryAddress,
+    });
+
+    const isTestnet = await contractWrappers.isTestnet();
+    const defaultGasPrice = await this.getGasPrice({
+      provider,
+      isTestnet,
+      defaultPrice: slowDefaultGasPrice,
+      speed,
+    });
+
+    contractWrappers = new PolymathBase({
+      provider,
+      polymathRegistryAddress,
+      defaultGasPrice,
+    });
 
     this.context = new Context({
       contractWrappers,
@@ -289,4 +311,115 @@ export class Polymath {
 
     return currentWallet.address();
   };
+
+  private getGasPrice = async ({
+    provider,
+    isTestnet,
+    defaultPrice,
+    speed,
+  }: {
+    provider: Provider;
+    isTestnet: boolean;
+    defaultPrice: BigNumber;
+    speed: TransactionSpeed;
+  }) => {
+    if (!isTestnet) {
+      try {
+        const gasResponse = await phin({
+          url: 'https://ethgasstation.info/json/ethgasAPI.json',
+          parse: 'json',
+        });
+
+        const body = gasResponse.body as {
+          fast: number;
+          fastest: number;
+          safeLow: number;
+          average: number;
+        };
+
+        let gasPrice = body.fast;
+
+        switch (speed) {
+          case TransactionSpeed.Slow: {
+            gasPrice = body.safeLow;
+            break;
+          }
+          case TransactionSpeed.Medium: {
+            gasPrice = body.average;
+            break;
+          }
+          case TransactionSpeed.Fastest: {
+            gasPrice = body.fastest;
+            break;
+          }
+          default: {
+            throw new PolymathError({
+              code: ErrorCode.FatalError,
+              message: 'Invalid transaction speed parameter',
+            });
+          }
+        }
+
+        return new BigNumber(gasPrice).multipliedBy(new BigNumber(10).exponentiatedBy(8));
+      } catch (err) {
+        return calculateGasPrice(speed, defaultPrice);
+      }
+    } else {
+      const networkGasPrice = await new Promise<BigNumber>((resolve, reject) => {
+        try {
+          provider.sendAsync(
+            {
+              jsonrpc: '2.0',
+              id: new Date().getTime(),
+              params: [],
+              method: 'eth_gasPrice',
+            },
+            (err, resp) => {
+              if (err) {
+                reject(err);
+              } else if (!resp) {
+                resolve(defaultPrice);
+              } else {
+                const price = parseInt(resp.result, 16);
+                resolve(new BigNumber(price));
+              }
+            }
+          );
+        } catch (err) {
+          resolve(defaultPrice);
+        }
+      });
+
+      return calculateGasPrice(speed, networkGasPrice);
+    }
+  };
 }
+
+const calculateGasPrice = (speed: TransactionSpeed, basePrice: BigNumber) => {
+  let result = basePrice;
+  switch (speed) {
+    case TransactionSpeed.Slow: {
+      break;
+    }
+    case TransactionSpeed.Medium: {
+      result = basePrice.multipliedBy(2);
+      break;
+    }
+    case TransactionSpeed.Fast: {
+      result = basePrice.multipliedBy(3);
+      break;
+    }
+    case TransactionSpeed.Fastest: {
+      result = basePrice.multipliedBy(5);
+      break;
+    }
+    default: {
+      throw new PolymathError({
+        code: ErrorCode.FatalError,
+        message: 'Invalid transaction speed parameter',
+      });
+    }
+  }
+
+  return result;
+};
