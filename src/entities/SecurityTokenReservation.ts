@@ -17,6 +17,8 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 
 export interface Params {
   expiry: Date;
+  reservedAt: Date;
+  ownerAddress: string;
   securityTokenAddress?: string;
 }
 
@@ -50,6 +52,16 @@ export class SecurityTokenReservation extends Entity<Params> {
   public expiry: Date;
 
   /**
+   * Date when the Security Token was reserved
+   */
+  public reservedAt: Date;
+
+  /**
+   * Address of the owner of the reservation
+   */
+  public ownerAddress: string;
+
+  /**
    * Address of the Security Token if it has already been launched, undefined if not
    */
   public securityTokenAddress?: string;
@@ -59,11 +71,13 @@ export class SecurityTokenReservation extends Entity<Params> {
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
-    const { symbol, expiry, securityTokenAddress } = params;
+    const { symbol, expiry, reservedAt, securityTokenAddress, ownerAddress } = params;
 
     this.symbol = symbol;
     this.context = context;
     this.expiry = expiry;
+    this.reservedAt = reservedAt;
+    this.ownerAddress = ownerAddress;
     this.securityTokenAddress = securityTokenAddress;
     this.uid = SecurityTokenReservation.generateId({ symbol });
   }

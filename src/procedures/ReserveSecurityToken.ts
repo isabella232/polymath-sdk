@@ -76,12 +76,14 @@ export class ReserveSecurityToken extends Procedure<
         if (event) {
           const { args: eventArgs } = event;
 
-          const { _ticker, _expiryDate } = eventArgs;
+          const { _ticker, _expiryDate, _owner, _registrationDate } = eventArgs;
 
           return securityTokenReservationFactory.create(
             SecurityTokenReservation.generateId({ symbol: _ticker }),
             {
               expiry: bigNumberToDate(_expiryDate),
+              reservedAt: bigNumberToDate(_registrationDate),
+              ownerAddress: _owner,
             }
           );
         }
