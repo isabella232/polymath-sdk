@@ -1,6 +1,5 @@
 export * from './types';
 export * from './entities';
-export * from './utils';
 export { Polymath } from './Polymath';
 export { PolymathError } from './PolymathError';
 export { BigNumber } from '@polymathnetwork/contract-wrappers';

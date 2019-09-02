@@ -438,4 +438,5 @@ export enum TransactionSpeed {
   Slow = 'slow',
   Medium = 'medium',
   Fast = 'fast',
+  Fastest = 'fastest',
 }
