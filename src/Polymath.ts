@@ -175,25 +175,29 @@ export class Polymath {
   };
 
   /**
-   * Retrieve all launched Security Tokens currently owned by an issuer
+   * Retrieve all launched Security Tokens related to a wallet.
+   * This includes tokens owned by the wallet and tokens for which the wallet holds some role
    *
-   * @param owner issuer's address (defaults to current address)
+   * @param walletAddress defaults to current address
    */
-  public getSecurityTokens = async (args?: { owner: string }) => {
+  public getSecurityTokens = async (args?: { walletAddress: string }) => {
     const {
       context: { currentWallet, contractWrappers },
     } = this;
 
-    let owner: string;
+    let walletAddress: string;
     if (args) {
-      ({ owner } = args);
+      ({ walletAddress } = args);
     } else {
-      owner = await currentWallet.address();
+      walletAddress = await currentWallet.address();
     }
 
-    const addresses = await contractWrappers.securityTokenRegistry.getTokensByOwner({ owner });
+    const [ownedAddresses, delegatedAddresses] = await Promise.all([
+      contractWrappers.securityTokenRegistry.getTokensByOwner({ owner: walletAddress }),
+      contractWrappers.securityTokenRegistry.getTokensByDelegate(walletAddress),
+    ]);
 
-    return P.map(addresses, address => {
+    return P.map(ownedAddresses.concat(delegatedAddresses), address => {
       return this.getSecurityToken({ address });
     });
   };
@@ -315,6 +319,15 @@ export class Polymath {
   };
 
   /**
+   * Get the address of the POLY token
+   */
+  public getPolyTokenAddress = async () => {
+    const { contractWrappers } = this.context;
+
+    return contractWrappers.polyToken.address();
+  };
+
+  /**
    * Returns the wallet address of the current user
    */
   public getCurrentAddress = async () => {
@@ -326,14 +339,14 @@ export class Polymath {
   /**
    * Obtains a recommended default gas price based on the desired transaction speed
    *
-   * On mainnet, the gas price is fetched from ethgasstation.info (most reliable)
-   * On testnets (or if ethgasstation is unavailable), the gas price is fetched from the network itself via eth_gasPrice
+   * On mainnet, the gas price is fetched from ethgasstation.info (most reliable)\
+   * On testnets (or if ethgasstation is unavailable), the gas price is fetched from the network itself via eth_gasPrice\
    * If everything else fails, we use a base default of 1 GWEI
    *
-   * On the last two cases, the obtained price is multiplied by a factor depending on the speed:
-   * Slow = x1
-   * Medium = x2
-   * Fast = x3
+   * On the last two cases, the obtained price is multiplied by a factor depending on the speed:\
+   * Slow = x1\
+   * Medium = x2\
+   * Fast = x3\
    * Fastest = x5
    */
   private getGasPrice = async ({
