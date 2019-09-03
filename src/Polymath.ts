@@ -360,6 +360,9 @@ export class Polymath {
             break;
           }
           case TransactionSpeed.Fastest: {
+            break;
+          }
+          case TransactionSpeed.Fastest: {
             gasPrice = body.fastest;
             break;
           }
