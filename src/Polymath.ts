@@ -104,6 +104,8 @@ export class Polymath {
       speed,
     });
 
+    console.log('DEFAULT GAS PRICE', defaultGasPrice);
+
     contractWrappers = new PolymathBase({
       provider,
       polymathRegistryAddress,
@@ -359,7 +361,7 @@ export class Polymath {
             gasPrice = body.average;
             break;
           }
-          case TransactionSpeed.Fastest: {
+          case TransactionSpeed.Fast: {
             break;
           }
           case TransactionSpeed.Fastest: {
@@ -376,36 +378,36 @@ export class Polymath {
 
         return new BigNumber(gasPrice).multipliedBy(new BigNumber(10).exponentiatedBy(8));
       } catch (err) {
-        return calculateGasPrice(speed, defaultPrice);
+        // Do nothing, fall back to asking the network
       }
-    } else {
-      const networkGasPrice = await new Promise<BigNumber>((resolve, reject) => {
-        try {
-          provider.sendAsync(
-            {
-              jsonrpc: '2.0',
-              id: new Date().getTime(),
-              params: [],
-              method: 'eth_gasPrice',
-            },
-            (err, resp) => {
-              if (err) {
-                reject(err);
-              } else if (!resp) {
-                resolve(defaultPrice);
-              } else {
-                const price = parseInt(resp.result, 16);
-                resolve(new BigNumber(price));
-              }
-            }
-          );
-        } catch (err) {
-          resolve(defaultPrice);
-        }
-      });
-
-      return calculateGasPrice(speed, networkGasPrice);
     }
+
+    const networkGasPrice = await new Promise<BigNumber>((resolve, reject) => {
+      try {
+        provider.sendAsync(
+          {
+            jsonrpc: '2.0',
+            id: new Date().getTime(),
+            params: [],
+            method: 'eth_gasPrice',
+          },
+          (err, resp) => {
+            if (err) {
+              reject(err);
+            } else if (!resp) {
+              resolve(defaultPrice);
+            } else {
+              const price = parseInt(resp.result, 16);
+              resolve(new BigNumber(price));
+            }
+          }
+        );
+      } catch (err) {
+        resolve(defaultPrice);
+      }
+    });
+
+    return calculateGasPrice(speed, networkGasPrice);
   };
 }
 
