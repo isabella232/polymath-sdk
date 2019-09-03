@@ -104,8 +104,6 @@ export class Polymath {
       speed,
     });
 
-    console.log('DEFAULT GAS PRICE', defaultGasPrice);
-
     contractWrappers = new PolymathBase({
       provider,
       polymathRegistryAddress,
@@ -325,6 +323,19 @@ export class Polymath {
     return currentWallet.address();
   };
 
+  /**
+   * Obtains a recommended default gas price based on the desired transaction speed
+   *
+   * On mainnet, the gas price is fetched from ethgasstation.info (most reliable)
+   * On testnets (or if ethgasstation is unavailable), the gas price is fetched from the network itself via eth_gasPrice
+   * If everything else fails, we use a base default of 1 GWEI
+   *
+   * On the last two cases, the obtained price is multiplied by a factor depending on the speed:
+   * Slow = x1
+   * Medium = x2
+   * Fast = x3
+   * Fastest = x5
+   */
   private getGasPrice = async ({
     provider,
     isTestnet,
