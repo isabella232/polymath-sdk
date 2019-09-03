@@ -7,6 +7,7 @@ import {
 } from '@0x/subproviders';
 import P from 'bluebird';
 import phin from 'phin';
+import { union } from 'lodash';
 import { Context } from './Context';
 import { getInjectedProvider } from './browserUtils';
 import { ErrorCode, TransactionSpeed } from './types';
@@ -197,7 +198,7 @@ export class Polymath {
       contractWrappers.securityTokenRegistry.getTokensByDelegate(walletAddress),
     ]);
 
-    return P.map(ownedAddresses.concat(delegatedAddresses), address => {
+    return P.map(union(ownedAddresses, delegatedAddresses), address => {
       return this.getSecurityToken({ address });
     });
   };
