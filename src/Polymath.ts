@@ -7,7 +7,7 @@ import {
 } from '@0x/subproviders';
 import P from 'bluebird';
 import phin from 'phin';
-import { union } from 'lodash';
+import { union, compact } from 'lodash';
 import { Context } from './Context';
 import { getInjectedProvider } from './browserUtils';
 import { ErrorCode, TransactionSpeed } from './types';
@@ -152,9 +152,17 @@ export class Polymath {
 
     const symbols = await contractWrappers.securityTokenRegistry.getTickersByOwner({ owner });
 
-    return P.map(symbols, symbol => {
-      return this.getSecurityTokenReservation({ symbol });
+    const reservations = await P.map(symbols, symbol => {
+      return P.resolve(this.getSecurityTokenReservation({ symbol })).catch(PolymathError, err => {
+        if (err.code === ErrorCode.FetcherValidationError) {
+          return undefined;
+        }
+
+        throw err;
+      });
     });
+
+    return compact(reservations);
   };
 
   /**
