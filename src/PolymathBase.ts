@@ -478,7 +478,7 @@ export class PolymathBase extends PolymathAPI {
     const dividendIndexes = await dividendsModule.getDividendIndex({ checkpointId });
 
     const dividends = await P.map(dividendIndexes, dividendIndex =>
-      this.getDividend({ dividendIndex: dividendIndex.toNumber(), dividendsModule })
+      this.getDividend({ dividendIndex, dividendsModule })
     );
 
     return dividends.sort((a, b) => a.index - b.index);
