@@ -23,7 +23,7 @@ export class SecurityTokenReservationFactory extends Factory<
       registrationDate,
     } = await securityTokenRegistry.getTickerDetails({ ticker: symbol });
 
-    if (registrationDate.getTime() === 0 || expiryDate > new Date()) {
+    if (registrationDate.getTime() === 0 || expiryDate < new Date()) {
       // reservation never created or expired
       throw new PolymathError({
         code: ErrorCode.FetcherValidationError,
