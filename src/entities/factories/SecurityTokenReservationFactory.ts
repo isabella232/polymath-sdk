@@ -23,19 +23,19 @@ export class SecurityTokenReservationFactory extends Factory<
       registrationDate,
     } = await securityTokenRegistry.getTickerDetails({ ticker: symbol });
 
-    if (!status) {
+    if (registrationDate.getTime() === 0 || expiryDate > new Date()) {
+      // reservation never created or expired
       throw new PolymathError({
         code: ErrorCode.FetcherValidationError,
-        message: `There is no reservation for token symbol ${symbol}`,
+        message: `There is no reservation for token symbol ${symbol} or it has expired`,
       });
     }
 
     let securityTokenAddress;
-    try {
+    if (status) {
+      // token has been launched
       const securityToken = await tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
       securityTokenAddress = await securityToken.address();
-    } catch (e) {
-      // we reach this point if the token hasn't been launched, so we just ignore it
     }
 
     return {

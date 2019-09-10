@@ -1318,36 +1318,30 @@
     universal-user-agent "^2.0.0"
     url-template "^2.0.8"
 
-"@polymathnetwork/abi-wrappers@3.0.0-beta.8":
-  version "3.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/@polymathnetwork/abi-wrappers/-/abi-wrappers-3.0.0-beta.8.tgz#48cad54a81695ef0ecd55dead7d5901cbd22b545"
-  integrity sha512-7IQgGmQi2O5Ta3Ue397n/q8Jgrr6dIf6sUGAP1cwXUiOLZedmsTzHXwGmQcrsdX++8Hav2P35jh6XH0n7rh+3g==
+"@polymathnetwork/abi-wrappers@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@polymathnetwork/abi-wrappers/-/abi-wrappers-3.0.0.tgz#eaf9daff64e650299fa87ae4269220ec945d0dba"
+  integrity sha512-CnV55bTz/Z89eb6cjgjkho9Z7KY0v34T8Ldw39YIci/XtIOVUBmtXBoV++cuYqYAtjte2P6EixLq0t4mp/uXbQ==
   dependencies:
     "@0x/base-contract" "^5.1.1"
     "@0x/utils" "^4.4.0"
     "@0x/web3-wrapper" "^6.0.7"
-    "@polymathnetwork/contract-artifacts" "3.0.0-beta.5"
     ethereum-types "^2.1.3"
     ethers "^4.0.33"
     lodash "^4.17.15"
     typescript "3.5.3"
 
-"@polymathnetwork/contract-artifacts@3.0.0-beta.5":
-  version "3.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-artifacts/-/contract-artifacts-3.0.0-beta.5.tgz#b3bf6c7f40eb036402237d08d98f4f11cc230c87"
-  integrity sha512-YS6VXPqEgv69SEUJHArNLrN93psfPZSRFBxX0TnLPiNC/9wsvdDUXhE0a3RhokEMjYBmD4Yi+CDB71Faxg3jpQ==
-
-"@polymathnetwork/contract-wrappers@2.0.0-beta.35":
-  version "2.0.0-beta.35"
-  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-wrappers/-/contract-wrappers-2.0.0-beta.35.tgz#fe5e8604e86570099e39476f746ce48233921d19"
-  integrity sha512-OgoSjqmnWM8F6OUFzWLyFvGrWtizZogewTL3uwRLkIBoXePrj14esm/3O+Y3Kho2ha4+YuOjoLpdsy0DmTqWtw==
+"@polymathnetwork/contract-wrappers@2.0.0-beta.40":
+  version "2.0.0-beta.40"
+  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-wrappers/-/contract-wrappers-2.0.0-beta.40.tgz#eebd0134b34057210e3be9f96e056c44fd0565d4"
+  integrity sha512-DBtffEKpNEz/AxysEl8/UrtEB6snpYT9a9SN/S7oVQANz7jIBwpEYeJurgN1T+z/EWqGqkodMs5FERYz7BDEDA==
   dependencies:
     "@0x/assert" "^2.1.0"
     "@0x/json-schemas" "^3.0.11"
     "@0x/subproviders" "^4.1.1"
     "@0x/types" "^2.4.0"
     "@0x/typescript-typings" "^4.2.3"
-    "@polymathnetwork/abi-wrappers" "3.0.0-beta.8"
+    "@polymathnetwork/abi-wrappers" "3.0.0"
     "@types/semver" "^6.0.1"
     ethereumjs-blockstream "6.0.0"
     ethereumjs-util "^6.1.0"
