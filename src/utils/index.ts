@@ -1,35 +1,42 @@
 import stringify from 'json-stable-stringify';
 import {
   ContractEvents,
-  SecurityTokenCheckpointCreatedEventArgs,
-  SecurityTokenEvents,
-  ERC20DividendCheckpointEvents,
-  ERC20DividendCheckpointERC20DividendDepositedEventArgs,
-  EtherDividendCheckpointEvents,
-  EtherDividendCheckpointEtherDividendDepositedEventArgs,
   LogEntry,
   LogWithDecodedArgs,
   DecodedLogArgs,
   SecurityTokenRegistryEvents,
   SecurityTokenRegistryRegisterTickerEventArgs,
   SecurityTokenRegistryNewSecurityTokenEventArgs,
-  SecurityTokenModuleAddedEventArgs,
-  GeneralTransferManagerEvents,
-  GeneralTransferManagerModifyKYCDataEventArgs,
-  GeneralTransferManagerModifyInvestorFlagEventArgs,
-  SecurityTokenControllerTransferEventArgs,
-  CappedSTOEvents,
-  USDTieredSTOEvents,
-  CappedSTOPauseEventArgs,
-  USDTieredSTOPauseEventArgs,
-  ERC20DividendCheckpointERC20DividendClaimedEventArgs,
-  EtherDividendCheckpointEtherDividendClaimedEventArgs,
-  ERC20DividendCheckpointERC20DividendReclaimedEventArgs,
-  EtherDividendCheckpointEtherDividendReclaimedEventArgs,
-  ERC20DividendCheckpointSetWalletEventArgs,
-  EtherDividendCheckpointSetWalletEventArgs,
-  ERC20DividendCheckpointSetWithholdingEventArgs,
-  EtherDividendCheckpointSetWithholdingEventArgs,
+  SecurityTokenEvents_3_0_0,
+  SecurityTokenModuleAddedEventArgs_3_0_0,
+  SecurityTokenCheckpointCreatedEventArgs_3_0_0,
+  SecurityTokenControllerTransferEventArgs_3_0_0,
+  GeneralTransferManagerEvents_3_0_0,
+  GeneralTransferManagerModifyKYCDataEventArgs_3_0_0,
+  GeneralTransferManagerModifyInvestorFlagEventArgs_3_0_0,
+  GeneralTransferManagerEvents_3_1_0,
+  GeneralTransferManagerModifyKYCDataEventArgs_3_1_0,
+  GeneralTransferManagerModifyInvestorFlagEventArgs_3_1_0,
+  CappedSTOEvents_3_0_0,
+  CappedSTOPauseEventArgs_3_0_0,
+  CappedSTOEvents_3_1_0,
+  CappedSTOPauseEventArgs_3_1_0,
+  USDTieredSTOEvents_3_0_0,
+  USDTieredSTOPauseEventArgs_3_0_0,
+  USDTieredSTOEvents_3_1_0,
+  USDTieredSTOPauseEventArgs_3_1_0,
+  ERC20DividendCheckpointEvents_3_0_0,
+  ERC20DividendCheckpointERC20DividendDepositedEventArgs_3_0_0,
+  ERC20DividendCheckpointERC20DividendClaimedEventArgs_3_0_0,
+  ERC20DividendCheckpointERC20DividendReclaimedEventArgs_3_0_0,
+  ERC20DividendCheckpointSetWalletEventArgs_3_0_0,
+  ERC20DividendCheckpointSetWithholdingEventArgs_3_0_0,
+  EtherDividendCheckpointEvents_3_0_0,
+  EtherDividendCheckpointEtherDividendDepositedEventArgs_3_0_0,
+  EtherDividendCheckpointEtherDividendClaimedEventArgs_3_0_0,
+  EtherDividendCheckpointEtherDividendReclaimedEventArgs_3_0_0,
+  EtherDividendCheckpointSetWalletEventArgs_3_0_0,
+  EtherDividendCheckpointSetWithholdingEventArgs_3_0_0,
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
 
@@ -84,72 +91,88 @@ interface FindNewSecurityTokenParams extends FindEventParams {
   eventName: SecurityTokenRegistryEvents.NewSecurityToken;
 }
 
-interface FindCheckpointCreatedParams extends FindEventParams {
-  eventName: SecurityTokenEvents.CheckpointCreated;
+interface FindCheckpointCreatedParams_3_0_0 extends FindEventParams {
+  eventName: SecurityTokenEvents_3_0_0.CheckpointCreated;
 }
 
-interface FindErc20DividendDepositedParams extends FindEventParams {
-  eventName: ERC20DividendCheckpointEvents.ERC20DividendDeposited;
+interface FindModuleAddedParams_3_0_0 extends FindEventParams {
+  eventName: SecurityTokenEvents_3_0_0.ModuleAdded;
 }
 
-interface FindEtherDividendDepositedParams extends FindEventParams {
-  eventName: EtherDividendCheckpointEvents.EtherDividendDeposited;
+interface FindControllerTransferParams_3_0_0 extends FindEventParams {
+  eventName: SecurityTokenEvents_3_0_0.ControllerTransfer;
 }
 
-interface FindModuleAddedParams extends FindEventParams {
-  eventName: SecurityTokenEvents.ModuleAdded;
+interface FindErc20DividendDepositedParams_3_0_0 extends FindEventParams {
+  eventName: ERC20DividendCheckpointEvents_3_0_0.ERC20DividendDeposited;
 }
 
-interface FindControllerTransferParams extends FindEventParams {
-  eventName: SecurityTokenEvents.ControllerTransfer;
+interface FindEtherDividendDepositedParams_3_0_0 extends FindEventParams {
+  eventName: EtherDividendCheckpointEvents_3_0_0.EtherDividendDeposited;
 }
 
-interface FindModifyKycDataParams extends FindEventParams {
-  eventName: GeneralTransferManagerEvents.ModifyKYCData;
+interface FindModifyKycDataParams_3_0_0 extends FindEventParams {
+  eventName: GeneralTransferManagerEvents_3_0_0.ModifyKYCData;
 }
 
-interface FindModifyInvestorFlagParams extends FindEventParams {
-  eventName: GeneralTransferManagerEvents.ModifyInvestorFlag;
+interface FindModifyInvestorFlagParams_3_0_0 extends FindEventParams {
+  eventName: GeneralTransferManagerEvents_3_0_0.ModifyInvestorFlag;
 }
 
-interface FindCappedStoPauseParams extends FindEventParams {
-  eventName: CappedSTOEvents.Pause;
+interface FindModifyKycDataParams_3_1_0 extends FindEventParams {
+  eventName: GeneralTransferManagerEvents_3_1_0.ModifyKYCData;
 }
 
-interface FindUsdTieredStoPauseParams extends FindEventParams {
-  eventName: USDTieredSTOEvents.Pause;
+interface FindModifyInvestorFlagParams_3_1_0 extends FindEventParams {
+  eventName: GeneralTransferManagerEvents_3_1_0.ModifyInvestorFlag;
 }
 
-interface FindErc20DividendClaimedParams extends FindEventParams {
-  eventName: ERC20DividendCheckpointEvents.ERC20DividendClaimed;
+interface FindCappedStoPauseParams_3_0_0 extends FindEventParams {
+  eventName: CappedSTOEvents_3_0_0.Pause;
 }
 
-interface FindEthDividendClaimedParams extends FindEventParams {
-  eventName: EtherDividendCheckpointEvents.EtherDividendClaimed;
+interface FindUsdTieredStoPauseParams_3_0_0 extends FindEventParams {
+  eventName: USDTieredSTOEvents_3_0_0.Pause;
 }
 
-interface FindErc20DividendReclaimedParams extends FindEventParams {
-  eventName: ERC20DividendCheckpointEvents.ERC20DividendReclaimed;
+interface FindCappedStoPauseParams_3_1_0 extends FindEventParams {
+  eventName: CappedSTOEvents_3_1_0.Pause;
 }
 
-interface FindEthDividendReclaimedParams extends FindEventParams {
-  eventName: EtherDividendCheckpointEvents.EtherDividendReclaimed;
+interface FindUsdTieredStoPauseParams_3_1_0 extends FindEventParams {
+  eventName: USDTieredSTOEvents_3_1_0.Pause;
 }
 
-interface FindErc20SetWallet extends FindEventParams {
-  eventName: ERC20DividendCheckpointEvents.SetWallet;
+interface FindErc20DividendClaimedParams_3_0_0 extends FindEventParams {
+  eventName: ERC20DividendCheckpointEvents_3_0_0.ERC20DividendClaimed;
 }
 
-interface FindEthSetWallet extends FindEventParams {
-  eventName: EtherDividendCheckpointEvents.SetWallet;
+interface FindEthDividendClaimedParams_3_0_0 extends FindEventParams {
+  eventName: EtherDividendCheckpointEvents_3_0_0.EtherDividendClaimed;
 }
 
-interface FindErc20SetWithholding extends FindEventParams {
-  eventName: ERC20DividendCheckpointEvents.SetWithholding;
+interface FindErc20DividendReclaimedParams_3_0_0 extends FindEventParams {
+  eventName: ERC20DividendCheckpointEvents_3_0_0.ERC20DividendReclaimed;
 }
 
-interface FindEthSetWithholding extends FindEventParams {
-  eventName: EtherDividendCheckpointEvents.SetWithholding;
+interface FindEthDividendReclaimedParams_3_0_0 extends FindEventParams {
+  eventName: EtherDividendCheckpointEvents_3_0_0.EtherDividendReclaimed;
+}
+
+interface FindErc20SetWalletParams_3_0_0 extends FindEventParams {
+  eventName: ERC20DividendCheckpointEvents_3_0_0.SetWallet;
+}
+
+interface FindEthSetWalletParams_3_0_0 extends FindEventParams {
+  eventName: EtherDividendCheckpointEvents_3_0_0.SetWallet;
+}
+
+interface FindErc20SetWithholdingParams_3_0_0 extends FindEventParams {
+  eventName: ERC20DividendCheckpointEvents_3_0_0.SetWithholding;
+}
+
+interface FindEthSetWithholdingParams_3_0_0 extends FindEventParams {
+  eventName: EtherDividendCheckpointEvents_3_0_0.SetWithholding;
 }
 
 interface FindEvents {
@@ -159,46 +182,64 @@ interface FindEvents {
   (params: FindNewSecurityTokenParams): LogWithDecodedArgs<
     SecurityTokenRegistryNewSecurityTokenEventArgs
   >[];
-  (params: FindModuleAddedParams): LogWithDecodedArgs<SecurityTokenModuleAddedEventArgs>[];
-  (params: FindCheckpointCreatedParams): LogWithDecodedArgs<
-    SecurityTokenCheckpointCreatedEventArgs
+  (params: FindModuleAddedParams_3_0_0): LogWithDecodedArgs<
+    SecurityTokenModuleAddedEventArgs_3_0_0
   >[];
-  (params: FindControllerTransferParams): LogWithDecodedArgs<
-    SecurityTokenControllerTransferEventArgs
+  (params: FindCheckpointCreatedParams_3_0_0): LogWithDecodedArgs<
+    SecurityTokenCheckpointCreatedEventArgs_3_0_0
   >[];
-  (params: FindErc20DividendDepositedParams): LogWithDecodedArgs<
-    ERC20DividendCheckpointERC20DividendDepositedEventArgs
+  (params: FindControllerTransferParams_3_0_0): LogWithDecodedArgs<
+    SecurityTokenControllerTransferEventArgs_3_0_0
   >[];
-  (params: FindEtherDividendDepositedParams): LogWithDecodedArgs<
-    EtherDividendCheckpointEtherDividendDepositedEventArgs
+  (params: FindErc20DividendDepositedParams_3_0_0): LogWithDecodedArgs<
+    ERC20DividendCheckpointERC20DividendDepositedEventArgs_3_0_0
   >[];
-  (params: FindModifyKycDataParams): LogWithDecodedArgs<
-    GeneralTransferManagerModifyKYCDataEventArgs
+  (params: FindEtherDividendDepositedParams_3_0_0): LogWithDecodedArgs<
+    EtherDividendCheckpointEtherDividendDepositedEventArgs_3_0_0
   >[];
-  (params: FindModifyInvestorFlagParams): LogWithDecodedArgs<
-    GeneralTransferManagerModifyInvestorFlagEventArgs
+  (params: FindModifyKycDataParams_3_0_0): LogWithDecodedArgs<
+    GeneralTransferManagerModifyKYCDataEventArgs_3_0_0
   >[];
-  (params: FindCappedStoPauseParams): LogWithDecodedArgs<CappedSTOPauseEventArgs>[];
-  (params: FindUsdTieredStoPauseParams): LogWithDecodedArgs<USDTieredSTOPauseEventArgs>[];
-  (params: FindErc20DividendClaimedParams): LogWithDecodedArgs<
-    ERC20DividendCheckpointERC20DividendClaimedEventArgs
+  (params: FindModifyInvestorFlagParams_3_0_0): LogWithDecodedArgs<
+    GeneralTransferManagerModifyInvestorFlagEventArgs_3_0_0
   >[];
-  (params: FindEthDividendClaimedParams): LogWithDecodedArgs<
-    EtherDividendCheckpointEtherDividendClaimedEventArgs
+  (params: FindModifyKycDataParams_3_1_0): LogWithDecodedArgs<
+    GeneralTransferManagerModifyKYCDataEventArgs_3_1_0
   >[];
-  (params: FindErc20DividendReclaimedParams): LogWithDecodedArgs<
-    ERC20DividendCheckpointERC20DividendReclaimedEventArgs
+  (params: FindModifyInvestorFlagParams_3_1_0): LogWithDecodedArgs<
+    GeneralTransferManagerModifyInvestorFlagEventArgs_3_1_0
   >[];
-  (params: FindEthDividendReclaimedParams): LogWithDecodedArgs<
-    EtherDividendCheckpointEtherDividendReclaimedEventArgs
+  (params: FindCappedStoPauseParams_3_0_0): LogWithDecodedArgs<CappedSTOPauseEventArgs_3_0_0>[];
+  (params: FindUsdTieredStoPauseParams_3_0_0): LogWithDecodedArgs<
+    USDTieredSTOPauseEventArgs_3_0_0
   >[];
-  (params: FindErc20SetWallet): LogWithDecodedArgs<ERC20DividendCheckpointSetWalletEventArgs>[];
-  (params: FindEthSetWallet): LogWithDecodedArgs<EtherDividendCheckpointSetWalletEventArgs>[];
-  (params: FindErc20SetWithholding): LogWithDecodedArgs<
-    ERC20DividendCheckpointSetWithholdingEventArgs
+  (params: FindCappedStoPauseParams_3_1_0): LogWithDecodedArgs<CappedSTOPauseEventArgs_3_1_0>[];
+  (params: FindUsdTieredStoPauseParams_3_1_0): LogWithDecodedArgs<
+    USDTieredSTOPauseEventArgs_3_1_0
   >[];
-  (params: FindEthSetWithholding): LogWithDecodedArgs<
-    EtherDividendCheckpointSetWithholdingEventArgs
+  (params: FindErc20DividendClaimedParams_3_0_0): LogWithDecodedArgs<
+    ERC20DividendCheckpointERC20DividendClaimedEventArgs_3_0_0
+  >[];
+  (params: FindEthDividendClaimedParams_3_0_0): LogWithDecodedArgs<
+    EtherDividendCheckpointEtherDividendClaimedEventArgs_3_0_0
+  >[];
+  (params: FindErc20DividendReclaimedParams_3_0_0): LogWithDecodedArgs<
+    ERC20DividendCheckpointERC20DividendReclaimedEventArgs_3_0_0
+  >[];
+  (params: FindEthDividendReclaimedParams_3_0_0): LogWithDecodedArgs<
+    EtherDividendCheckpointEtherDividendReclaimedEventArgs_3_0_0
+  >[];
+  (params: FindErc20SetWalletParams_3_0_0): LogWithDecodedArgs<
+    ERC20DividendCheckpointSetWalletEventArgs_3_0_0
+  >[];
+  (params: FindEthSetWalletParams_3_0_0): LogWithDecodedArgs<
+    EtherDividendCheckpointSetWalletEventArgs_3_0_0
+  >[];
+  (params: FindErc20SetWithholdingParams_3_0_0): LogWithDecodedArgs<
+    ERC20DividendCheckpointSetWithholdingEventArgs_3_0_0
+  >[];
+  (params: FindEthSetWithholdingParams_3_0_0): LogWithDecodedArgs<
+    EtherDividendCheckpointSetWithholdingEventArgs_3_0_0
   >[];
 }
 

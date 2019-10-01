@@ -1,5 +1,5 @@
-import { SecurityTokenRegistryEvents } from '@polymathnetwork/abi-wrappers';
-import { FeeType } from '@polymathnetwork/contract-wrappers';
+import { SecurityTokenRegistryEvents, FeeType } from '@polymathnetwork/contract-wrappers';
+
 import { Procedure } from './Procedure';
 import { ApproveErc20 } from './ApproveErc20';
 import {

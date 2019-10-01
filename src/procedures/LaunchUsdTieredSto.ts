@@ -2,7 +2,7 @@ import {
   ModuleName,
   BigNumber,
   FundRaiseType,
-  SecurityTokenEvents,
+  SecurityTokenEvents_3_0_0,
 } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
@@ -129,7 +129,7 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
           const { logs } = receipt;
 
           const [event] = findEvents({
-            eventName: SecurityTokenEvents.ModuleAdded,
+            eventName: SecurityTokenEvents_3_0_0.ModuleAdded,
             logs,
           });
 

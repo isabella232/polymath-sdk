@@ -14,8 +14,10 @@ import {
   SecurityToken,
   ModuleType,
   BigNumber,
+  isERC20DividendCheckpoint_3_0_0,
+  isERC20DividendCheckpoint,
 } from '@polymathnetwork/contract-wrappers';
-import { range, flatten, includes, compact } from 'lodash';
+import { range, flatten, includes } from 'lodash';
 import P from 'bluebird';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';
@@ -163,6 +165,8 @@ export class PolymathBase extends PolymathAPI {
       [ModuleName.EtherDividendCheckpoint]: ModuleType.Dividends,
       [ModuleName.GeneralPermissionManager]: ModuleType.PermissionManager,
       [ModuleName.VestingEscrowWallet]: ModuleType.Wallet,
+      [ModuleName.BlacklistTransferManager]: ModuleType.TransferManager,
+      [ModuleName.RestrictedPartialSaleTM]: ModuleType.TransferManager,
     };
 
     const availableModules = await this.moduleRegistry.getModulesByTypeAndToken({
@@ -408,7 +412,7 @@ export class PolymathBase extends PolymathAPI {
     let symbol: string;
     let dividendType: DividendType;
 
-    if (dividendsModule instanceof ERC20DividendCheckpoint) {
+    if (isERC20DividendCheckpoint(dividendsModule)) {
       const tokenAddress = await dividendsModule.dividendTokens({ dividendIndex });
 
       const token = await this.tokenFactory.getERC20TokenInstanceFromAddress(tokenAddress);
