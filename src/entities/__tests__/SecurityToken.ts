@@ -43,8 +43,4 @@ describe('SecurityToken', () => {
       expect(st1.uid).not.toBe(st2.uid);
     });
   });
-
-  describe('methods', () => {
-    describe('createCheckpoint', () => {});
-  });
 });
