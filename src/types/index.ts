@@ -225,6 +225,7 @@ export interface LaunchCappedStoProcedureArgs {
   rate: BigNumber;
   currency: CappedStoCurrency;
   storageWallet: string;
+  treasuryWallet: string;
 }
 
 export interface StoTier {

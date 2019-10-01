@@ -2,7 +2,7 @@ import {
   ModuleName,
   BigNumber,
   CappedSTOFundRaiseType,
-  SecurityTokenEvents,
+  SecurityTokenEvents_3_0_0,
 } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
@@ -27,6 +27,7 @@ interface AddCappedSTOParams {
     rate: BigNumber;
     fundRaiseType: CappedSTOFundRaiseType;
     fundsReceiver: string;
+    treasuryWallet: string;
   };
   archived: boolean;
   label?: string;
@@ -37,7 +38,16 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
 
   public async prepareTransactions() {
     const { args, context } = this;
-    const { symbol, startDate, endDate, tokensOnSale, rate, currency, storageWallet } = args;
+    const {
+      symbol,
+      startDate,
+      endDate,
+      tokensOnSale,
+      rate,
+      currency,
+      storageWallet,
+      treasuryWallet,
+    } = args;
     const {
       contractWrappers,
       factories: { cappedStoFactory },
@@ -93,7 +103,7 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
           const { logs } = receipt;
 
           const [event] = findEvents({
-            eventName: SecurityTokenEvents.ModuleAdded,
+            eventName: SecurityTokenEvents_3_0_0.ModuleAdded,
             logs,
           });
 
@@ -127,6 +137,7 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
         rate,
         fundRaiseType: currency,
         fundsReceiver: storageWallet,
+        treasuryWallet,
       },
       archived: false,
     });

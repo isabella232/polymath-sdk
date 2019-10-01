@@ -1,9 +1,9 @@
 import {
   ModuleName,
-  CappedSTOEvents,
   BlockParamLiteral,
   conversionUtils,
   FULL_DECIMALS,
+  CappedSTOEvents_3_0_0,
 } from '@polymathnetwork/contract-wrappers';
 import { Factory } from './Factory';
 import { Context } from '../../Context';
@@ -26,7 +26,7 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
     });
 
     const tokenPurchases = await module.getLogsAsync({
-      eventName: CappedSTOEvents.TokenPurchase,
+      eventName: CappedSTOEvents_3_0_0.TokenPurchase,
       blockRange: {
         fromBlock: BlockParamLiteral.Earliest,
         toBlock: BlockParamLiteral.Latest,

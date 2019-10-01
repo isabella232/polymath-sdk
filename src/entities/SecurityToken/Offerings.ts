@@ -22,6 +22,7 @@ export class Offerings extends SubModule {
    * @param rate amount of tokens an investor can purchase per unit of currency spent
    * @param currency currency in which the funds will be raised (ETH or POLY)
    * @param storageWallet wallet address that will receive the funds that are being raised
+   * @param treasuryWallet wallet address that will receive unsold tokens
    *
    */
   public launchCappedSto = async (args: {
@@ -31,6 +32,7 @@ export class Offerings extends SubModule {
     rate: BigNumber;
     currency: CappedStoCurrency;
     storageWallet: string;
+    treasuryWallet: string;
   }) => {
     const { context, securityToken } = this;
     const { symbol } = securityToken;

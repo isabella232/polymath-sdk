@@ -1,6 +1,6 @@
 import {
   ModuleName,
-  USDTieredSTOEvents,
+  USDTieredSTOEvents_3_0_0,
   BlockParamLiteral,
   conversionUtils,
   FULL_DECIMALS,
@@ -27,7 +27,7 @@ export class UsdTieredStoFactory extends Factory<UsdTieredSto, Params, UniqueIde
     });
 
     const tokenPurchases = await module.getLogsAsync({
-      eventName: USDTieredSTOEvents.TokenPurchase,
+      eventName: USDTieredSTOEvents_3_0_0.TokenPurchase,
       blockRange: {
         fromBlock: BlockParamLiteral.Earliest,
         toBlock: BlockParamLiteral.Latest,
