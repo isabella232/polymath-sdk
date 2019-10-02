@@ -3,7 +3,7 @@ import SecurityTokenRegistryWrapper from '@polymathnetwork/contract-wrappers/lib
 import ERC20TokenWrapper from '@polymathnetwork/contract-wrappers/lib/contract_wrappers/tokens/erc20_wrapper';
 import ContractFactory from '@polymathnetwork/contract-wrappers/lib/factories/contractFactory';
 
-export abstract class MockedTokenFactory {
+export abstract class MockedTokenFactoryObject {
   public readonly web3Wrapper: Web3Wrapper;
 
   public contractFactory: ContractFactory;
@@ -27,6 +27,6 @@ export abstract class MockedTokenFactory {
   ): Promise<SecurityToken_3_0_0>;
 
   public async getSecurityTokenInstanceFromTicker(ticker: string): Promise<SecurityToken_3_0_0> {
-    return new Promise<SecurityToken_3_0_0>(resolve => {});
+    return {} as Promise<SecurityToken_3_0_0>;
   }
 }
