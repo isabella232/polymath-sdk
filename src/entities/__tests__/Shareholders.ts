@@ -23,19 +23,20 @@ describe('Shareholders', () => {
   let target: FakeSecurityToken;
   let mockedContract: SecurityToken_3_0_0;
   let mockedPolymathBase: PolymathBase;
+  let myContractPromise: Promise<SecurityToken_3_0_0>;
 
   beforeAll(() => {
     mockedContract = mock(SecurityToken_3_0_0);
     mockedPolymathBase = mock(PolymathBase);
 
-    const myContractPromise = Promise.resolve(instance(mockedContract));
+    myContractPromise = Promise.resolve(instance(mockedContract));
 
     const provider = new Web3ProviderEngine();
     provider.start();
     const context = new Context({
       contractWrappers: mockedPolymathBase,
     });
-    target = new SecurityToken(params1, instance(context));
+    target = new FakeSecurityToken(params1, instance(context));
   });
   afterAll(() => {
     reset(mockedPolymathBase);
@@ -47,33 +48,26 @@ describe('Shareholders', () => {
       expect(target instanceof Entity).toBe(true);
     });
   });
-  /*
+
   describe('createCheckpoint', () => {
     test('should send the transaction to createCheckpoint', async () => {
-      // Mocked parameters
-      const mockedParams = {
-        txData: {},
-        safetyFactor: 10,
-      };
-      const expectedResult = getMockedPolyResponse();
-      // Mocked method
-      const mockedMethod = mock(MockedSendMethod);
+      when(
+        mockedPolymathBase.tokenFactory.getSecurityTokenInstanceFromTicker(params1.symbol)
+      ).thenReturn(myContractPromise);
+
       // Stub the method
-      when(mockedContract.createCheckpoint).thenReturn(instance(mockedMethod));
-      // Stub the request
-      when(mockedMethod.sendTransactionAsync(mockedParams.txData, mockedParams.safetyFactor)).thenResolve(
-        expectedResult,
-      );
+      when(mockedContract.createCheckpoint).thenReturn(getMockedPolyResponse);
 
       // Real call
       const result = await target.shareholders.createCheckpoint();
 
       // Result expectation
-      expect(result).toBe(expectedResult);
+      expect(result).toBe(getMockedPolyResponse());
       // Verifications
       verify(mockedContract.createCheckpoint).once();
-      verify(mockedMethod.sendTransactionAsync(mockedParams.txData, mockedParams.safetyFactor)).once();
+      verify(
+        mockedPolymathBase.tokenFactory.getSecurityTokenInstanceFromTicker(params1.symbol)
+      ).once();
     });
   });
-  */
 });

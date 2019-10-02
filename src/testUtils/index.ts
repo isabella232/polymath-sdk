@@ -176,7 +176,7 @@ export const getMockTransactionSpec = (
   postTransactionResolver: new PostTransactionResolver(resolver),
 });
 
-export function getMockedPolyResponse(): PolyResponse {
+export async function getMockedPolyResponse(): Promise<PolyResponse> {
   return new PolyResponse(
     'TxHash',
     Promise.resolve({
