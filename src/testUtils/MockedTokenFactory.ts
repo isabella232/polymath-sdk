@@ -26,5 +26,7 @@ export abstract class MockedTokenFactory {
     address: string
   ): Promise<SecurityToken_3_0_0>;
 
-  public abstract getSecurityTokenInstanceFromTicker(ticker: string): Promise<SecurityToken_3_0_0>;
+  public async getSecurityTokenInstanceFromTicker(ticker: string): Promise<SecurityToken_3_0_0> {
+    return new Promise<SecurityToken_3_0_0>(resolve => {});
+  }
 }

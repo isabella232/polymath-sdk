@@ -1,4 +1,3 @@
-import { Params, SecurityToken, UniqueIdentifiers } from '../SecurityToken';
 import { Context } from '~/Context';
 import { SecurityToken_3_0_0 } from '@polymathnetwork/contract-wrappers';
 import { instance, mock, reset, when, verify } from 'ts-mockito';
@@ -6,6 +5,8 @@ import { PolymathBase } from '~/PolymathBase';
 import { Entity } from '~/entities';
 import { getMockedPolyResponse, MockedCallMethod, MockedSendMethod } from '~/testUtils';
 import { MockedTokenFactory } from '~/testUtils/MockedTokenFactory';
+import { Web3ProviderEngine } from '@0x/subproviders';
+import { Params, SecurityToken, UniqueIdentifiers } from '../SecurityToken';
 
 const params1 = {
   symbol: 'TEST1',
@@ -22,23 +23,25 @@ describe('Shareholders', () => {
   }
   let target: FakeSecurityToken;
   let mockedContract: SecurityToken_3_0_0;
-  let mockedPolymathBase: PolymathBase;
+  let polymathBase: PolymathBase;
   let myContractPromise: Promise<SecurityToken_3_0_0>;
   let mockedTokenFactory: MockedTokenFactory;
 
   beforeAll(() => {
+    const provider = new Web3ProviderEngine();
+    provider.start();
+    polymathBase = new PolymathBase({ provider });
+
     mockedContract = mock(SecurityToken_3_0_0);
-    mockedPolymathBase = mock(PolymathBase);
     myContractPromise = Promise.resolve(instance(mockedContract));
     mockedTokenFactory = mock(MockedTokenFactory);
 
     const context = new Context({
-      contractWrappers: mockedPolymathBase,
+      contractWrappers: polymathBase,
     });
-    target = new FakeSecurityToken(params1, instance(context));
+    target = new FakeSecurityToken(params1, context);
   });
   afterAll(() => {
-    reset(mockedPolymathBase);
     reset(mockedContract);
     reset(mockedTokenFactory);
   });
@@ -51,9 +54,9 @@ describe('Shareholders', () => {
 
   describe('createCheckpoint', () => {
     test('should send the transaction to createCheckpoint', async () => {
-      when(mockedPolymathBase.tokenFactory).thenReturn(mockedTokenFactory);
+      when(polymathBase.tokenFactory).thenReturn(mockedTokenFactory);
       when(mockedTokenFactory.getSecurityTokenInstanceFromTicker(params1.symbol)).thenReturn(
-        instance(myContractPromise)
+        myContractPromise
       );
 
       // Stub the method
@@ -66,9 +69,7 @@ describe('Shareholders', () => {
       expect(result).toBe(getMockedPolyResponse());
       // Verifications
       verify(mockedContract.createCheckpoint).once();
-      verify(
-        mockedPolymathBase.tokenFactory.getSecurityTokenInstanceFromTicker(params1.symbol)
-      ).once();
+      verify(polymathBase.tokenFactory.getSecurityTokenInstanceFromTicker(params1.symbol)).once();
     });
   });
 });
