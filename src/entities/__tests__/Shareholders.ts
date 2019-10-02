@@ -3,9 +3,9 @@ import { Context } from '~/Context';
 import { SecurityToken_3_0_0 } from '@polymathnetwork/contract-wrappers';
 import { instance, mock, reset, when, verify } from 'ts-mockito';
 import { PolymathBase } from '~/PolymathBase';
-import { Web3ProviderEngine } from '@0x/subproviders';
 import { Entity } from '~/entities';
 import { getMockedPolyResponse, MockedCallMethod, MockedSendMethod } from '~/testUtils';
+import { MockedTokenFactory } from '~/testUtils/MockedTokenFactory';
 
 const params1 = {
   symbol: 'TEST1',
@@ -24,15 +24,14 @@ describe('Shareholders', () => {
   let mockedContract: SecurityToken_3_0_0;
   let mockedPolymathBase: PolymathBase;
   let myContractPromise: Promise<SecurityToken_3_0_0>;
+  let mockedTokenFactory: MockedTokenFactory;
 
   beforeAll(() => {
     mockedContract = mock(SecurityToken_3_0_0);
     mockedPolymathBase = mock(PolymathBase);
-
     myContractPromise = Promise.resolve(instance(mockedContract));
+    mockedTokenFactory = mock(MockedTokenFactory);
 
-    const provider = new Web3ProviderEngine();
-    provider.start();
     const context = new Context({
       contractWrappers: mockedPolymathBase,
     });
@@ -41,6 +40,7 @@ describe('Shareholders', () => {
   afterAll(() => {
     reset(mockedPolymathBase);
     reset(mockedContract);
+    reset(mockedTokenFactory);
   });
 
   describe('Types', () => {
@@ -51,9 +51,10 @@ describe('Shareholders', () => {
 
   describe('createCheckpoint', () => {
     test('should send the transaction to createCheckpoint', async () => {
-      when(
-        mockedPolymathBase.tokenFactory.getSecurityTokenInstanceFromTicker(params1.symbol)
-      ).thenReturn(myContractPromise);
+      when(mockedPolymathBase.tokenFactory).thenReturn(mockedTokenFactory);
+      when(mockedTokenFactory.getSecurityTokenInstanceFromTicker(params1.symbol)).thenReturn(
+        instance(myContractPromise)
+      );
 
       // Stub the method
       when(mockedContract.createCheckpoint).thenReturn(getMockedPolyResponse);
