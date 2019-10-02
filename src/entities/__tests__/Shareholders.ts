@@ -30,7 +30,7 @@ describe('Shareholders', () => {
   beforeAll(() => {
     const provider = new Web3ProviderEngine();
     provider.start();
-    polymathBase = new PolymathBase({ provider });
+    polymathBase = mock(new PolymathBase({ provider }));
 
     mockedContract = mock(SecurityToken_3_0_0);
     myContractPromise = Promise.resolve(instance(mockedContract));
