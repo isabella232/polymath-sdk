@@ -10,7 +10,7 @@ import { PolymathError } from '../PolymathError';
 import { findEvents } from '../utils';
 import { SecurityToken, Checkpoint } from '../entities';
 
-export default class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint> {
+export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint> {
   public type = ProcedureType.CreateCheckpoint;
 
   public async prepareTransactions() {
