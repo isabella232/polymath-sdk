@@ -8,9 +8,9 @@ import CreateCheckpoint from '~/procedures/CreateCheckpoint';
 import { SubModule } from '~/entities/SecurityToken/SubModule';
 
 jest.mock('~/procedures/CreateCheckpoint', () => ({
-  CreateCheckpoint: jest.fn(() => {
-    jest.fn();
-  }),
+  CreateCheckpoint: jest.fn(() => ({
+    prepare: jest.fn(),
+  })),
 }));
 
 const params1 = {
