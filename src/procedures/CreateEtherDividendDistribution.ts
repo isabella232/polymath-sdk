@@ -55,8 +55,7 @@ export class CreateEtherDividendDistribution extends Procedure<
     if (!etherModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message:
-          "The ETH Dividends Manager hasn't been enabled. Did you forget to call dividends.enable() on the Security Token?",
+        message: "The ETH Dividends Manager hasn't been enabled",
       });
     }
 
