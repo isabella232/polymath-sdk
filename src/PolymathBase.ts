@@ -14,7 +14,6 @@ import {
   SecurityToken,
   ModuleType,
   BigNumber,
-  isERC20DividendCheckpoint_3_0_0,
   isERC20DividendCheckpoint,
 } from '@polymathnetwork/contract-wrappers';
 import { range, flatten, includes } from 'lodash';
