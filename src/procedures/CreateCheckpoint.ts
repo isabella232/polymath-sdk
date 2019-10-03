@@ -10,7 +10,7 @@ import { PolymathError } from '../PolymathError';
 import { findEvents } from '../utils';
 import { SecurityToken, Checkpoint } from '../entities';
 
-export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint> {
+export default class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint> {
   public type = ProcedureType.CreateCheckpoint;
 
   public async prepareTransactions() {
@@ -27,7 +27,7 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
     } catch (err) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `There is no Security Token with symbol ${symbol}`,
+        message: `There is no Security Token with symbol ${symbol}, ${err}`,
       });
     }
 

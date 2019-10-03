@@ -1,11 +1,17 @@
 import { Context } from '~/Context';
-import { SecurityToken_3_0_0 } from '@polymathnetwork/contract-wrappers';
-import { instance, mock, reset, when, verify } from 'ts-mockito';
-import { PolymathBase } from '~/PolymathBase';
-import { Entity } from '~/entities';
-import { getMockedPolyResponse, MockedCallMethod, MockedSendMethod } from '~/testUtils';
-import { Params, SecurityToken, UniqueIdentifiers } from '../SecurityToken';
-import { MockedTokenFactoryObject } from '~/testUtils/MockedTokenFactoryObject';
+import { instance, mock, when } from 'ts-mockito';
+import { SecurityToken } from '../SecurityToken';
+import { Shareholders } from '~/entities/SecurityToken/Shareholders';
+
+import CreateCheckpoint from '~/procedures/CreateCheckpoint';
+
+import { SubModule } from '~/entities/SecurityToken/SubModule';
+
+jest.mock('~/procedures/CreateCheckpoint', () => ({
+  CreateCheckpoint: jest.fn(() => {
+    jest.fn();
+  }),
+}));
 
 const params1 = {
   symbol: 'TEST1',
@@ -15,38 +21,32 @@ const params1 = {
 };
 
 describe('Shareholders', () => {
-  let target: SecurityToken;
-  let MockedSecurityTokenContract: SecurityToken_3_0_0;
-  let polymathBase: PolymathBase;
-  let myContractPromise: Promise<SecurityToken_3_0_0>;
-  let MockedTokenFactory: MockedTokenFactoryObject;
-  let MockPolymathBase: PolymathBase;
+  let target: Shareholders;
 
   beforeAll(() => {
-    MockPolymathBase = mock(PolymathBase);
-    polymathBase = instance(MockPolymathBase);
-
-    MockedSecurityTokenContract = mock(SecurityToken_3_0_0);
-    myContractPromise = Promise.resolve(instance(MockedSecurityTokenContract));
-    MockedTokenFactory = mock(MockedTokenFactory);
-
-    const context = new Context({
-      contractWrappers: polymathBase,
-    });
-    target = new SecurityToken(params1, context);
-  });
-  afterAll(() => {
-    reset(MockedSecurityTokenContract);
-    reset(MockPolymathBase);
-    reset(MockedTokenFactory);
+    const contextMock = mock(Context);
+    const SecurityTokenMock = mock(SecurityToken);
+    when(SecurityTokenMock.uid).thenReturn('12345');
+    when(SecurityTokenMock.symbol).thenReturn(params1.symbol);
+    const stMock = instance(SecurityTokenMock);
+    target = new Shareholders(stMock, contextMock);
   });
 
   describe('Types', () => {
     test('should extend Entity', async () => {
-      expect(target instanceof Entity).toBe(true);
+      expect(target instanceof SubModule).toBe(true);
     });
   });
 
+  describe('createCheckpoint', () => {
+    test('should send the transaction to createCheckpoint', async () => {
+      // Real call
+      const result = await target.createCheckpoint();
+      // Verifications
+      expect(CreateCheckpoint).toHaveBeenCalledTimes(1);
+    });
+  });
+  /*
   describe('createCheckpoint', () => {
     test('should send the transaction to createCheckpoint', async () => {
       when(MockPolymathBase.tokenFactory).thenReturn(instance(MockedTokenFactory));
@@ -62,15 +62,13 @@ describe('Shareholders', () => {
       const result = await target.shareholders.createCheckpoint();
 
       // Result expectation
-      /*
       // Expect needs a mock of transaction queue
-      expect(result).toBe();
-      */
-
+      //expect(result).toBe();
       // Verifications
-      verify(MockPolymathBase.tokenFactory).once();
+       verify(MockPolymathBase.tokenFactory).once();
       verify(MockedTokenFactory.getSecurityTokenInstanceFromTicker(params1.symbol)).once();
       verify(MockedSecurityTokenContract.createCheckpoint).once();
+      });
     });
-  });
+   */
 });
