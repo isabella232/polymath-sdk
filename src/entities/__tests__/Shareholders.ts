@@ -43,6 +43,7 @@ describe('Shareholders', () => {
       // Real call
       const result = await target.createCheckpoint();
       // Verifications
+      spyOn(target, 'createCheckpoint').wasCalled;
       expect(CreateCheckpoint).toHaveBeenCalledTimes(1);
     });
   });
