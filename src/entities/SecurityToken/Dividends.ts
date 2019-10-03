@@ -24,24 +24,6 @@ interface GetManager {
 
 export class Dividends extends SubModule {
   /**
-   * Enable dividend functionalities (ERC20, ETH or both)
-   *
-   * @param storageWalletAddress wallet that will receive reclaimed dividends and withheld taxes
-   * @param types array containing the types of dividends to enable (will enable both if not present)
-   */
-  public enable = async (args: { storageWalletAddress: string; types?: DividendType[] }) => {
-    const { symbol } = this.securityToken;
-    const procedure = new EnableDividendManagers(
-      {
-        symbol,
-        ...args,
-      },
-      this.context
-    );
-    return procedure.prepare();
-  };
-
-  /**
    * Distribute dividends in POLY
    *
    * @param checkpointId uuid of the checkpoint to use as reference for the distribution

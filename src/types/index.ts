@@ -436,8 +436,24 @@ export function isPojo(pojo: any): pojo is Pojo {
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export enum TransactionSpeed {
-  Slow = 'slow',
-  Medium = 'medium',
-  Fast = 'fast',
-  Fastest = 'fastest',
+  Slow = 'Slow',
+  Medium = 'Medium',
+  Fast = 'Fast',
+  Fastest = 'Fastest',
+}
+
+export enum Feature {
+  Permissions = 'Permissions',
+  Shareholders = 'Shareholders',
+  Erc20Dividends = 'Erc20Dividends',
+  EtherDividends = 'EtherDividends',
+}
+
+export enum Roles {
+  PermissionsAdministrator = 'PermissionsAdministrator',
+  Erc20DividendsOperator = 'Erc20DividendsOperator',
+  Erc20DividendsAdministrator = 'Erc20DividendsAdministrator',
+  EtherDividendsOperator = 'EtherDividendsOperator',
+  EtherDividendsAdministrator = 'EtherDividendsAdministrator',
+  ShareholdersAdministrator = 'ShareholdersAdministrator',
 }
