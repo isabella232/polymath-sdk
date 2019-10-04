@@ -50,6 +50,7 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.2.0",
     "@polymathnetwork/contract-wrappers": "3.0.0-beta.47",
+    "@types/sinon": "^7.5.0",
     "bluebird": "^3.5.5",
     "ethereum-address": "^0.0.4",
     "json-stable-stringify": "^1.0.1",
@@ -57,8 +58,9 @@
     "phin": "^3.4.0",
     "semantic-release-cli": "^5.1.1",
     "semver": "^5.6.0",
+    "sinon": "^7.5.0",
+    "ts-mock-imports": "^1.2.6",
     "ts-mockito": "^2.5.0",
-    "typemoq": "^2.1.0",
     "uuid": "^3.3.2"
   },
   "browserslist": [
