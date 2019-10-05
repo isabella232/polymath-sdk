@@ -5,18 +5,20 @@ import {
   PolyTransactionTag,
   ChangeDelegatePermissionProcedureArgs,
   ErrorCode,
-  PermissibleOperation,
+  SecurityTokenRole,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { SecurityToken } from '../entities';
 
 export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermissionProcedureArgs> {
   public type = ProcedureType.ChangeDelegatePermission;
 
   public async prepareTransactions() {
-    const { symbol, op, isGranted, details = '' } = this.args;
-    const delegate = conversionUtils.checksumAddress(this.args.delegate);
+    const { symbol, role, assign, description = '', delegateAddress } = this.args;
     const { contractWrappers } = this.context;
-    let moduleAddress: string;
+    const delegate = conversionUtils.checksumAddress(delegateAddress);
+
+    let attachedModule;
     let perm: Perm;
 
     try {
@@ -28,50 +30,86 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
       });
     }
 
-    // @TODO remon-nashid refactor into a map(op => {module, perm}).
-    switch (op) {
-      case PermissibleOperation.ModifyShareholderData: {
-        perm = Perm.Admin;
-        const attachedModule = (await contractWrappers.getAttachedModules(
-          { moduleName: ModuleName.GeneralTransferManager, symbol },
-          { unarchived: true }
-        ))[0];
-        if (!attachedModule) {
-          // GTM is supposedly attached to all tokens by default. If we reach this line
-          // then something very wrong is happening.
-          throw new PolymathError({
-            code: ErrorCode.FatalError,
-            message: `General Transfer Manager for token "${symbol}" isn't enabled. Please report this issue to the Polymath team`,
-          });
-        }
-        moduleAddress = await attachedModule.address();
-        break;
-      }
-      default: {
-        throw new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: `Unkown operation "${op}"`,
-        });
-      }
+    const {
+      permissions: { isRoleAvailable, getFeatureFromRole },
+    } = await this.context.factories.securityTokenFactory.fetch(
+      SecurityToken.generateId({ symbol })
+    );
+    const [isAvailable, requiredFeature] = await Promise.all([
+      isRoleAvailable({ role }),
+      getFeatureFromRole({ role }),
+    ]);
+
+    if (!isAvailable) {
+      throw new PolymathError({
+        code: ErrorCode.FeatureNotEnabled,
+        message: `You must enable the ${requiredFeature} feature`,
+      });
     }
+
+    if (role === SecurityTokenRole.ShareholdersAdministrator) {
+      perm = Perm.Admin;
+      attachedModule = (await contractWrappers.getAttachedModules(
+        { moduleName: ModuleName.GeneralTransferManager, symbol },
+        { unarchived: true }
+      ))[0];
+    } else if (role === SecurityTokenRole.PermissionsAdministrator) {
+      perm = Perm.Admin;
+      attachedModule = (await contractWrappers.getAttachedModules(
+        { moduleName: ModuleName.GeneralPermissionManager, symbol },
+        { unarchived: true }
+      ))[0];
+    } else if (
+      [
+        SecurityTokenRole.Erc20DividendsAdministrator,
+        SecurityTokenRole.Erc20DividendsOperator,
+      ].includes(role)
+    ) {
+      perm = role === SecurityTokenRole.Erc20DividendsAdministrator ? Perm.Admin : Perm.Operator;
+      attachedModule = (await contractWrappers.getAttachedModules(
+        { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
+        { unarchived: true }
+      ))[0];
+    } else if (
+      [
+        SecurityTokenRole.EtherDividendsAdministrator,
+        SecurityTokenRole.EtherDividendsOperator,
+      ].includes(role)
+    ) {
+      perm = role === SecurityTokenRole.EtherDividendsAdministrator ? Perm.Admin : Perm.Operator;
+      attachedModule = (await contractWrappers.getAttachedModules(
+        { moduleName: ModuleName.EtherDividendCheckpoint, symbol },
+        { unarchived: true }
+      ))[0];
+    } else {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `Unknown role "${role}"`,
+      });
+    }
+
+    const moduleAddress = await attachedModule.address();
 
     const permissionModule = (await contractWrappers.getAttachedModules(
       { moduleName: ModuleName.GeneralPermissionManager, symbol },
       { unarchived: true }
     ))[0];
-    if (!permissionModule)
+
+    if (!permissionModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message:
-          "Permissions haven't been enabled. Please call permissions.enable() on your Security Token.",
+        message: 'You must enable the Permissions feature',
       });
+    }
 
     const delegates = await permissionModule.getAllDelegates();
     const exists = delegates.filter(element => element === delegate).length > 0;
 
-    // In the following block we attempt to:
-    // * Find whether the delegate address is already present. Otherwise add them.
-    // * Find whether current delegate permission equals provided one. Otherwise change permissions.
+    /**
+     * In the following block we attempt to:
+     * - Find whether the delegate address is already present. Otherwise add them
+     * - Find whether current delegate permission is equal to the provided one. Otherwise change permissions
+     */
     if (exists) {
       const permittedDelegates: string[] = await permissionModule.getAllDelegatesWithPerm({
         module: moduleAddress,
@@ -79,23 +117,26 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
       });
 
       const permitted = !!permittedDelegates.find(element => element === delegate);
-      // Upcoming permission equals existing one.
-      if (permitted === isGranted) {
+
+      // Upcoming permission equals existing one
+      if (permitted === assign) {
         throw new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `Delegate's permission is already set to ${isGranted}.`,
+          message: `Role ${role} has already been ${
+            assign ? 'assigned to' : 'revoked from'
+          } delegate.`,
         });
       }
     } else {
-      // Delegate not found. Add them here.
+      // Delegate not found. Add them here
       await this.addTransaction(permissionModule.addDelegate, {
         tag: PolyTransactionTag.ChangeDelegatePermission,
-      })({ delegate, details });
+      })({ delegate, details: description });
     }
 
     // Change delegate permission
     await this.addTransaction(permissionModule.changePermission, {
       tag: PolyTransactionTag.ChangeDelegatePermission,
-    })({ delegate, module: moduleAddress, perm, valid: isGranted });
+    })({ delegate, module: moduleAddress, perm, valid: assign });
   }
 }

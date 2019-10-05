@@ -133,6 +133,8 @@ export class Features extends SubModule {
       [Feature.Erc20Dividends]: erc20DividendsEnabled,
       [Feature.EtherDividends]: etherDividendsEnabled,
     };
+
+    return result;
   };
 
   /**

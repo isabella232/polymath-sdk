@@ -43,6 +43,7 @@ export interface TaxWithholdingEntry {
 
 export enum ErrorCode {
   IncompatibleBrowser = 'IncompatibleBrowser',
+  FeatureNotEnabled = 'FeatureNotEnabled',
   NonBrowserEnvironment = 'NonBrowserEnvironment',
   MetamaskNotInstalled = 'MetamaskNotInstalled',
   UserDeniedAccess = 'UserDeniedAccess',
@@ -293,10 +294,10 @@ export interface SetDividendsWalletProcedureArgs {
 
 export interface ChangeDelegatePermissionProcedureArgs {
   symbol: string;
-  delegate: string;
-  op: PermissibleOperation;
-  isGranted: boolean;
-  details?: string;
+  delegateAddress: string;
+  role: Role;
+  assign: boolean;
+  description?: string;
 }
 
 export interface ControllerTransferProcedureArgs {
@@ -397,11 +398,6 @@ export enum TransactionQueueStatus {
   Succeeded = 'Succeeded',
 }
 
-export enum PermissibleOperation {
-  // MODULE_COMPONENT_OP
-  ModifyShareholderData = 'GTM_WHITELIST_UPDATE',
-}
-
 export interface Fees {
   usd: BigNumber | null;
   poly: BigNumber;
@@ -449,7 +445,7 @@ export enum Feature {
   EtherDividends = 'EtherDividends',
 }
 
-export enum Roles {
+export enum SecurityTokenRole {
   PermissionsAdministrator = 'PermissionsAdministrator',
   Erc20DividendsOperator = 'Erc20DividendsOperator',
   Erc20DividendsAdministrator = 'Erc20DividendsAdministrator',
@@ -457,3 +453,5 @@ export enum Roles {
   EtherDividendsAdministrator = 'EtherDividendsAdministrator',
   ShareholdersAdministrator = 'ShareholdersAdministrator',
 }
+
+export type Role = SecurityTokenRole;
