@@ -1,9 +1,9 @@
 import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
+import { SinonStub } from 'sinon';
 import * as contextObject from '../../Context';
 import * as wrappersObject from '../../PolymathBase';
 import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
-
 import { Shareholders } from '~/entities/SecurityToken/Shareholders';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
 import { Procedure } from '~/procedures/Procedure';
@@ -20,12 +20,17 @@ describe('Shareholders', () => {
   let contextMock: MockManager<contextObject.Context>;
   let wrappersMock: MockManager<wrappersObject.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryObject.MockedTokenFactoryObject>;
+  let tokenFactoryMockStub: SinonStub<any, any>;
 
   beforeAll(() => {
     // Generate a mock for context, and a security token to instantiate Shareholders
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryObject, 'MockedTokenFactoryObject');
+
+    tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
+    contextMock.set('contractWrappers', wrappersMock.getMockInstance());
+    wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
     // Instantiate CreateCheckpoint
     target = new CreateCheckpoint(
@@ -37,73 +42,23 @@ describe('Shareholders', () => {
   });
 
   describe('Types', () => {
-    test('should extend Submodule', async () => {
+    test('should extend procedure and have CreateCheckpoint type', async () => {
       expect(target instanceof Procedure).toBe(true);
+      expect(target.type).toBe('CreateCheckpoint');
     });
   });
 
   describe('createCheckpoint', () => {
     test('should send the transaction to createCheckpoint', async () => {
-      const getSecurityTokenMock = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
-      const wrappersMockObject = contextMock.mock('contractWrappers', wrappersMock);
-      const tokenFactoryMockObject = wrappersMock.mock('tokenFactory', tokenFactoryMock);
-
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      //  expect(sinon.spy(target, 'prep').calledOnce);
-      expect(getSecurityTokenMock.calledOnce);
+      expect(sinon.spy(target, 'prepare').calledOnce);
+      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
+      expect(sinon.spy(target, 'addProcedure').calledOnce);
+      expect(sinon.spy(target, 'addTransaction').calledOnce);
+      expect(tokenFactoryMockStub().calledOnce);
     });
   });
-
-  /*
-  // Original test we created here, saving it as a comment as it is useful to test
-  // use of wrappers in procedures afterwards. Completed with ts-mockito
-  describe('createCheckpoint', () => {
-    beforeAll(() => {
-      MockPolymathBase = mock(PolymathBase);
-      polymathBase = instance(MockPolymathBase);
-
-      MockedSecurityTokenContract = mock(SecurityToken_3_0_0);
-      myContractPromise = Promise.resolve(
-        instance(MockedSecurityTokenContract)
-      );
-      MockedTokenFactory = mock(MockedTokenFactory);
-
-      const context = new Context({
-        contractWrappers: polymathBase,
-      });
-      target = new SecurityToken(params1, context);
-    });
-
-    test('should send the transaction to createCheckpoint', async () => {
-      when(MockPolymathBase.tokenFactory).thenReturn(
-        instance(MockedTokenFactory)
-      );
-      when(
-        MockedTokenFactory.getSecurityTokenInstanceFromTicker(params1.symbol)
-      ).thenReturn(myContractPromise);
-
-      // Stub the method
-
-      when(MockedSecurityTokenContract.createCheckpoint).thenReturn(
-        getMockedPolyResponse
-      );
-
-      // Real call
-      const result = await target.shareholders.createCheckpoint();
-
-      // Result expectation
-      // Expect needs a mock of transaction queue
-      //expect(result).toBe();
-      // Verifications
-      verify(MockPolymathBase.tokenFactory).once();
-      verify(
-        MockedTokenFactory.getSecurityTokenInstanceFromTicker(params1.symbol)
-      ).once();
-      verify(MockedSecurityTokenContract.createCheckpoint).once();
-    });
-  });
-  */
 });
