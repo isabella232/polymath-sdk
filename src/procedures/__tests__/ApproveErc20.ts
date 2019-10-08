@@ -34,7 +34,7 @@ describe('ApproveErc20', () => {
     });
     contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
 
-    // Instantiate CreateCheckpoint
+    // Instantiate ApproveErc20
     target = new ApproveErc20(params1, contextMock.getMockInstance());
   });
 
