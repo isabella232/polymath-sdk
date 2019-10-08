@@ -4,7 +4,6 @@ import { SinonStub } from 'sinon';
 import * as contextObject from '../../Context';
 import * as wrappersObject from '../../PolymathBase';
 import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
-import { Shareholders } from '~/entities/SecurityToken/Shareholders';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
 import { Procedure } from '~/procedures/Procedure';
 
@@ -15,7 +14,7 @@ const params1 = {
   owner: '0x3',
 };
 
-describe('Shareholders', () => {
+describe('CreateCheckpoint', () => {
   let target: CreateCheckpoint;
   let contextMock: MockManager<contextObject.Context>;
   let wrappersMock: MockManager<wrappersObject.PolymathBase>;
