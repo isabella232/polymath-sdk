@@ -5,7 +5,9 @@ import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
 import * as contextObject from '../../Context';
 import * as wrappersObject from '../../PolymathBase';
 import { CreateSecurityToken } from '../../procedures/CreateSecurityToken';
+// import * as approveErc20Object from '../../procedures/ApproveErc20';
 import { Procedure } from '~/procedures/Procedure';
+import { Wallet } from '~/Wallet';
 
 const params1 = {
   symbol: 'TEST1',
@@ -20,6 +22,7 @@ describe('CreateSecurityToken', () => {
   let target: CreateSecurityToken;
   let contextMock: MockManager<contextObject.Context>;
   let wrappersMock: MockManager<wrappersObject.PolymathBase>;
+  // let approveErc20Mock: MockManager<approveErc20Object.ApproveErc20>;
 
   let securityTokenRegistryMock: MockManager<contractWrappersObject.SecurityTokenRegistry>;
 
@@ -27,11 +30,15 @@ describe('CreateSecurityToken', () => {
     // Mock the context, wrappers, and tokenFactory to test
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
+    //  approveErc20Mock = ImportMock.mockClass(approveErc20Object, 'ApproveErc20');
 
     securityTokenRegistryMock = ImportMock.mockClass(
       contractWrappersObject,
       'SecurityTokenRegistry'
     );
+
+    // approveErc20Mock.set('prepareTransactions', () => Promise.resolve());
+
     securityTokenRegistryMock.mock('tickerAvailable', Promise.resolve(false));
     securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(true));
     securityTokenRegistryMock.mock('isTokenLaunched', Promise.resolve(false));
@@ -43,6 +50,11 @@ describe('CreateSecurityToken', () => {
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('securityTokenRegistry', securityTokenRegistryMock.getMockInstance());
+
+    const ownerPromise = new Promise<string>((resolve, reject) => {
+      resolve(params1.owner);
+    });
+    contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
 
     // Instantiate CreateSecurityToken
     target = new CreateSecurityToken(

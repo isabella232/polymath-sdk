@@ -46,7 +46,7 @@ describe('CreateErc20DividendDistribution', () => {
     erc20DividendsMock.mock('address', Promise.resolve(params1.erc20Address));
     getAttachedModulesMockStub = wrappersMock.mock(
       'getAttachedModules',
-      Promise.resolve([erc20DividendsMock])
+      Promise.resolve([erc20DividendsMock.getMockInstance()])
     );
 
     // Instantiate CreateErc20DividendDistribution
