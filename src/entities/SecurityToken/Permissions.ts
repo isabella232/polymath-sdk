@@ -1,5 +1,5 @@
 import { forEach } from 'lodash';
-import { ModuleName, Perm } from '@polymathnetwork/contract-wrappers';
+import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import P from 'bluebird';
 import { SubModule } from './SubModule';
 import { ChangeDelegatePermission } from '../../procedures';
