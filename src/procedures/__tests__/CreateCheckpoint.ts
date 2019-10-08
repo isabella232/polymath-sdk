@@ -23,7 +23,7 @@ describe('Shareholders', () => {
   let tokenFactoryMockStub: SinonStub<any, any>;
 
   beforeAll(() => {
-    // Generate a mock for context, and a security token to instantiate Shareholders
+    // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryObject, 'MockedTokenFactoryObject');
