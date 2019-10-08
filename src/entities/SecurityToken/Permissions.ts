@@ -2,7 +2,7 @@ import { forEach } from 'lodash';
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import P from 'bluebird';
 import { SubModule } from './SubModule';
-import { ChangeDelegatePermission } from '../../procedures';
+import { AssignSecurityTokenRole } from '../../procedures';
 import { SecurityTokenRole, Feature, ErrorCode } from '../../types';
 import { PolymathError } from '../../PolymathError';
 
@@ -101,7 +101,7 @@ export class Permissions extends SubModule {
   }) => {
     const { symbol } = this.securityToken;
 
-    const procedure = new ChangeDelegatePermission(
+    const procedure = new AssignSecurityTokenRole(
       {
         symbol,
         assign: true,
@@ -122,7 +122,7 @@ export class Permissions extends SubModule {
   public revokeRole = async (args: { delegateAddress: string; role: SecurityTokenRole }) => {
     const { symbol } = this.securityToken;
 
-    const procedure = new ChangeDelegatePermission(
+    const procedure = new AssignSecurityTokenRole(
       {
         symbol,
         assign: false,

@@ -107,7 +107,8 @@ export enum ProcedureType {
   UpdateDividendsTaxWithholdingList = 'UpdateDividendsTaxWithholdingList',
   SetDividendsWallet = 'SetDividendsWallet',
   PushDividendPayment = 'PushDividendPayment',
-  ChangeDelegatePermission = 'ChangeDelegatePermission',
+  AssignSecurityTokenRole = 'AssignSecurityTokenRole',
+  AssignStoRole = 'AssignStoRole',
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
@@ -135,7 +136,7 @@ export enum PolyTransactionTag {
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
-  ChangeDelegatePermission = 'ChangeDelegatePermission',
+  ChangePermission = 'ChangePermission',
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
@@ -306,10 +307,19 @@ export interface SetDividendsWalletProcedureArgs {
   address: string;
 }
 
-export interface ChangeDelegatePermissionProcedureArgs {
+export interface AssignSecurityTokenRoleProcedureArgs {
   symbol: string;
   delegateAddress: string;
-  role: Role;
+  role: SecurityTokenRole;
+  assign: boolean;
+  description?: string;
+}
+
+export interface AssignStoRoleProcedureArgs {
+  symbol: string;
+  delegateAddress: string;
+  stoAddress: string;
+  role: StoRole;
   assign: boolean;
   description?: string;
 }
@@ -390,7 +400,7 @@ export interface ProcedureArguments {
   [ProcedureType.PauseSto]: PauseStoProcedureArgs;
   [ProcedureType.ControllerTransfer]: ControllerTransferProcedureArgs;
   [ProcedureType.SetController]: SetControllerProcedureArgs;
-  [ProcedureType.ChangeDelegatePermission]: ChangeDelegatePermissionProcedureArgs;
+  [ProcedureType.AssignSecurityTokenRole]: AssignSecurityTokenRoleProcedureArgs;
   [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
@@ -472,8 +482,6 @@ export enum StoRole {
   StoOperator = 'StoOperator',
   StoAdministrator = 'StoAdministrator',
 }
-
-export type Role = SecurityTokenRole | StoRole;
 
 export type Module =
   | GeneralPermissionManager

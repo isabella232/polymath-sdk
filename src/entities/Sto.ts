@@ -1,11 +1,11 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
-import { StoType, isStoType, Currency, ErrorCode, Role, Feature } from '../types';
+import { StoType, isStoType, Currency, ErrorCode, Feature, StoRole } from '../types';
 import { Investment } from './Investment';
 import { PolymathError } from '../PolymathError';
 import { Context } from '../Context';
-import { PauseSto, ChangeDelegatePermission } from '../procedures';
+import { PauseSto, AssignStoRole } from '../procedures';
 
 export interface UniqueIdentifiers {
   securityTokenId: string;
@@ -131,15 +131,16 @@ export abstract class Sto<P> extends Entity<P> {
    */
   public assignRole = async (args: {
     delegateAddress: string;
-    role: Role;
+    role: StoRole;
     description?: string;
   }) => {
-    const { securityTokenSymbol: symbol } = this;
+    const { securityTokenSymbol: symbol, address } = this;
 
-    const procedure = new ChangeDelegatePermission(
+    const procedure = new AssignStoRole(
       {
         symbol,
         assign: true,
+        stoAddress: address,
         ...args,
       },
       this.context
@@ -154,13 +155,14 @@ export abstract class Sto<P> extends Entity<P> {
    * @param delegateAddress wallet address of the delegate
    * @param role role to revoke
    */
-  public revokeRole = async (args: { delegateAddress: string; role: Role }) => {
-    const { securityTokenSymbol: symbol } = this;
+  public revokeRole = async (args: { delegateAddress: string; role: StoRole }) => {
+    const { securityTokenSymbol: symbol, address } = this;
 
-    const procedure = new ChangeDelegatePermission(
+    const procedure = new AssignStoRole(
       {
         symbol,
         assign: false,
+        stoAddress: address,
         ...args,
       },
       this.context

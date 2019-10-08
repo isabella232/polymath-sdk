@@ -25,7 +25,7 @@ import { range, flatten, includes } from 'lodash';
 import P from 'bluebird';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';
-import { ErrorCode, DividendType, Module, Role, SecurityTokenRole } from './types';
+import { ErrorCode, DividendType, Module, SecurityTokenRole } from './types';
 
 interface GetModuleAddressesByNameParams {
   symbol: string;

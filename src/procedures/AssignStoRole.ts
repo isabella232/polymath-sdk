@@ -3,17 +3,18 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  ChangeDelegatePermissionProcedureArgs,
+  AssignStoRoleProcedureArgs,
   ErrorCode,
+  StoRole,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { SecurityToken } from '../entities';
 
-export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermissionProcedureArgs> {
-  public type = ProcedureType.ChangeDelegatePermission;
+export class AssignStoRole extends Procedure<AssignStoRoleProcedureArgs> {
+  public type = ProcedureType.AssignStoRole;
 
   public async prepareTransactions() {
-    const { symbol, role, assign, description = '', delegateAddress } = this.args;
+    const { symbol, role, assign, description = '', delegateAddress, stoAddress } = this.args;
     const { contractWrappers } = this.context;
     const delegate = conversionUtils.checksumAddress(delegateAddress);
 
@@ -25,31 +26,6 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
-
-    const {
-      permissions: { isRoleAvailable, getFeatureFromRole },
-    } = await this.context.factories.securityTokenFactory.fetch(
-      SecurityToken.generateId({ symbol })
-    );
-    const [isAvailable, requiredFeature] = await Promise.all([
-      isRoleAvailable({ role }),
-      getFeatureFromRole({ role }),
-    ]);
-
-    if (!isAvailable) {
-      throw new PolymathError({
-        code: ErrorCode.FeatureNotEnabled,
-        message: `You must enable the ${requiredFeature} feature`,
-      });
-    }
-
-    const { moduleName, permission: perm } = await contractWrappers.roleToPermission({ role });
-    const attachedModule = (await contractWrappers.getAttachedModules(
-      { moduleName, symbol },
-      { unarchived: true }
-    ))[0];
-
-    const moduleAddress = await attachedModule.address();
 
     const permissionModule = (await contractWrappers.getAttachedModules(
       { moduleName: ModuleName.GeneralPermissionManager, symbol },
@@ -63,6 +39,8 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
       });
     }
 
+    const perm = role === StoRole.StoAdministrator ? Perm.Admin : Perm.Operator;
+
     const delegates = await permissionModule.getAllDelegates();
     const exists = delegates.filter(element => element === delegate).length > 0;
 
@@ -73,7 +51,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
      */
     if (exists) {
       const permittedDelegates: string[] = await permissionModule.getAllDelegatesWithPerm({
-        module: moduleAddress,
+        module: stoAddress,
         perm,
       });
 
@@ -85,19 +63,19 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
           code: ErrorCode.ProcedureValidationError,
           message: `Role ${role} has already been ${
             assign ? 'assigned to' : 'revoked from'
-          } delegate.`,
+          } delegate for this STO.`,
         });
       }
     } else {
       // Delegate not found. Add them here
       await this.addTransaction(permissionModule.addDelegate, {
-        tag: PolyTransactionTag.ChangeDelegatePermission,
+        tag: PolyTransactionTag.ChangePermission,
       })({ delegate, details: description });
     }
 
     // Change delegate permission
     await this.addTransaction(permissionModule.changePermission, {
-      tag: PolyTransactionTag.ChangeDelegatePermission,
-    })({ delegate, module: moduleAddress, perm, valid: assign });
+      tag: PolyTransactionTag.ChangePermission,
+    })({ delegate, module: stoAddress, perm, valid: assign });
   }
 }
