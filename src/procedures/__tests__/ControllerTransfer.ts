@@ -2,8 +2,10 @@ import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub } from 'sinon';
 import BigNumber from 'bignumber.js';
+import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
 import * as contextObject from '../../Context';
 import * as wrappersObject from '../../PolymathBase';
+import { Wallet } from '../../Wallet';
 import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import { Procedure } from '~/procedures/Procedure';
@@ -21,6 +23,7 @@ describe('ControllerTransfer', () => {
   let contextMock: MockManager<contextObject.Context>;
   let wrappersMock: MockManager<wrappersObject.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryObject.MockedTokenFactoryObject>;
+  let securityTokenMock: MockManager<contractWrappersObject.SecurityToken_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
 
   beforeAll(() => {
@@ -29,7 +32,18 @@ describe('ControllerTransfer', () => {
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryObject, 'MockedTokenFactoryObject');
 
-    tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
+    securityTokenMock = ImportMock.mockClass(contractWrappersObject, 'SecurityToken_3_0_0');
+    securityTokenMock.mock('balanceOf', Promise.resolve(params1.amount));
+    securityTokenMock.mock('controller', Promise.resolve(params1.owner));
+    const ownerPromise = new Promise<string>((resolve, reject) => {
+      resolve(params1.owner);
+    });
+    contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
+    tokenFactoryMockStub = tokenFactoryMock.mock(
+      'getSecurityTokenInstanceFromTicker',
+      securityTokenMock.getMockInstance()
+    );
+
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
