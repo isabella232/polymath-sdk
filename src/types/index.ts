@@ -453,7 +453,7 @@ export function isPojo(pojo: any): pojo is Pojo {
   );
 }
 
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type Omit<T, K> = { [key in Exclude<keyof T, K>]: T[key] };
 
 export enum TransactionSpeed {
   Slow = 'Slow',
