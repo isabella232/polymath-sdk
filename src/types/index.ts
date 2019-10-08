@@ -3,6 +3,20 @@ import {
   BigNumber,
   FundRaiseType as Currency,
   CappedSTOFundRaiseType as CappedStoCurrency,
+  GeneralTransferManager,
+  GeneralPermissionManager,
+  CountTransferManager,
+  ManualApprovalTransferManager,
+  PercentageTransferManager,
+  VolumeRestrictionTransferManager,
+  CappedSTO,
+  USDTieredSTO,
+  ERC20DividendCheckpoint,
+  EtherDividendCheckpoint,
+  VestingEscrowWallet,
+  BlacklistTransferManager,
+  LockUpTransferManager,
+  RestrictedPartialSaleTransferManager,
 } from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
@@ -455,3 +469,19 @@ export enum SecurityTokenRole {
 }
 
 export type Role = SecurityTokenRole;
+
+export type Module =
+  | GeneralPermissionManager
+  | GeneralTransferManager
+  | BlacklistTransferManager
+  | LockUpTransferManager
+  | CountTransferManager
+  | ManualApprovalTransferManager
+  | PercentageTransferManager
+  | VolumeRestrictionTransferManager
+  | RestrictedPartialSaleTransferManager
+  | CappedSTO
+  | USDTieredSTO
+  | ERC20DividendCheckpoint
+  | EtherDividendCheckpoint
+  | VestingEscrowWallet;

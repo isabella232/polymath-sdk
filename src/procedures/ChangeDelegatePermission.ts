@@ -5,7 +5,6 @@ import {
   PolyTransactionTag,
   ChangeDelegatePermissionProcedureArgs,
   ErrorCode,
-  SecurityTokenRole,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { SecurityToken } from '../entities';
@@ -17,9 +16,6 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
     const { symbol, role, assign, description = '', delegateAddress } = this.args;
     const { contractWrappers } = this.context;
     const delegate = conversionUtils.checksumAddress(delegateAddress);
-
-    let attachedModule;
-    let perm: Perm;
 
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
@@ -47,46 +43,11 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
       });
     }
 
-    if (role === SecurityTokenRole.ShareholdersAdministrator) {
-      perm = Perm.Admin;
-      attachedModule = (await contractWrappers.getAttachedModules(
-        { moduleName: ModuleName.GeneralTransferManager, symbol },
-        { unarchived: true }
-      ))[0];
-    } else if (role === SecurityTokenRole.PermissionsAdministrator) {
-      perm = Perm.Admin;
-      attachedModule = (await contractWrappers.getAttachedModules(
-        { moduleName: ModuleName.GeneralPermissionManager, symbol },
-        { unarchived: true }
-      ))[0];
-    } else if (
-      [
-        SecurityTokenRole.Erc20DividendsAdministrator,
-        SecurityTokenRole.Erc20DividendsOperator,
-      ].includes(role)
-    ) {
-      perm = role === SecurityTokenRole.Erc20DividendsAdministrator ? Perm.Admin : Perm.Operator;
-      attachedModule = (await contractWrappers.getAttachedModules(
-        { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
-        { unarchived: true }
-      ))[0];
-    } else if (
-      [
-        SecurityTokenRole.EtherDividendsAdministrator,
-        SecurityTokenRole.EtherDividendsOperator,
-      ].includes(role)
-    ) {
-      perm = role === SecurityTokenRole.EtherDividendsAdministrator ? Perm.Admin : Perm.Operator;
-      attachedModule = (await contractWrappers.getAttachedModules(
-        { moduleName: ModuleName.EtherDividendCheckpoint, symbol },
-        { unarchived: true }
-      ))[0];
-    } else {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `Unknown role "${role}"`,
-      });
-    }
+    const { moduleName, permission: perm } = await contractWrappers.roleToPermission({ role });
+    const attachedModule = (await contractWrappers.getAttachedModules(
+      { moduleName, symbol },
+      { unarchived: true }
+    ))[0];
 
     const moduleAddress = await attachedModule.address();
 
@@ -108,7 +69,7 @@ export class ChangeDelegatePermission extends Procedure<ChangeDelegatePermission
     /**
      * In the following block we attempt to:
      * - Find whether the delegate address is already present. Otherwise add them
-     * - Find whether current delegate permission is equal to the provided one. Otherwise change permissions
+     * - Find whether the current delegate permission is equal to the provided one. Otherwise change permissions
      */
     if (exists) {
       const permittedDelegates: string[] = await permissionModule.getAllDelegatesWithPerm({
