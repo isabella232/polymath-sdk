@@ -2,6 +2,7 @@ import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub } from 'sinon';
 import BigNumber from 'bignumber.js';
+import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
 import * as contextObject from '../../Context';
 import * as wrappersObject from '../../PolymathBase';
 import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
@@ -13,6 +14,7 @@ const params1 = {
   name: 'Test Token 1',
   amount: new BigNumber(1),
   checkpointIndex: 1,
+  erc20Address: '0x1',
   maturityDate: new Date(2030, 1),
   expiryDate: new Date(2031, 1),
 };
@@ -22,24 +24,30 @@ describe('CreateErc20DividendDistribution', () => {
   let contextMock: MockManager<contextObject.Context>;
   let wrappersMock: MockManager<wrappersObject.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryObject.MockedTokenFactoryObject>;
+  let gpmMock: MockManager<contractWrappersObject.GeneralPermissionManager_3_0_0>;
+  let erc20DividendsMock: MockManager<contractWrappersObject.ERC20DividendCheckpoint_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
+  let getAttachedModulesMockStub: SinonStub<any, any>;
 
   beforeAll(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateErc20DividendDistribution
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryObject, 'MockedTokenFactoryObject');
-
-    tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
-    /*
-    // In progress work for getAttachedModules
-    const attachedModulesObject = new Promise<GeneralPermissionManager[]>((resolve, reject) => {
-      resolve();
-    });
-    wrappersMock.set('getAttachedModules', attachedModulesObject);
-    */
+
+    gpmMock = ImportMock.mockClass(contractWrappersObject, 'GeneralPermissionManager_3_0_0');
+    erc20DividendsMock = ImportMock.mockClass(
+      contractWrappersObject,
+      'ERC20DividendCheckpoint_3_0_0'
+    );
+    tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
+    erc20DividendsMock.mock('address', () => Promise.resolve(params1.erc20Address));
+    getAttachedModulesMockStub = wrappersMock.mock(
+      'getAttachedModules',
+      Promise.resolve([erc20DividendsMock.getMockInstance()])
+    );
 
     // Instantiate CreateErc20DividendDistribution
     target = new CreateErc20DividendDistribution(
@@ -73,6 +81,7 @@ describe('CreateErc20DividendDistribution', () => {
       expect(sinon.spy(target, 'prepareTransactions').calledOnce);
       expect(sinon.spy(target, 'addProcedure').calledOnce);
       expect(sinon.spy(target, 'addTransaction').calledOnce);
+      expect(getAttachedModulesMockStub().calledOnce);
       expect(tokenFactoryMockStub().calledOnce);
     });
   });

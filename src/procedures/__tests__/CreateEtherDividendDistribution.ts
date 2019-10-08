@@ -2,6 +2,7 @@ import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub } from 'sinon';
 import BigNumber from 'bignumber.js';
+import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
 import * as contextObject from '../../Context';
 import * as wrappersObject from '../../PolymathBase';
 import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
@@ -11,7 +12,6 @@ import { Procedure } from '~/procedures/Procedure';
 const params1 = {
   symbol: 'TEST1',
   name: 'Test Token 1',
-  erc20Address: '0x1',
   amount: new BigNumber(1),
   checkpointIndex: 1,
   maturityDate: new Date(2030, 1),
@@ -23,24 +23,29 @@ describe('CreateEtherDividendDistribution', () => {
   let contextMock: MockManager<contextObject.Context>;
   let wrappersMock: MockManager<wrappersObject.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryObject.MockedTokenFactoryObject>;
+  let gpmMock: MockManager<contractWrappersObject.GeneralPermissionManager_3_0_0>;
+  let etherDividendsMock: MockManager<contractWrappersObject.EtherDividendCheckpoint_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
+  let getAttachedModulesMockStub: SinonStub<any, any>;
 
   beforeAll(() => {
-    // Mock the context, wrappers, and tokenFactory to test CreateErc20DividendDistribution
+    // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryObject, 'MockedTokenFactoryObject');
-
-    tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
-    /*
-    // In progress work for getAttachedModules
-    const attachedModulesObject = new Promise<GeneralPermissionManager[]>((resolve, reject) => {
-      resolve();
-    });
-    wrappersMock.set('getAttachedModules', attachedModulesObject);
-    */
+
+    gpmMock = ImportMock.mockClass(contractWrappersObject, 'GeneralPermissionManager_3_0_0');
+    etherDividendsMock = ImportMock.mockClass(
+      contractWrappersObject,
+      'EtherDividendCheckpoint_3_0_0'
+    );
+    getAttachedModulesMockStub = wrappersMock.mock(
+      'getAttachedModules',
+      Promise.resolve([etherDividendsMock])
+    );
+    tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
 
     // Instantiate CreateEtherDividendDistribution
     target = new CreateEtherDividendDistribution(
