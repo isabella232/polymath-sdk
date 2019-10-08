@@ -18,15 +18,7 @@ export interface FeatureStatuses {
   [Feature.EtherDividends]: boolean;
 }
 
-type EnableOpts =
-  | EnablePermissionsOpts
-  | EnableShareholdersOpts
-  | EnableErc20DividendsOpts
-  | EnableEtherDividendsOpts;
-
-export interface EnablePermissionsOpts {}
-
-export interface EnableShareholdersOpts {}
+type EnableOpts = EnableErc20DividendsOpts | EnableEtherDividendsOpts;
 
 export interface EnableErc20DividendsOpts {
   storageWalletAddress: string;
@@ -37,12 +29,10 @@ export interface EnableEtherDividendsOpts {
 }
 
 export interface Enable {
-  (args: { feature: Feature.Permissions }, opts: EnablePermissionsOpts): Promise<
+  (args: { feature: Feature.Permissions }): Promise<
     TransactionQueue<EnableGeneralPermissionManagerProcedureArgs>
   >;
-  (args: { feature: Feature.Shareholders }, opts: EnableShareholdersOpts): Promise<
-    TransactionQueue
-  >; // poorly typed because the corresponding procedure doesn't exist yet
+  (args: { feature: Feature.Shareholders }): Promise<TransactionQueue>; // poorly typed because the corresponding procedure doesn't exist yet
   (args: { feature: Feature.Erc20Dividends }, opts: EnableErc20DividendsOpts): Promise<
     TransactionQueue<EnableDividendManagersProcedureArgs>
   >;
@@ -145,7 +135,7 @@ export class Features extends SubModule {
    */
   public enable: Enable = async (
     args: { feature: Feature },
-    opts: EnableOpts
+    opts?: EnableOpts
   ): Promise<TransactionQueue> => {
     const { feature } = args;
 
