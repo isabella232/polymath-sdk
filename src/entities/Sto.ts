@@ -1,7 +1,7 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
-import { StoType, isStoType, Currency, ErrorCode, Feature, StoRole } from '../types';
+import { StoType, isStoType, Currency, ErrorCode, StoRole } from '../types';
 import { Investment } from './Investment';
 import { PolymathError } from '../PolymathError';
 import { Context } from '../Context';
