@@ -2,7 +2,8 @@ import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub } from 'sinon';
 import * as contextObject from '../../Context';
-import * as wrappersObject from '../../PolymathBase';
+import * as polymathBaseObject from '../../PolymathBase';
+import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
 import { ApproveErc20 } from '../../procedures/ApproveErc20';
 import { Procedure } from '~/procedures/Procedure';
 import BigNumber from 'bignumber.js';
@@ -17,17 +18,17 @@ const params1 = {
 describe('ApproveErc20', () => {
   let target: ApproveErc20;
   let contextMock: MockManager<contextObject.Context>;
-  let wrappersMock: MockManager<wrappersObject.PolymathBase>;
+  let wrappersMock: MockManager<polymathBaseObject.PolymathBase>;
+  let erc20Mock: MockManager<contractWrappersObject.ERC20>;
   let wrapperMockStub: SinonStub<any, any>;
 
   beforeAll(() => {
     // Mock the context and wrappers, including currentWallet and balanceOf to test ApproveErc20
     contextMock = ImportMock.mockClass(contextObject, 'Context');
-    wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
-    wrapperMockStub = wrappersMock.mock('getERC20TokenWrapper', {
-      // This object needs to return balanceOf() for the 'token'
-      balanceOf: params1.amount, // Need to correct syntax here?
-    });
+    wrappersMock = ImportMock.mockClass(polymathBaseObject, 'PolymathBase');
+    erc20Mock = ImportMock.mockClass(contractWrappersObject, 'ERC20');
+    erc20Mock.mock('balanceOf', {});
+    wrapperMockStub = wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     const ownerPromise = new Promise<string>((resolve, reject) => {
       resolve();
