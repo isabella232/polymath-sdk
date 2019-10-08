@@ -43,7 +43,7 @@ describe('CreateErc20DividendDistribution', () => {
       'ERC20DividendCheckpoint_3_0_0'
     );
     tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
-    erc20DividendsMock.mock('address', () => Promise.resolve(params1.erc20Address));
+    erc20DividendsMock.mock('address', Promise.resolve(params1.erc20Address));
     getAttachedModulesMockStub = wrappersMock.mock(
       'getAttachedModules',
       Promise.resolve([erc20DividendsMock.getMockInstance()])

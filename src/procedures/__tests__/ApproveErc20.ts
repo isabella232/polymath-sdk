@@ -27,7 +27,7 @@ describe('ApproveErc20', () => {
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(polymathBaseObject, 'PolymathBase');
     erc20Mock = ImportMock.mockClass(contractWrappersObject, 'ERC20');
-    erc20Mock.mock('balanceOf', {});
+    erc20Mock.mock('balanceOf', Promise.resolve(params1.amount));
     wrapperMockStub = wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     const ownerPromise = new Promise<string>((resolve, reject) => {
