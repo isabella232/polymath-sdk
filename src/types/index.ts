@@ -468,7 +468,12 @@ export enum SecurityTokenRole {
   ShareholdersAdministrator = 'ShareholdersAdministrator',
 }
 
-export type Role = SecurityTokenRole;
+export enum StoRole {
+  StoOperator = 'StoOperator',
+  StoAdministrator = 'StoAdministrator',
+}
+
+export type Role = SecurityTokenRole | StoRole;
 
 export type Module =
   | GeneralPermissionManager

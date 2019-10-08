@@ -1,11 +1,11 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
-import { StoType, isStoType, Currency, ErrorCode } from '../types';
+import { StoType, isStoType, Currency, ErrorCode, Role, Feature } from '../types';
 import { Investment } from './Investment';
 import { PolymathError } from '../PolymathError';
 import { Context } from '../Context';
-import { PauseSto } from '../procedures';
+import { PauseSto, ChangeDelegatePermission } from '../procedures';
 
 export interface UniqueIdentifiers {
   securityTokenId: string;
@@ -111,10 +111,60 @@ export abstract class Sto<P> extends Entity<P> {
     this.context = context;
   }
 
+  /**
+   * Pause the offering
+   */
   public pause = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
     const procedure = new PauseSto({ stoAddress, stoType, symbol }, this.context);
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Assigns a role on the STO to a delegate
+   *
+   * @param delegateAddress wallet address of the delegate
+   * @param role role to assign
+   * @param description description of the delegate (defaults to empty string, is ignored if the delegate already exists)
+   */
+  public assignRole = async (args: {
+    delegateAddress: string;
+    role: Role;
+    description?: string;
+  }) => {
+    const { securityTokenSymbol: symbol } = this;
+
+    const procedure = new ChangeDelegatePermission(
+      {
+        symbol,
+        assign: true,
+        ...args,
+      },
+      this.context
+    );
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Removes a role from a delegate
+   *
+   * @param delegateAddress wallet address of the delegate
+   * @param role role to revoke
+   */
+  public revokeRole = async (args: { delegateAddress: string; role: Role }) => {
+    const { securityTokenSymbol: symbol } = this;
+
+    const procedure = new ChangeDelegatePermission(
+      {
+        symbol,
+        assign: false,
+        ...args,
+      },
+      this.context
+    );
 
     return procedure.prepare();
   };

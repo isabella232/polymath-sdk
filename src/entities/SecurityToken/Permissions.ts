@@ -64,14 +64,11 @@ export class Permissions extends SubModule {
    */
   public getFeatureFromRole = async (args: { role: SecurityTokenRole }) => {
     const {
-      securityToken: {
-        features: { getStatus },
-      },
+      securityToken: { features },
     } = this;
 
-    const status = await getStatus();
-
-    if (!status[Feature.Permissions]) {
+    const isPermissionsEnabled = await features.isEnabled({ feature: Feature.Permissions });
+    if (!isPermissionsEnabled) {
       throw new PolymathError({
         code: ErrorCode.FeatureNotEnabled,
         message: 'You must enable the Permissions feature',
@@ -91,7 +88,7 @@ export class Permissions extends SubModule {
   };
 
   /**
-   * Assigns a role to a delegate
+   * Assigns a role on the Security Token to a delegate
    *
    * @param delegateAddress wallet address of the delegate
    * @param role role to assign
