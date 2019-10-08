@@ -13,6 +13,7 @@ const params1 = {
   amount: new BigNumber(1),
   spender: '0x1',
   owner: '0x3',
+  tokenAddress: '0x2222222222222222222222222222222222222222',
 };
 
 describe('ApproveErc20', () => {
