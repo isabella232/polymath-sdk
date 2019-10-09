@@ -5,6 +5,7 @@ import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
 import { SinonStub } from 'sinon';
 import * as contextObject from '../../Context';
 import * as wrappersObject from '../../PolymathBase';
+import * as approvalObject from '../ApproveErc20';
 import { CreateSecurityToken } from '../../procedures/CreateSecurityToken';
 import { Procedure } from '~/procedures/Procedure';
 import { Wallet } from '~/Wallet';
@@ -22,10 +23,8 @@ describe('CreateSecurityToken', () => {
   let target: CreateSecurityToken;
   let contextMock: MockManager<contextObject.Context>;
   let wrappersMock: MockManager<wrappersObject.PolymathBase>;
-  let polyTokenMock: MockManager<contractWrappersObject.PolyToken>;
-  let checkPolyBalanceStub: SinonStub<any, any>;
-  let checkPolyAddressStub: SinonStub<any, any>;
-  let checkPolyAllowanceStub: SinonStub<any, any>;
+  let approvalMock: MockManager<approvalObject.ApproveErc20>;
+  let prepareApprovalTransactionsStub: SinonStub<any, any>;
 
   let securityTokenRegistryMock: MockManager<contractWrappersObject.SecurityTokenRegistry>;
 
@@ -33,14 +32,17 @@ describe('CreateSecurityToken', () => {
     // Mock the context, wrappers, and tokenFactory to test
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
-    polyTokenMock = ImportMock.mockClass(contractWrappersObject, 'PolyToken');
+
+    // Import mock for approveErc20
+    approvalMock = ImportMock.mockClass(approvalObject, 'ApproveErc20');
+    prepareApprovalTransactionsStub = approvalMock.mock('prepareTransactions', Promise.resolve());
+    approvalMock.set('transactions' as any, []);
+    approvalMock.set('fees' as any, []);
 
     securityTokenRegistryMock = ImportMock.mockClass(
       contractWrappersObject,
       'SecurityTokenRegistry'
     );
-
-    // approveErc20Mock.set('prepareTransactions', () => Promise.resolve());
 
     securityTokenRegistryMock.mock('tickerAvailable', Promise.resolve(false));
     securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(true));
@@ -58,14 +60,6 @@ describe('CreateSecurityToken', () => {
       resolve(params1.owner);
     });
     contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
-
-    // TODO We should replace this with a mock of ApproveErc20 but right now there is a bug
-    // Bug with import mockClass("TypeError: Invalid attempt to spread non-iterable instance")
-    checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
-    checkPolyAddressStub = polyTokenMock.mock('address', Promise.resolve(params1.owner));
-    checkPolyAllowanceStub = polyTokenMock.mock('allowance', Promise.resolve(new BigNumber(0)));
-
-    wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
     // Instantiate CreateSecurityToken
@@ -96,6 +90,7 @@ describe('CreateSecurityToken', () => {
       expect(sinon.spy(target, 'prepareTransactions').calledOnce);
       expect(sinon.spy(target, 'addProcedure').calledOnce);
       expect(sinon.spy(target, 'addTransaction').calledOnce);
+      expect(prepareApprovalTransactionsStub().calledOnce);
     });
   });
 });
