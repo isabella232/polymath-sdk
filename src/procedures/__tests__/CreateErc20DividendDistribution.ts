@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js';
 import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
 import * as contextObject from '../../Context';
 import * as wrappersObject from '../../PolymathBase';
+import * as approveObject from '../ApproveErc20';
 import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
 import { CreateErc20DividendDistribution } from '../../procedures/CreateErc20DividendDistribution';
 import { Procedure } from '~/procedures/Procedure';
@@ -23,6 +24,7 @@ describe('CreateErc20DividendDistribution', () => {
   let target: CreateErc20DividendDistribution;
   let contextMock: MockManager<contextObject.Context>;
   let wrappersMock: MockManager<wrappersObject.PolymathBase>;
+  let approvalMock: MockManager<approveObject.ApproveErc20>;
   let tokenFactoryMock: MockManager<tokenFactoryObject.MockedTokenFactoryObject>;
   let gpmMock: MockManager<contractWrappersObject.GeneralPermissionManager_3_0_0>;
   let erc20DividendsMock: MockManager<contractWrappersObject.ERC20DividendCheckpoint_3_0_0>;
@@ -34,6 +36,10 @@ describe('CreateErc20DividendDistribution', () => {
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryObject, 'MockedTokenFactoryObject');
+    // Issue- TypeError: Invalid attempt to spread non-iterable instance
+    approvalMock = ImportMock.mockClass(approveObject, 'ApproveErc20');
+    // approveErc20Mock.set('prepareTransactions', () => Promise.resolve());
+
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
