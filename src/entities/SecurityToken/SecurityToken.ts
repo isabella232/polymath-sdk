@@ -1,6 +1,7 @@
 import { Context } from '../../Context';
 import { Entity } from '../Entity';
 import { serialize, unserialize as unserializeUtil } from '../../utils';
+import { Features } from './Features';
 import { Shareholders } from './Shareholders';
 import { Dividends } from './Dividends';
 import { Offerings } from './Offerings';
@@ -57,6 +58,8 @@ export class SecurityToken extends Entity<Params> {
 
   public address: string;
 
+  public features: Features;
+
   public shareholders: Shareholders;
 
   public dividends: Dividends;
@@ -77,6 +80,7 @@ export class SecurityToken extends Entity<Params> {
     this.owner = owner;
     this.address = address;
     this.uid = SecurityToken.generateId({ symbol });
+    this.features = new Features(this, context);
     this.shareholders = new Shareholders(this, context);
     this.dividends = new Dividends(this, context);
     this.offerings = new Offerings(this, context);

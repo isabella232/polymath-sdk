@@ -14,14 +14,27 @@ import {
   SecurityToken,
   ModuleType,
   BigNumber,
-  isERC20DividendCheckpoint_3_0_0,
   isERC20DividendCheckpoint,
+  BlacklistTransferManager,
+  LockUpTransferManager,
+  VestingEscrowWallet,
+  RestrictedPartialSaleTransferManager,
+  Perm,
 } from '@polymathnetwork/contract-wrappers';
 import { range, flatten, includes } from 'lodash';
 import P from 'bluebird';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';
-import { ErrorCode, DividendType } from './types';
+import { ErrorCode, DividendType, Module, SecurityTokenRole } from './types';
+
+interface GetModuleAddressesByNameParams {
+  symbol: string;
+  moduleName: ModuleName;
+}
+
+interface GetModuleAddressesByNameOpts {
+  unarchived: boolean;
+}
 
 interface GetAttachedModulesParams {
   symbol: string;
@@ -56,6 +69,18 @@ interface GetAttachedVolumeRestrictionTransferManagersParams extends GetAttached
   moduleName: ModuleName.VolumeRestrictionTM;
 }
 
+interface GetAttachedBlacklistTransferManagersParams extends GetAttachedModulesParams {
+  moduleName: ModuleName.BlacklistTransferManager;
+}
+
+interface GetAttachedLockUpTransferManagersParams extends GetAttachedModulesParams {
+  moduleName: ModuleName.LockUpTransferManager;
+}
+
+interface GetAttachedRestrictedPartialSaleTransferManagersParams extends GetAttachedModulesParams {
+  moduleName: ModuleName.RestrictedPartialSaleTM;
+}
+
 interface GetAttachedCappedStosParams extends GetAttachedModulesParams {
   moduleName: ModuleName.CappedSTO;
 }
@@ -70,6 +95,10 @@ interface GetAttachedErc20DividendCheckpointsParams extends GetAttachedModulesPa
 
 interface GetAttachedEtherDividendCheckpointsParams extends GetAttachedModulesParams {
   moduleName: ModuleName.EtherDividendCheckpoint;
+}
+
+interface GetAttachedVestingEscrowWalletsParams extends GetAttachedModulesParams {
+  moduleName: ModuleName.VestingEscrowWallet;
 }
 
 interface GetAttachedModules {
@@ -92,6 +121,16 @@ interface GetAttachedModules {
     params: GetAttachedVolumeRestrictionTransferManagersParams,
     opts?: GetAttachedModulesOpts
   ): Promise<VolumeRestrictionTransferManager[]>;
+  (params: GetAttachedBlacklistTransferManagersParams, opts?: GetAttachedModulesOpts): Promise<
+    BlacklistTransferManager[]
+  >;
+  (params: GetAttachedLockUpTransferManagersParams, opts?: GetAttachedModulesOpts): Promise<
+    LockUpTransferManager[]
+  >;
+  (
+    params: GetAttachedRestrictedPartialSaleTransferManagersParams,
+    opts?: GetAttachedModulesOpts
+  ): Promise<RestrictedPartialSaleTransferManager[]>;
   (params: GetAttachedCappedStosParams, opts?: GetAttachedModulesOpts): Promise<CappedSTO[]>;
   (params: GetAttachedUSDTieredStosParams, opts?: GetAttachedModulesOpts): Promise<USDTieredSTO[]>;
   (params: GetAttachedErc20DividendCheckpointsParams, opts?: GetAttachedModulesOpts): Promise<
@@ -100,6 +139,10 @@ interface GetAttachedModules {
   (params: GetAttachedEtherDividendCheckpointsParams, opts?: GetAttachedModulesOpts): Promise<
     EtherDividendCheckpoint[]
   >;
+  (params: GetAttachedVestingEscrowWalletsParams, opts?: GetAttachedModulesOpts): Promise<
+    VestingEscrowWallet[]
+  >;
+  (params: GetAttachedModulesParams, opts?: GetAttachedModulesOpts): Promise<Module[]>;
 }
 
 interface GetModuleFactoryAddressArgs {
@@ -161,12 +204,11 @@ export class PolymathBase extends PolymathAPI {
       [ModuleName.BlacklistTransferManager]: ModuleType.TransferManager,
       [ModuleName.LockUpTransferManager]: ModuleType.TransferManager,
       [ModuleName.VolumeRestrictionTM]: ModuleType.TransferManager,
+      [ModuleName.RestrictedPartialSaleTM]: ModuleType.TransferManager,
       [ModuleName.ERC20DividendCheckpoint]: ModuleType.Dividends,
       [ModuleName.EtherDividendCheckpoint]: ModuleType.Dividends,
       [ModuleName.GeneralPermissionManager]: ModuleType.PermissionManager,
       [ModuleName.VestingEscrowWallet]: ModuleType.Wallet,
-      [ModuleName.BlacklistTransferManager]: ModuleType.TransferManager,
-      [ModuleName.RestrictedPartialSaleTM]: ModuleType.TransferManager,
     };
 
     const availableModules = await this.moduleRegistry.getModulesByTypeAndToken({
@@ -201,11 +243,11 @@ export class PolymathBase extends PolymathAPI {
     });
   };
 
-  public getAttachedModules: GetAttachedModules = async (
-    { symbol, moduleName }: GetAttachedModulesParams,
-    opts?: GetAttachedModulesOpts
-  ): Promise<any[]> => {
-    const { tokenFactory, moduleFactory } = this;
+  public getModuleAddressesByName = async (
+    { symbol, moduleName }: GetModuleAddressesByNameParams,
+    opts?: GetModuleAddressesByNameOpts
+  ) => {
+    const { tokenFactory } = this;
 
     const securityToken = await tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
 
@@ -224,13 +266,24 @@ export class PolymathBase extends PolymathAPI {
       filteredModuleAddresses = moduleAddresses;
     }
 
+    return filteredModuleAddresses;
+  };
+
+  public getAttachedModules: GetAttachedModules = async (
+    { symbol, moduleName }: GetAttachedModulesParams,
+    opts?: GetAttachedModulesOpts
+  ): Promise<any[]> => {
+    const { moduleFactory } = this;
+
+    const moduleAddresses = await this.getModuleAddressesByName({ moduleName, symbol });
+
     const { getModuleInstance } = moduleFactory;
 
     // This has to be done this way because of typescript limitations
     let wrappedModules;
     switch (moduleName) {
       case ModuleName.GeneralPermissionManager: {
-        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
           getModuleInstance({
             address: moduleAddress,
             name: moduleName,
@@ -240,7 +293,7 @@ export class PolymathBase extends PolymathAPI {
         return wrappedModules;
       }
       case ModuleName.CountTransferManager: {
-        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
           getModuleInstance({
             address: moduleAddress,
             name: moduleName,
@@ -250,7 +303,7 @@ export class PolymathBase extends PolymathAPI {
         return wrappedModules;
       }
       case ModuleName.GeneralTransferManager: {
-        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
           getModuleInstance({
             address: moduleAddress,
             name: moduleName,
@@ -260,7 +313,7 @@ export class PolymathBase extends PolymathAPI {
         return wrappedModules;
       }
       case ModuleName.ManualApprovalTransferManager: {
-        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
           getModuleInstance({
             address: moduleAddress,
             name: moduleName,
@@ -270,7 +323,7 @@ export class PolymathBase extends PolymathAPI {
         return wrappedModules;
       }
       case ModuleName.PercentageTransferManager: {
-        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
           getModuleInstance({
             address: moduleAddress,
             name: moduleName,
@@ -280,7 +333,37 @@ export class PolymathBase extends PolymathAPI {
         return wrappedModules;
       }
       case ModuleName.VolumeRestrictionTM: {
-        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
+          getModuleInstance({
+            address: moduleAddress,
+            name: moduleName,
+          })
+        );
+
+        return wrappedModules;
+      }
+      case ModuleName.BlacklistTransferManager: {
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
+          getModuleInstance({
+            address: moduleAddress,
+            name: moduleName,
+          })
+        );
+
+        return wrappedModules;
+      }
+      case ModuleName.LockUpTransferManager: {
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
+          getModuleInstance({
+            address: moduleAddress,
+            name: moduleName,
+          })
+        );
+
+        return wrappedModules;
+      }
+      case ModuleName.RestrictedPartialSaleTM: {
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
           getModuleInstance({
             address: moduleAddress,
             name: moduleName,
@@ -290,7 +373,7 @@ export class PolymathBase extends PolymathAPI {
         return wrappedModules;
       }
       case ModuleName.CappedSTO: {
-        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
           getModuleInstance({
             address: moduleAddress,
             name: moduleName,
@@ -300,7 +383,7 @@ export class PolymathBase extends PolymathAPI {
         return wrappedModules;
       }
       case ModuleName.UsdTieredSTO: {
-        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
           getModuleInstance({
             address: moduleAddress,
             name: moduleName,
@@ -310,7 +393,7 @@ export class PolymathBase extends PolymathAPI {
         return wrappedModules;
       }
       case ModuleName.ERC20DividendCheckpoint: {
-        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
           getModuleInstance({
             address: moduleAddress,
             name: moduleName,
@@ -320,7 +403,17 @@ export class PolymathBase extends PolymathAPI {
         return wrappedModules;
       }
       case ModuleName.EtherDividendCheckpoint: {
-        wrappedModules = await P.map(filteredModuleAddresses, moduleAddress =>
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
+          getModuleInstance({
+            address: moduleAddress,
+            name: moduleName,
+          })
+        );
+
+        return wrappedModules;
+      }
+      case ModuleName.VestingEscrowWallet: {
+        wrappedModules = await P.map(moduleAddresses, moduleAddress =>
           getModuleInstance({
             address: moduleAddress,
             name: moduleName,
@@ -560,5 +653,46 @@ export class PolymathBase extends PolymathAPI {
     }
 
     return dividends;
+  };
+
+  public roleToPermission = async ({ role }: { role: SecurityTokenRole }) => {
+    let moduleName: ModuleName;
+    let permission: Perm;
+
+    if (role === SecurityTokenRole.ShareholdersAdministrator) {
+      moduleName = ModuleName.GeneralTransferManager;
+      permission = Perm.Admin;
+    } else if (role === SecurityTokenRole.PermissionsAdministrator) {
+      moduleName = ModuleName.GeneralPermissionManager;
+      permission = Perm.Admin;
+    } else if (
+      [
+        SecurityTokenRole.Erc20DividendsAdministrator,
+        SecurityTokenRole.Erc20DividendsOperator,
+      ].includes(role)
+    ) {
+      moduleName = ModuleName.ERC20DividendCheckpoint;
+      permission =
+        role === SecurityTokenRole.Erc20DividendsAdministrator ? Perm.Admin : Perm.Operator;
+    } else if (
+      [
+        SecurityTokenRole.EtherDividendsAdministrator,
+        SecurityTokenRole.EtherDividendsOperator,
+      ].includes(role)
+    ) {
+      moduleName = ModuleName.EtherDividendCheckpoint;
+      permission =
+        role === SecurityTokenRole.EtherDividendsAdministrator ? Perm.Admin : Perm.Operator;
+    } else {
+      throw new PolymathError({
+        code: ErrorCode.FatalError,
+        message: `Role ${role} not supported`,
+      });
+    }
+
+    return {
+      permission,
+      moduleName,
+    };
   };
 }

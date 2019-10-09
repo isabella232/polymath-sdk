@@ -3,6 +3,20 @@ import {
   BigNumber,
   FundRaiseType as Currency,
   CappedSTOFundRaiseType as CappedStoCurrency,
+  GeneralTransferManager,
+  GeneralPermissionManager,
+  CountTransferManager,
+  ManualApprovalTransferManager,
+  PercentageTransferManager,
+  VolumeRestrictionTransferManager,
+  CappedSTO,
+  USDTieredSTO,
+  ERC20DividendCheckpoint,
+  EtherDividendCheckpoint,
+  VestingEscrowWallet,
+  BlacklistTransferManager,
+  LockUpTransferManager,
+  RestrictedPartialSaleTransferManager,
 } from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
@@ -43,6 +57,7 @@ export interface TaxWithholdingEntry {
 
 export enum ErrorCode {
   IncompatibleBrowser = 'IncompatibleBrowser',
+  FeatureNotEnabled = 'FeatureNotEnabled',
   NonBrowserEnvironment = 'NonBrowserEnvironment',
   MetamaskNotInstalled = 'MetamaskNotInstalled',
   UserDeniedAccess = 'UserDeniedAccess',
@@ -92,7 +107,8 @@ export enum ProcedureType {
   UpdateDividendsTaxWithholdingList = 'UpdateDividendsTaxWithholdingList',
   SetDividendsWallet = 'SetDividendsWallet',
   PushDividendPayment = 'PushDividendPayment',
-  ChangeDelegatePermission = 'ChangeDelegatePermission',
+  AssignSecurityTokenRole = 'AssignSecurityTokenRole',
+  AssignStoRole = 'AssignStoRole',
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
@@ -120,7 +136,7 @@ export enum PolyTransactionTag {
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
-  ChangeDelegatePermission = 'ChangeDelegatePermission',
+  ChangePermission = 'ChangePermission',
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
@@ -291,12 +307,21 @@ export interface SetDividendsWalletProcedureArgs {
   address: string;
 }
 
-export interface ChangeDelegatePermissionProcedureArgs {
+export interface AssignSecurityTokenRoleProcedureArgs {
   symbol: string;
-  delegate: string;
-  op: PermissibleOperation;
-  isGranted: boolean;
-  details?: string;
+  delegateAddress: string;
+  role: SecurityTokenRole;
+  assign: boolean;
+  description?: string;
+}
+
+export interface AssignStoRoleProcedureArgs {
+  symbol: string;
+  delegateAddress: string;
+  stoAddress: string;
+  role: StoRole;
+  assign: boolean;
+  description?: string;
 }
 
 export interface ControllerTransferProcedureArgs {
@@ -375,7 +400,8 @@ export interface ProcedureArguments {
   [ProcedureType.PauseSto]: PauseStoProcedureArgs;
   [ProcedureType.ControllerTransfer]: ControllerTransferProcedureArgs;
   [ProcedureType.SetController]: SetControllerProcedureArgs;
-  [ProcedureType.ChangeDelegatePermission]: ChangeDelegatePermissionProcedureArgs;
+  [ProcedureType.AssignSecurityTokenRole]: AssignSecurityTokenRoleProcedureArgs;
+  [ProcedureType.AssignStoRole]: AssignStoRoleProcedureArgs;
   [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
@@ -395,11 +421,6 @@ export enum TransactionQueueStatus {
   Running = 'Running',
   Failed = 'Failed',
   Succeeded = 'Succeeded',
-}
-
-export enum PermissibleOperation {
-  // MODULE_COMPONENT_OP
-  ModifyShareholderData = 'GTM_WHITELIST_UPDATE',
 }
 
 export interface Fees {
@@ -433,11 +454,48 @@ export function isPojo(pojo: any): pojo is Pojo {
   );
 }
 
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type Omit<T, K> = { [key in Exclude<keyof T, K>]: T[key] };
 
 export enum TransactionSpeed {
-  Slow = 'slow',
-  Medium = 'medium',
-  Fast = 'fast',
-  Fastest = 'fastest',
+  Slow = 'Slow',
+  Medium = 'Medium',
+  Fast = 'Fast',
+  Fastest = 'Fastest',
 }
+
+export enum Feature {
+  Permissions = 'Permissions',
+  Shareholders = 'Shareholders',
+  Erc20Dividends = 'Erc20Dividends',
+  EtherDividends = 'EtherDividends',
+}
+
+export enum SecurityTokenRole {
+  PermissionsAdministrator = 'PermissionsAdministrator',
+  Erc20DividendsOperator = 'Erc20DividendsOperator',
+  Erc20DividendsAdministrator = 'Erc20DividendsAdministrator',
+  EtherDividendsOperator = 'EtherDividendsOperator',
+  EtherDividendsAdministrator = 'EtherDividendsAdministrator',
+  ShareholdersAdministrator = 'ShareholdersAdministrator',
+}
+
+export enum StoRole {
+  StoOperator = 'StoOperator',
+  StoAdministrator = 'StoAdministrator',
+}
+
+export type Module =
+  | GeneralPermissionManager
+  | GeneralTransferManager
+  | BlacklistTransferManager
+  | LockUpTransferManager
+  | CountTransferManager
+  | ManualApprovalTransferManager
+  | PercentageTransferManager
+  | VolumeRestrictionTransferManager
+  | RestrictedPartialSaleTransferManager
+  | CappedSTO
+  | USDTieredSTO
+  | ERC20DividendCheckpoint
+  | EtherDividendCheckpoint
+  | VestingEscrowWallet;
