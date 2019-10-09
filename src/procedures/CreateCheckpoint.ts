@@ -27,7 +27,7 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
     } catch (err) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `There is no Security Token with symbol ${symbol}, ${err}`,
+        message: `There is no Security Token with symbol ${symbol}`,
       });
     }
 
