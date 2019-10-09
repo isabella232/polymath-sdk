@@ -139,5 +139,28 @@ describe('ApproveErc20', () => {
       expect(sinon.spy(target, 'addTransaction').calledOnce);
       expect(wrapperMockStub().calledOnce);
     });
+
+    test('should use token faucet if the balanceOf is less than amount (with poly token)', async () => {
+      // Setup test situation
+      wrappersMock.mock('isTestnet', Promise.resolve(true));
+      const zeroBalanceOf = new BigNumber(0);
+      checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(zeroBalanceOf));
+
+      const wrapperMockStub = wrappersMock.mock(
+        'getERC20TokenWrapper',
+        erc20Mock.getMockInstance()
+      );
+      // Instantiate ApproveErc20
+      target = new ApproveErc20(params1, contextMock.getMockInstance());
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(sinon.spy(target, 'prepare').calledOnce);
+      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
+      expect(sinon.spy(target, 'addProcedure').calledOnce);
+      expect(sinon.spy(target, 'addTransaction').calledOnce);
+      expect(wrapperMockStub().calledOnce);
+    });
   });
 });
