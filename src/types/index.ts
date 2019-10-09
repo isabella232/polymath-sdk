@@ -401,6 +401,7 @@ export interface ProcedureArguments {
   [ProcedureType.ControllerTransfer]: ControllerTransferProcedureArgs;
   [ProcedureType.SetController]: SetControllerProcedureArgs;
   [ProcedureType.AssignSecurityTokenRole]: AssignSecurityTokenRoleProcedureArgs;
+  [ProcedureType.AssignStoRole]: AssignStoRoleProcedureArgs;
   [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};

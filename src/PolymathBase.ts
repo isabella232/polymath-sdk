@@ -671,7 +671,7 @@ export class PolymathBase extends PolymathAPI {
         SecurityTokenRole.Erc20DividendsOperator,
       ].includes(role)
     ) {
-      moduleName = ModuleName.GeneralTransferManager;
+      moduleName = ModuleName.ERC20DividendCheckpoint;
       permission =
         role === SecurityTokenRole.Erc20DividendsAdministrator ? Perm.Admin : Perm.Operator;
     } else if (
@@ -680,7 +680,7 @@ export class PolymathBase extends PolymathAPI {
         SecurityTokenRole.EtherDividendsOperator,
       ].includes(role)
     ) {
-      moduleName = ModuleName.ERC20DividendCheckpoint;
+      moduleName = ModuleName.EtherDividendCheckpoint;
       permission =
         role === SecurityTokenRole.EtherDividendsAdministrator ? Perm.Admin : Perm.Operator;
     } else {
