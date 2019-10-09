@@ -36,9 +36,12 @@ describe('CreateErc20DividendDistribution', () => {
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryObject, 'MockedTokenFactoryObject');
-    // Issue- TypeError: Invalid attempt to spread non-iterable instance
+
+    // Import mock out of ApproveErc20
     approvalMock = ImportMock.mockClass(approveObject, 'ApproveErc20');
-    // approveErc20Mock.set('prepareTransactions', () => Promise.resolve());
+    approvalMock.mock('prepareTransactions', Promise.resolve());
+    approvalMock.set('transactions' as any, []);
+    approvalMock.set('fees' as any, []);
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
