@@ -57,8 +57,7 @@ export class CreateErc20DividendDistribution extends Procedure<
     if (!erc20Module) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message:
-          "The ERC20 Dividends Manager hasn't been enabled. Did you forget to call dividends.enable() on the Security Token?",
+        message: "The ERC20 Dividends Manager hasn't been enabled",
       });
     }
 

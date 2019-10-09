@@ -23,8 +23,7 @@ export class Erc20DividendsManagerFactory extends Factory<
     if (!dividendsModule) {
       throw new PolymathError({
         code: ErrorCode.FetcherValidationError,
-        message:
-          "Dividends of the specified type haven't been enabled. Did you forget to call dividends.enable() on your Security Token?",
+        message: "Dividends of the specified type haven't been enabled",
       });
     }
 
