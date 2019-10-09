@@ -8,6 +8,8 @@ import { ApproveErc20 } from '../../procedures/ApproveErc20';
 import { Procedure } from '~/procedures/Procedure';
 import BigNumber from 'bignumber.js';
 import { Wallet } from '~/Wallet';
+import { PolymathError } from '~/PolymathError';
+import { ErrorCode } from '~/types';
 
 const params1 = {
   amount: new BigNumber(1),
@@ -37,7 +39,7 @@ describe('ApproveErc20', () => {
   let checkErc20AddressStub: SinonStub<any, any>;
   let checkErc20BalanceStub: SinonStub<any, any>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     // Mock the context and wrappers, including currentWallet and balanceOf to test ApproveErc20
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(polymathBaseObject, 'PolymathBase');
@@ -84,28 +86,58 @@ describe('ApproveErc20', () => {
       expect(checkPolyAllowanceStub().calledOnce);
       expect(checkPolyAddressStub().calledOnce);
     });
-  });
 
-  test('should send the transaction to createCheckpoint with a custom erc20 token', async () => {
-    // Used by custom erc20 token
-    checkErc20BalanceStub = erc20Mock.mock('balanceOf', Promise.resolve(params2.amount));
-    checkErc20AddressStub = erc20Mock.mock('address', Promise.resolve(params2.spender));
-    checkErc20AllowanceStub = erc20Mock.mock('allowance', Promise.resolve(new BigNumber(0)));
+    test('should send the transaction to createCheckpoint with a custom erc20 token', async () => {
+      // Used by custom erc20 token
+      checkErc20BalanceStub = erc20Mock.mock('balanceOf', Promise.resolve(params2.amount));
+      checkErc20AddressStub = erc20Mock.mock('address', Promise.resolve(params2.spender));
+      checkErc20AllowanceStub = erc20Mock.mock('allowance', Promise.resolve(new BigNumber(0)));
 
-    const wrapperMockStub = wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
-    // Instantiate ApproveErc20
-    target = new ApproveErc20(params2, contextMock.getMockInstance());
-    // Real call
-    await target.prepareTransactions();
+      const wrapperMockStub = wrappersMock.mock(
+        'getERC20TokenWrapper',
+        erc20Mock.getMockInstance()
+      );
+      // Instantiate ApproveErc20
+      target = new ApproveErc20(params2, contextMock.getMockInstance());
+      // Real call
+      await target.prepareTransactions();
 
-    // Verifications
-    expect(sinon.spy(target, 'prepare').calledOnce);
-    expect(sinon.spy(target, 'prepareTransactions').calledOnce);
-    expect(sinon.spy(target, 'addProcedure').calledOnce);
-    expect(sinon.spy(target, 'addTransaction').calledOnce);
-    expect(wrapperMockStub().calledOnce);
-    expect(checkErc20BalanceStub().calledOnce);
-    expect(checkErc20AllowanceStub().calledOnce);
-    expect(checkErc20AddressStub().calledOnce);
+      // Verifications
+      expect(sinon.spy(target, 'prepare').calledOnce);
+      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
+      expect(sinon.spy(target, 'addProcedure').calledOnce);
+      expect(sinon.spy(target, 'addTransaction').calledOnce);
+      expect(wrapperMockStub().calledOnce);
+      expect(checkErc20BalanceStub().calledOnce);
+      expect(checkErc20AllowanceStub().calledOnce);
+      expect(checkErc20AddressStub().calledOnce);
+    });
+
+    test('should fail with not enough funds error thrown ', async () => {
+      // Setup test situation
+      const zeroBalanceOf = new BigNumber(0);
+      checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(zeroBalanceOf));
+
+      const wrapperMockStub = wrappersMock.mock(
+        'getERC20TokenWrapper',
+        erc20Mock.getMockInstance()
+      );
+      // Instantiate ApproveErc20
+      target = new ApproveErc20(params1, contextMock.getMockInstance());
+      // Real call
+      expect(await target.prepareTransactions()).toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: 'Not enough funds',
+        })
+      );
+
+      // Verifications
+      expect(sinon.spy(target, 'prepare').calledOnce);
+      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
+      expect(sinon.spy(target, 'addProcedure').calledOnce);
+      expect(sinon.spy(target, 'addTransaction').calledOnce);
+      expect(wrapperMockStub().calledOnce);
+    });
   });
 });
