@@ -125,7 +125,7 @@ describe('ApproveErc20', () => {
       // Instantiate ApproveErc20
       target = new ApproveErc20(params1, contextMock.getMockInstance());
       // Real call
-      expect(await target.prepareTransactions()).toThrow(
+      expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: 'Not enough funds',
