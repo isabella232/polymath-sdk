@@ -9,7 +9,7 @@ import { Procedure } from '~/procedures/Procedure';
 import BigNumber from 'bignumber.js';
 import { Wallet } from '~/Wallet';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode } from '~/types';
+import { ErrorCode, PolyTransactionTag } from '~/types';
 
 const params1 = {
   amount: new BigNumber(1),
@@ -161,6 +161,37 @@ describe('ApproveErc20', () => {
       expect(sinon.spy(target, 'addProcedure').calledOnce);
       expect(sinon.spy(target, 'addTransaction').calledOnce);
       expect(wrapperMockStub().calledOnce);
+    });
+
+    test('should return if it has sufficient allowance', async () => {
+      // Used by custom erc20 token
+      checkErc20BalanceStub = erc20Mock.mock('balanceOf', Promise.resolve(params2.amount));
+      checkErc20AddressStub = erc20Mock.mock('address', Promise.resolve(params2.spender));
+      // Sufficient allowance passed in
+      checkErc20AllowanceStub = erc20Mock.mock('allowance', Promise.resolve(new BigNumber(3)));
+
+      const wrapperMockStub = wrappersMock.mock(
+        'getERC20TokenWrapper',
+        erc20Mock.getMockInstance()
+      );
+      // Instantiate ApproveErc20
+      target = new ApproveErc20(params2, contextMock.getMockInstance());
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(sinon.spy(target, 'prepare').calledOnce);
+      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
+      expect(sinon.spy(target, 'addProcedure').calledOnce);
+      expect(
+        sinon.spy(target, 'addTransaction').neverCalledWith({
+          tag: PolyTransactionTag.ApproveErc20,
+        })
+      );
+      expect(wrapperMockStub().calledOnce);
+      expect(checkErc20BalanceStub().calledOnce);
+      expect(checkErc20AllowanceStub().calledOnce);
+      expect(checkErc20AddressStub().calledOnce);
     });
   });
 });
