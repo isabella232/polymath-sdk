@@ -28,7 +28,7 @@ describe('CreateSecurityToken', () => {
 
   let securityTokenRegistryMock: MockManager<contractWrappersObject.SecurityTokenRegistry>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
@@ -82,6 +82,27 @@ describe('CreateSecurityToken', () => {
 
   describe('CreateSecurityToken', () => {
     test('should send the transaction to CreateSecurityToken', async () => {
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(sinon.spy(target, 'prepare').calledOnce);
+      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
+      expect(sinon.spy(target, 'addProcedure').calledOnce);
+      expect(sinon.spy(target, 'addTransaction').calledOnce);
+      expect(prepareApprovalTransactionsStub().calledOnce);
+    });
+
+    test('should send the transaction to CreateSecurityToken with a treasury wallet', async () => {
+      target = new CreateSecurityToken(
+        {
+          name: params1.name,
+          symbol: params1.symbol,
+          divisible: params1.divisible,
+          treasuryWallet: '0x5', // Extra argument of treasuryWallet
+        },
+        contextMock.getMockInstance()
+      );
       // Real call
       await target.prepareTransactions();
 
