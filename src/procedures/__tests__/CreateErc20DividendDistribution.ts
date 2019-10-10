@@ -9,6 +9,8 @@ import * as approveObject from '../ApproveErc20';
 import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
 import { CreateErc20DividendDistribution } from '../../procedures/CreateErc20DividendDistribution';
 import { Procedure } from '~/procedures/Procedure';
+import { PolymathError } from '~/PolymathError';
+import { ErrorCode } from '~/types';
 
 const params1 = {
   symbol: 'TEST1',
@@ -31,7 +33,7 @@ describe('CreateErc20DividendDistribution', () => {
   let tokenFactoryMockStub: SinonStub<any, any>;
   let getAttachedModulesMockStub: SinonStub<any, any>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateErc20DividendDistribution
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
@@ -92,6 +94,17 @@ describe('CreateErc20DividendDistribution', () => {
       expect(sinon.spy(target, 'addTransaction').calledOnce);
       expect(getAttachedModulesMockStub().calledOnce);
       expect(tokenFactoryMockStub().calledOnce);
+    });
+
+    test('should throw error if the erc20 dividends manager has not been enabled', async () => {
+      getAttachedModulesMockStub = wrappersMock.mock('getAttachedModules', Promise.resolve([]));
+      // Real call
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: "The ERC20 Dividends Manager hasn't been enabled",
+        })
+      );
     });
   });
 });

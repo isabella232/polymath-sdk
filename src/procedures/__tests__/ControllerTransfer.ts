@@ -9,6 +9,8 @@ import { Wallet } from '../../Wallet';
 import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import { Procedure } from '~/procedures/Procedure';
+import { PolymathError } from '~/PolymathError';
+import { ErrorCode } from '~/types';
 
 const params1 = {
   symbol: 'TEST1',
@@ -26,7 +28,7 @@ describe('ControllerTransfer', () => {
   let securityTokenMock: MockManager<contractWrappersObject.SecurityToken_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
@@ -77,6 +79,48 @@ describe('ControllerTransfer', () => {
       expect(sinon.spy(target, 'addProcedure').calledOnce);
       expect(sinon.spy(target, 'addTransaction').calledOnce);
       expect(tokenFactoryMockStub().calledOnce);
+    });
+
+    test('should throw error if balanceOf is less than amount', async () => {
+      securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(0)));
+      // Real call
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.InsufficientBalance,
+          message: `Sender's balance of 0 is less than the requested amount of ${params1.amount.toNumber()}`,
+        })
+      );
+    });
+
+    test('should throw error if current wallet is not controller', async () => {
+      securityTokenMock.mock('controller', Promise.resolve('Random'));
+      // Real call
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `You must be the controller of this Security Token to perform forced transfers. Did you remember to call "setController"?`,
+        })
+      );
+    });
+
+    test('should call error on inappropriate params address', async () => {
+      // Instantiate ControllerTransfer with incorrect args instead
+      target = new ControllerTransfer(
+        {
+          from: params1.owner,
+          to: 'Inappropriate',
+          amount: params1.amount,
+          symbol: params1.symbol,
+        },
+        contextMock.getMockInstance()
+      );
+      // Real call rejects
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.InvalidAddress,
+          message: `Provided "to" address is invalid: Inappropriate`,
+        })
+      );
     });
   });
 });

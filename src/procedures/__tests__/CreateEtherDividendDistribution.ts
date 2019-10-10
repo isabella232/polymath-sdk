@@ -8,6 +8,8 @@ import * as wrappersObject from '../../PolymathBase';
 import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
 import { CreateEtherDividendDistribution } from '../../procedures/CreateEtherDividendDistribution';
 import { Procedure } from '~/procedures/Procedure';
+import { PolymathError } from '~/PolymathError';
+import { ErrorCode } from '~/types';
 
 const params1 = {
   symbol: 'TEST1',
@@ -79,6 +81,17 @@ describe('CreateEtherDividendDistribution', () => {
       expect(sinon.spy(target, 'addProcedure').calledOnce);
       expect(sinon.spy(target, 'addTransaction').calledOnce);
       expect(tokenFactoryMockStub().calledOnce);
+    });
+
+    test('should throw if eth dividends manager has not been enabled', async () => {
+      getAttachedModulesMockStub = wrappersMock.mock('getAttachedModules', Promise.resolve([]));
+      // Real call
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: "The ETH Dividends Manager hasn't been enabled",
+        })
+      );
     });
   });
 });

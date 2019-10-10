@@ -131,13 +131,6 @@ describe('ApproveErc20', () => {
           message: 'Not enough funds',
         })
       );
-
-      // Verifications
-      expect(sinon.spy(target, 'prepare').calledOnce);
-      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
-      expect(sinon.spy(target, 'addProcedure').calledOnce);
-      expect(sinon.spy(target, 'addTransaction').calledOnce);
-      expect(wrapperMockStub().calledOnce);
     });
 
     test('should use token faucet if the balanceOf is less than amount (with poly token)', async () => {
