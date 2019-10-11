@@ -9,6 +9,8 @@ import * as approvalObject from '../ApproveErc20';
 import { CreateSecurityToken } from '../../procedures/CreateSecurityToken';
 import { Procedure } from '~/procedures/Procedure';
 import { Wallet } from '~/Wallet';
+import { PolymathError } from '~/PolymathError';
+import { ErrorCode } from '~/types';
 
 const params1 = {
   symbol: 'TEST1',
@@ -81,6 +83,43 @@ describe('CreateSecurityToken', () => {
   });
 
   describe('CreateSecurityToken', () => {
+    test('should throw error if token is not reserved ', async () => {
+      securityTokenRegistryMock.mock('tickerAvailable', Promise.resolve(true));
+      // Real call
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `The security token symbol ${
+            params1.symbol
+          } hasn't been reserved. You need to call "reserveSecurityToken" first.`,
+        })
+      );
+    });
+
+    test('should throw error if token has been reserved by other user', async () => {
+      securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(false));
+      // Real call
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `The security token symbol ${
+            params1.symbol
+          } has already been reserved by another issuer."`,
+        })
+      );
+    });
+
+    test('should throw error if token has already been launched', async () => {
+      securityTokenRegistryMock.mock('isTokenLaunched', Promise.resolve(true));
+      // Real call
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `The security token symbol ${params1.symbol} has already been launched."`,
+        })
+      );
+    });
+
     test('should send the transaction to CreateSecurityToken', async () => {
       // Real call
       await target.prepareTransactions();
