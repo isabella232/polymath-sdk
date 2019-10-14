@@ -27,7 +27,7 @@ describe('AssignStoRole', () => {
   let tokenFactoryMockStub: SinonStub<any, any>;
   let getAttachedModulesMockStub: SinonStub<any, any>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test AssignSecurityRole
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
@@ -85,6 +85,19 @@ describe('AssignStoRole', () => {
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: 'You must enable the Permissions feature',
+        })
+      );
+    });
+
+    test('should throw if role has already been assigned to delegate', async () => {
+      gpmMock.mock('getAllDelegatesWithPerm', Promise.resolve([params1.delegateAddress]));
+      // Real call
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Role ${params1.role} has already been ${
+            params1.assign ? 'assigned to' : 'revoked from'
+          } delegate for this STO.`,
         })
       );
     });
