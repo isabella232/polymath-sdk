@@ -168,15 +168,14 @@ describe('AssignSecurityTokenRole', () => {
 
   describe('AssignSecurityTokenRole', () => {
     test('should send the transaction to AssignSecurityTokenRole', async () => {
+      const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
+      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(sinon.spy(target, 'prepare').calledOnce);
-      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
-      expect(sinon.spy(target, 'addProcedure').calledOnce);
-      expect(sinon.spy(target, 'addTransaction').calledOnce);
-      expect(tokenFactoryMockStub().calledOnce);
+      expect(spyOnPrepareTransactions.callCount).toEqual(1);
+      expect(spyOnAddTransaction.callCount).toEqual(1);
     });
 
     test('should throw if permission feature is not enabled', async () => {
@@ -206,7 +205,10 @@ describe('AssignSecurityTokenRole', () => {
     test('should throw if feature is not enabled', async () => {
       // Setup fetch mock returning empty
       securityTokenFactoryMock.mock('fetch', {
-        permissions: { isRoleAvailable: () => {}, getFeatureFromRole: () => {} },
+        permissions: {
+          isRoleAvailable: () => {},
+          getFeatureFromRole: () => {},
+        },
       });
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(

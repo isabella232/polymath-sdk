@@ -49,15 +49,15 @@ describe('CreateCheckpoint', () => {
 
   describe('createCheckpoint', () => {
     test('should send the transaction to createCheckpoint', async () => {
+      const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
+      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(sinon.spy(target, 'prepare').calledOnce);
-      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
-      expect(sinon.spy(target, 'addProcedure').calledOnce);
-      expect(sinon.spy(target, 'addTransaction').calledOnce);
-      expect(tokenFactoryMockStub().calledOnce);
+      expect(spyOnPrepareTransactions.callCount).toEqual(1);
+      expect(spyOnAddTransaction.callCount).toEqual(1);
     });
   });
 });

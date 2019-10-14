@@ -74,17 +74,15 @@ describe('ApproveErc20', () => {
       // Instantiate ApproveErc20
       target = new ApproveErc20(params1, contextMock.getMockInstance());
 
+      const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
+      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(sinon.spy(target, 'prepare').calledOnce);
-      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
-      expect(sinon.spy(target, 'addProcedure').calledOnce);
-      expect(sinon.spy(target, 'addTransaction').calledOnce);
-      expect(checkPolyBalanceStub().calledOnce);
-      expect(checkPolyAllowanceStub().calledOnce);
-      expect(checkPolyAddressStub().calledOnce);
+      expect(spyOnPrepareTransactions.callCount).toEqual(1);
+      expect(spyOnAddTransaction.callCount).toEqual(1);
     });
 
     test('should send the transaction to createCheckpoint with a custom erc20 token', async () => {
@@ -99,18 +97,16 @@ describe('ApproveErc20', () => {
       );
       // Instantiate ApproveErc20
       target = new ApproveErc20(params2, contextMock.getMockInstance());
+
+      const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
+      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(sinon.spy(target, 'prepare').calledOnce);
-      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
-      expect(sinon.spy(target, 'addProcedure').calledOnce);
-      expect(sinon.spy(target, 'addTransaction').calledOnce);
-      expect(wrapperMockStub().calledOnce);
-      expect(checkErc20BalanceStub().calledOnce);
-      expect(checkErc20AllowanceStub().calledOnce);
-      expect(checkErc20AddressStub().calledOnce);
+      expect(spyOnPrepareTransactions.callCount).toEqual(1);
+      expect(spyOnAddTransaction.callCount).toEqual(1);
     });
 
     test('should fail with not enough funds error thrown ', async () => {
@@ -146,14 +142,16 @@ describe('ApproveErc20', () => {
       // Instantiate ApproveErc20
       target = new ApproveErc20(params1, contextMock.getMockInstance());
       // Real call
+
+      const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
+      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+
+      // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(sinon.spy(target, 'prepare').calledOnce);
-      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
-      expect(sinon.spy(target, 'addProcedure').calledOnce);
-      expect(sinon.spy(target, 'addTransaction').calledOnce);
-      expect(wrapperMockStub().calledOnce);
+      expect(spyOnPrepareTransactions.callCount).toEqual(1);
+      expect(spyOnAddTransaction.callCount).toEqual(2);
     });
 
     test('should return if it has sufficient allowance', async () => {
@@ -169,22 +167,19 @@ describe('ApproveErc20', () => {
       );
       // Instantiate ApproveErc20
       target = new ApproveErc20(params2, contextMock.getMockInstance());
+
+      const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(sinon.spy(target, 'prepare').calledOnce);
-      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
-      expect(sinon.spy(target, 'addProcedure').calledOnce);
+      expect(spyOnPrepareTransactions.callCount).toEqual(1);
       expect(
         sinon.spy(target, 'addTransaction').neverCalledWith({
           tag: PolyTransactionTag.ApproveErc20,
         })
       );
-      expect(wrapperMockStub().calledOnce);
-      expect(checkErc20BalanceStub().calledOnce);
-      expect(checkErc20AllowanceStub().calledOnce);
-      expect(checkErc20AddressStub().calledOnce);
     });
   });
 });
