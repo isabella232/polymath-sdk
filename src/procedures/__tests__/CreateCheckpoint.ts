@@ -6,6 +6,8 @@ import * as wrappersObject from '../../PolymathBase';
 import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
 import { Procedure } from '~/procedures/Procedure';
+import { PolymathError } from '~/PolymathError';
+import { ErrorCode } from '~/types';
 
 const params1 = {
   symbol: 'TEST1',
@@ -56,8 +58,25 @@ describe('CreateCheckpoint', () => {
       await target.prepareTransactions();
 
       // Verifications
-      expect(spyOnPrepareTransactions.callCount).toBe(1);
+      expect(spyOnPrepareTransactions.withArgs().callCount).toBe(1);
       expect(spyOnAddTransaction.callCount).toBe(1);
+    });
+
+    test('should throw if there is no supplied valid security token', async () => {
+      tokenFactoryMock.set(
+        'getSecurityTokenInstanceFromTicker',
+        sinon
+          .stub()
+          .withArgs({ address: params1.symbol })
+          .throws()
+      );
+
+      expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `There is no Security Token with symbol ${params1.symbol}`,
+        })
+      );
     });
   });
 });

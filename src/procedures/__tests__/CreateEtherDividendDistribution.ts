@@ -78,8 +78,25 @@ describe('CreateEtherDividendDistribution', () => {
       await target.prepareTransactions();
 
       // Verifications
-      expect(spyOnPrepareTransactions.callCount).toBe(1);
+      expect(spyOnPrepareTransactions.withArgs().callCount).toBe(1);
       expect(spyOnAddTransaction.callCount).toBe(1);
+    });
+
+    test('should throw if there is no supplied valid security token', async () => {
+      tokenFactoryMock.set(
+        'getSecurityTokenInstanceFromTicker',
+        sinon
+          .stub()
+          .withArgs({ address: params1.symbol })
+          .throws()
+      );
+
+      expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `There is no Security Token with symbol ${params1.symbol}`,
+        })
+      );
     });
 
     test('should throw if eth dividends manager has not been enabled', async () => {
