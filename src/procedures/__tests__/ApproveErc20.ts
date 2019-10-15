@@ -81,8 +81,8 @@ describe('ApproveErc20', () => {
       await target.prepareTransactions();
 
       // Verifications
-      expect(spyOnPrepareTransactions.callCount).toEqual(1);
-      expect(spyOnAddTransaction.callCount).toEqual(1);
+      expect(spyOnPrepareTransactions.callCount).toBe(1);
+      expect(spyOnAddTransaction.callCount).toBe(1);
     });
 
     test('should send the transaction to createCheckpoint with a custom erc20 token', async () => {
@@ -105,8 +105,8 @@ describe('ApproveErc20', () => {
       await target.prepareTransactions();
 
       // Verifications
-      expect(spyOnPrepareTransactions.callCount).toEqual(1);
-      expect(spyOnAddTransaction.callCount).toEqual(1);
+      expect(spyOnPrepareTransactions.callCount).toBe(1);
+      expect(spyOnAddTransaction.callCount).toBe(1);
     });
 
     test('should fail with not enough funds error thrown ', async () => {
@@ -150,8 +150,8 @@ describe('ApproveErc20', () => {
       await target.prepareTransactions();
 
       // Verifications
-      expect(spyOnPrepareTransactions.callCount).toEqual(1);
-      expect(spyOnAddTransaction.callCount).toEqual(2);
+      expect(spyOnPrepareTransactions.callCount).toBe(1);
+      expect(spyOnAddTransaction.callCount).toBe(2);
     });
 
     test('should return if it has sufficient allowance', async () => {
@@ -174,7 +174,7 @@ describe('ApproveErc20', () => {
       await target.prepareTransactions();
 
       // Verifications
-      expect(spyOnPrepareTransactions.callCount).toEqual(1);
+      expect(spyOnPrepareTransactions.callCount).toBe(1);
       expect(
         sinon.spy(target, 'addTransaction').neverCalledWith({
           tag: PolyTransactionTag.ApproveErc20,

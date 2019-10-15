@@ -90,8 +90,8 @@ describe('CreateErc20DividendDistribution', () => {
       await target.prepareTransactions();
 
       // Verifications
-      expect(spyOnPrepareTransactions.callCount).toEqual(1);
-      expect(spyOnAddTransaction.callCount).toEqual(1);
+      expect(spyOnPrepareTransactions.callCount).toBe(1);
+      expect(spyOnAddTransaction.callCount).toBe(1);
     });
 
     test('should throw error if the erc20 dividends manager has not been enabled', async () => {
