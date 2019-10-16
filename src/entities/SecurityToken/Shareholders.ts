@@ -2,8 +2,8 @@ import {
   ModuleName,
   SecurityToken as SecurityTokenWrapper,
 } from '@polymathnetwork/contract-wrappers';
-import { ShareholderDataEntry, ErrorCode } from '../../types';
-import { ModifyShareholderData, CreateCheckpoint, RevokeKyc } from '../../procedures';
+import { ShareholderDataEntry, ErrorCode, MintingDataEntry } from '../../types';
+import { ModifyShareholderData, CreateCheckpoint, RevokeKyc, MintTokens } from '../../procedures';
 import { SubModule } from './SubModule';
 import { Checkpoint } from '../Checkpoint';
 import { PolymathError } from '../../PolymathError';
@@ -26,6 +26,31 @@ export class Shareholders extends SubModule {
    */
   public modifyData = async (args: { shareholderData: ShareholderDataEntry[] }) => {
     const procedure = new ModifyShareholderData(
+      {
+        symbol: this.securityToken.symbol,
+        ...args,
+      },
+      this.context
+    );
+    return procedure.prepare();
+  };
+
+  /**
+   * Mint a certain amount of tokens to an address. The address must already have been added via `modifyData`. Otherwise,
+   * the corresponding shareholder data for that address must be supplied to this method
+   *
+   * @param mintingData array of minting data
+   * @param mintingData[].address address of the shareholder to mint tokens for
+   * @param mintingData[].amount amount of tokens to mint
+   * @param mintingData[].shareholderData KYC-related and other shareholder data to add/modify (optional. If not supplied, the shareholder is implied to exist already)
+   * @param mintingData[].shareholderData.canSendAfter date after which the shareholder can transfer tokens
+   * @param mintingData[].shareholderData.canReceiveAfter date after which the shareholder can receive tokens
+   * @param mintingData[].shareholderData.kycExpiry date at which the shareholder's KYC expires
+   * @param mintingData[].shareholderData.isAccredited whether the shareholder is accredited (defaults to false)
+   * @param mintingData[].shareholderData.canBuyFromSto whether the shareholder is allowed to purchase tokens in an STO (defaults to true)
+   */
+  public mintTokens = async (args: { mintingData: MintingDataEntry[] }) => {
+    const procedure = new MintTokens(
       {
         symbol: this.securityToken.symbol,
         ...args,
