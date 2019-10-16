@@ -47,10 +47,6 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
       }
     });
 
-    const securityTokenEntity = await factories.securityTokenFactory.fetch(
-      SecurityToken.generateId({ symbol })
-    );
-
     if (updatedShareholderData.length > 0) {
       await this.addProcedure(ModifyShareholderData)({
         symbol,
@@ -58,8 +54,11 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
       });
     }
 
+    const securityTokenEntity = await factories.securityTokenFactory.fetch(
+      SecurityToken.generateId({ symbol })
+    );
+
     const shareholders = await securityTokenEntity.shareholders.getShareholders();
-    const now = new Date();
 
     // complete gaps in latest kyc data with current shareholders
     shareholders.forEach(
@@ -89,6 +88,8 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
         )}]. Reason: Those addresses are not Shareholders`,
       });
     }
+
+    const now = new Date();
 
     const expiredKyc = updatedShareholderData.filter(
       ({ canReceiveAfter, kycExpiry }) => canReceiveAfter > now || now > kycExpiry
