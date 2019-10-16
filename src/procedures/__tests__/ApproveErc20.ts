@@ -99,15 +99,17 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params1, contextMock.getMockInstance());
 
-    const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
     const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
 
     // Real call
     await target.prepareTransactions();
 
     // Verifications
-    expect(spyOnPrepareTransactions.withArgs().callCount).toBe(1);
-    expect(spyOnAddTransaction.callCount).toBe(1);
+    expect(
+      spyOnAddTransaction.withArgs(polyTokenMock.getMockInstance().approve, {
+        tag: PolyTransactionTag.ApproveErc20,
+      }).callCount
+    ).toBe(1);
   });
 
   test('should send the transaction to createCheckpoint with a custom erc20 token', async () => {
@@ -116,19 +118,21 @@ describe('ApproveErc20', () => {
     checkErc20AddressStub = erc20Mock.mock('address', Promise.resolve(params2.spender));
     checkErc20AllowanceStub = erc20Mock.mock('allowance', Promise.resolve(new BigNumber(0)));
 
-    const wrapperMockStub = wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
+    wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
     // Instantiate ApproveErc20
     target = new ApproveErc20(params2, contextMock.getMockInstance());
 
-    const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
     const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
 
     // Real call
     await target.prepareTransactions();
 
     // Verifications
-    expect(spyOnPrepareTransactions.withArgs().callCount).toBe(1);
-    expect(spyOnAddTransaction.callCount).toBe(1);
+    expect(
+      spyOnAddTransaction.withArgs(polyTokenMock.getMockInstance().approve, {
+        tag: PolyTransactionTag.ApproveErc20,
+      }).callCount
+    ).toBe(1);
   });
 
   test('should fail with not enough funds error thrown ', async () => {
@@ -155,25 +159,26 @@ describe('ApproveErc20', () => {
     const zeroBalanceOf = new BigNumber(0);
     checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(zeroBalanceOf));
 
-    const wrapperMockStub = wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
+    wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
     // Instantiate ApproveErc20
     target = new ApproveErc20(params1, contextMock.getMockInstance());
-    // Real call
 
-    const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
     const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
 
     // Real call
     await target.prepareTransactions();
 
     // Verifications
-    expect(spyOnPrepareTransactions.withArgs().callCount).toBe(1);
     expect(
       spyOnAddTransaction.withArgs(wrappersMock.getMockInstance().getPolyTokens, {
         tag: PolyTransactionTag.GetTokens,
       }).callCount
     ).toBe(1);
-    expect(spyOnAddTransaction.callCount).toBe(2);
+    expect(
+      spyOnAddTransaction.withArgs(polyTokenMock.getMockInstance().approve, {
+        tag: PolyTransactionTag.ApproveErc20,
+      }).callCount
+    ).toBe(1);
   });
 
   test('should return if it has sufficient allowance', async () => {

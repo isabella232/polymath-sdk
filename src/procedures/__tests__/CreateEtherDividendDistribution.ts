@@ -10,6 +10,7 @@ import { CreateEtherDividendDistribution } from '../../procedures/CreateEtherDiv
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCode } from '~/types';
+import { ApproveErc20 } from '~/procedures';
 
 const params1 = {
   symbol: 'TEST1',
@@ -72,14 +73,19 @@ describe('CreateEtherDividendDistribution', () => {
 
   describe('CreateEtherDividendDistribution', () => {
     test('should send the transaction to CreateEtherDividendDistribution', async () => {
-      const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
       const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(spyOnPrepareTransactions.withArgs().callCount).toBe(1);
-      expect(spyOnAddTransaction.callCount).toBe(1);
+      expect(
+        spyOnAddTransaction.withArgs(etherDividendsMock.getMockInstance().setWithholding).callCount
+      ).toBe(1);
+      expect(
+        spyOnAddTransaction.withArgs(
+          etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
+        ).callCount
+      ).toBe(1);
     });
 
     test('should throw if there is no supplied valid security token', async () => {

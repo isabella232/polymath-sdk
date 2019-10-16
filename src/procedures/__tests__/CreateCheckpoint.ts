@@ -1,6 +1,7 @@
 import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub } from 'sinon';
+import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
 import * as contextObject from '../../Context';
 import * as wrappersObject from '../../PolymathBase';
 import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
@@ -21,6 +22,7 @@ describe('CreateCheckpoint', () => {
   let contextMock: MockManager<contextObject.Context>;
   let wrappersMock: MockManager<wrappersObject.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryObject.MockedTokenFactoryObject>;
+  let securityTokenMock: MockManager<contractWrappersObject.SecurityToken_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
 
   beforeAll(() => {
@@ -28,8 +30,12 @@ describe('CreateCheckpoint', () => {
     contextMock = ImportMock.mockClass(contextObject, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryObject, 'MockedTokenFactoryObject');
+    securityTokenMock = ImportMock.mockClass(contractWrappersObject, 'SecurityToken_3_0_0');
 
-    tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
+    tokenFactoryMockStub = tokenFactoryMock.mock(
+      'getSecurityTokenInstanceFromTicker',
+      securityTokenMock.getMockInstance()
+    );
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
@@ -51,15 +57,16 @@ describe('CreateCheckpoint', () => {
 
   describe('createCheckpoint', () => {
     test('should send the transaction to createCheckpoint', async () => {
-      const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
       const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(spyOnPrepareTransactions.withArgs().callCount).toBe(1);
-      expect(spyOnAddTransaction.callCount).toBe(1);
+      expect(
+        spyOnAddTransaction.withArgs(securityTokenMock.getMockInstance().controllerTransfer)
+          .callCount
+      ).toBe(1);
     });
 
     test('should throw if there is no supplied valid security token', async () => {

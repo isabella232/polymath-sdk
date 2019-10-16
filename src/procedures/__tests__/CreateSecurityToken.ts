@@ -11,6 +11,7 @@ import { Procedure } from '~/procedures/Procedure';
 import { Wallet } from '~/Wallet';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCode } from '~/types';
+import { ApproveErc20 } from '../ApproveErc20';
 
 const params1 = {
   symbol: 'TEST1',
@@ -121,14 +122,18 @@ describe('CreateSecurityToken', () => {
     });
 
     test('should send the transaction to CreateSecurityToken', async () => {
-      const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
+      const spyOnAddProcedure = sinon.spy(target, 'addProcedure');
       const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(spyOnPrepareTransactions.withArgs().callCount).toBe(1);
-      expect(spyOnAddTransaction.callCount).toBe(1);
+      expect(
+        spyOnAddTransaction.withArgs(
+          securityTokenRegistryMock.getMockInstance().generateNewSecurityToken
+        ).callCount
+      ).toBe(1);
+      expect(spyOnAddProcedure.withArgs(ApproveErc20).callCount).toBe(1);
     });
 
     test('should send the transaction to CreateSecurityToken with a treasury wallet', async () => {

@@ -10,7 +10,7 @@ import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode } from '~/types';
+import { ErrorCode, PolyTransactionTag } from '~/types';
 
 const params1 = {
   symbol: 'TEST1',
@@ -70,14 +70,15 @@ describe('ControllerTransfer', () => {
 
   describe('ControllerTransfer', () => {
     test('should send the transaction to ControllerTransfer', async () => {
-      const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
       const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(spyOnPrepareTransactions.withArgs().callCount).toBe(1);
-      expect(spyOnAddTransaction.callCount).toBe(1);
+      expect(
+        spyOnAddTransaction.withArgs(securityTokenMock.getMockInstance().controllerTransfer)
+          .callCount
+      ).toBe(1);
     });
 
     test('should throw if there is no supplied valid security token', async () => {

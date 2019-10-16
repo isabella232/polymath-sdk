@@ -8,7 +8,7 @@ import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
 import { AssignStoRole } from '../../procedures/AssignStoRole';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode, StoRole } from '~/types';
+import { ErrorCode, PolyTransactionTag, StoRole } from '~/types';
 
 const params1 = {
   symbol: 'TEST1',
@@ -67,14 +67,21 @@ describe('AssignStoRole', () => {
 
   describe('AssignStoRole', () => {
     test('should send the transaction to AssignStoRole', async () => {
-      const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
       const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(spyOnPrepareTransactions.withArgs().callCount).toBe(1);
-      expect(spyOnAddTransaction.callCount).toBe(1);
+      expect(
+        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().addDelegate, {
+          tag: PolyTransactionTag.ChangePermission,
+        }).callCount
+      ).toBe(1);
+      expect(
+        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().changePermission, {
+          tag: PolyTransactionTag.ChangePermission,
+        }).callCount
+      ).toBe(1);
     });
 
     test('should throw if there is no supplied valid security token', async () => {
