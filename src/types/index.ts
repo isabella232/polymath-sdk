@@ -55,6 +55,12 @@ export interface TaxWithholdingEntry {
   percentage: number;
 }
 
+export interface MintingDataEntry {
+  address: string;
+  amount: BigNumber;
+  shareholderData?: Omit<ShareholderDataEntry, 'address'>;
+}
+
 export enum ErrorCode {
   IncompatibleBrowser = 'IncompatibleBrowser',
   FeatureNotEnabled = 'FeatureNotEnabled',
@@ -114,6 +120,7 @@ export enum ProcedureType {
   SetController = 'SetController',
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
+  MintTokens = 'MintTokens',
 }
 
 export enum PolyTransactionTag {
@@ -142,6 +149,7 @@ export enum PolyTransactionTag {
   SetController = 'SetController',
   ModifyKycDataMulti = 'ModifyKycDataMulti',
   ModifyInvestorFlagMulti = 'ModifyInvestorFlagMulti',
+  IssueMulti = 'IssueMulti',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -242,6 +250,11 @@ export interface LaunchCappedStoProcedureArgs {
   currency: CappedStoCurrency;
   storageWallet: string;
   treasuryWallet: string;
+}
+
+export interface MintTokensProcedureArgs {
+  symbol: string;
+  mintingData: MintingDataEntry[];
 }
 
 export interface StoTier {
@@ -404,6 +417,7 @@ export interface ProcedureArguments {
   [ProcedureType.AssignStoRole]: AssignStoRoleProcedureArgs;
   [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
+  [ProcedureType.MintTokens]: MintTokensProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 
