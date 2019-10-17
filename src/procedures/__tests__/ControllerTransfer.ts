@@ -71,13 +71,6 @@ describe('ControllerTransfer', () => {
     test('should send the transaction to ControllerTransfer', async () => {
       // Real call
       await target.prepareTransactions();
-
-      // Verifications
-      expect(sinon.spy(target, 'prepare').calledOnce);
-      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
-      expect(sinon.spy(target, 'addProcedure').calledOnce);
-      expect(sinon.spy(target, 'addTransaction').calledOnce);
-      expect(tokenFactoryMockStub().calledOnce);
     });
   });
 });

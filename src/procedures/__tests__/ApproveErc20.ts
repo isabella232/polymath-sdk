@@ -72,15 +72,6 @@ describe('ApproveErc20', () => {
 
       // Real call
       await target.prepareTransactions();
-
-      // Verifications
-      expect(sinon.spy(target, 'prepare').calledOnce);
-      expect(sinon.spy(target, 'prepareTransactions').calledOnce);
-      expect(sinon.spy(target, 'addProcedure').calledOnce);
-      expect(sinon.spy(target, 'addTransaction').calledOnce);
-      expect(checkPolyBalanceStub().calledOnce);
-      expect(checkPolyAllowanceStub().calledOnce);
-      expect(checkPolyAddressStub().calledOnce);
     });
   });
 
@@ -98,15 +89,5 @@ describe('ApproveErc20', () => {
     target = new ApproveErc20(params2, contextMock.getMockInstance());
     // Real call
     await target.prepareTransactions();
-
-    // Verifications
-    expect(sinon.spy(target, 'prepare').calledOnce);
-    expect(sinon.spy(target, 'prepareTransactions').calledOnce);
-    expect(sinon.spy(target, 'addProcedure').calledOnce);
-    expect(sinon.spy(target, 'addTransaction').calledOnce);
-    expect(getErc20TokenWrapperStub().calledOnce);
-    expect(checkErc20BalanceStub().calledOnce);
-    expect(checkErc20AllowanceStub().calledOnce);
-    expect(checkErc20AddressStub().calledOnce);
   });
 });
