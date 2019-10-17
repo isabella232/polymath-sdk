@@ -52,10 +52,7 @@ describe('ApproveErc20', () => {
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
     wrappersMock.mock('isTestnet', Promise.resolve(false));
-    const ownerPromise = new Promise<string>((resolve, reject) => {
-      resolve();
-    });
-    contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
+    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(params1.owner) }));
   });
 
   describe('Types', () => {
