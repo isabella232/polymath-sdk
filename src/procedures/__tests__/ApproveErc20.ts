@@ -8,6 +8,7 @@ import { ApproveErc20 } from '../../procedures/ApproveErc20';
 import { Procedure } from '~/procedures/Procedure';
 import BigNumber from 'bignumber.js';
 import { Wallet } from '~/Wallet';
+import { ProcedureType } from '~/types';
 
 const params1 = {
   amount: new BigNumber(1),
@@ -60,7 +61,7 @@ describe('ApproveErc20', () => {
       // Instantiate ApproveErc20
       target = new ApproveErc20(params1, contextMock.getMockInstance());
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('ApproveErc20');
+      expect(target.type).toBe(ProcedureType.ApproveErc20);
     });
   });
 
@@ -89,7 +90,10 @@ describe('ApproveErc20', () => {
     checkErc20AddressStub = erc20Mock.mock('address', Promise.resolve(params2.spender));
     checkErc20AllowanceStub = erc20Mock.mock('allowance', Promise.resolve(new BigNumber(0)));
 
-    const wrapperMockStub = wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
+    const getErc20TokenWrapperStub = wrappersMock.mock(
+      'getERC20TokenWrapper',
+      erc20Mock.getMockInstance()
+    );
     // Instantiate ApproveErc20
     target = new ApproveErc20(params2, contextMock.getMockInstance());
     // Real call
@@ -100,7 +104,7 @@ describe('ApproveErc20', () => {
     expect(sinon.spy(target, 'prepareTransactions').calledOnce);
     expect(sinon.spy(target, 'addProcedure').calledOnce);
     expect(sinon.spy(target, 'addTransaction').calledOnce);
-    expect(wrapperMockStub().calledOnce);
+    expect(getErc20TokenWrapperStub().calledOnce);
     expect(checkErc20BalanceStub().calledOnce);
     expect(checkErc20AllowanceStub().calledOnce);
     expect(checkErc20AddressStub().calledOnce);

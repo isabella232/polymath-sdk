@@ -9,6 +9,7 @@ import { Wallet } from '../../Wallet';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import { Procedure } from '~/procedures/Procedure';
+import { ProcedureType } from '~/types';
 
 const params1 = {
   symbol: 'TEST1',
@@ -62,7 +63,7 @@ describe('ControllerTransfer', () => {
   describe('Types', () => {
     test('should extend procedure and have ControllerTransfer type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('ControllerTransfer');
+      expect(target.type).toBe(ProcedureType.ControllerTransfer);
     });
   });
 

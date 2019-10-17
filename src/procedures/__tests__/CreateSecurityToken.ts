@@ -9,6 +9,7 @@ import * as approvalModule from '../ApproveErc20';
 import { CreateSecurityToken } from '../../procedures/CreateSecurityToken';
 import { Procedure } from '~/procedures/Procedure';
 import { Wallet } from '~/Wallet';
+import { ProcedureType } from '~/types';
 
 const params1 = {
   symbol: 'TEST1',
@@ -76,7 +77,7 @@ describe('CreateSecurityToken', () => {
   describe('Types', () => {
     test('should extend procedure and have CreateSecurityToken type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('CreateSecurityToken');
+      expect(target.type).toBe(ProcedureType.CreateSecurityToken);
     });
   });
 

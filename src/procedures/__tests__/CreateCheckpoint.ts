@@ -6,6 +6,7 @@ import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
 import { Procedure } from '~/procedures/Procedure';
+import { ProcedureType } from '~/types';
 
 const params1 = {
   symbol: 'TEST1',
@@ -43,7 +44,7 @@ describe('CreateCheckpoint', () => {
   describe('Types', () => {
     test('should extend procedure and have CreateCheckpoint type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('CreateCheckpoint');
+      expect(target.type).toBe(ProcedureType.CreateCheckpoint);
     });
   });
 

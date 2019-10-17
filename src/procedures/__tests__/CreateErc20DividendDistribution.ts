@@ -9,6 +9,7 @@ import * as approveModule from '../ApproveErc20';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { CreateErc20DividendDistribution } from '../../procedures/CreateErc20DividendDistribution';
 import { Procedure } from '~/procedures/Procedure';
+import { ProcedureType } from '~/types';
 
 const params1 = {
   symbol: 'TEST1',
@@ -76,7 +77,7 @@ describe('CreateErc20DividendDistribution', () => {
   describe('Types', () => {
     test('should extend procedure and have CreateErc20DividendDistribution type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('CreateErc20DividendDistribution');
+      expect(target.type).toBe(ProcedureType.CreateErc20DividendDistribution);
     });
   });
 
