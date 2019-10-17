@@ -12,6 +12,20 @@ import { Wallet } from '~/Wallet';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCode } from '~/types';
 import { ApproveErc20 } from '../ApproveErc20';
+import * as securityTokenFactoryObject from '~/entities/factories/SecurityTokenFactory';
+import * as cappedStoFactoryObject from '~/entities/factories/CappedStoFactory';
+import * as checkpointFactoryObject from '~/entities/factories/CheckpointFactory';
+import * as dividendDistributionSecurityTokenFactoryObject from '~/entities/factories/DividendDistributionFactory';
+import * as erc20DividendsManagerFactoryObject from '~/entities/factories/Erc20DividendsManagerFactory';
+import * as erc20TokenBalanceFactoryObject from '~/entities/factories/Erc20TokenBalanceFactory';
+import * as ethDividendsManagerFactoryObject from '~/entities/factories/EthDividendsManagerFactory';
+import * as investmentFactoryObject from '~/entities/factories/InvestmentFactory';
+import * as securityTokenReservationObject from '~/entities/factories/SecurityTokenReservationFactory';
+import * as shareholderFactoryObject from '~/entities/factories/ShareholderFactory';
+import * as usdTieredStoFactoryObject from '~/entities/factories/UsdTieredStoFactory';
+import * as taxWithholdingFactoryObject from '~/entities/factories/TaxWithholdingFactory';
+import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
+import * as utilsModule from '~/utils';
 
 const params1 = {
   symbol: 'TEST1',
@@ -30,6 +44,31 @@ describe('CreateSecurityToken', () => {
   let prepareApprovalTransactionsStub: SinonStub<any, any>;
 
   let securityTokenRegistryMock: MockManager<contractWrappersObject.SecurityTokenRegistry>;
+
+  // Mock factories
+  let securityTokenFactoryMock: MockManager<securityTokenFactoryObject.SecurityTokenFactory>;
+  let cappedStoFactoryMock: MockManager<cappedStoFactoryObject.CappedStoFactory>;
+  let checkpointFactoryMock: MockManager<checkpointFactoryObject.CheckpointFactory>;
+  let dividendDistributionFactoryMock: MockManager<
+    dividendDistributionSecurityTokenFactoryObject.DividendDistributionFactory
+  >;
+  let erc20DividendsManagerFactoryMock: MockManager<
+    erc20DividendsManagerFactoryObject.Erc20DividendsManagerFactory
+  >;
+  let erc20TokenBalanceFactoryMock: MockManager<
+    erc20TokenBalanceFactoryObject.Erc20TokenBalanceFactory
+  >;
+  let ethDividendsManagerFactoryMock: MockManager<
+    ethDividendsManagerFactoryObject.EthDividendsManagerFactory
+  >;
+  let investmentFactoryMock: MockManager<investmentFactoryObject.InvestmentFactory>;
+  let securityTokenReservationFactoryMock: MockManager<
+    securityTokenReservationObject.SecurityTokenReservationFactory
+  >;
+  let shareholderFactoryMock: MockManager<shareholderFactoryObject.ShareholderFactory>;
+  let usdTieredStoFactoryMock: MockManager<usdTieredStoFactoryObject.UsdTieredStoFactory>;
+  let taxWithholdingFactoryMock: MockManager<taxWithholdingFactoryObject.TaxWithholdingFactory>;
+  let findEventsStub: SinonStub<any, any>;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test
@@ -65,6 +104,59 @@ describe('CreateSecurityToken', () => {
     contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
+    securityTokenFactoryMock = ImportMock.mockClass(
+      securityTokenFactoryObject,
+      'SecurityTokenFactory'
+    );
+    cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryObject, 'CappedStoFactory');
+    checkpointFactoryMock = ImportMock.mockClass(checkpointFactoryObject, 'CheckpointFactory');
+    dividendDistributionFactoryMock = ImportMock.mockClass(
+      dividendDistributionSecurityTokenFactoryObject,
+      'DividendDistributionFactory'
+    );
+    erc20DividendsManagerFactoryMock = ImportMock.mockClass(
+      erc20DividendsManagerFactoryObject,
+      'Erc20DividendsManagerFactory'
+    );
+    erc20TokenBalanceFactoryMock = ImportMock.mockClass(
+      erc20TokenBalanceFactoryObject,
+      'Erc20TokenBalanceFactory'
+    );
+    ethDividendsManagerFactoryMock = ImportMock.mockClass(
+      ethDividendsManagerFactoryObject,
+      'EthDividendsManagerFactory'
+    );
+    investmentFactoryMock = ImportMock.mockClass(investmentFactoryObject, 'InvestmentFactory');
+    securityTokenReservationFactoryMock = ImportMock.mockClass(
+      securityTokenReservationObject,
+      'SecurityTokenReservationFactory'
+    );
+    shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryObject, 'ShareholderFactory');
+    usdTieredStoFactoryMock = ImportMock.mockClass(
+      usdTieredStoFactoryObject,
+      'UsdTieredStoFactory'
+    );
+    taxWithholdingFactoryMock = ImportMock.mockClass(
+      taxWithholdingFactoryObject,
+      'TaxWithholdingFactory'
+    );
+
+    const factoryMockSetup = {
+      securityTokenFactory: securityTokenFactoryMock.getMockInstance(),
+      securityTokenReservationFactory: securityTokenReservationFactoryMock.getMockInstance(),
+      erc20TokenBalanceFactory: erc20TokenBalanceFactoryMock.getMockInstance(),
+      investmentFactory: investmentFactoryMock.getMockInstance(),
+      cappedStoFactory: cappedStoFactoryMock.getMockInstance(),
+      usdTieredStoFactory: usdTieredStoFactoryMock.getMockInstance(),
+      dividendDistributionFactory: dividendDistributionFactoryMock.getMockInstance(),
+      checkpointFactory: checkpointFactoryMock.getMockInstance(),
+      erc20DividendsManagerFactory: erc20DividendsManagerFactoryMock.getMockInstance(),
+      ethDividendsManagerFactory: ethDividendsManagerFactoryMock.getMockInstance(),
+      shareholderFactory: shareholderFactoryMock.getMockInstance(),
+      taxWithholdingFactory: taxWithholdingFactoryMock.getMockInstance(),
+    };
+    contextMock.set('factories', factoryMockSetup);
+
     // Instantiate CreateSecurityToken
     target = new CreateSecurityToken(
       {
@@ -74,6 +166,10 @@ describe('CreateSecurityToken', () => {
       },
       contextMock.getMockInstance()
     );
+  });
+
+  afterEach(() => {
+    sinon.restore();
   });
 
   describe('Types', () => {
@@ -95,6 +191,46 @@ describe('CreateSecurityToken', () => {
           } hasn't been reserved. You need to call "reserveSecurityToken" first.`,
         })
       );
+    });
+
+    test('should throw if corresponding event is not fired', async () => {
+      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', []);
+
+      // Real call
+      const resolver = await target.prepareTransactions();
+
+      expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.UnexpectedEventLogs,
+          message:
+            "The Security Token was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
+        })
+      );
+    });
+
+    test('should correctly return the resolver', async () => {
+      const createStub = securityTokenFactoryMock.mock('create', {
+        generateId: {
+          name: () => Promise.resolve(params1.name),
+          owner: () => Promise.resolve(params1.owner),
+          address: () => Promise.resolve(params1.address),
+        },
+      });
+      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
+        {
+          args: {
+            _ticker: params1.symbol,
+            _name: params1.name,
+            _owner: params1.owner,
+            _securityTokenAddress: params1.address,
+          },
+        },
+      ]);
+
+      // Real call
+      const resolver = await target.prepareTransactions();
+      await resolver.run({} as TransactionReceiptWithDecodedLogs);
+      expect(createStub.callCount).toBe(1);
     });
 
     test('should throw error if token has been reserved by other user', async () => {

@@ -24,7 +24,6 @@ import * as securityTokenReservationObject from '~/entities/factories/SecurityTo
 import * as shareholderFactoryObject from '~/entities/factories/ShareholderFactory';
 import * as usdTieredStoFactoryObject from '~/entities/factories/UsdTieredStoFactory';
 import * as taxWithholdingFactoryObject from '~/entities/factories/TaxWithholdingFactory';
-import { SecurityToken } from '~/entities';
 
 const params1 = {
   symbol: 'TEST1',
@@ -140,6 +139,9 @@ describe('CreateCheckpoint', () => {
       },
       contextMock.getMockInstance()
     );
+  });
+  afterEach(() => {
+    sinon.restore();
   });
 
   describe('Types', () => {
