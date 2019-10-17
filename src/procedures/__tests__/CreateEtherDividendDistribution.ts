@@ -40,7 +40,6 @@ describe('CreateEtherDividendDistribution', () => {
   let contextMock: MockManager<contextObject.Context>;
   let wrappersMock: MockManager<wrappersObject.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryObject.MockedTokenFactoryObject>;
-  let gpmMock: MockManager<contractWrappersObject.GeneralPermissionManager_3_0_0>;
   let etherDividendsMock: MockManager<contractWrappersObject.EtherDividendCheckpoint_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
   let getAttachedModulesMockStub: SinonStub<any, any>;
@@ -78,7 +77,6 @@ describe('CreateEtherDividendDistribution', () => {
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
-    gpmMock = ImportMock.mockClass(contractWrappersObject, 'GeneralPermissionManager_3_0_0');
     etherDividendsMock = ImportMock.mockClass(
       contractWrappersObject,
       'EtherDividendCheckpoint_3_0_0'
