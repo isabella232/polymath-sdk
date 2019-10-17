@@ -172,20 +172,6 @@ describe('ControllerTransfer', () => {
       ).toBe(1);
     });
 
-    test('should correctly return the resolver', async () => {
-      const createStub = securityTokenFactoryMock.mock('create', {
-        permissions: {
-          securityTokenId: () => Promise.resolve(params1.symbol),
-          index: () => Promise.resolve(1),
-        },
-      });
-
-      // Real call
-      const resolver = await target.prepareTransactions();
-      await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      expect(createStub.callCount).toBe(1);
-    });
-
     test('should throw if there is no supplied valid security token', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',

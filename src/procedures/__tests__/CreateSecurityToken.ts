@@ -209,13 +209,14 @@ describe('CreateSecurityToken', () => {
     });
 
     test('should correctly return the resolver', async () => {
-      const createStub = securityTokenFactoryMock.mock('create', {
-        generateId: {
+      const creationObject = {
+        creation: {
           name: () => Promise.resolve(params1.name),
           owner: () => Promise.resolve(params1.owner),
           address: () => Promise.resolve(params1.address),
         },
-      });
+      };
+      const createStub = securityTokenFactoryMock.mock('create', creationObject);
       findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
@@ -230,6 +231,7 @@ describe('CreateSecurityToken', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
+      expect(resolver.result).toEqual(creationObject);
       expect(createStub.callCount).toBe(1);
     });
 

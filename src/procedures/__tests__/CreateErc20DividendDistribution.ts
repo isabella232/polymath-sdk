@@ -231,12 +231,13 @@ describe('CreateErc20DividendDistribution', () => {
     });
 
     test('should correctly return the resolver', async () => {
-      const fetchStub = dividendDistributionFactoryMock.mock('fetch', {
+      const dividendObject = {
         permissions: {
           securityTokenId: () => Promise.resolve(params1.symbol),
           index: () => Promise.resolve(1),
         },
-      });
+      };
+      const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
       findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
@@ -248,6 +249,7 @@ describe('CreateErc20DividendDistribution', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
+      expect(resolver.result).toEqual(dividendObject);
       expect(fetchStub.callCount).toBe(1);
     });
 

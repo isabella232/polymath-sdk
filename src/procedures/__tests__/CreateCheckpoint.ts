@@ -180,12 +180,13 @@ describe('CreateCheckpoint', () => {
     });
 
     test('should correctly return the resolver', async () => {
-      const fetchStub = checkpointFactoryMock.mock('fetch', {
-        permissions: {
+      const checkpointObject = {
+        checkpoint: {
           securityTokenId: () => Promise.resolve(params1.symbol),
           index: () => Promise.resolve(1),
         },
-      });
+      };
+      const fetchStub = checkpointFactoryMock.mock('fetch', checkpointObject);
       findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
@@ -197,6 +198,7 @@ describe('CreateCheckpoint', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
+      expect(resolver.result).toEqual(checkpointObject);
       expect(fetchStub.callCount).toBe(1);
     });
 
