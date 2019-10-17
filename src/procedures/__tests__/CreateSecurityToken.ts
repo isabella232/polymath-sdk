@@ -1,11 +1,11 @@
 import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import BigNumber from 'bignumber.js';
-import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
+import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { SinonStub } from 'sinon';
-import * as contextObject from '../../Context';
-import * as wrappersObject from '../../PolymathBase';
-import * as approvalObject from '../ApproveErc20';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
+import * as approvalModule from '../ApproveErc20';
 import { CreateSecurityToken } from '../../procedures/CreateSecurityToken';
 import { Procedure } from '~/procedures/Procedure';
 import { Wallet } from '~/Wallet';
@@ -21,26 +21,26 @@ const params1 = {
 
 describe('CreateSecurityToken', () => {
   let target: CreateSecurityToken;
-  let contextMock: MockManager<contextObject.Context>;
-  let wrappersMock: MockManager<wrappersObject.PolymathBase>;
-  let approvalMock: MockManager<approvalObject.ApproveErc20>;
+  let contextMock: MockManager<contextModule.Context>;
+  let wrappersMock: MockManager<wrappersModule.PolymathBase>;
+  let approvalMock: MockManager<approvalModule.ApproveErc20>;
   let prepareApprovalTransactionsStub: SinonStub<any, any>;
 
-  let securityTokenRegistryMock: MockManager<contractWrappersObject.SecurityTokenRegistry>;
+  let securityTokenRegistryMock: MockManager<contractWrappersModule.SecurityTokenRegistry>;
 
   beforeAll(() => {
     // Mock the context, wrappers, and tokenFactory to test
-    contextMock = ImportMock.mockClass(contextObject, 'Context');
-    wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
+    contextMock = ImportMock.mockClass(contextModule, 'Context');
+    wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
 
     // Import mock for approveErc20
-    approvalMock = ImportMock.mockClass(approvalObject, 'ApproveErc20');
+    approvalMock = ImportMock.mockClass(approvalModule, 'ApproveErc20');
     prepareApprovalTransactionsStub = approvalMock.mock('prepareTransactions', Promise.resolve());
     approvalMock.set('transactions' as any, []);
     approvalMock.set('fees' as any, []);
 
     securityTokenRegistryMock = ImportMock.mockClass(
-      contractWrappersObject,
+      contractWrappersModule,
       'SecurityTokenRegistry'
     );
 

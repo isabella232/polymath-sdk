@@ -2,10 +2,10 @@ import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub } from 'sinon';
 import BigNumber from 'bignumber.js';
-import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
-import * as contextObject from '../../Context';
-import * as wrappersObject from '../../PolymathBase';
-import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
+import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { CreateEtherDividendDistribution } from '../../procedures/CreateEtherDividendDistribution';
 import { Procedure } from '~/procedures/Procedure';
 
@@ -20,25 +20,25 @@ const params1 = {
 
 describe('CreateEtherDividendDistribution', () => {
   let target: CreateEtherDividendDistribution;
-  let contextMock: MockManager<contextObject.Context>;
-  let wrappersMock: MockManager<wrappersObject.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryObject.MockedTokenFactoryObject>;
-  let gpmMock: MockManager<contractWrappersObject.GeneralPermissionManager_3_0_0>;
-  let etherDividendsMock: MockManager<contractWrappersObject.EtherDividendCheckpoint_3_0_0>;
+  let contextMock: MockManager<contextModule.Context>;
+  let wrappersMock: MockManager<wrappersModule.PolymathBase>;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+  let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
+  let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
   let getAttachedModulesMockStub: SinonStub<any, any>;
 
   beforeAll(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
-    contextMock = ImportMock.mockClass(contextObject, 'Context');
-    wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryObject, 'MockedTokenFactoryObject');
+    contextMock = ImportMock.mockClass(contextModule, 'Context');
+    wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
-    gpmMock = ImportMock.mockClass(contractWrappersObject, 'GeneralPermissionManager_3_0_0');
+    gpmMock = ImportMock.mockClass(contractWrappersModule, 'GeneralPermissionManager_3_0_0');
     etherDividendsMock = ImportMock.mockClass(
-      contractWrappersObject,
+      contractWrappersModule,
       'EtherDividendCheckpoint_3_0_0'
     );
     getAttachedModulesMockStub = wrappersMock.mock(

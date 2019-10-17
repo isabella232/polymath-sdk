@@ -1,9 +1,9 @@
 import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub } from 'sinon';
-import * as contextObject from '../../Context';
-import * as wrappersObject from '../../PolymathBase';
-import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
 import { Procedure } from '~/procedures/Procedure';
 
@@ -16,16 +16,16 @@ const params1 = {
 
 describe('CreateCheckpoint', () => {
   let target: CreateCheckpoint;
-  let contextMock: MockManager<contextObject.Context>;
-  let wrappersMock: MockManager<wrappersObject.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryObject.MockedTokenFactoryObject>;
+  let contextMock: MockManager<contextModule.Context>;
+  let wrappersMock: MockManager<wrappersModule.PolymathBase>;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
   let tokenFactoryMockStub: SinonStub<any, any>;
 
   beforeAll(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
-    contextMock = ImportMock.mockClass(contextObject, 'Context');
-    wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryObject, 'MockedTokenFactoryObject');
+    contextMock = ImportMock.mockClass(contextModule, 'Context');
+    wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
 
     tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());

@@ -1,9 +1,9 @@
 import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub } from 'sinon';
-import * as contextObject from '../../Context';
-import * as polymathBaseObject from '../../PolymathBase';
-import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
+import * as contextModule from '../../Context';
+import * as polymathBaseModule from '../../PolymathBase';
+import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ApproveErc20 } from '../../procedures/ApproveErc20';
 import { Procedure } from '~/procedures/Procedure';
 import BigNumber from 'bignumber.js';
@@ -24,10 +24,10 @@ const params2 = {
 
 describe('ApproveErc20', () => {
   let target: ApproveErc20;
-  let contextMock: MockManager<contextObject.Context>;
-  let wrappersMock: MockManager<polymathBaseObject.PolymathBase>;
-  let erc20Mock: MockManager<contractWrappersObject.ERC20>;
-  let polyTokenMock: MockManager<contractWrappersObject.PolyToken>;
+  let contextMock: MockManager<contextModule.Context>;
+  let wrappersMock: MockManager<polymathBaseModule.PolymathBase>;
+  let erc20Mock: MockManager<contractWrappersModule.ERC20>;
+  let polyTokenMock: MockManager<contractWrappersModule.PolyToken>;
 
   let checkPolyAllowanceStub: SinonStub<any, any>;
   let checkPolyAddressStub: SinonStub<any, any>;
@@ -39,10 +39,10 @@ describe('ApproveErc20', () => {
 
   beforeAll(() => {
     // Mock the context and wrappers, including currentWallet and balanceOf to test ApproveErc20
-    contextMock = ImportMock.mockClass(contextObject, 'Context');
-    wrappersMock = ImportMock.mockClass(polymathBaseObject, 'PolymathBase');
-    erc20Mock = ImportMock.mockClass(contractWrappersObject, 'ERC20');
-    polyTokenMock = ImportMock.mockClass(contractWrappersObject, 'PolyToken');
+    contextMock = ImportMock.mockClass(contextModule, 'Context');
+    wrappersMock = ImportMock.mockClass(polymathBaseModule, 'PolymathBase');
+    erc20Mock = ImportMock.mockClass(contractWrappersModule, 'ERC20');
+    polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
 
     // Setup poly token
     checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(2)));

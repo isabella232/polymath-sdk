@@ -1,6 +1,6 @@
 import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import * as contextObject from '../../Context';
+import * as contextModule from '../../Context';
 import * as createCheckpointProcedure from '../../procedures/CreateCheckpoint';
 
 import { Shareholders } from '~/entities/SecurityToken/Shareholders';
@@ -23,7 +23,7 @@ describe('Shareholders', () => {
     createCheckpointMock = ImportMock.mockClass(createCheckpointProcedure, 'CreateCheckpoint');
 
     // Generate a mock for context, and a security token to instantiate Shareholders
-    const contextMock = ImportMock.mockClass(contextObject, 'Context');
+    const contextMock = ImportMock.mockClass(contextModule, 'Context');
     const st1 = new SecurityToken(params1, contextMock.getMockInstance());
 
     // Instantiate Shareholders
@@ -39,14 +39,14 @@ describe('Shareholders', () => {
   describe('createCheckpoint', () => {
     test('should send the transaction to createCheckpoint', async () => {
       // Setup the mock on prepare
-      const prepareCreateCheckpointMock = createCheckpointMock.mock('prepare', {});
+      const prepareCreateCheckpointStub = createCheckpointMock.mock('prepare', {});
 
       // Real call
       await target.createCheckpoint();
 
       // Verifications
       expect(sinon.spy(target, 'createCheckpoint').calledOnce);
-      expect(prepareCreateCheckpointMock.calledOnce);
+      expect(prepareCreateCheckpointStub.calledOnce);
     });
   });
 });
