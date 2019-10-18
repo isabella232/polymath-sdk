@@ -84,6 +84,53 @@ describe('AssignStoRole', () => {
       ).toBe(1);
     });
 
+    test('should send the transaction to AssignStoRole without delegate', async () => {
+      gpmMock.mock('getAllDelegates', Promise.resolve([]));
+      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().addDelegate, {
+          tag: PolyTransactionTag.ChangePermission,
+        }).callCount
+      ).toBe(2);
+      expect(
+        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().changePermission, {
+          tag: PolyTransactionTag.ChangePermission,
+        }).callCount
+      ).toBe(2);
+    });
+
+    test('should use an operator perm', async () => {
+      target = new AssignStoRole(
+        {
+          symbol: params1.symbol,
+          delegateAddress: params1.delegateAddress,
+          role: StoRole.StoOperator,
+          assign: params1.assign,
+          stoAddress: params1.stoAddress,
+        },
+        contextMock.getMockInstance()
+      );
+      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().addDelegate, {
+          tag: PolyTransactionTag.ChangePermission,
+        }).callCount
+      ).toBe(1);
+      expect(
+        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().changePermission, {
+          tag: PolyTransactionTag.ChangePermission,
+        }).callCount
+      ).toBe(1);
+    });
+
     test('should throw if there is no supplied valid security token', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
