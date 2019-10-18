@@ -2,29 +2,28 @@ import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub } from 'sinon';
 import BigNumber from 'bignumber.js';
-import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
-import * as contextObject from '../../Context';
-import * as wrappersObject from '../../PolymathBase';
-import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
+import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { CreateEtherDividendDistribution } from '../../procedures/CreateEtherDividendDistribution';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode } from '~/types';
-import { ApproveErc20 } from '~/procedures';
-import * as securityTokenFactoryObject from '~/entities/factories/SecurityTokenFactory';
-import * as cappedStoFactoryObject from '~/entities/factories/CappedStoFactory';
-import * as checkpointFactoryObject from '~/entities/factories/CheckpointFactory';
-import * as dividendDistributionSecurityTokenFactoryObject from '~/entities/factories/DividendDistributionFactory';
-import * as erc20DividendsManagerFactoryObject from '~/entities/factories/Erc20DividendsManagerFactory';
-import * as erc20TokenBalanceFactoryObject from '~/entities/factories/Erc20TokenBalanceFactory';
-import * as ethDividendsManagerFactoryObject from '~/entities/factories/EthDividendsManagerFactory';
-import * as investmentFactoryObject from '~/entities/factories/InvestmentFactory';
-import * as securityTokenReservationObject from '~/entities/factories/SecurityTokenReservationFactory';
-import * as shareholderFactoryObject from '~/entities/factories/ShareholderFactory';
-import * as usdTieredStoFactoryObject from '~/entities/factories/UsdTieredStoFactory';
-import * as taxWithholdingFactoryObject from '~/entities/factories/TaxWithholdingFactory';
+import { ErrorCode, ProcedureType } from '~/types';
+import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
+import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
+import * as checkpointFactoryModule from '~/entities/factories/CheckpointFactory';
+import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/factories/DividendDistributionFactory';
+import * as erc20DividendsManagerFactoryModule from '~/entities/factories/Erc20DividendsManagerFactory';
+import * as erc20TokenBalanceFactoryModule from '~/entities/factories/Erc20TokenBalanceFactory';
+import * as ethDividendsManagerFactoryModule from '~/entities/factories/EthDividendsManagerFactory';
+import * as investmentFactoryModule from '~/entities/factories/InvestmentFactory';
+import * as securityTokenReservationModule from '~/entities/factories/SecurityTokenReservationFactory';
+import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
+import * as usdTieredStoFactoryModule from '~/entities/factories/UsdTieredStoFactory';
+import * as taxWithholdingFactoryModule from '~/entities/factories/TaxWithholdingFactory';
 import * as utilsModule from '~/utils';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 
 const params1 = {
   symbol: 'TEST1',
@@ -37,48 +36,50 @@ const params1 = {
 
 describe('CreateEtherDividendDistribution', () => {
   let target: CreateEtherDividendDistribution;
-  let contextMock: MockManager<contextObject.Context>;
-  let wrappersMock: MockManager<wrappersObject.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryObject.MockedTokenFactoryObject>;
-  let etherDividendsMock: MockManager<contractWrappersObject.EtherDividendCheckpoint_3_0_0>;
+  let contextMock: MockManager<contextModule.Context>;
+  let wrappersMock: MockManager<wrappersModule.PolymathBase>;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+  let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
+  let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
   let getAttachedModulesMockStub: SinonStub<any, any>;
 
   // Mock factories
-  let securityTokenFactoryMock: MockManager<securityTokenFactoryObject.SecurityTokenFactory>;
-  let cappedStoFactoryMock: MockManager<cappedStoFactoryObject.CappedStoFactory>;
-  let checkpointFactoryMock: MockManager<checkpointFactoryObject.CheckpointFactory>;
+  let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
+  let cappedStoFactoryMock: MockManager<cappedStoFactoryModule.CappedStoFactory>;
+  let checkpointFactoryMock: MockManager<checkpointFactoryModule.CheckpointFactory>;
   let dividendDistributionFactoryMock: MockManager<
-    dividendDistributionSecurityTokenFactoryObject.DividendDistributionFactory
+    dividendDistributionSecurityTokenFactoryModule.DividendDistributionFactory
   >;
   let erc20DividendsManagerFactoryMock: MockManager<
-    erc20DividendsManagerFactoryObject.Erc20DividendsManagerFactory
+    erc20DividendsManagerFactoryModule.Erc20DividendsManagerFactory
   >;
   let erc20TokenBalanceFactoryMock: MockManager<
-    erc20TokenBalanceFactoryObject.Erc20TokenBalanceFactory
+    erc20TokenBalanceFactoryModule.Erc20TokenBalanceFactory
   >;
   let ethDividendsManagerFactoryMock: MockManager<
-    ethDividendsManagerFactoryObject.EthDividendsManagerFactory
+    ethDividendsManagerFactoryModule.EthDividendsManagerFactory
   >;
-  let investmentFactoryMock: MockManager<investmentFactoryObject.InvestmentFactory>;
+  let investmentFactoryMock: MockManager<investmentFactoryModule.InvestmentFactory>;
   let securityTokenReservationFactoryMock: MockManager<
-    securityTokenReservationObject.SecurityTokenReservationFactory
+    securityTokenReservationModule.SecurityTokenReservationFactory
   >;
-  let shareholderFactoryMock: MockManager<shareholderFactoryObject.ShareholderFactory>;
-  let usdTieredStoFactoryMock: MockManager<usdTieredStoFactoryObject.UsdTieredStoFactory>;
-  let taxWithholdingFactoryMock: MockManager<taxWithholdingFactoryObject.TaxWithholdingFactory>;
+  let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
+  let usdTieredStoFactoryMock: MockManager<usdTieredStoFactoryModule.UsdTieredStoFactory>;
+  let taxWithholdingFactoryMock: MockManager<taxWithholdingFactoryModule.TaxWithholdingFactory>;
   let findEventsStub: SinonStub<any, any>;
 
   beforeAll(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
-    contextMock = ImportMock.mockClass(contextObject, 'Context');
-    wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryObject, 'MockedTokenFactoryObject');
+    contextMock = ImportMock.mockClass(contextModule, 'Context');
+    wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
+    gpmMock = ImportMock.mockClass(contractWrappersModule, 'GeneralPermissionManager_3_0_0');
     etherDividendsMock = ImportMock.mockClass(
-      contractWrappersObject,
+      contractWrappersModule,
       'EtherDividendCheckpoint_3_0_0'
     );
     getAttachedModulesMockStub = wrappersMock.mock(
@@ -88,39 +89,39 @@ describe('CreateEtherDividendDistribution', () => {
     tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
 
     securityTokenFactoryMock = ImportMock.mockClass(
-      securityTokenFactoryObject,
+      securityTokenFactoryModule,
       'SecurityTokenFactory'
     );
-    cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryObject, 'CappedStoFactory');
-    checkpointFactoryMock = ImportMock.mockClass(checkpointFactoryObject, 'CheckpointFactory');
+    cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryModule, 'CappedStoFactory');
+    checkpointFactoryMock = ImportMock.mockClass(checkpointFactoryModule, 'CheckpointFactory');
     dividendDistributionFactoryMock = ImportMock.mockClass(
-      dividendDistributionSecurityTokenFactoryObject,
+      dividendDistributionSecurityTokenFactoryModule,
       'DividendDistributionFactory'
     );
     erc20DividendsManagerFactoryMock = ImportMock.mockClass(
-      erc20DividendsManagerFactoryObject,
+      erc20DividendsManagerFactoryModule,
       'Erc20DividendsManagerFactory'
     );
     erc20TokenBalanceFactoryMock = ImportMock.mockClass(
-      erc20TokenBalanceFactoryObject,
+      erc20TokenBalanceFactoryModule,
       'Erc20TokenBalanceFactory'
     );
     ethDividendsManagerFactoryMock = ImportMock.mockClass(
-      ethDividendsManagerFactoryObject,
+      ethDividendsManagerFactoryModule,
       'EthDividendsManagerFactory'
     );
-    investmentFactoryMock = ImportMock.mockClass(investmentFactoryObject, 'InvestmentFactory');
+    investmentFactoryMock = ImportMock.mockClass(investmentFactoryModule, 'InvestmentFactory');
     securityTokenReservationFactoryMock = ImportMock.mockClass(
-      securityTokenReservationObject,
+      securityTokenReservationModule,
       'SecurityTokenReservationFactory'
     );
-    shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryObject, 'ShareholderFactory');
+    shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
     usdTieredStoFactoryMock = ImportMock.mockClass(
-      usdTieredStoFactoryObject,
+      usdTieredStoFactoryModule,
       'UsdTieredStoFactory'
     );
     taxWithholdingFactoryMock = ImportMock.mockClass(
-      taxWithholdingFactoryObject,
+      taxWithholdingFactoryModule,
       'TaxWithholdingFactory'
     );
 
@@ -160,7 +161,7 @@ describe('CreateEtherDividendDistribution', () => {
   describe('Types', () => {
     test('should extend procedure and have CreateEtherDividendDistribution type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('CreateEtherDividendDistribution');
+      expect(target.type).toBe(ProcedureType.CreateEtherDividendDistribution);
     });
   });
 

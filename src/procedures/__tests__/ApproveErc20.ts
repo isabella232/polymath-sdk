@@ -1,15 +1,15 @@
 import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub } from 'sinon';
-import * as contextObject from '../../Context';
-import * as polymathBaseObject from '../../PolymathBase';
-import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
+import * as contextModule from '../../Context';
+import * as polymathBaseModule from '../../PolymathBase';
+import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ApproveErc20 } from '../../procedures/ApproveErc20';
 import { Procedure } from '~/procedures/Procedure';
 import BigNumber from 'bignumber.js';
 import { Wallet } from '~/Wallet';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode, PolyTransactionTag } from '~/types';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '~/types';
 
 const params1 = {
   amount: new BigNumber(1),
@@ -26,10 +26,10 @@ const params2 = {
 
 describe('ApproveErc20', () => {
   let target: ApproveErc20;
-  let contextMock: MockManager<contextObject.Context>;
-  let wrappersMock: MockManager<polymathBaseObject.PolymathBase>;
-  let erc20Mock: MockManager<contractWrappersObject.ERC20>;
-  let polyTokenMock: MockManager<contractWrappersObject.PolyToken>;
+  let contextMock: MockManager<contextModule.Context>;
+  let wrappersMock: MockManager<polymathBaseModule.PolymathBase>;
+  let erc20Mock: MockManager<contractWrappersModule.ERC20>;
+  let polyTokenMock: MockManager<contractWrappersModule.PolyToken>;
 
   let checkPolyAllowanceStub: SinonStub<any, any>;
   let checkPolyAddressStub: SinonStub<any, any>;
@@ -41,10 +41,10 @@ describe('ApproveErc20', () => {
 
   beforeEach(() => {
     // Mock the context and wrappers, including currentWallet and balanceOf to test ApproveErc20
-    contextMock = ImportMock.mockClass(contextObject, 'Context');
-    wrappersMock = ImportMock.mockClass(polymathBaseObject, 'PolymathBase');
-    erc20Mock = ImportMock.mockClass(contractWrappersObject, 'ERC20');
-    polyTokenMock = ImportMock.mockClass(contractWrappersObject, 'PolyToken');
+    contextMock = ImportMock.mockClass(contextModule, 'Context');
+    wrappersMock = ImportMock.mockClass(polymathBaseModule, 'PolymathBase');
+    erc20Mock = ImportMock.mockClass(contractWrappersModule, 'ERC20');
+    polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
 
     // Setup poly token
     checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
@@ -60,10 +60,7 @@ describe('ApproveErc20', () => {
         receiptAsync: Promise.resolve([]),
       })
     );
-    const ownerPromise = new Promise<string>((resolve, reject) => {
-      resolve();
-    });
-    contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
+    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(params1.owner) }));
   });
 
   describe('Types', () => {
@@ -71,7 +68,7 @@ describe('ApproveErc20', () => {
       // Instantiate ApproveErc20
       target = new ApproveErc20(params1, contextMock.getMockInstance());
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('ApproveErc20');
+      expect(target.type).toBe(ProcedureType.ApproveErc20);
     });
   });
 
@@ -83,7 +80,6 @@ describe('ApproveErc20', () => {
         .withArgs({ address: params2.tokenAddress })
         .throws()
     );
-
     // Instantiate ApproveErc20
     target = new ApproveErc20(params2, contextMock.getMockInstance());
 
@@ -188,7 +184,11 @@ describe('ApproveErc20', () => {
     // Sufficient allowance passed in
     checkErc20AllowanceStub = erc20Mock.mock('allowance', Promise.resolve(new BigNumber(3)));
 
-    const wrapperMockStub = wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
+    const getErc20TokenWrapperStub = wrappersMock.mock(
+      'getERC20TokenWrapper',
+      erc20Mock.getMockInstance()
+    );
+
     // Instantiate ApproveErc20
     target = new ApproveErc20(params2, contextMock.getMockInstance());
 
