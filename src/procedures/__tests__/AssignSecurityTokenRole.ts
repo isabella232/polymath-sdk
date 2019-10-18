@@ -158,7 +158,9 @@ describe('AssignSecurityTokenRole', () => {
       contextMock.getMockInstance()
     );
   });
-
+  afterEach(() => {
+    sinon.restore();
+  });
   describe('Types', () => {
     test('should extend procedure and have AssignSecurityTokenRole type', async () => {
       expect(target instanceof Procedure).toBe(true);
@@ -183,6 +185,25 @@ describe('AssignSecurityTokenRole', () => {
           tag: PolyTransactionTag.ChangePermission,
         }).callCount
       ).toBe(1);
+    });
+
+    test('should send transaction to assign role without existing delegates', async () => {
+      gpmMock.mock('getAllDelegates', Promise.resolve([]));
+      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().addDelegate, {
+          tag: PolyTransactionTag.ChangePermission,
+        }).callCount
+      ).toBe(2);
+      expect(
+        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().changePermission, {
+          tag: PolyTransactionTag.ChangePermission,
+        }).callCount
+      ).toBe(2);
     });
 
     test('should throw if there is no supplied valid security token', async () => {
