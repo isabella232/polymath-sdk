@@ -1,6 +1,6 @@
 {
   "name": "@polymathnetwork/sdk",
-  "version": "2.0.1-beta.41",
+  "version": "2.0.1-beta.42",
   "description": "A Javascript SDK for interacting with the Polymath network for the browser and Node.js",
   "bugs": {
     "url": "https://github.com/PolymathNetwork/polymath-sdk/issues"
@@ -21,7 +21,8 @@
     "build:prod": "webpack --mode production && ttsc -b",
     "build:ci": "yarn build:prod",
     "commit": "npx git-cz",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -90,6 +91,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.5",
+    "coveralls": "^3.0.7",
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
