@@ -6,11 +6,11 @@ import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import { Wallet } from '../../Wallet';
-import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode , ProcedureType } from '~/types';
+import { ErrorCode, ProcedureType } from '~/types';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
 import * as checkpointFactoryModule from '~/entities/factories/CheckpointFactory';
@@ -24,7 +24,6 @@ import * as shareholderFactoryModule from '~/entities/factories/ShareholderFacto
 import * as usdTieredStoFactoryModule from '~/entities/factories/UsdTieredStoFactory';
 import * as taxWithholdingFactoryModule from '~/entities/factories/TaxWithholdingFactory';
 
-
 const params1 = {
   symbol: 'TEST1',
   name: 'Test Token 1',
@@ -37,7 +36,7 @@ describe('ControllerTransfer', () => {
   let target: ControllerTransfer;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
 
@@ -69,7 +68,7 @@ describe('ControllerTransfer', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
     securityTokenMock.mock('balanceOf', Promise.resolve(params1.amount));

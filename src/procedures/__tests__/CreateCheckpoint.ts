@@ -7,7 +7,7 @@ import BigNumber from 'bignumber.js';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode , ProcedureType } from '~/types';
+import { ErrorCode, ProcedureType } from '~/types';
 import * as utilsModule from '../../utils';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
@@ -24,8 +24,7 @@ import * as taxWithholdingFactoryModule from '~/entities/factories/TaxWithholdin
 
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
-import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
-
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 
 const params1 = {
   symbol: 'TEST1',
@@ -42,7 +41,7 @@ describe('CreateCheckpoint', () => {
 
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let tokenFactoryMockStub: SinonStub<any, any>;
 
   // Mock factories
@@ -73,7 +72,7 @@ describe('CreateCheckpoint', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
     tokenFactoryMockStub = tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
