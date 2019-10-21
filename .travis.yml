@@ -9,7 +9,7 @@ before_install:
 jobs:
   include:
     - stage: release
-      node_js: lts/*
+      node_js: '10.16.3'
       script:
         - yarn
         - yarn build:ci
