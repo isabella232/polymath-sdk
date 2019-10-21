@@ -23,7 +23,7 @@ import * as taxWithholdingFactoryModule from '~/entities/factories/TaxWithholdin
 import * as utilsModule from '~/utils';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
-import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 
 const params1 = {
   symbol: 'TEST1',
@@ -38,7 +38,7 @@ describe('CreateEtherDividendDistribution', () => {
   let target: CreateEtherDividendDistribution;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
@@ -73,7 +73,7 @@ describe('CreateEtherDividendDistribution', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
