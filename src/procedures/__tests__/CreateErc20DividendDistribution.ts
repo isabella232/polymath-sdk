@@ -11,7 +11,7 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { CreateErc20DividendDistribution } from '../../procedures/CreateErc20DividendDistribution';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode , ProcedureType } from '~/types';
+import { ErrorCode, ProcedureType } from '~/types';
 import { ApproveErc20 } from '../ApproveErc20';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
@@ -26,7 +26,6 @@ import * as shareholderFactoryModule from '~/entities/factories/ShareholderFacto
 import * as usdTieredStoFactoryModule from '~/entities/factories/UsdTieredStoFactory';
 import * as taxWithholdingFactoryModule from '~/entities/factories/TaxWithholdingFactory';
 import * as utilsModule from '~/utils';
-
 
 const params1 = {
   symbol: 'TEST1',
@@ -196,6 +195,42 @@ describe('CreateErc20DividendDistribution', () => {
           erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
         ).callCount
       ).toBe(1);
+      expect(spyOnAddProcedure.withArgs(ApproveErc20).callCount).toBe(1);
+    });
+
+    test('should send the transaction to CreateErc20DividendDistribution with taxWitholdings', async () => {
+      target = new CreateErc20DividendDistribution(
+        {
+          symbol: params1.symbol,
+          maturityDate: params1.maturityDate,
+          expiryDate: params1.expiryDate,
+          erc20Address: params1.erc20Address,
+          amount: params1.amount,
+          checkpointIndex: params1.checkpointIndex,
+          name: params1.name,
+          taxWithholdings: [
+            {
+              address: '0x5555555555555555555555555555555555555555',
+              percentage: 50,
+            },
+          ],
+        },
+        contextMock.getMockInstance()
+      );
+      const spyOnAddProcedure = sinon.spy(target, 'addProcedure');
+      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        spyOnAddTransaction.withArgs(erc20DividendsMock.getMockInstance().setWithholding).callCount
+      ).toBe(2);
+      expect(
+        spyOnAddTransaction.withArgs(
+          erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
+        ).callCount
+      ).toBe(2);
       expect(spyOnAddProcedure.withArgs(ApproveErc20).callCount).toBe(1);
     });
 

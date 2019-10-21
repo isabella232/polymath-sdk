@@ -182,6 +182,40 @@ describe('CreateEtherDividendDistribution', () => {
       ).toBe(1);
     });
 
+    test('should send the transaction to CreateEtherDividendDistribution with taxwithholdings', async () => {
+      target = new CreateEtherDividendDistribution(
+        {
+          symbol: params1.symbol,
+          maturityDate: params1.maturityDate,
+          expiryDate: params1.expiryDate,
+          amount: params1.amount,
+          checkpointIndex: params1.checkpointIndex,
+          name: params1.name,
+          taxWithholdings: [
+            {
+              address: '0x5555555555555555555555555555555555555555',
+              percentage: 50,
+            },
+          ],
+        },
+        contextMock.getMockInstance()
+      );
+
+      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        spyOnAddTransaction.withArgs(etherDividendsMock.getMockInstance().setWithholding).callCount
+      ).toBe(2);
+      expect(
+        spyOnAddTransaction.withArgs(
+          etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
+        ).callCount
+      ).toBe(2);
+    });
+
     test('should throw if corresponding event is not fired', async () => {
       findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
