@@ -1,4 +1,5 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { difference } from 'lodash';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,
@@ -34,12 +35,14 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
     const investors: string[] = [];
     const values: BigNumber[] = [];
     const updatedShareholderData: ShareholderDataEntry[] = [];
+    const updatedShareholderAddresses: string[] = [];
 
     mintingData.forEach(({ address, amount, shareholderData }) => {
       investors.push(address);
       values.push(amount);
 
       if (shareholderData) {
+        updatedShareholderAddresses.push(address);
         updatedShareholderData.push({
           address,
           ...shareholderData,
@@ -63,7 +66,12 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
     // complete gaps in latest kyc data with current shareholders
     shareholders.forEach(
       ({ address, canSendAfter, canReceiveAfter, kycExpiry, canBuyFromSto, isAccredited }) => {
-        if (!updatedShareholderData.find(data => data.address === address)) {
+        if (
+          !updatedShareholderData.find(
+            data => data.address.toUpperCase() === address.toUpperCase()
+          ) &&
+          !!investors.find(investor => investor.toUpperCase() === address.toUpperCase())
+        ) {
           updatedShareholderData.push({
             address,
             canSendAfter,
@@ -76,8 +84,9 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
       }
     );
 
-    const missingShareholders = investors.filter(
-      investor => !shareholders.find(({ address }) => address === investor)
+    const missingShareholders = difference(investors, updatedShareholderAddresses).filter(
+      investor =>
+        !shareholders.find(({ address }) => address.toUpperCase() === investor.toUpperCase())
     );
 
     if (missingShareholders.length) {
