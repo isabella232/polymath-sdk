@@ -1,10 +1,10 @@
 import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub } from 'sinon';
-import * as contractWrappersObject from '@polymathnetwork/contract-wrappers';
-import * as contextObject from '../../Context';
-import * as wrappersObject from '../../PolymathBase';
-import * as tokenFactoryObject from '../../testUtils/MockedTokenFactoryObject';
+import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { AssignStoRole } from '../../procedures/AssignStoRole';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
@@ -20,22 +20,22 @@ const params1 = {
 
 describe('AssignStoRole', () => {
   let target: AssignStoRole;
-  let contextMock: MockManager<contextObject.Context>;
-  let wrappersMock: MockManager<wrappersObject.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryObject.MockedTokenFactoryObject>;
-  let gpmMock: MockManager<contractWrappersObject.GeneralPermissionManager_3_0_0>;
+  let contextMock: MockManager<contextModule.Context>;
+  let wrappersMock: MockManager<wrappersModule.PolymathBase>;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+  let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
   let getAttachedModulesMockStub: SinonStub<any, any>;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test AssignSecurityRole
-    contextMock = ImportMock.mockClass(contextObject, 'Context');
-    wrappersMock = ImportMock.mockClass(wrappersObject, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryObject, 'MockedTokenFactoryObject');
+    contextMock = ImportMock.mockClass(contextModule, 'Context');
+    wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
-    gpmMock = ImportMock.mockClass(contractWrappersObject, 'GeneralPermissionManager_3_0_0');
+    gpmMock = ImportMock.mockClass(contractWrappersModule, 'GeneralPermissionManager_3_0_0');
     gpmMock.mock('getAllDelegates', Promise.resolve([params1.delegateAddress]));
     gpmMock.mock('getAllDelegatesWithPerm', Promise.resolve([]));
 
