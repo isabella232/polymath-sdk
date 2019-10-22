@@ -154,9 +154,15 @@ export class MockedContract {
     this.autoResolve = autoResolve;
     this.errorMsg = errorMsg;
 
-    this.fakeTxOnePolyResponse = new MockPolyResponse({ txHash: txHashes[0] || '0x1' });
-    this.fakeTxTwoPolyResponse = new MockPolyResponse({ txHash: txHashes[1] || '0x2' });
-    this.failureTxPolyResponse = new MockPolyResponse({ txHash: txHashes[2] || '0x3' });
+    this.fakeTxOnePolyResponse = new MockPolyResponse({
+      txHash: txHashes[0] || '0x1',
+    });
+    this.fakeTxTwoPolyResponse = new MockPolyResponse({
+      txHash: txHashes[1] || '0x2',
+    });
+    this.failureTxPolyResponse = new MockPolyResponse({
+      txHash: txHashes[2] || '0x3',
+    });
   }
 }
 
@@ -169,3 +175,53 @@ export const getMockTransactionSpec = (
   args,
   postTransactionResolver: new PostTransactionResolver(resolver),
 });
+
+export async function getMockedPolyResponse(): Promise<PolyResponse> {
+  return new PolyResponse(
+    'TxHash',
+    Promise.resolve({
+      from: 'from',
+      to: 'to',
+      status: '0',
+      cumulativeGasUsed: 0,
+      gasUsed: 0,
+      contractAddress: 'contractAddress',
+      logs: [],
+      logIndex: null,
+      transactionIndex: 1,
+      transactionHash: 'transactionHash',
+      blockHash: 'blockHash',
+      blockNumber: 1,
+      address: 'address',
+      data: 'data',
+      topics: ['topic1'],
+    })
+  );
+}
+
+export class MockedCallMethod {
+  public callAsync(...args: any): Promise<any> {
+    // eslint-disable-line
+    return Promise.resolve();
+  }
+
+  public getABIEncodedTransactionData(): string {
+    return '';
+  }
+}
+
+export class MockedSendMethod extends MockedCallMethod {
+  public sendTransactionAsync(...args: any): Promise<any> {
+    // eslint-disable-line
+    return Promise.resolve();
+  }
+
+  public estimateGasAsync(...args: any): Promise<any> {
+    // eslint-disable-line
+    return Promise.resolve();
+  }
+
+  public getABIEncodedTransactionData(): string {
+    return '';
+  }
+}

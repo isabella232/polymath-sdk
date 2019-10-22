@@ -1,6 +1,6 @@
 {
   "name": "@polymathnetwork/sdk",
-  "version": "2.0.1-beta.43",
+  "version": "2.0.1-beta.44",
   "description": "A Javascript SDK for interacting with the Polymath network for the browser and Node.js",
   "bugs": {
     "url": "https://github.com/PolymathNetwork/polymath-sdk/issues"
@@ -51,6 +51,7 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.2.0",
     "@polymathnetwork/contract-wrappers": "3.0.0-beta.47",
+    "@types/sinon": "^7.5.0",
     "bluebird": "^3.5.5",
     "ethereum-address": "^0.0.4",
     "json-stable-stringify": "^1.0.1",
@@ -103,6 +104,8 @@
     "reflect-metadata": "^0.1.12",
     "regenerator-runtime": "^0.13.1",
     "semantic-release": "^16.0.0-beta.18",
+    "sinon": "^7.5.0",
+    "ts-mock-imports": "^1.2.6",
     "ts-loader": "^5.3.3",
     "tsconfig-paths": "^3.7.0",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
