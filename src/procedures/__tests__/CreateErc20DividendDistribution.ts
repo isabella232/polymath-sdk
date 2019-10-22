@@ -7,7 +7,7 @@ import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as approveModule from '../ApproveErc20';
-import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { CreateErc20DividendDistribution } from '../../procedures/CreateErc20DividendDistribution';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
@@ -42,7 +42,7 @@ describe('CreateErc20DividendDistribution', () => {
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let approvalMock: MockManager<approveModule.ApproveErc20>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let erc20DividendsMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
@@ -77,7 +77,7 @@ describe('CreateErc20DividendDistribution', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateErc20DividendDistribution
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
 
     // Import mock out of ApproveErc20
     approvalMock = ImportMock.mockClass(approveModule, 'ApproveErc20');
