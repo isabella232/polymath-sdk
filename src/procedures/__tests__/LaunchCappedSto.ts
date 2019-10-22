@@ -37,6 +37,7 @@ import {
   ModuleName,
 } from '@polymathnetwork/contract-wrappers';
 import * as transferERC20Module from '~/procedures/TransferERC20';
+import { Wallet } from '~/Wallet';
 
 const params1: LaunchCappedStoProcedureArgs = {
   symbol: 'TEST1',
@@ -59,6 +60,7 @@ describe('LaunchCappedSto', () => {
   >;
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
+  let polyTokenMock: MockManager<contractWrappersModule.PolyToken>;
   let tokenFactoryStub: SinonStub<any, any>;
   let moduleWrapperFactoryStub: SinonStub<any, any>;
   let getAttachedModuleStub: SinonStub<any, any>;
@@ -116,6 +118,7 @@ describe('LaunchCappedSto', () => {
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
     securityTokenMock.mock('address', Promise.resolve(params1.storageWallet));
+    securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(1)));
 
     securityTokenMock.mock('addModuleWithLabel', Promise.resolve({}));
 
@@ -123,8 +126,6 @@ describe('LaunchCappedSto', () => {
     moduleFactoryMock.mock('setupCostInPoly', Promise.resolve(new BigNumber(1)));
     moduleFactoryMock.mock('isCostInPoly', Promise.resolve(true));
     moduleFactoryMock.mock('setupCost', Promise.resolve(new BigNumber(1)));
-
-    moduleFactoryMock.mock('address', Promise.resolve(params1.storageWallet));
 
     gpmMock = ImportMock.mockClass(contractWrappersModule, 'GeneralPermissionManager_3_0_0');
     etherDividendsMock = ImportMock.mockClass(
@@ -196,6 +197,17 @@ describe('LaunchCappedSto', () => {
       taxWithholdingFactory: taxWithholdingFactoryMock.getMockInstance(),
     };
     contextMock.set('factories', factoryMockSetup);
+    contextMock.set(
+      'currentWallet',
+      new Wallet({ address: () => Promise.resolve(params1.storageWallet) })
+    );
+
+    polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
+    polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
+    polyTokenMock.mock('address', Promise.resolve(params1.treasuryWallet));
+    polyTokenMock.mock('allowance', Promise.resolve(new BigNumber(0)));
+    wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
+    wrappersMock.mock('isTestnet', Promise.resolve(false));
 
     getAttachedModulesFactoryAddressStub = wrappersMock.mock(
       'getModuleFactoryAddress',
