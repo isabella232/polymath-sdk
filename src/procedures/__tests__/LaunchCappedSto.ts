@@ -38,6 +38,8 @@ import {
 } from '@polymathnetwork/contract-wrappers';
 import * as transferERC20Module from '~/procedures/TransferERC20';
 import { Wallet } from '~/Wallet';
+import { ApproveErc20 } from '~/procedures';
+import { TransferErc20 } from '~/procedures/TransferERC20';
 
 const params1: LaunchCappedStoProcedureArgs = {
   symbol: 'TEST1',
@@ -230,20 +232,19 @@ describe('LaunchCappedSto', () => {
 
   describe('LaunchCappedSto', () => {
     test('should send the transaction to LaunchCappedSto', async () => {
+      const spyOnAddProcedure = sinon.spy(target, 'addProcedure');
       const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel, {
-          tag: PolyTransactionTag.EnableCappedSto,
-          fees: {
-            usd: new BigNumber(1),
-            poly: new BigNumber(1),
-          },
-        }).callCount
+        spyOnAddTransaction.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel)
+          .callCount
       ).toBe(1);
+      // TODO add with correct args
+      //  // {"args": {"address": , "archived": false, "data": {"cap": "1000", "endTime": 2031-02-01T08:00:00.000Z, "fundRaiseType": 0, "fundsReceiver": "0x6666666666666666666666666666666666666666", "rate": "10", "startTime": 2030-02-01T08:00:00.000Z, "treasuryWallet": "0x6666666666666666666666666666666666666666"}
+      expect(spyOnAddProcedure.callCount).toBe(1);
     });
 
     test('should throw if corresponding event is not fired', async () => {
@@ -256,22 +257,20 @@ describe('LaunchCappedSto', () => {
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
-            "The Capped STO was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team..",
+            "The Capped STO was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
         })
       );
     });
 
     test('should correctly return the resolver', async () => {
       const stoObject = {
-        moduleName: () => Promise.resolve(ModuleName.CappedSTO),
-        address: () => Promise.resolve(params1.treasuryWallet),
-        permissions: {
+        sto: {
           securityTokenId: () => Promise.resolve(params1.symbol),
           stoType: () => Promise.resolve(StoType.Capped),
           address: () => Promise.resolve(params1.storageWallet),
         },
       };
-      const fetchStub = dividendDistributionFactoryMock.mock('fetch', stoObject);
+      const fetchStub = cappedStoFactoryMock.mock('fetch', stoObject);
       findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
