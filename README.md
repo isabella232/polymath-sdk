@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/PolymathNetwork/polymath-sdk/badge.svg?branch=beta)](https://coveralls.io/github/PolymathNetwork/polymath-sdk?branch=beta)
+
 # Polymath SDK
 
 A Javascript SDK for interacting with the Polymath network for the browser and Node.js
