@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
-import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { EnableDividendManagers } from '../../procedures/EnableDividendManagers';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
@@ -25,7 +25,7 @@ describe('EnableDividendManagers', () => {
   let target: EnableDividendManagers;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let tokenFactoryMockStub: SinonStub<any, any>;
@@ -35,7 +35,7 @@ describe('EnableDividendManagers', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
