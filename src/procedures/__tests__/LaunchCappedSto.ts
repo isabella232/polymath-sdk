@@ -7,14 +7,7 @@ import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { LaunchCappedSto } from '../../procedures/LaunchCappedSto';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import {
-  ErrorCode,
-  LaunchCappedStoProcedureArgs,
-  PolyTransactionTag,
-  ProcedureArguments,
-  ProcedureType,
-  StoType,
-} from '~/types';
+import { ErrorCode, LaunchCappedStoProcedureArgs, ProcedureType, StoType } from '~/types';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
 import * as checkpointFactoryModule from '~/entities/factories/CheckpointFactory';
@@ -32,14 +25,8 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import {
-  CappedSTOFundRaiseType as CappedStoCurrency,
-  ModuleName,
-} from '@polymathnetwork/contract-wrappers';
-import * as transferERC20Module from '~/procedures/TransferERC20';
+import { CappedSTOFundRaiseType as CappedStoCurrency } from '@polymathnetwork/contract-wrappers';
 import { Wallet } from '~/Wallet';
-import { ApproveErc20 } from '~/procedures';
-import { TransferErc20 } from '~/procedures/TransferERC20';
 
 const params1: LaunchCappedStoProcedureArgs = {
   symbol: 'TEST1',
@@ -60,12 +47,10 @@ describe('LaunchCappedSto', () => {
   let moduleWrapperFactoryMock: MockManager<
     moduleWrapperFactoryModule.MockedModuleWrapperFactoryModule
   >;
-  let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
   let polyTokenMock: MockManager<contractWrappersModule.PolyToken>;
   let tokenFactoryStub: SinonStub<any, any>;
   let moduleWrapperFactoryStub: SinonStub<any, any>;
-  let getAttachedModuleStub: SinonStub<any, any>;
 
   // Mock factories
   let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
@@ -93,8 +78,6 @@ describe('LaunchCappedSto', () => {
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let moduleFactoryMock: MockManager<contractWrappersModule.ModuleFactory_3_0_0>;
 
-  let transferErc20Mock: MockManager<transferERC20Module.TransferErc20>;
-
   let findEventsStub: SinonStub<any, any>;
   let getAttachedModulesFactoryAddressStub: SinonStub<any, any>;
 
@@ -108,12 +91,6 @@ describe('LaunchCappedSto', () => {
       'MockedModuleWrapperFactoryModule'
     );
 
-    // Import mock out of TransferErc20
-    transferErc20Mock = ImportMock.mockClass(transferERC20Module, 'TransferErc20');
-    transferErc20Mock.mock('prepareTransactions', []);
-    transferErc20Mock.set('transactions' as any, []);
-    transferErc20Mock.set('fees' as any, []);
-
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
     wrappersMock.set('moduleFactory', moduleWrapperFactoryMock.getMockInstance());
@@ -122,22 +99,11 @@ describe('LaunchCappedSto', () => {
     securityTokenMock.mock('address', Promise.resolve(params1.storageWallet));
     securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(1)));
 
-    securityTokenMock.mock('addModuleWithLabel', Promise.resolve({}));
-
     moduleFactoryMock = ImportMock.mockClass(contractWrappersModule, 'ModuleFactory_3_0_0');
     moduleFactoryMock.mock('setupCostInPoly', Promise.resolve(new BigNumber(1)));
-    moduleFactoryMock.mock('isCostInPoly', Promise.resolve(true));
+    moduleFactoryMock.mock('isCostInPoly', Promise.resolve(false));
     moduleFactoryMock.mock('setupCost', Promise.resolve(new BigNumber(1)));
 
-    gpmMock = ImportMock.mockClass(contractWrappersModule, 'GeneralPermissionManager_3_0_0');
-    etherDividendsMock = ImportMock.mockClass(
-      contractWrappersModule,
-      'EtherDividendCheckpoint_3_0_0'
-    );
-    getAttachedModuleStub = wrappersMock.mock(
-      'getAttachedModules',
-      Promise.resolve([etherDividendsMock])
-    );
     tokenFactoryStub = tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
