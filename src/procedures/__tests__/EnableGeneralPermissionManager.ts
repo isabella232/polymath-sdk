@@ -32,7 +32,7 @@ describe('EnableGeneralPermissionManager', () => {
   let getAttachedModulesMockStub: SinonStub<any, any>;
 
   beforeAll(() => {
-    // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
+    // Mock the context, wrappers, and tokenFactory to test EnableGeneralPermissionManager
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');

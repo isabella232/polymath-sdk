@@ -90,7 +90,7 @@ describe('LaunchUsdTieredSto', () => {
   let getAttachedModulesFactoryAddressStub: SinonStub<any, any>;
 
   beforeAll(() => {
-    // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
+    // Mock the context, wrappers, and tokenFactory to test LaunchUsdTieredSto
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');

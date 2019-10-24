@@ -65,7 +65,7 @@ describe('ControllerTransfer', () => {
   let taxWithholdingFactoryMock: MockManager<taxWithholdingFactoryModule.TaxWithholdingFactory>;
 
   beforeEach(() => {
-    // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
+    // Mock the context, wrappers, and tokenFactory to test ControllerTransfer
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');

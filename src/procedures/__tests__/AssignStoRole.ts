@@ -28,7 +28,7 @@ describe('AssignStoRole', () => {
   let getAttachedModulesMockStub: SinonStub<any, any>;
 
   beforeEach(() => {
-    // Mock the context, wrappers, and tokenFactory to test AssignSecurityRole
+    // Mock the context, wrappers, and tokenFactory to test AssignStoRole
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
