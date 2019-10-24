@@ -229,18 +229,17 @@ describe('MintTokens', () => {
 
   describe('MintTokens', () => {
     test('should send the transaction to MintTokens', async () => {
-      const spyOnAddProcedure = sinon.spy(target, 'addProcedure');
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addProcedureSpy = sinon.spy(target, 'addProcedure');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel)
-          .callCount
+        addTransactionSpy.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel).callCount
       ).toBe(1);
       // TODO add with correct args
-      expect(spyOnAddProcedure.callCount).toBe(1);
+      expect(addProcedureSpy.callCount).toBe(1);
     });
 
     test('should correctly return the resolver', async () => {
@@ -266,7 +265,7 @@ describe('MintTokens', () => {
       expect(fetchStub.callCount).toBe(1);
     });
 
-    test('should throw if there is no supplied valid security token', async () => {
+    test('should throw if there is no valid security token supplied', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         sinon

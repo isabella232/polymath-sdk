@@ -198,22 +198,21 @@ describe('LaunchCappedSto', () => {
 
   describe('LaunchCappedSto', () => {
     test('should send the transaction to LaunchCappedSto', async () => {
-      const spyOnAddProcedure = sinon.spy(target, 'addProcedure');
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addProcedureSpy = sinon.spy(target, 'addProcedure');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel)
-          .callCount
+        addTransactionSpy.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel).callCount
       ).toBe(1);
       // TODO add with correct args
       //  // {"args": {"address": , "archived": false, "data": {"cap": "1000", "endTime": 2031-02-01T08:00:00.000Z, "fundRaiseType": 0, "fundsReceiver": "0x6666666666666666666666666666666666666666", "rate": "10", "startTime": 2030-02-01T08:00:00.000Z, "treasuryWallet": "0x6666666666666666666666666666666666666666"}
-      expect(spyOnAddProcedure.callCount).toBe(1);
+      expect(addProcedureSpy.callCount).toBe(1);
     });
 
-    test('should throw if corresponding event is not fired', async () => {
+    test('should throw if corresponding capped sto event is not fired', async () => {
       findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
       // Real call
