@@ -10,7 +10,7 @@ import { CreateSecurityToken } from '../../procedures/CreateSecurityToken';
 import { Procedure } from '~/procedures/Procedure';
 import { Wallet } from '~/Wallet';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode , ProcedureType } from '~/types';
+import { ErrorCode, ProcedureType } from '~/types';
 import { ApproveErc20 } from '../ApproveErc20';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
@@ -26,7 +26,6 @@ import * as usdTieredStoFactoryModule from '~/entities/factories/UsdTieredStoFac
 import * as taxWithholdingFactoryModule from '~/entities/factories/TaxWithholdingFactory';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as utilsModule from '~/utils';
-
 
 const params1 = {
   symbol: 'TEST1',
@@ -194,7 +193,7 @@ describe('CreateSecurityToken', () => {
       );
     });
 
-    test('should throw if corresponding event is not fired', async () => {
+    test('should throw if corresponding create security token event is not fired', async () => {
       findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
       // Real call
@@ -249,7 +248,7 @@ describe('CreateSecurityToken', () => {
       );
     });
 
-    test('should throw error if token has already been launched', async () => {
+    test('should throw error if the token has already been launched', async () => {
       securityTokenRegistryMock.mock('isTokenLaunched', Promise.resolve(true));
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(
@@ -261,18 +260,18 @@ describe('CreateSecurityToken', () => {
     });
 
     test('should send the transaction to CreateSecurityToken', async () => {
-      const spyOnAddProcedure = sinon.spy(target, 'addProcedure');
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addProcedureSpy = sinon.spy(target, 'addProcedure');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(
+        addTransactionSpy.withArgs(
           securityTokenRegistryMock.getMockInstance().generateNewSecurityToken
         ).callCount
       ).toBe(1);
-      expect(spyOnAddProcedure.withArgs(ApproveErc20).callCount).toBe(1);
+      expect(addProcedureSpy.withArgs(ApproveErc20).callCount).toBe(1);
     });
 
     test('should send the transaction to CreateSecurityToken with a treasury wallet', async () => {

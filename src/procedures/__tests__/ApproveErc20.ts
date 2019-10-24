@@ -95,20 +95,20 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params1, contextMock.getMockInstance());
 
-    const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+    const addTransactionSpy = sinon.spy(target, 'addTransaction');
 
     // Real call
     await target.prepareTransactions();
 
     // Verifications
     expect(
-      spyOnAddTransaction.withArgs(polyTokenMock.getMockInstance().approve, {
+      addTransactionSpy.withArgs(polyTokenMock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
       }).callCount
     ).toBe(1);
   });
 
-  test('should send the transaction to createCheckpoint with a custom erc20 token', async () => {
+  test('should send the transaction to approve custom erc20 token', async () => {
     // Used by custom erc20 token
     checkErc20BalanceStub = erc20Mock.mock('balanceOf', Promise.resolve(params2.amount));
     checkErc20AddressStub = erc20Mock.mock('address', Promise.resolve(params2.spender));
@@ -118,20 +118,20 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params2, contextMock.getMockInstance());
 
-    const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+    const addTransactionSpy = sinon.spy(target, 'addTransaction');
 
     // Real call
     await target.prepareTransactions();
 
     // Verifications
     expect(
-      spyOnAddTransaction.withArgs(polyTokenMock.getMockInstance().approve, {
+      addTransactionSpy.withArgs(polyTokenMock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
       }).callCount
     ).toBe(1);
   });
 
-  test('should fail with not enough funds error thrown ', async () => {
+  test("should throw an error if the wallet doesn't have enough funds to approve the required amount", async () => {
     // Setup test situation
     const zeroBalanceOf = new BigNumber(0);
     checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(zeroBalanceOf));
@@ -148,7 +148,7 @@ describe('ApproveErc20', () => {
     );
   });
 
-  test('should use token faucet if the balanceOf is less than amount (with poly token)', async () => {
+  test('should use token faucet if the balanceOf is less than amount (with poly token), and it is on test net environment', async () => {
     // Setup test situation
     wrappersMock.mock('isTestnet', Promise.resolve(true));
 
@@ -159,19 +159,19 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params1, contextMock.getMockInstance());
 
-    const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+    const addTransactionSpy = sinon.spy(target, 'addTransaction');
 
     // Real call
     await target.prepareTransactions();
 
     // Verifications
     expect(
-      spyOnAddTransaction.withArgs(wrappersMock.getMockInstance().getPolyTokens, {
+      addTransactionSpy.withArgs(wrappersMock.getMockInstance().getPolyTokens, {
         tag: PolyTransactionTag.GetTokens,
       }).callCount
     ).toBe(1);
     expect(
-      spyOnAddTransaction.withArgs(polyTokenMock.getMockInstance().approve, {
+      addTransactionSpy.withArgs(polyTokenMock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
       }).callCount
     ).toBe(1);
@@ -192,13 +192,10 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params2, contextMock.getMockInstance());
 
-    const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
-
     // Real call
     await target.prepareTransactions();
 
     // Verifications
-    expect(spyOnPrepareTransactions.withArgs().callCount).toBe(1);
     expect(
       sinon.spy(target, 'addTransaction').neverCalledWith({
         tag: PolyTransactionTag.ApproveErc20,

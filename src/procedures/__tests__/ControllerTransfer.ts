@@ -159,18 +159,17 @@ describe('ControllerTransfer', () => {
 
   describe('ControllerTransfer', () => {
     test('should send the transaction to ControllerTransfer', async () => {
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(securityTokenMock.getMockInstance().controllerTransfer)
-          .callCount
+        addTransactionSpy.withArgs(securityTokenMock.getMockInstance().controllerTransfer).callCount
       ).toBe(1);
     });
 
-    test('should throw if there is no supplied valid security token', async () => {
+    test('should throw if there is no valid security token supplied', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         sinon
@@ -187,7 +186,7 @@ describe('ControllerTransfer', () => {
       );
     });
 
-    test('should throw error if balanceOf is less than amount', async () => {
+    test('should throw error if balanceOf is less than amount being transferred', async () => {
       securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(0)));
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(
@@ -198,7 +197,7 @@ describe('ControllerTransfer', () => {
       );
     });
 
-    test('should throw error if current wallet is not controller', async () => {
+    test('should throw error if current wallet is not controller to perform forced transfers', async () => {
       securityTokenMock.mock('controller', Promise.resolve('Random'));
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(

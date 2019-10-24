@@ -67,18 +67,18 @@ describe('AssignStoRole', () => {
 
   describe('AssignStoRole', () => {
     test('should send the transaction to AssignStoRole', async () => {
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().addDelegate, {
+        addTransactionSpy.withArgs(gpmMock.getMockInstance().addDelegate, {
           tag: PolyTransactionTag.ChangePermission,
         }).callCount
       ).toBe(1);
       expect(
-        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().changePermission, {
+        addTransactionSpy.withArgs(gpmMock.getMockInstance().changePermission, {
           tag: PolyTransactionTag.ChangePermission,
         }).callCount
       ).toBe(1);
@@ -86,18 +86,18 @@ describe('AssignStoRole', () => {
 
     test('should send the transaction to AssignStoRole without delegate', async () => {
       gpmMock.mock('getAllDelegates', Promise.resolve([]));
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().addDelegate, {
+        addTransactionSpy.withArgs(gpmMock.getMockInstance().addDelegate, {
           tag: PolyTransactionTag.ChangePermission,
         }).callCount
       ).toBe(2);
       expect(
-        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().changePermission, {
+        addTransactionSpy.withArgs(gpmMock.getMockInstance().changePermission, {
           tag: PolyTransactionTag.ChangePermission,
         }).callCount
       ).toBe(2);
@@ -114,24 +114,24 @@ describe('AssignStoRole', () => {
         },
         contextMock.getMockInstance()
       );
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().addDelegate, {
+        addTransactionSpy.withArgs(gpmMock.getMockInstance().addDelegate, {
           tag: PolyTransactionTag.ChangePermission,
         }).callCount
       ).toBe(1);
       expect(
-        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().changePermission, {
+        addTransactionSpy.withArgs(gpmMock.getMockInstance().changePermission, {
           tag: PolyTransactionTag.ChangePermission,
         }).callCount
       ).toBe(1);
     });
 
-    test('should throw if there is no supplied valid security token', async () => {
+    test('should throw if there is no valid security token supplied ', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         sinon

@@ -10,7 +10,7 @@ import { AssignSecurityTokenRole } from '../../procedures/AssignSecurityTokenRol
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
 import * as checkpointFactoryModule from '~/entities/factories/CheckpointFactory';
-import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/factories/DividendDistributionFactory';
+import * as dividendDistributionFactoryModule from '~/entities/factories/DividendDistributionFactory';
 import * as erc20DividendsManagerFactoryModule from '~/entities/factories/Erc20DividendsManagerFactory';
 import * as erc20TokenBalanceFactoryModule from '~/entities/factories/Erc20TokenBalanceFactory';
 import * as ethDividendsManagerFactoryModule from '~/entities/factories/EthDividendsManagerFactory';
@@ -41,7 +41,7 @@ describe('AssignSecurityTokenRole', () => {
   let cappedStoFactoryMock: MockManager<cappedStoFactoryModule.CappedStoFactory>;
   let checkpointFactoryMock: MockManager<checkpointFactoryModule.CheckpointFactory>;
   let dividendDistributionFactoryMock: MockManager<
-    dividendDistributionSecurityTokenFactoryModule.DividendDistributionFactory
+    dividendDistributionFactoryModule.DividendDistributionFactory
   >;
   let erc20DividendsManagerFactoryMock: MockManager<
     erc20DividendsManagerFactoryModule.Erc20DividendsManagerFactory
@@ -80,7 +80,7 @@ describe('AssignSecurityTokenRole', () => {
     cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryModule, 'CappedStoFactory');
     checkpointFactoryMock = ImportMock.mockClass(checkpointFactoryModule, 'CheckpointFactory');
     dividendDistributionFactoryMock = ImportMock.mockClass(
-      dividendDistributionSecurityTokenFactoryModule,
+      dividendDistributionFactoryModule,
       'DividendDistributionFactory'
     );
     erc20DividendsManagerFactoryMock = ImportMock.mockClass(
@@ -169,19 +169,19 @@ describe('AssignSecurityTokenRole', () => {
   });
 
   describe('AssignSecurityTokenRole', () => {
-    test('should send the transaction to AssignSecurityTokenRole', async () => {
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+    test('should enqueue the addDelegate and changePermission transactions when the delegate is a new address', async () => {
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().addDelegate, {
+        addTransactionSpy.withArgs(gpmMock.getMockInstance().addDelegate, {
           tag: PolyTransactionTag.ChangePermission,
         }).callCount
       ).toBe(1);
       expect(
-        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().changePermission, {
+        addTransactionSpy.withArgs(gpmMock.getMockInstance().changePermission, {
           tag: PolyTransactionTag.ChangePermission,
         }).callCount
       ).toBe(1);
@@ -189,24 +189,24 @@ describe('AssignSecurityTokenRole', () => {
 
     test('should send transaction to assign role without existing delegates', async () => {
       gpmMock.mock('getAllDelegates', Promise.resolve([]));
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().addDelegate, {
+        addTransactionSpy.withArgs(gpmMock.getMockInstance().addDelegate, {
           tag: PolyTransactionTag.ChangePermission,
         }).callCount
       ).toBe(2);
       expect(
-        spyOnAddTransaction.withArgs(gpmMock.getMockInstance().changePermission, {
+        addTransactionSpy.withArgs(gpmMock.getMockInstance().changePermission, {
           tag: PolyTransactionTag.ChangePermission,
         }).callCount
       ).toBe(2);
     });
 
-    test('should throw if there is no supplied valid security token', async () => {
+    test('should throw if there is no valid security token being provided', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         sinon
