@@ -10,7 +10,7 @@ import { AssignSecurityTokenRole } from '../../procedures/AssignSecurityTokenRol
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
 import * as checkpointFactoryModule from '~/entities/factories/CheckpointFactory';
-import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/factories/DividendDistributionFactory';
+import * as dividendDistributionFactoryModule from '~/entities/factories/DividendDistributionFactory';
 import * as erc20DividendsManagerFactoryModule from '~/entities/factories/Erc20DividendsManagerFactory';
 import * as erc20TokenBalanceFactoryModule from '~/entities/factories/Erc20TokenBalanceFactory';
 import * as ethDividendsManagerFactoryModule from '~/entities/factories/EthDividendsManagerFactory';
@@ -41,7 +41,7 @@ describe('AssignSecurityTokenRole', () => {
   let cappedStoFactoryMock: MockManager<cappedStoFactoryModule.CappedStoFactory>;
   let checkpointFactoryMock: MockManager<checkpointFactoryModule.CheckpointFactory>;
   let dividendDistributionFactoryMock: MockManager<
-    dividendDistributionSecurityTokenFactoryModule.DividendDistributionFactory
+    dividendDistributionFactoryModule.DividendDistributionFactory
   >;
   let erc20DividendsManagerFactoryMock: MockManager<
     erc20DividendsManagerFactoryModule.Erc20DividendsManagerFactory
@@ -80,7 +80,7 @@ describe('AssignSecurityTokenRole', () => {
     cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryModule, 'CappedStoFactory');
     checkpointFactoryMock = ImportMock.mockClass(checkpointFactoryModule, 'CheckpointFactory');
     dividendDistributionFactoryMock = ImportMock.mockClass(
-      dividendDistributionSecurityTokenFactoryModule,
+      dividendDistributionFactoryModule,
       'DividendDistributionFactory'
     );
     erc20DividendsManagerFactoryMock = ImportMock.mockClass(
@@ -169,7 +169,7 @@ describe('AssignSecurityTokenRole', () => {
   });
 
   describe('AssignSecurityTokenRole', () => {
-    test('should send the transaction to AssignSecurityTokenRole', async () => {
+    test('should enqueue the addDelegate and changePermission transactions when the delegate is a new address', async () => {
       const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();

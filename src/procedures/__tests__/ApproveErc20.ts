@@ -192,13 +192,10 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params2, contextMock.getMockInstance());
 
-    const prepareTransactionsSpy = sinon.spy(target, 'prepareTransactions');
-
     // Real call
     await target.prepareTransactions();
 
     // Verifications
-    expect(prepareTransactionsSpy.withArgs().callCount).toBe(1);
     expect(
       sinon.spy(target, 'addTransaction').neverCalledWith({
         tag: PolyTransactionTag.ApproveErc20,
