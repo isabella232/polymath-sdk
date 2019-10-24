@@ -265,7 +265,7 @@ describe('CreateEtherDividendDistribution', () => {
       );
     });
 
-    test('should throw if there is no supplied valid security token', async () => {
+    test('should throw if there is no valid security token supplied', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         sinon

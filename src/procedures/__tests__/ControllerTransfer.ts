@@ -169,7 +169,7 @@ describe('ControllerTransfer', () => {
       ).toBe(1);
     });
 
-    test('should throw if there is no supplied valid security token', async () => {
+    test('should throw if there is no valid security token supplied', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         sinon
@@ -186,7 +186,7 @@ describe('ControllerTransfer', () => {
       );
     });
 
-    test('should throw error if balanceOf is less than amount', async () => {
+    test('should throw error if balanceOf is less than amount being transferred', async () => {
       securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(0)));
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(
@@ -197,7 +197,7 @@ describe('ControllerTransfer', () => {
       );
     });
 
-    test('should throw error if current wallet is not controller', async () => {
+    test('should throw error if current wallet is not controller to perform forced transfers', async () => {
       securityTokenMock.mock('controller', Promise.resolve('Random'));
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(

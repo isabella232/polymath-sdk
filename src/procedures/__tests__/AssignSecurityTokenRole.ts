@@ -206,7 +206,7 @@ describe('AssignSecurityTokenRole', () => {
       ).toBe(2);
     });
 
-    test('should throw if there is no supplied valid security token', async () => {
+    test('should throw if there is no valid security token being provided', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         sinon

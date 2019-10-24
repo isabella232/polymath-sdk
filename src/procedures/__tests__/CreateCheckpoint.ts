@@ -165,7 +165,7 @@ describe('CreateCheckpoint', () => {
       ).toBe(1);
     });
 
-    test('should throw if corresponding event is not fired', async () => {
+    test('should throw if corresponding checkpoint event is not fired', async () => {
       findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
       // Real call
@@ -203,7 +203,7 @@ describe('CreateCheckpoint', () => {
       expect(fetchStub.callCount).toBe(1);
     });
 
-    test('should throw if there is no supplied valid security token', async () => {
+    test('should throw if there is no valid security token supplied', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         sinon

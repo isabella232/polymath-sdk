@@ -193,7 +193,7 @@ describe('CreateSecurityToken', () => {
       );
     });
 
-    test('should throw if corresponding event is not fired', async () => {
+    test('should throw if corresponding create security token event is not fired', async () => {
       findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
       // Real call
@@ -248,7 +248,7 @@ describe('CreateSecurityToken', () => {
       );
     });
 
-    test('should throw error if token has already been launched', async () => {
+    test('should throw error if the token has already been launched', async () => {
       securityTokenRegistryMock.mock('isTokenLaunched', Promise.resolve(true));
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(
