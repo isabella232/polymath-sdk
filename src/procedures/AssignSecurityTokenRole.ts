@@ -90,7 +90,7 @@ export class AssignSecurityTokenRole extends Procedure<AssignSecurityTokenRolePr
     } else {
       // Delegate not found. Add them here
       await this.addTransaction(permissionModule.addDelegate, {
-        tag: PolyTransactionTag.ChangePermission,
+        tag: PolyTransactionTag.AddDelegate,
       })({ delegate, details: description });
     }
 
