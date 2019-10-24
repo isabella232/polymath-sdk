@@ -148,7 +148,7 @@ describe('ApproveErc20', () => {
     );
   });
 
-  test('should use token faucet if the balanceOf is less than amount (with poly token)', async () => {
+  test('should use token faucet if the balanceOf is less than amount (with poly token), and it is on test net environment', async () => {
     // Setup test situation
     wrappersMock.mock('isTestnet', Promise.resolve(true));
 
