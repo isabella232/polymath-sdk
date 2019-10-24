@@ -181,21 +181,21 @@ describe('CreateErc20DividendDistribution', () => {
 
   describe('CreateErc20DividendDistribution', () => {
     test('should send the transaction to CreateErc20DividendDistribution', async () => {
-      const spyOnAddProcedure = sinon.spy(target, 'addProcedure');
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addProcedureSpy = sinon.spy(target, 'addProcedure');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(erc20DividendsMock.getMockInstance().setWithholding).callCount
+        addTransactionSpy.withArgs(erc20DividendsMock.getMockInstance().setWithholding).callCount
       ).toBe(1);
       expect(
-        spyOnAddTransaction.withArgs(
+        addTransactionSpy.withArgs(
           erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
         ).callCount
       ).toBe(1);
-      expect(spyOnAddProcedure.withArgs(ApproveErc20).callCount).toBe(1);
+      expect(addProcedureSpy.withArgs(ApproveErc20).callCount).toBe(1);
     });
 
     test('should send the transaction to CreateErc20DividendDistribution with taxWitholdings', async () => {
@@ -217,21 +217,21 @@ describe('CreateErc20DividendDistribution', () => {
         },
         contextMock.getMockInstance()
       );
-      const spyOnAddProcedure = sinon.spy(target, 'addProcedure');
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addProcedureSpy = sinon.spy(target, 'addProcedure');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(erc20DividendsMock.getMockInstance().setWithholding).callCount
+        addTransactionSpy.withArgs(erc20DividendsMock.getMockInstance().setWithholding).callCount
       ).toBe(2);
       expect(
-        spyOnAddTransaction.withArgs(
+        addTransactionSpy.withArgs(
           erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
         ).callCount
       ).toBe(2);
-      expect(spyOnAddProcedure.withArgs(ApproveErc20).callCount).toBe(1);
+      expect(addProcedureSpy.withArgs(ApproveErc20).callCount).toBe(1);
     });
 
     test('should throw if there is no supplied valid security token', async () => {

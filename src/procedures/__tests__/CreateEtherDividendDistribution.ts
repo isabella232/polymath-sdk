@@ -167,16 +167,16 @@ describe('CreateEtherDividendDistribution', () => {
 
   describe('CreateEtherDividendDistribution', () => {
     test('should send the transaction to CreateEtherDividendDistribution', async () => {
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(etherDividendsMock.getMockInstance().setWithholding).callCount
+        addTransactionSpy.withArgs(etherDividendsMock.getMockInstance().setWithholding).callCount
       ).toBe(1);
       expect(
-        spyOnAddTransaction.withArgs(
+        addTransactionSpy.withArgs(
           etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
         ).callCount
       ).toBe(1);
@@ -201,16 +201,16 @@ describe('CreateEtherDividendDistribution', () => {
         contextMock.getMockInstance()
       );
 
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(etherDividendsMock.getMockInstance().setWithholding).callCount
+        addTransactionSpy.withArgs(etherDividendsMock.getMockInstance().setWithholding).callCount
       ).toBe(2);
       expect(
-        spyOnAddTransaction.withArgs(
+        addTransactionSpy.withArgs(
           etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
         ).callCount
       ).toBe(2);

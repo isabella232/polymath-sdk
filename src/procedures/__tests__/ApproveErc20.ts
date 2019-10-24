@@ -95,14 +95,14 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params1, contextMock.getMockInstance());
 
-    const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+    const addTransactionSpy = sinon.spy(target, 'addTransaction');
 
     // Real call
     await target.prepareTransactions();
 
     // Verifications
     expect(
-      spyOnAddTransaction.withArgs(polyTokenMock.getMockInstance().approve, {
+      addTransactionSpy.withArgs(polyTokenMock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
       }).callCount
     ).toBe(1);
@@ -118,14 +118,14 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params2, contextMock.getMockInstance());
 
-    const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+    const addTransactionSpy = sinon.spy(target, 'addTransaction');
 
     // Real call
     await target.prepareTransactions();
 
     // Verifications
     expect(
-      spyOnAddTransaction.withArgs(polyTokenMock.getMockInstance().approve, {
+      addTransactionSpy.withArgs(polyTokenMock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
       }).callCount
     ).toBe(1);
@@ -159,19 +159,19 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params1, contextMock.getMockInstance());
 
-    const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+    const addTransactionSpy = sinon.spy(target, 'addTransaction');
 
     // Real call
     await target.prepareTransactions();
 
     // Verifications
     expect(
-      spyOnAddTransaction.withArgs(wrappersMock.getMockInstance().getPolyTokens, {
+      addTransactionSpy.withArgs(wrappersMock.getMockInstance().getPolyTokens, {
         tag: PolyTransactionTag.GetTokens,
       }).callCount
     ).toBe(1);
     expect(
-      spyOnAddTransaction.withArgs(polyTokenMock.getMockInstance().approve, {
+      addTransactionSpy.withArgs(polyTokenMock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
       }).callCount
     ).toBe(1);
@@ -192,13 +192,13 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params2, contextMock.getMockInstance());
 
-    const spyOnPrepareTransactions = sinon.spy(target, 'prepareTransactions');
+    const prepareTransactionsSpy = sinon.spy(target, 'prepareTransactions');
 
     // Real call
     await target.prepareTransactions();
 
     // Verifications
-    expect(spyOnPrepareTransactions.withArgs().callCount).toBe(1);
+    expect(prepareTransactionsSpy.withArgs().callCount).toBe(1);
     expect(
       sinon.spy(target, 'addTransaction').neverCalledWith({
         tag: PolyTransactionTag.ApproveErc20,

@@ -77,13 +77,13 @@ describe('EnableDividendManagers', () => {
 
   describe('EnableDividendManagers', () => {
     test('should send the transaction to EnableDividendManagers', async () => {
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel, {
+        addTransactionSpy.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel, {
           tag: PolyTransactionTag.EnableDividends,
         }).callCount
       ).toBe(2);

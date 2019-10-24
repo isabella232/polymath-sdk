@@ -76,13 +76,13 @@ describe('EnableGeneralPermissionManager', () => {
 
   describe('EnableGeneralPermissionManager', () => {
     test('should send the transaction to EnableGeneralPermissionManager', async () => {
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel, {
+        addTransactionSpy.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel, {
           tag: PolyTransactionTag.EnableGeneralPermissionManager,
         }).callCount
       ).toBe(1);

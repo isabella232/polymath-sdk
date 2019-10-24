@@ -155,14 +155,13 @@ describe('CreateCheckpoint', () => {
 
   describe('createCheckpoint', () => {
     test('should send the transaction to createCheckpoint', async () => {
-      const spyOnAddTransaction = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = sinon.spy(target, 'addTransaction');
 
       // Real call
       await target.prepareTransactions();
       // Verifications
       expect(
-        spyOnAddTransaction.withArgs(securityTokenMock.getMockInstance().controllerTransfer)
-          .callCount
+        addTransactionSpy.withArgs(securityTokenMock.getMockInstance().controllerTransfer).callCount
       ).toBe(1);
     });
 
