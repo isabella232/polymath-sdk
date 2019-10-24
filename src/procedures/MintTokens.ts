@@ -13,7 +13,7 @@ import { Shareholder, SecurityToken } from '../entities';
 import { ModifyShareholderData } from './ModifyShareholderData';
 
 export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]> {
-  public type = ProcedureType.CreateErc20DividendDistribution;
+  public type = ProcedureType.MintTokens;
 
   public async prepareTransactions() {
     const { symbol, mintingData } = this.args;
