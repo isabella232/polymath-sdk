@@ -27,6 +27,7 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { CappedSTOFundRaiseType as CappedStoCurrency } from '@polymathnetwork/contract-wrappers';
 import { Wallet } from '~/Wallet';
+import { ApproveErc20, TransferErc20 } from '~/procedures';
 
 const params1: LaunchCappedStoProcedureArgs = {
   symbol: 'TEST1',
@@ -205,11 +206,13 @@ describe('LaunchCappedSto', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel).callCount
-      ).toBe(1);
-      // TODO add with correct args
-      //  // {"args": {"address": , "archived": false, "data": {"cap": "1000", "endTime": 2031-02-01T08:00:00.000Z, "fundRaiseType": 0, "fundsReceiver": "0x6666666666666666666666666666666666666666", "rate": "10", "startTime": 2030-02-01T08:00:00.000Z, "treasuryWallet": "0x6666666666666666666666666666666666666666"}
-      expect(addProcedureSpy.callCount).toBe(1);
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20)).toEqual(true);
+      expect(addProcedureSpy.callCount).toEqual(1);
     });
 
     test('should throw if corresponding capped sto event is not fired', async () => {

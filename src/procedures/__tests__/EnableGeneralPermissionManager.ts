@@ -82,10 +82,13 @@ describe('EnableGeneralPermissionManager', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel, {
-          tag: PolyTransactionTag.EnableGeneralPermissionManager,
-        }).callCount
-      ).toBe(1);
+        addTransactionSpy
+          .getCall(0)
+          .calledWithExactly(securityTokenMock.getMockInstance().addModuleWithLabel, {
+            tag: PolyTransactionTag.EnableGeneralPermissionManager,
+          })
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {

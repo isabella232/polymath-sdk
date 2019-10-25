@@ -27,6 +27,7 @@ import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { Wallet } from '~/Wallet';
+import { TransferErc20 } from '~/procedures';
 
 const params1: LaunchUsdTieredStoProcedureArgs = {
   symbol: 'TEST1',
@@ -213,11 +214,13 @@ describe('LaunchUsdTieredSto', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel).callCount
-      ).toBe(1);
-      // TODO add with correct args
-      //  // {"args": {"address": , "archived": false, "data": {"cap": "1000", "endTime": 2031-02-01T08:00:00.000Z, "fundRaiseType": 0, "fundsReceiver": "0x6666666666666666666666666666666666666666", "rate": "10", "startTime": 2030-02-01T08:00:00.000Z, "treasuryWallet": "0x6666666666666666666666666666666666666666"}
-      expect(addProcedureSpy.callCount).toBe(1);
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20)).toEqual(true);
+      expect(addProcedureSpy.callCount).toEqual(1);
     });
 
     test('should throw if corresponding usd tiered sto event is not fired', async () => {

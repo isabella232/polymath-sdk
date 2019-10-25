@@ -73,15 +73,11 @@ describe('AssignStoRole', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.withArgs(gpmMock.getMockInstance().addDelegate, {
+        addTransactionSpy.getCall(0).calledWithExactly(gpmMock.getMockInstance().changePermission, {
           tag: PolyTransactionTag.ChangePermission,
-        }).callCount
-      ).toBe(1);
-      expect(
-        addTransactionSpy.withArgs(gpmMock.getMockInstance().changePermission, {
-          tag: PolyTransactionTag.ChangePermission,
-        }).callCount
-      ).toBe(1);
+        })
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
     });
 
     test('should send the transaction to AssignStoRole without delegate', async () => {
@@ -92,15 +88,16 @@ describe('AssignStoRole', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.withArgs(gpmMock.getMockInstance().addDelegate, {
+        addTransactionSpy.getCall(0).calledWithExactly(gpmMock.getMockInstance().addDelegate, {
           tag: PolyTransactionTag.ChangePermission,
-        }).callCount
-      ).toBe(2);
+        })
+      ).toEqual(true);
       expect(
-        addTransactionSpy.withArgs(gpmMock.getMockInstance().changePermission, {
+        addTransactionSpy.getCall(1).calledWithExactly(gpmMock.getMockInstance().changePermission, {
           tag: PolyTransactionTag.ChangePermission,
-        }).callCount
-      ).toBe(2);
+        })
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(2);
     });
 
     test('should use an operator perm', async () => {
@@ -120,15 +117,11 @@ describe('AssignStoRole', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.withArgs(gpmMock.getMockInstance().addDelegate, {
+        addTransactionSpy.getCall(0).calledWithExactly(gpmMock.getMockInstance().changePermission, {
           tag: PolyTransactionTag.ChangePermission,
-        }).callCount
-      ).toBe(1);
-      expect(
-        addTransactionSpy.withArgs(gpmMock.getMockInstance().changePermission, {
-          tag: PolyTransactionTag.ChangePermission,
-        }).callCount
-      ).toBe(1);
+        })
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied ', async () => {

@@ -83,10 +83,20 @@ describe('EnableDividendManagers', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel, {
-          tag: PolyTransactionTag.EnableDividends,
-        }).callCount
-      ).toBe(2);
+        addTransactionSpy
+          .getCall(0)
+          .calledWithExactly(securityTokenMock.getMockInstance().addModuleWithLabel, {
+            tag: PolyTransactionTag.EnableDividends,
+          })
+      ).toEqual(true);
+      expect(
+        addTransactionSpy
+          .getCall(1)
+          .calledWithExactly(securityTokenMock.getMockInstance().addModuleWithLabel, {
+            tag: PolyTransactionTag.EnableDividends,
+          })
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(2);
     });
 
     test('should throw if there is no valid security token supplied', async () => {

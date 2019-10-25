@@ -28,6 +28,7 @@ import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { Wallet } from '~/Wallet';
+import { TransferErc20 } from '~/procedures';
 
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
@@ -236,10 +237,13 @@ describe('MintTokens', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.withArgs(securityTokenMock.getMockInstance().addModuleWithLabel).callCount
-      ).toBe(1);
-      // TODO add with correct args
-      expect(addProcedureSpy.callCount).toBe(1);
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20)).toEqual(true);
+      expect(addProcedureSpy.callCount).toEqual(1);
     });
 
     test('should correctly return the resolver', async () => {
