@@ -113,15 +113,16 @@ describe('CreateErc20DividendDistribution', () => {
       await target.prepareTransactions();
 
       // Verifications
+      expect(addProcedureSpy.getCall(0).calledWith(ApproveErc20)).toEqual(true);
       expect(
-        addTransactionSpy.withArgs(erc20DividendsMock.getMockInstance().setWithholding).callCount
-      ).toBe(1);
-      expect(
-        addTransactionSpy.withArgs(
-          erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
-        ).callCount
-      ).toBe(1);
-      expect(addProcedureSpy.withArgs(ApproveErc20).callCount).toBe(1);
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(
+            erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
+          )
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addProcedureSpy.callCount).toEqual(1);
     });
 
     test('should send the transaction to CreateErc20DividendDistribution with taxWitholdings', async () => {
@@ -149,15 +150,19 @@ describe('CreateErc20DividendDistribution', () => {
       await target.prepareTransactions();
 
       // Verifications
+      expect(addProcedureSpy.getCall(0).calledWith(ApproveErc20)).toEqual(true);
       expect(
-        addTransactionSpy.withArgs(erc20DividendsMock.getMockInstance().setWithholding).callCount
-      ).toBe(2);
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(
+            erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
+          )
+      ).toEqual(true);
       expect(
-        addTransactionSpy.withArgs(
-          erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
-        ).callCount
-      ).toBe(2);
-      expect(addProcedureSpy.withArgs(ApproveErc20).callCount).toBe(1);
+        addTransactionSpy.getCall(1).calledWith(erc20DividendsMock.getMockInstance().setWithholding)
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(2);
+      expect(addProcedureSpy.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {

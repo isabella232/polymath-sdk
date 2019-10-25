@@ -192,11 +192,14 @@ describe('CreateSecurityToken', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.withArgs(
-          securityTokenRegistryMock.getMockInstance().generateNewSecurityToken
-        ).callCount
-      ).toBe(1);
-      expect(addProcedureSpy.withArgs(ApproveErc20).callCount).toBe(1);
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(securityTokenRegistryMock.getMockInstance().generateNewSecurityToken)
+      ).toEqual(true);
+
+      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addProcedureSpy.getCall(0).calledWith(ApproveErc20)).toEqual(true);
+      expect(addProcedureSpy.callCount).toEqual(1);
     });
 
     test('should send the transaction to CreateSecurityToken with a treasury wallet', async () => {

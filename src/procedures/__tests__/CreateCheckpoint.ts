@@ -50,10 +50,7 @@ describe('CreateCheckpoint', () => {
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
-    checkpointFactoryMock = ImportMock.mockClass(
-      checkpointFactoryModule,
-      'CheckpointFactory'
-    );
+    checkpointFactoryMock = ImportMock.mockClass(checkpointFactoryModule, 'CheckpointFactory');
     const factoryMockSetup = mockFactories();
     factoryMockSetup.checkpointFactory = checkpointFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
@@ -85,8 +82,11 @@ describe('CreateCheckpoint', () => {
       await target.prepareTransactions();
       // Verifications
       expect(
-        addTransactionSpy.withArgs(securityTokenMock.getMockInstance().controllerTransfer).callCount
-      ).toBe(1);
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(securityTokenMock.getMockInstance().controllerTransfer)
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
     });
 
     test('should throw if corresponding checkpoint event is not fired', async () => {

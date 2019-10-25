@@ -14,6 +14,7 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { mockFactories } from '~/testUtils/MockFactories';
+import { ApproveErc20 } from '~/procedures';
 
 const params1 = {
   symbol: 'TEST1',
@@ -98,13 +99,13 @@ describe('CreateEtherDividendDistribution', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.withArgs(etherDividendsMock.getMockInstance().setWithholding).callCount
-      ).toBe(1);
-      expect(
-        addTransactionSpy.withArgs(
-          etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
-        ).callCount
-      ).toBe(1);
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(
+            etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
+          )
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
     });
 
     test('should send the transaction to CreateEtherDividendDistribution with taxwithholdings', async () => {
@@ -132,13 +133,16 @@ describe('CreateEtherDividendDistribution', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.withArgs(etherDividendsMock.getMockInstance().setWithholding).callCount
-      ).toBe(2);
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(
+            etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
+          )
+      ).toEqual(true);
       expect(
-        addTransactionSpy.withArgs(
-          etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
-        ).callCount
-      ).toBe(2);
+        addTransactionSpy.getCall(1).calledWith(etherDividendsMock.getMockInstance().setWithholding)
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(2);
     });
 
     test('should throw if corresponding event is not fired', async () => {
