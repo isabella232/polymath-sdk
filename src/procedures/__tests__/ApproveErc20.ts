@@ -102,10 +102,11 @@ describe('ApproveErc20', () => {
 
     // Verifications
     expect(
-      addTransactionSpy.withArgs(polyTokenMock.getMockInstance().approve, {
+      addTransactionSpy.getCall(0).calledWithExactly(polyTokenMock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
-      }).callCount
-    ).toBe(1);
+      })
+    ).toEqual(true);
+    expect(addTransactionSpy.callCount).toEqual(1);
   });
 
   test('should send the transaction to approve custom erc20 token', async () => {
@@ -125,10 +126,11 @@ describe('ApproveErc20', () => {
 
     // Verifications
     expect(
-      addTransactionSpy.withArgs(polyTokenMock.getMockInstance().approve, {
+      addTransactionSpy.getCall(0).calledWithExactly(polyTokenMock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
-      }).callCount
-    ).toBe(1);
+      })
+    ).toEqual(true);
+    expect(addTransactionSpy.callCount).toEqual(1);
   });
 
   test("should throw an error if the wallet doesn't have enough funds to approve the required amount", async () => {
@@ -166,15 +168,16 @@ describe('ApproveErc20', () => {
 
     // Verifications
     expect(
-      addTransactionSpy.withArgs(wrappersMock.getMockInstance().getPolyTokens, {
+      addTransactionSpy.getCall(0).calledWithExactly(wrappersMock.getMockInstance().getPolyTokens, {
         tag: PolyTransactionTag.GetTokens,
-      }).callCount
-    ).toBe(1);
+      })
+    ).toEqual(true);
     expect(
-      addTransactionSpy.withArgs(polyTokenMock.getMockInstance().approve, {
+      addTransactionSpy.getCall(1).calledWithExactly(polyTokenMock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
-      }).callCount
-    ).toBe(1);
+      })
+    ).toEqual(true);
+    expect(addTransactionSpy.callCount).toEqual(2);
   });
 
   test('should return if it has sufficient allowance', async () => {
