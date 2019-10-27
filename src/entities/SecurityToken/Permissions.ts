@@ -92,12 +92,12 @@ export class Permissions extends SubModule {
    *
    * @param delegateAddress wallet address of the delegate
    * @param role role to assign
-   * @param description description of the delegate (defaults to empty string, is ignored if the delegate already exists)
+   * @param description description of the delegate (is ignored if the delegate already exists)
    */
   public assignRole = async (args: {
     delegateAddress: string;
     role: SecurityTokenRole;
-    description?: string;
+    description: string;
   }) => {
     const { symbol } = this.securityToken;
 
@@ -126,6 +126,7 @@ export class Permissions extends SubModule {
       {
         symbol,
         assign: false,
+        description: '', // this is not used when revoking
         ...args,
       },
       this.context

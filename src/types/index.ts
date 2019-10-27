@@ -326,7 +326,7 @@ export interface AssignSecurityTokenRoleProcedureArgs {
   delegateAddress: string;
   role: SecurityTokenRole;
   assign: boolean;
-  description?: string;
+  description: string;
 }
 
 export interface AssignStoRoleProcedureArgs {

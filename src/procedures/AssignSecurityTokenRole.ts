@@ -13,7 +13,7 @@ export class AssignSecurityTokenRole extends Procedure<AssignSecurityTokenRolePr
   public type = ProcedureType.AssignSecurityTokenRole;
 
   public async prepareTransactions() {
-    const { symbol, role, assign, description = '', delegateAddress } = this.args;
+    const { symbol, role, assign, description, delegateAddress } = this.args;
     const { contractWrappers } = this.context;
     const delegate = conversionUtils.checksumAddress(delegateAddress);
 
@@ -63,7 +63,8 @@ export class AssignSecurityTokenRole extends Procedure<AssignSecurityTokenRolePr
     ))[0];
 
     const delegates = await permissionModule.getAllDelegates();
-    const exists = delegates.filter(element => element === delegate).length > 0;
+    const exists =
+      delegates.filter(element => element.toUpperCase() === delegate.toUpperCase()).length > 0;
 
     /**
      * In the following block we attempt to:
@@ -76,7 +77,9 @@ export class AssignSecurityTokenRole extends Procedure<AssignSecurityTokenRolePr
         perm,
       });
 
-      const permitted = !!permittedDelegates.find(element => element === delegate);
+      const permitted = !!permittedDelegates.find(
+        element => element.toUpperCase() === delegate.toUpperCase()
+      );
 
       // Upcoming permission equals existing one
       if (permitted === assign) {
