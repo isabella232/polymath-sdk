@@ -2,7 +2,7 @@ import {
   ModuleName,
   BigNumber,
   CappedSTOFundRaiseType,
-  SecurityTokenEvents_3_0_0,
+  SecurityTokenEvents,
 } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
@@ -103,7 +103,7 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
           const { logs } = receipt;
 
           const [event] = findEvents({
-            eventName: SecurityTokenEvents_3_0_0.ModuleAdded,
+            eventName: SecurityTokenEvents.ModuleAdded,
             logs,
           });
 
