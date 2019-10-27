@@ -256,7 +256,7 @@ export class Permissions extends SubModule {
     });
   };
 
-  private rolesPerFeature = {
+  public rolesPerFeature = {
     [Feature.Permissions]: [SecurityTokenRole.PermissionsAdministrator],
     [Feature.Shareholders]: [SecurityTokenRole.ShareholdersAdministrator],
     [Feature.Erc20Dividends]: [
