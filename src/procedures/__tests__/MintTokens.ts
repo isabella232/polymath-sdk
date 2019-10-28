@@ -135,6 +135,7 @@ describe('MintTokens', () => {
     securityTokenEntityMock.mock('shareholders', shareholdersEntityMock.getMockInstance());
     securityTokenFactoryMock.mock('fetch', securityTokenFactoryMock.getMockInstance());
     factoryMockSetup.securityTokenFactory = securityTokenFactoryMock.getMockInstance();
+    factoryMockSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
 
     // Instantiate MintTokens
