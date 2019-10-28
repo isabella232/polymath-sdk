@@ -27,6 +27,7 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { Wallet } from '~/Wallet';
 import { TransferErc20 } from '~/procedures';
+import { mockFactories } from '~/testUtils/MockFactories';
 
 const params1: LaunchUsdTieredStoProcedureArgs = {
   symbol: 'TEST1',
@@ -120,58 +121,13 @@ describe('LaunchUsdTieredSto', () => {
       'getModuleFactory',
       moduleFactoryMock.getMockInstance()
     );
-
-    securityTokenFactoryMock = ImportMock.mockClass(
-      securityTokenFactoryModule,
-      'SecurityTokenFactory'
-    );
-    cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryModule, 'CappedStoFactory');
-    checkpointFactoryMock = ImportMock.mockClass(checkpointFactoryModule, 'CheckpointFactory');
-    dividendDistributionFactoryMock = ImportMock.mockClass(
-      dividendDistributionSecurityTokenFactoryModule,
-      'DividendDistributionFactory'
-    );
-    erc20DividendsManagerFactoryMock = ImportMock.mockClass(
-      erc20DividendsManagerFactoryModule,
-      'Erc20DividendsManagerFactory'
-    );
-    erc20TokenBalanceFactoryMock = ImportMock.mockClass(
-      erc20TokenBalanceFactoryModule,
-      'Erc20TokenBalanceFactory'
-    );
-    ethDividendsManagerFactoryMock = ImportMock.mockClass(
-      ethDividendsManagerFactoryModule,
-      'EthDividendsManagerFactory'
-    );
-    investmentFactoryMock = ImportMock.mockClass(investmentFactoryModule, 'InvestmentFactory');
-    securityTokenReservationFactoryMock = ImportMock.mockClass(
-      securityTokenReservationModule,
-      'SecurityTokenReservationFactory'
-    );
-    shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
     usdTieredStoFactoryMock = ImportMock.mockClass(
       usdTieredStoFactoryModule,
       'UsdTieredStoFactory'
     );
-    taxWithholdingFactoryMock = ImportMock.mockClass(
-      taxWithholdingFactoryModule,
-      'TaxWithholdingFactory'
-    );
 
-    const factoryMockSetup = {
-      securityTokenFactory: securityTokenFactoryMock.getMockInstance(),
-      securityTokenReservationFactory: securityTokenReservationFactoryMock.getMockInstance(),
-      erc20TokenBalanceFactory: erc20TokenBalanceFactoryMock.getMockInstance(),
-      investmentFactory: investmentFactoryMock.getMockInstance(),
-      cappedStoFactory: cappedStoFactoryMock.getMockInstance(),
-      usdTieredStoFactory: usdTieredStoFactoryMock.getMockInstance(),
-      dividendDistributionFactory: dividendDistributionFactoryMock.getMockInstance(),
-      checkpointFactory: checkpointFactoryMock.getMockInstance(),
-      erc20DividendsManagerFactory: erc20DividendsManagerFactoryMock.getMockInstance(),
-      ethDividendsManagerFactory: ethDividendsManagerFactoryMock.getMockInstance(),
-      shareholderFactory: shareholderFactoryMock.getMockInstance(),
-      taxWithholdingFactory: taxWithholdingFactoryMock.getMockInstance(),
-    };
+    const factoryMockSetup = mockFactories();
+    factoryMockSetup.usdTieredStoFactory = usdTieredStoFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
     contextMock.set(
       'currentWallet',
