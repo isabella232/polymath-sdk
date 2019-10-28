@@ -1,6 +1,5 @@
-import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub } from 'sinon';
+import { SinonStub, stub, spy, restore } from 'sinon';
 import BigNumber from 'bignumber.js';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
@@ -218,7 +217,7 @@ describe('MintTokens', () => {
     target = new MintTokens(params1, contextMock.getMockInstance());
   });
   afterEach(() => {
-    sinon.restore();
+    restore();
   });
 
   describe('Types', () => {
@@ -230,8 +229,8 @@ describe('MintTokens', () => {
 
   describe('MintTokens', () => {
     test('should send the transaction to MintTokens', async () => {
-      const addProcedureSpy = sinon.spy(target, 'addProcedure');
-      const addTransactionSpy = sinon.spy(target, 'addTransaction');
+      const addProcedureSpy = spy(target, 'addProcedure');
+      const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
@@ -272,8 +271,7 @@ describe('MintTokens', () => {
     test('should throw if there is no valid security token supplied', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
-        sinon
-          .stub()
+        stub()
           .withArgs({ address: params1.symbol })
           .throws()
       );

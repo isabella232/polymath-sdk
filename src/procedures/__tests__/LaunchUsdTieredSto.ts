@@ -1,6 +1,5 @@
-import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub } from 'sinon';
+import { SinonStub, stub, spy, restore } from 'sinon';
 import BigNumber from 'bignumber.js';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
@@ -195,7 +194,7 @@ describe('LaunchUsdTieredSto', () => {
     target = new LaunchUsdTieredSto(params1, contextMock.getMockInstance());
   });
   afterEach(() => {
-    sinon.restore();
+    restore();
   });
 
   describe('Types', () => {
@@ -207,8 +206,8 @@ describe('LaunchUsdTieredSto', () => {
 
   describe('LaunchUsdTieredSto', () => {
     test('should send the transaction to LaunchUsdTieredSto', async () => {
-      const addProcedureSpy = sinon.spy(target, 'addProcedure');
-      const addTransactionSpy = sinon.spy(target, 'addTransaction');
+      const addProcedureSpy = spy(target, 'addProcedure');
+      const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
@@ -265,8 +264,7 @@ describe('LaunchUsdTieredSto', () => {
     test('should throw if there is no supplied valid security token', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
-        sinon
-          .stub()
+        stub()
           .withArgs({ address: params1.symbol })
           .throws()
       );
