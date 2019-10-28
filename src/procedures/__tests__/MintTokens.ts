@@ -1,4 +1,4 @@
-import { ImportMock, MockManager } from 'ts-mock-imports';
+import { ImportMock, MockManager, StaticMockManager } from 'ts-mock-imports';
 import { SinonStub, stub, spy, restore } from 'sinon';
 import BigNumber from 'bignumber.js';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
@@ -11,13 +11,11 @@ import { PolymathError } from '~/PolymathError';
 import { ErrorCode, MintTokensProcedureArgs, ProcedureType } from '~/types';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
-import * as utilsModule from '~/utils';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { Wallet } from '~/Wallet';
-import { TransferErc20 } from '~/procedures';
+import { ModifyShareholderData } from '~/procedures';
 import { mockFactories } from '~/testUtils/MockFactories';
 
 const testAddress = '0x6666666666666666666666666666666666666666';
@@ -28,6 +26,13 @@ const params1: MintTokensProcedureArgs = {
     {
       address: testAddress,
       amount: new BigNumber(1),
+      shareholderData: {
+        canSendAfter: new Date(2030, 1),
+        canReceiveAfter: new Date(0, 0),
+        kycExpiry: new Date(2035, 1),
+        canBuyFromSto: true,
+        isAccredited: true,
+      },
     },
   ],
 };
@@ -40,15 +45,12 @@ describe('MintTokens', () => {
   let moduleWrapperFactoryMock: MockManager<
     moduleWrapperFactoryModule.MockedModuleWrapperFactoryModule
   >;
-  let polyTokenMock: MockManager<contractWrappersModule.PolyToken>;
   let tokenFactoryStub: SinonStub<any, any>;
-  let moduleWrapperFactoryStub: SinonStub<any, any>;
 
   // Mock factories
   let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
   let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
-  let moduleFactoryMock: MockManager<contractWrappersModule.ModuleFactory_3_0_0>;
   securityTokenFactoryMock = ImportMock.mockClass(
     securityTokenFactoryModule,
     'SecurityTokenFactory'
@@ -57,9 +59,7 @@ describe('MintTokens', () => {
   let shareholdersEntityMock: MockManager<shareholdersEntityModule.Shareholders>;
 
   let securityTokenEntityMock: MockManager<securityTokenEntityModule.SecurityToken>;
-
-  let findEventsStub: SinonStub<any, any>;
-  let getAttachedModulesFactoryAddressStub: SinonStub<any, any>;
+  let securityTokenEntityStaticMock: StaticMockManager<securityTokenEntityModule.SecurityToken>;
 
   beforeAll(() => {
     // Mock the context, wrappers, and tokenFactory to test MintTokens
@@ -74,66 +74,48 @@ describe('MintTokens', () => {
     shareholdersEntityMock = ImportMock.mockClass(shareholdersEntityModule, 'Shareholders');
 
     securityTokenEntityMock = ImportMock.mockClass(securityTokenEntityModule, 'SecurityToken');
+    securityTokenEntityStaticMock = ImportMock.mockStaticClass(
+      securityTokenEntityModule,
+      'SecurityToken'
+    );
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
     wrappersMock.set('moduleFactory', moduleWrapperFactoryMock.getMockInstance());
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    securityTokenMock.mock('address', Promise.resolve(testAddress));
-    securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(1)));
-
-    moduleFactoryMock = ImportMock.mockClass(contractWrappersModule, 'ModuleFactory_3_0_0');
-    moduleFactoryMock.mock('setupCostInPoly', Promise.resolve(new BigNumber(1)));
-    moduleFactoryMock.mock('isCostInPoly', Promise.resolve(false));
-    moduleFactoryMock.mock('setupCost', Promise.resolve(new BigNumber(1)));
 
     tokenFactoryStub = tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
-    moduleWrapperFactoryStub = moduleWrapperFactoryMock.mock(
-      'getModuleFactory',
-      moduleFactoryMock.getMockInstance()
-    );
 
     const factoryMockSetup = mockFactories();
 
-    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(testAddress) }));
-
-    polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
-    polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
-    polyTokenMock.mock('address', Promise.resolve(testAddress));
-    polyTokenMock.mock('allowance', Promise.resolve(new BigNumber(0)));
-    wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
-    wrappersMock.mock('isTestnet', Promise.resolve(false));
-
-    getAttachedModulesFactoryAddressStub = wrappersMock.mock(
-      'getModuleFactoryAddress',
-      Promise.resolve(testAddress)
-    );
+    wrappersMock.mock('getAttachedModules', Promise.resolve(''));
 
     const shareHolders = [
       {
         address: testAddress,
         canSendAfter: new Date(Date.now()),
-        canReceiveAfter: new Date(Date.now()),
-        kycExpiry: new Date(Date.now()),
+        canReceiveAfter: new Date(0, 0),
+        kycExpiry: new Date(2035, 1),
         canBuyFromSto: true,
         isAccredited: true,
       },
       {
         address: testAddress2,
         canSendAfter: new Date(Date.now()),
-        canReceiveAfter: new Date(Date.now()),
-        kycExpiry: new Date(Date.now()),
+        canReceiveAfter: new Date(0, 0),
+        kycExpiry: new Date(2036, 1),
         canBuyFromSto: true,
         isAccredited: true,
       },
     ];
     shareholdersEntityMock.mock('getShareholders', shareHolders);
-    securityTokenEntityMock.mock('shareholders', shareholdersEntityMock.getMockInstance());
-    securityTokenFactoryMock.mock('fetch', securityTokenFactoryMock.getMockInstance());
+    securityTokenEntityMock.set('shareholders', shareholdersEntityMock.getMockInstance());
+    securityTokenEntityStaticMock.mock('generateId', 'id');
+    securityTokenFactoryMock.mock('fetch', securityTokenEntityMock.getMockInstance());
     factoryMockSetup.securityTokenFactory = securityTokenFactoryMock.getMockInstance();
     factoryMockSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
@@ -161,13 +143,33 @@ describe('MintTokens', () => {
 
       // Verifications
       expect(
-        addTransactionSpy
-          .getCall(0)
-          .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
+        addTransactionSpy.getCall(0).calledWith(securityTokenMock.getMockInstance().issueMulti)
       ).toEqual(true);
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWith(ModifyShareholderData)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
+    });
+
+    test('should throw an error for an expired Kyc', async () => {
+      const shareHoldersExpiredKyc = [
+        {
+          address: testAddress,
+          canSendAfter: new Date(Date.now()),
+          canReceiveAfter: new Date(Date.now()),
+          kycExpiry: new Date(Date.now()),
+          canBuyFromSto: true,
+          isAccredited: true,
+        },
+      ];
+
+      shareholdersEntityMock.mock('getShareholders', shareHoldersExpiredKyc);
+
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Cannot mint tokens to the following addresses: [${testAddress}]. Reason: Expired KYC`,
+        })
+      );
     });
 
     test('should correctly return the resolver', async () => {
@@ -178,18 +180,11 @@ describe('MintTokens', () => {
         },
       };
       const fetchStub = shareholderFactoryMock.mock('fetch', shareholderObject);
-      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
-        {
-          args: {
-            _module: '0x3333333333333333333333333333333333333333',
-          },
-        },
-      ]);
 
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      expect(resolver.result).toEqual(shareholderObject);
+      expect(resolver.result).toEqual([shareholderObject]);
       expect(fetchStub.callCount).toBe(1);
     });
 
