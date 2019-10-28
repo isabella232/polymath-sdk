@@ -1,8 +1,7 @@
-import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import BigNumber from 'bignumber.js';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import { SinonStub } from 'sinon';
+import { SinonStub, spy, restore } from 'sinon';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as approvalModule from '../ApproveErc20';
@@ -13,7 +12,6 @@ import { PolymathError } from '~/PolymathError';
 import { ErrorCode, ProcedureType } from '~/types';
 import { ApproveErc20 } from '../ApproveErc20';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
-
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as utilsModule from '~/utils';
 import { mockFactories } from '~/testUtils/MockFactories';
@@ -94,7 +92,7 @@ describe('CreateSecurityToken', () => {
   });
 
   afterEach(() => {
-    sinon.restore();
+    restore();
   });
 
   describe('Types', () => {
@@ -185,8 +183,8 @@ describe('CreateSecurityToken', () => {
     });
 
     test('should send the transaction to CreateSecurityToken', async () => {
-      const addProcedureSpy = sinon.spy(target, 'addProcedure');
-      const addTransactionSpy = sinon.spy(target, 'addTransaction');
+      const addProcedureSpy = spy(target, 'addProcedure');
+      const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
