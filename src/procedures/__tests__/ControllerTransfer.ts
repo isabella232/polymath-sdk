@@ -1,6 +1,5 @@
-import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub } from 'sinon';
+import { SinonStub, stub, spy } from 'sinon';
 import BigNumber from 'bignumber.js';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
@@ -10,7 +9,7 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode, PolyTransactionTag, ProcedureType } from '~/types';
+import { ErrorCode, ProcedureType } from '~/types';
 import { mockFactories } from '~/testUtils/MockFactories';
 
 const params1 = {
@@ -73,7 +72,7 @@ describe('ControllerTransfer', () => {
 
   describe('ControllerTransfer', () => {
     test('should send the transaction to ControllerTransfer', async () => {
-      const addTransactionSpy = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
@@ -90,8 +89,7 @@ describe('ControllerTransfer', () => {
     test('should throw if there is no valid security token supplied', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
-        sinon
-          .stub()
+        stub()
           .withArgs({ address: params1.symbol })
           .throws()
       );

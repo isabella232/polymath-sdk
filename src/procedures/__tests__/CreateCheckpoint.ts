@@ -1,6 +1,5 @@
-import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub } from 'sinon';
+import { SinonStub, stub, spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import BigNumber from 'bignumber.js';
@@ -10,7 +9,6 @@ import { PolymathError } from '~/PolymathError';
 import { ErrorCode, ProcedureType } from '~/types';
 import * as utilsModule from '../../utils';
 import * as checkpointFactoryModule from '~/entities/factories/CheckpointFactory';
-
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
@@ -64,7 +62,7 @@ describe('CreateCheckpoint', () => {
     );
   });
   afterEach(() => {
-    sinon.restore();
+    restore();
   });
 
   describe('Types', () => {
@@ -76,7 +74,7 @@ describe('CreateCheckpoint', () => {
 
   describe('createCheckpoint', () => {
     test('should send the transaction to createCheckpoint', async () => {
-      const addTransactionSpy = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = spy(target, 'addTransaction');
 
       // Real call
       await target.prepareTransactions();
@@ -130,8 +128,7 @@ describe('CreateCheckpoint', () => {
     test('should throw if there is no valid security token supplied', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
-        sinon
-          .stub()
+        stub()
           .withArgs({ address: params1.symbol })
           .throws()
       );

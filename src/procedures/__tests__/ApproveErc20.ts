@@ -1,12 +1,11 @@
-import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub } from 'sinon';
+import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import BigNumber from 'bignumber.js';
+import { SinonStub, stub, spy } from 'sinon';
 import * as contextModule from '../../Context';
 import * as polymathBaseModule from '../../PolymathBase';
-import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ApproveErc20 } from '../../procedures/ApproveErc20';
 import { Procedure } from '~/procedures/Procedure';
-import BigNumber from 'bignumber.js';
 import { Wallet } from '~/Wallet';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCode, PolyTransactionTag, ProcedureType } from '~/types';
@@ -75,8 +74,7 @@ describe('ApproveErc20', () => {
   test('should throw if supplied address does not correspond to erc20 token', async () => {
     wrappersMock.set(
       'getERC20TokenWrapper',
-      sinon
-        .stub()
+      stub()
         .withArgs({ address: params2.tokenAddress })
         .throws()
     );
@@ -95,7 +93,7 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params1, contextMock.getMockInstance());
 
-    const addTransactionSpy = sinon.spy(target, 'addTransaction');
+    const addTransactionSpy = spy(target, 'addTransaction');
 
     // Real call
     await target.prepareTransactions();
@@ -119,7 +117,7 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params2, contextMock.getMockInstance());
 
-    const addTransactionSpy = sinon.spy(target, 'addTransaction');
+    const addTransactionSpy = spy(target, 'addTransaction');
 
     // Real call
     await target.prepareTransactions();
@@ -161,7 +159,7 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params1, contextMock.getMockInstance());
 
-    const addTransactionSpy = sinon.spy(target, 'addTransaction');
+    const addTransactionSpy = spy(target, 'addTransaction');
 
     // Real call
     await target.prepareTransactions();
@@ -200,7 +198,7 @@ describe('ApproveErc20', () => {
 
     // Verifications
     expect(
-      sinon.spy(target, 'addTransaction').neverCalledWith({
+      spy(target, 'addTransaction').neverCalledWith({
         tag: PolyTransactionTag.ApproveErc20,
       })
     );

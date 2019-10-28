@@ -1,6 +1,5 @@
-import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub } from 'sinon';
+import { SinonStub, stub, spy, restore } from 'sinon';
 import BigNumber from 'bignumber.js';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
@@ -14,7 +13,6 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { mockFactories } from '~/testUtils/MockFactories';
-import { ApproveErc20 } from '~/procedures';
 
 const params1 = {
   symbol: 'TEST1',
@@ -81,7 +79,7 @@ describe('CreateEtherDividendDistribution', () => {
     );
   });
   afterEach(() => {
-    sinon.restore();
+    restore();
   });
 
   describe('Types', () => {
@@ -93,7 +91,7 @@ describe('CreateEtherDividendDistribution', () => {
 
   describe('CreateEtherDividendDistribution', () => {
     test('should send the transaction to CreateEtherDividendDistribution', async () => {
-      const addTransactionSpy = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
@@ -127,7 +125,7 @@ describe('CreateEtherDividendDistribution', () => {
         contextMock.getMockInstance()
       );
 
-      const addTransactionSpy = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
@@ -197,8 +195,7 @@ describe('CreateEtherDividendDistribution', () => {
     test('should throw if there is no valid security token supplied', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
-        sinon
-          .stub()
+        stub()
           .withArgs({ address: params1.symbol })
           .throws()
       );

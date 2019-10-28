@@ -1,6 +1,5 @@
-import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub } from 'sinon';
+import { SinonStub, stub, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -67,7 +66,7 @@ describe('AssignStoRole', () => {
 
   describe('AssignStoRole', () => {
     test('should send the transaction to AssignStoRole', async () => {
-      const addTransactionSpy = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
@@ -82,7 +81,7 @@ describe('AssignStoRole', () => {
 
     test('should send the transaction to AssignStoRole without delegate', async () => {
       gpmMock.mock('getAllDelegates', Promise.resolve([]));
-      const addTransactionSpy = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
@@ -111,7 +110,7 @@ describe('AssignStoRole', () => {
         },
         contextMock.getMockInstance()
       );
-      const addTransactionSpy = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
@@ -127,8 +126,7 @@ describe('AssignStoRole', () => {
     test('should throw if there is no valid security token supplied ', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
-        sinon
-          .stub()
+        stub()
           .withArgs({ address: params1.symbol })
           .throws()
       );

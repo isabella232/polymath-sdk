@@ -1,6 +1,5 @@
-import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub } from 'sinon';
+import { SinonStub, stub, spy, restore } from 'sinon';
 import BigNumber from 'bignumber.js';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
@@ -64,7 +63,7 @@ describe('EnableGeneralPermissionManager', () => {
     );
   });
   afterEach(() => {
-    sinon.restore();
+    restore();
   });
 
   describe('Types', () => {
@@ -76,7 +75,7 @@ describe('EnableGeneralPermissionManager', () => {
 
   describe('EnableGeneralPermissionManager', () => {
     test('should send the transaction to EnableGeneralPermissionManager', async () => {
-      const addTransactionSpy = sinon.spy(target, 'addTransaction');
+      const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
@@ -94,8 +93,7 @@ describe('EnableGeneralPermissionManager', () => {
     test('should throw if there is no valid security token supplied', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
-        sinon
-          .stub()
+        stub()
           .withArgs({ address: params1.symbol })
           .throws()
       );
