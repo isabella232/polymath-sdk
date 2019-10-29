@@ -1,12 +1,11 @@
-import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub } from 'sinon';
 import * as contextModule from '../../Context';
 import * as polymathBaseModule from '../../PolymathBase';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { ApproveErc20 } from '../../procedures/ApproveErc20';
 import { Procedure } from '~/procedures/Procedure';
-import BigNumber from 'bignumber.js';
 import { Wallet } from '~/Wallet';
 import { ProcedureType } from '~/types';
 
