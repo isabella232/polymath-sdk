@@ -20,6 +20,7 @@ import { mockFactories } from '~/testUtils/MockFactories';
 
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
+const testAddress3 = '0x8888888888888888888888888888888888888888';
 const params1: MintTokensProcedureArgs = {
   symbol: 'TEST1',
   mintingData: [
@@ -107,7 +108,7 @@ describe('MintTokens', () => {
         address: testAddress2,
         canSendAfter: new Date(Date.now()),
         canReceiveAfter: new Date(0, 0),
-        kycExpiry: new Date(2036, 1),
+        kycExpiry: new Date(2035, 1),
         canBuyFromSto: true,
         isAccredited: true,
       },
@@ -200,6 +201,19 @@ describe('MintTokens', () => {
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params1.symbol}`,
+        })
+      );
+    });
+
+    test('should throw if minting addresses are not shareholders', async () => {
+      const newParams = params1;
+      newParams.mintingData = [{ address: testAddress3, amount: new BigNumber(1) }];
+      target = new MintTokens(newParams, contextMock.getMockInstance());
+
+      expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Cannot mint tokens to the following addresses: [${testAddress3}]. Reason: Those addresses are not Shareholders`,
         })
       );
     });
