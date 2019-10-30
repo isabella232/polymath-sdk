@@ -4,14 +4,15 @@ import {
   BlockParamLiteral,
   conversionUtils,
   FULL_DECIMALS,
+  isUSDTieredSTO_3_1_0,
 } from '@polymathnetwork/contract-wrappers';
-import { zipWith } from 'lodash';
+import { range } from 'lodash';
 import { Factory } from './Factory';
 import { Context } from '../../Context';
 import { Currency } from '../../types';
 import { SecurityToken } from '../SecurityToken';
 import { Investment } from '../Investment';
-import { TieredSto, Params, UniqueIdentifiers } from '../TieredSto';
+import { TieredSto, Params, UniqueIdentifiers, Tier } from '../TieredSto';
 
 const { weiToValue } = conversionUtils;
 
@@ -46,6 +47,10 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
     const [
       paused,
       capReached,
+      isFinalized,
+      beneficialInvestmentsAllowed,
+      raisedFundsWallet,
+      numberOfTiers,
       {
         tokensSold,
         capPerTier,
@@ -57,7 +62,65 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
         isRaisedInSC,
         ...details
       },
-    ] = await Promise.all([module.paused(), module.capReached(), module.getSTODetails()]);
+    ] = await Promise.all([
+      module.paused(),
+      module.capReached(),
+      module.isFinalized(),
+      module.allowBeneficialInvestments(),
+      module.wallet(),
+      module.getNumberOfTiers(),
+      module.getSTODetails(),
+    ]);
+
+    let preMintAllowed = false;
+    let unsoldTokensWallet: string;
+    let tiers: Tier[];
+    let rawTiers;
+
+    if (isUSDTieredSTO_3_1_0(module)) {
+      [preMintAllowed, unsoldTokensWallet, rawTiers] = await Promise.all([
+        module.preMintAllowed(),
+        module.getTreasuryWallet(),
+        Promise.all(range(numberOfTiers).map(tier => module.tiers({ tier }))),
+      ]);
+      tiers = rawTiers.map(
+        ({
+          tokenTotal,
+          totalTokensSoldInTier,
+          rate,
+          soldDiscountPoly,
+          tokensDiscountPoly,
+          rateDiscountPoly,
+        }) => ({
+          tokensOnSale: tokenTotal,
+          tokensSold: totalTokensSoldInTier,
+          price: rate,
+          tokensWithDiscount: tokensDiscountPoly,
+          tokensSoldAtDiscount: soldDiscountPoly,
+          discountedPrice: rateDiscountPoly,
+        })
+      );
+    } else {
+      unsoldTokensWallet = await module.treasuryWallet();
+      rawTiers = await Promise.all(range(numberOfTiers).map(tier => module.tiers({ tier })));
+      tiers = rawTiers.map(
+        ({
+          tokenTotal,
+          mintedTotal,
+          rate,
+          tokensDiscountPoly,
+          mintedDiscountPoly,
+          rateDiscountPoly,
+        }) => ({
+          tokensOnSale: tokenTotal,
+          tokensSold: mintedTotal,
+          price: rate,
+          tokensWithDiscount: tokensDiscountPoly,
+          tokensSoldAtDiscount: mintedDiscountPoly,
+          discountedPrice: rateDiscountPoly,
+        })
+      );
+    }
 
     const stoId = TieredSto.generateId({
       securityTokenId,
@@ -71,8 +134,6 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
         { securityTokenSymbol: symbol, ...investment }
       )
     );
-
-    const tiers = zipWith(capPerTier, ratePerTier, (cap, rate) => ({ cap, rate }));
 
     const fundraiseTypes = [];
 
@@ -90,6 +151,8 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
 
     return {
       fundraiseTypes,
+      raisedFundsWallet,
+      unsoldTokensWallet,
       raisedAmount: fundsRaised,
       investorAmount: investorCount,
       soldTokensAmount: tokensSold,
@@ -102,6 +165,9 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       address,
       paused,
       capReached,
+      isFinalized,
+      preMintAllowed,
+      beneficialInvestmentsAllowed,
     };
   };
 

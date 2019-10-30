@@ -4,6 +4,7 @@ import {
   conversionUtils,
   FULL_DECIMALS,
   CappedSTOEvents,
+  isCappedSTO_3_1_0,
 } from '@polymathnetwork/contract-wrappers';
 import { Factory } from './Factory';
 import { Context } from '../../Context';
@@ -19,8 +20,11 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
     const { securityTokenId, stoType, address } = CappedSto.unserialize(uid);
 
     const { symbol } = SecurityToken.unserialize(securityTokenId);
+    const {
+      context: { contractWrappers, factories },
+    } = this;
 
-    const module = await this.context.contractWrappers.moduleFactory.getModuleInstance({
+    const module = await contractWrappers.moduleFactory.getModuleInstance({
       name: ModuleName.CappedSTO,
       address,
     });
@@ -43,8 +47,33 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
     const [
       paused,
       capReached,
+      beneficialInvestmentsAllowed,
+      raisedFundsWallet,
       { fundsRaised, investorCount, totalTokensSold, isRaisedInPoly, ...details },
-    ] = await Promise.all([module.paused(), module.capReached(), module.getSTODetails()]);
+    ] = await Promise.all([
+      module.paused(),
+      module.capReached(),
+      module.allowBeneficialInvestments(),
+      module.wallet(),
+      module.getSTODetails(),
+    ]);
+
+    let preMintAllowed = false;
+    let isFinalized = capReached || details.endTime <= new Date();
+    let unsoldTokensWallet: string;
+
+    if (isCappedSTO_3_1_0(module)) {
+      [preMintAllowed, unsoldTokensWallet, isFinalized] = await Promise.all([
+        module.preMintAllowed(),
+        module.getTreasuryWallet(),
+        module.isFinalized(),
+      ]);
+    } else {
+      const securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+      unsoldTokensWallet = await securityToken.owner();
+    }
 
     const stoId = CappedSto.generateId({
       securityTokenId,
@@ -53,14 +82,16 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
     });
 
     const investmentEntities = investments.map(({ index, ...investment }) =>
-      this.context.factories.investmentFactory.create(
-        Investment.generateId({ securityTokenId, stoId, index }),
-        { securityTokenSymbol: symbol, ...investment }
-      )
+      factories.investmentFactory.create(Investment.generateId({ securityTokenId, stoId, index }), {
+        securityTokenSymbol: symbol,
+        ...investment,
+      })
     );
 
     return {
       fundraiseTypes: isRaisedInPoly ? [Currency.POLY] : [Currency.ETH],
+      raisedFundsWallet,
+      unsoldTokensWallet,
       raisedAmount: fundsRaised,
       soldTokensAmount: totalTokensSold,
       investorAmount: investorCount,
@@ -72,6 +103,9 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
       address,
       paused,
       capReached,
+      isFinalized,
+      preMintAllowed,
+      beneficialInvestmentsAllowed,
     };
   };
 

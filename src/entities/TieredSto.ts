@@ -6,8 +6,12 @@ import { Context } from '../Context';
 export { UniqueIdentifiers };
 
 export interface Tier {
-  cap: BigNumber;
-  rate: BigNumber;
+  tokensOnSale: BigNumber;
+  tokensSold: BigNumber;
+  price: BigNumber;
+  tokensWithDiscount: BigNumber;
+  tokensSoldAtDiscount: BigNumber;
+  discountedPrice: BigNumber;
 }
 
 export interface Params extends StoParams {

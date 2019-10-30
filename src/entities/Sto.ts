@@ -24,12 +24,17 @@ export interface Params {
   startTime: Date;
   endTime: Date;
   fundraiseTypes: Currency[];
+  raisedFundsWallet: string;
+  unsoldTokensWallet: string;
   raisedAmount: BigNumber;
   soldTokensAmount: BigNumber;
   investorAmount: number;
   investments: Investment[];
   paused: boolean;
   capReached: boolean;
+  isFinalized: boolean;
+  preMintAllowed: boolean;
+  beneficialInvestmentsAllowed: boolean;
 }
 
 export abstract class Sto<P> extends Entity<P> {
@@ -47,6 +52,10 @@ export abstract class Sto<P> extends Entity<P> {
 
   public endTime: Date;
 
+  public raisedFundsWallet: string;
+
+  public unsoldTokensWallet: string;
+
   public raisedAmount: BigNumber;
 
   public soldTokensAmount: BigNumber;
@@ -60,6 +69,12 @@ export abstract class Sto<P> extends Entity<P> {
   public paused: boolean;
 
   public capReached: boolean;
+
+  public isFinalized: boolean;
+
+  public preMintAllowed: boolean;
+
+  public beneficialInvestmentsAllowed: boolean;
 
   protected context: Context;
 
@@ -87,12 +102,17 @@ export abstract class Sto<P> extends Entity<P> {
       fundraiseTypes,
       startTime,
       endTime,
+      raisedFundsWallet,
+      unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
       investorAmount,
       investments,
       paused,
       capReached,
+      isFinalized,
+      preMintAllowed,
+      beneficialInvestmentsAllowed,
     } = params;
 
     this.address = address;
@@ -101,6 +121,8 @@ export abstract class Sto<P> extends Entity<P> {
     this.stoType = stoType;
     this.startTime = startTime;
     this.endTime = endTime;
+    this.raisedFundsWallet = raisedFundsWallet;
+    this.unsoldTokensWallet = unsoldTokensWallet;
     this.raisedAmount = raisedAmount;
     this.soldTokensAmount = soldTokensAmount;
     this.investorAmount = investorAmount;
@@ -108,6 +130,9 @@ export abstract class Sto<P> extends Entity<P> {
     this.fundraiseTypes = fundraiseTypes;
     this.paused = paused;
     this.capReached = capReached;
+    this.isFinalized = isFinalized;
+    this.preMintAllowed = preMintAllowed;
+    this.beneficialInvestmentsAllowed = beneficialInvestmentsAllowed;
     this.context = context;
   }
 
@@ -175,26 +200,42 @@ export abstract class Sto<P> extends Entity<P> {
     const {
       uid,
       securityTokenId,
+      address,
       securityTokenSymbol,
       fundraiseTypes,
+      raisedFundsWallet,
+      unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
       investorAmount,
       investments,
       startTime,
       endTime,
+      capReached,
+      isFinalized,
+      paused,
+      preMintAllowed,
+      beneficialInvestmentsAllowed,
     } = this;
 
     return {
       uid,
       securityTokenId,
+      address,
       securityTokenSymbol,
       fundraiseTypes,
+      raisedFundsWallet,
+      unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
       investorAmount,
       startTime,
       endTime,
+      capReached,
+      isFinalized,
+      paused,
+      preMintAllowed,
+      beneficialInvestmentsAllowed,
       investments: investments.map(investment => investment.toPojo()),
     };
   }
@@ -205,12 +246,17 @@ export abstract class Sto<P> extends Entity<P> {
       startTime,
       endTime,
       fundraiseTypes,
+      raisedFundsWallet,
+      unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
       investorAmount,
       investments,
       paused,
       capReached,
+      isFinalized,
+      preMintAllowed,
+      beneficialInvestmentsAllowed,
     } = params;
 
     if (securityTokenSymbol) {
@@ -227,6 +273,14 @@ export abstract class Sto<P> extends Entity<P> {
 
     if (fundraiseTypes) {
       this.fundraiseTypes = fundraiseTypes;
+    }
+
+    if (raisedFundsWallet) {
+      this.raisedFundsWallet = raisedFundsWallet;
+    }
+
+    if (unsoldTokensWallet) {
+      this.unsoldTokensWallet = unsoldTokensWallet;
     }
 
     if (raisedAmount) {
@@ -251,6 +305,18 @@ export abstract class Sto<P> extends Entity<P> {
 
     if (capReached !== undefined) {
       this.capReached = capReached;
+    }
+
+    if (isFinalized !== undefined) {
+      this.isFinalized = isFinalized;
+    }
+
+    if (preMintAllowed !== undefined) {
+      this.preMintAllowed = preMintAllowed;
+    }
+
+    if (beneficialInvestmentsAllowed !== undefined) {
+      this.beneficialInvestmentsAllowed = beneficialInvestmentsAllowed;
     }
   }
 }
