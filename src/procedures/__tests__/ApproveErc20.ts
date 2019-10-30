@@ -1,6 +1,6 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SinonStub, stub, spy } from 'sinon';
 import * as contextModule from '../../Context';
 import * as polymathBaseModule from '../../PolymathBase';

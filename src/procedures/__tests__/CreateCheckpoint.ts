@@ -2,7 +2,7 @@ import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub, stub, spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';

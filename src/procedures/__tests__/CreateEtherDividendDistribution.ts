@@ -1,6 +1,6 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub, stub, spy, restore } from 'sinon';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { CreateEtherDividendDistribution } from '../../procedures/CreateEtherDividendDistribution';
