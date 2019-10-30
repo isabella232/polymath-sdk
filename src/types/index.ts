@@ -43,11 +43,11 @@ export function isDividendType(type: any): type is DividendType {
 
 export enum StoType {
   Capped = 'Capped',
-  UsdTiered = 'UsdTiered',
+  Tiered = 'Tiered',
 }
 
 export function isStoType(type: any): type is StoType {
-  return typeof type === 'string' && (type === StoType.UsdTiered || type === StoType.Capped);
+  return typeof type === 'string' && (type === StoType.Tiered || type === StoType.Capped);
 }
 
 export interface TaxWithholdingEntry {
@@ -103,7 +103,7 @@ export enum ProcedureType {
   EnableDividendManagers = 'EnableDividendManagers',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   LaunchCappedSto = 'LaunchCappedSto',
-  LaunchUsdTieredSto = 'LaunchUsdTieredSto',
+  LaunchTieredSto = 'LaunchTieredSto',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
@@ -137,7 +137,7 @@ export enum PolyTransactionTag {
   SetEtherTaxWithholding = 'SetEtherTaxWithholding',
   EnableDividends = 'EnableDividends',
   EnableCappedSto = 'EnableCappedSto',
-  EnableUsdTieredSto = 'EnableUsdTieredSto',
+  EnableTieredSto = 'EnableTieredSto',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
@@ -264,7 +264,7 @@ export interface StoTier {
    */
   tokensOnSale: BigNumber;
   /**
-   * Price of each token in this tier in USD
+   * Price of each token in this tier
    */
   price: BigNumber;
   /**
@@ -278,7 +278,7 @@ export interface StoTier {
   discountedPrice?: BigNumber;
 }
 
-export interface LaunchUsdTieredStoProcedureArgs {
+export interface LaunchTieredStoProcedureArgs {
   symbol: string;
   startDate: Date;
   endDate: Date;
@@ -288,7 +288,7 @@ export interface LaunchUsdTieredStoProcedureArgs {
   currencies: Currency[];
   storageWallet: string;
   treasuryWallet: string;
-  usdTokenAddresses: string[];
+  stableCoinAddresses: string[];
 }
 
 export interface ReclaimFundsProcedureArgs {
@@ -410,7 +410,7 @@ export interface ProcedureArguments {
   [ProcedureType.PushDividendPayment]: PushDividendPaymentProcedureArgs;
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
   [ProcedureType.LaunchCappedSto]: LaunchCappedStoProcedureArgs;
-  [ProcedureType.LaunchUsdTieredSto]: LaunchUsdTieredStoProcedureArgs;
+  [ProcedureType.LaunchTieredSto]: LaunchTieredStoProcedureArgs;
   [ProcedureType.PauseSto]: PauseStoProcedureArgs;
   [ProcedureType.ControllerTransfer]: ControllerTransferProcedureArgs;
   [ProcedureType.SetController]: SetControllerProcedureArgs;

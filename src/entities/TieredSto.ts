@@ -15,9 +15,9 @@ export interface Params extends StoParams {
   tiers: Tier[];
 }
 
-export class UsdTieredSto extends Sto<Params> {
+export class TieredSto extends Sto<Params> {
   public static generateId({ securityTokenId, stoType, address }: UniqueIdentifiers) {
-    return serialize('usdTieredSto', {
+    return serialize('tieredSto', {
       securityTokenId,
       stoType,
       address,
@@ -39,7 +39,7 @@ export class UsdTieredSto extends Sto<Params> {
 
     this.currentTier = currentTier;
     this.tiers = tiers;
-    this.uid = UsdTieredSto.generateId({ address, stoType, securityTokenId });
+    this.uid = TieredSto.generateId({ address, stoType, securityTokenId });
   }
 
   public toPojo() {

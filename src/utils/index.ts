@@ -115,7 +115,7 @@ interface FindCappedStoPauseParams extends FindEventParams {
   eventName: typeof CappedSTOEvents.Pause;
 }
 
-interface FindUsdTieredStoPauseParams extends FindEventParams {
+interface FindTieredStoPauseParams extends FindEventParams {
   eventName: typeof USDTieredSTOEvents.Pause;
 }
 
@@ -178,7 +178,7 @@ interface FindEvents {
     GeneralTransferManagerModifyInvestorFlagEventArgs
   >[];
   (params: FindCappedStoPauseParams): LogWithDecodedArgs<CappedSTOPauseEventArgs>[];
-  (params: FindUsdTieredStoPauseParams): LogWithDecodedArgs<USDTieredSTOPauseEventArgs>[];
+  (params: FindTieredStoPauseParams): LogWithDecodedArgs<USDTieredSTOPauseEventArgs>[];
   (params: FindErc20DividendClaimedParams): LogWithDecodedArgs<
     ERC20DividendCheckpointERC20DividendClaimedEventArgs
   >[];

@@ -9,13 +9,13 @@ import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
-  LaunchUsdTieredStoProcedureArgs,
+  LaunchTieredStoProcedureArgs,
   StoType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { TransferErc20 } from './TransferErc20';
 import { findEvents } from '../utils';
-import { SecurityToken, UsdTieredSto } from '../entities';
+import { SecurityToken, TieredSto } from '../entities';
 
 interface AddUSDTieredSTOParams {
   moduleName: ModuleName.UsdTieredSTO;
@@ -38,8 +38,8 @@ interface AddUSDTieredSTOParams {
   label?: string;
 }
 
-export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArgs, UsdTieredSto> {
-  public type = ProcedureType.LaunchUsdTieredSto;
+export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, TieredSto> {
+  public type = ProcedureType.LaunchTieredSto;
 
   public async prepareTransactions() {
     const { args, context } = this;
@@ -53,11 +53,11 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
       currencies,
       storageWallet,
       treasuryWallet,
-      usdTokenAddresses,
+      stableCoinAddresses,
     } = args;
     const {
       contractWrappers,
-      factories: { usdTieredStoFactory },
+      factories: { tieredStoFactory },
     } = context;
 
     let securityToken;
@@ -117,10 +117,10 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
       }
     );
 
-    const newSto = await this.addTransaction<AddUSDTieredSTOParams, UsdTieredSto>(
+    const newSto = await this.addTransaction<AddUSDTieredSTOParams, TieredSto>(
       securityToken.addModuleWithLabel,
       {
-        tag: PolyTransactionTag.EnableUsdTieredSto,
+        tag: PolyTransactionTag.EnableTieredSto,
         fees: {
           usd: usdCost,
           poly: polyCost,
@@ -138,10 +138,10 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
 
             const { _module } = eventArgs;
 
-            return usdTieredStoFactory.fetch(
-              UsdTieredSto.generateId({
+            return tieredStoFactory.fetch(
+              TieredSto.generateId({
                 securityTokenId: SecurityToken.generateId({ symbol }),
-                stoType: StoType.UsdTiered,
+                stoType: StoType.Tiered,
                 address: _module,
               })
             );
@@ -149,7 +149,7 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
           throw new PolymathError({
             code: ErrorCode.UnexpectedEventLogs,
             message:
-              "The USD Tiered STO was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
+              "The Tiered STO was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
           });
         },
       }
@@ -168,7 +168,7 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
         fundRaiseTypes: currencies,
         wallet: storageWallet,
         treasuryWallet,
-        usdTokens: usdTokenAddresses,
+        usdTokens: stableCoinAddresses,
       },
       archived: false,
     });

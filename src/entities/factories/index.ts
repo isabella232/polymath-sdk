@@ -3,7 +3,7 @@ export { SecurityTokenReservationFactory } from './SecurityTokenReservationFacto
 export { Erc20TokenBalanceFactory } from './Erc20TokenBalanceFactory';
 export { InvestmentFactory } from './InvestmentFactory';
 export { CappedStoFactory } from './CappedStoFactory';
-export { UsdTieredStoFactory } from './UsdTieredStoFactory';
+export { TieredStoFactory } from './TieredStoFactory';
 export { DividendDistributionFactory } from './DividendDistributionFactory';
 export { CheckpointFactory } from './CheckpointFactory';
 export { Erc20DividendsManagerFactory } from './Erc20DividendsManagerFactory';

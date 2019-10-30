@@ -11,7 +11,7 @@ export { PolyTransaction } from './PolyTransaction';
 export { TransactionQueue } from './TransactionQueue';
 export { Erc20TokenBalance } from './Erc20TokenBalance';
 export { CappedSto } from './CappedSto';
-export { UsdTieredSto } from './UsdTieredSto';
+export { TieredSto } from './TieredSto';
 export { Investment } from './Investment';
 export { Sto } from './Sto';
 export { Shareholder } from './Shareholder';

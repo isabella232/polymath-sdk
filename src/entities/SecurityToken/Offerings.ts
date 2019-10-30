@@ -2,14 +2,14 @@ import { BigNumber, ModuleName } from '@polymathnetwork/contract-wrappers';
 import { includes } from 'lodash';
 import { SubModule } from './SubModule';
 import { CappedStoCurrency, StoTier, Currency, StoType, ErrorCode } from '../../types';
-import { LaunchCappedSto, LaunchUsdTieredSto } from '../../procedures';
-import { CappedSto, UsdTieredSto, Sto } from '..';
+import { LaunchCappedSto, LaunchTieredSto } from '../../procedures';
+import { CappedSto, TieredSto, Sto } from '..';
 import { PolymathError } from '../../PolymathError';
 
 interface GetSto {
   (args: { stoType: StoType.Capped; address: string }): Promise<CappedSto>;
-  (args: { stoType: StoType.UsdTiered; address: string }): Promise<UsdTieredSto>;
-  (args: string): Promise<CappedSto | UsdTieredSto>;
+  (args: { stoType: StoType.Tiered; address: string }): Promise<TieredSto>;
+  (args: string): Promise<CappedSto | TieredSto>;
 }
 
 export class Offerings extends SubModule {
@@ -47,13 +47,13 @@ export class Offerings extends SubModule {
   };
 
   /**
-   * Launch a USD Tiered STO
+   * Launch a Tiered STO
    *
    * @param startDate date when the STO should start
    * @param endDate date when the STO should end
    * @param tiers tier information
    * @param tiers[].tokensOnSale amount of tokens to be sold on that tier
-   * @param tiers[].price price of each token on that tier in USD
+   * @param tiers[].price price of each token on that tier
    * @param tiers[].tokensWithDiscount amount of tokens to be sold on that tier at a discount if paid in POLY (must be less than tokensOnSale, defaults to 0)
    * @param tiers[].discountedPrice price of discounted tokens on that tier (defaults to 0)
    * @param nonAccreditedInvestmentLimit maximum investment for non-accredited investors
@@ -61,10 +61,10 @@ export class Offerings extends SubModule {
    * @param currencies array of currencies in which the funds will be raised (ETH, POLY, StableCoin)
    * @param storageWallet wallet address that will receive the funds that are being raised
    * @param treasuryWallet wallet address that will receive unsold tokens when the end date is reached
-   * @param usdTokenAddresses array of USD stable coins that the offering supports
+   * @param stableCoinAddresses array of stable coins that the offering supports
    *
    */
-  public launchUsdTieredSto = async (args: {
+  public launchTieredSto = async (args: {
     startDate: Date;
     endDate: Date;
     tiers: StoTier[];
@@ -73,11 +73,11 @@ export class Offerings extends SubModule {
     currencies: Currency[];
     storageWallet: string;
     treasuryWallet: string;
-    usdTokenAddresses: string[];
+    stableCoinAddresses: string[];
   }) => {
     const { context, securityToken } = this;
     const { symbol } = securityToken;
-    const procedure = new LaunchUsdTieredSto(
+    const procedure = new LaunchTieredSto(
       {
         symbol,
         ...args,
@@ -90,7 +90,7 @@ export class Offerings extends SubModule {
   /**
    * Retrieve an STO by type and address or UUID
    *
-   * @param stoType type of the STO (Capped or USDTiered)
+   * @param stoType type of the STO (Capped or Tiered)
    * @param address address of the STO contract
    */
   public getSto: GetSto = async (
@@ -120,9 +120,9 @@ export class Offerings extends SubModule {
       return factories.cappedStoFactory.fetch(
         CappedSto.generateId({ securityTokenId: uid, stoType, address })
       );
-    } else if (stoType === StoType.UsdTiered) {
-      return factories.usdTieredStoFactory.fetch(
-        UsdTieredSto.generateId({ securityTokenId: uid, stoType, address })
+    } else if (stoType === StoType.Tiered) {
+      return factories.tieredStoFactory.fetch(
+        TieredSto.generateId({ securityTokenId: uid, stoType, address })
       );
     } else {
       throw new PolymathError({
@@ -141,7 +141,7 @@ export class Offerings extends SubModule {
     opts: {
       stoTypes: StoType[];
     } = {
-      stoTypes: [StoType.Capped, StoType.UsdTiered],
+      stoTypes: [StoType.Capped, StoType.Tiered],
     }
   ) => {
     const { contractWrappers, factories } = this.context;
@@ -150,7 +150,7 @@ export class Offerings extends SubModule {
 
     const { stoTypes } = opts;
 
-    let stos: Promise<CappedSto | UsdTieredSto>[] = [];
+    let stos: Promise<CappedSto | TieredSto>[] = [];
 
     if (includes(stoTypes, StoType.Capped)) {
       const fetchedModules = await contractWrappers.getAttachedModules(
@@ -169,7 +169,7 @@ export class Offerings extends SubModule {
       );
     }
 
-    if (includes(stoTypes, StoType.UsdTiered)) {
+    if (includes(stoTypes, StoType.Tiered)) {
       const fetchedModules = await contractWrappers.getAttachedModules(
         { symbol: securityTokenSymbol, moduleName: ModuleName.UsdTieredSTO },
         { unarchived: true }
@@ -179,8 +179,8 @@ export class Offerings extends SubModule {
 
       stos = stos.concat(
         addresses.map(address =>
-          factories.usdTieredStoFactory.fetch(
-            UsdTieredSto.generateId({ address, stoType: StoType.Capped, securityTokenId: uid })
+          factories.tieredStoFactory.fetch(
+            TieredSto.generateId({ address, stoType: StoType.Capped, securityTokenId: uid })
           )
         )
       );

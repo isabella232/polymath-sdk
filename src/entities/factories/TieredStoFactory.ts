@@ -11,13 +11,13 @@ import { Context } from '../../Context';
 import { Currency } from '../../types';
 import { SecurityToken } from '../SecurityToken';
 import { Investment } from '../Investment';
-import { UsdTieredSto, Params, UniqueIdentifiers } from '../UsdTieredSto';
+import { TieredSto, Params, UniqueIdentifiers } from '../TieredSto';
 
 const { weiToValue } = conversionUtils;
 
-export class UsdTieredStoFactory extends Factory<UsdTieredSto, Params, UniqueIdentifiers> {
+export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
-    const { securityTokenId, stoType, address } = UsdTieredSto.unserialize(uid);
+    const { securityTokenId, stoType, address } = TieredSto.unserialize(uid);
 
     const { symbol } = SecurityToken.unserialize(securityTokenId);
 
@@ -59,7 +59,7 @@ export class UsdTieredStoFactory extends Factory<UsdTieredSto, Params, UniqueIde
       },
     ] = await Promise.all([module.paused(), module.capReached(), module.getSTODetails()]);
 
-    const stoId = UsdTieredSto.generateId({
+    const stoId = TieredSto.generateId({
       securityTokenId,
       stoType,
       address,
@@ -106,6 +106,6 @@ export class UsdTieredStoFactory extends Factory<UsdTieredSto, Params, UniqueIde
   };
 
   constructor(context: Context) {
-    super(UsdTieredSto, context);
+    super(TieredSto, context);
   }
 }

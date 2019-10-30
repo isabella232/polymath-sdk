@@ -9,7 +9,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
-import { SecurityToken, CappedSto, UsdTieredSto } from '../entities';
+import { SecurityToken, CappedSto, TieredSto } from '../entities';
 
 export class PauseSto extends Procedure<PauseStoProcedureArgs> {
   public type = ProcedureType.PauseSto;
@@ -39,7 +39,7 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
         });
         break;
       }
-      case StoType.UsdTiered: {
+      case StoType.Tiered: {
         stoModule = await contractWrappers.moduleFactory.getModuleInstance({
           name: ModuleName.UsdTieredSTO,
           address: stoAddress,
@@ -80,11 +80,11 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
               })
             );
           }
-          case StoType.UsdTiered: {
-            return factories.usdTieredStoFactory.refresh(
-              UsdTieredSto.generateId({
+          case StoType.Tiered: {
+            return factories.tieredStoFactory.refresh(
+              TieredSto.generateId({
                 securityTokenId,
-                stoType: StoType.UsdTiered,
+                stoType: StoType.Tiered,
                 address: stoAddress,
               })
             );

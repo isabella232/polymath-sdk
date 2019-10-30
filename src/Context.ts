@@ -6,7 +6,7 @@ import {
   Erc20TokenBalanceFactory,
   InvestmentFactory,
   CappedStoFactory,
-  UsdTieredStoFactory,
+  TieredStoFactory,
   DividendDistributionFactory,
   CheckpointFactory,
   Erc20DividendsManagerFactory,
@@ -25,7 +25,7 @@ interface Factories {
   erc20TokenBalanceFactory: Erc20TokenBalanceFactory;
   investmentFactory: InvestmentFactory;
   cappedStoFactory: CappedStoFactory;
-  usdTieredStoFactory: UsdTieredStoFactory;
+  tieredStoFactory: TieredStoFactory;
   dividendDistributionFactory: DividendDistributionFactory;
   checkpointFactory: CheckpointFactory;
   erc20DividendsManagerFactory: Erc20DividendsManagerFactory;
@@ -61,7 +61,7 @@ export class Context {
       erc20TokenBalanceFactory: new Erc20TokenBalanceFactory(this),
       investmentFactory: new InvestmentFactory(this),
       cappedStoFactory: new CappedStoFactory(this),
-      usdTieredStoFactory: new UsdTieredStoFactory(this),
+      tieredStoFactory: new TieredStoFactory(this),
       dividendDistributionFactory: new DividendDistributionFactory(this),
       checkpointFactory: new CheckpointFactory(this),
       erc20DividendsManagerFactory: new Erc20DividendsManagerFactory(this),

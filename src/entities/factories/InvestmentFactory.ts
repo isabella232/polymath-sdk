@@ -57,7 +57,7 @@ export class InvestmentFactory extends Factory<Investment, Params, UniqueIdentif
         investedFunds: weiToValue(value, FULL_DECIMALS),
         securityTokenSymbol: symbol,
       };
-    } else if (stoType === StoType.UsdTiered) {
+    } else if (stoType === StoType.Tiered) {
       const module = await this.context.contractWrappers.moduleFactory.getModuleInstance({
         name: ModuleName.UsdTieredSTO,
         address,
