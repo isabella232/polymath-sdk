@@ -58,9 +58,6 @@ export class SetDividendsWallet extends Procedure<
         );
         break;
       }
-      default: {
-        break;
-      }
     }
 
     if (!dividendModule) {
@@ -89,9 +86,6 @@ export class SetDividendsWallet extends Procedure<
                 dividendType,
               })
             );
-          }
-          default: {
-            break;
           }
         }
       },
