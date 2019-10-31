@@ -1,7 +1,6 @@
 import { ImportMock, MockManager, StaticMockManager } from 'ts-mock-imports';
-import { SinonStub, stub, spy, restore } from 'sinon';
-import BigNumber from 'bignumber.js';
-import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
+import { stub, spy, restore } from 'sinon';
+import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { MintTokens } from '../../procedures/MintTokens';
 import { Procedure } from '~/procedures/Procedure';
@@ -21,7 +20,7 @@ import { mockFactories } from '~/testUtils/MockFactories';
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
 const testAddress3 = '0x8888888888888888888888888888888888888888';
-const params1: MintTokensProcedureArgs = {
+const params: MintTokensProcedureArgs = {
   symbol: 'TEST1',
   mintingData: [
     {
@@ -46,7 +45,6 @@ describe('MintTokens', () => {
   let moduleWrapperFactoryMock: MockManager<
     moduleWrapperFactoryModule.MockedModuleWrapperFactoryModule
   >;
-  let tokenFactoryStub: SinonStub<any, any>;
 
   // Mock factories
   let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
@@ -86,7 +84,7 @@ describe('MintTokens', () => {
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
 
-    tokenFactoryStub = tokenFactoryMock.mock(
+    tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
@@ -122,7 +120,7 @@ describe('MintTokens', () => {
     contextMock.set('factories', factoryMockSetup);
 
     // Instantiate MintTokens
-    target = new MintTokens(params1, contextMock.getMockInstance());
+    target = new MintTokens(params, contextMock.getMockInstance());
   });
   afterEach(() => {
     restore();
@@ -136,7 +134,7 @@ describe('MintTokens', () => {
   });
 
   describe('MintTokens', () => {
-    test('should send the transaction to MintTokens', async () => {
+    test('should add the transaction to the queue to mint tokens and add a procedure to modify shareholder data', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
@@ -173,10 +171,10 @@ describe('MintTokens', () => {
       );
     });
 
-    test('should correctly return the resolver', async () => {
+    test('should return the minted tokens shareholders object', async () => {
       const shareholderObject = {
         shareholder: {
-          securityTokenId: () => Promise.resolve(params1.symbol),
+          securityTokenId: () => Promise.resolve(params.symbol),
           address: () => Promise.resolve(testAddress),
         },
       };
@@ -193,20 +191,20 @@ describe('MintTokens', () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         stub()
-          .withArgs({ address: params1.symbol })
+          .withArgs({ address: params.symbol })
           .throws()
       );
 
       expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${params1.symbol}`,
+          message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
     });
 
     test('should throw if minting addresses are not shareholders', async () => {
-      const newParams = params1;
+      const newParams = params;
       newParams.mintingData = [{ address: testAddress3, amount: new BigNumber(1) }];
       target = new MintTokens(newParams, contextMock.getMockInstance());
 

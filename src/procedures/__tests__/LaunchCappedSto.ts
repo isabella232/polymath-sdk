@@ -1,7 +1,6 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub, stub, spy, restore } from 'sinon';
-import BigNumber from 'bignumber.js';
-import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
+import { stub, spy, restore } from 'sinon';
+import { BigNumber, TransactionReceiptWithDecodedLogs , CappedSTOFundRaiseType as CappedStoCurrency } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { LaunchCappedSto } from '../../procedures/LaunchCappedSto';
 import { Procedure } from '~/procedures/Procedure';
@@ -13,12 +12,12 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { CappedSTOFundRaiseType as CappedStoCurrency } from '@polymathnetwork/contract-wrappers';
+
 import { Wallet } from '~/Wallet';
 import { TransferErc20 } from '~/procedures';
 import { mockFactories } from '~/testUtils/MockFactories';
 
-const params1: LaunchCappedStoProcedureArgs = {
+const params: LaunchCappedStoProcedureArgs = {
   symbol: 'TEST1',
   startDate: new Date(2030, 1),
   endDate: new Date(2031, 1),
@@ -38,17 +37,12 @@ describe('LaunchCappedSto', () => {
     moduleWrapperFactoryModule.MockedModuleWrapperFactoryModule
   >;
   let polyTokenMock: MockManager<contractWrappersModule.PolyToken>;
-  let tokenFactoryStub: SinonStub<any, any>;
-  let moduleWrapperFactoryStub: SinonStub<any, any>;
 
   // Mock factories
   let cappedStoFactoryMock: MockManager<cappedStoFactoryModule.CappedStoFactory>;
 
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let moduleFactoryMock: MockManager<contractWrappersModule.ModuleFactory_3_0_0>;
-
-  let findEventsStub: SinonStub<any, any>;
-  let getAttachedModulesFactoryAddressStub: SinonStub<any, any>;
 
   beforeAll(() => {
     // Mock the context, wrappers, and tokenFactory to test LaunchCappedSto
@@ -65,7 +59,7 @@ describe('LaunchCappedSto', () => {
     wrappersMock.set('moduleFactory', moduleWrapperFactoryMock.getMockInstance());
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    securityTokenMock.mock('address', Promise.resolve(params1.storageWallet));
+    securityTokenMock.mock('address', Promise.resolve(params.storageWallet));
     securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(1)));
 
     moduleFactoryMock = ImportMock.mockClass(contractWrappersModule, 'ModuleFactory_3_0_0');
@@ -73,14 +67,11 @@ describe('LaunchCappedSto', () => {
     moduleFactoryMock.mock('isCostInPoly', Promise.resolve(false));
     moduleFactoryMock.mock('setupCost', Promise.resolve(new BigNumber(1)));
 
-    tokenFactoryStub = tokenFactoryMock.mock(
+    tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
-    moduleWrapperFactoryStub = moduleWrapperFactoryMock.mock(
-      'getModuleFactory',
-      moduleFactoryMock.getMockInstance()
-    );
+    moduleWrapperFactoryMock.mock('getModuleFactory', moduleFactoryMock.getMockInstance());
 
     cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryModule, 'CappedStoFactory');
 
@@ -89,23 +80,20 @@ describe('LaunchCappedSto', () => {
     contextMock.set('factories', factoryMockSetup);
     contextMock.set(
       'currentWallet',
-      new Wallet({ address: () => Promise.resolve(params1.storageWallet) })
+      new Wallet({ address: () => Promise.resolve(params.storageWallet) })
     );
 
     polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
     polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
-    polyTokenMock.mock('address', Promise.resolve(params1.treasuryWallet));
+    polyTokenMock.mock('address', Promise.resolve(params.treasuryWallet));
     polyTokenMock.mock('allowance', Promise.resolve(new BigNumber(0)));
     wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
-    getAttachedModulesFactoryAddressStub = wrappersMock.mock(
-      'getModuleFactoryAddress',
-      Promise.resolve(params1.treasuryWallet)
-    );
+    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(params.treasuryWallet));
 
     // Instantiate LaunchCappedSto
-    target = new LaunchCappedSto(params1, contextMock.getMockInstance());
+    target = new LaunchCappedSto(params, contextMock.getMockInstance());
   });
   afterEach(() => {
     restore();
@@ -119,7 +107,7 @@ describe('LaunchCappedSto', () => {
   });
 
   describe('LaunchCappedSto', () => {
-    test('should send the transaction to LaunchCappedSto', async () => {
+    test('should add a transaction to the queue to launch a capped sto', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
@@ -137,7 +125,7 @@ describe('LaunchCappedSto', () => {
     });
 
     test('should throw if corresponding capped sto event is not fired', async () => {
-      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', []);
+      ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
       // Real call
       const resolver = await target.prepareTransactions();
@@ -151,16 +139,16 @@ describe('LaunchCappedSto', () => {
       );
     });
 
-    test('should correctly return the resolver', async () => {
+    test('should return the capped sto', async () => {
       const stoObject = {
         sto: {
-          securityTokenId: () => Promise.resolve(params1.symbol),
+          securityTokenId: () => Promise.resolve(params.symbol),
           stoType: () => Promise.resolve(StoType.Capped),
-          address: () => Promise.resolve(params1.storageWallet),
+          address: () => Promise.resolve(params.storageWallet),
         },
       };
       const fetchStub = cappedStoFactoryMock.mock('fetch', stoObject);
-      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
+      ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
             _module: '0x3333333333333333333333333333333333333333',
@@ -179,14 +167,14 @@ describe('LaunchCappedSto', () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         stub()
-          .withArgs({ address: params1.symbol })
+          .withArgs({ address: params.symbol })
           .throws()
       );
 
       expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${params1.symbol}`,
+          message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
     });

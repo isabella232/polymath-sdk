@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, SinonStub, spy, stub } from 'sinon';
+import { restore, spy, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { PauseSto } from '../../procedures/PauseSto';
 import { Procedure } from '~/procedures/Procedure';
@@ -34,8 +34,6 @@ describe('PauseSto', () => {
   >;
   let cappedStoMock: MockManager<contractWrappersModule.CappedSTO_3_0_0>;
   let usdTieredStoMock: MockManager<contractWrappersModule.USDTieredSTO_3_0_0>;
-  let tokenFactoryStub: SinonStub<any, any>;
-  let moduleWrapperFactoryStub: SinonStub<any, any>;
 
   // Mock factories
   let cappedStoFactoryMock: MockManager<cappedStoFactoryModule.CappedStoFactory>;
@@ -61,15 +59,12 @@ describe('PauseSto', () => {
 
     moduleFactoryMock = ImportMock.mockClass(contractWrappersModule, 'ModuleFactory_3_0_0');
 
-    tokenFactoryStub = tokenFactoryMock.mock(
+    tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
 
-    moduleWrapperFactoryStub = moduleWrapperFactoryMock.mock(
-      'getModuleInstance',
-      moduleFactoryMock.getMockInstance()
-    );
+    moduleWrapperFactoryMock.mock('getModuleInstance', moduleFactoryMock.getMockInstance());
 
     cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryModule, 'CappedStoFactory');
 
@@ -95,7 +90,7 @@ describe('PauseSto', () => {
   });
 
   describe('PauseSto', () => {
-    test('should send the transaction to pause a capped sto', async () => {
+    test('should add the transaction to the queue to pause a capped sto', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
@@ -107,7 +102,7 @@ describe('PauseSto', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should send the transaction to pause a usdTiered sto', async () => {
+    test('should add the transaction to the queue to pause a usdTiered sto', async () => {
       target = new PauseSto(usdTieredParams, contextMock.getMockInstance());
 
       const addTransactionSpy = spy(target, 'addTransaction');
@@ -172,7 +167,7 @@ describe('PauseSto', () => {
     });
 
     test('should throw if there is an invalid module instance returned', async () => {
-      moduleWrapperFactoryStub = moduleWrapperFactoryMock.mock('getModuleInstance', undefined);
+      moduleWrapperFactoryMock.mock('getModuleInstance', undefined);
       expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,

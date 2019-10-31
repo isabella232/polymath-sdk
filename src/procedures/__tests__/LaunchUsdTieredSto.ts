@@ -1,25 +1,13 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub, stub, spy, restore } from 'sinon';
-import BigNumber from 'bignumber.js';
-import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
+import { BigNumber, TransactionReceiptWithDecodedLogs , FundRaiseType as Currency } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import { FundRaiseType as Currency } from '@polymathnetwork/contract-wrappers';
+
 import { LaunchUsdTieredSto } from '../../procedures/LaunchUsdTieredSto';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCode, LaunchUsdTieredStoProcedureArgs, ProcedureType, StoType } from '~/types';
-import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
-import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
-import * as checkpointFactoryModule from '~/entities/factories/CheckpointFactory';
-import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/factories/DividendDistributionFactory';
-import * as erc20DividendsManagerFactoryModule from '~/entities/factories/Erc20DividendsManagerFactory';
-import * as erc20TokenBalanceFactoryModule from '~/entities/factories/Erc20TokenBalanceFactory';
-import * as ethDividendsManagerFactoryModule from '~/entities/factories/EthDividendsManagerFactory';
-import * as investmentFactoryModule from '~/entities/factories/InvestmentFactory';
-import * as securityTokenReservationModule from '~/entities/factories/SecurityTokenReservationFactory';
-import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
 import * as usdTieredStoFactoryModule from '~/entities/factories/UsdTieredStoFactory';
-import * as taxWithholdingFactoryModule from '~/entities/factories/TaxWithholdingFactory';
 import * as utilsModule from '~/utils';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -29,7 +17,7 @@ import { Wallet } from '~/Wallet';
 import { TransferErc20 } from '~/procedures';
 import { mockFactories } from '~/testUtils/MockFactories';
 
-const params1: LaunchUsdTieredStoProcedureArgs = {
+const params: LaunchUsdTieredStoProcedureArgs = {
   symbol: 'TEST1',
   startDate: new Date(2030, 1),
   endDate: new Date(2031, 1),
@@ -62,28 +50,8 @@ describe('LaunchUsdTieredSto', () => {
   let moduleWrapperFactoryStub: SinonStub<any, any>;
 
   // Mock factories
-  let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
-  let cappedStoFactoryMock: MockManager<cappedStoFactoryModule.CappedStoFactory>;
-  let checkpointFactoryMock: MockManager<checkpointFactoryModule.CheckpointFactory>;
-  let dividendDistributionFactoryMock: MockManager<
-    dividendDistributionSecurityTokenFactoryModule.DividendDistributionFactory
-  >;
-  let erc20DividendsManagerFactoryMock: MockManager<
-    erc20DividendsManagerFactoryModule.Erc20DividendsManagerFactory
-  >;
-  let erc20TokenBalanceFactoryMock: MockManager<
-    erc20TokenBalanceFactoryModule.Erc20TokenBalanceFactory
-  >;
-  let ethDividendsManagerFactoryMock: MockManager<
-    ethDividendsManagerFactoryModule.EthDividendsManagerFactory
-  >;
-  let investmentFactoryMock: MockManager<investmentFactoryModule.InvestmentFactory>;
-  let securityTokenReservationFactoryMock: MockManager<
-    securityTokenReservationModule.SecurityTokenReservationFactory
-  >;
-  let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
   let usdTieredStoFactoryMock: MockManager<usdTieredStoFactoryModule.UsdTieredStoFactory>;
-  let taxWithholdingFactoryMock: MockManager<taxWithholdingFactoryModule.TaxWithholdingFactory>;
+
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let moduleFactoryMock: MockManager<contractWrappersModule.ModuleFactory_3_0_0>;
 
@@ -105,7 +73,7 @@ describe('LaunchUsdTieredSto', () => {
     wrappersMock.set('moduleFactory', moduleWrapperFactoryMock.getMockInstance());
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    securityTokenMock.mock('address', Promise.resolve(params1.storageWallet));
+    securityTokenMock.mock('address', Promise.resolve(params.storageWallet));
     securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(1)));
 
     moduleFactoryMock = ImportMock.mockClass(contractWrappersModule, 'ModuleFactory_3_0_0');
@@ -131,23 +99,23 @@ describe('LaunchUsdTieredSto', () => {
     contextMock.set('factories', factoryMockSetup);
     contextMock.set(
       'currentWallet',
-      new Wallet({ address: () => Promise.resolve(params1.storageWallet) })
+      new Wallet({ address: () => Promise.resolve(params.storageWallet) })
     );
 
     polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
     polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
-    polyTokenMock.mock('address', Promise.resolve(params1.treasuryWallet));
+    polyTokenMock.mock('address', Promise.resolve(params.treasuryWallet));
     polyTokenMock.mock('allowance', Promise.resolve(new BigNumber(0)));
     wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
     getAttachedModulesFactoryAddressStub = wrappersMock.mock(
       'getModuleFactoryAddress',
-      Promise.resolve(params1.treasuryWallet)
+      Promise.resolve(params.treasuryWallet)
     );
 
     // Instantiate LaunchUsdTieredSto
-    target = new LaunchUsdTieredSto(params1, contextMock.getMockInstance());
+    target = new LaunchUsdTieredSto(params, contextMock.getMockInstance());
   });
   afterEach(() => {
     restore();
@@ -161,7 +129,7 @@ describe('LaunchUsdTieredSto', () => {
   });
 
   describe('LaunchUsdTieredSto', () => {
-    test('should send the transaction to LaunchUsdTieredSto', async () => {
+    test('should add the transaction to the queue to launch usd tiered sto and add a procedure to transfer erc20 token', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
@@ -193,12 +161,12 @@ describe('LaunchUsdTieredSto', () => {
       );
     });
 
-    test('should correctly return the resolver', async () => {
+    test('should return the usd tiered sto', async () => {
       const stoObject = {
         sto: {
-          securityTokenId: () => Promise.resolve(params1.symbol),
+          securityTokenId: () => Promise.resolve(params.symbol),
           stoType: () => Promise.resolve(StoType.UsdTiered),
-          address: () => Promise.resolve(params1.storageWallet),
+          address: () => Promise.resolve(params.storageWallet),
         },
       };
       const fetchStub = usdTieredStoFactoryMock.mock('fetch', stoObject);
@@ -221,14 +189,14 @@ describe('LaunchUsdTieredSto', () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         stub()
-          .withArgs({ address: params1.symbol })
+          .withArgs({ address: params.symbol })
           .throws()
       );
 
       expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${params1.symbol}`,
+          message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
     });
