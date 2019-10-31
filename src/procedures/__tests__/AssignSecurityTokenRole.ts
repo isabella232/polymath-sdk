@@ -17,6 +17,7 @@ const params = {
   delegateAddress: '0x5555555555555555555555555555555555555555',
   assign: true,
   role: SecurityTokenRole.PermissionsAdministrator,
+  description: 'Description',
 };
 
 describe('AssignSecurityTokenRole', () => {
@@ -102,7 +103,7 @@ describe('AssignSecurityTokenRole', () => {
       // Verifications
       expect(
         addTransactionSpy.getCall(0).calledWithExactly(gpmMock.getMockInstance().addDelegate, {
-          tag: PolyTransactionTag.ChangePermission,
+          tag: PolyTransactionTag.AddDelegate,
         })
       ).toEqual(true);
       expect(
