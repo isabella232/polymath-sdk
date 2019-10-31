@@ -26,8 +26,6 @@ describe('SetController', () => {
     contractWrappersModule.SecurityToken_3_0_0
   >;
 
-  let tokenFactoryMockStub: SinonStub<any, any>;
-
   beforeEach(() => {
     // Mock the context, wrappers, tokenFactory and securityToken to test SetController
     contextMock = ImportMock.mockClass(contextModule, 'Context');
@@ -41,7 +39,7 @@ describe('SetController', () => {
       'SecurityToken_3_0_0'
     );
 
-    tokenFactoryMockStub = tokenFactoryMock.mock(
+    tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
