@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub, stub, spy } from 'sinon';
+import { stub, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -9,7 +9,7 @@ import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCode, PolyTransactionTag, StoRole } from '~/types';
 
-const params1 = {
+const params = {
   symbol: 'TEST1',
   delegateAddress: '0x5555555555555555555555555555555555555555',
   stoAddress: '0x1234555555555555555555555555555555555555',
@@ -23,8 +23,6 @@ describe('AssignStoRole', () => {
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
-  let tokenFactoryMockStub: SinonStub<any, any>;
-  let getAttachedModulesMockStub: SinonStub<any, any>;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test AssignStoRole
@@ -35,26 +33,14 @@ describe('AssignStoRole', () => {
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
     gpmMock = ImportMock.mockClass(contractWrappersModule, 'GeneralPermissionManager_3_0_0');
-    gpmMock.mock('getAllDelegates', Promise.resolve([params1.delegateAddress]));
+    gpmMock.mock('getAllDelegates', Promise.resolve([params.delegateAddress]));
     gpmMock.mock('getAllDelegatesWithPerm', Promise.resolve([]));
 
-    getAttachedModulesMockStub = wrappersMock.mock(
-      'getAttachedModules',
-      Promise.resolve([gpmMock.getMockInstance()])
-    );
-    tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
+    wrappersMock.mock('getAttachedModules', Promise.resolve([gpmMock.getMockInstance()]));
+    tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
 
     // Instantiate AssignStoRole
-    target = new AssignStoRole(
-      {
-        symbol: params1.symbol,
-        delegateAddress: params1.delegateAddress,
-        role: params1.role,
-        assign: params1.assign,
-        stoAddress: params1.stoAddress,
-      },
-      contextMock.getMockInstance()
-    );
+    target = new AssignStoRole(params, contextMock.getMockInstance());
   });
 
   describe('Types', () => {
@@ -65,7 +51,7 @@ describe('AssignStoRole', () => {
   });
 
   describe('AssignStoRole', () => {
-    test('should send the transaction to AssignStoRole', async () => {
+    test('should add transaction to the queue to change permission for an sto', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
@@ -79,7 +65,7 @@ describe('AssignStoRole', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should send the transaction to AssignStoRole without delegate', async () => {
+    test('should add transaction to the queue to add delegate and change permission for a new delegate in an sto', async () => {
       gpmMock.mock('getAllDelegates', Promise.resolve([]));
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
@@ -99,14 +85,14 @@ describe('AssignStoRole', () => {
       expect(addTransactionSpy.callCount).toEqual(2);
     });
 
-    test('should use an operator perm', async () => {
+    test('should add change permission transaction to the queue and use an operator role as param', async () => {
       target = new AssignStoRole(
         {
-          symbol: params1.symbol,
-          delegateAddress: params1.delegateAddress,
+          symbol: params.symbol,
+          delegateAddress: params.delegateAddress,
           role: StoRole.StoOperator,
-          assign: params1.assign,
-          stoAddress: params1.stoAddress,
+          assign: params.assign,
+          stoAddress: params.stoAddress,
         },
         contextMock.getMockInstance()
       );
@@ -123,24 +109,24 @@ describe('AssignStoRole', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should throw if there is no valid security token supplied ', async () => {
+    test('should throw if there is no valid security token supplied', async () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         stub()
-          .withArgs({ address: params1.symbol })
+          .withArgs({ address: params.symbol })
           .throws()
       );
 
       expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${params1.symbol}`,
+          message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
     });
 
     test('should throw if permission feature is not enabled', async () => {
-      getAttachedModulesMockStub = wrappersMock.mock('getAttachedModules', Promise.resolve([]));
+      wrappersMock.mock('getAttachedModules', Promise.resolve([]));
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
@@ -151,13 +137,13 @@ describe('AssignStoRole', () => {
     });
 
     test('should throw if role has already been assigned to delegate', async () => {
-      gpmMock.mock('getAllDelegatesWithPerm', Promise.resolve([params1.delegateAddress]));
+      gpmMock.mock('getAllDelegatesWithPerm', Promise.resolve([params.delegateAddress]));
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `Role ${params1.role} has already been ${
-            params1.assign ? 'assigned to' : 'revoked from'
+          message: `Role ${params.role} has already been ${
+            params.assign ? 'assigned to' : 'revoked from'
           } delegate for this STO.`,
         })
       );

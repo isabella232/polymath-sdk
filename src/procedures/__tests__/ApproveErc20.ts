@@ -1,6 +1,6 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SinonStub, stub, spy } from 'sinon';
 import * as contextModule from '../../Context';
 import * as polymathBaseModule from '../../PolymathBase';
@@ -89,7 +89,7 @@ describe('ApproveErc20', () => {
     );
   });
 
-  test('should send the transaction to ApproveErc20 with a poly token', async () => {
+  test('should add an approve transaction to the queue using the POLY token if no token address is supplied', async () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params1, contextMock.getMockInstance());
 
@@ -107,7 +107,7 @@ describe('ApproveErc20', () => {
     expect(addTransactionSpy.callCount).toEqual(1);
   });
 
-  test('should send the transaction to approve custom erc20 token', async () => {
+  test('should add an approve transaction to the queue using a custom ERC20 contract as a token address is supplied', async () => {
     // Used by custom erc20 token
     checkErc20BalanceStub = erc20Mock.mock('balanceOf', Promise.resolve(params2.amount));
     checkErc20AddressStub = erc20Mock.mock('address', Promise.resolve(params2.spender));
@@ -136,7 +136,7 @@ describe('ApproveErc20', () => {
     const zeroBalanceOf = new BigNumber(0);
     checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(zeroBalanceOf));
 
-    const wrapperMockStub = wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
+    wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
     // Instantiate ApproveErc20
     target = new ApproveErc20(params1, contextMock.getMockInstance());
     // Real call
@@ -178,17 +178,14 @@ describe('ApproveErc20', () => {
     expect(addTransactionSpy.callCount).toEqual(2);
   });
 
-  test('should return if it has sufficient allowance', async () => {
+  test('should return if it has sufficient allowance, will never add the transaction', async () => {
     // Used by custom erc20 token
     checkErc20BalanceStub = erc20Mock.mock('balanceOf', Promise.resolve(params2.amount));
     checkErc20AddressStub = erc20Mock.mock('address', Promise.resolve(params2.spender));
     // Sufficient allowance passed in
     checkErc20AllowanceStub = erc20Mock.mock('allowance', Promise.resolve(new BigNumber(3)));
 
-    const getErc20TokenWrapperStub = wrappersMock.mock(
-      'getERC20TokenWrapper',
-      erc20Mock.getMockInstance()
-    );
+    wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
 
     // Instantiate ApproveErc20
     target = new ApproveErc20(params2, contextMock.getMockInstance());

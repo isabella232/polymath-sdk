@@ -1,7 +1,7 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import { SinonStub, spy, restore } from 'sinon';
+import { spy, restore } from 'sinon';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as approvalModule from '../ApproveErc20';
@@ -16,7 +16,7 @@ import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as utilsModule from '~/utils';
 import { mockFactories } from '~/testUtils/MockFactories';
 
-const params1 = {
+const params = {
   symbol: 'TEST1',
   name: 'Test Token 1',
   address: '0x1111111111111111111111111111111111111111',
@@ -30,13 +30,9 @@ describe('CreateSecurityToken', () => {
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let approvalMock: MockManager<approvalModule.ApproveErc20>;
-  let prepareApprovalTransactionsStub: SinonStub<any, any>;
 
   let securityTokenRegistryMock: MockManager<contractWrappersModule.SecurityTokenRegistry>;
-
   let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
-
-  let findEventsStub: SinonStub<any, any>;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test
@@ -45,7 +41,7 @@ describe('CreateSecurityToken', () => {
 
     // Import mock for approveErc20
     approvalMock = ImportMock.mockClass(approvalModule, 'ApproveErc20');
-    prepareApprovalTransactionsStub = approvalMock.mock('prepareTransactions', Promise.resolve());
+    approvalMock.mock('prepareTransactions', Promise.resolve());
     approvalMock.set('transactions' as any, []);
     approvalMock.set('fees' as any, []);
 
@@ -61,13 +57,13 @@ describe('CreateSecurityToken', () => {
       'getFees',
       Promise.resolve([new BigNumber(1), new BigNumber(1)])
     );
-    securityTokenRegistryMock.mock('address', Promise.resolve(params1.address));
+    securityTokenRegistryMock.mock('address', Promise.resolve(params.address));
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('securityTokenRegistry', securityTokenRegistryMock.getMockInstance());
 
     const ownerPromise = new Promise<string>((resolve, reject) => {
-      resolve(params1.owner);
+      resolve(params.owner);
     });
     contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
     wrappersMock.mock('isTestnet', Promise.resolve(false));
@@ -81,14 +77,7 @@ describe('CreateSecurityToken', () => {
     contextMock.set('factories', factoryMockSetup);
 
     // Instantiate CreateSecurityToken
-    target = new CreateSecurityToken(
-      {
-        name: params1.name,
-        symbol: params1.symbol,
-        divisible: params1.divisible,
-      },
-      contextMock.getMockInstance()
-    );
+    target = new CreateSecurityToken(params, contextMock.getMockInstance());
   });
 
   afterEach(() => {
@@ -110,14 +99,14 @@ describe('CreateSecurityToken', () => {
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `The security token symbol ${
-            params1.symbol
+            params.symbol
           } hasn't been reserved. You need to call "reserveSecurityToken" first.`,
         })
       );
     });
 
     test('should throw if corresponding create security token event is not fired', async () => {
-      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', []);
+      ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
       // Real call
       const resolver = await target.prepareTransactions();
@@ -131,22 +120,22 @@ describe('CreateSecurityToken', () => {
       );
     });
 
-    test('should correctly return the resolver', async () => {
+    test('should return the newly created security token', async () => {
       const creationObject = {
         creation: {
-          name: () => Promise.resolve(params1.name),
-          owner: () => Promise.resolve(params1.owner),
-          address: () => Promise.resolve(params1.address),
+          name: () => params.name,
+          owner: () => params.owner,
+          address: () => params.address,
         },
       };
       const createStub = securityTokenFactoryMock.mock('create', creationObject);
-      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
+      ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
-            _ticker: params1.symbol,
-            _name: params1.name,
-            _owner: params1.owner,
-            _securityTokenAddress: params1.address,
+            _ticker: params.symbol,
+            _name: params.name,
+            _owner: params.owner,
+            _securityTokenAddress: params.address,
           },
         },
       ]);
@@ -165,7 +154,7 @@ describe('CreateSecurityToken', () => {
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `The security token symbol ${
-            params1.symbol
+            params.symbol
           } has already been reserved by another issuer."`,
         })
       );
@@ -177,12 +166,12 @@ describe('CreateSecurityToken', () => {
       expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `The security token symbol ${params1.symbol} has already been launched."`,
+          message: `The security token symbol ${params.symbol} has already been launched."`,
         })
       );
     });
 
-    test('should send the transaction to CreateSecurityToken', async () => {
+    test('should add the transaction to the queue to create the security token and approve erc20 transfer', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
@@ -200,12 +189,10 @@ describe('CreateSecurityToken', () => {
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
-    test('should send the transaction to CreateSecurityToken with a treasury wallet', async () => {
+    test('should add the transaction to the queue to create the security token with a treasury wallet', async () => {
       target = new CreateSecurityToken(
         {
-          name: params1.name,
-          symbol: params1.symbol,
-          divisible: params1.divisible,
+          ...params,
           treasuryWallet: '0x5', // Extra argument of treasuryWallet
         },
         contextMock.getMockInstance()

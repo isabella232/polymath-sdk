@@ -143,6 +143,7 @@ export enum PolyTransactionTag {
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
+  AddDelegate = 'AddDelegate',
   ChangePermission = 'ChangePermission',
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
@@ -325,7 +326,7 @@ export interface AssignSecurityTokenRoleProcedureArgs {
   delegateAddress: string;
   role: SecurityTokenRole;
   assign: boolean;
-  description?: string;
+  description: string;
 }
 
 export interface AssignStoRoleProcedureArgs {

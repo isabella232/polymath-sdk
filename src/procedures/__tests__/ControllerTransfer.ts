@@ -1,6 +1,6 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub, stub, spy } from 'sinon';
-import BigNumber from 'bignumber.js';
+import { stub, spy } from 'sinon';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -26,7 +26,6 @@ describe('ControllerTransfer', () => {
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
-  let tokenFactoryMockStub: SinonStub<any, any>;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test ControllerTransfer
@@ -41,7 +40,7 @@ describe('ControllerTransfer', () => {
       resolve(params1.owner);
     });
     contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
-    tokenFactoryMockStub = tokenFactoryMock.mock(
+    tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
@@ -71,13 +70,12 @@ describe('ControllerTransfer', () => {
   });
 
   describe('ControllerTransfer', () => {
-    test('should send the transaction to ControllerTransfer', async () => {
+    test('should add a transaction to the queue to execute a controller transfer', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-
       expect(
         addTransactionSpy
           .getCall(0)
@@ -113,7 +111,7 @@ describe('ControllerTransfer', () => {
       );
     });
 
-    test('should throw error if current wallet is not controller to perform forced transfers', async () => {
+    test('should throw an error if the current wallet is not the Security Token controller', async () => {
       securityTokenMock.mock('controller', Promise.resolve('Random'));
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(
@@ -124,7 +122,7 @@ describe('ControllerTransfer', () => {
       );
     });
 
-    test('should call error on inappropriate params address', async () => {
+    test("should call error on inappropriate params 'to' address", async () => {
       // Instantiate ControllerTransfer with incorrect args instead
       target = new ControllerTransfer(
         {
@@ -140,6 +138,26 @@ describe('ControllerTransfer', () => {
         new PolymathError({
           code: ErrorCode.InvalidAddress,
           message: `Provided "to" address is invalid: Inappropriate`,
+        })
+      );
+    });
+
+    test("should call error on inappropriate params 'from' address", async () => {
+      // Instantiate ControllerTransfer with incorrect args instead
+      target = new ControllerTransfer(
+        {
+          from: 'Inappropriate',
+          to: params1.owner,
+          amount: params1.amount,
+          symbol: params1.symbol,
+        },
+        contextMock.getMockInstance()
+      );
+      // Real call rejects
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.InvalidAddress,
+          message: `Provided "from" address is invalid: Inappropriate`,
         })
       );
     });

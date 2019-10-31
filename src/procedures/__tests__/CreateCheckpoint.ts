@@ -1,8 +1,8 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub, stub, spy, restore } from 'sinon';
+import { stub, spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
@@ -14,7 +14,7 @@ import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { mockFactories } from '~/testUtils/MockFactories';
 
-const params1 = {
+const params = {
   symbol: 'TEST1',
   name: 'Test Token 1',
   address: '0x1',
@@ -25,13 +25,10 @@ describe('CreateCheckpoint', () => {
   let target: CreateCheckpoint;
 
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
-  let findEventsStub: SinonStub<any, any>;
 
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
-  let tokenFactoryMockStub: SinonStub<any, any>;
-
   // Mock factories
   let checkpointFactoryMock: MockManager<checkpointFactoryModule.CheckpointFactory>;
 
@@ -41,7 +38,7 @@ describe('CreateCheckpoint', () => {
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    tokenFactoryMockStub = tokenFactoryMock.mock(
+    tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
@@ -56,7 +53,7 @@ describe('CreateCheckpoint', () => {
     // Instantiate CreateCheckpoint
     target = new CreateCheckpoint(
       {
-        symbol: params1.symbol,
+        symbol: params.symbol,
       },
       contextMock.getMockInstance()
     );
@@ -73,7 +70,7 @@ describe('CreateCheckpoint', () => {
   });
 
   describe('createCheckpoint', () => {
-    test('should send the transaction to createCheckpoint', async () => {
+    test('should add a transaction to the queue to create a new checkpoint', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
 
       // Real call
@@ -88,7 +85,7 @@ describe('CreateCheckpoint', () => {
     });
 
     test('should throw if corresponding checkpoint event is not fired', async () => {
-      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', []);
+      ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
       // Real call
       const resolver = await target.prepareTransactions();
@@ -102,15 +99,15 @@ describe('CreateCheckpoint', () => {
       );
     });
 
-    test('should correctly return the resolver', async () => {
+    test('should return the newly created checkpoint', async () => {
       const checkpointObject = {
         checkpoint: {
-          securityTokenId: () => Promise.resolve(params1.symbol),
-          index: () => Promise.resolve(1),
+          securityTokenId: () => params.symbol,
+          index: () => 1,
         },
       };
-      const fetchStub = checkpointFactoryMock.mock('fetch', checkpointObject);
-      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
+      const fetchStub = checkpointFactoryMock.mock('fetch', Promise.resolve(checkpointObject));
+      ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
             _checkpointId: new BigNumber(1),
@@ -129,14 +126,14 @@ describe('CreateCheckpoint', () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         stub()
-          .withArgs({ address: params1.symbol })
+          .withArgs({ address: params.symbol })
           .throws()
       );
 
       expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${params1.symbol}`,
+          message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
     });

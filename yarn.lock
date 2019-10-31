@@ -1335,10 +1335,10 @@
     lodash "^4.17.15"
     typescript "3.5.3"
 
-"@polymathnetwork/contract-wrappers@3.0.0-beta.47":
-  version "3.0.0-beta.47"
-  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-wrappers/-/contract-wrappers-3.0.0-beta.47.tgz#38018d8bb332804cfd9bef8e16ca6173439ae8f0"
-  integrity sha512-x2CHEU/6aj192Bv4vRdhDxwMfYIVRMKqljPpt1Ofg+pmHIUfsE0QqZDMgndWSo7Xa24PY3UYSt1zsUygvPNd9w==
+"@polymathnetwork/contract-wrappers@3.0.0-beta.52":
+  version "3.0.0-beta.52"
+  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-wrappers/-/contract-wrappers-3.0.0-beta.52.tgz#34945dc84dd5fb4b38ed9bb5f8f66f59bd91c6a9"
+  integrity sha512-IbZLoY6J62/cV8ZTwoIyANHMRVSzUWzRFy8zclokTkW0IqhdBe8xsyeWVj6capkG8Eu/JMiMztv6VJhwjvaCLg==
   dependencies:
     "@0x/assert" "2.1.6"
     "@0x/json-schemas" "4.0.2"
