@@ -1,4 +1,4 @@
-import { SecurityTokenEvents_3_0_0 } from '@polymathnetwork/contract-wrappers';
+import { SecurityTokenEvents } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   CreateCheckpointProcedureArgs,
@@ -38,7 +38,7 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
 
         const [event] = findEvents({
           logs,
-          eventName: SecurityTokenEvents_3_0_0.CheckpointCreated,
+          eventName: SecurityTokenEvents.CheckpointCreated,
         });
         if (event) {
           const { args: eventArgs } = event;
