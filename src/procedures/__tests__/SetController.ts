@@ -6,17 +6,11 @@ import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { SetController } from '../../procedures/SetController';
 import { Procedure } from '~/procedures/Procedure';
-import {
-  ProcedureType,
-  PolyTransactionTag,
-  SetControllerProcedureArgs,
-  ErrorCode,
-} from '~/types';
+import { ProcedureType, PolyTransactionTag, ErrorCode } from '~/types';
 import { PolymathError } from '~/PolymathError';
-import * as utilsModule from '../../utils';
 import { Wallet } from '../../Wallet';
 
-const params1 = {
+const params = {
   symbol: 'TEST1',
   controller: '0x3333333333333333333333333333333333333333',
 };
@@ -35,7 +29,7 @@ describe('SetController', () => {
   let tokenFactoryMockStub: SinonStub<any, any>;
 
   beforeEach(() => {
-    // Mock the context, wrappers, and tokenFactory to test AssignSecurityRole
+    // Mock the context, wrappers, tokenFactory and securityToken to test SetController
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(
@@ -62,40 +56,28 @@ describe('SetController', () => {
 
   describe('Types', () => {
     test('should extend procedure and have SetController type', async () => {
-      target = new SetController(
-        {
-          symbol: params1.symbol,
-          controller: params1.controller,
-        },
-        contextMock.getMockInstance()
-      );
+      target = new SetController(params, contextMock.getMockInstance());
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('SetController');
+      expect(target.type).toBe(ProcedureType.SetController);
     });
   });
 
   describe('SetController', () => {
     test('should throw if there is no valid security token being provided', async () => {
       // Instantiate SetController with incorrect security symbol
-      target = new SetController(
-        {
-          symbol: params1.symbol,
-          controller: params1.controller,
-        },
-        contextMock.getMockInstance()
-      );
+      target = new SetController(params, contextMock.getMockInstance());
 
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         stub()
-          .withArgs({ address: params1.symbol })
+          .withArgs({ address: params.symbol })
           .throws()
       );
 
       expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${params1.symbol}`,
+          message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
     });
@@ -104,7 +86,7 @@ describe('SetController', () => {
       // Instantiate SetController with incorrect args instead
       target = new SetController(
         {
-          symbol: params1.symbol,
+          symbol: params.symbol,
           controller: 'Inappropriate',
         },
         contextMock.getMockInstance()
@@ -127,13 +109,7 @@ describe('SetController', () => {
       );
 
       // Instantiate SetController
-      target = new SetController(
-        {
-          symbol: params1.symbol,
-          controller: params1.controller,
-        },
-        contextMock.getMockInstance()
-      );
+      target = new SetController(params, contextMock.getMockInstance());
 
       // Real call rejects
       expect(target.prepareTransactions()).rejects.toThrowError(
@@ -144,20 +120,14 @@ describe('SetController', () => {
       );
     });
 
-    test('should send the transaction to set a controller', async () => {
+    test('should add a transaction to the queue to set a controller on the security token', async () => {
       securityTokenMock.mock('owner', Promise.resolve('0x01'));
       contextMock.set(
         'currentWallet',
         new Wallet({ address: () => Promise.resolve('0x01') })
       );
 
-      target = new SetController(
-        {
-          symbol: params1.symbol,
-          controller: params1.controller,
-        },
-        contextMock.getMockInstance()
-      );
+      target = new SetController(params, contextMock.getMockInstance());
 
       const addTransactionSpy = spy(target, 'addTransaction');
 
