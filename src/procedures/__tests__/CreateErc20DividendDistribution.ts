@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub, stub, spy, restore } from 'sinon';
+import { stub, spy, restore } from 'sinon';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
@@ -16,7 +16,7 @@ import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/fact
 import * as utilsModule from '~/utils';
 import { mockFactories } from '~/testUtils/MockFactories';
 
-const params1 = {
+const params = {
   symbol: 'TEST1',
   name: 'Test Token 1',
   amount: new BigNumber(1),
@@ -34,13 +34,10 @@ describe('CreateErc20DividendDistribution', () => {
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let erc20DividendsMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
-  let tokenFactoryMockStub: SinonStub<any, any>;
-  let getAttachedModulesMockStub: SinonStub<any, any>;
 
   let dividendDistributionFactoryMock: MockManager<
     dividendDistributionSecurityTokenFactoryModule.DividendDistributionFactory
   >;
-  let findEventsStub: SinonStub<any, any>;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateErc20DividendDistribution
@@ -62,9 +59,9 @@ describe('CreateErc20DividendDistribution', () => {
       contractWrappersModule,
       'ERC20DividendCheckpoint_3_0_0'
     );
-    tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
-    erc20DividendsMock.mock('address', Promise.resolve(params1.erc20Address));
-    getAttachedModulesMockStub = wrappersMock.mock(
+    tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
+    erc20DividendsMock.mock('address', Promise.resolve(params.erc20Address));
+    wrappersMock.mock(
       'getAttachedModules',
       Promise.resolve([erc20DividendsMock.getMockInstance()])
     );
@@ -79,18 +76,7 @@ describe('CreateErc20DividendDistribution', () => {
     contextMock.set('factories', factoryMockSetup);
 
     // Instantiate CreateErc20DividendDistribution
-    target = new CreateErc20DividendDistribution(
-      {
-        symbol: params1.symbol,
-        maturityDate: params1.maturityDate,
-        expiryDate: params1.expiryDate,
-        erc20Address: params1.erc20Address,
-        amount: params1.amount,
-        checkpointIndex: params1.checkpointIndex,
-        name: params1.name,
-      },
-      contextMock.getMockInstance()
-    );
+    target = new CreateErc20DividendDistribution(params, contextMock.getMockInstance());
   });
 
   afterEach(() => {
@@ -105,7 +91,7 @@ describe('CreateErc20DividendDistribution', () => {
   });
 
   describe('CreateErc20DividendDistribution', () => {
-    test('should send the transaction to CreateErc20DividendDistribution', async () => {
+    test('should add a transaction to the queue to create an erc20 dividend distribution and to approve erc20 token', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
@@ -124,16 +110,10 @@ describe('CreateErc20DividendDistribution', () => {
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
-    test('should send the transaction to CreateErc20DividendDistribution with taxWitholdings', async () => {
+    test('should send add a transaction to the queue to create arc20 dividend distribution with taxWitholding data', async () => {
       target = new CreateErc20DividendDistribution(
         {
-          symbol: params1.symbol,
-          maturityDate: params1.maturityDate,
-          expiryDate: params1.expiryDate,
-          erc20Address: params1.erc20Address,
-          amount: params1.amount,
-          checkpointIndex: params1.checkpointIndex,
-          name: params1.name,
+          ...params,
           taxWithholdings: [
             {
               address: '0x5555555555555555555555555555555555555555',
@@ -168,20 +148,20 @@ describe('CreateErc20DividendDistribution', () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         stub()
-          .withArgs({ address: params1.symbol })
+          .withArgs({ address: params.symbol })
           .throws()
       );
 
       expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${params1.symbol}`,
+          message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
     });
 
     test('should throw if corresponding dividend distribution event is not fired', async () => {
-      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', []);
+      ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
       // Real call
       const resolver = await target.prepareTransactions();
@@ -195,15 +175,15 @@ describe('CreateErc20DividendDistribution', () => {
       );
     });
 
-    test('should correctly return the resolver', async () => {
+    test('should return the created erc20 dividend distribution', async () => {
       const dividendObject = {
         permissions: {
-          securityTokenId: () => Promise.resolve(params1.symbol),
+          securityTokenId: () => Promise.resolve(params.symbol),
           index: () => Promise.resolve(1),
         },
       };
       const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
-      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
+      ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
             _dividendIndex: new BigNumber(1),
@@ -219,7 +199,7 @@ describe('CreateErc20DividendDistribution', () => {
     });
 
     test('should throw error if the erc20 dividends manager has not been enabled', async () => {
-      getAttachedModulesMockStub = wrappersMock.mock('getAttachedModules', Promise.resolve([]));
+      wrappersMock.mock('getAttachedModules', Promise.resolve([]));
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({

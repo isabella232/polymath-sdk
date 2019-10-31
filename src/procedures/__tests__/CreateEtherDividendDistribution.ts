@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub, stub, spy, restore } from 'sinon';
+import { stub, spy, restore } from 'sinon';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
@@ -14,7 +14,7 @@ import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { mockFactories } from '~/testUtils/MockFactories';
 
-const params1 = {
+const params = {
   symbol: 'TEST1',
   name: 'Test Token 1',
   amount: new BigNumber(1),
@@ -30,13 +30,10 @@ describe('CreateEtherDividendDistribution', () => {
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
-  let tokenFactoryMockStub: SinonStub<any, any>;
-  let getAttachedModulesMockStub: SinonStub<any, any>;
 
   let dividendDistributionFactoryMock: MockManager<
     dividendDistributionSecurityTokenFactoryModule.DividendDistributionFactory
   >;
-  let findEventsStub: SinonStub<any, any>;
 
   beforeAll(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
@@ -51,11 +48,8 @@ describe('CreateEtherDividendDistribution', () => {
       contractWrappersModule,
       'EtherDividendCheckpoint_3_0_0'
     );
-    getAttachedModulesMockStub = wrappersMock.mock(
-      'getAttachedModules',
-      Promise.resolve([etherDividendsMock])
-    );
-    tokenFactoryMockStub = tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
+    wrappersMock.mock('getAttachedModules', Promise.resolve([etherDividendsMock]));
+    tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
 
     dividendDistributionFactoryMock = ImportMock.mockClass(
       dividendDistributionSecurityTokenFactoryModule,
@@ -66,17 +60,7 @@ describe('CreateEtherDividendDistribution', () => {
     contextMock.set('factories', factoryMockSetup);
 
     // Instantiate CreateEtherDividendDistribution
-    target = new CreateEtherDividendDistribution(
-      {
-        symbol: params1.symbol,
-        maturityDate: params1.maturityDate,
-        expiryDate: params1.expiryDate,
-        amount: params1.amount,
-        checkpointIndex: params1.checkpointIndex,
-        name: params1.name,
-      },
-      contextMock.getMockInstance()
-    );
+    target = new CreateEtherDividendDistribution(params, contextMock.getMockInstance());
   });
   afterEach(() => {
     restore();
@@ -90,7 +74,7 @@ describe('CreateEtherDividendDistribution', () => {
   });
 
   describe('CreateEtherDividendDistribution', () => {
-    test('should send the transaction to CreateEtherDividendDistribution', async () => {
+    test('should add the transaction to the queue to create an ether dividend distribution', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
@@ -106,15 +90,10 @@ describe('CreateEtherDividendDistribution', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should send the transaction to CreateEtherDividendDistribution with taxwithholdings', async () => {
+    test('should add the transaction to the queue to create an ether dividend distribution with taxwithholdings', async () => {
       target = new CreateEtherDividendDistribution(
         {
-          symbol: params1.symbol,
-          maturityDate: params1.maturityDate,
-          expiryDate: params1.expiryDate,
-          amount: params1.amount,
-          checkpointIndex: params1.checkpointIndex,
-          name: params1.name,
+          ...params,
           taxWithholdings: [
             {
               address: '0x5555555555555555555555555555555555555555',
@@ -143,8 +122,8 @@ describe('CreateEtherDividendDistribution', () => {
       expect(addTransactionSpy.callCount).toEqual(2);
     });
 
-    test('should throw if corresponding event is not fired', async () => {
-      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', []);
+    test('should throw if corresponding eth dividend distribution event is not fired', async () => {
+      ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
       // Real call
       const resolver = await target.prepareTransactions();
@@ -158,15 +137,15 @@ describe('CreateEtherDividendDistribution', () => {
       );
     });
 
-    test('should correctly return the resolver', async () => {
+    test('should return the newly created eth dividend distribution', async () => {
       const dividendObject = {
         permissions: {
-          securityTokenId: () => Promise.resolve(params1.symbol),
-          index: () => Promise.resolve(1),
+          securityTokenId: () => 'Id',
+          index: () => 1,
         },
       };
       const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
-      findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
+      ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
             _dividendIndex: new BigNumber(1),
@@ -182,7 +161,7 @@ describe('CreateEtherDividendDistribution', () => {
     });
 
     test('should throw if eth dividends manager has not been enabled', async () => {
-      getAttachedModulesMockStub = wrappersMock.mock('getAttachedModules', Promise.resolve([]));
+      wrappersMock.mock('getAttachedModules', Promise.resolve([]));
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
@@ -196,14 +175,14 @@ describe('CreateEtherDividendDistribution', () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         stub()
-          .withArgs({ address: params1.symbol })
+          .withArgs({ address: params.symbol })
           .throws()
       );
 
       expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${params1.symbol}`,
+          message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
     });
