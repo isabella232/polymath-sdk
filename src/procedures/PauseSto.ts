@@ -67,30 +67,32 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
 
     await this.addTransaction(stoModule.pause, {
       tag: PolyTransactionTag.PauseSto,
-      resolver: async () => {
-        const securityTokenId = SecurityToken.generateId({ symbol });
+      resolvers: [
+        async () => {
+          const securityTokenId = SecurityToken.generateId({ symbol });
 
-        switch (stoType) {
-          case StoType.Capped: {
-            return factories.cappedStoFactory.refresh(
-              CappedSto.generateId({
-                securityTokenId,
-                stoType: StoType.Capped,
-                address: stoAddress,
-              })
-            );
+          switch (stoType) {
+            case StoType.Capped: {
+              return factories.cappedStoFactory.refresh(
+                CappedSto.generateId({
+                  securityTokenId,
+                  stoType: StoType.Capped,
+                  address: stoAddress,
+                })
+              );
+            }
+            case StoType.Tiered: {
+              return factories.tieredStoFactory.refresh(
+                TieredSto.generateId({
+                  securityTokenId,
+                  stoType: StoType.Tiered,
+                  address: stoAddress,
+                })
+              );
+            }
           }
-          case StoType.Tiered: {
-            return factories.tieredStoFactory.refresh(
-              TieredSto.generateId({
-                securityTokenId,
-                stoType: StoType.Tiered,
-                address: stoAddress,
-              })
-            );
-          }
-        }
-      },
+        },
+      ],
     })({});
   }
 }

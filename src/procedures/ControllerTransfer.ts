@@ -68,23 +68,25 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
 
     await this.addTransaction(securityToken.controllerTransfer, {
       tag: PolyTransactionTag.ControllerTransfer,
-      resolver: async () => {
-        const refreshingFrom = factories.shareholderFactory.refresh(
-          Shareholder.generateId({
-            securityTokenId: SecurityToken.generateId({ symbol }),
-            address: from,
-          })
-        );
+      resolvers: [
+        async () => {
+          const refreshingFrom = factories.shareholderFactory.refresh(
+            Shareholder.generateId({
+              securityTokenId: SecurityToken.generateId({ symbol }),
+              address: from,
+            })
+          );
 
-        const refreshingTo = factories.shareholderFactory.refresh(
-          Shareholder.generateId({
-            securityTokenId: SecurityToken.generateId({ symbol }),
-            address: to,
-          })
-        );
+          const refreshingTo = factories.shareholderFactory.refresh(
+            Shareholder.generateId({
+              securityTokenId: SecurityToken.generateId({ symbol }),
+              address: to,
+            })
+          );
 
-        return Promise.all([refreshingFrom, refreshingTo]);
-      },
+          return Promise.all([refreshingFrom, refreshingTo]);
+        },
+      ],
     })({ from, to, value: amount, data, operatorData: log });
   }
 }

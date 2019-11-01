@@ -1,4 +1,9 @@
-import { ModuleName, FlagsType, conversionUtils } from '@polymathnetwork/contract-wrappers';
+import {
+  ModuleName,
+  FlagsType,
+  conversionUtils,
+  TransactionParams,
+} from '@polymathnetwork/contract-wrappers';
 import { uniq } from 'lodash';
 import { Procedure } from './Procedure';
 import {
@@ -124,21 +129,68 @@ export class ModifyShareholderData extends Procedure<
     let newShareholders;
 
     if (investors.length > 0) {
-      newShareholders = await this.addTransaction(gtmModule.modifyKYCDataMulti, {
+      [newShareholders] = await this.addTransaction<
+        TransactionParams.GeneralTransferManager.ModifyKYCDataMulti,
+        [Shareholder[]]
+      >(gtmModule.modifyKYCDataMulti, {
         tag: PolyTransactionTag.ModifyKycDataMulti,
-        resolver: async () => {
-          const refreshingShareholders = investors.map(investor => {
-            return factories.shareholderFactory.refresh(
-              Shareholder.generateId({
-                securityTokenId,
-                address: investor,
-              })
-            );
-          });
+        resolvers: [
+          async () => {
+            const refreshingShareholders = investors.map(investor => {
+              return factories.shareholderFactory.refresh(
+                Shareholder.generateId({
+                  securityTokenId,
+                  address: investor,
+                })
+              );
+            });
 
-          await Promise.all(refreshingShareholders);
+            await Promise.all(refreshingShareholders);
 
-          if (investorsForFlags.length === 0) {
+            if (investorsForFlags.length === 0) {
+              const fetchingShareholders = allAffectedShareholders.map(shareholder => {
+                return factories.shareholderFactory.fetch(
+                  Shareholder.generateId({
+                    securityTokenId,
+                    address: shareholder,
+                  })
+                );
+              });
+
+              return Promise.all(fetchingShareholders);
+            }
+
+            return [];
+          },
+        ],
+      })({
+        investors,
+        canSendAfter,
+        canReceiveAfter,
+        expiryTime,
+      });
+    }
+
+    if (investorsForFlags.length > 0) {
+      [newShareholders] = await this.addTransaction<
+        TransactionParams.GeneralTransferManager.ModifyInvestorFlagMulti,
+        [Shareholder[]]
+      >(gtmModule.modifyInvestorFlagMulti, {
+        tag: PolyTransactionTag.ModifyInvestorFlagMulti,
+        resolvers: [
+          async () => {
+            // Only consider one occurence of each investor address
+            const refreshingShareholders = uniqueInvestorsForFlags.map(investor => {
+              return factories.shareholderFactory.refresh(
+                Shareholder.generateId({
+                  securityTokenId,
+                  address: investor,
+                })
+              );
+            });
+
+            await Promise.all(refreshingShareholders);
+
             const fetchingShareholders = allAffectedShareholders.map(shareholder => {
               return factories.shareholderFactory.fetch(
                 Shareholder.generateId({
@@ -149,45 +201,8 @@ export class ModifyShareholderData extends Procedure<
             });
 
             return Promise.all(fetchingShareholders);
-          }
-
-          return [];
-        },
-      })({
-        investors,
-        canSendAfter,
-        canReceiveAfter,
-        expiryTime,
-      });
-    }
-
-    if (investorsForFlags.length > 0) {
-      newShareholders = await this.addTransaction(gtmModule.modifyInvestorFlagMulti, {
-        tag: PolyTransactionTag.ModifyInvestorFlagMulti,
-        resolver: async () => {
-          // Only consider one occurence of each investor address
-          const refreshingShareholders = uniqueInvestorsForFlags.map(investor => {
-            return factories.shareholderFactory.refresh(
-              Shareholder.generateId({
-                securityTokenId,
-                address: investor,
-              })
-            );
-          });
-
-          await Promise.all(refreshingShareholders);
-
-          const fetchingShareholders = allAffectedShareholders.map(shareholder => {
-            return factories.shareholderFactory.fetch(
-              Shareholder.generateId({
-                securityTokenId,
-                address: shareholder,
-              })
-            );
-          });
-
-          return Promise.all(fetchingShareholders);
-        },
+          },
+        ],
       })({
         investors: investorsForFlags,
         flag,

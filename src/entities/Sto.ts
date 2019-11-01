@@ -6,6 +6,7 @@ import { Investment } from './Investment';
 import { PolymathError } from '../PolymathError';
 import { Context } from '../Context';
 import { PauseSto, AssignStoRole } from '../procedures';
+import { ModifyPreMinting } from '../procedures/ModifyPreMinting';
 
 export interface UniqueIdentifiers {
   securityTokenId: string;
@@ -143,6 +144,36 @@ export abstract class Sto<P> extends Entity<P> {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
     const procedure = new PauseSto({ stoAddress, stoType, symbol }, this.context);
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Enables all offered tokens to be minted instantly at STO start (default behavior is to mint on purchase)
+   * Can be disabled *BEFORE* the STO starts by calling disallowPreMinting
+   */
+  public allowPreMinting = async () => {
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
+
+    const procedure = new ModifyPreMinting(
+      { stoAddress, stoType, symbol, allowPreMinting: true },
+      this.context
+    );
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Disables pre-minting of offered tokens at STO start (goes back to default behavior, which is to mint on purchase)
+   * Can be re-enabled *BEFORE* the STO starts by calling allowPreMinting
+   */
+  public disallowPreMinting = async () => {
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
+
+    const procedure = new ModifyPreMinting(
+      { stoAddress, stoType, symbol, allowPreMinting: false },
+      this.context
+    );
 
     return procedure.prepare();
   };

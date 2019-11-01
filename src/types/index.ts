@@ -17,6 +17,7 @@ import {
   BlacklistTransferManager,
   LockUpTransferManager,
   RestrictedPartialSaleTransferManager,
+  TransactionReceiptWithDecodedLogs,
 } from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
@@ -79,6 +80,7 @@ export enum ErrorCode {
   InvalidAddress = 'InvalidAddress',
   InsufficientBalance = 'InsufficientBalance',
   InexistentModule = 'InexistentModule',
+  IncorrectVersion = 'IncorrecVersion',
 }
 
 export interface ShareholderBalance {
@@ -88,10 +90,30 @@ export interface ShareholderBalance {
 
 export type LowLevelMethod<A> = (args: A) => Promise<PolyResponse>;
 
-export interface TransactionSpec<Args = any, R extends any = any> {
-  method: LowLevelMethod<Args>;
+/**
+ * Represents a contract method that doesn't exist yet but will exist
+ * once a certain post transaction resolver is resolved
+ *
+ * @param futureMethod function that returns a low level method
+ * @param futureValue post transaction resolver that resolves into the value that is passed to the future method
+ */
+export interface FutureLowLevelMethod<T, U> {
+  futureMethod: (resolvedValue: T) => Promise<LowLevelMethod<U>>;
+  futureValue: PostTransactionResolver<T>;
+}
+
+export type ResolverArray<R extends any[]> = {
+  [P in keyof R]: (receipt: TransactionReceiptWithDecodedLogs) => Promise<R[P]>
+};
+
+export type PostTransactionResolverArray<R extends any[]> = {
+  [P in keyof R]: PostTransactionResolver<R[P]>
+};
+
+export interface TransactionSpec<Args = any, R extends any[] = any[], V extends any = any> {
+  method: LowLevelMethod<Args> | FutureLowLevelMethod<V, Args>;
   args: MapMaybeResolver<Args>;
-  postTransactionResolver?: PostTransactionResolver<R>;
+  postTransactionResolvers?: PostTransactionResolverArray<R>;
   tag?: PolyTransactionTag;
 }
 
@@ -121,6 +143,7 @@ export enum ProcedureType {
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
   MintTokens = 'MintTokens',
+  ModifyPreMinting = 'ModifyPreMinting',
 }
 
 export enum PolyTransactionTag {
@@ -151,6 +174,8 @@ export enum PolyTransactionTag {
   ModifyKycDataMulti = 'ModifyKycDataMulti',
   ModifyInvestorFlagMulti = 'ModifyInvestorFlagMulti',
   IssueMulti = 'IssueMulti',
+  AllowPreMinting = 'AllowPreMinting',
+  RevokePreMinting = 'RevokePreMinting',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -251,11 +276,19 @@ export interface LaunchCappedStoProcedureArgs {
   currency: CappedStoCurrency;
   storageWallet: string;
   treasuryWallet: string;
+  allowPreMinting?: boolean;
 }
 
 export interface MintTokensProcedureArgs {
   symbol: string;
   mintingData: MintingDataEntry[];
+}
+
+export interface ModifyPreMintingProcedureArgs {
+  symbol: string;
+  stoAddress: string;
+  stoType: StoType;
+  allowPreMinting: boolean;
 }
 
 export interface StoTier {
@@ -289,6 +322,7 @@ export interface LaunchTieredStoProcedureArgs {
   storageWallet: string;
   treasuryWallet: string;
   stableCoinAddresses: string[];
+  allowPreMinting?: boolean;
 }
 
 export interface ReclaimFundsProcedureArgs {
@@ -419,6 +453,7 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
   [ProcedureType.MintTokens]: MintTokensProcedureArgs;
+  [ProcedureType.ModifyPreMinting]: ModifyPreMintingProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 

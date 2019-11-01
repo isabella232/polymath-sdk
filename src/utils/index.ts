@@ -30,6 +30,8 @@ import {
   EtherDividendCheckpointEtherDividendReclaimedEventArgs,
   EtherDividendCheckpointSetWalletEventArgs,
   EtherDividendCheckpointSetWithholdingEventArgs,
+  USDTieredSTOAllowPreMintFlagEventArgs,
+  CappedSTOAllowPreMintFlagEventArgs,
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
 import { Pojo } from '../types';
@@ -115,8 +117,16 @@ interface FindCappedStoPauseParams extends FindEventParams {
   eventName: typeof CappedSTOEvents.Pause;
 }
 
+interface FindCappedStoPreMintAllowedParams extends FindEventParams {
+  eventName: typeof CappedSTOEvents.AllowPreMintFlag;
+}
+
 interface FindTieredStoPauseParams extends FindEventParams {
   eventName: typeof USDTieredSTOEvents.Pause;
+}
+
+interface FindTieredStoPreMintAllowedParams extends FindEventParams {
+  eventName: typeof USDTieredSTOEvents.AllowPreMintFlag;
 }
 
 interface FindErc20DividendClaimedParams extends FindEventParams {
@@ -178,7 +188,13 @@ interface FindEvents {
     GeneralTransferManagerModifyInvestorFlagEventArgs
   >[];
   (params: FindCappedStoPauseParams): LogWithDecodedArgs<CappedSTOPauseEventArgs>[];
+  (params: FindCappedStoPreMintAllowedParams): LogWithDecodedArgs<
+    CappedSTOAllowPreMintFlagEventArgs
+  >[];
   (params: FindTieredStoPauseParams): LogWithDecodedArgs<USDTieredSTOPauseEventArgs>[];
+  (params: FindTieredStoPreMintAllowedParams): LogWithDecodedArgs<
+    USDTieredSTOAllowPreMintFlagEventArgs
+  >[];
   (params: FindErc20DividendClaimedParams): LogWithDecodedArgs<
     ERC20DividendCheckpointERC20DividendClaimedEventArgs
   >[];

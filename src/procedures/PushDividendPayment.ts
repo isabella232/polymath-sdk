@@ -83,18 +83,20 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
       await this.addTransaction(dividendsModule!.pushDividendPaymentToAddresses, {
         tag: PolyTransactionTag.PushDividendPayment,
         // Only add resolver to the last transaction
-        resolver:
+        resolvers:
           index < shareholderAddressChunks.length - 1
             ? undefined
-            : async () => {
-                return factories.dividendDistributionFactory.refresh(
-                  DividendDistribution.generateId({
-                    securityTokenId: SecurityToken.generateId({ symbol }),
-                    dividendType,
-                    index,
-                  })
-                );
-              },
+            : [
+                async () => {
+                  return factories.dividendDistributionFactory.refresh(
+                    DividendDistribution.generateId({
+                      securityTokenId: SecurityToken.generateId({ symbol }),
+                      dividendType,
+                      index,
+                    })
+                  );
+                },
+              ],
       })({
         dividendIndex,
         payees: addresses,

@@ -58,26 +58,28 @@ export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArg
 
     await this.addTransaction(dividendModule.changeWallet, {
       tag: PolyTransactionTag.SetDividendsWallet,
-      resolver: async () => {
-        switch (dividendType) {
-          case DividendType.Erc20: {
-            return factories.erc20DividendsManagerFactory.refresh(
-              Erc20DividendsManager.generateId({
-                securityTokenId: SecurityToken.generateId({ symbol }),
-                dividendType,
-              })
-            );
+      resolvers: [
+        async () => {
+          switch (dividendType) {
+            case DividendType.Erc20: {
+              return factories.erc20DividendsManagerFactory.refresh(
+                Erc20DividendsManager.generateId({
+                  securityTokenId: SecurityToken.generateId({ symbol }),
+                  dividendType,
+                })
+              );
+            }
+            case DividendType.Eth: {
+              return factories.ethDividendsManagerFactory.refresh(
+                EthDividendsManager.generateId({
+                  securityTokenId: SecurityToken.generateId({ symbol }),
+                  dividendType,
+                })
+              );
+            }
           }
-          case DividendType.Eth: {
-            return factories.ethDividendsManagerFactory.refresh(
-              EthDividendsManager.generateId({
-                securityTokenId: SecurityToken.generateId({ symbol }),
-                dividendType,
-              })
-            );
-          }
-        }
-      },
+        },
+      ],
     })({ wallet: address });
   }
 }

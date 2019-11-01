@@ -23,7 +23,7 @@ export class Offerings extends SubModule {
    * @param currency currency in which the funds will be raised (ETH or POLY)
    * @param storageWallet wallet address that will receive the funds that are being raised
    * @param treasuryWallet wallet address that will receive unsold tokens
-   *
+   * @param allowPreMinting whether to have all tokens minted on STO start. Default behavior is to mint on purchase
    */
   public launchCappedSto = async (args: {
     startDate: Date;
@@ -33,6 +33,7 @@ export class Offerings extends SubModule {
     currency: CappedStoCurrency;
     storageWallet: string;
     treasuryWallet: string;
+    allowPreMinting?: boolean;
   }) => {
     const { context, securityToken } = this;
     const { symbol } = securityToken;
@@ -62,7 +63,7 @@ export class Offerings extends SubModule {
    * @param storageWallet wallet address that will receive the funds that are being raised
    * @param treasuryWallet wallet address that will receive unsold tokens when the end date is reached
    * @param stableCoinAddresses array of stable coins that the offering supports
-   *
+   * @param allowPreMinting whether to have all tokens minted on STO start. Default behavior is to mint on purchase
    */
   public launchTieredSto = async (args: {
     startDate: Date;
@@ -74,6 +75,7 @@ export class Offerings extends SubModule {
     storageWallet: string;
     treasuryWallet: string;
     stableCoinAddresses: string[];
+    allowPreMinting?: boolean;
   }) => {
     const { context, securityToken } = this;
     const { symbol } = securityToken;

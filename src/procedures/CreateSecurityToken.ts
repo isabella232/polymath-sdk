@@ -1,4 +1,8 @@
-import { SecurityTokenRegistryEvents, FeeType } from '@polymathnetwork/contract-wrappers';
+import {
+  SecurityTokenRegistryEvents,
+  FeeType,
+  TransactionParams,
+} from '@polymathnetwork/contract-wrappers';
 
 import { Procedure } from './Procedure';
 import { ApproveErc20 } from './ApproveErc20';
@@ -71,40 +75,45 @@ export class CreateSecurityToken extends Procedure<
       spender: await securityTokenRegistry.address(),
     });
 
-    const newToken = await this.addTransaction(securityTokenRegistry.generateNewSecurityToken, {
+    const [newToken] = await this.addTransaction<
+      TransactionParams.SecurityTokenRegistry.NewSecurityToken,
+      [SecurityToken]
+    >(securityTokenRegistry.generateNewSecurityToken, {
       tag: PolyTransactionTag.CreateSecurityToken,
       fees: {
         usd: usdFee,
         poly: polyFee,
       },
-      resolver: async receipt => {
-        const { logs } = receipt;
+      resolvers: [
+        async receipt => {
+          const { logs } = receipt;
 
-        const [event] = findEvents({
-          eventName: SecurityTokenRegistryEvents.NewSecurityToken,
-          logs,
-        });
+          const [event] = findEvents({
+            eventName: SecurityTokenRegistryEvents.NewSecurityToken,
+            logs,
+          });
 
-        if (event) {
-          const { args: eventArgs } = event;
+          if (event) {
+            const { args: eventArgs } = event;
 
-          const { _ticker, _name, _owner, _securityTokenAddress } = eventArgs;
+            const { _ticker, _name, _owner, _securityTokenAddress } = eventArgs;
 
-          return factories.securityTokenFactory.create(
-            SecurityToken.generateId({ symbol: _ticker }),
-            {
-              name: _name,
-              owner: _owner,
-              address: _securityTokenAddress,
-            }
-          );
-        }
-        throw new PolymathError({
-          code: ErrorCode.UnexpectedEventLogs,
-          message:
-            "The Security Token was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
-        });
-      },
+            return factories.securityTokenFactory.create(
+              SecurityToken.generateId({ symbol: _ticker }),
+              {
+                name: _name,
+                owner: _owner,
+                address: _securityTokenAddress,
+              }
+            );
+          }
+          throw new PolymathError({
+            code: ErrorCode.UnexpectedEventLogs,
+            message:
+              "The Security Token was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
+          });
+        },
+      ],
     })({
       name,
       ticker: symbol,

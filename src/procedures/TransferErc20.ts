@@ -1,4 +1,4 @@
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import { TransferErc20ProcedureArgs, ErrorCode, ProcedureType, PolyTransactionTag } from '../types';
 import { PolymathError } from '../PolymathError';
@@ -44,13 +44,12 @@ export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
     } else {
       token = polyToken;
     }
-
-    const balance = await token.balanceOf({ owner: ownerAddress });
-
-    const address = await token.address();
-    const polyTokenAddress = await polyToken.address();
-
-    const isTestnet = await contractWrappers.isTestnet();
+    const [balance, address, polyTokenAddress, isTestnet] = await Promise.all([
+      token.balanceOf({ owner: ownerAddress }),
+      token.address(),
+      polyToken.address(),
+      contractWrappers.isTestnet(),
+    ]);
 
     if (balance.lt(amount)) {
       if (isTestnet && address.toUpperCase() === polyTokenAddress.toUpperCase()) {
@@ -68,13 +67,15 @@ export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
       }
     }
 
-    await this.addTransaction(token.transfer, {
+    await this.addTransaction<TransactionParams.ERC20.Transfer>(token.transfer, {
       tag: PolyTransactionTag.TransferErc20,
-      resolver: async _receipt => {
-        return factories.erc20TokenBalanceFactory.refresh(
-          Erc20TokenBalance.generateId({ tokenAddress: address, walletAddress: receiver })
-        );
-      },
+      resolvers: [
+        async _receipt => {
+          return factories.erc20TokenBalanceFactory.refresh(
+            Erc20TokenBalance.generateId({ tokenAddress: address, walletAddress: receiver })
+          );
+        },
+      ],
     })({ to: receiver, value: amount });
   }
 }
