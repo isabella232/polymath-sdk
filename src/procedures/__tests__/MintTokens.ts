@@ -204,9 +204,13 @@ describe('MintTokens', () => {
     });
 
     test('should throw if minting addresses are not shareholders', async () => {
-      const newParams = params;
-      newParams.mintingData = [{ address: testAddress3, amount: new BigNumber(1) }];
-      target = new MintTokens(newParams, contextMock.getMockInstance());
+      target = new MintTokens(
+        {
+          ...params,
+          mintingData: [{ address: testAddress3, amount: new BigNumber(1) }],
+        },
+        contextMock.getMockInstance()
+      );
 
       expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
