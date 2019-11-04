@@ -9,8 +9,9 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode, ProcedureType } from '~/types';
+import { ErrorCode, Feature, ProcedureType } from '~/types';
 import { mockFactories } from '~/testUtils/mockFactories';
+import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
 
 const params = {
   symbol: 'TEST1',
@@ -28,6 +29,7 @@ describe('ControllerTransfer', () => {
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
+  let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
@@ -49,8 +51,11 @@ describe('ControllerTransfer', () => {
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
-
-    contextMock.set('factories', mockFactories());
+    shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
+    shareholderFactoryMock.mock('refresh', Promise.resolve([true, true]));
+    const factoryMockSetup = mockFactories();
+    factoryMockSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
+    contextMock.set('factories', factoryMockSetup);
 
     // Instantiate ControllerTransfer
     target = new ControllerTransfer(params, contextMock.getMockInstance());
@@ -150,6 +155,17 @@ describe('ControllerTransfer', () => {
           message: `Provided "from" address is invalid: Inappropriate`,
         })
       );
+    });
+
+    test('should successfully resolve controller transfer', async () => {
+      expect(
+        await target.resolveControllerTransfer(
+          mockFactories(),
+          params.symbol,
+          params.from,
+          params.to
+        )
+      ).toBeTruthy();
     });
   });
 });
