@@ -27,6 +27,9 @@ describe('SetDividendsWallet', () => {
   let erc20DividendMock: MockManager<
     contractWrappersModule.ERC20DividendCheckpointContract_3_0_0
   >;
+  let ethDividendMock: MockManager<
+    contractWrappersModule.EtherDividendCheckpointContract_3_0_0
+  >;
 
   beforeEach(() => {
     // Mock the context, wrappers, tokenFactory and securityToken to test SetDividendsWallet
@@ -39,11 +42,6 @@ describe('SetDividendsWallet', () => {
     securityTokenMock = ImportMock.mockClass(
       contractWrappersModule,
       'SecurityToken_3_0_0'
-    );
-
-    erc20DividendMock = ImportMock.mockClass(
-      contractWrappersModule,
-      'ERC20DividendCheckpointContract_3_0_0'
     );
 
     tokenFactoryMock.mock(
@@ -125,6 +123,11 @@ describe('SetDividendsWallet', () => {
     });
 
     test('should add transactions to the queue for change wallet with a new Erc20 dividend module', async () => {
+      erc20DividendMock = ImportMock.mockClass(
+        contractWrappersModule,
+        'ERC20DividendCheckpointContract_3_0_0'
+      );
+
       target = new SetDividendsWallet(
         { ...params, dividendType: DividendType.Erc20 },
         contextMock.getMockInstance()
@@ -145,6 +148,36 @@ describe('SetDividendsWallet', () => {
         addTransactionSpy
           .getCall(0)
           .calledWith(erc20DividendMock.getMockInstance().changeWallet)
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
+    });
+
+    test('should add transactions to the queue for change wallet with a new Eth dividend module', async () => {
+      ethDividendMock = ImportMock.mockClass(
+        contractWrappersModule,
+        'EtherDividendCheckpointContract_3_0_0'
+      );
+
+      target = new SetDividendsWallet(
+        { ...params, dividendType: DividendType.Eth },
+        contextMock.getMockInstance()
+      );
+
+      wrappersMock.mock(
+        'getAttachedModules',
+        Promise.resolve([ethDividendMock.getMockInstance()])
+      );
+
+      const addTransactionSpy = spy(target, 'addTransaction');
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(ethDividendMock.getMockInstance().changeWallet)
       ).toEqual(true);
       expect(addTransactionSpy.callCount).toEqual(1);
     });
