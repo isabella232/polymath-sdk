@@ -10,7 +10,7 @@ import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCode, Feature, PolyTransactionTag, SecurityTokenRole } from '~/types';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
-import { mockFactories } from '~/testUtils/MockFactories';
+import { mockFactories } from '~/testUtils/mockFactories';
 
 const params = {
   symbol: 'TEST1',
