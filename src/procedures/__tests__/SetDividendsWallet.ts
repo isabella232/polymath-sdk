@@ -72,11 +72,7 @@ describe('SetDividendsWallet', () => {
     test('should throw if there is no valid dividend type being provided', async () => {
       // Instantiate SetDividendsWallet with incorrect dividend type
       target = new SetDividendsWallet(
-        {
-          symbol: params.symbol,
-          dividendType: 'wrong' as DividendType,
-          address: params.address,
-        },
+        { ...params, dividendType: 'wrong' as DividendType },
         contextMock.getMockInstance()
       );
 
@@ -122,7 +118,7 @@ describe('SetDividendsWallet', () => {
       );
     });
 
-    test('should add transactions to the queue for change wallet with a new Erc20 dividend module', async () => {
+    test('should add a transaction to the queue to change the dividends wallet of an attached ERC20 dividends module', async () => {
       erc20DividendMock = ImportMock.mockClass(
         contractWrappersModule,
         'ERC20DividendCheckpointContract_3_0_0'
@@ -152,7 +148,7 @@ describe('SetDividendsWallet', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add transactions to the queue for change wallet with a new Eth dividend module', async () => {
+    test('should add a transaction to the queue to change the dividends wallet of an attached ETH dividends module', async () => {
       ethDividendMock = ImportMock.mockClass(
         contractWrappersModule,
         'EtherDividendCheckpointContract_3_0_0'
