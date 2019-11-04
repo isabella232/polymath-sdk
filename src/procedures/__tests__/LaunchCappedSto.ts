@@ -16,7 +16,6 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-
 import { Wallet } from '~/Wallet';
 import { TransferErc20 } from '~/procedures';
 import { mockFactories } from '~/testUtils/mockFactories';
