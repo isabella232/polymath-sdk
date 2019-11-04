@@ -12,7 +12,7 @@ import * as checkpointFactoryModule from '~/entities/factories/CheckpointFactory
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
-import { mockFactories } from '~/testUtils/MockFactories';
+import { mockFactories } from '~/testUtils/mockFactories';
 
 const params = {
   symbol: 'TEST1',
@@ -24,21 +24,33 @@ const params = {
 describe('CreateCheckpoint', () => {
   let target: CreateCheckpoint;
 
-  let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
+  let securityTokenMock: MockManager<
+    contractWrappersModule.SecurityToken_3_0_0
+  >;
 
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+  let tokenFactoryMock: MockManager<
+    tokenFactoryModule.MockedTokenFactoryObject
+  >;
 
   // Mock factories
-  let checkpointFactoryMock: MockManager<checkpointFactoryModule.CheckpointFactory>;
+  let checkpointFactoryMock: MockManager<
+    checkpointFactoryModule.CheckpointFactory
+  >;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
-    securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
+    tokenFactoryMock = ImportMock.mockClass(
+      tokenFactoryModule,
+      'MockedTokenFactoryObject'
+    );
+    securityTokenMock = ImportMock.mockClass(
+      contractWrappersModule,
+      'SecurityToken_3_0_0'
+    );
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
@@ -46,7 +58,10 @@ describe('CreateCheckpoint', () => {
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
-    checkpointFactoryMock = ImportMock.mockClass(checkpointFactoryModule, 'CheckpointFactory');
+    checkpointFactoryMock = ImportMock.mockClass(
+      checkpointFactoryModule,
+      'CheckpointFactory'
+    );
     const factoryMockSetup = mockFactories();
     factoryMockSetup.checkpointFactory = checkpointFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
@@ -91,7 +106,9 @@ describe('CreateCheckpoint', () => {
       // Real call
       const resolver = await target.prepareTransactions();
 
-      expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
+      expect(
+        resolver.run({} as TransactionReceiptWithDecodedLogs)
+      ).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
@@ -107,7 +124,10 @@ describe('CreateCheckpoint', () => {
           index: () => 1,
         },
       };
-      const fetchStub = checkpointFactoryMock.mock('fetch', Promise.resolve(checkpointObject));
+      const fetchStub = checkpointFactoryMock.mock(
+        'fetch',
+        Promise.resolve(checkpointObject)
+      );
       ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {

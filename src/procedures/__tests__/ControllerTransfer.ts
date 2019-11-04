@@ -10,7 +10,7 @@ import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCode, ProcedureType } from '~/types';
-import { mockFactories } from '~/testUtils/MockFactories';
+import { mockFactories } from '~/testUtils/mockFactories';
 
 const params1 = {
   symbol: 'TEST1',
@@ -24,22 +24,35 @@ describe('ControllerTransfer', () => {
   let target: ControllerTransfer;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
-  let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
+  let tokenFactoryMock: MockManager<
+    tokenFactoryModule.MockedTokenFactoryObject
+  >;
+  let securityTokenMock: MockManager<
+    contractWrappersModule.SecurityToken_3_0_0
+  >;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
+    tokenFactoryMock = ImportMock.mockClass(
+      tokenFactoryModule,
+      'MockedTokenFactoryObject'
+    );
 
-    securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
+    securityTokenMock = ImportMock.mockClass(
+      contractWrappersModule,
+      'SecurityToken_3_0_0'
+    );
     securityTokenMock.mock('balanceOf', Promise.resolve(params1.amount));
     securityTokenMock.mock('controller', Promise.resolve(params1.owner));
     const ownerPromise = new Promise<string>((resolve, reject) => {
       resolve(params1.owner);
     });
-    contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
+    contextMock.set(
+      'currentWallet',
+      new Wallet({ address: () => ownerPromise })
+    );
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()

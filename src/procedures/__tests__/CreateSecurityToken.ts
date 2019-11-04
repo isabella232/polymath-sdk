@@ -14,7 +14,7 @@ import { ApproveErc20 } from '../ApproveErc20';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as utilsModule from '~/utils';
-import { mockFactories } from '~/testUtils/MockFactories';
+import { mockFactories } from '~/testUtils/mockFactories';
 
 const params = {
   symbol: 'TEST1',
@@ -31,8 +31,12 @@ describe('CreateSecurityToken', () => {
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let approvalMock: MockManager<approvalModule.ApproveErc20>;
 
-  let securityTokenRegistryMock: MockManager<contractWrappersModule.SecurityTokenRegistry>;
-  let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
+  let securityTokenRegistryMock: MockManager<
+    contractWrappersModule.SecurityTokenRegistry
+  >;
+  let securityTokenFactoryMock: MockManager<
+    securityTokenFactoryModule.SecurityTokenFactory
+  >;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test
@@ -51,7 +55,10 @@ describe('CreateSecurityToken', () => {
     );
 
     securityTokenRegistryMock.mock('tickerAvailable', Promise.resolve(false));
-    securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(true));
+    securityTokenRegistryMock.mock(
+      'isTickerRegisteredByCurrentIssuer',
+      Promise.resolve(true)
+    );
     securityTokenRegistryMock.mock('isTokenLaunched', Promise.resolve(false));
     securityTokenRegistryMock.mock(
       'getFees',
@@ -60,12 +67,18 @@ describe('CreateSecurityToken', () => {
     securityTokenRegistryMock.mock('address', Promise.resolve(params.address));
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
-    wrappersMock.set('securityTokenRegistry', securityTokenRegistryMock.getMockInstance());
+    wrappersMock.set(
+      'securityTokenRegistry',
+      securityTokenRegistryMock.getMockInstance()
+    );
 
     const ownerPromise = new Promise<string>((resolve, reject) => {
       resolve(params.owner);
     });
-    contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
+    contextMock.set(
+      'currentWallet',
+      new Wallet({ address: () => ownerPromise })
+    );
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
     securityTokenFactoryMock = ImportMock.mockClass(
@@ -111,7 +124,9 @@ describe('CreateSecurityToken', () => {
       // Real call
       const resolver = await target.prepareTransactions();
 
-      expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
+      expect(
+        resolver.run({} as TransactionReceiptWithDecodedLogs)
+      ).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
@@ -128,7 +143,10 @@ describe('CreateSecurityToken', () => {
           address: () => params.address,
         },
       };
-      const createStub = securityTokenFactoryMock.mock('create', creationObject);
+      const createStub = securityTokenFactoryMock.mock(
+        'create',
+        creationObject
+      );
       ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
@@ -148,7 +166,10 @@ describe('CreateSecurityToken', () => {
     });
 
     test('should throw error if token has been reserved by other user', async () => {
-      securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(false));
+      securityTokenRegistryMock.mock(
+        'isTickerRegisteredByCurrentIssuer',
+        Promise.resolve(false)
+      );
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
@@ -166,7 +187,9 @@ describe('CreateSecurityToken', () => {
       expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `The security token symbol ${params.symbol} has already been launched."`,
+          message: `The security token symbol ${
+            params.symbol
+          } has already been launched."`,
         })
       );
     });
@@ -181,7 +204,9 @@ describe('CreateSecurityToken', () => {
       expect(
         addTransactionSpy
           .getCall(0)
-          .calledWith(securityTokenRegistryMock.getMockInstance().generateNewSecurityToken)
+          .calledWith(
+            securityTokenRegistryMock.getMockInstance().generateNewSecurityToken
+          )
       ).toEqual(true);
 
       expect(addTransactionSpy.callCount).toEqual(1);
