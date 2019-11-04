@@ -87,13 +87,7 @@ describe('AssignStoRole', () => {
 
     test('should add change permission transaction to the queue and use an operator role as param', async () => {
       target = new AssignStoRole(
-        {
-          symbol: params.symbol,
-          delegateAddress: params.delegateAddress,
-          role: StoRole.StoOperator,
-          assign: params.assign,
-          stoAddress: params.stoAddress,
-        },
+        { ...params, role: StoRole.StoOperator },
         contextMock.getMockInstance()
       );
       const addTransactionSpy = spy(target, 'addTransaction');
