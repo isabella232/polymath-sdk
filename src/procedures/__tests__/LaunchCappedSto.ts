@@ -1,6 +1,10 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { stub, spy, restore } from 'sinon';
-import { BigNumber, TransactionReceiptWithDecodedLogs , CappedSTOFundRaiseType as CappedStoCurrency } from '@polymathnetwork/contract-wrappers';
+import {
+  BigNumber,
+  TransactionReceiptWithDecodedLogs,
+  CappedSTOFundRaiseType as CappedStoCurrency,
+} from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { LaunchCappedSto } from '../../procedures/LaunchCappedSto';
 import { Procedure } from '~/procedures/Procedure';
@@ -15,7 +19,7 @@ import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapper
 
 import { Wallet } from '~/Wallet';
 import { TransferErc20 } from '~/procedures';
-import { mockFactories } from '~/testUtils/MockFactories';
+import { mockFactories } from '~/testUtils/mockFactories';
 
 const params: LaunchCappedStoProcedureArgs = {
   symbol: 'TEST1',

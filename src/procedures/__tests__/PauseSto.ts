@@ -10,7 +10,7 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { mockFactories } from '~/testUtils/MockFactories';
+import { mockFactories } from '~/testUtils/mockFactories';
 
 const usdTieredParams: PauseStoProcedureArgs = {
   symbol: 'TEST1',

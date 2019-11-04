@@ -1,6 +1,10 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { SinonStub, stub, spy, restore } from 'sinon';
-import { BigNumber, TransactionReceiptWithDecodedLogs , FundRaiseType as Currency } from '@polymathnetwork/contract-wrappers';
+import {
+  BigNumber,
+  TransactionReceiptWithDecodedLogs,
+  FundRaiseType as Currency,
+} from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 
 import { LaunchUsdTieredSto } from '../../procedures/LaunchUsdTieredSto';
@@ -15,7 +19,7 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { Wallet } from '~/Wallet';
 import { TransferErc20 } from '~/procedures';
-import { mockFactories } from '~/testUtils/MockFactories';
+import { mockFactories } from '~/testUtils/mockFactories';
 
 const params: LaunchUsdTieredStoProcedureArgs = {
   symbol: 'TEST1',

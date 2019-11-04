@@ -15,7 +15,7 @@ import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { ModifyShareholderData } from '~/procedures';
-import { mockFactories } from '~/testUtils/MockFactories';
+import { mockFactories } from '~/testUtils/mockFactories';
 
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
