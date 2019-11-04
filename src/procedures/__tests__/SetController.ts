@@ -84,7 +84,7 @@ describe('SetController', () => {
       // Instantiate SetController with incorrect args instead
       target = new SetController(
         {
-          symbol: params.symbol,
+          ...params,
           controller: 'Inappropriate',
         },
         contextMock.getMockInstance()
