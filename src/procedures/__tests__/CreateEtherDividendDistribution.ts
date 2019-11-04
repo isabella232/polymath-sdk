@@ -48,7 +48,10 @@ describe('CreateEtherDividendDistribution', () => {
       contractWrappersModule,
       'EtherDividendCheckpoint_3_0_0'
     );
-    wrappersMock.mock('getAttachedModules', Promise.resolve([etherDividendsMock]));
+    wrappersMock.mock(
+      'getAttachedModules',
+      Promise.resolve([etherDividendsMock.getMockInstance()])
+    );
     tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
 
     dividendDistributionFactoryMock = ImportMock.mockClass(

@@ -10,18 +10,13 @@ import { Wallet } from '~/Wallet';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCode, PolyTransactionTag, ProcedureType } from '~/types';
 
-const params1 = {
+const params = {
   amount: new BigNumber(1),
   spender: '0x1',
   owner: '0x3',
 };
 
-const params2 = {
-  amount: new BigNumber(1),
-  spender: '0x1',
-  owner: '0x3',
-  tokenAddress: '0x2222222222222222222222222222222222222222',
-};
+const tokenAddress = '0x2222222222222222222222222222222222222222';
 
 describe('ApproveErc20', () => {
   let target: ApproveErc20;
@@ -47,7 +42,7 @@ describe('ApproveErc20', () => {
 
     // Setup poly token
     checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
-    checkPolyAddressStub = polyTokenMock.mock('address', Promise.resolve(params1.spender));
+    checkPolyAddressStub = polyTokenMock.mock('address', Promise.resolve(params.spender));
     checkPolyAllowanceStub = polyTokenMock.mock('allowance', Promise.resolve(new BigNumber(0)));
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
@@ -59,13 +54,13 @@ describe('ApproveErc20', () => {
         receiptAsync: Promise.resolve([]),
       })
     );
-    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(params1.owner) }));
+    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(params.owner) }));
   });
 
   describe('Types', () => {
     test('should extend procedure and have ApproveErc20 type', async () => {
       // Instantiate ApproveErc20
-      target = new ApproveErc20(params1, contextMock.getMockInstance());
+      target = new ApproveErc20(params, contextMock.getMockInstance());
       expect(target instanceof Procedure).toBe(true);
       expect(target.type).toBe(ProcedureType.ApproveErc20);
     });
@@ -75,11 +70,11 @@ describe('ApproveErc20', () => {
     wrappersMock.set(
       'getERC20TokenWrapper',
       stub()
-        .withArgs({ address: params2.tokenAddress })
+        .withArgs({ address: tokenAddress })
         .throws()
     );
     // Instantiate ApproveErc20
-    target = new ApproveErc20(params2, contextMock.getMockInstance());
+    target = new ApproveErc20({ ...params, tokenAddress }, contextMock.getMockInstance());
 
     expect(target.prepareTransactions()).rejects.toThrow(
       new PolymathError({
@@ -91,7 +86,7 @@ describe('ApproveErc20', () => {
 
   test('should add an approve transaction to the queue using the POLY token if no token address is supplied', async () => {
     // Instantiate ApproveErc20
-    target = new ApproveErc20(params1, contextMock.getMockInstance());
+    target = new ApproveErc20(params, contextMock.getMockInstance());
 
     const addTransactionSpy = spy(target, 'addTransaction');
 
@@ -109,13 +104,13 @@ describe('ApproveErc20', () => {
 
   test('should add an approve transaction to the queue using a custom ERC20 contract as a token address is supplied', async () => {
     // Used by custom erc20 token
-    checkErc20BalanceStub = erc20Mock.mock('balanceOf', Promise.resolve(params2.amount));
-    checkErc20AddressStub = erc20Mock.mock('address', Promise.resolve(params2.spender));
+    checkErc20BalanceStub = erc20Mock.mock('balanceOf', Promise.resolve(params.amount));
+    checkErc20AddressStub = erc20Mock.mock('address', Promise.resolve(params.spender));
     checkErc20AllowanceStub = erc20Mock.mock('allowance', Promise.resolve(new BigNumber(0)));
 
     wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
     // Instantiate ApproveErc20
-    target = new ApproveErc20(params2, contextMock.getMockInstance());
+    target = new ApproveErc20({ ...params, tokenAddress }, contextMock.getMockInstance());
 
     const addTransactionSpy = spy(target, 'addTransaction');
 
@@ -133,12 +128,11 @@ describe('ApproveErc20', () => {
 
   test("should throw an error if the wallet doesn't have enough funds to approve the required amount", async () => {
     // Setup test situation
-    const zeroBalanceOf = new BigNumber(0);
-    checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(zeroBalanceOf));
+    checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(0)));
 
     wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
     // Instantiate ApproveErc20
-    target = new ApproveErc20(params1, contextMock.getMockInstance());
+    target = new ApproveErc20(params, contextMock.getMockInstance());
     // Real call
     expect(target.prepareTransactions()).rejects.toThrow(
       new PolymathError({
@@ -152,12 +146,11 @@ describe('ApproveErc20', () => {
     // Setup test situation
     wrappersMock.mock('isTestnet', Promise.resolve(true));
 
-    const zeroBalanceOf = new BigNumber(0);
-    checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(zeroBalanceOf));
+    checkPolyBalanceStub = polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(0)));
 
     wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
     // Instantiate ApproveErc20
-    target = new ApproveErc20(params1, contextMock.getMockInstance());
+    target = new ApproveErc20(params, contextMock.getMockInstance());
 
     const addTransactionSpy = spy(target, 'addTransaction');
 
@@ -180,15 +173,15 @@ describe('ApproveErc20', () => {
 
   test('should return if it has sufficient allowance, will never add the transaction', async () => {
     // Used by custom erc20 token
-    checkErc20BalanceStub = erc20Mock.mock('balanceOf', Promise.resolve(params2.amount));
-    checkErc20AddressStub = erc20Mock.mock('address', Promise.resolve(params2.spender));
+    checkErc20BalanceStub = erc20Mock.mock('balanceOf', Promise.resolve(params.amount));
+    checkErc20AddressStub = erc20Mock.mock('address', Promise.resolve(params.spender));
     // Sufficient allowance passed in
     checkErc20AllowanceStub = erc20Mock.mock('allowance', Promise.resolve(new BigNumber(3)));
 
     wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
 
     // Instantiate ApproveErc20
-    target = new ApproveErc20(params2, contextMock.getMockInstance());
+    target = new ApproveErc20({ ...params, tokenAddress }, contextMock.getMockInstance());
 
     // Real call
     await target.prepareTransactions();
