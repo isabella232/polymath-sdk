@@ -134,7 +134,7 @@ describe('ControllerTransfer', () => {
       );
     });
 
-    test("should call error on inappropriate params 'from' address", async () => {
+    test('should call error on inappropriate params "from" address', async () => {
       // Instantiate ControllerTransfer with incorrect args instead
       target = new ControllerTransfer(
         {

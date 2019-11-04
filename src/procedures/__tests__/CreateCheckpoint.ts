@@ -52,12 +52,7 @@ describe('CreateCheckpoint', () => {
     contextMock.set('factories', factoryMockSetup);
 
     // Instantiate CreateCheckpoint
-    target = new CreateCheckpoint(
-      {
-        symbol: params.symbol,
-      },
-      contextMock.getMockInstance()
-    );
+    target = new CreateCheckpoint(params, contextMock.getMockInstance());
   });
   afterEach(() => {
     restore();
