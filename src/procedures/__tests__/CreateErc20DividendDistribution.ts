@@ -14,7 +14,7 @@ import { ErrorCode, ProcedureType } from '~/types';
 import { ApproveErc20 } from '../ApproveErc20';
 import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/factories/DividendDistributionFactory';
 import * as utilsModule from '~/utils';
-import { mockFactories } from '~/testUtils/MockFactories';
+import { mockFactories } from '~/testUtils/mockFactories';
 
 const params = {
   symbol: 'TEST1',

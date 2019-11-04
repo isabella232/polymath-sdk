@@ -14,7 +14,7 @@ import { ApproveErc20 } from '../ApproveErc20';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as utilsModule from '~/utils';
-import { mockFactories } from '~/testUtils/MockFactories';
+import { mockFactories } from '~/testUtils/mockFactories';
 
 const params = {
   symbol: 'TEST1',
