@@ -17,6 +17,7 @@ import {
   BlacklistTransferManager,
   LockUpTransferManager,
   RestrictedPartialSaleTransferManager,
+  ModuleName,
 } from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
@@ -102,6 +103,7 @@ export enum ProcedureType {
   CreateCheckpoint = 'CreateCheckpoint',
   EnableDividendManagers = 'EnableDividendManagers',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
+  EnableGeneralTransferManager = 'EnableGeneralTransferManager',
   LaunchCappedSto = 'LaunchCappedSto',
   LaunchUsdTieredSto = 'LaunchUsdTieredSto',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
@@ -139,6 +141,8 @@ export enum PolyTransactionTag {
   EnableCappedSto = 'EnableCappedSto',
   EnableUsdTieredSto = 'EnableUsdTieredSto',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
+  EnableGeneralTransferManager = 'EnableGeneralTransferManager',
+  DisableFeature = 'DisableFeature',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
   PushDividendPayment = 'PushDividendPayment',
@@ -240,6 +244,15 @@ export interface EnableDividendManagersProcedureArgs {
 
 export interface EnableGeneralPermissionManagerProcedureArgs {
   symbol: string;
+}
+
+export interface EnableGeneralTransferManagerProcedureArgs {
+  symbol: string;
+}
+
+export interface DisableFeatureArgs {
+  symbol: string;
+  moduleName: ModuleName;
 }
 
 export interface LaunchCappedStoProcedureArgs {

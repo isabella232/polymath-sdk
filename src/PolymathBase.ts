@@ -209,6 +209,7 @@ export class PolymathBase extends PolymathAPI {
       [ModuleName.EtherDividendCheckpoint]: ModuleType.Dividends,
       [ModuleName.GeneralPermissionManager]: ModuleType.PermissionManager,
       [ModuleName.VestingEscrowWallet]: ModuleType.Wallet,
+      [ModuleName.AdvancedPLCRVotingCheckpoint]: ModuleType.Dividends,
     };
 
     const availableModules = await this.moduleRegistry.getModulesByTypeAndToken({

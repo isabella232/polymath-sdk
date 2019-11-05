@@ -1,12 +1,18 @@
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { SubModule } from './SubModule';
-import { EnableGeneralPermissionManager, EnableDividendManagers } from '../../procedures';
+import {
+  EnableGeneralPermissionManager,
+  EnableDividendManagers,
+  EnableGeneralTransferManager,
+  DisableFeature,
+} from '../../procedures';
 import {
   Feature,
   ErrorCode,
   EnableGeneralPermissionManagerProcedureArgs,
   EnableDividendManagersProcedureArgs,
   DividendType,
+  DisableFeatureArgs,
 } from '../../types';
 import { PolymathError } from '../../PolymathError';
 import { TransactionQueue } from '../TransactionQueue';
@@ -63,43 +69,11 @@ export class Features extends SubModule {
       context: { contractWrappers },
       securityToken: { symbol },
     } = this;
-    let attachedModule;
-    switch (feature) {
-      case Feature.Permissions: {
-        attachedModule = (await contractWrappers.getAttachedModules(
-          { symbol, moduleName: ModuleName.GeneralPermissionManager },
-          { unarchived: true }
-        ))[0];
-        break;
-      }
-      case Feature.Shareholders: {
-        attachedModule = (await contractWrappers.getAttachedModules(
-          { symbol, moduleName: ModuleName.GeneralTransferManager },
-          { unarchived: true }
-        ))[0];
-        break;
-      }
-      case Feature.Erc20Dividends: {
-        attachedModule = (await contractWrappers.getAttachedModules(
-          { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
-          { unarchived: true }
-        ))[0];
-        break;
-      }
-      case Feature.EtherDividends: {
-        attachedModule = (await contractWrappers.getAttachedModules(
-          { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
-          { unarchived: true }
-        ))[0];
-        break;
-      }
-      default: {
-        throw new PolymathError({
-          code: ErrorCode.FetcherValidationError,
-          message: `Feature '${feature}' is not supported`,
-        });
-      }
-    }
+    const moduleName = this.getModuleNameFromFeature(feature);
+    const attachedModule = (await contractWrappers.getAttachedModules(
+      { symbol, moduleName },
+      { unarchived: true }
+    ))[0];
 
     return !!attachedModule;
   };
@@ -162,12 +136,14 @@ export class Features extends SubModule {
         break;
       }
       case Feature.Shareholders: {
-        // TODO @monitz87: add logic here when the GTM attaching procedure is implemented
-        throw new PolymathError({
-          code: ErrorCode.FatalError,
-          message: 'Cannot enable/disable the Shareholders feature',
-        });
-        // break;
+        procedure = new EnableGeneralTransferManager(
+          {
+            symbol,
+            ...opts,
+          },
+          this.context
+        );
+        break;
       }
       case Feature.Erc20Dividends: {
         procedure = new EnableDividendManagers(
@@ -192,5 +168,65 @@ export class Features extends SubModule {
     }
 
     return procedure.prepare();
+  };
+
+  /**
+   * Disable a feature
+   *
+   * @param feature feature to enable
+   * @param opts feature options
+   */
+  public disable = async (
+    args: { feature: Feature },
+    opts?: EnableOpts
+  ): Promise<TransactionQueue<DisableFeatureArgs>> => {
+    const { feature } = args;
+
+    const alreadyDisabled = !(await this.isEnabled({ feature }));
+
+    if (alreadyDisabled) {
+      throw new PolymathError({
+        code: ErrorCode.FatalError,
+        message: `Feature '${feature}' already disabled`,
+      });
+    }
+
+    const { symbol } = this.securityToken;
+    const moduleName = this.getModuleNameFromFeature(feature);
+    const procedure = new DisableFeature(
+      {
+        symbol,
+        moduleName,
+        ...opts,
+      },
+      this.context
+    );
+
+    return procedure.prepare();
+  };
+
+  private getModuleNameFromFeature = (feature: Feature): ModuleName => {
+    let moduleName: ModuleName;
+    switch (feature) {
+      case Feature.Permissions:
+        moduleName = ModuleName.GeneralPermissionManager;
+        break;
+      case Feature.Shareholders:
+        moduleName = ModuleName.GeneralTransferManager;
+        break;
+      case Feature.Erc20Dividends:
+        moduleName = ModuleName.ERC20DividendCheckpoint;
+        break;
+      case Feature.EtherDividends:
+        moduleName = ModuleName.EtherDividendCheckpoint;
+        break;
+      default:
+        throw new PolymathError({
+          code: ErrorCode.FetcherValidationError,
+          message: `Feature '${feature}' is not supported`,
+        });
+    }
+
+    return moduleName;
   };
 }
