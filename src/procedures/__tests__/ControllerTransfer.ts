@@ -10,9 +10,11 @@ import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import * as controllerTransferModule from '../../procedures/ControllerTransfer';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode, Feature, ProcedureType } from '~/types';
+import { ErrorCode, ProcedureType } from '~/types';
 import { mockFactories } from '~/testUtils/mockFactories';
 import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
+import { Factories } from '../../Context';
+import { Shareholder } from '~/entities';
 
 const params = {
   symbol: 'TEST1',
@@ -31,6 +33,7 @@ describe('ControllerTransfer', () => {
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
+  let factoriesMockedSetup: Factories;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
@@ -53,10 +56,9 @@ describe('ControllerTransfer', () => {
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
     shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
-    shareholderFactoryMock.mock('refresh', Promise.resolve([undefined, undefined]));
-    const factoryMockSetup = mockFactories();
-    factoryMockSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
-    contextMock.set('factories', factoryMockSetup);
+    factoriesMockedSetup = mockFactories();
+    factoriesMockedSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
+    contextMock.set('factories', factoriesMockedSetup);
 
     // Instantiate ControllerTransfer
     target = new ControllerTransfer(params, contextMock.getMockInstance());
@@ -158,16 +160,18 @@ describe('ControllerTransfer', () => {
       );
     });
   });
-  test('should successfully resolve controller transfer', async () => {
-    const controllerTransferSpy = spy(controllerTransferModule, 'createControllerTransferResolver');
 
-    await controllerTransferModule.createControllerTransferResolver(
-      mockFactories(),
+  test('should successfully resolve controller transfer', async () => {
+    const refreshMock = shareholderFactoryMock.mock('refresh', Promise.resolve(undefined));
+    const resolverValue = await controllerTransferModule.createControllerTransferResolver(
+      factoriesMockedSetup,
       params.symbol,
       params.from,
       params.to
-    );
-
-    expect(controllerTransferSpy.callCount).toEqual(1);
+    )();
+    expect(refreshMock.getCall(0).calledWith(Shareholder.generateId));
+    expect(refreshMock.getCall(1).calledWith(Shareholder.generateId));
+    expect(await resolverValue()).toEqual([undefined, undefined]);
+    expect(refreshMock.callCount).toEqual(2);
   });
 });
