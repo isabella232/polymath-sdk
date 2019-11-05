@@ -53,7 +53,7 @@ describe('ControllerTransfer', () => {
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
     shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
-    shareholderFactoryMock.mock('refresh', Promise.resolve([true, true]));
+    shareholderFactoryMock.mock('refresh', Promise.resolve([undefined, undefined]));
     const factoryMockSetup = mockFactories();
     factoryMockSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
