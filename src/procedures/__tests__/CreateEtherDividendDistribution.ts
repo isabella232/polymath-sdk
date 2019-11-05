@@ -62,7 +62,7 @@ describe('CreateEtherDividendDistribution', () => {
     );
     wrappersMock.mock(
       'getAttachedModules',
-      Promise.resolve([etherDividendsMock])
+      Promise.resolve([etherDividendsMock.getMockInstance()])
     );
     tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
 

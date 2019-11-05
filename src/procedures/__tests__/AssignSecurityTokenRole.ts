@@ -176,9 +176,21 @@ describe('AssignSecurityTokenRole', () => {
       expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `Role ${params.role} has already been ${
-            params.assign ? 'assigned to' : 'revoked from'
-          } delegate.`,
+          message: `Role ${params.role} has already been assigned to delegate.`,
+        })
+      );
+    });
+
+    test('should throw if role has already been revoked from delegate', async () => {
+      target = new AssignSecurityTokenRole(
+        { ...params, assign: false },
+        contextMock.getMockInstance()
+      );
+      // Real call
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Role ${params.role} has already been revoked from delegate.`,
         })
       );
     });

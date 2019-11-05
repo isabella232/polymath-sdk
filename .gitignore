@@ -5,3 +5,4 @@ yarn-error.log
 npm-package/
 .idea/
 coverage/
+test.ts
