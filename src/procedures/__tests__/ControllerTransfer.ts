@@ -7,6 +7,7 @@ import * as wrappersModule from '../../PolymathBase';
 import { Wallet } from '../../Wallet';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
+import * as controllerTransferModule from '../../procedures/ControllerTransfer';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCode, Feature, ProcedureType } from '~/types';
@@ -156,16 +157,17 @@ describe('ControllerTransfer', () => {
         })
       );
     });
+  });
+  test('should successfully resolve controller transfer', async () => {
+    const controllerTransferSpy = spy(controllerTransferModule, 'resolveControllerTransfer');
 
-    test('should successfully resolve controller transfer', async () => {
-      expect(
-        await target.resolveControllerTransfer(
-          mockFactories(),
-          params.symbol,
-          params.from,
-          params.to
-        )
-      ).toBeTruthy();
-    });
+    await controllerTransferModule.resolveControllerTransfer(
+      mockFactories(),
+      params.symbol,
+      params.from,
+      params.to
+    );
+
+    expect(controllerTransferSpy.callCount).toEqual(1);
   });
 });
