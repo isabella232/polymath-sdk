@@ -275,7 +275,7 @@ export class PolymathBase extends PolymathAPI {
   ): Promise<any[]> => {
     const { moduleFactory } = this;
 
-    const moduleAddresses = await this.getModuleAddressesByName({ moduleName, symbol });
+    const moduleAddresses = await this.getModuleAddressesByName({ moduleName, symbol }, opts);
 
     const { getModuleInstance } = moduleFactory;
 
