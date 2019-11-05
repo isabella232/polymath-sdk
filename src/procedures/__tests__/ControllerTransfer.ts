@@ -159,9 +159,9 @@ describe('ControllerTransfer', () => {
     });
   });
   test('should successfully resolve controller transfer', async () => {
-    const controllerTransferSpy = spy(controllerTransferModule, 'resolveControllerTransfer');
+    const controllerTransferSpy = spy(controllerTransferModule, 'createControllerTransferResolver');
 
-    await controllerTransferModule.resolveControllerTransfer(
+    await controllerTransferModule.createControllerTransferResolver(
       mockFactories(),
       params.symbol,
       params.from,

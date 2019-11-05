@@ -71,16 +71,16 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
 
     await this.addTransaction(securityToken.controllerTransfer, {
       tag: PolyTransactionTag.ControllerTransfer,
-      resolver: () => resolveControllerTransfer(factories, symbol, from, to),
+      resolver: createControllerTransferResolver(factories, symbol, from, to),
     })({ from, to, value: amount, data, operatorData: log });
   }
 }
-export const resolveControllerTransfer = async (
+export const createControllerTransferResolver = (
   factories: Factories,
   symbol: string,
   from: string,
   to: string
-) => {
+) => async () => {
   const refreshingFrom = factories.shareholderFactory.refresh(
     Shareholder.generateId({
       securityTokenId: SecurityToken.generateId({ symbol }),
