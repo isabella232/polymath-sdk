@@ -19,11 +19,11 @@ import {
   EthDividendsManager,
 } from '../entities';
 
-export const createResolver = async (
+export const createResolver = (
   dividendType: DividendType,
   factories: Factories,
   symbol: string
-) => {
+) => async () => {
   let refresh;
   // eslint-disable-next-line default-case
   switch (dividendType) {
@@ -102,7 +102,7 @@ export class SetDividendsWallet extends Procedure<
 
     await this.addTransaction(dividendModule.changeWallet, {
       tag: PolyTransactionTag.SetDividendsWallet,
-      resolver: () => createResolver(dividendType, factories, symbol),
+      resolver: createResolver(dividendType, factories, symbol),
     })({ wallet: address });
   }
 }
