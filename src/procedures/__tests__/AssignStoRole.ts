@@ -87,13 +87,7 @@ describe('AssignStoRole', () => {
 
     test('should add change permission transaction to the queue and use an operator role as param', async () => {
       target = new AssignStoRole(
-        {
-          symbol: params.symbol,
-          delegateAddress: params.delegateAddress,
-          role: StoRole.StoOperator,
-          assign: params.assign,
-          stoAddress: params.stoAddress,
-        },
+        { ...params, role: StoRole.StoOperator },
         contextMock.getMockInstance()
       );
       const addTransactionSpy = spy(target, 'addTransaction');
@@ -142,9 +136,18 @@ describe('AssignStoRole', () => {
       expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `Role ${params.role} has already been ${
-            params.assign ? 'assigned to' : 'revoked from'
-          } delegate for this STO.`,
+          message: `Role ${params.role} has already been assigned to delegate for this STO.`,
+        })
+      );
+    });
+
+    test('should throw if role has already been revoked from delegate', async () => {
+      target = new AssignStoRole({ ...params, assign: false }, contextMock.getMockInstance());
+      // Real call
+      expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Role ${params.role} has already been revoked from delegate for this STO.`,
         })
       );
     });

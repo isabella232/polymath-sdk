@@ -12,10 +12,12 @@ import { PolymathError } from '~/PolymathError';
 import { ErrorCode, ProcedureType } from '~/types';
 import { mockFactories } from '~/testUtils/mockFactories';
 
-const params1 = {
+const params = {
   symbol: 'TEST1',
   name: 'Test Token 1',
   address: '0x1111111111111111111111111111111111111111',
+  from: '0x2222222222222222222222222222222222222222',
+  to: '0x4444444444444444444444444444444444444444',
   owner: '0x3333333333333333333333333333333333333333',
   amount: new BigNumber(1),
 };
@@ -40,14 +42,12 @@ describe('ControllerTransfer', () => {
       'MockedTokenFactoryObject'
     );
 
-    securityTokenMock = ImportMock.mockClass(
-      contractWrappersModule,
-      'SecurityToken_3_0_0'
-    );
-    securityTokenMock.mock('balanceOf', Promise.resolve(params1.amount));
-    securityTokenMock.mock('controller', Promise.resolve(params1.owner));
+    securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
+    securityTokenMock.mock('balanceOf', Promise.resolve(params.amount));
+    securityTokenMock.mock('controller', Promise.resolve(params.owner));
+
     const ownerPromise = new Promise<string>((resolve, reject) => {
-      resolve(params1.owner);
+      resolve(params.owner);
     });
     contextMock.set(
       'currentWallet',
@@ -64,15 +64,7 @@ describe('ControllerTransfer', () => {
     contextMock.set('factories', mockFactories());
 
     // Instantiate ControllerTransfer
-    target = new ControllerTransfer(
-      {
-        from: params1.address,
-        to: params1.owner,
-        amount: params1.amount,
-        symbol: params1.symbol,
-      },
-      contextMock.getMockInstance()
-    );
+    target = new ControllerTransfer(params, contextMock.getMockInstance());
   });
 
   describe('Types', () => {
@@ -101,14 +93,14 @@ describe('ControllerTransfer', () => {
       tokenFactoryMock.set(
         'getSecurityTokenInstanceFromTicker',
         stub()
-          .withArgs({ address: params1.symbol })
+          .withArgs({ address: params.symbol })
           .throws()
       );
 
       expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${params1.symbol}`,
+          message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
     });
@@ -119,7 +111,7 @@ describe('ControllerTransfer', () => {
       expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.InsufficientBalance,
-          message: `Sender's balance of 0 is less than the requested amount of ${params1.amount.toNumber()}`,
+          message: `Sender's balance of 0 is less than the requested amount of ${params.amount.toNumber()}`,
         })
       );
     });
@@ -135,14 +127,12 @@ describe('ControllerTransfer', () => {
       );
     });
 
-    test("should call error on inappropriate params 'to' address", async () => {
+    test('should call error on inappropriate params "to" address', async () => {
       // Instantiate ControllerTransfer with incorrect args instead
       target = new ControllerTransfer(
         {
-          from: params1.owner,
+          ...params,
           to: 'Inappropriate',
-          amount: params1.amount,
-          symbol: params1.symbol,
         },
         contextMock.getMockInstance()
       );
@@ -155,14 +145,12 @@ describe('ControllerTransfer', () => {
       );
     });
 
-    test("should call error on inappropriate params 'from' address", async () => {
+    test('should call error on inappropriate params "from" address', async () => {
       // Instantiate ControllerTransfer with incorrect args instead
       target = new ControllerTransfer(
         {
+          ...params,
           from: 'Inappropriate',
-          to: params1.owner,
-          amount: params1.amount,
-          symbol: params1.symbol,
         },
         contextMock.getMockInstance()
       );

@@ -170,7 +170,7 @@ export class Permissions extends SubModule {
         { unarchived: true }
       ))[0];
 
-      const status = generalPermissionManager.checkPermission({
+      const status = await generalPermissionManager.checkPermission({
         permission,
         module: moduleAddress,
         delegate,
