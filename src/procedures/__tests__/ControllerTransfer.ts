@@ -14,7 +14,7 @@ import { ErrorCode, ProcedureType } from '~/types';
 import { mockFactories } from '~/testUtils/mockFactories';
 import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
 import { Factories } from '../../Context';
-import { Shareholder } from '~/entities';
+import { SecurityToken, Shareholder } from '~/entities';
 
 const params = {
   symbol: 'TEST1',
@@ -162,16 +162,30 @@ describe('ControllerTransfer', () => {
   });
 
   test('should successfully resolve controller transfer', async () => {
-    const refreshMock = shareholderFactoryMock.mock('refresh', Promise.resolve(undefined));
+    const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve(undefined));
     const resolverValue = await controllerTransferModule.createControllerTransferResolver(
       factoriesMockedSetup,
       params.symbol,
       params.from,
       params.to
     )();
-    expect(refreshMock.getCall(0).calledWith(Shareholder.generateId));
-    expect(refreshMock.getCall(1).calledWith(Shareholder.generateId));
+    expect(
+      refreshStub.getCall(0).calledWithExactly(
+        Shareholder.generateId({
+          securityTokenId: SecurityToken.generateId({ symbol: params.symbol }),
+          address: params.from,
+        })
+      )
+    ).toEqual(true);
+    expect(
+      refreshStub.getCall(1).calledWithExactly(
+        Shareholder.generateId({
+          securityTokenId: SecurityToken.generateId({ symbol: params.symbol }),
+          address: params.to,
+        })
+      )
+    ).toEqual(true);
     expect(await resolverValue()).toEqual([undefined, undefined]);
-    expect(refreshMock.callCount).toEqual(2);
+    expect(refreshStub.callCount).toEqual(2);
   });
 });
