@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import { stub, spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -69,6 +69,28 @@ describe('SetDividendsWallet', () => {
   });
 
   describe('SetDividendsWallet', () => {
+    test('should throw if there is no valid security token being provided', async () => {
+      // Instantiate SetDividendsWallet with incorrect security symbol
+      target = new SetDividendsWallet(
+        { ...params, dividendType: DividendType.Erc20 },
+        contextMock.getMockInstance()
+      );
+
+      tokenFactoryMock.set(
+        'getSecurityTokenInstanceFromTicker',
+        stub()
+          .withArgs({ address: params.symbol })
+          .throws()
+      );
+
+      expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `There is no Security Token with symbol ${params.symbol}`,
+        })
+      );
+    });
+
     test('should throw if there is no valid dividend type being provided', async () => {
       // Instantiate SetDividendsWallet with incorrect dividend type
       target = new SetDividendsWallet(
