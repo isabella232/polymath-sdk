@@ -4,9 +4,9 @@ import {
   BigNumber,
   TransactionReceiptWithDecodedLogs,
   FundRaiseType as Currency,
+  SecurityTokenEvents,
 } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-
 import { LaunchUsdTieredSto } from '../../procedures/LaunchUsdTieredSto';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
@@ -20,6 +20,7 @@ import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapper
 import { Wallet } from '~/Wallet';
 import { TransferErc20 } from '~/procedures';
 import { mockFactories } from '~/testUtils/mockFactories';
+import { SecurityToken, UsdTieredSto } from '~/entities';
 
 const params: LaunchUsdTieredStoProcedureArgs = {
   symbol: 'TEST1',
@@ -174,10 +175,11 @@ describe('LaunchUsdTieredSto', () => {
         },
       };
       const fetchStub = usdTieredStoFactoryMock.mock('fetch', stoObject);
+      const moduleAddress = '0x3333333333333333333333333333333333333333';
       findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
-            _module: '0x3333333333333333333333333333333333333333',
+            _module: moduleAddress,
           },
         },
       ]);
@@ -185,8 +187,29 @@ describe('LaunchUsdTieredSto', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
+
+      // Verification for resolver result
       expect(resolver.result).toEqual(stoObject);
+      // Verification for fetch
+      expect(
+        fetchStub.getCall(0).calledWithExactly(
+          UsdTieredSto.generateId({
+            securityTokenId: SecurityToken.generateId({
+              symbol: params.symbol,
+            }),
+            stoType: StoType.UsdTiered,
+            address: moduleAddress,
+          })
+        )
+      ).toEqual(true);
       expect(fetchStub.callCount).toBe(1);
+      // Verifications for findEvents
+      expect(
+        findEventsStub.getCall(0).calledWithMatch({
+          eventName: SecurityTokenEvents.ModuleAdded,
+        })
+      ).toEqual(true);
+      expect(findEventsStub.callCount).toBe(1);
     });
 
     test('should throw if there is no supplied valid security token', async () => {

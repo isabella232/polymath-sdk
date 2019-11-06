@@ -1,11 +1,12 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { stub, spy, restore } from 'sinon';
+import { restore, spy, stub } from 'sinon';
+import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import {
   BigNumber,
-  TransactionReceiptWithDecodedLogs,
   CappedSTOFundRaiseType as CappedStoCurrency,
+  SecurityTokenEvents,
+  TransactionReceiptWithDecodedLogs,
 } from '@polymathnetwork/contract-wrappers';
-import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { LaunchCappedSto } from '../../procedures/LaunchCappedSto';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
@@ -19,6 +20,7 @@ import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapper
 import { Wallet } from '~/Wallet';
 import { TransferErc20 } from '~/procedures';
 import { mockFactories } from '~/testUtils/mockFactories';
+import { CappedSto, SecurityToken } from '~/entities';
 
 const params: LaunchCappedStoProcedureArgs = {
   symbol: 'TEST1',
@@ -151,10 +153,11 @@ describe('LaunchCappedSto', () => {
         },
       };
       const fetchStub = cappedStoFactoryMock.mock('fetch', stoObject);
-      ImportMock.mockFunction(utilsModule, 'findEvents', [
+      const moduleAddress = '0x3333333333333333333333333333333333333333';
+      const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
-            _module: '0x3333333333333333333333333333333333333333',
+            _module: moduleAddress,
           },
         },
       ]);
@@ -162,8 +165,29 @@ describe('LaunchCappedSto', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
+
+      // Verification for resolver result
       expect(resolver.result).toEqual(stoObject);
+      // Verification for fetch
+      expect(
+        fetchStub.getCall(0).calledWithExactly(
+          CappedSto.generateId({
+            securityTokenId: SecurityToken.generateId({
+              symbol: params.symbol,
+            }),
+            stoType: StoType.Capped,
+            address: moduleAddress,
+          })
+        )
+      ).toEqual(true);
       expect(fetchStub.callCount).toBe(1);
+      // Verifications for findEvents
+      expect(
+        findEventsStub.getCall(0).calledWithMatch({
+          eventName: SecurityTokenEvents.ModuleAdded,
+        })
+      ).toEqual(true);
+      expect(findEventsStub.callCount).toBe(1);
     });
 
     test('should throw if there is no supplied valid security token', async () => {
