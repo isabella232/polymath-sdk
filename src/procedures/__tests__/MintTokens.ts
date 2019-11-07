@@ -7,7 +7,7 @@ import { Procedure } from '~/procedures/Procedure';
 import * as shareholdersEntityModule from '~/entities/SecurityToken/Shareholders';
 import * as securityTokenEntityModule from '~/entities/SecurityToken/SecurityToken';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode, MintTokensProcedureArgs, ProcedureType } from '~/types';
+import { ErrorCode, MintTokensProcedureArgs, ProcedureType, StoType } from '~/types';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
 import * as contextModule from '../../Context';
@@ -16,7 +16,10 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { ModifyShareholderData } from '~/procedures';
 import { mockFactories } from '~/testUtils/mockFactories';
+import { Shareholder } from '~/entities';
+import { SecurityToken } from '~/entities/SecurityToken/SecurityToken';
 
+const securityTokenId = 'ST ID';
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
 const testAddress3 = '0x8888888888888888888888888888888888888888';
@@ -113,6 +116,7 @@ describe('MintTokens', () => {
     ];
     shareholdersEntityMock.mock('getShareholders', shareHolders);
     securityTokenEntityMock.set('shareholders', shareholdersEntityMock.getMockInstance());
+    securityTokenEntityMock.set('uid', securityTokenId);
     securityTokenEntityStaticMock.mock('generateId', 'id');
     securityTokenFactoryMock.mock('fetch', securityTokenEntityMock.getMockInstance());
     factoryMockSetup.securityTokenFactory = securityTokenFactoryMock.getMockInstance();
@@ -184,6 +188,16 @@ describe('MintTokens', () => {
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
       expect(resolver.result).toEqual([shareholderObject]);
+
+      // Verification for fetch
+      expect(
+        fetchStub.getCall(0).calledWithExactly(
+          Shareholder.generateId({
+            securityTokenId,
+            address: testAddress,
+          })
+        )
+      ).toEqual(true);
       expect(fetchStub.callCount).toBe(1);
     });
 
