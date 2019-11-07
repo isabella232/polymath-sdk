@@ -186,7 +186,7 @@ export class Permissions extends SubModule {
   };
 
   /**
-   * Returns the list of delegate addresses that hold a specific role
+   * Returns the list of delegate addresses and details that hold a specific role
    *
    * @param role role for which delegates must be fetched
    */
@@ -217,14 +217,23 @@ export class Permissions extends SubModule {
       { unarchived: true }
     ))[0];
 
-    return generalPermissionManager.getAllDelegatesWithPerm({
+    const delegatesWithPerm = await generalPermissionManager.getAllDelegatesWithPerm({
       module: moduleAddress,
       perm: permission,
+    });
+
+    return P.map(delegatesWithPerm, async delegateAddress => {
+      const details = await generalPermissionManager.delegateDetails({ delegate: delegateAddress });
+
+      return {
+        delegateAddress,
+        details,
+      };
     });
   };
 
   /**
-   * Returns a list of all delegates with their respective roles
+   * Returns a list of all delegates with their respective details and roles
    */
   public getAllDelegates = async () => {
     const {
@@ -249,10 +258,12 @@ export class Permissions extends SubModule {
 
     return P.map(delegates, async delegateAddress => {
       const roles = await this.getAssignedRoles({ delegateAddress });
+      const details = await generalPermissionManager.delegateDetails({ delegate: delegateAddress });
 
       return {
         delegateAddress,
         roles,
+        details,
       };
     });
   };
