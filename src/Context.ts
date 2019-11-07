@@ -19,7 +19,7 @@ interface ConstructorParams {
   contractWrappers: PolymathBase;
 }
 
-interface Factories {
+export interface Factories {
   securityTokenFactory: SecurityTokenFactory;
   securityTokenReservationFactory: SecurityTokenReservationFactory;
   erc20TokenBalanceFactory: Erc20TokenBalanceFactory;

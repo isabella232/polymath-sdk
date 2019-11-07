@@ -57,7 +57,7 @@ export class CreateSecurityToken extends Procedure<
     if (!isRegisteredByCurrentIssuer) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `The security token symbol ${symbol} has already been reserved by another issuer."`,
+        message: `The security token symbol ${symbol} has already been reserved by another issuer.`,
       });
     }
 
