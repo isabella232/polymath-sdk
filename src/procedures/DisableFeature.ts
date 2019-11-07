@@ -1,13 +1,14 @@
-import { SecurityToken } from '@polymathnetwork/contract-wrappers';
+import { SecurityToken, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
-import { DisableFeatureArgs, ProcedureType, PolyTransactionTag, ErrorCode } from '../types';
+import {
+  DisableFeatureProcedureArgs,
+  ProcedureType,
+  PolyTransactionTag,
+  ErrorCode,
+} from '../types';
 import { PolymathError } from '../PolymathError';
 
-interface DisableFeatureParams {
-  moduleAddress: string;
-}
-
-export class DisableFeature extends Procedure<DisableFeatureArgs> {
+export class DisableFeature extends Procedure<DisableFeatureProcedureArgs> {
   public type = ProcedureType.EnableDividendManagers;
 
   public async prepareTransactions() {
@@ -35,9 +36,12 @@ export class DisableFeature extends Procedure<DisableFeatureArgs> {
       { unarchived: true }
     ))[0];
 
-    await this.addTransaction<DisableFeatureParams>(securityToken.archiveModule, {
-      tag: PolyTransactionTag.DisableFeature,
-    })({
+    await this.addTransaction<TransactionParams.SecurityToken.ArchiveModule>(
+      securityToken.archiveModule,
+      {
+        tag: PolyTransactionTag.DisableFeature,
+      }
+    )({
       moduleAddress,
     });
   }

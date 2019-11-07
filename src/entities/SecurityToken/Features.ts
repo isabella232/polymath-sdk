@@ -12,7 +12,7 @@ import {
   EnableGeneralPermissionManagerProcedureArgs,
   EnableDividendManagersProcedureArgs,
   DividendType,
-  DisableFeatureArgs,
+  DisableFeatureProcedureArgs,
 } from '../../types';
 import { PolymathError } from '../../PolymathError';
 import { TransactionQueue } from '../TransactionQueue';
@@ -174,12 +174,10 @@ export class Features extends SubModule {
    * Disable a feature
    *
    * @param feature feature to enable
-   * @param opts feature options
    */
-  public disable = async (
-    args: { feature: Feature },
-    opts?: EnableOpts
-  ): Promise<TransactionQueue<DisableFeatureArgs>> => {
+  public disable = async (args: {
+    feature: Feature;
+  }): Promise<TransactionQueue<DisableFeatureProcedureArgs>> => {
     const { feature } = args;
 
     const alreadyDisabled = !(await this.isEnabled({ feature }));
@@ -197,7 +195,6 @@ export class Features extends SubModule {
       {
         symbol,
         moduleName,
-        ...opts,
       },
       this.context
     );

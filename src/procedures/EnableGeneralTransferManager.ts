@@ -1,4 +1,4 @@
-import { ModuleName } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,
@@ -7,13 +7,6 @@ import {
   ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-
-interface AddGeneralTransferManagerParams {
-  moduleName: ModuleName.GeneralTransferManager;
-  address: string;
-  archived: boolean;
-  label?: string;
-}
 
 export class EnableGeneralTransferManager extends Procedure<
   EnableGeneralTransferManagerProcedureArgs
@@ -45,9 +38,12 @@ export class EnableGeneralTransferManager extends Procedure<
       moduleName,
     });
 
-    await this.addTransaction<AddGeneralTransferManagerParams>(securityToken.addModuleWithLabel, {
-      tag: PolyTransactionTag.EnableGeneralTransferManager,
-    })({
+    await this.addTransaction<TransactionParams.SecurityToken.AddNoDataModule>(
+      securityToken.addModuleWithLabel,
+      {
+        tag: PolyTransactionTag.EnableGeneralTransferManager,
+      }
+    )({
       moduleName,
       address: moduleAddress,
       archived: false,

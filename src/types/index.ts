@@ -250,7 +250,7 @@ export interface EnableGeneralTransferManagerProcedureArgs {
   symbol: string;
 }
 
-export interface DisableFeatureArgs {
+export interface DisableFeatureProcedureArgs {
   symbol: string;
   moduleName: ModuleName;
 }
