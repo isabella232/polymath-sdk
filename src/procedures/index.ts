@@ -14,6 +14,8 @@ export { SetDividendsWallet } from './SetDividendsWallet';
 export { AssignSecurityTokenRole } from './AssignSecurityTokenRole';
 export { AssignStoRole } from './AssignStoRole';
 export { EnableGeneralPermissionManager } from './EnableGeneralPermissionManager';
+export { EnableGeneralTransferManager } from './EnableGeneralTransferManager';
+export { DisableFeature } from './DisableFeature';
 export { ControllerTransfer } from './ControllerTransfer';
 export { PauseSto } from './PauseSto';
 export { SetController } from './SetController';
