@@ -223,11 +223,13 @@ export class Permissions extends SubModule {
     });
 
     return P.map(delegatesWithPerm, async delegateAddress => {
-      const details = await generalPermissionManager.delegateDetails({ delegate: delegateAddress });
+      const description = await generalPermissionManager.delegateDetails({
+        delegate: delegateAddress,
+      });
 
       return {
-        delegateAddress,
-        details,
+        address: delegateAddress,
+        description,
       };
     });
   };
@@ -257,13 +259,17 @@ export class Permissions extends SubModule {
     const delegates = await generalPermissionManager.getAllDelegates();
 
     return P.map(delegates, async delegateAddress => {
-      const roles = await this.getAssignedRoles({ delegateAddress });
-      const details = await generalPermissionManager.delegateDetails({ delegate: delegateAddress });
+      const [roles, description] = await Promise.all([
+        this.getAssignedRoles({ delegateAddress }),
+        generalPermissionManager.delegateDetails({
+          delegate: delegateAddress,
+        }),
+      ]);
 
       return {
-        delegateAddress,
+        address: delegateAddress,
         roles,
-        details,
+        description,
       };
     });
   };
