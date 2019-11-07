@@ -138,7 +138,7 @@ export abstract class Sto<P> extends Entity<P> {
   }
 
   /**
-   * Pause the offering
+   * Pauses the offering
    */
   public pause = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
@@ -149,7 +149,7 @@ export abstract class Sto<P> extends Entity<P> {
   };
 
   /**
-   * Finalize the offering. The offering's treasury wallet (or the Security Token's treasury wallet if one was not specified for the offering)
+   * Finalizes the offering. The offering's treasury wallet (or the Security Token's treasury wallet if one was not specified for the offering)
    * will receive the remaining unsold tokens. Throws an error if there are transfer restrictions which do not permit the wallet to receive that amount of tokens
    */
   public finalize = async () => {
