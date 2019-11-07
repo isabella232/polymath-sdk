@@ -75,7 +75,7 @@ export class ModifyPreMinting extends Procedure<ModifyPreMintingProcedureArgs> {
     if (!stoModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `STO ${stoAddress} is either archived or hasn't been launched.`,
+        message: `STO ${stoAddress} is either archived or hasn't been launched`,
       });
     }
 

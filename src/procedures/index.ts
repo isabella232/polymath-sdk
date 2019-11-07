@@ -22,3 +22,4 @@ export { LaunchTieredSto } from './LaunchTieredSto';
 export { ModifyShareholderData } from './ModifyShareholderData';
 export { RevokeKyc } from './RevokeKyc';
 export { MintTokens } from './MintTokens';
+export { FinalizeSto } from './FinalizeSto';

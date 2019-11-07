@@ -21,8 +21,11 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
     const { securityTokenId, stoType, address } = TieredSto.unserialize(uid);
 
     const { symbol } = SecurityToken.unserialize(securityTokenId);
+    const {
+      context: { factories, contractWrappers },
+    } = this;
 
-    const module = await this.context.contractWrappers.moduleFactory.getModuleInstance({
+    const module = await contractWrappers.moduleFactory.getModuleInstance({
       name: ModuleName.UsdTieredSTO,
       address,
     });
@@ -50,6 +53,7 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       isFinalized,
       beneficialInvestmentsAllowed,
       raisedFundsWallet,
+      unsoldTokensWallet,
       numberOfTiers,
       {
         tokensSold,
@@ -68,19 +72,18 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       module.isFinalized(),
       module.allowBeneficialInvestments(),
       module.wallet(),
+      contractWrappers.getTreasuryWallet({ module }),
       module.getNumberOfTiers(),
       module.getSTODetails(),
     ]);
 
     let preMintAllowed = false;
-    let unsoldTokensWallet: string;
     let tiers: Tier[];
     let rawTiers;
 
     if (isUSDTieredSTO_3_1_0(module)) {
-      [preMintAllowed, unsoldTokensWallet, rawTiers] = await Promise.all([
+      [preMintAllowed, rawTiers] = await Promise.all([
         module.preMintAllowed(),
-        module.getTreasuryWallet(),
         Promise.all(range(numberOfTiers).map(tier => module.tiers({ tier }))),
       ]);
       tiers = rawTiers.map(
@@ -101,7 +104,6 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
         })
       );
     } else {
-      unsoldTokensWallet = await module.treasuryWallet();
       rawTiers = await Promise.all(range(numberOfTiers).map(tier => module.tiers({ tier })));
       tiers = rawTiers.map(
         ({
@@ -129,10 +131,10 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
     });
 
     const investmentEntities = investments.map(({ index, ...investment }) =>
-      this.context.factories.investmentFactory.create(
-        Investment.generateId({ securityTokenId, stoId, index }),
-        { securityTokenSymbol: symbol, ...investment }
-      )
+      factories.investmentFactory.create(Investment.generateId({ securityTokenId, stoId, index }), {
+        securityTokenSymbol: symbol,
+        ...investment,
+      })
     );
 
     const fundraiseTypes = [];

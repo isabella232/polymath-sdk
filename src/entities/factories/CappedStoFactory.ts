@@ -49,30 +49,25 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
       capReached,
       beneficialInvestmentsAllowed,
       raisedFundsWallet,
+      unsoldTokensWallet,
       { fundsRaised, investorCount, totalTokensSold, isRaisedInPoly, ...details },
     ] = await Promise.all([
       module.paused(),
       module.capReached(),
       module.allowBeneficialInvestments(),
       module.wallet(),
+      contractWrappers.getTreasuryWallet({ module }),
       module.getSTODetails(),
     ]);
 
     let preMintAllowed = false;
     let isFinalized = capReached || details.endTime <= new Date();
-    let unsoldTokensWallet: string;
 
     if (isCappedSTO_3_1_0(module)) {
-      [preMintAllowed, unsoldTokensWallet, isFinalized] = await Promise.all([
+      [preMintAllowed, isFinalized] = await Promise.all([
         module.preMintAllowed(),
-        module.getTreasuryWallet(),
         module.isFinalized(),
       ]);
-    } else {
-      const securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
-        symbol
-      );
-      unsoldTokensWallet = await securityToken.owner();
     }
 
     const stoId = CappedSto.generateId({

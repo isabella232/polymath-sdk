@@ -5,7 +5,7 @@ import { StoType, isStoType, Currency, ErrorCode, StoRole } from '../types';
 import { Investment } from './Investment';
 import { PolymathError } from '../PolymathError';
 import { Context } from '../Context';
-import { PauseSto, AssignStoRole } from '../procedures';
+import { PauseSto, AssignStoRole, FinalizeSto } from '../procedures';
 import { ModifyPreMinting } from '../procedures/ModifyPreMinting';
 
 export interface UniqueIdentifiers {
@@ -85,7 +85,7 @@ export abstract class Sto<P> extends Entity<P> {
     if (!isUniqueIdentifiers(unserialized)) {
       throw new PolymathError({
         code: ErrorCode.InvalidUuid,
-        message: 'Wrong STO ID format.',
+        message: 'Wrong STO ID format',
       });
     }
 
@@ -144,6 +144,18 @@ export abstract class Sto<P> extends Entity<P> {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
     const procedure = new PauseSto({ stoAddress, stoType, symbol }, this.context);
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Finalize the offering. The offering's treasury wallet (or the Security Token's treasury wallet if one was not specified for the offering)
+   * will receive the remaining unsold tokens. Throws an error if there are transfer restrictions which do not permit the wallet to receive that amount of tokens
+   */
+  public finalize = async () => {
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
+
+    const procedure = new FinalizeSto({ stoAddress, stoType, symbol }, this.context);
 
     return procedure.prepare();
   };

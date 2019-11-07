@@ -32,7 +32,7 @@ export const unserialize = (serialized: string) => {
   if (!isUniqueIdentifiers(unserialized)) {
     throw new PolymathError({
       code: ErrorCode.InvalidUuid,
-      message: 'Wrong Security Token ID format.',
+      message: 'Wrong Security Token ID format',
     });
   }
 

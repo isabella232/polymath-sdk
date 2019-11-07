@@ -53,7 +53,7 @@ export function unserialize(id: string) {
 
   const matched = unserialized.match(/^.*?:(.*)/);
 
-  const errorMsg = 'Wrong ID format.';
+  const errorMsg = 'Wrong ID format';
 
   if (!matched) {
     throw new Error(errorMsg);

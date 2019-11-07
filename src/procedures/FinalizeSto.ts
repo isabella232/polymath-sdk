@@ -1,9 +1,9 @@
-import { ModuleName } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, isCappedSTO_3_0_0, BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  PauseStoProcedureArgs,
+  FinalizeStoProcedureArgs,
   ErrorCode,
   StoType,
 } from '../types';
@@ -11,8 +11,8 @@ import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, CappedSto, TieredSto } from '../entities';
 
-export class PauseSto extends Procedure<PauseStoProcedureArgs> {
-  public type = ProcedureType.PauseSto;
+export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
+  public type = ProcedureType.FinalizeSto;
 
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol } = this.args;
@@ -22,6 +22,19 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
      * Validation
      */
 
+    let securityToken;
+
+    try {
+      securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+
     if (!isValidAddress(stoAddress)) {
       throw new PolymathError({
         code: ErrorCode.InvalidAddress,
@@ -30,6 +43,7 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
     }
 
     let stoModule;
+    let remainingTokens: BigNumber;
 
     switch (stoType) {
       case StoType.Capped: {
@@ -37,6 +51,17 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
           name: ModuleName.CappedSTO,
           address: stoAddress,
         });
+
+        if (isCappedSTO_3_0_0(stoModule)) {
+          throw new PolymathError({
+            code: ErrorCode.IncorrectVersion,
+            message:
+              'Capped STO version is 3.0.0. Version 3.1.0 or greater is required for forced finalization',
+          });
+        }
+        const { totalTokensSold, cap } = await stoModule.getSTODetails();
+        remainingTokens = cap.minus(totalTokensSold);
+
         break;
       }
       case StoType.Tiered: {
@@ -44,6 +69,11 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
           name: ModuleName.UsdTieredSTO,
           address: stoAddress,
         });
+
+        const { tokensSold, capPerTier } = await stoModule.getSTODetails();
+        const totalCap = capPerTier.reduce((prev, next) => prev.plus(next), new BigNumber(0));
+        remainingTokens = totalCap.minus(tokensSold);
+
         break;
       }
       default: {
@@ -61,12 +91,36 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
       });
     }
 
+    const [isFinalized, treasuryWallet] = await Promise.all([
+      stoModule.isFinalized(),
+      contractWrappers.getTreasuryWallet({ module: stoModule }),
+    ]);
+
+    if (isFinalized) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `STO ${stoAddress} has already been finalized`,
+      });
+    }
+
+    const canTransfer = await securityToken.canTransfer({
+      to: treasuryWallet,
+      value: remainingTokens,
+    });
+
+    if (!canTransfer) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `Treasury wallet "${treasuryWallet}" is not cleared to receive the remaining ${remainingTokens} "${symbol}" tokens. Please review transfer restrictions regarding this wallet address before attempting to finalize the STO`,
+      });
+    }
+
     /**
      * Transactions
      */
 
-    await this.addTransaction(stoModule.pause, {
-      tag: PolyTransactionTag.PauseSto,
+    await this.addTransaction(stoModule.finalize, {
+      tag: PolyTransactionTag.FinalizeSto,
       resolvers: [
         async () => {
           const securityTokenId = SecurityToken.generateId({ symbol });

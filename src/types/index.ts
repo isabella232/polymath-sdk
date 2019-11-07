@@ -139,6 +139,7 @@ export enum ProcedureType {
   AssignStoRole = 'AssignStoRole',
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
+  FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
@@ -170,6 +171,7 @@ export enum PolyTransactionTag {
   ChangePermission = 'ChangePermission',
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
+  FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
   ModifyKycDataMulti = 'ModifyKycDataMulti',
   ModifyInvestorFlagMulti = 'ModifyInvestorFlagMulti',
@@ -382,6 +384,12 @@ export interface ControllerTransferProcedureArgs {
 }
 
 export interface PauseStoProcedureArgs {
+  symbol: string;
+  stoAddress: string;
+  stoType: StoType;
+}
+
+export interface FinalizeStoProcedureArgs {
   symbol: string;
   stoAddress: string;
   stoType: StoType;

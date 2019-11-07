@@ -64,7 +64,7 @@ export class CreateSecurityToken extends Procedure<
     if (isLaunched) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `The security token symbol ${symbol} has already been launched."`,
+        message: `The security token symbol ${symbol} has already been launched`,
       });
     }
 
