@@ -131,7 +131,7 @@ describe('SetController', () => {
       await target.prepareTransactions();
 
       // Verifications
-      await expect(
+      expect(
         addTransactionSpy
           .getCall(0)
           .calledWithExactly(
