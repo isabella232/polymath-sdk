@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy, stub } from 'sinon';
+import { restore, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { PauseSto } from '../../procedures/PauseSto';
 import { Procedure } from '~/procedures/Procedure';
@@ -49,7 +49,7 @@ describe('PauseSto', () => {
   let factoryMockSetup: Factories;
   let securityTokenId: string;
 
-  beforeAll(() => {
+  beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test PauseSto
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
@@ -132,22 +132,6 @@ describe('PauseSto', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should throw if there is no supplied valid security token', async () => {
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: cappedParams.stoAddress })
-          .throws()
-      );
-
-      expect(target.prepareTransactions()).rejects.toThrow(
-        new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${cappedParams.symbol}`,
-        })
-      );
-    });
-
     test('should throw if there is an invalid sto address', async () => {
       target = new PauseSto(
         {
@@ -157,7 +141,7 @@ describe('PauseSto', () => {
         },
         contextMock.getMockInstance()
       );
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.InvalidAddress,
           message: `Invalid STO address invalid`,
@@ -174,7 +158,7 @@ describe('PauseSto', () => {
         },
         contextMock.getMockInstance()
       );
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `Invalid STO type ${{}}`,
@@ -184,7 +168,7 @@ describe('PauseSto', () => {
 
     test('should throw if there is an invalid module instance returned', async () => {
       moduleWrapperFactoryMock.mock('getModuleInstance', undefined);
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `STO ${cappedParams.stoAddress} is either archived or hasn't been launched.`,

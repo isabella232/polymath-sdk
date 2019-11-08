@@ -63,7 +63,7 @@ describe('MintTokens', () => {
   let securityTokenEntityMock: MockManager<securityTokenEntityModule.SecurityToken>;
   let securityTokenEntityStaticMock: StaticMockManager<securityTokenEntityModule.SecurityToken>;
 
-  beforeAll(() => {
+  beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test MintTokens
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
@@ -158,16 +158,15 @@ describe('MintTokens', () => {
         {
           address: testAddress,
           canSendAfter: new Date(Date.now()),
-          canReceiveAfter: new Date(Date.now()),
-          kycExpiry: new Date(Date.now()),
+          canReceiveAfter: new Date(0),
+          kycExpiry: new Date(0),
           canBuyFromSto: true,
           isAccredited: true,
         },
       ];
 
       shareholdersEntityMock.mock('getShareholders', shareHoldersExpiredKyc);
-
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `Cannot mint tokens to the following addresses: [${testAddress}]. Reason: Expired KYC`,
@@ -187,7 +186,7 @@ describe('MintTokens', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      expect(resolver.result).toEqual([shareholderObject]);
+      await expect(resolver.result).toEqual([shareholderObject]);
 
       // Verification for fetch
       expect(
@@ -202,14 +201,12 @@ describe('MintTokens', () => {
     });
 
     test('should throw if there is no valid security token supplied', async () => {
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params.symbol })
-          .throws()
-      );
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,
@@ -226,7 +223,7 @@ describe('MintTokens', () => {
         contextMock.getMockInstance()
       );
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `Cannot mint tokens to the following addresses: [${testAddress3}]. Reason: Those addresses are not Shareholders`,

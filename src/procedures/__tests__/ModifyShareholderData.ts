@@ -1,11 +1,11 @@
 import { ImportMock, MockManager, StaticMockManager } from 'ts-mock-imports';
-import { stub, spy, restore } from 'sinon';
+import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { ModifyShareholderData } from '../../procedures/ModifyShareholderData';
 import { Procedure } from '~/procedures/Procedure';
-import { PolyTransactionTag, ProcedureType } from '~/types';
+import { ErrorCode, ProcedureType } from '~/types';
 import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import * as contextModule from '../../Context';
@@ -14,8 +14,8 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { mockFactories } from '~/testUtils/mockFactories';
 import * as shareholdersEntityModule from '~/entities/SecurityToken/Shareholders';
 import * as securityTokenEntityModule from '~/entities/SecurityToken/SecurityToken';
-import { Shareholder } from '~/entities';
 import { SecurityToken } from '~/entities/SecurityToken/SecurityToken';
+import { PolymathError } from '~/PolymathError';
 
 const params = {
   symbol: 'TEST1',
@@ -143,7 +143,7 @@ describe('ModifyShareholderData', () => {
       ).toEqual(true);
       expect(addTransactionSpy.callCount).toEqual(2);
     });
-
+    // TODO
     /*
     test('should throw if corresponding checkpoint event is not fired', async () => {
       ImportMock.mockFunction(utilsModule, 'findEvents', []);
@@ -151,7 +151,7 @@ describe('ModifyShareholderData', () => {
       // Real call
       const resolver = await target.prepareTransactions();
 
-      expect(
+      await expect(
         resolver.run({} as TransactionReceiptWithDecodedLogs)
       ).rejects.toThrow(
         new PolymathError({
@@ -188,23 +188,19 @@ describe('ModifyShareholderData', () => {
 
       expect(fetchStub.callCount).toBe(1);
     });
-    // TODO correctly test throws
-    /*
-    test('should throw if there is no valid security token supplied', async () => {
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params.symbol })
-          .throws()
-      );
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+    test('should throw if there is no valid security token supplied', async () => {
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
+
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
     });
-    */
   });
 });
