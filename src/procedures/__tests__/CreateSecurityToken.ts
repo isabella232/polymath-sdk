@@ -123,11 +123,9 @@ describe('CreateSecurityToken', () => {
 
     test('should return the newly created security token', async () => {
       const creationObject = {
-        creation: {
-          name: () => params.name,
-          owner: () => params.owner,
-          address: () => params.address,
-        },
+        name: () => params.name,
+        owner: () => params.owner,
+        address: () => params.address,
       };
       const createStub = securityTokenFactoryMock.mock('create', creationObject);
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
@@ -149,7 +147,6 @@ describe('CreateSecurityToken', () => {
       // Verification for resolver result
       expect(resolver.result).toEqual(creationObject);
       // Verification for fetch
-      expect(createStub.getCall(0).calledWithMatch(SecurityToken.generateId, {})).toEqual(true);
       expect(
         createStub
           .getCall(0)

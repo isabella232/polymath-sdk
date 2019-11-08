@@ -163,6 +163,7 @@ describe('ControllerTransfer', () => {
 
   test('should successfully resolve controller transfer', async () => {
     const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve(undefined));
+    const securityTokenId = SecurityToken.generateId({ symbol: params.symbol });
     const resolverValue = await controllerTransferModule.createControllerTransferResolver(
       factoriesMockedSetup,
       params.symbol,
@@ -172,7 +173,7 @@ describe('ControllerTransfer', () => {
     expect(
       refreshStub.getCall(0).calledWithExactly(
         Shareholder.generateId({
-          securityTokenId: SecurityToken.generateId({ symbol: params.symbol }),
+          securityTokenId,
           address: params.from,
         })
       )
@@ -180,12 +181,12 @@ describe('ControllerTransfer', () => {
     expect(
       refreshStub.getCall(1).calledWithExactly(
         Shareholder.generateId({
-          securityTokenId: SecurityToken.generateId({ symbol: params.symbol }),
+          securityTokenId,
           address: params.to,
         })
       )
     ).toEqual(true);
-    expect(await resolverValue()).toEqual([undefined, undefined]);
+    expect(await resolverValue).toEqual([undefined, undefined]);
     expect(refreshStub.callCount).toEqual(2);
   });
 });

@@ -179,10 +179,8 @@ describe('CreateErc20DividendDistribution', () => {
     test('should return the created erc20 dividend distribution', async () => {
       const dividendIndex = 1;
       const dividendObject = {
-        permissions: {
-          securityTokenId: () => Promise.resolve(params.symbol),
-          index: () => Promise.resolve(dividendIndex),
-        },
+        securityTokenId: () => Promise.resolve(params.symbol),
+        index: () => Promise.resolve(dividendIndex),
       };
       const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
@@ -203,7 +201,9 @@ describe('CreateErc20DividendDistribution', () => {
       expect(
         fetchStub.getCall(0).calledWithExactly(
           DividendDistribution.generateId({
-            securityTokenId: SecurityToken.generateId({ symbol: params.symbol }),
+            securityTokenId: SecurityToken.generateId({
+              symbol: params.symbol,
+            }),
             dividendType: DividendType.Erc20,
             index: dividendIndex,
           })

@@ -144,10 +144,8 @@ describe('CreateEtherDividendDistribution', () => {
     test('should return the newly created eth dividend distribution', async () => {
       const dividendIndex = 1;
       const dividendObject = {
-        permissions: {
-          securityTokenId: () => 'Id',
-          index: () => dividendIndex,
-        },
+        securityTokenId: () => 'Id',
+        index: () => dividendIndex,
       };
       const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [

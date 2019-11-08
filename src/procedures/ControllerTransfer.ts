@@ -95,5 +95,5 @@ export const createControllerTransferResolver = (
     })
   );
 
-  return () => Promise.all([refreshingFrom, refreshingTo]);
+  return Promise.all([refreshingFrom, refreshingTo]);
 };

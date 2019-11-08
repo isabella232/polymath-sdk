@@ -100,10 +100,8 @@ describe('CreateCheckpoint', () => {
     test('should return the newly created checkpoint', async () => {
       const indexValue = 1;
       const checkpointObject = {
-        checkpoint: {
-          securityTokenId: () => params.symbol,
-          index: () => indexValue,
-        },
+        securityTokenId: () => params.symbol,
+        index: () => indexValue,
       };
       // Better test this
       const fetchStub = checkpointFactoryMock.mock('fetch', Promise.resolve(checkpointObject));
