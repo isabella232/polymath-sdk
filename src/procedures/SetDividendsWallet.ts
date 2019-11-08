@@ -19,7 +19,7 @@ import {
   EthDividendsManager,
 } from '../entities';
 
-export const createSetDividendWalletResolver = (
+export const createSetDividendsWalletResolver = (
   dividendType: DividendType,
   factories: Factories,
   symbol: string
@@ -102,7 +102,7 @@ export class SetDividendsWallet extends Procedure<
 
     await this.addTransaction(dividendModule.changeWallet, {
       tag: PolyTransactionTag.SetDividendsWallet,
-      resolver: createSetDividendWalletResolver(
+      resolver: createSetDividendsWalletResolver(
         dividendType,
         factories,
         symbol

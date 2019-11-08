@@ -104,14 +104,12 @@ describe('SetDividendsWallet', () => {
         contextMock.getMockInstance()
       );
 
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params.symbol })
-          .throws()
-      );
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,
@@ -126,7 +124,7 @@ describe('SetDividendsWallet', () => {
         contextMock.getMockInstance()
       );
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: "Dividends of the specified type haven't been enabled",
@@ -143,7 +141,7 @@ describe('SetDividendsWallet', () => {
       wrappersMock.mock('getAttachedModules', Promise.resolve([]));
 
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: "Dividends of the specified type haven't been enabled",
@@ -160,7 +158,7 @@ describe('SetDividendsWallet', () => {
       wrappersMock.mock('getAttachedModules', Promise.resolve([]));
 
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: "Dividends of the specified type haven't been enabled",
@@ -233,11 +231,13 @@ describe('SetDividendsWallet', () => {
         'refresh',
         Promise.resolve(undefined)
       );
-      const resolverValue = setDividendsWalletModule.createSetDividendWalletResolver(
+
+      const resolverValue = await setDividendsWalletModule.createSetDividendsWalletResolver(
         DividendType.Erc20,
         factoriesMockedSetup,
         params.symbol
       )();
+
       expect(
         refreshStub.getCall(0).calledWithExactly(
           Erc20DividendsManager.generateId({
@@ -258,11 +258,13 @@ describe('SetDividendsWallet', () => {
       'refresh',
       Promise.resolve(undefined)
     );
-    const resolverValue = setDividendsWalletModule.createSetDividendWalletResolver(
+
+    const resolverValue = await setDividendsWalletModule.createSetDividendsWalletResolver(
       DividendType.Eth,
       factoriesMockedSetup,
       params.symbol
     )();
+
     expect(
       refreshStub.getCall(0).calledWithExactly(
         EthDividendsManager.generateId({
