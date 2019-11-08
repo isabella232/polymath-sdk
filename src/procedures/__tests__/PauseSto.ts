@@ -5,12 +5,16 @@ import { PauseSto } from '../../procedures/PauseSto';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCode, PauseStoProcedureArgs, ProcedureType, StoType } from '~/types';
+import * as pauseStoModule from '../../procedures/PauseSto';
 import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
+import * as usdTieredStoFactoryModule from '~/entities/factories/UsdTieredStoFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { mockFactories } from '~/testUtils/mockFactories';
+import { Factories } from '../../Context';
+import { CappedSto, SecurityToken, UsdTieredSto } from '~/entities';
 
 const usdTieredParams: PauseStoProcedureArgs = {
   symbol: 'TEST1',
@@ -19,7 +23,7 @@ const usdTieredParams: PauseStoProcedureArgs = {
 };
 
 const cappedParams: PauseStoProcedureArgs = {
-  symbol: 'TEST2',
+  symbol: 'TEST1',
   stoAddress: '0x5555555555555555555555555555555555555555',
   stoType: StoType.Capped,
 };
@@ -38,8 +42,12 @@ describe('PauseSto', () => {
   // Mock factories
   let cappedStoFactoryMock: MockManager<cappedStoFactoryModule.CappedStoFactory>;
 
+  let usdTieredStoFactoryMock: MockManager<usdTieredStoFactoryModule.UsdTieredStoFactory>;
+
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let moduleFactoryMock: MockManager<contractWrappersModule.ModuleFactory_3_0_0>;
+  let factoryMockSetup: Factories;
+  let securityTokenId: string;
 
   beforeAll(() => {
     // Mock the context, wrappers, and tokenFactory to test PauseSto
@@ -68,12 +76,20 @@ describe('PauseSto', () => {
 
     cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryModule, 'CappedStoFactory');
 
-    const factoryMockSetup = mockFactories();
+    usdTieredStoFactoryMock = ImportMock.mockClass(
+      usdTieredStoFactoryModule,
+      'UsdTieredStoFactory'
+    );
+
+    factoryMockSetup = mockFactories();
     factoryMockSetup.cappedStoFactory = cappedStoFactoryMock.getMockInstance();
+    factoryMockSetup.usdTieredStoFactory = usdTieredStoFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
 
     usdTieredStoMock = ImportMock.mockClass(contractWrappersModule, 'USDTieredSTO_3_0_0');
     cappedStoMock = ImportMock.mockClass(contractWrappersModule, 'CappedSTO_3_0_0');
+
+    securityTokenId = SecurityToken.generateId({ symbol: cappedParams.symbol });
 
     // Instantiate PauseSto
     target = new PauseSto(cappedParams, contextMock.getMockInstance());
@@ -174,6 +190,51 @@ describe('PauseSto', () => {
           message: `STO ${cappedParams.stoAddress} is either archived or hasn't been launched.`,
         })
       );
+    });
+  });
+
+  describe('should successfully resolve pause sto with cappedSto', () => {
+    test('should successfully resolve controller transfer', async () => {
+      const refreshStub = cappedStoFactoryMock.mock('refresh', Promise.resolve(undefined));
+      await pauseStoModule.createPauseStoResolver(
+        factoryMockSetup,
+        cappedParams.symbol,
+        cappedParams.stoType,
+        cappedParams.stoAddress
+      )();
+      expect(
+        refreshStub.getCall(0).calledWithExactly(
+          CappedSto.generateId({
+            securityTokenId,
+            stoType: StoType.Capped,
+            address: cappedParams.stoAddress,
+          })
+        )
+      ).toEqual(true);
+      expect(refreshStub.callCount).toEqual(1);
+    });
+  });
+
+  describe('should successfully resolve pause sto with usdtieredSto', () => {
+    test('should successfully resolve controller transfer', async () => {
+      target = new PauseSto(usdTieredParams, contextMock.getMockInstance());
+      const refreshStub = usdTieredStoFactoryMock.mock('refresh', Promise.resolve(undefined));
+      await pauseStoModule.createPauseStoResolver(
+        factoryMockSetup,
+        usdTieredParams.symbol,
+        usdTieredParams.stoType,
+        usdTieredParams.stoAddress
+      )();
+      expect(
+        refreshStub.getCall(0).calledWithExactly(
+          UsdTieredSto.generateId({
+            securityTokenId,
+            stoType: StoType.UsdTiered,
+            address: usdTieredParams.stoAddress,
+          })
+        )
+      ).toEqual(true);
+      expect(refreshStub.callCount).toEqual(1);
     });
   });
 });

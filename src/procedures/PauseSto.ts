@@ -10,6 +10,7 @@ import {
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, CappedSto, UsdTieredSto } from '../entities';
+import { Factories } from '~/Context';
 
 export class PauseSto extends Procedure<PauseStoProcedureArgs> {
   public type = ProcedureType.PauseSto;
@@ -67,30 +68,37 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
 
     await this.addTransaction(stoModule.pause, {
       tag: PolyTransactionTag.PauseSto,
-      resolver: async () => {
-        const securityTokenId = SecurityToken.generateId({ symbol });
-
-        switch (stoType) {
-          case StoType.Capped: {
-            return factories.cappedStoFactory.refresh(
-              CappedSto.generateId({
-                securityTokenId,
-                stoType: StoType.Capped,
-                address: stoAddress,
-              })
-            );
-          }
-          case StoType.UsdTiered: {
-            return factories.usdTieredStoFactory.refresh(
-              UsdTieredSto.generateId({
-                securityTokenId,
-                stoType: StoType.UsdTiered,
-                address: stoAddress,
-              })
-            );
-          }
-        }
-      },
+      resolver: createPauseStoResolver(factories, symbol, stoType, stoAddress),
     })({});
   }
 }
+
+export const createPauseStoResolver = (
+  factories: Factories,
+  symbol: string,
+  stoType: StoType,
+  stoAddress: string
+) => async () => {
+  const securityTokenId = SecurityToken.generateId({ symbol });
+
+  switch (stoType) {
+    case StoType.Capped: {
+      return factories.cappedStoFactory.refresh(
+        CappedSto.generateId({
+          securityTokenId,
+          stoType: StoType.Capped,
+          address: stoAddress,
+        })
+      );
+    }
+    case StoType.UsdTiered: {
+      return factories.usdTieredStoFactory.refresh(
+        UsdTieredSto.generateId({
+          securityTokenId,
+          stoType: StoType.UsdTiered,
+          address: stoAddress,
+        })
+      );
+    }
+  }
+};
