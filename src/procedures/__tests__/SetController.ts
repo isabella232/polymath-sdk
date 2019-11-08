@@ -65,14 +65,12 @@ describe('SetController', () => {
       // Instantiate SetController with incorrect security symbol
       target = new SetController(params, contextMock.getMockInstance());
 
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params.symbol })
-          .throws()
-      );
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,
@@ -91,7 +89,7 @@ describe('SetController', () => {
       );
 
       // Real call rejects
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `Controller address "Inappropriate" is invalid.`,
@@ -110,7 +108,7 @@ describe('SetController', () => {
       target = new SetController(params, contextMock.getMockInstance());
 
       // Real call rejects
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `You must be the owner of this Security Token to set the controller`,
@@ -133,7 +131,7 @@ describe('SetController', () => {
       await target.prepareTransactions();
 
       // Verifications
-      expect(
+      await expect(
         addTransactionSpy
           .getCall(0)
           .calledWithExactly(
