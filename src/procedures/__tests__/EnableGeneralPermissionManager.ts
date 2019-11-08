@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { stub, spy, restore } from 'sinon';
+import { spy, restore } from 'sinon';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
@@ -76,14 +76,12 @@ describe('EnableGeneralPermissionManager', () => {
     });
 
     test('should throw if there is no valid security token supplied', async () => {
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params.symbol })
-          .throws()
-      );
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,
