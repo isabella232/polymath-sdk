@@ -81,7 +81,7 @@ describe('ModifyShareholderData', () => {
       {
         address: testAddress,
         canSendAfter: new Date(Date.now()),
-        canReceiveAfter: new Date(0, 0),
+        canReceiveAfter: new Date(1980, 1),
         kycExpiry: new Date(2035, 1),
         canBuyFromSto: true,
         isAccredited: true,
@@ -89,7 +89,7 @@ describe('ModifyShareholderData', () => {
       {
         address: testAddress2,
         canSendAfter: new Date(Date.now()),
-        canReceiveAfter: new Date(0, 0),
+        canReceiveAfter: new Date(1980, 1),
         kycExpiry: new Date(2035, 1),
         canBuyFromSto: true,
         isAccredited: true,
@@ -144,25 +144,7 @@ describe('ModifyShareholderData', () => {
       ).toEqual(true);
       expect(addTransactionSpy.callCount).toEqual(2);
     });
-    // TODO
-    /*
-    test('should throw if corresponding checkpoint event is not fired', async () => {
-      ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
-      // Real call
-      const resolver = await target.prepareTransactions();
-
-      await expect(
-        resolver.run({} as TransactionReceiptWithDecodedLogs)
-      ).rejects.toThrow(
-        new PolymathError({
-          code: ErrorCode.UnexpectedEventLogs,
-          message:
-            "The Checkpoint was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
-        })
-      );
-    });
-*/
     test('should return the newly created checkpoint', async () => {
       const shareholderObject = {
         shareholder: {
@@ -180,7 +162,9 @@ describe('ModifyShareholderData', () => {
       expect(
         fetchStub.getCall(0).calledWithExactly(
           Shareholder.generateId({
-            securityTokenId: SecurityToken.generateId({ symbol: params.symbol }),
+            securityTokenId: SecurityToken.generateId({
+              symbol: params.symbol,
+            }),
             address: params.shareholderData[0].address,
           })
         )
@@ -199,6 +183,47 @@ describe('ModifyShareholderData', () => {
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,
+        })
+      );
+    });
+    /*
+    test('should throw if there is an invalid epoch time', async () => {
+      const invalidParams = params;
+      invalidParams.shareholderData = [{
+        canReceiveAfter: new Date(1970,0),
+        canSendAfter: new Date(1970,0),
+        address: testAddress,
+        canBuyFromSto: true,
+        isAccredited: true,
+        kycExpiry: new Date(0, 0)
+      }];
+      target = new ModifyShareholderData(invalidParams, contextMock.getMockInstance());
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message:
+            "Cannot set dates to epoch. If you're trying to revoke a shareholder's KYC, use .revokeKyc()",
+        })
+      );
+    });
+    
+    test('should throw if modifying share holder fails', async () => {
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: 'Modify shareholder data failed: Nothing to modify',
+        })
+      );
+    });
+    */
+    test('should throw if the general transfer manager is not enabled', async () => {
+      wrappersMock.mock('getAttachedModules', {});
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `General Transfer Manager for token "${
+            params.symbol
+          }" isn't enabled. Please report this issue to the Polymath team`,
         })
       );
     });
