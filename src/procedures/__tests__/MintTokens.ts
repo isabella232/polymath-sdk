@@ -27,7 +27,7 @@ const params: MintTokensProcedureArgs = {
   symbol: 'TEST1',
   mintingData: [
     {
-      address: testAddress,
+      address: testAddress3,
       amount: new BigNumber(1),
       shareholderData: {
         canSendAfter: new Date(2030, 1),
@@ -36,6 +36,10 @@ const params: MintTokensProcedureArgs = {
         canBuyFromSto: true,
         isAccredited: true,
       },
+    },
+    {
+      address: testAddress,
+      amount: new BigNumber(1),
     },
   ],
 };
@@ -165,18 +169,26 @@ describe('MintTokens', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      await expect(resolver.result).toEqual([shareholderObject]);
+      await expect(resolver.result).toEqual([shareholderObject, shareholderObject]);
 
       // Verification for fetch
       expect(
         fetchStub.getCall(0).calledWithExactly(
           Shareholder.generateId({
             securityTokenId,
+            address: testAddress3,
+          })
+        )
+      ).toEqual(true);
+      expect(
+        fetchStub.getCall(1).calledWithExactly(
+          Shareholder.generateId({
+            securityTokenId,
             address: testAddress,
           })
         )
       ).toEqual(true);
-      expect(fetchStub.callCount).toBe(1);
+      expect(fetchStub.callCount).toBe(2);
     });
 
     test('should throw if there is no valid security token supplied', async () => {
@@ -224,7 +236,7 @@ describe('MintTokens', () => {
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `Cannot mint tokens to the following addresses: [${testAddress}]. Reason: Expired KYC`,
+          message: `Cannot mint tokens to the following addresses: [${testAddress3}]. Reason: Expired KYC`,
         })
       );
     });
