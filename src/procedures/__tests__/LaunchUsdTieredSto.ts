@@ -32,8 +32,6 @@ const params: LaunchUsdTieredStoProcedureArgs = {
     {
       tokensOnSale: new BigNumber(1),
       price: new BigNumber(1),
-      discountedPrice: new BigNumber(1),
-      tokensWithDiscount: new BigNumber(1),
     },
   ],
   nonAccreditedInvestmentLimit: new BigNumber(1),
@@ -137,6 +135,25 @@ describe('LaunchUsdTieredSto', () => {
     test('should add the transaction to the queue to launch usd tiered sto and add a procedure to transfer erc20 token', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20)).toEqual(true);
+      expect(addProcedureSpy.callCount).toEqual(1);
+    });
+
+    test('should add the transaction to the queue to launch usd tiered sto with cost in poly', async () => {
+      const addProcedureSpy = spy(target, 'addProcedure');
+      const addTransactionSpy = spy(target, 'addTransaction');
+
+      moduleFactoryMock.mock('isCostInPoly', Promise.resolve(true));
       // Real call
       await target.prepareTransactions();
 

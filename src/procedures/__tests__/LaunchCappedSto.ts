@@ -129,6 +129,26 @@ describe('LaunchCappedSto', () => {
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
+    test('should add a transaction to the queue to launch a capped sto with cost in poly', async () => {
+      const addProcedureSpy = spy(target, 'addProcedure');
+      const addTransactionSpy = spy(target, 'addTransaction');
+
+      moduleFactoryMock.mock('isCostInPoly', Promise.resolve(true));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20)).toEqual(true);
+      expect(addProcedureSpy.callCount).toEqual(1);
+    });
+
     test('should throw if corresponding capped sto event is not fired', async () => {
       ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
