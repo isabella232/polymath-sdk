@@ -16,6 +16,7 @@ import * as shareholdersEntityModule from '~/entities/SecurityToken/Shareholders
 import * as securityTokenEntityModule from '~/entities/SecurityToken/SecurityToken';
 import { SecurityToken } from '~/entities/SecurityToken/SecurityToken';
 import { PolymathError } from '~/PolymathError';
+import { Shareholder } from '~/entities';
 
 const params = {
   symbol: 'TEST1',
@@ -176,15 +177,14 @@ describe('ModifyShareholderData', () => {
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
       expect(resolver.result).toEqual([shareholderObject]);
       // Verification for fetch
-      // TODO fix verification
-      // expect(
-      //   fetchStub.getCall(0).calledWith(
-      //         Shareholder.generateId({
-      //          securityTokenId:  SecurityToken.generateId({ symbol: params.symbol }),
-      //         address: testAddress,
-      //     })
-      //   )
-      // ).toEqual(true);
+      expect(
+        fetchStub.getCall(0).calledWithExactly(
+          Shareholder.generateId({
+            securityTokenId: SecurityToken.generateId({ symbol: params.symbol }),
+            address: params.shareholderData[0].address,
+          })
+        )
+      ).toEqual(true);
 
       expect(fetchStub.callCount).toBe(1);
     });
