@@ -31,7 +31,7 @@ const params: MintTokensProcedureArgs = {
       amount: new BigNumber(1),
       shareholderData: {
         canSendAfter: new Date(2030, 1),
-        canReceiveAfter: new Date(0, 0),
+        canReceiveAfter: new Date(1980, 1),
         kycExpiry: new Date(2035, 1),
         canBuyFromSto: true,
         isAccredited: true,
@@ -100,7 +100,7 @@ describe('MintTokens', () => {
       {
         address: testAddress,
         canSendAfter: new Date(Date.now()),
-        canReceiveAfter: new Date(0, 0),
+        canReceiveAfter: new Date(1980, 1),
         kycExpiry: new Date(2035, 1),
         canBuyFromSto: true,
         isAccredited: true,
@@ -108,7 +108,7 @@ describe('MintTokens', () => {
       {
         address: testAddress2,
         canSendAfter: new Date(Date.now()),
-        canReceiveAfter: new Date(0, 0),
+        canReceiveAfter: new Date(1980, 1),
         kycExpiry: new Date(2035, 1),
         canBuyFromSto: true,
         isAccredited: true,
@@ -151,25 +151,6 @@ describe('MintTokens', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
       expect(addProcedureSpy.getCall(0).calledWith(ModifyShareholderData)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
-    });
-
-    test('should throw an error for an expired Kyc', async () => {
-      const expiredParams = params;
-      expiredParams.mintingData[0].shareholderData = {
-        canSendAfter: new Date(Date.now()),
-        canReceiveAfter: new Date(2035, 1),
-        kycExpiry: new Date(2000, 1),
-        canBuyFromSto: true,
-        isAccredited: true,
-      };
-
-      target = new MintTokens(expiredParams, contextMock.getMockInstance());
-      await expect(target.prepareTransactions()).rejects.toThrow(
-        new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: `Cannot mint tokens to the following addresses: [${testAddress}]. Reason: Expired KYC`,
-        })
-      );
     });
 
     test('should return the minted tokens shareholders object', async () => {
@@ -225,6 +206,25 @@ describe('MintTokens', () => {
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `Cannot mint tokens to the following addresses: [${testAddress3}]. Reason: Those addresses are not Shareholders`,
+        })
+      );
+    });
+
+    test('should throw an error for an expired Kyc', async () => {
+      const expiredParams = params;
+      expiredParams.mintingData[0].shareholderData = {
+        canSendAfter: new Date(Date.now()),
+        canReceiveAfter: new Date(2035, 1),
+        kycExpiry: new Date(2000, 1),
+        canBuyFromSto: true,
+        isAccredited: true,
+      };
+
+      target = new MintTokens(expiredParams, contextMock.getMockInstance());
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Cannot mint tokens to the following addresses: [${testAddress}]. Reason: Expired KYC`,
         })
       );
     });
