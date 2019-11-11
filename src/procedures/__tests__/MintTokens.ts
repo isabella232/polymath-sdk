@@ -154,18 +154,16 @@ describe('MintTokens', () => {
     });
 
     test('should throw an error for an expired Kyc', async () => {
-      const shareHoldersExpiredKyc = [
-        {
-          address: testAddress,
-          canSendAfter: new Date(Date.now()),
-          canReceiveAfter: new Date(0),
-          kycExpiry: new Date(0),
-          canBuyFromSto: true,
-          isAccredited: true,
-        },
-      ];
+      const expiredParams = params;
+      expiredParams.mintingData[0].shareholderData = {
+        canSendAfter: new Date(Date.now()),
+        canReceiveAfter: new Date(2035, 1),
+        kycExpiry: new Date(2000, 1),
+        canBuyFromSto: true,
+        isAccredited: true,
+      };
 
-      shareholdersEntityMock.mock('getShareholders', shareHoldersExpiredKyc);
+      target = new MintTokens(expiredParams, contextMock.getMockInstance());
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
