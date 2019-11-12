@@ -153,6 +153,22 @@ describe('ModifyShareholderData', () => {
       expect(addTransactionSpy.callCount).toEqual(2);
     });
 
+    test('should add a transaction to the queue to create a new checkpoint without changing flags', async () => {
+      const paramsWithoutFlagsChange = Object.assign({}, params);
+      paramsWithoutFlagsChange.shareholderData[0].isAccredited = false;
+      paramsWithoutFlagsChange.shareholderData[1].isAccredited = false;
+      target = new ModifyShareholderData(paramsWithoutFlagsChange, contextMock.getMockInstance());
+      const addTransactionSpy = spy(target, 'addTransaction');
+
+      // Real call
+      await target.prepareTransactions();
+      // Verifications
+      expect(
+        addTransactionSpy.getCall(0).calledWith(gtmMock.getMockInstance().modifyKYCDataMulti)
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
+    });
+
     test('should return the newly created checkpoint', async () => {
       const shareholderObject = {
         shareholder: {
@@ -232,7 +248,7 @@ describe('ModifyShareholderData', () => {
     });
 
     test('should throw if there is an invalid epoch time', async () => {
-      const invalidParams = params;
+      const invalidParams = Object.assign({}, params);
       invalidParams.shareholderData[0].kycExpiry = new Date(0);
       target = new ModifyShareholderData(invalidParams, contextMock.getMockInstance());
       await expect(target.prepareTransactions()).rejects.toThrow(
