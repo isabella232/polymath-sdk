@@ -79,6 +79,15 @@ export class ModifyPreMinting extends Procedure<ModifyPreMintingProcedureArgs> {
       });
     }
 
+    const preMintingAllowed = await stoModule.preMintAllowed();
+
+    if (preMintingAllowed === allowPreMinting) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `Pre-minting is already ${preMintingAllowed ? '' : 'dis'}allowed`,
+      });
+    }
+
     /**
      * Transactions
      */

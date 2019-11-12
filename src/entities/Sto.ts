@@ -5,7 +5,7 @@ import { StoType, isStoType, Currency, ErrorCode, StoRole } from '../types';
 import { Investment } from './Investment';
 import { PolymathError } from '../PolymathError';
 import { Context } from '../Context';
-import { PauseSto, AssignStoRole, FinalizeSto } from '../procedures';
+import { PauseSto, AssignStoRole, FinalizeSto, ModifyBeneficialInvestments } from '../procedures';
 import { ModifyPreMinting } from '../procedures/ModifyPreMinting';
 
 export interface UniqueIdentifiers {
@@ -184,6 +184,34 @@ export abstract class Sto<P> extends Entity<P> {
 
     const procedure = new ModifyPreMinting(
       { stoAddress, stoType, symbol, allowPreMinting: false },
+      this.context
+    );
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Enables a party to invest in the STO on behalf of another party
+   */
+  public allowBeneficialInvestments = async () => {
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
+
+    const procedure = new ModifyBeneficialInvestments(
+      { stoAddress, stoType, symbol, allowBeneficialInvestments: true },
+      this.context
+    );
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Disables the possibility for a party to invest in the STO on behalf of another party
+   */
+  public disallowBeneficialInvestments = async () => {
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
+
+    const procedure = new ModifyBeneficialInvestments(
+      { stoAddress, stoType, symbol, allowBeneficialInvestments: false },
       this.context
     );
 

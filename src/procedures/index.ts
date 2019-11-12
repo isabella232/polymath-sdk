@@ -25,3 +25,4 @@ export { ModifyShareholderData } from './ModifyShareholderData';
 export { RevokeKyc } from './RevokeKyc';
 export { MintTokens } from './MintTokens';
 export { FinalizeSto } from './FinalizeSto';
+export { ModifyBeneficialInvestments } from './ModifyBeneficialInvestments';
