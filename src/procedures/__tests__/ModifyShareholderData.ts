@@ -18,13 +18,15 @@ import { SecurityToken } from '~/entities/SecurityToken/SecurityToken';
 import { PolymathError } from '~/PolymathError';
 import { Shareholder } from '~/entities';
 
+const testAddress = '0x6666666666666666666666666666666666666666';
+const testAddress2 = '0x9999999999999999999999999999999999999999';
 const params = {
   symbol: 'TEST1',
   name: 'Test Token 1',
   owner: '0x3',
   shareholderData: [
     {
-      address: '0x1',
+      address: testAddress2,
       canSendAfter: new Date(2030, 1),
       canReceiveAfter: new Date(0, 0),
       kycExpiry: new Date(2035, 1),
@@ -53,8 +55,6 @@ describe('ModifyShareholderData', () => {
   let gtmMock: MockManager<contractWrappersModule.GeneralTransferManager_3_0_0>;
 
   const securityTokenId = 'ST ID';
-  const testAddress = '0x6666666666666666666666666666666666666666';
-  const testAddress2 = '0x9999999999999999999999999999999999999999';
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test ModifyShareholderData
@@ -92,7 +92,7 @@ describe('ModifyShareholderData', () => {
         canReceiveAfter: new Date(1980, 1),
         kycExpiry: new Date(2035, 1),
         canBuyFromSto: true,
-        isAccredited: true,
+        isAccredited: false,
       },
     ];
     shareholdersEntityMock.mock('getShareholders', shareHolders);
