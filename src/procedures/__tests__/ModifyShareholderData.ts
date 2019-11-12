@@ -187,6 +187,18 @@ describe('ModifyShareholderData', () => {
       );
     });
 
+    test('should throw if the general transfer manager is not enabled', async () => {
+      wrappersMock.mock('getAttachedModules', {});
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `General Transfer Manager for token "${
+            params.symbol
+          }" isn't enabled. Please report this issue to the Polymath team`,
+        })
+      );
+    });
+
     test('should throw if there is an invalid epoch time', async () => {
       const invalidParams = params;
       invalidParams.shareholderData[0].kycExpiry = new Date(0);
@@ -209,16 +221,5 @@ describe('ModifyShareholderData', () => {
       );
     });
 */
-    test('should throw if the general transfer manager is not enabled', async () => {
-      wrappersMock.mock('getAttachedModules', {});
-      await expect(target.prepareTransactions()).rejects.toThrow(
-        new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: `General Transfer Manager for token "${
-            params.symbol
-          }" isn't enabled. Please report this issue to the Polymath team`,
-        })
-      );
-    });
   });
 });
