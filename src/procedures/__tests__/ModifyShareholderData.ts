@@ -186,17 +186,10 @@ describe('ModifyShareholderData', () => {
         })
       );
     });
-    /*
+
     test('should throw if there is an invalid epoch time', async () => {
       const invalidParams = params;
-      invalidParams.shareholderData = [{
-        canReceiveAfter: new Date(1970,0),
-        canSendAfter: new Date(1970,0),
-        address: testAddress,
-        canBuyFromSto: true,
-        isAccredited: true,
-        kycExpiry: new Date(0, 0)
-      }];
+      invalidParams.shareholderData[0].kycExpiry = new Date(0);
       target = new ModifyShareholderData(invalidParams, contextMock.getMockInstance());
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
@@ -206,7 +199,7 @@ describe('ModifyShareholderData', () => {
         })
       );
     });
-    
+    /*
     test('should throw if modifying share holder fails', async () => {
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
@@ -215,7 +208,7 @@ describe('ModifyShareholderData', () => {
         })
       );
     });
-    */
+*/
     test('should throw if the general transfer manager is not enabled', async () => {
       wrappersMock.mock('getAttachedModules', {});
       await expect(target.prepareTransactions()).rejects.toThrow(
