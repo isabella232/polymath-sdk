@@ -20,11 +20,37 @@ import { Shareholder } from '~/entities';
 
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
+const oldShareholdersData = [
+  {
+    address: testAddress,
+    canSendAfter: new Date(1980, 1),
+    canReceiveAfter: new Date(1980, 1),
+    kycExpiry: new Date(2035, 1),
+    canBuyFromSto: true,
+    isAccredited: false,
+  },
+  {
+    address: testAddress2,
+    canSendAfter: new Date(1980, 1),
+    canReceiveAfter: new Date(1980, 1),
+    kycExpiry: new Date(2035, 1),
+    canBuyFromSto: true,
+    isAccredited: false,
+  },
+];
 const params = {
   symbol: 'TEST1',
   name: 'Test Token 1',
   owner: '0x3',
   shareholderData: [
+    {
+      address: testAddress,
+      canSendAfter: new Date(2030, 1),
+      canReceiveAfter: new Date(0, 0),
+      kycExpiry: new Date(2035, 1),
+      canBuyFromSto: true,
+      isAccredited: true,
+    },
     {
       address: testAddress2,
       canSendAfter: new Date(2030, 1),
@@ -77,25 +103,7 @@ describe('ModifyShareholderData', () => {
       'SecurityTokenFactory'
     );
 
-    const shareHolders = [
-      {
-        address: testAddress,
-        canSendAfter: new Date(Date.now()),
-        canReceiveAfter: new Date(1980, 1),
-        kycExpiry: new Date(2035, 1),
-        canBuyFromSto: true,
-        isAccredited: true,
-      },
-      {
-        address: testAddress2,
-        canSendAfter: new Date(Date.now()),
-        canReceiveAfter: new Date(1980, 1),
-        kycExpiry: new Date(2035, 1),
-        canBuyFromSto: true,
-        isAccredited: false,
-      },
-    ];
-    shareholdersEntityMock.mock('getShareholders', shareHolders);
+    shareholdersEntityMock.mock('getShareholders', oldShareholdersData);
     securityTokenEntityMock.set('shareholders', shareholdersEntityMock.getMockInstance());
     securityTokenEntityMock.set('uid', securityTokenId);
 
@@ -157,7 +165,7 @@ describe('ModifyShareholderData', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      expect(resolver.result).toEqual([shareholderObject]);
+      expect(resolver.result).toEqual([shareholderObject, shareholderObject]);
       // Verification for fetch
       expect(
         fetchStub.getCall(0).calledWithExactly(
@@ -170,7 +178,18 @@ describe('ModifyShareholderData', () => {
         )
       ).toEqual(true);
 
-      expect(fetchStub.callCount).toBe(1);
+      expect(
+        fetchStub.getCall(1).calledWithExactly(
+          Shareholder.generateId({
+            securityTokenId: SecurityToken.generateId({
+              symbol: params.symbol,
+            }),
+            address: params.shareholderData[1].address,
+          })
+        )
+      ).toEqual(true);
+
+      expect(fetchStub.callCount).toBe(2);
     });
 
     test('should throw if there is no valid security token supplied', async () => {
@@ -199,6 +218,19 @@ describe('ModifyShareholderData', () => {
       );
     });
 
+    test('should throw if modifying share holder fails, as old shareholder data is same as the new shareholder data', async () => {
+      target = new ModifyShareholderData(
+        { ...params, shareholderData: oldShareholdersData },
+        contextMock.getMockInstance()
+      );
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: 'Modify shareholder data failed: Nothing to modify',
+        })
+      );
+    });
+
     test('should throw if there is an invalid epoch time', async () => {
       const invalidParams = params;
       invalidParams.shareholderData[0].kycExpiry = new Date(0);
@@ -211,15 +243,5 @@ describe('ModifyShareholderData', () => {
         })
       );
     });
-    /*
-    test('should throw if modifying share holder fails', async () => {
-      await expect(target.prepareTransactions()).rejects.toThrow(
-        new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: 'Modify shareholder data failed: Nothing to modify',
-        })
-      );
-    });
-*/
   });
 });
