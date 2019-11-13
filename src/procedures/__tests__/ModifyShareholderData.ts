@@ -46,16 +46,16 @@ const params = {
     {
       address: testAddress,
       canSendAfter: new Date(2030, 1),
-      canReceiveAfter: new Date(0, 0),
-      kycExpiry: new Date(2035, 1),
+      canReceiveAfter: new Date(1981, 1),
+      kycExpiry: new Date(2035, 2),
       canBuyFromSto: true,
       isAccredited: true,
     },
     {
       address: testAddress2,
       canSendAfter: new Date(2030, 1),
-      canReceiveAfter: new Date(0, 0),
-      kycExpiry: new Date(2035, 1),
+      canReceiveAfter: new Date(1981, 1),
+      kycExpiry: new Date(2035, 2),
       canBuyFromSto: true,
       isAccredited: true,
     },
@@ -155,10 +155,8 @@ describe('ModifyShareholderData', () => {
 
     test('should return the newly created checkpoint', async () => {
       const shareholderObject = {
-        shareholder: {
-          securityTokenId: () => params.symbol,
-          address: () => testAddress,
-        },
+        securityTokenId: () => params.symbol,
+        address: () => testAddress,
       };
       const fetchStub = shareholderFactoryMock.mock('fetch', Promise.resolve(shareholderObject));
 
@@ -251,10 +249,8 @@ describe('ModifyShareholderData', () => {
 
     test('should return the newly created checkpoint without changing flags', async () => {
       const shareholderObject = {
-        shareholder: {
-          securityTokenId: () => params.symbol,
-          address: () => testAddress,
-        },
+        securityTokenId: () => params.symbol,
+        address: () => testAddress,
       };
       const fetchStub = shareholderFactoryMock.mock('fetch', Promise.resolve(shareholderObject));
 
