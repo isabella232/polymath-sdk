@@ -21,7 +21,7 @@ export class ModifyShareholderData extends Procedure<
   ModifyShareholderDataProcedureArgs,
   Shareholder[]
 > {
-  public type = ProcedureType.CreateErc20DividendDistribution;
+  public type = ProcedureType.ModifyShareholderData;
 
   public async prepareTransactions() {
     const { symbol, shareholderData } = this.args;

@@ -92,6 +92,14 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       stoModule.getSTODetails(),
     ]);
 
+    // STO can't have started
+    if (startTime <= new Date()) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: 'Cannot modify STO data: STO has already started',
+      });
+    }
+
     // list of added transactions to keep track of the last added tx in order to refresh the entity only once
     const addedTransactions: PolyTransactionTag[] = [];
     const securityTokenId = SecurityToken.generateId({ symbol });

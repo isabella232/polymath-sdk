@@ -14,7 +14,7 @@ import { SecurityToken, CappedSto, TieredSto } from '../entities';
 export class ModifyBeneficialInvestments extends Procedure<
   ModifyBeneficialInvestmentsProcedureArgs
 > {
-  public type = ProcedureType.PauseSto;
+  public type = ProcedureType.ModifyBeneficialInvestments;
 
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol, allowBeneficialInvestments } = this.args;

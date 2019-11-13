@@ -27,3 +27,4 @@ export { MintTokens } from './MintTokens';
 export { FinalizeSto } from './FinalizeSto';
 export { ModifyBeneficialInvestments } from './ModifyBeneficialInvestments';
 export { ModifyTieredStoData } from './ModifyTieredStoData';
+export { InvestInTieredSto } from './InvestInTieredSto';

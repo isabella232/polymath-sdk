@@ -16,7 +16,7 @@ import { isValidAddress } from '../utils';
 import { SecurityToken, CappedSto, TieredSto } from '../entities';
 
 export class ModifyPreMinting extends Procedure<ModifyPreMintingProcedureArgs> {
-  public type = ProcedureType.PauseSto;
+  public type = ProcedureType.ModifyPreMinting;
 
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol, allowPreMinting } = this.args;

@@ -149,6 +149,8 @@ export enum ProcedureType {
   ModifyPreMinting = 'ModifyPreMinting',
   ModifyBeneficialInvestments = 'ModifyBeneificialInvestments',
   ModifyTieredStoData = 'ModifyTieredStoData',
+  InvestInTieredSto = 'InvestInTieredSto',
+  DisableFeature = 'DisableFeature',
 }
 
 export enum PolyTransactionTag {
@@ -190,6 +192,9 @@ export enum PolyTransactionTag {
   ModifyAddresses = 'ModifyAddresses',
   ModifyTiers = 'ModifiyTiers',
   ModifyLimits = 'ModifyLimits',
+  BuyWithScRateLimited = 'BuyWithScRateLimited',
+  BuyWithPolyRateLimited = 'BuyWithPolyRateLimited',
+  BuyWithEthRateLimited = 'BuyWithEthRateLimited',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -324,6 +329,33 @@ export interface ModifyBeneficialInvestmentsProcedureArgs {
 export interface ModifyTieredStoDataProcedureArgs
   extends Omit<LaunchTieredStoProcedureArgs, 'allowPreMinting'> {
   stoAddress: string;
+}
+
+interface InvestInTieredStoBaseProcedureArgs {
+  symbol: string;
+  stoAddress: string;
+  amount: BigNumber;
+  currency: Currency;
+  minTokens?: BigNumber;
+  beneficiary?: string;
+}
+
+export type InvestWithStableCoinArgs = {
+  currency: Currency.StableCoin;
+  stableCoinAddress: string;
+} & InvestInTieredStoBaseProcedureArgs;
+
+export type InvestInTieredStoProcedureArgs =
+  | InvestInTieredStoBaseProcedureArgs & {
+      currency: Currency.POLY | Currency.ETH;
+      stableCoinAddress?: undefined; // this is done this way on purpose for type safety
+    }
+  | InvestWithStableCoinArgs;
+
+export function isInvestWithStableCoinArgs(args: any): args is InvestWithStableCoinArgs {
+  const { currency, stableCoinAddress } = args;
+
+  return currency === Currency.StableCoin && typeof stableCoinAddress === 'string';
 }
 
 export interface StoTier {
@@ -495,6 +527,13 @@ export interface ProcedureArguments {
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
   [ProcedureType.MintTokens]: MintTokensProcedureArgs;
   [ProcedureType.ModifyPreMinting]: ModifyPreMintingProcedureArgs;
+  [ProcedureType.DisableFeature]: DisableFeatureProcedureArgs;
+  [ProcedureType.FinalizeSto]: FinalizeStoProcedureArgs;
+  [ProcedureType.ModifyBeneficialInvestments]: ModifyBeneficialInvestmentsProcedureArgs;
+  [ProcedureType.ModifyTieredStoData]: ModifyTieredStoDataProcedureArgs;
+  [ProcedureType.InvestInTieredSto]: InvestInTieredStoProcedureArgs;
+  [ProcedureType.EnableGeneralPermissionManager]: EnableGeneralPermissionManagerProcedureArgs;
+  [ProcedureType.EnableGeneralTransferManager]: EnableGeneralTransferManagerProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 

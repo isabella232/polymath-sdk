@@ -50,7 +50,15 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
       beneficialInvestmentsAllowed,
       raisedFundsWallet,
       unsoldTokensWallet,
-      { fundsRaised, investorCount, totalTokensSold, isRaisedInPoly, ...details },
+      {
+        fundsRaised,
+        investorCount,
+        totalTokensSold,
+        isRaisedInPoly,
+        startTime,
+        endTime,
+        ...details
+      },
     ] = await Promise.all([
       module.paused(),
       module.capReached(),
@@ -61,7 +69,7 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
     ]);
 
     let preMintAllowed = false;
-    let isFinalized = capReached || details.endTime <= new Date();
+    let isFinalized = capReached || endTime <= new Date();
 
     if (isCappedSTO_3_1_0(module)) {
       [preMintAllowed, isFinalized] = await Promise.all([
@@ -84,12 +92,14 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
     );
 
     return {
-      fundraiseTypes: isRaisedInPoly ? [Currency.POLY] : [Currency.ETH],
+      currencies: isRaisedInPoly ? [Currency.POLY] : [Currency.ETH],
       raisedFundsWallet,
       unsoldTokensWallet,
       raisedAmount: fundsRaised,
       soldTokensAmount: totalTokensSold,
       investorAmount: investorCount,
+      startDate: startTime,
+      endDate: endTime,
       ...details,
       securityTokenId,
       securityTokenSymbol: symbol,
