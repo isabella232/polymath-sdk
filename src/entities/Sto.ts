@@ -1,11 +1,17 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
-import { StoType, isStoType, Currency, ErrorCode, StoRole } from '../types';
+import { StoType, isStoType, Currency, ErrorCode, StoRole, StoTier } from '../types';
 import { Investment } from './Investment';
 import { PolymathError } from '../PolymathError';
 import { Context } from '../Context';
-import { PauseSto, AssignStoRole, FinalizeSto, ModifyBeneficialInvestments } from '../procedures';
+import {
+  PauseSto,
+  AssignStoRole,
+  FinalizeSto,
+  ModifyBeneficialInvestments,
+  ModifyTieredStoData,
+} from '../procedures';
 import { ModifyPreMinting } from '../procedures/ModifyPreMinting';
 
 export interface UniqueIdentifiers {

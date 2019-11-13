@@ -148,6 +148,7 @@ export enum ProcedureType {
   MintTokens = 'MintTokens',
   ModifyPreMinting = 'ModifyPreMinting',
   ModifyBeneficialInvestments = 'ModifyBeneificialInvestments',
+  ModifyTieredStoData = 'ModifyTieredStoData',
 }
 
 export enum PolyTransactionTag {
@@ -184,6 +185,11 @@ export enum PolyTransactionTag {
   AllowPreMinting = 'AllowPreMinting',
   RevokePreMinting = 'RevokePreMinting',
   ChangeAllowBeneficialInvestments = 'ChangeAllowBeneficialInvestments',
+  ModifyTimes = 'ModifyTimes',
+  ModifyFunding = 'ModifyFunding',
+  ModifyAddresses = 'ModifyAddresses',
+  ModifyTiers = 'ModifiyTiers',
+  ModifyLimits = 'ModifyLimits',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -313,6 +319,11 @@ export interface ModifyBeneficialInvestmentsProcedureArgs {
   stoAddress: string;
   stoType: StoType;
   allowBeneficialInvestments: boolean;
+}
+
+export interface ModifyTieredStoDataProcedureArgs
+  extends Omit<LaunchTieredStoProcedureArgs, 'allowPreMinting'> {
+  stoAddress: string;
 }
 
 export interface StoTier {

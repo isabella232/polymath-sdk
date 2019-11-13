@@ -2,6 +2,8 @@ import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { serialize } from '../utils';
 import { Sto, UniqueIdentifiers, Params as StoParams } from './Sto';
 import { Context } from '../Context';
+import { StoTier, Currency } from '../types';
+import { ModifyTieredStoData } from '../procedures';
 
 export { UniqueIdentifiers };
 
@@ -44,6 +46,27 @@ export class TieredSto extends Sto<Params> {
     this.currentTier = currentTier;
     this.tiers = tiers;
     this.uid = TieredSto.generateId({ address, stoType, securityTokenId });
+  }
+
+  /**
+   * Modifies STO parameters
+   */
+  public async modifyData(args: {
+    startDate: Date;
+    endDate: Date;
+    tiers: StoTier[];
+    nonAccreditedInvestmentLimit: BigNumber;
+    minimumInvestment: BigNumber;
+    currencies: Currency[];
+    storageWallet: string;
+    treasuryWallet: string;
+    stableCoinAddresses: string[];
+  }) {
+    const { address: stoAddress, securityTokenSymbol: symbol } = this;
+
+    const procedure = new ModifyTieredStoData({ stoAddress, symbol, ...args }, this.context);
+
+    return procedure.prepare();
   }
 
   public toPojo() {

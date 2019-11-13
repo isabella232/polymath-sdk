@@ -44,6 +44,10 @@ export const delay = async (amount: number) => {
   });
 };
 
+export function areSameAddress(a: string, b: string) {
+  return a.toUpperCase() === b.toUpperCase();
+}
+
 export function serialize(entityType: string, pojo: Pojo) {
   return Buffer.from(`${entityType}:${stringify(pojo)}`).toString('base64');
 }
