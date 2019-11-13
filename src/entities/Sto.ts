@@ -1,17 +1,11 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
-import { StoType, isStoType, Currency, ErrorCode, StoRole, StoTier } from '../types';
+import { StoType, isStoType, Currency, ErrorCode, StoRole } from '../types';
 import { Investment } from './Investment';
 import { PolymathError } from '../PolymathError';
 import { Context } from '../Context';
-import {
-  PauseSto,
-  AssignStoRole,
-  FinalizeSto,
-  ModifyBeneficialInvestments,
-  ModifyTieredStoData,
-} from '../procedures';
+import { PauseSto, AssignStoRole, FinalizeSto, ModifyBeneficialInvestments } from '../procedures';
 import { ModifyPreMinting } from '../procedures/ModifyPreMinting';
 
 export interface UniqueIdentifiers {
@@ -28,9 +22,9 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 
 export interface Params {
   securityTokenSymbol: string;
-  startTime: Date;
-  endTime: Date;
-  fundraiseTypes: Currency[];
+  startDate: Date;
+  endDate: Date;
+  currencies: Currency[];
   raisedFundsWallet: string;
   unsoldTokensWallet: string;
   raisedAmount: BigNumber;
@@ -55,9 +49,9 @@ export abstract class Sto<P> extends Entity<P> {
 
   public stoType: StoType;
 
-  public startTime: Date;
+  public startDate: Date;
 
-  public endTime: Date;
+  public endDate: Date;
 
   public raisedFundsWallet: string;
 
@@ -71,7 +65,7 @@ export abstract class Sto<P> extends Entity<P> {
 
   public investments: Investment[];
 
-  public fundraiseTypes: Currency[];
+  public currencies: Currency[];
 
   public paused: boolean;
 
@@ -106,9 +100,9 @@ export abstract class Sto<P> extends Entity<P> {
       securityTokenSymbol,
       securityTokenId,
       stoType,
-      fundraiseTypes,
-      startTime,
-      endTime,
+      currencies,
+      startDate,
+      endDate,
       raisedFundsWallet,
       unsoldTokensWallet,
       raisedAmount,
@@ -126,15 +120,15 @@ export abstract class Sto<P> extends Entity<P> {
     this.securityTokenSymbol = securityTokenSymbol;
     this.securityTokenId = securityTokenId;
     this.stoType = stoType;
-    this.startTime = startTime;
-    this.endTime = endTime;
+    this.startDate = startDate;
+    this.endDate = endDate;
     this.raisedFundsWallet = raisedFundsWallet;
     this.unsoldTokensWallet = unsoldTokensWallet;
     this.raisedAmount = raisedAmount;
     this.soldTokensAmount = soldTokensAmount;
     this.investorAmount = investorAmount;
     this.investments = investments;
-    this.fundraiseTypes = fundraiseTypes;
+    this.currencies = currencies;
     this.paused = paused;
     this.capReached = capReached;
     this.isFinalized = isFinalized;
@@ -279,15 +273,15 @@ export abstract class Sto<P> extends Entity<P> {
       securityTokenId,
       address,
       securityTokenSymbol,
-      fundraiseTypes,
+      currencies,
       raisedFundsWallet,
       unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
       investorAmount,
       investments,
-      startTime,
-      endTime,
+      startDate,
+      endDate,
       capReached,
       isFinalized,
       paused,
@@ -300,14 +294,14 @@ export abstract class Sto<P> extends Entity<P> {
       securityTokenId,
       address,
       securityTokenSymbol,
-      fundraiseTypes,
+      currencies,
       raisedFundsWallet,
       unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
       investorAmount,
-      startTime,
-      endTime,
+      startDate,
+      endDate,
       capReached,
       isFinalized,
       paused,
@@ -320,9 +314,9 @@ export abstract class Sto<P> extends Entity<P> {
   public _refresh(params: Partial<Params>) {
     const {
       securityTokenSymbol,
-      startTime,
-      endTime,
-      fundraiseTypes,
+      startDate,
+      endDate,
+      currencies,
       raisedFundsWallet,
       unsoldTokensWallet,
       raisedAmount,
@@ -340,16 +334,16 @@ export abstract class Sto<P> extends Entity<P> {
       this.securityTokenSymbol = securityTokenSymbol;
     }
 
-    if (startTime) {
-      this.startTime = startTime;
+    if (startDate) {
+      this.startDate = startDate;
     }
 
-    if (endTime) {
-      this.endTime = endTime;
+    if (endDate) {
+      this.endDate = endDate;
     }
 
-    if (fundraiseTypes) {
-      this.fundraiseTypes = fundraiseTypes;
+    if (currencies) {
+      this.currencies = currencies;
     }
 
     if (raisedFundsWallet) {

@@ -58,8 +58,8 @@ export class TieredSto extends Sto<Params> {
     nonAccreditedInvestmentLimit: BigNumber;
     minimumInvestment: BigNumber;
     currencies: Currency[];
-    storageWallet: string;
-    treasuryWallet: string;
+    raisedFundsWallet: string;
+    unsoldTokensWallet: string;
     stableCoinAddresses: string[];
   }) {
     const { address: stoAddress, securityTokenSymbol: symbol } = this;

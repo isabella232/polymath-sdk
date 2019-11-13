@@ -21,8 +21,8 @@ export class Offerings extends SubModule {
    * @param tokensOnSale amount of tokens to be sold
    * @param rate amount of tokens an investor can purchase per unit of currency spent
    * @param currency currency in which the funds will be raised (ETH or POLY)
-   * @param storageWallet wallet address that will receive the funds that are being raised
-   * @param treasuryWallet wallet address that will receive unsold tokens
+   * @param raisedFundsWallet wallet address that will receive the funds that are being raised
+   * @param unsoldTokensWallet wallet address that will receive unsold tokens
    * @param allowPreMinting whether to have all tokens minted on STO start. Default behavior is to mint on purchase
    */
   public launchCappedSto = async (args: {
@@ -31,8 +31,8 @@ export class Offerings extends SubModule {
     tokensOnSale: BigNumber;
     rate: BigNumber;
     currency: CappedStoCurrency;
-    storageWallet: string;
-    treasuryWallet: string;
+    raisedFundsWallet: string;
+    unsoldTokensWallet: string;
     allowPreMinting?: boolean;
   }) => {
     const { context, securityToken } = this;
@@ -60,8 +60,8 @@ export class Offerings extends SubModule {
    * @param nonAccreditedInvestmentLimit maximum investment for non-accredited investors
    * @param minimumInvestment minimum investment amount
    * @param currencies array of currencies in which the funds will be raised (ETH, POLY, StableCoin)
-   * @param storageWallet wallet address that will receive the funds that are being raised
-   * @param treasuryWallet wallet address that will receive unsold tokens when the end date is reached
+   * @param raisedFundsWallet wallet address that will receive the funds that are being raised
+   * @param unsoldTokensWallet wallet address that will receive unsold tokens when the end date is reached
    * @param stableCoinAddresses array of stable coins that the offering supports
    * @param allowPreMinting whether to have all tokens minted on STO start. Default behavior is to mint on purchase
    */
@@ -72,8 +72,8 @@ export class Offerings extends SubModule {
     nonAccreditedInvestmentLimit: BigNumber;
     minimumInvestment: BigNumber;
     currencies: Currency[];
-    storageWallet: string;
-    treasuryWallet: string;
+    raisedFundsWallet: string;
+    unsoldTokensWallet: string;
     stableCoinAddresses: string[];
     allowPreMinting?: boolean;
   }) => {

@@ -44,8 +44,8 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       nonAccreditedInvestmentLimit,
       minimumInvestment,
       currencies,
-      storageWallet,
-      treasuryWallet,
+      raisedFundsWallet,
+      unsoldTokensWallet,
       stableCoinAddresses,
     } = args;
     const {
@@ -75,8 +75,8 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
     }
 
     const [
-      raisedFundsWallet,
-      unsoldTokensWallet,
+      storageWallet,
+      treasuryWallet,
       numberOfTiers,
       usdTokens,
       minInvestment,
@@ -239,7 +239,11 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
             stoAddress
           ),
         ],
-      })({ treasuryWallet, wallet: storageWallet, usdTokens: stableCoinAddresses });
+      })({
+        treasuryWallet: unsoldTokensWallet,
+        wallet: raisedFundsWallet,
+        usdTokens: stableCoinAddresses,
+      });
     }
 
     if (addedTransactions.length === 0) {

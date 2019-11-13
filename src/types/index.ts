@@ -297,8 +297,8 @@ export interface LaunchCappedStoProcedureArgs {
   tokensOnSale: BigNumber;
   rate: BigNumber;
   currency: CappedStoCurrency;
-  storageWallet: string;
-  treasuryWallet: string;
+  raisedFundsWallet: string;
+  unsoldTokensWallet: string;
   allowPreMinting?: boolean;
 }
 

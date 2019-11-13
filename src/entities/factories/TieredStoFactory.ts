@@ -64,6 +64,8 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
         isRaisedInETH,
         isRaisedInPOLY,
         isRaisedInSC,
+        startTime: startDate,
+        endTime: endDate,
         ...details
       },
     ] = await Promise.all([
@@ -137,27 +139,29 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       })
     );
 
-    const fundraiseTypes = [];
+    const currencies = [];
 
     if (isRaisedInETH) {
-      fundraiseTypes.push(Currency.ETH);
+      currencies.push(Currency.ETH);
     }
 
     if (isRaisedInPOLY) {
-      fundraiseTypes.push(Currency.POLY);
+      currencies.push(Currency.POLY);
     }
 
     if (isRaisedInSC) {
-      fundraiseTypes.push(Currency.StableCoin);
+      currencies.push(Currency.StableCoin);
     }
 
     return {
-      fundraiseTypes,
+      currencies,
       raisedFundsWallet,
       unsoldTokensWallet,
       raisedAmount: fundsRaised,
       investorAmount: investorCount,
       soldTokensAmount: tokensSold,
+      startDate,
+      endDate,
       ...details,
       securityTokenId,
       securityTokenSymbol: symbol,

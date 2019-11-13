@@ -31,8 +31,8 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
       tokensOnSale,
       rate,
       currency,
-      storageWallet,
-      treasuryWallet,
+      raisedFundsWallet,
+      unsoldTokensWallet,
       allowPreMinting = false,
     } = args;
     const {
@@ -146,8 +146,8 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
         cap: tokensOnSale,
         rate,
         fundRaiseType: currency,
-        fundsReceiver: storageWallet,
-        treasuryWallet,
+        fundsReceiver: raisedFundsWallet,
+        treasuryWallet: unsoldTokensWallet,
       },
       maxCost: polyCost,
       archived: false,
