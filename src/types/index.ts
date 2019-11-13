@@ -354,8 +354,8 @@ export interface LaunchTieredStoProcedureArgs {
   nonAccreditedInvestmentLimit: BigNumber;
   minimumInvestment: BigNumber;
   currencies: Currency[];
-  storageWallet: string;
-  treasuryWallet: string;
+  raisedFundsWallet: string;
+  unsoldTokensWallet: string;
   stableCoinAddresses: string[];
   allowPreMinting?: boolean;
 }
