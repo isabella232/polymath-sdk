@@ -48,7 +48,7 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
     );
 
     const [
-      paused,
+      isPaused,
       capReached,
       isFinalized,
       beneficialInvestmentsAllowed,
@@ -169,7 +169,7 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       investments: investmentEntities,
       stoType,
       address,
-      paused,
+      isPaused,
       capReached,
       isFinalized,
       preMintAllowed,

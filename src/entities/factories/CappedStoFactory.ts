@@ -45,7 +45,7 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
     }));
 
     const [
-      paused,
+      isPaused,
       capReached,
       beneficialInvestmentsAllowed,
       raisedFundsWallet,
@@ -106,7 +106,7 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
       investments: investmentEntities,
       stoType,
       address,
-      paused,
+      isPaused,
       capReached,
       isFinalized,
       preMintAllowed,

@@ -31,7 +31,7 @@ export interface Params {
   soldTokensAmount: BigNumber;
   investorAmount: number;
   investments: Investment[];
-  paused: boolean;
+  isPaused: boolean;
   capReached: boolean;
   isFinalized: boolean;
   preMintAllowed: boolean;
@@ -67,7 +67,7 @@ export abstract class Sto<P> extends Entity<P> {
 
   public currencies: Currency[];
 
-  public paused: boolean;
+  public isPaused: boolean;
 
   public capReached: boolean;
 
@@ -109,7 +109,7 @@ export abstract class Sto<P> extends Entity<P> {
       soldTokensAmount,
       investorAmount,
       investments,
-      paused,
+      isPaused,
       capReached,
       isFinalized,
       preMintAllowed,
@@ -129,7 +129,7 @@ export abstract class Sto<P> extends Entity<P> {
     this.investorAmount = investorAmount;
     this.investments = investments;
     this.currencies = currencies;
-    this.paused = paused;
+    this.isPaused = isPaused;
     this.capReached = capReached;
     this.isFinalized = isFinalized;
     this.preMintAllowed = preMintAllowed;
@@ -284,7 +284,7 @@ export abstract class Sto<P> extends Entity<P> {
       endDate,
       capReached,
       isFinalized,
-      paused,
+      isPaused,
       preMintAllowed,
       beneficialInvestmentsAllowed,
     } = this;
@@ -304,7 +304,7 @@ export abstract class Sto<P> extends Entity<P> {
       endDate,
       capReached,
       isFinalized,
-      paused,
+      isPaused,
       preMintAllowed,
       beneficialInvestmentsAllowed,
       investments: investments.map(investment => investment.toPojo()),
@@ -323,7 +323,7 @@ export abstract class Sto<P> extends Entity<P> {
       soldTokensAmount,
       investorAmount,
       investments,
-      paused,
+      isPaused,
       capReached,
       isFinalized,
       preMintAllowed,
@@ -370,8 +370,8 @@ export abstract class Sto<P> extends Entity<P> {
       this.investments = investments;
     }
 
-    if (paused !== undefined) {
-      this.paused = paused;
+    if (isPaused !== undefined) {
+      this.isPaused = isPaused;
     }
 
     if (capReached !== undefined) {

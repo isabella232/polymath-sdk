@@ -1,30 +1,29 @@
-import { ModuleName, BigNumber } from '@polymathnetwork/contract-wrappers';
+import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  InvestInTieredStoProcedureArgs,
+  InvestInCappedStoProcedureArgs,
   ErrorCode,
   StoType,
   Currency,
-  isInvestWithStableCoinArgs,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
-import { SecurityToken, TieredSto } from '../entities';
+import { SecurityToken, CappedSto } from '../entities';
 import { ApproveErc20 } from './ApproveErc20';
 
-export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs> {
-  public type = ProcedureType.InvestInTieredSto;
+export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs> {
+  public type = ProcedureType.InvestInCappedSto;
 
   public async prepareTransactions() {
     const { args, context } = this;
-    const { stoAddress, symbol, amount, currency, minTokens = new BigNumber(0) } = args;
+    const { stoAddress, symbol, amount, currency } = args;
     let { beneficiary } = args;
 
     const {
       contractWrappers,
-      factories: { tieredStoFactory },
+      factories: { cappedStoFactory },
     } = context;
 
     /**
@@ -48,7 +47,7 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
     }
 
     const stoModule = await contractWrappers.moduleFactory.getModuleInstance({
-      name: ModuleName.UsdTieredSTO,
+      name: ModuleName.CappedSTO,
       address: stoAddress,
     });
 
@@ -59,19 +58,18 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
       });
     }
 
-    const [
-      isFinalized,
-      isPaused,
-      currentAddress,
-      beneficialInvestmentsAllowed,
-      startDate,
-    ] = await Promise.all([
-      stoModule.isFinalized(),
-      stoModule.paused(),
-      context.currentWallet.address(),
-      stoModule.allowBeneficialInvestments(),
-      stoModule.startTime(),
-    ]);
+    const securityTokenId = SecurityToken.generateId({ symbol });
+    const cappedStoId = CappedSto.generateId({
+      securityTokenId,
+      stoType: StoType.Capped,
+      address: stoAddress,
+    });
+
+    const sto = await cappedStoFactory.fetch(cappedStoId);
+
+    const { isFinalized, isPaused, startDate, beneficialInvestmentsAllowed } = sto;
+
+    const currentAddress = await context.currentWallet.address();
 
     if (startDate > new Date()) {
       throw new PolymathError({
@@ -103,58 +101,31 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
 
     beneficiary = beneficiary || currentAddress;
 
-    const securityTokenId = SecurityToken.generateId({ symbol });
-    const tieredStoId = TieredSto.generateId({
-      securityTokenId,
-      stoType: StoType.Tiered,
-      address: stoAddress,
-    });
     const resolvers = [
       async () => {
-        return tieredStoFactory.refresh(tieredStoId);
+        return cappedStoFactory.refresh(cappedStoId);
       },
     ];
 
-    if (isInvestWithStableCoinArgs(args)) {
-      const { stableCoinAddress } = args;
-
-      await this.addProcedure(ApproveErc20)({
-        tokenAddress: stableCoinAddress,
-        amount,
-        spender: stoAddress,
-      });
-
-      await this.addTransaction(stoModule.buyWithUSDRateLimited, {
-        tag: PolyTransactionTag.BuyWithScRateLimited,
+    if (currency === Currency.ETH) {
+      await this.addTransaction(stoModule.buyTokens, {
+        tag: PolyTransactionTag.BuyTokens,
         resolvers,
       })({
-        minTokens,
-        beneficiary,
-        usdToken: stableCoinAddress,
-        investedSC: amount,
-      });
-    } else if (currency === Currency.POLY) {
-      await this.addProcedure(ApproveErc20)({
-        amount,
-        spender: stoAddress,
-      });
-
-      await this.addTransaction(stoModule.buyWithPOLYRateLimited, {
-        tag: PolyTransactionTag.BuyWithPolyRateLimited,
-        resolvers,
-      })({
-        minTokens,
-        beneficiary,
-        investedPOLY: amount,
-      });
-    } else {
-      await this.addTransaction(stoModule.buyWithETHRateLimited, {
-        tag: PolyTransactionTag.BuyWithEthRateLimited,
-        resolvers,
-      })({
-        minTokens,
         beneficiary,
         value: amount,
+      });
+    } else {
+      await this.addProcedure(ApproveErc20)({
+        amount,
+        spender: stoAddress,
+      });
+
+      await this.addTransaction(stoModule.buyTokensWithPoly, {
+        tag: PolyTransactionTag.BuyTokensWithPoly,
+        resolvers,
+      })({
+        investedPOLY: amount,
       });
     }
   }

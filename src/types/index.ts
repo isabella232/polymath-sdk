@@ -150,6 +150,7 @@ export enum ProcedureType {
   ModifyBeneficialInvestments = 'ModifyBeneificialInvestments',
   ModifyTieredStoData = 'ModifyTieredStoData',
   InvestInTieredSto = 'InvestInTieredSto',
+  InvestInCappedSto = 'InvestInCappedSto',
   DisableFeature = 'DisableFeature',
 }
 
@@ -195,6 +196,8 @@ export enum PolyTransactionTag {
   BuyWithScRateLimited = 'BuyWithScRateLimited',
   BuyWithPolyRateLimited = 'BuyWithPolyRateLimited',
   BuyWithEthRateLimited = 'BuyWithEthRateLimited',
+  BuyTokens = 'BuyTokens',
+  BuyTokensWithPoly = 'BuyTokensWithPoly',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -340,10 +343,10 @@ interface InvestInTieredStoBaseProcedureArgs {
   beneficiary?: string;
 }
 
-export type InvestWithStableCoinArgs = {
+export interface InvestWithStableCoinArgs extends InvestInTieredStoBaseProcedureArgs {
   currency: Currency.StableCoin;
   stableCoinAddress: string;
-} & InvestInTieredStoBaseProcedureArgs;
+}
 
 export type InvestInTieredStoProcedureArgs =
   | InvestInTieredStoBaseProcedureArgs & {
@@ -351,6 +354,24 @@ export type InvestInTieredStoProcedureArgs =
       stableCoinAddress?: undefined; // this is done this way on purpose for type safety
     }
   | InvestWithStableCoinArgs;
+
+interface InvestInCappedStoBaseProcedureArgs {
+  symbol: string;
+  stoAddress: string;
+  amount: BigNumber;
+  currency: Currency.ETH | Currency.POLY;
+}
+
+export type InvestInCappedStoProcedureArgs = InvestInCappedStoBaseProcedureArgs &
+  (
+    | {
+        currency: Currency.POLY;
+        beneficiary?: undefined;
+      }
+    | {
+        currency: Currency.ETH;
+        beneficiary?: string;
+      });
 
 export function isInvestWithStableCoinArgs(args: any): args is InvestWithStableCoinArgs {
   const { currency, stableCoinAddress } = args;
@@ -532,6 +553,7 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyBeneficialInvestments]: ModifyBeneficialInvestmentsProcedureArgs;
   [ProcedureType.ModifyTieredStoData]: ModifyTieredStoDataProcedureArgs;
   [ProcedureType.InvestInTieredSto]: InvestInTieredStoProcedureArgs;
+  [ProcedureType.InvestInCappedSto]: InvestInCappedStoProcedureArgs;
   [ProcedureType.EnableGeneralPermissionManager]: EnableGeneralPermissionManagerProcedureArgs;
   [ProcedureType.EnableGeneralTransferManager]: EnableGeneralTransferManagerProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};

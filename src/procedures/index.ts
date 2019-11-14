@@ -28,3 +28,4 @@ export { FinalizeSto } from './FinalizeSto';
 export { ModifyBeneficialInvestments } from './ModifyBeneficialInvestments';
 export { ModifyTieredStoData } from './ModifyTieredStoData';
 export { InvestInTieredSto } from './InvestInTieredSto';
+export { InvestInCappedSto } from './InvestInCappedSto';
