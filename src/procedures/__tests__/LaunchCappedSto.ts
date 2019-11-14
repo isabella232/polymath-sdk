@@ -30,7 +30,7 @@ const params: LaunchCappedStoProcedureArgs = {
   rate: new BigNumber(10),
   currency: CappedStoCurrency.ETH,
   storageWallet: '0x6666666666666666666666666666666666666666',
-  treasuryWallet: '0x6666666666666666666666666666666666666666',
+  treasuryWallet: '0x7777777777777777777777777777777777777777',
 };
 
 describe('LaunchCappedSto', () => {
