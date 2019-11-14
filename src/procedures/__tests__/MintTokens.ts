@@ -1,5 +1,5 @@
 import { ImportMock, MockManager, StaticMockManager } from 'ts-mock-imports';
-import { stub, spy, restore } from 'sinon';
+import { spy, restore } from 'sinon';
 import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { MintTokens } from '../../procedures/MintTokens';
@@ -7,7 +7,7 @@ import { Procedure } from '~/procedures/Procedure';
 import * as shareholdersEntityModule from '~/entities/SecurityToken/Shareholders';
 import * as securityTokenEntityModule from '~/entities/SecurityToken/SecurityToken';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode, MintTokensProcedureArgs, ProcedureType, StoType } from '~/types';
+import { ErrorCode, MintTokensProcedureArgs, ProcedureType } from '~/types';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
 import * as contextModule from '../../Context';
@@ -159,10 +159,8 @@ describe('MintTokens', () => {
 
     test('should return the minted tokens shareholders object', async () => {
       const shareholderObject = {
-        shareholder: {
-          securityTokenId: () => Promise.resolve(params.symbol),
-          address: () => Promise.resolve(testAddress),
-        },
+        securityTokenId: () => Promise.resolve(params.symbol),
+        address: () => Promise.resolve(testAddress),
       };
       const fetchStub = shareholderFactoryMock.mock('fetch', shareholderObject);
 

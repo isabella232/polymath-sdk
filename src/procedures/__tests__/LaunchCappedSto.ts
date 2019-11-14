@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy, stub } from 'sinon';
+import { restore, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import {
   BigNumber,
@@ -166,11 +166,9 @@ describe('LaunchCappedSto', () => {
 
     test('should return the capped sto', async () => {
       const stoObject = {
-        sto: {
-          securityTokenId: () => Promise.resolve(params.symbol),
-          stoType: () => Promise.resolve(StoType.Capped),
-          address: () => Promise.resolve(params.storageWallet),
-        },
+        securityTokenId: () => Promise.resolve(params.symbol),
+        stoType: () => Promise.resolve(StoType.Capped),
+        address: () => Promise.resolve(params.storageWallet),
       };
       const fetchStub = cappedStoFactoryMock.mock('fetch', stoObject);
       const moduleAddress = '0x3333333333333333333333333333333333333333';

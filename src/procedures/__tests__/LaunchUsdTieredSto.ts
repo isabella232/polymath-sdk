@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub, stub, spy, restore } from 'sinon';
+import { SinonStub, spy, restore } from 'sinon';
 import {
   BigNumber,
   TransactionReceiptWithDecodedLogs,
@@ -185,11 +185,9 @@ describe('LaunchUsdTieredSto', () => {
 
     test('should return the usd tiered sto', async () => {
       const stoObject = {
-        sto: {
-          securityTokenId: () => Promise.resolve(params.symbol),
-          stoType: () => Promise.resolve(StoType.UsdTiered),
-          address: () => Promise.resolve(params.storageWallet),
-        },
+        securityTokenId: () => Promise.resolve(params.symbol),
+        stoType: () => Promise.resolve(StoType.UsdTiered),
+        address: () => Promise.resolve(params.storageWallet),
       };
       const fetchStub = usdTieredStoFactoryMock.mock('fetch', stoObject);
       const moduleAddress = '0x3333333333333333333333333333333333333333';
