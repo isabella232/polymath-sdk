@@ -37,8 +37,6 @@ describe('TransferErc20', () => {
 
   let securityTokenRegistryMock: MockManager<contractWrappersModule.SecurityTokenRegistry>;
 
-  let moduleFactoryMock: MockManager<contractWrappersModule.ModuleFactory_3_0_0>;
-
   let erc20Mock: MockManager<contractWrappersModule.ERC20>;
 
   beforeEach(() => {
@@ -60,11 +58,6 @@ describe('TransferErc20', () => {
 
     erc20Mock.mock('address', Promise.resolve(params.tokenAddress));
 
-    moduleFactoryMock = ImportMock.mockClass(contractWrappersModule, 'ModuleFactory_3_0_0');
-    moduleFactoryMock.mock('setupCostInPoly', Promise.resolve(new BigNumber(1)));
-    moduleFactoryMock.mock('isCostInPoly', Promise.resolve(false));
-    moduleFactoryMock.mock('setupCost', Promise.resolve(new BigNumber(1)));
-
     securityTokenRegistryMock = ImportMock.mockClass(
       contractWrappersModule,
       'SecurityTokenRegistry'
@@ -75,7 +68,6 @@ describe('TransferErc20', () => {
     securityTokenRegistryMock.mock('isSecurityToken', Promise.resolve(false));
 
     wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
-    moduleWrapperFactoryMock.mock('getModuleFactory', moduleFactoryMock.getMockInstance());
 
     erc20TokenBalanceFactoryMock = ImportMock.mockClass(
       erc20TokenBalanceFactoryModule,
@@ -94,7 +86,6 @@ describe('TransferErc20', () => {
 
     polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
     polyTokenMock.mock('address', Promise.resolve(params.receiver));
-    polyTokenMock.mock('allowance', Promise.resolve(new BigNumber(0)));
     wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
