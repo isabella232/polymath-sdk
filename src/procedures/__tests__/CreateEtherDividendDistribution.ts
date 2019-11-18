@@ -27,6 +27,7 @@ describe('CreateEtherDividendDistribution', () => {
   let target: CreateEtherDividendDistribution;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
+
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
@@ -39,7 +40,9 @@ describe('CreateEtherDividendDistribution', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
+
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
+
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
@@ -147,6 +150,7 @@ describe('CreateEtherDividendDistribution', () => {
           index: () => 1,
         },
       };
+
       const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
       const findEvents = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {

@@ -31,6 +31,7 @@ describe('CreateErc20DividendDistribution', () => {
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let approvalMock: MockManager<approveModule.ApproveErc20>;
+
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let erc20DividendsMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
@@ -43,6 +44,7 @@ describe('CreateErc20DividendDistribution', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateErc20DividendDistribution
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
+
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
 
     // Import mock out of ApproveErc20
