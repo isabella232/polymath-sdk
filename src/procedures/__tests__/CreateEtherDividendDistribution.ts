@@ -143,14 +143,12 @@ describe('CreateEtherDividendDistribution', () => {
 
     test('should return the newly created eth dividend distribution', async () => {
       const dividendObject = {
-        permissions: {
-          securityTokenId: () => 'Id',
-          index: () => 1,
-        },
+        securityTokenId: () => 'Id',
+        index: () => 1,
       };
 
       const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
-      const findEvents = ImportMock.mockFunction(utilsModule, 'findEvents', [
+      const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
             _dividendIndex: new BigNumber(1),
@@ -163,7 +161,7 @@ describe('CreateEtherDividendDistribution', () => {
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
       await expect(resolver.result).toEqual(dividendObject);
       expect(fetchStub.callCount).toBe(1);
-      expect(findEvents.callCount).toBe(1);
+      expect(findEventsStub.callCount).toBe(1);
     });
 
     test('should throw if eth dividends manager has not been enabled', async () => {
