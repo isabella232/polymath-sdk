@@ -27,9 +27,15 @@ describe('CreateEtherDividendDistribution', () => {
   let target: CreateEtherDividendDistribution;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
-  let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
-  let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
+  let tokenFactoryMock: MockManager<
+    tokenFactoryModule.MockedTokenFactoryObject
+  >;
+  let gpmMock: MockManager<
+    contractWrappersModule.GeneralPermissionManager_3_0_0
+  >;
+  let etherDividendsMock: MockManager<
+    contractWrappersModule.EtherDividendCheckpoint_3_0_0
+  >;
 
   let dividendDistributionFactoryMock: MockManager<
     dividendDistributionSecurityTokenFactoryModule.DividendDistributionFactory
@@ -39,11 +45,17 @@ describe('CreateEtherDividendDistribution', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
+    tokenFactoryMock = ImportMock.mockClass(
+      tokenFactoryModule,
+      'MockedTokenFactoryObject'
+    );
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
-    gpmMock = ImportMock.mockClass(contractWrappersModule, 'GeneralPermissionManager_3_0_0');
+    gpmMock = ImportMock.mockClass(
+      contractWrappersModule,
+      'GeneralPermissionManager_3_0_0'
+    );
     etherDividendsMock = ImportMock.mockClass(
       contractWrappersModule,
       'EtherDividendCheckpoint_3_0_0'
@@ -63,7 +75,10 @@ describe('CreateEtherDividendDistribution', () => {
     contextMock.set('factories', factoryMockSetup);
 
     // Instantiate CreateEtherDividendDistribution
-    target = new CreateEtherDividendDistribution(params, contextMock.getMockInstance());
+    target = new CreateEtherDividendDistribution(
+      params,
+      contextMock.getMockInstance()
+    );
   });
   afterEach(() => {
     restore();
@@ -87,7 +102,8 @@ describe('CreateEtherDividendDistribution', () => {
         addTransactionSpy
           .getCall(0)
           .calledWith(
-            etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
+            etherDividendsMock.getMockInstance()
+              .createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
       expect(addTransactionSpy.callCount).toEqual(1);
@@ -116,11 +132,14 @@ describe('CreateEtherDividendDistribution', () => {
         addTransactionSpy
           .getCall(0)
           .calledWith(
-            etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
+            etherDividendsMock.getMockInstance()
+              .createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
       expect(
-        addTransactionSpy.getCall(1).calledWith(etherDividendsMock.getMockInstance().setWithholding)
+        addTransactionSpy
+          .getCall(1)
+          .calledWith(etherDividendsMock.getMockInstance().setWithholding)
       ).toEqual(true);
       expect(addTransactionSpy.callCount).toEqual(2);
     });
@@ -147,7 +166,10 @@ describe('CreateEtherDividendDistribution', () => {
           index: () => 1,
         },
       };
-      const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
+      const fetchStub = dividendDistributionFactoryMock.mock(
+        'fetch',
+        dividendObject
+      );
       ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
