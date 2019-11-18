@@ -8,7 +8,12 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { AssignSecurityTokenRole } from '../../procedures/AssignSecurityTokenRole';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode, Feature, PolyTransactionTag, SecurityTokenRole } from '~/types';
+import {
+  ErrorCode,
+  Feature,
+  PolyTransactionTag,
+  SecurityTokenRole,
+} from '~/types';
 import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
 import { mockFactories } from '~/testUtils/mockFactories';
 
@@ -24,20 +29,32 @@ describe('AssignSecurityTokenRole', () => {
   let target: AssignSecurityTokenRole;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
-  let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
+  let tokenFactoryMock: MockManager<
+    tokenFactoryModule.MockedTokenFactoryObject
+  >;
+  let gpmMock: MockManager<
+    contractWrappersModule.GeneralPermissionManager_3_0_0
+  >;
 
-  let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
+  let securityTokenFactoryMock: MockManager<
+    securityTokenFactoryModule.SecurityTokenFactory
+  >;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test AssignSecurityRole
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
+    tokenFactoryMock = ImportMock.mockClass(
+      tokenFactoryModule,
+      'MockedTokenFactoryObject'
+    );
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
-    gpmMock = ImportMock.mockClass(contractWrappersModule, 'GeneralPermissionManager_3_0_0');
+    gpmMock = ImportMock.mockClass(
+      contractWrappersModule,
+      'GeneralPermissionManager_3_0_0'
+    );
 
     // Setup factories and security token mock
     securityTokenFactoryMock = ImportMock.mockClass(
@@ -57,7 +74,10 @@ describe('AssignSecurityTokenRole', () => {
     gpmMock.mock('getAllDelegates', Promise.resolve([params.delegateAddress]));
     gpmMock.mock('getAllDelegatesWithPerm', Promise.resolve([]));
 
-    wrappersMock.mock('getAttachedModules', Promise.resolve([gpmMock.getMockInstance()]));
+    wrappersMock.mock(
+      'getAttachedModules',
+      Promise.resolve([gpmMock.getMockInstance()])
+    );
     tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
 
     wrappersMock.mock('roleToPermission', {
@@ -87,9 +107,11 @@ describe('AssignSecurityTokenRole', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.getCall(0).calledWithExactly(gpmMock.getMockInstance().changePermission, {
-          tag: PolyTransactionTag.ChangePermission,
-        })
+        addTransactionSpy
+          .getCall(0)
+          .calledWithExactly(gpmMock.getMockInstance().changePermission, {
+            tag: PolyTransactionTag.ChangePermission,
+          })
       ).toEqual(true);
       expect(addTransactionSpy.callCount).toEqual(1);
     });
@@ -102,14 +124,18 @@ describe('AssignSecurityTokenRole', () => {
 
       // Verifications
       expect(
-        addTransactionSpy.getCall(0).calledWithExactly(gpmMock.getMockInstance().addDelegate, {
-          tag: PolyTransactionTag.AddDelegate,
-        })
+        addTransactionSpy
+          .getCall(0)
+          .calledWithExactly(gpmMock.getMockInstance().addDelegate, {
+            tag: PolyTransactionTag.AddDelegate,
+          })
       ).toEqual(true);
       expect(
-        addTransactionSpy.getCall(1).calledWithExactly(gpmMock.getMockInstance().changePermission, {
-          tag: PolyTransactionTag.ChangePermission,
-        })
+        addTransactionSpy
+          .getCall(1)
+          .calledWithExactly(gpmMock.getMockInstance().changePermission, {
+            tag: PolyTransactionTag.ChangePermission,
+          })
       ).toEqual(true);
       expect(addTransactionSpy.callCount).toEqual(2);
     });
@@ -142,7 +168,10 @@ describe('AssignSecurityTokenRole', () => {
     });
 
     test('should throw if role has already been assigned to delegate', async () => {
-      gpmMock.mock('getAllDelegatesWithPerm', Promise.resolve([params.delegateAddress]));
+      gpmMock.mock(
+        'getAllDelegatesWithPerm',
+        Promise.resolve([params.delegateAddress])
+      );
       // Real call
       expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
