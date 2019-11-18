@@ -12,7 +12,37 @@ import {
   DividendType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { Factories } from '../Context';
 import { SecurityToken, Erc20DividendsManager, EthDividendsManager } from '../entities';
+
+export const createSetDividendsWalletResolver = (
+  dividendType: DividendType,
+  factories: Factories,
+  symbol: string
+) => async () => {
+  let refresh;
+  // eslint-disable-next-line default-case
+  switch (dividendType) {
+    case DividendType.Erc20: {
+      refresh = factories.erc20DividendsManagerFactory.refresh(
+        Erc20DividendsManager.generateId({
+          securityTokenId: SecurityToken.generateId({ symbol }),
+          dividendType,
+        })
+      );
+      break;
+    }
+    case DividendType.Eth: {
+      refresh = factories.ethDividendsManagerFactory.refresh(
+        EthDividendsManager.generateId({
+          securityTokenId: SecurityToken.generateId({ symbol }),
+          dividendType,
+        })
+      );
+    }
+  }
+  return refresh;
+};
 
 export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArgs> {
   public type = ProcedureType.SetDividendsWallet;
@@ -47,6 +77,9 @@ export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArg
         );
         break;
       }
+      default: {
+        break;
+      }
     }
 
     if (!dividendModule) {
@@ -58,26 +91,7 @@ export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArg
 
     await this.addTransaction(dividendModule.changeWallet, {
       tag: PolyTransactionTag.SetDividendsWallet,
-      resolver: async () => {
-        switch (dividendType) {
-          case DividendType.Erc20: {
-            return factories.erc20DividendsManagerFactory.refresh(
-              Erc20DividendsManager.generateId({
-                securityTokenId: SecurityToken.generateId({ symbol }),
-                dividendType,
-              })
-            );
-          }
-          case DividendType.Eth: {
-            return factories.ethDividendsManagerFactory.refresh(
-              EthDividendsManager.generateId({
-                securityTokenId: SecurityToken.generateId({ symbol }),
-                dividendType,
-              })
-            );
-          }
-        }
-      },
+      resolver: createSetDividendsWalletResolver(dividendType, factories, symbol),
     })({ wallet: address });
   }
 }

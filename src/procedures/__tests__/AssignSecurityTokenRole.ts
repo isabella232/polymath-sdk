@@ -24,6 +24,7 @@ describe('AssignSecurityTokenRole', () => {
   let target: AssignSecurityTokenRole;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
+
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
 
@@ -33,6 +34,7 @@ describe('AssignSecurityTokenRole', () => {
     // Mock the context, wrappers, and tokenFactory to test AssignSecurityTokenRole
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
+
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());

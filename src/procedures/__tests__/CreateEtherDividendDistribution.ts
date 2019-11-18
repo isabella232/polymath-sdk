@@ -39,6 +39,7 @@ describe('CreateEtherDividendDistribution', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
+
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
@@ -147,6 +148,7 @@ describe('CreateEtherDividendDistribution', () => {
           index: () => 1,
         },
       };
+
       const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
       const findEvents = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
@@ -159,7 +161,7 @@ describe('CreateEtherDividendDistribution', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      expect(resolver.result).toEqual(dividendObject);
+      await expect(resolver.result).toEqual(dividendObject);
       expect(fetchStub.callCount).toBe(1);
       expect(findEvents.callCount).toBe(1);
     });
