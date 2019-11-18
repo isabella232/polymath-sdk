@@ -182,6 +182,7 @@ describe('CreateErc20DividendDistribution', () => {
         securityTokenId: () => Promise.resolve(params.symbol),
         index: () => Promise.resolve(dividendIndex),
       };
+
       const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {

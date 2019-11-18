@@ -127,6 +127,7 @@ describe('CreateSecurityToken', () => {
         owner: () => params.owner,
         address: () => params.address,
       };
+
       const createStub = securityTokenFactoryMock.mock('create', creationObject);
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {

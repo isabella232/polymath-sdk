@@ -147,6 +147,7 @@ describe('CreateEtherDividendDistribution', () => {
         securityTokenId: () => 'Id',
         index: () => dividendIndex,
       };
+
       const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {

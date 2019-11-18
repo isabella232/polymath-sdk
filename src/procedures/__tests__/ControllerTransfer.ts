@@ -44,6 +44,7 @@ describe('ControllerTransfer', () => {
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
     securityTokenMock.mock('balanceOf', Promise.resolve(params.amount));
     securityTokenMock.mock('controller', Promise.resolve(params.owner));
+
     const ownerPromise = new Promise<string>((resolve, reject) => {
       resolve(params.owner);
     });
