@@ -187,7 +187,7 @@ describe('ControllerTransfer', () => {
         })
       )
     ).toEqual(true);
-    expect(await resolverValue).toEqual([undefined, undefined]);
+    await expect(resolverValue).toEqual([undefined, undefined]);
     expect(refreshStub.callCount).toEqual(2);
   });
 });
