@@ -18,7 +18,7 @@ export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs>
 
   public async prepareTransactions() {
     const { args, context } = this;
-    const { stoAddress, symbol, amount, currency } = args;
+    const { stoAddress, symbol, amount } = args;
     let { beneficiary } = args;
 
     const {
@@ -67,7 +67,13 @@ export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs>
 
     const sto = await cappedStoFactory.fetch(cappedStoId);
 
-    const { isFinalized, isPaused, startDate, beneficialInvestmentsAllowed } = sto;
+    const {
+      isFinalized,
+      isPaused,
+      startDate,
+      beneficialInvestmentsAllowed,
+      currencies: [currency],
+    } = sto;
 
     const currentAddress = await context.currentWallet.address();
 
@@ -99,8 +105,6 @@ export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs>
       });
     }
 
-    beneficiary = beneficiary || currentAddress;
-
     const resolvers = [
       async () => {
         return cappedStoFactory.refresh(cappedStoId);
@@ -108,6 +112,8 @@ export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs>
     ];
 
     if (currency === Currency.ETH) {
+      beneficiary = beneficiary || currentAddress;
+
       await this.addTransaction(stoModule.buyTokens, {
         tag: PolyTransactionTag.BuyTokens,
         resolvers,
@@ -116,6 +122,13 @@ export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs>
         value: amount,
       });
     } else {
+      if (beneficiary) {
+        throw new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: 'This STO does not support investing in POLY on behalf of someone else',
+        });
+      }
+
       await this.addProcedure(ApproveErc20)({
         amount,
         spender: stoAddress,

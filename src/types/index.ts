@@ -2,7 +2,6 @@ import {
   PolyResponse,
   BigNumber,
   FundRaiseType as Currency,
-  CappedSTOFundRaiseType as CappedStoCurrency,
   GeneralTransferManager,
   GeneralPermissionManager,
   CountTransferManager,
@@ -23,7 +22,7 @@ import {
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
 
-export { CappedStoCurrency, Currency };
+export { Currency };
 
 export interface DividendShareholderStatus {
   address: string;
@@ -304,7 +303,7 @@ export interface LaunchCappedStoProcedureArgs {
   endDate: Date;
   tokensOnSale: BigNumber;
   rate: BigNumber;
-  currency: CappedStoCurrency;
+  currency: Currency.ETH | Currency.POLY;
   raisedFundsWallet: string;
   unsoldTokensWallet: string;
   allowPreMinting?: boolean;
@@ -355,23 +354,12 @@ export type InvestInTieredStoProcedureArgs =
     }
   | InvestWithStableCoinArgs;
 
-interface InvestInCappedStoBaseProcedureArgs {
+export interface InvestInCappedStoProcedureArgs {
   symbol: string;
   stoAddress: string;
   amount: BigNumber;
-  currency: Currency.ETH | Currency.POLY;
+  beneficiary?: string;
 }
-
-export type InvestInCappedStoProcedureArgs = InvestInCappedStoBaseProcedureArgs &
-  (
-    | {
-        currency: Currency.POLY;
-        beneficiary?: undefined;
-      }
-    | {
-        currency: Currency.ETH;
-        beneficiary?: string;
-      });
 
 export function isInvestWithStableCoinArgs(args: any): args is InvestWithStableCoinArgs {
   const { currency, stableCoinAddress } = args;

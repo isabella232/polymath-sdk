@@ -13,21 +13,6 @@ export interface Params extends StoParams {
 
 export { UniqueIdentifiers };
 
-interface BaseParams {
-  amount: BigNumber;
-  currency: Currency;
-}
-
-interface InvestInEthParams extends BaseParams {
-  currency: Currency.ETH;
-  beneficiary?: string;
-}
-
-interface InvestInPolyParams extends BaseParams {
-  currency: Currency.POLY;
-  beneficiary?: undefined;
-}
-
 export class CappedSto extends Sto<Params> {
   public static generateId({ securityTokenId, stoType, address }: UniqueIdentifiers) {
     return serialize('cappedSto', {
@@ -55,32 +40,16 @@ export class CappedSto extends Sto<Params> {
     this.uid = CappedSto.generateId({ address, stoType, securityTokenId });
   }
 
-  public invest(
-    params: InvestInEthParams
-  ): Promise<TransactionQueue<InvestInCappedStoProcedureArgs>>;
-
-  public invest(
-    params: InvestInPolyParams
-  ): Promise<TransactionQueue<InvestInCappedStoProcedureArgs>>;
-
   /**
    * Invests in the STO
    *
    * @param amount amount to spend
-   * @param currency currency in which to buy the tokens (ETH or POLY)
-   * @param beneficiary address that will receive the purchased tokens (defaults to current wallet, will fail if beneficial investments are not allowed for the STO, only applicable if currency is ETH)
+   * @param beneficiary address that will receive the purchased tokens (defaults to current wallet, will fail if beneficial investments are not allowed for the STO, only applicable if the STO currency is ETH)
    */
-  public async invest(args: {
-    amount: BigNumber;
-    currency: Currency.ETH | Currency.POLY;
-    beneficiary?: string;
-  }): Promise<any> {
+  public async invest(args: { amount: BigNumber; beneficiary?: string }): Promise<any> {
     const { address: stoAddress, securityTokenSymbol: symbol } = this;
 
-    const procedure = new InvestInCappedSto(
-      { stoAddress, symbol, ...(args as InvestInCappedStoProcedureArgs) },
-      this.context
-    );
+    const procedure = new InvestInCappedSto({ stoAddress, symbol, ...args }, this.context);
 
     return procedure.prepare();
   }

@@ -13,6 +13,7 @@ import {
   ErrorCode,
   LaunchCappedStoProcedureArgs,
   StoType,
+  Currency,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { TransferErc20 } from './TransferErc20';
@@ -77,6 +78,9 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
       receiver: securityTokenAddress,
       amount: polyCost,
     });
+
+    const fundRaiseType =
+      currency === Currency.ETH ? CappedSTOFundRaiseType.ETH : CappedSTOFundRaiseType.POLY;
 
     const [newStoAddress, newSto] = await this.addTransaction<
       TransactionParams.SecurityToken.AddCappedSTO,
@@ -145,7 +149,7 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
         endTime: endDate,
         cap: tokensOnSale,
         rate,
-        fundRaiseType: currency,
+        fundRaiseType,
         fundsReceiver: raisedFundsWallet,
         treasuryWallet: unsoldTokensWallet,
       },

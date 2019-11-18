@@ -1,7 +1,7 @@
 import { BigNumber, ModuleName } from '@polymathnetwork/contract-wrappers';
 import { includes } from 'lodash';
 import { SubModule } from './SubModule';
-import { CappedStoCurrency, StoTier, Currency, StoType, ErrorCode } from '../../types';
+import { StoTier, Currency, StoType, ErrorCode } from '../../types';
 import { LaunchCappedSto, LaunchTieredSto } from '../../procedures';
 import { CappedSto, TieredSto, Sto } from '..';
 import { PolymathError } from '../../PolymathError';
@@ -30,7 +30,7 @@ export class Offerings extends SubModule {
     endDate: Date;
     tokensOnSale: BigNumber;
     rate: BigNumber;
-    currency: CappedStoCurrency;
+    currency: Currency.ETH | Currency.POLY;
     raisedFundsWallet: string;
     unsoldTokensWallet: string;
     allowPreMinting?: boolean;

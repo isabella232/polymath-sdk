@@ -65,12 +65,18 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
       currentAddress,
       beneficialInvestmentsAllowed,
       startDate,
+      canRaiseInEth,
+      canRaiseInPoly,
+      canRaiseInStableCoin,
     ] = await Promise.all([
       stoModule.isFinalized(),
       stoModule.paused(),
       context.currentWallet.address(),
       stoModule.allowBeneficialInvestments(),
       stoModule.startTime(),
+      stoModule.fundRaiseTypes({ type: Currency.ETH }),
+      stoModule.fundRaiseTypes({ type: Currency.POLY }),
+      stoModule.fundRaiseTypes({ type: Currency.StableCoin }),
     ]);
 
     if (startDate > new Date()) {
@@ -115,8 +121,17 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
       },
     ];
 
+    const unsupportedCurrencyError = new PolymathError({
+      code: ErrorCode.ProcedureValidationError,
+      message: `STO ${stoAddress} doesn't support investments in the selected currency`,
+    });
+
     if (isInvestWithStableCoinArgs(args)) {
       const { stableCoinAddress } = args;
+
+      if (!canRaiseInStableCoin) {
+        throw unsupportedCurrencyError;
+      }
 
       await this.addProcedure(ApproveErc20)({
         tokenAddress: stableCoinAddress,
@@ -134,6 +149,10 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
         investedSC: amount,
       });
     } else if (currency === Currency.POLY) {
+      if (!canRaiseInPoly) {
+        throw unsupportedCurrencyError;
+      }
+
       await this.addProcedure(ApproveErc20)({
         amount,
         spender: stoAddress,
@@ -148,6 +167,10 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
         investedPOLY: amount,
       });
     } else {
+      if (!canRaiseInEth) {
+        throw unsupportedCurrencyError;
+      }
+
       await this.addTransaction(stoModule.buyWithETHRateLimited, {
         tag: PolyTransactionTag.BuyWithEthRateLimited,
         resolvers,
