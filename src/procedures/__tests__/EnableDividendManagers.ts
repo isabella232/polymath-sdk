@@ -15,7 +15,8 @@ const params = {
   storageWalletAddress: '0x5555555555555555555555555555555555555555',
 };
 
-const testAddress = '0x2222222222222222222222222222222222222222';
+const securityTokenAddress = '0x2222222222222222222222222222222222222222';
+const moduleFactoryAddress = '0x3333333333333333333333333333333333333333';
 
 describe('EnableDividendManagers', () => {
   let target: EnableDividendManagers;
@@ -34,13 +35,13 @@ describe('EnableDividendManagers', () => {
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    securityTokenMock.mock('address', Promise.resolve(testAddress));
+    securityTokenMock.mock('address', Promise.resolve(securityTokenAddress));
 
     etherDividendsMock = ImportMock.mockClass(
       contractWrappersModule,
       'EtherDividendCheckpoint_3_0_0'
     );
-    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(testAddress));
+    wrappersMock.mock('getModuleFactoryAddress', moduleFactoryAddress);
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()

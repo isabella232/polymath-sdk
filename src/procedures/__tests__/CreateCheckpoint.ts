@@ -108,7 +108,7 @@ describe('CreateCheckpoint', () => {
       };
 
       // Better test this
-      const fetchStub = checkpointFactoryMock.mock('fetch', Promise.resolve(checkpointObject));
+      const fetchStub = checkpointFactoryMock.mock('fetch', checkpointObject);
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {

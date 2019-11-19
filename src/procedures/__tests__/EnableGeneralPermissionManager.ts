@@ -14,6 +14,8 @@ const params = {
   symbol: 'TEST1',
   address: '0x4444444444444444444444444444444444444444',
 };
+const securityTokenAddress = '0x2222222222222222222222222222222222222222';
+const moduleFactoryAddress = '0x3333333333333333333333333333333333333333';
 
 describe('EnableGeneralPermissionManager', () => {
   let target: EnableGeneralPermissionManager;
@@ -32,13 +34,13 @@ describe('EnableGeneralPermissionManager', () => {
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    securityTokenMock.mock('address', Promise.resolve(params.address));
+    securityTokenMock.mock('address', Promise.resolve(securityTokenAddress));
 
     etherDividendsMock = ImportMock.mockClass(
       contractWrappersModule,
       'EtherDividendCheckpoint_3_0_0'
     );
-    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(params.address));
+    wrappersMock.mock('getModuleFactoryAddress', moduleFactoryAddress);
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
