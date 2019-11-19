@@ -67,16 +67,14 @@ describe('ApproveErc20', () => {
   });
 
   test('should throw if supplied address does not correspond to erc20 token', async () => {
-    wrappersMock.set(
-      'getERC20TokenWrapper',
-      stub()
-        .withArgs({ address: tokenAddress })
-        .throws()
-    );
+    wrappersMock
+      .mock('getERC20TokenWrapper')
+      .withArgs({ address: tokenAddress })
+      .throws();
     // Instantiate ApproveErc20
     target = new ApproveErc20({ ...params, tokenAddress }, contextMock.getMockInstance());
 
-    expect(target.prepareTransactions()).rejects.toThrow(
+    await expect(target.prepareTransactions()).rejects.toThrow(
       new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message: 'The supplied address does not correspond to an ERC20 token',
@@ -134,7 +132,7 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params, contextMock.getMockInstance());
     // Real call
-    expect(target.prepareTransactions()).rejects.toThrow(
+    await expect(target.prepareTransactions()).rejects.toThrow(
       new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message: 'Not enough funds',

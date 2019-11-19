@@ -36,6 +36,7 @@ describe('SetDividendsWallet', () => {
     // Mock the context, wrappers, tokenFactory and securityToken to test SetDividendsWallet
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
+
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
 

@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { stub, spy } from 'sinon';
+import { spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -104,14 +104,12 @@ describe('AssignStoRole', () => {
     });
 
     test('should throw if there is no valid security token supplied', async () => {
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params.symbol })
-          .throws()
-      );
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,
@@ -122,7 +120,7 @@ describe('AssignStoRole', () => {
     test('should throw if permission feature is not enabled', async () => {
       wrappersMock.mock('getAttachedModules', Promise.resolve([]));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: 'You must enable the Permissions feature',
@@ -133,7 +131,7 @@ describe('AssignStoRole', () => {
     test('should throw if role has already been assigned to delegate', async () => {
       gpmMock.mock('getAllDelegatesWithPerm', Promise.resolve([params.delegateAddress]));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `Role ${params.role} has already been assigned to delegate for this STO.`,
@@ -144,7 +142,7 @@ describe('AssignStoRole', () => {
     test('should throw if role has already been revoked from delegate', async () => {
       target = new AssignStoRole({ ...params, assign: false }, contextMock.getMockInstance());
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `Role ${params.role} has already been revoked from delegate for this STO.`,

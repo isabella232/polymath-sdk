@@ -1,18 +1,19 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { stub, spy, restore } from 'sinon';
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { spy, restore } from 'sinon';
+import { BigNumber, EtherDividendCheckpointEvents } from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { CreateEtherDividendDistribution } from '../../procedures/CreateEtherDividendDistribution';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode, ProcedureType } from '~/types';
+import { DividendType, ErrorCode, ProcedureType } from '~/types';
 import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/factories/DividendDistributionFactory';
 import * as utilsModule from '~/utils';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { mockFactories } from '~/testUtils/mockFactories';
+import { DividendDistribution, SecurityToken } from '~/entities';
 
 const params = {
   symbol: 'TEST1',
@@ -27,7 +28,9 @@ describe('CreateEtherDividendDistribution', () => {
   let target: CreateEtherDividendDistribution;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
+
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
+
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
 
@@ -39,8 +42,8 @@ describe('CreateEtherDividendDistribution', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
+
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
@@ -142,16 +145,17 @@ describe('CreateEtherDividendDistribution', () => {
     });
 
     test('should return the newly created eth dividend distribution', async () => {
+      const dividendIndex = 1;
       const dividendObject = {
         securityTokenId: () => 'Id',
-        index: () => 1,
+        index: () => dividendIndex,
       };
 
       const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
-            _dividendIndex: new BigNumber(1),
+            _dividendIndex: new BigNumber(dividendIndex),
           },
         },
       ]);
@@ -159,15 +163,35 @@ describe('CreateEtherDividendDistribution', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      await expect(resolver.result).toEqual(dividendObject);
+
+      // Verification for resolver result
+      expect(await resolver.result).toEqual(dividendObject);
+      // Verification for fetch
+      expect(
+        fetchStub.getCall(0).calledWithExactly(
+          DividendDistribution.generateId({
+            securityTokenId: SecurityToken.generateId({
+              symbol: params.symbol,
+            }),
+            dividendType: DividendType.Eth,
+            index: dividendIndex,
+          })
+        )
+      ).toEqual(true);
       expect(fetchStub.callCount).toBe(1);
+      // Verifications for findEvents
+      expect(
+        findEventsStub.getCall(0).calledWithMatch({
+          eventName: EtherDividendCheckpointEvents.EtherDividendDeposited,
+        })
+      ).toEqual(true);
       expect(findEventsStub.callCount).toBe(1);
     });
 
     test('should throw if eth dividends manager has not been enabled', async () => {
       wrappersMock.mock('getAttachedModules', Promise.resolve([]));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: "The ETH Dividends Manager hasn't been enabled",
@@ -176,14 +200,12 @@ describe('CreateEtherDividendDistribution', () => {
     });
 
     test('should throw if there is no valid security token supplied', async () => {
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params.symbol })
-          .throws()
-      );
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,

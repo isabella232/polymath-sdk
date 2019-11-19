@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { stub, spy, restore } from 'sinon';
+import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ModuleName, Perm } from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
@@ -24,7 +24,6 @@ describe('AssignSecurityTokenRole', () => {
   let target: AssignSecurityTokenRole;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
 
@@ -34,8 +33,8 @@ describe('AssignSecurityTokenRole', () => {
     // Mock the context, wrappers, and tokenFactory to test AssignSecurityTokenRole
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
+
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
@@ -117,14 +116,12 @@ describe('AssignSecurityTokenRole', () => {
     });
 
     test('should throw if there is no valid security token being provided', async () => {
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params.symbol })
-          .throws()
-      );
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,
@@ -135,7 +132,7 @@ describe('AssignSecurityTokenRole', () => {
     test('should throw if permission feature is not enabled', async () => {
       wrappersMock.mock('getAttachedModules', Promise.resolve([]));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: 'You must enable the Permissions feature',
@@ -146,7 +143,7 @@ describe('AssignSecurityTokenRole', () => {
     test('should throw if role has already been assigned to delegate', async () => {
       gpmMock.mock('getAllDelegatesWithPerm', Promise.resolve([params.delegateAddress]));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `Role ${params.role} has already been assigned to delegate.`,
@@ -160,7 +157,7 @@ describe('AssignSecurityTokenRole', () => {
         contextMock.getMockInstance()
       );
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `Role ${params.role} has already been revoked from delegate.`,
@@ -177,7 +174,7 @@ describe('AssignSecurityTokenRole', () => {
         },
       });
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.FeatureNotEnabled,
           message: `You must enable the Permissions feature`,
