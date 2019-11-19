@@ -2,6 +2,7 @@ import { ImportMock, MockManager, StaticMockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import { cloneDeep } from 'lodash';
 import { MintTokens } from '../../procedures/MintTokens';
 import { Procedure } from '../../procedures/Procedure';
 import * as shareholdersEntityModule from '../../entities/SecurityToken/Shareholders';
@@ -18,8 +19,6 @@ import { ModifyShareholderData } from '../../procedures';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { Shareholder } from '../../entities';
 import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
-
-const cloneDeep = require('lodash/clonedeep');
 
 const securityTokenId = 'ST ID';
 const testAddress = '0x6666666666666666666666666666666666666666';

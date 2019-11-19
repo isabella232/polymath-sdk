@@ -3,6 +3,7 @@ import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import { BigNumber, GeneralTransferManager_3_0_0 } from '@polymathnetwork/contract-wrappers';
+import { cloneDeep } from 'lodash';
 import { ModifyShareholderData } from '../../procedures/ModifyShareholderData';
 import { Procedure } from '../../procedures/Procedure';
 import { ErrorCode, ProcedureType } from '../../types';
@@ -17,8 +18,6 @@ import * as securityTokenEntityModule from '../../entities/SecurityToken/Securit
 import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
 import { PolymathError } from '../../PolymathError';
 import { Shareholder } from '../../entities';
-
-const cloneDeep = require('lodash/clonedeep');
 
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
@@ -255,7 +254,7 @@ describe('ModifyShareholderData', () => {
         securityTokenId: () => params.symbol,
         address: () => testAddress,
       };
-      const fetchStub = shareholderFactoryMock.mock('fetch', Promise.resolve(shareholderObject));
+      const fetchStub = shareholderFactoryMock.mock('fetch', shareholderObject);
 
       // Real call
       const resolver = await target.prepareTransactions();
