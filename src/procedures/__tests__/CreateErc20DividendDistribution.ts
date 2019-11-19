@@ -8,14 +8,14 @@ import * as wrappersModule from '../../PolymathBase';
 import * as approveModule from '../ApproveErc20';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { CreateErc20DividendDistribution } from '../../procedures/CreateErc20DividendDistribution';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { DividendType, ErrorCode, ProcedureType } from '~/types';
+import { Procedure } from '../Procedure';
+import { PolymathError } from '../../PolymathError';
+import { DividendType, ErrorCode, ProcedureType } from '../../types';
 import { ApproveErc20 } from '../ApproveErc20';
-import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/factories/DividendDistributionFactory';
-import * as utilsModule from '~/utils';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { DividendDistribution, SecurityToken } from '~/entities';
+import * as dividendDistributionSecurityTokenFactoryModule from '../../entities/factories/DividendDistributionFactory';
+import * as utilsModule from '../../utils';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { DividendDistribution, SecurityToken } from '../../entities';
 
 const params = {
   symbol: 'TEST1',
@@ -167,7 +167,7 @@ describe('CreateErc20DividendDistribution', () => {
       // Real call
       const resolver = await target.prepareTransactions();
 
-      expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
+      await expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:

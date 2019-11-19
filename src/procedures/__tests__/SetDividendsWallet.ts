@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { stub, spy, restore } from 'sinon';
+import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import { Factories } from '../../Context';
@@ -7,13 +7,13 @@ import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { SetDividendsWallet } from '../../procedures/SetDividendsWallet';
 import * as setDividendsWalletModule from '../../procedures/SetDividendsWallet';
-import { Procedure } from '~/procedures/Procedure';
-import { ProcedureType, DividendType, ErrorCode } from '~/types';
-import { PolymathError } from '~/PolymathError';
-import { mockFactories } from '~/testUtils/mockFactories';
-import * as erc20FactoryModule from '~/entities/factories/Erc20DividendsManagerFactory';
-import * as ethFactoryModule from '~/entities/factories/EthDividendsManagerFactory';
-import { SecurityToken, Erc20DividendsManager, EthDividendsManager } from '~/entities';
+import { Procedure } from '../../procedures/Procedure';
+import { ProcedureType, DividendType, ErrorCode } from '../../types';
+import { PolymathError } from '../../PolymathError';
+import { mockFactories } from '../../testUtils/mockFactories';
+import * as erc20FactoryModule from '../../entities/factories/Erc20DividendsManagerFactory';
+import * as ethFactoryModule from '../../entities/factories/EthDividendsManagerFactory';
+import { SecurityToken, Erc20DividendsManager, EthDividendsManager } from '../../entities';
 
 const params = {
   symbol: 'TEST1',

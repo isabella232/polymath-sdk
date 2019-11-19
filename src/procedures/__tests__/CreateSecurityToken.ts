@@ -2,20 +2,20 @@ import { ImportMock, MockManager } from 'ts-mock-imports';
 import { BigNumber, SecurityTokenRegistryEvents } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { spy, restore } from 'sinon';
+import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as approvalModule from '../ApproveErc20';
 import { CreateSecurityToken } from '../../procedures/CreateSecurityToken';
-import { Procedure } from '~/procedures/Procedure';
-import { Wallet } from '~/Wallet';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, ProcedureType } from '~/types';
+import { Procedure } from '../../procedures/Procedure';
+import { Wallet } from '../../Wallet';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, ProcedureType } from '../../types';
 import { ApproveErc20 } from '../ApproveErc20';
-import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
-import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
-import * as utilsModule from '~/utils';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { SecurityToken } from '~/entities';
+import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
+import * as utilsModule from '../../utils';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { SecurityToken } from '../../entities';
 
 const params = {
   symbol: 'TEST1',
@@ -110,7 +110,7 @@ describe('CreateSecurityToken', () => {
       // Real call
       const resolver = await target.prepareTransactions();
 
-      expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
+      await expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:

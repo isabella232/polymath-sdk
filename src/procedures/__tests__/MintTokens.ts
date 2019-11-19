@@ -3,21 +3,21 @@ import { spy, restore } from 'sinon';
 import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { MintTokens } from '../../procedures/MintTokens';
-import { Procedure } from '~/procedures/Procedure';
-import * as shareholdersEntityModule from '~/entities/SecurityToken/Shareholders';
-import * as securityTokenEntityModule from '~/entities/SecurityToken/SecurityToken';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, MintTokensProcedureArgs, ProcedureType } from '~/types';
-import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
-import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
+import { Procedure } from '../../procedures/Procedure';
+import * as shareholdersEntityModule from '../../entities/SecurityToken/Shareholders';
+import * as securityTokenEntityModule from '../../entities/SecurityToken/SecurityToken';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, MintTokensProcedureArgs, ProcedureType } from '../../types';
+import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
+import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { ModifyShareholderData } from '~/procedures';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { Shareholder } from '~/entities';
-import { SecurityToken } from '~/entities/SecurityToken/SecurityToken';
+import { ModifyShareholderData } from '../../procedures';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { Shareholder } from '../../entities';
+import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
 
 const cloneDeep = require('lodash/clonedeep');
 
@@ -100,7 +100,7 @@ describe('MintTokens', () => {
 
     const factoryMockSetup = mockFactories();
 
-    wrappersMock.mock('getAttachedModules', Promise.resolve(''));
+    wrappersMock.mock('getAttachedModules', Promise.resolve([]));
 
     const shareHolders = [
       {

@@ -5,9 +5,9 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { AssignStoRole } from '../../procedures/AssignStoRole';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, PolyTransactionTag, StoRole } from '~/types';
+import { Procedure } from '../Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, PolyTransactionTag, StoRole } from '../../types';
 
 const params = {
   symbol: 'TEST1',

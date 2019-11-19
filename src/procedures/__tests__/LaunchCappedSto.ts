@@ -8,19 +8,19 @@ import {
   TransactionReceiptWithDecodedLogs,
 } from '@polymathnetwork/contract-wrappers';
 import { LaunchCappedSto } from '../../procedures/LaunchCappedSto';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, LaunchCappedStoProcedureArgs, ProcedureType, StoType } from '~/types';
-import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
-import * as utilsModule from '~/utils';
+import { Procedure } from '../../procedures/Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, LaunchCappedStoProcedureArgs, ProcedureType, StoType } from '../../types';
+import * as cappedStoFactoryModule from '../../entities/factories/CappedStoFactory';
+import * as utilsModule from '../../utils';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { Wallet } from '~/Wallet';
-import { TransferErc20 } from '~/procedures';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { CappedSto, SecurityToken } from '~/entities';
+import { Wallet } from '../../Wallet';
+import { TransferErc20 } from '../../procedures';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { CappedSto, SecurityToken } from '../../entities';
 
 const params: LaunchCappedStoProcedureArgs = {
   symbol: 'TEST1',

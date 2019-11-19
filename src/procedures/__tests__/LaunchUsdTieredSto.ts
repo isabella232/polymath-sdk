@@ -8,19 +8,19 @@ import {
 } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { LaunchUsdTieredSto } from '../../procedures/LaunchUsdTieredSto';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, LaunchUsdTieredStoProcedureArgs, ProcedureType, StoType } from '~/types';
+import { Procedure } from '../Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, LaunchUsdTieredStoProcedureArgs, ProcedureType, StoType } from '../../types';
 import * as usdTieredStoFactoryModule from '~/entities/factories/UsdTieredStoFactory';
-import * as utilsModule from '~/utils';
+import * as utilsModule from '../../utils';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { Wallet } from '~/Wallet';
-import { TransferErc20 } from '~/procedures';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { SecurityToken, UsdTieredSto } from '~/entities';
+import { Wallet } from '../../Wallet';
+import { TransferErc20 } from '../../procedures';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { SecurityToken, UsdTieredSto } from '../../entities';
 
 const params: LaunchUsdTieredStoProcedureArgs = {
   symbol: 'TEST1',

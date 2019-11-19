@@ -4,16 +4,16 @@ import { BigNumber, EtherDividendCheckpointEvents } from '@polymathnetwork/contr
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { CreateEtherDividendDistribution } from '../../procedures/CreateEtherDividendDistribution';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { DividendType, ErrorCode, ProcedureType } from '~/types';
-import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/factories/DividendDistributionFactory';
-import * as utilsModule from '~/utils';
+import { Procedure } from '../Procedure';
+import { PolymathError } from '../../PolymathError';
+import { DividendType, ErrorCode, ProcedureType } from '../../types';
+import * as dividendDistributionSecurityTokenFactoryModule from '../../entities/factories/DividendDistributionFactory';
+import * as utilsModule from '../../utils';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { DividendDistribution, SecurityToken } from '~/entities';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { DividendDistribution, SecurityToken } from '../../entities';
 
 const params = {
   symbol: 'TEST1',
@@ -135,7 +135,7 @@ describe('CreateEtherDividendDistribution', () => {
       // Real call
       const resolver = await target.prepareTransactions();
 
-      expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
+      await expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:

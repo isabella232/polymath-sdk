@@ -2,19 +2,19 @@ import { ImportMock, MockManager } from 'ts-mock-imports';
 import { restore, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { PauseSto } from '../../procedures/PauseSto';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, PauseStoProcedureArgs, ProcedureType, StoType } from '~/types';
+import { Procedure } from '../../procedures/Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, PauseStoProcedureArgs, ProcedureType, StoType } from '../../types';
 import * as pauseStoModule from '../../procedures/PauseSto';
-import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
-import * as usdTieredStoFactoryModule from '~/entities/factories/UsdTieredStoFactory';
+import * as cappedStoFactoryModule from '../../entities/factories/CappedStoFactory';
+import * as usdTieredStoFactoryModule from '../../entities/factories/UsdTieredStoFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { mockFactories } from '~/testUtils/mockFactories';
+import { mockFactories } from '../../testUtils/mockFactories';
 import { Factories } from '../../Context';
-import { CappedSto, SecurityToken, UsdTieredSto } from '~/entities';
+import { CappedSto, SecurityToken, UsdTieredSto } from '../../entities';
 
 const usdTieredParams: PauseStoProcedureArgs = {
   symbol: 'TEST1',

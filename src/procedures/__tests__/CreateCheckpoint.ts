@@ -5,16 +5,16 @@ import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SecurityTokenEvents } from '@polymathnetwork/contract-wrappers';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, ProcedureType } from '~/types';
+import { Procedure } from '../../procedures/Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, ProcedureType } from '../../types';
 import * as utilsModule from '../../utils';
-import * as checkpointFactoryModule from '~/entities/factories/CheckpointFactory';
+import * as checkpointFactoryModule from '../../entities/factories/CheckpointFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { Checkpoint, SecurityToken } from '~/entities';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { Checkpoint, SecurityToken } from '../../entities';
 
 const params = {
   symbol: 'TEST1',
@@ -91,7 +91,7 @@ describe('CreateCheckpoint', () => {
       // Real call
       const resolver = await target.prepareTransactions();
 
-      expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
+      await expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:

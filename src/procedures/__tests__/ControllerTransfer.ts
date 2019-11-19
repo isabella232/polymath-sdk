@@ -8,13 +8,13 @@ import { Wallet } from '../../Wallet';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import * as controllerTransferModule from '../../procedures/ControllerTransfer';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, ProcedureType } from '~/types';
-import { mockFactories } from '~/testUtils/mockFactories';
-import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
+import { Procedure } from '../../procedures/Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, ProcedureType } from '../../types';
+import { mockFactories } from '../../testUtils/mockFactories';
+import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
 import { Factories } from '../../Context';
-import { SecurityToken, Shareholder } from '~/entities';
+import { SecurityToken, Shareholder } from '../../entities';
 
 const params = {
   symbol: 'TEST1',

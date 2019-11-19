@@ -1,14 +1,14 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import { SinonStub, stub, spy } from 'sinon';
+import { SinonStub, spy } from 'sinon';
 import * as contextModule from '../../Context';
 import * as polymathBaseModule from '../../PolymathBase';
 import { ApproveErc20 } from '../../procedures/ApproveErc20';
-import { Procedure } from '~/procedures/Procedure';
-import { Wallet } from '~/Wallet';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, PolyTransactionTag, ProcedureType } from '~/types';
+import { Procedure } from '../../procedures/Procedure';
+import { Wallet } from '../../Wallet';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 
 const params = {
   amount: new BigNumber(1),
