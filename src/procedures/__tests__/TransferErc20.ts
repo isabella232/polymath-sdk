@@ -86,7 +86,7 @@ describe('TransferErc20', () => {
     factoryMockSetup = mockFactories();
     factoryMockSetup.erc20TokenBalanceFactory = erc20TokenBalanceFactoryMock.getMockInstance();
 
-    erc20TokenBalanceFactoryMock.mock('refresh', {});
+    erc20TokenBalanceFactoryMock.mock('refresh', Promise.resolve());
     contextMock.set('factories', factoryMockSetup);
     contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(currentWallet) }));
 
