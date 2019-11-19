@@ -28,6 +28,8 @@ const cappedParams: PauseStoProcedureArgs = {
   stoType: StoType.Capped,
 };
 
+const invalidSto = 'InvalidSto';
+
 describe('PauseSto', () => {
   let target: PauseSto;
   let contextMock: MockManager<contextModule.Context>;
@@ -154,14 +156,14 @@ describe('PauseSto', () => {
         {
           stoAddress: cappedParams.stoAddress,
           symbol: cappedParams.symbol,
-          stoType: {} as StoType,
+          stoType: invalidSto as StoType,
         },
         contextMock.getMockInstance()
       );
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `Invalid STO type ${{}}`,
+          message: `Invalid STO type ${invalidSto}`,
         })
       );
     });
@@ -175,11 +177,9 @@ describe('PauseSto', () => {
         })
       );
     });
-  });
 
-  describe('should successfully resolve pause sto with cappedSto', () => {
-    test('should successfully resolve controller transfer', async () => {
-      const refreshStub = cappedStoFactoryMock.mock('refresh', Promise.resolve(undefined));
+    test('should successfully resolve pause sto with capped sto params', async () => {
+      const refreshStub = cappedStoFactoryMock.mock('refresh', undefined);
       await pauseStoModule.createPauseStoResolver(
         factoryMockSetup,
         cappedParams.symbol,
@@ -197,10 +197,8 @@ describe('PauseSto', () => {
       ).toEqual(true);
       expect(refreshStub.callCount).toEqual(1);
     });
-  });
 
-  describe('should successfully resolve pause sto with usdtieredSto', () => {
-    test('should successfully resolve controller transfer', async () => {
+    test('should successfully resolve pause sto with usd tiered sto params', async () => {
       target = new PauseSto(usdTieredParams, contextMock.getMockInstance());
       const refreshStub = usdTieredStoFactoryMock.mock('refresh', Promise.resolve(undefined));
       await pauseStoModule.createPauseStoResolver(

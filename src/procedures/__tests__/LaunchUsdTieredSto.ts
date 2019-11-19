@@ -40,6 +40,11 @@ const params: LaunchUsdTieredStoProcedureArgs = {
   usdTokenAddresses: ['0x7777777777777777777777777777777777777777'],
 };
 
+const currentWallet = '0x8888888888888888888888888888888888888888';
+const securityTokenAddress = '0x9999999999999999999999999999999999999999';
+const polyTokenAddress = '0x5555555555555555555555555555555555555555';
+const moduleFactoryAddress = '0x4444444444444444444444444444444444444444';
+
 describe('LaunchUsdTieredSto', () => {
   let target: LaunchUsdTieredSto;
   let contextMock: MockManager<contextModule.Context>;
@@ -100,10 +105,7 @@ describe('LaunchUsdTieredSto', () => {
     const factoryMockSetup = mockFactories();
     factoryMockSetup.usdTieredStoFactory = usdTieredStoFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
-    contextMock.set(
-      'currentWallet',
-      new Wallet({ address: () => Promise.resolve(params.storageWallet) })
-    );
+    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(currentWallet) }));
 
     polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
     polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
@@ -114,7 +116,7 @@ describe('LaunchUsdTieredSto', () => {
 
     getAttachedModulesFactoryAddressStub = wrappersMock.mock(
       'getModuleFactoryAddress',
-      Promise.resolve(params.treasuryWallet)
+      Promise.resolve(moduleFactoryAddress)
     );
 
     // Instantiate LaunchUsdTieredSto
@@ -183,11 +185,11 @@ describe('LaunchUsdTieredSto', () => {
       );
     });
 
-    test('should return the usd tiered sto', async () => {
+    test('should return the usd tiered sto object information', async () => {
       const stoObject = {
-        securityTokenId: () => Promise.resolve(params.symbol),
-        stoType: () => Promise.resolve(StoType.UsdTiered),
-        address: () => Promise.resolve(params.storageWallet),
+        securityTokenId: params.symbol,
+        stoType: StoType.UsdTiered,
+        address: securityTokenAddress,
       };
       const fetchStub = usdTieredStoFactoryMock.mock('fetch', stoObject);
       const moduleAddress = '0x3333333333333333333333333333333333333333';

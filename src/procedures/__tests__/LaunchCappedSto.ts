@@ -33,6 +33,11 @@ const params: LaunchCappedStoProcedureArgs = {
   treasuryWallet: '0x7777777777777777777777777777777777777777',
 };
 
+const currentWallet = '0x8888888888888888888888888888888888888888';
+const securityTokenAddress = '0x9999999999999999999999999999999999999999';
+const polyTokenAddress = '0x5555555555555555555555555555555555555555';
+const moduleFactoryAddress = '0x4444444444444444444444444444444444444444';
+
 describe('LaunchCappedSto', () => {
   let target: LaunchCappedSto;
   let contextMock: MockManager<contextModule.Context>;
@@ -83,10 +88,7 @@ describe('LaunchCappedSto', () => {
     const factoryMockSetup = mockFactories();
     factoryMockSetup.cappedStoFactory = cappedStoFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
-    contextMock.set(
-      'currentWallet',
-      new Wallet({ address: () => Promise.resolve(params.storageWallet) })
-    );
+    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(currentWallet) }));
 
     polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
     polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
@@ -95,7 +97,7 @@ describe('LaunchCappedSto', () => {
     wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
-    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(params.treasuryWallet));
+    wrappersMock.mock('getModuleFactoryAddress', moduleFactoryAddress);
 
     // Instantiate LaunchCappedSto
     target = new LaunchCappedSto(params, contextMock.getMockInstance());
@@ -164,11 +166,11 @@ describe('LaunchCappedSto', () => {
       );
     });
 
-    test('should return the capped sto', async () => {
+    test('should return the capped sto object information', async () => {
       const stoObject = {
-        securityTokenId: () => Promise.resolve(params.symbol),
-        stoType: () => Promise.resolve(StoType.Capped),
-        address: () => Promise.resolve(params.storageWallet),
+        securityTokenId: params.symbol,
+        stoType: StoType.Capped,
+        address: securityTokenAddress,
       };
       const fetchStub = cappedStoFactoryMock.mock('fetch', stoObject);
       const moduleAddress = '0x3333333333333333333333333333333333333333';

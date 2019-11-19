@@ -19,6 +19,8 @@ import { mockFactories } from '~/testUtils/mockFactories';
 import { Shareholder } from '~/entities';
 import { SecurityToken } from '~/entities/SecurityToken/SecurityToken';
 
+const cloneDeep = require('lodash/clonedeep');
+
 const securityTokenId = 'ST ID';
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
@@ -157,17 +159,17 @@ describe('MintTokens', () => {
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
-    test('should return the minted tokens shareholders object', async () => {
+    test('should return an array of the shareholders for whom tokens were minted', async () => {
       const shareholderObject = {
-        securityTokenId: () => Promise.resolve(params.symbol),
-        address: () => Promise.resolve(testAddress),
+        securityTokenId: params.symbol,
+        address: testAddress,
       };
       const fetchStub = shareholderFactoryMock.mock('fetch', shareholderObject);
 
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      await expect(resolver.result).toEqual([shareholderObject, shareholderObject]);
+      expect(resolver.result).toEqual([shareholderObject, shareholderObject]);
 
       // Verification for fetch
       expect(
@@ -221,7 +223,7 @@ describe('MintTokens', () => {
     });
 
     test('should throw an error for an expired Kyc', async () => {
-      const expiredParams = params;
+      const expiredParams = cloneDeep(params);
       expiredParams.mintingData[0].shareholderData = {
         canSendAfter: new Date(Date.now()),
         canReceiveAfter: new Date(2035, 1),
