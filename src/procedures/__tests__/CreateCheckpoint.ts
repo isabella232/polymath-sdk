@@ -7,7 +7,7 @@ import { SecurityTokenEvents } from '@polymathnetwork/contract-wrappers';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
 import { Procedure } from '../../procedures/Procedure';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, ProcedureType } from '../../types';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import * as utilsModule from '../../utils';
 import * as checkpointFactoryModule from '../../entities/factories/CheckpointFactory';
 import * as contextModule from '../../Context';
@@ -80,8 +80,9 @@ describe('CreateCheckpoint', () => {
       expect(
         addTransactionSpy
           .getCall(0)
-          .calledWith(securityTokenMock.getMockInstance().controllerTransfer)
+          .calledWith(securityTokenMock.getMockInstance().createCheckpoint)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.CreateCheckpoint);
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 

@@ -10,7 +10,7 @@ import { CreateSecurityToken } from '../../procedures/CreateSecurityToken';
 import { Procedure } from '../../procedures/Procedure';
 import { Wallet } from '../../Wallet';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, ProcedureType } from '../../types';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import { ApproveErc20 } from '../ApproveErc20';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import * as utilsModule from '../../utils';
@@ -25,6 +25,9 @@ const params = {
   amount: new BigNumber(1),
   divisible: false,
 };
+
+const costInPoly = new BigNumber(5);
+const costInUsd = new BigNumber(6);
 
 describe('CreateSecurityToken', () => {
   let target: CreateSecurityToken;
@@ -54,10 +57,7 @@ describe('CreateSecurityToken', () => {
     securityTokenRegistryMock.mock('tickerAvailable', Promise.resolve(false));
     securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(true));
     securityTokenRegistryMock.mock('isTokenLaunched', Promise.resolve(false));
-    securityTokenRegistryMock.mock(
-      'getFees',
-      Promise.resolve([new BigNumber(1), new BigNumber(1)])
-    );
+    securityTokenRegistryMock.mock('getFees', Promise.resolve([costInUsd, costInPoly]));
     securityTokenRegistryMock.mock('address', Promise.resolve(params.address));
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
@@ -200,9 +200,15 @@ describe('CreateSecurityToken', () => {
           .getCall(0)
           .calledWith(securityTokenRegistryMock.getMockInstance().generateNewSecurityToken)
       ).toEqual(true);
-
+      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+        usd: costInUsd,
+        poly: costInPoly,
+      });
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateSecurityToken
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWith(ApproveErc20)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 

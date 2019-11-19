@@ -10,7 +10,7 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { CreateErc20DividendDistribution } from '../../procedures/CreateErc20DividendDistribution';
 import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
-import { DividendType, ErrorCode, ProcedureType } from '../../types';
+import { DividendType, ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import { ApproveErc20 } from '../ApproveErc20';
 import * as dividendDistributionSecurityTokenFactoryModule from '../../entities/factories/DividendDistributionFactory';
 import * as utilsModule from '../../utils';
@@ -109,6 +109,9 @@ describe('CreateErc20DividendDistribution', () => {
             erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateErc20DividendDistribution
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
@@ -140,9 +143,15 @@ describe('CreateErc20DividendDistribution', () => {
             erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateErc20DividendDistribution
+      );
       expect(
         addTransactionSpy.getCall(1).calledWith(erc20DividendsMock.getMockInstance().setWithholding)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(1).lastArg.tag).toEqual(
+        PolyTransactionTag.SetErc20TaxWithholding
+      );
       expect(addTransactionSpy.callCount).toEqual(2);
       expect(addProcedureSpy.callCount).toEqual(1);
     });

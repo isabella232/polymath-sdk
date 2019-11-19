@@ -8,7 +8,7 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { SetDividendsWallet } from '../../procedures/SetDividendsWallet';
 import * as setDividendsWalletModule from '../../procedures/SetDividendsWallet';
 import { Procedure } from '../../procedures/Procedure';
-import { ProcedureType, DividendType, ErrorCode } from '../../types';
+import { ProcedureType, DividendType, ErrorCode, PolyTransactionTag } from '../../types';
 import { PolymathError } from '../../PolymathError';
 import { mockFactories } from '../../testUtils/mockFactories';
 import * as erc20FactoryModule from '../../entities/factories/Erc20DividendsManagerFactory';
@@ -166,6 +166,9 @@ describe('SetDividendsWallet', () => {
       expect(
         addTransactionSpy.getCall(0).calledWith(erc20DividendMock.getMockInstance().changeWallet)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.SetDividendsWallet
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
@@ -191,6 +194,9 @@ describe('SetDividendsWallet', () => {
       expect(
         addTransactionSpy.getCall(0).calledWith(ethDividendMock.getMockInstance().changeWallet)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.SetDividendsWallet
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 

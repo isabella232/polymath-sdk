@@ -8,7 +8,7 @@ import { Procedure } from '../../procedures/Procedure';
 import * as shareholdersEntityModule from '../../entities/SecurityToken/Shareholders';
 import * as securityTokenEntityModule from '../../entities/SecurityToken/SecurityToken';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, MintTokensProcedureArgs, ProcedureType } from '../../types';
+import { ErrorCode, MintTokensProcedureArgs, PolyTransactionTag, ProcedureType } from '../../types';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
 import * as contextModule from '../../Context';
@@ -153,8 +153,9 @@ describe('MintTokens', () => {
       expect(
         addTransactionSpy.getCall(0).calledWith(securityTokenMock.getMockInstance().issueMulti)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.IssueMulti);
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWith(ModifyShareholderData)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ModifyShareholderData)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 

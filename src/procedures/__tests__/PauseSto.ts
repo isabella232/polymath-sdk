@@ -4,7 +4,13 @@ import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { PauseSto } from '../../procedures/PauseSto';
 import { Procedure } from '../../procedures/Procedure';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, PauseStoProcedureArgs, ProcedureType, StoType } from '../../types';
+import {
+  ErrorCode,
+  PauseStoProcedureArgs,
+  PolyTransactionTag,
+  ProcedureType,
+  StoType,
+} from '../../types';
 import * as pauseStoModule from '../../procedures/PauseSto';
 import * as cappedStoFactoryModule from '../../entities/factories/CappedStoFactory';
 import * as usdTieredStoFactoryModule from '../../entities/factories/UsdTieredStoFactory';
@@ -117,6 +123,7 @@ describe('PauseSto', () => {
       expect(
         addTransactionSpy.getCall(0).calledWith(cappedStoMock.getMockInstance().pause)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.PauseSto);
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
@@ -131,6 +138,7 @@ describe('PauseSto', () => {
       expect(
         addTransactionSpy.getCall(0).calledWith(usdTieredStoMock.getMockInstance().pause)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.PauseSto);
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 

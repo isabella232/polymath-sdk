@@ -6,7 +6,7 @@ import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { CreateEtherDividendDistribution } from '../../procedures/CreateEtherDividendDistribution';
 import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
-import { DividendType, ErrorCode, ProcedureType } from '../../types';
+import { DividendType, ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import * as dividendDistributionSecurityTokenFactoryModule from '../../entities/factories/DividendDistributionFactory';
 import * as utilsModule from '../../utils';
 import * as contextModule from '../../Context';
@@ -94,6 +94,9 @@ describe('CreateEtherDividendDistribution', () => {
             etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateEtherDividendDistribution
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
@@ -123,9 +126,15 @@ describe('CreateEtherDividendDistribution', () => {
             etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateEtherDividendDistribution
+      );
       expect(
         addTransactionSpy.getCall(1).calledWith(etherDividendsMock.getMockInstance().setWithholding)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(1).lastArg.tag).toEqual(
+        PolyTransactionTag.SetEtherTaxWithholding
+      );
       expect(addTransactionSpy.callCount).toEqual(2);
     });
 

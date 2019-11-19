@@ -10,7 +10,7 @@ import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import * as controllerTransferModule from '../../procedures/ControllerTransfer';
 import { Procedure } from '../../procedures/Procedure';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, ProcedureType } from '../../types';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import { mockFactories } from '../../testUtils/mockFactories';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
 import { Factories } from '../../Context';
@@ -85,6 +85,9 @@ describe('ControllerTransfer', () => {
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().controllerTransfer)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.ControllerTransfer
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 

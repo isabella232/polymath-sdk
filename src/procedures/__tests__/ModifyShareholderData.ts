@@ -6,7 +6,7 @@ import { BigNumber, GeneralTransferManager_3_0_0 } from '@polymathnetwork/contra
 import { cloneDeep } from 'lodash';
 import { ModifyShareholderData } from '../../procedures/ModifyShareholderData';
 import { Procedure } from '../../procedures/Procedure';
-import { ErrorCode, ProcedureType } from '../../types';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import * as contextModule from '../../Context';
@@ -140,7 +140,7 @@ describe('ModifyShareholderData', () => {
   });
 
   describe('ModifyShareholderData', () => {
-    test('should add a transaction to the queue to modify the shareholders data', async () => {
+    test('should add a transaction to the queue to modify the shareholders kyc data and flags', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
 
       // Real call
@@ -149,9 +149,15 @@ describe('ModifyShareholderData', () => {
       expect(addTransactionSpy.getCall(0).calledWith(gtmMockInstance.modifyKYCDataMulti)).toEqual(
         true
       );
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.ModifyKycDataMulti
+      );
       expect(
         addTransactionSpy.getCall(1).calledWith(gtmMockInstance.modifyInvestorFlagMulti)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(1).lastArg.tag).toEqual(
+        PolyTransactionTag.ModifyInvestorFlagMulti
+      );
       expect(addTransactionSpy.callCount).toEqual(2);
     });
 
@@ -245,6 +251,9 @@ describe('ModifyShareholderData', () => {
       // Verifications
       expect(addTransactionSpy.getCall(0).calledWith(gtmMockInstance.modifyKYCDataMulti)).toEqual(
         true
+      );
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.ModifyKycDataMulti
       );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
