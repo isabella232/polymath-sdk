@@ -96,7 +96,7 @@ describe('CreateSecurityToken', () => {
     test('should throw error if token is not reserved ', async () => {
       securityTokenRegistryMock.mock('tickerAvailable', Promise.resolve(true));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `The security token symbol ${
@@ -112,7 +112,7 @@ describe('CreateSecurityToken', () => {
       // Real call
       const resolver = await target.prepareTransactions();
 
-      expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
+      await expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
@@ -170,7 +170,7 @@ describe('CreateSecurityToken', () => {
     test('should throw error if token has been reserved by other user', async () => {
       securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(false));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `The security token symbol ${
@@ -183,7 +183,7 @@ describe('CreateSecurityToken', () => {
     test('should throw error if the token has already been launched', async () => {
       securityTokenRegistryMock.mock('isTokenLaunched', Promise.resolve(true));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `The security token symbol ${params.symbol} has already been launched.`,

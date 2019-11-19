@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { stub, spy, restore } from 'sinon';
+import { spy, restore } from 'sinon';
 import { BigNumber, ERC20DividendCheckpointEvents } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
@@ -146,14 +146,12 @@ describe('CreateErc20DividendDistribution', () => {
     });
 
     test('should throw if there is no valid security token supplied', async () => {
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params.symbol })
-          .throws()
-      );
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,
@@ -167,7 +165,7 @@ describe('CreateErc20DividendDistribution', () => {
       // Real call
       const resolver = await target.prepareTransactions();
 
-      expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
+      await expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
@@ -223,7 +221,7 @@ describe('CreateErc20DividendDistribution', () => {
     test('should throw error if the erc20 dividends manager has not been enabled', async () => {
       wrappersMock.mock('getAttachedModules', Promise.resolve([]));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: "The ERC20 Dividends Manager hasn't been enabled",
