@@ -10,7 +10,13 @@ import {
 import { LaunchCappedSto } from '../../procedures/LaunchCappedSto';
 import { Procedure } from '../../procedures/Procedure';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, LaunchCappedStoProcedureArgs, ProcedureType, StoType } from '../../types';
+import {
+  ErrorCode,
+  LaunchCappedStoProcedureArgs,
+  PolyTransactionTag,
+  ProcedureType,
+  StoType,
+} from '../../types';
 import * as cappedStoFactoryModule from '../../entities/factories/CappedStoFactory';
 import * as utilsModule from '../../utils';
 import * as contextModule from '../../Context';
@@ -37,6 +43,8 @@ const currentWallet = '0x8888888888888888888888888888888888888888';
 const securityTokenAddress = '0x9999999999999999999999999999999999999999';
 const polyTokenAddress = '0x5555555555555555555555555555555555555555';
 const moduleFactoryAddress = '0x4444444444444444444444444444444444444444';
+const costInPoly = new BigNumber(5);
+const costInUsd = new BigNumber(6);
 
 describe('LaunchCappedSto', () => {
   let target: LaunchCappedSto;
@@ -69,13 +77,13 @@ describe('LaunchCappedSto', () => {
     wrappersMock.set('moduleFactory', moduleWrapperFactoryMock.getMockInstance());
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    securityTokenMock.mock('address', Promise.resolve(params.storageWallet));
-    securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(1)));
+    securityTokenMock.mock('address', Promise.resolve(securityTokenAddress));
+    securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(10)));
 
     moduleFactoryMock = ImportMock.mockClass(contractWrappersModule, 'ModuleFactory_3_0_0');
-    moduleFactoryMock.mock('setupCostInPoly', Promise.resolve(new BigNumber(1)));
+    moduleFactoryMock.mock('setupCostInPoly', Promise.resolve(costInPoly));
     moduleFactoryMock.mock('isCostInPoly', Promise.resolve(false));
-    moduleFactoryMock.mock('setupCost', Promise.resolve(new BigNumber(1)));
+    moduleFactoryMock.mock('setupCost', Promise.resolve(costInUsd));
 
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
@@ -91,12 +99,12 @@ describe('LaunchCappedSto', () => {
     contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(currentWallet) }));
 
     polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
-    polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
-    polyTokenMock.mock('address', Promise.resolve(params.treasuryWallet));
+    polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(20)));
+    polyTokenMock.mock('address', Promise.resolve(polyTokenAddress));
     polyTokenMock.mock('allowance', Promise.resolve(new BigNumber(0)));
+
     wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
     wrappersMock.mock('isTestnet', Promise.resolve(false));
-
     wrappersMock.mock('getModuleFactoryAddress', moduleFactoryAddress);
 
     // Instantiate LaunchCappedSto
@@ -114,7 +122,7 @@ describe('LaunchCappedSto', () => {
   });
 
   describe('LaunchCappedSto', () => {
-    test('should add a transaction to the queue to launch a capped sto', async () => {
+    test('should add a transaction to the queue to launch a capped sto with cost in usd', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
@@ -126,6 +134,11 @@ describe('LaunchCappedSto', () => {
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+        usd: costInUsd,
+        poly: costInPoly,
+      });
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
       expect(addTransactionSpy.callCount).toEqual(1);
       expect(addProcedureSpy.getCall(0).calledWith(TransferErc20)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
@@ -146,6 +159,11 @@ describe('LaunchCappedSto', () => {
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+        usd: null,
+        poly: costInPoly,
+      });
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
       expect(addTransactionSpy.callCount).toEqual(1);
       expect(addProcedureSpy.getCall(0).calledWith(TransferErc20)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
