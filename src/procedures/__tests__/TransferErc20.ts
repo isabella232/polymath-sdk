@@ -3,15 +3,20 @@ import { restore, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from '../Procedure';
-import { ErrorCode, ProcedureType, TransferErc20ProcedureArgs } from '../../types';
+import {
+  ErrorCode,
+  PolyTransactionTag,
+  ProcedureType,
+  TransferErc20ProcedureArgs,
+} from '../../types';
 import * as erc20TokenBalanceFactoryModule from '../../entities/factories/Erc20TokenBalanceFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { Wallet } from '~/Wallet';
-import { TransferErc20 } from '~/procedures';
-import * as transferErc20Module from '~/procedures/TransferErc20';
+import { Wallet } from '../../Wallet';
+import { TransferErc20 } from '../../procedures';
+import * as transferErc20Module from '../../procedures/TransferErc20';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { PolymathError } from '../../PolymathError';
 import { Erc20TokenBalance } from '../../entities';
@@ -23,6 +28,7 @@ const params: TransferErc20ProcedureArgs = {
   tokenAddress: '0x7777777777777777777777777777777777777777',
 };
 const currentWallet = '0x8888888888888888888888888888888888888888';
+const polyTokenAddress = '0x9999999999999999999999999999999999999999';
 
 describe('TransferErc20', () => {
   let target: TransferErc20;
@@ -85,7 +91,7 @@ describe('TransferErc20', () => {
     contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(currentWallet) }));
 
     polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
-    polyTokenMock.mock('address', Promise.resolve(params.tokenAddress));
+    polyTokenMock.mock('address', Promise.resolve(polyTokenAddress));
     wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
@@ -104,7 +110,7 @@ describe('TransferErc20', () => {
   });
 
   describe('TransferErc20', () => {
-    test('should add a transaction to the queue to transfer an erc20 token', async () => {
+    test('should add a transaction to the queue to transfer an erc20 token with specified token address to a specified receiving address', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
@@ -113,16 +119,17 @@ describe('TransferErc20', () => {
       expect(addTransactionSpy.getCall(0).calledWith(erc20Mock.getMockInstance().transfer)).toEqual(
         true
       );
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.TransferErc20);
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should throw if supplied address does not correspond to erc20 token', async () => {
+    test('should throw if supplied address does not correspond to a valid erc20 token', async () => {
       wrappersMock
         .mock('getERC20TokenWrapper')
         .withArgs({ address: params.tokenAddress })
         .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: 'The supplied address does not correspond to an ERC20 token',
@@ -133,7 +140,7 @@ describe('TransferErc20', () => {
     test('should throw if address belongs to a security token, not an erc20 token', async () => {
       securityTokenRegistryMock.mock('isSecurityToken', Promise.resolve(true));
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message:
@@ -142,27 +149,30 @@ describe('TransferErc20', () => {
       );
     });
 
-    test('should add a transaction to the queue to transfer an erc20 token getting token funds if there are not enough funds, only on testnet', async () => {
+    test('should add a transaction to the queue to transfer an erc20 token getting poly token funds if there are not enough funds, only on testnet', async () => {
       wrappersMock.mock('isTestnet', Promise.resolve(true));
+      polyTokenMock.mock('address', Promise.resolve(params.tokenAddress));
       erc20Mock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(addTransactionSpy.getCall(0).calledWith(erc20Mock.getMockInstance().transfer)).toEqual(
+      expect(
+        addTransactionSpy.getCall(0).calledWith(wrappersMock.getMockInstance().getPolyTokens)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.GetTokens);
+      expect(addTransactionSpy.getCall(1).calledWith(erc20Mock.getMockInstance().transfer)).toEqual(
         true
       );
-      expect(
-        addTransactionSpy.getCall(1).calledWith(wrappersMock.getMockInstance().getPolyTokens)
-      ).toEqual(true);
+      expect(addTransactionSpy.getCall(1).lastArg.tag).toEqual(PolyTransactionTag.TransferErc20);
       expect(addTransactionSpy.callCount).toEqual(2);
     });
 
-    test('should throw if there are not enough funds to make transfer', async () => {
+    test('should throw error if there are not enough funds to make an erc20 transfer', async () => {
       erc20Mock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: 'Not enough funds',
@@ -171,7 +181,7 @@ describe('TransferErc20', () => {
     });
 
     test('should successfully create erc20 transfer resolver', async () => {
-      const refreshStub = erc20TokenBalanceFactoryMock.mock('refresh', Promise.resolve(undefined));
+      const refreshStub = erc20TokenBalanceFactoryMock.mock('refresh', Promise.resolve());
       const address = params.tokenAddress ? params.tokenAddress : '';
       const erc20TokenBalanceGeneratedId = Erc20TokenBalance.generateId({
         tokenAddress: address,
@@ -183,7 +193,7 @@ describe('TransferErc20', () => {
         params.receiver
       )();
       expect(refreshStub.getCall(0).calledWithExactly(erc20TokenBalanceGeneratedId)).toEqual(true);
-      expect(await resolverValue).toEqual(undefined);
+      expect(resolverValue).toEqual(undefined);
       expect(refreshStub.callCount).toEqual(1);
     });
   });
