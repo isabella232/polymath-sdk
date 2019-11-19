@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { stub, spy } from 'sinon';
+import { spy } from 'sinon';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
@@ -90,14 +90,12 @@ describe('ControllerTransfer', () => {
     });
 
     test('should throw if there is no valid security token supplied', async () => {
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params.symbol })
-          .throws()
-      );
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,
@@ -108,7 +106,7 @@ describe('ControllerTransfer', () => {
     test('should throw error if balanceOf is less than amount being transferred', async () => {
       securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(0)));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.InsufficientBalance,
           message: `Sender's balance of 0 is less than the requested amount of ${params.amount.toNumber()}`,
@@ -119,7 +117,7 @@ describe('ControllerTransfer', () => {
     test('should throw an error if the current wallet is not the Security Token controller', async () => {
       securityTokenMock.mock('controller', Promise.resolve('Random'));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `You must be the controller of this Security Token to perform forced transfers. Did you remember to call "setController"?`,
@@ -137,7 +135,7 @@ describe('ControllerTransfer', () => {
         contextMock.getMockInstance()
       );
       // Real call rejects
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.InvalidAddress,
           message: `Provided "to" address is invalid: Inappropriate`,
@@ -155,7 +153,7 @@ describe('ControllerTransfer', () => {
         contextMock.getMockInstance()
       );
       // Real call rejects
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.InvalidAddress,
           message: `Provided "from" address is invalid: Inappropriate`,
