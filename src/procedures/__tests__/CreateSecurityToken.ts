@@ -63,10 +63,7 @@ describe('CreateSecurityToken', () => {
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('securityTokenRegistry', securityTokenRegistryMock.getMockInstance());
 
-    const ownerPromise = new Promise<string>((resolve, reject) => {
-      resolve(params.owner);
-    });
-    contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
+    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(params.owner) }));
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
     securityTokenFactoryMock = ImportMock.mockClass(
