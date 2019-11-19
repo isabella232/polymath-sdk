@@ -3,8 +3,8 @@ import { restore, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from '../Procedure';
-import { ErrorCode, ProcedureType, TransferErc20ProcedureArgs } from '~/types';
-import * as erc20TokenBalanceFactoryModule from '~/entities/factories/Erc20TokenBalanceFactory';
+import { ErrorCode, ProcedureType, TransferErc20ProcedureArgs } from '../../types';
+import * as erc20TokenBalanceFactoryModule from '../../entities/factories/Erc20TokenBalanceFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
@@ -22,6 +22,7 @@ const params: TransferErc20ProcedureArgs = {
   receiver: '0x6666666666666666666666666666666666666666',
   tokenAddress: '0x7777777777777777777777777777777777777777',
 };
+const currentWallet = '0x8888888888888888888888888888888888888888';
 
 describe('TransferErc20', () => {
   let target: TransferErc20;
@@ -66,11 +67,9 @@ describe('TransferErc20', () => {
       contractWrappersModule,
       'SecurityTokenRegistry'
     );
-
-    wrappersMock.set('securityTokenRegistry', securityTokenRegistryMock.getMockInstance());
-
     securityTokenRegistryMock.mock('isSecurityToken', Promise.resolve(false));
 
+    wrappersMock.set('securityTokenRegistry', securityTokenRegistryMock.getMockInstance());
     wrappersMock.mock('getERC20TokenWrapper', erc20Mock.getMockInstance());
 
     erc20TokenBalanceFactoryMock = ImportMock.mockClass(
@@ -83,17 +82,12 @@ describe('TransferErc20', () => {
 
     erc20TokenBalanceFactoryMock.mock('refresh', {});
     contextMock.set('factories', factoryMockSetup);
-    contextMock.set(
-      'currentWallet',
-      new Wallet({ address: () => Promise.resolve(params.receiver) })
-    );
+    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(currentWallet) }));
 
     polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
     polyTokenMock.mock('address', Promise.resolve(params.tokenAddress));
     wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
     wrappersMock.mock('isTestnet', Promise.resolve(false));
-
-    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(params.receiver));
 
     // Instantiate TransferErc20
     target = new TransferErc20(params, contextMock.getMockInstance());
@@ -128,7 +122,7 @@ describe('TransferErc20', () => {
         .withArgs({ address: params.tokenAddress })
         .throws();
 
-      await expect(target.prepareTransactions()).rejects.toThrow(
+      expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: 'The supplied address does not correspond to an ERC20 token',
@@ -139,7 +133,7 @@ describe('TransferErc20', () => {
     test('should throw if address belongs to a security token, not an erc20 token', async () => {
       securityTokenRegistryMock.mock('isSecurityToken', Promise.resolve(true));
 
-      await expect(target.prepareTransactions()).rejects.toThrow(
+      expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message:
@@ -168,7 +162,7 @@ describe('TransferErc20', () => {
     test('should throw if there are not enough funds to make transfer', async () => {
       erc20Mock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
 
-      await expect(target.prepareTransactions()).rejects.toThrow(
+      expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: 'Not enough funds',
