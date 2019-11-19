@@ -1,6 +1,6 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { stub, spy, restore } from 'sinon';
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { spy, restore } from 'sinon';
+import { BigNumber, ERC20DividendCheckpointEvents } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contextModule from '../../Context';
@@ -10,11 +10,12 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { CreateErc20DividendDistribution } from '../../procedures/CreateErc20DividendDistribution';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode, ProcedureType } from '~/types';
+import { DividendType, ErrorCode, ProcedureType } from '~/types';
 import { ApproveErc20 } from '../ApproveErc20';
 import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/factories/DividendDistributionFactory';
 import * as utilsModule from '~/utils';
 import { mockFactories } from '~/testUtils/mockFactories';
+import { DividendDistribution, SecurityToken } from '~/entities';
 
 const params = {
   symbol: 'TEST1',
@@ -31,7 +32,6 @@ describe('CreateErc20DividendDistribution', () => {
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let approvalMock: MockManager<approveModule.ApproveErc20>;
-
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let erc20DividendsMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
@@ -44,7 +44,6 @@ describe('CreateErc20DividendDistribution', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateErc20DividendDistribution
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
 
     // Import mock out of ApproveErc20
@@ -147,14 +146,12 @@ describe('CreateErc20DividendDistribution', () => {
     });
 
     test('should throw if there is no valid security token supplied', async () => {
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params.symbol })
-          .throws()
-      );
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,
@@ -168,7 +165,7 @@ describe('CreateErc20DividendDistribution', () => {
       // Real call
       const resolver = await target.prepareTransactions();
 
-      expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
+      await expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
@@ -178,17 +175,17 @@ describe('CreateErc20DividendDistribution', () => {
     });
 
     test('should return the created erc20 dividend distribution', async () => {
+      const dividendIndex = 1;
       const dividendObject = {
-        permissions: {
-          securityTokenId: () => Promise.resolve(params.symbol),
-          index: () => Promise.resolve(1),
-        },
+        securityTokenId: () => Promise.resolve(params.symbol),
+        index: () => Promise.resolve(dividendIndex),
       };
+
       const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
-      ImportMock.mockFunction(utilsModule, 'findEvents', [
+      const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
-            _dividendIndex: new BigNumber(1),
+            _dividendIndex: new BigNumber(dividendIndex),
           },
         },
       ]);
@@ -196,14 +193,35 @@ describe('CreateErc20DividendDistribution', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      expect(resolver.result).toEqual(dividendObject);
+
+      // Verification for resolver result
+      expect(await resolver.result).toEqual(dividendObject);
+      // Verification for fetch
+      expect(
+        fetchStub.getCall(0).calledWithExactly(
+          DividendDistribution.generateId({
+            securityTokenId: SecurityToken.generateId({
+              symbol: params.symbol,
+            }),
+            dividendType: DividendType.Erc20,
+            index: dividendIndex,
+          })
+        )
+      ).toEqual(true);
       expect(fetchStub.callCount).toBe(1);
+      // Verifications for findEvents
+      expect(
+        findEventsStub.getCall(0).calledWithMatch({
+          eventName: ERC20DividendCheckpointEvents.ERC20DividendDeposited,
+        })
+      ).toEqual(true);
+      expect(findEventsStub.callCount).toBe(1);
     });
 
     test('should throw error if the erc20 dividends manager has not been enabled', async () => {
       wrappersMock.mock('getAttachedModules', Promise.resolve([]));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: "The ERC20 Dividends Manager hasn't been enabled",

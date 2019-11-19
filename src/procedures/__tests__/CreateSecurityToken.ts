@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, SecurityTokenRegistryEvents } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { spy, restore } from 'sinon';
 import * as contextModule from '../../Context';
@@ -15,6 +15,7 @@ import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenF
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as utilsModule from '~/utils';
 import { mockFactories } from '~/testUtils/mockFactories';
+import { SecurityToken } from '~/entities';
 
 const params = {
   symbol: 'TEST1',
@@ -95,7 +96,7 @@ describe('CreateSecurityToken', () => {
     test('should throw error if token is not reserved ', async () => {
       securityTokenRegistryMock.mock('tickerAvailable', Promise.resolve(true));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `The security token symbol ${
@@ -111,7 +112,7 @@ describe('CreateSecurityToken', () => {
       // Real call
       const resolver = await target.prepareTransactions();
 
-      expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
+      await expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
@@ -122,14 +123,13 @@ describe('CreateSecurityToken', () => {
 
     test('should return the newly created security token', async () => {
       const creationObject = {
-        creation: {
-          name: () => params.name,
-          owner: () => params.owner,
-          address: () => params.address,
-        },
+        name: () => params.name,
+        owner: () => params.owner,
+        address: () => params.address,
       };
+
       const createStub = securityTokenFactoryMock.mock('create', creationObject);
-      ImportMock.mockFunction(utilsModule, 'findEvents', [
+      const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
             _ticker: params.symbol,
@@ -142,15 +142,35 @@ describe('CreateSecurityToken', () => {
 
       // Real call
       const resolver = await target.prepareTransactions();
-      await resolver.run({} as TransactionReceiptWithDecodedLogs);
+      const receipt = {} as TransactionReceiptWithDecodedLogs;
+      await resolver.run(receipt);
+
+      // Verification for resolver result
       expect(resolver.result).toEqual(creationObject);
+      // Verification for fetch
+      expect(
+        createStub
+          .getCall(0)
+          .calledWithExactly(SecurityToken.generateId({ symbol: params.symbol }), {
+            name: params.name,
+            owner: params.owner,
+            address: params.address,
+          })
+      ).toEqual(true);
       expect(createStub.callCount).toBe(1);
+      // Verifications for findEvents
+      expect(
+        findEventsStub.getCall(0).calledWithMatch({
+          eventName: SecurityTokenRegistryEvents.NewSecurityToken,
+        })
+      ).toEqual(true);
+      expect(findEventsStub.callCount).toBe(1);
     });
 
     test('should throw error if token has been reserved by other user', async () => {
       securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(false));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `The security token symbol ${
@@ -163,7 +183,7 @@ describe('CreateSecurityToken', () => {
     test('should throw error if the token has already been launched', async () => {
       securityTokenRegistryMock.mock('isTokenLaunched', Promise.resolve(true));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `The security token symbol ${params.symbol} has already been launched.`,
