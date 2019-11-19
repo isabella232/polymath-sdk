@@ -160,7 +160,7 @@ describe('ModifyShareholderData', () => {
         securityTokenId: params.symbol,
         address: testAddress,
       };
-      const fetchStub = shareholderFactoryMock.mock('fetch', shareholderObject);
+      const fetchStub = shareholderFactoryMock.mock('fetch', Promise.resolve(shareholderObject));
 
       // Real call
       const resolver = await target.prepareTransactions();
@@ -254,7 +254,7 @@ describe('ModifyShareholderData', () => {
         securityTokenId: () => params.symbol,
         address: () => testAddress,
       };
-      const fetchStub = shareholderFactoryMock.mock('fetch', shareholderObject);
+      const fetchStub = shareholderFactoryMock.mock('fetch', Promise.resolve(shareholderObject));
 
       // Real call
       const resolver = await target.prepareTransactions();

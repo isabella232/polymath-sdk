@@ -191,7 +191,7 @@ describe('LaunchUsdTieredSto', () => {
         stoType: StoType.UsdTiered,
         address: securityTokenAddress,
       };
-      const fetchStub = usdTieredStoFactoryMock.mock('fetch', stoObject);
+      const fetchStub = usdTieredStoFactoryMock.mock('fetch', Promise.resolve(stoObject));
       const moduleAddress = '0x3333333333333333333333333333333333333333';
       findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {

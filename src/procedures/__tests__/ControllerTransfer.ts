@@ -162,7 +162,7 @@ describe('ControllerTransfer', () => {
   });
 
   test('should successfully resolve controller transfer', async () => {
-    const refreshStub = shareholderFactoryMock.mock('refresh', undefined);
+    const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve());
     const securityTokenId = SecurityToken.generateId({ symbol: params.symbol });
     const resolverValue = await controllerTransferModule.createControllerTransferResolver(
       factoriesMockedSetup,

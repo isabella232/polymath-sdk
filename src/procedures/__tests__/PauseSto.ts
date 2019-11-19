@@ -179,7 +179,7 @@ describe('PauseSto', () => {
     });
 
     test('should successfully resolve pause sto with capped sto params', async () => {
-      const refreshStub = cappedStoFactoryMock.mock('refresh', undefined);
+      const refreshStub = cappedStoFactoryMock.mock('refresh', Promise.resolve());
       await pauseStoModule.createPauseStoResolver(
         factoryMockSetup,
         cappedParams.symbol,
@@ -200,7 +200,7 @@ describe('PauseSto', () => {
 
     test('should successfully resolve pause sto with usd tiered sto params', async () => {
       target = new PauseSto(usdTieredParams, contextMock.getMockInstance());
-      const refreshStub = usdTieredStoFactoryMock.mock('refresh', undefined);
+      const refreshStub = usdTieredStoFactoryMock.mock('refresh', Promise.resolve());
       await pauseStoModule.createPauseStoResolver(
         factoryMockSetup,
         usdTieredParams.symbol,

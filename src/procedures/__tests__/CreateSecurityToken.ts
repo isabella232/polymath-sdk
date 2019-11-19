@@ -143,9 +143,8 @@ describe('CreateSecurityToken', () => {
       const receipt = {} as TransactionReceiptWithDecodedLogs;
       await resolver.run(receipt);
 
-      // Verification for resolver result
+      // Verifications
       expect(resolver.result).toEqual(creationObject);
-      // Verification for fetch
       expect(
         createStub
           .getCall(0)

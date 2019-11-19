@@ -172,7 +172,7 @@ describe('LaunchCappedSto', () => {
         stoType: StoType.Capped,
         address: securityTokenAddress,
       };
-      const fetchStub = cappedStoFactoryMock.mock('fetch', stoObject);
+      const fetchStub = cappedStoFactoryMock.mock('fetch', Promise.resolve(stoObject));
       const moduleAddress = '0x3333333333333333333333333333333333333333';
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {

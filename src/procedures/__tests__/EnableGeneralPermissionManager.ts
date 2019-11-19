@@ -40,7 +40,7 @@ describe('EnableGeneralPermissionManager', () => {
       contractWrappersModule,
       'EtherDividendCheckpoint_3_0_0'
     );
-    wrappersMock.mock('getModuleFactoryAddress', moduleFactoryAddress);
+    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(moduleFactoryAddress));
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()

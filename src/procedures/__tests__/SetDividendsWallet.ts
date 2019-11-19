@@ -195,7 +195,7 @@ describe('SetDividendsWallet', () => {
     });
 
     test('should successfully refresh ERC20 dividends factory', async () => {
-      const refreshStub = erc20FactoryMock.mock('refresh', undefined);
+      const refreshStub = erc20FactoryMock.mock('refresh', Promise.resolve());
 
       const resolverValue = await setDividendsWalletModule.createSetDividendsWalletResolver(
         DividendType.Erc20,
@@ -219,7 +219,7 @@ describe('SetDividendsWallet', () => {
   });
 
   test('should successfully refresh Eth dividends factory', async () => {
-    const refreshStub = ethFactoryMock.mock('refresh', undefined);
+    const refreshStub = ethFactoryMock.mock('refresh', Promise.resolve());
 
     const resolverValue = await setDividendsWalletModule.createSetDividendsWalletResolver(
       DividendType.Eth,
