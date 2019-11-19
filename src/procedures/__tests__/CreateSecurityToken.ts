@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, SecurityTokenRegistryEvents } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { spy, restore } from 'sinon';
 import * as contextModule from '../../Context';
@@ -15,6 +15,7 @@ import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenF
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as utilsModule from '~/utils';
 import { mockFactories } from '~/testUtils/mockFactories';
+import { SecurityToken } from '~/entities';
 
 const params = {
   symbol: 'TEST1',
@@ -31,12 +32,8 @@ describe('CreateSecurityToken', () => {
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let approvalMock: MockManager<approvalModule.ApproveErc20>;
 
-  let securityTokenRegistryMock: MockManager<
-    contractWrappersModule.SecurityTokenRegistry
-  >;
-  let securityTokenFactoryMock: MockManager<
-    securityTokenFactoryModule.SecurityTokenFactory
-  >;
+  let securityTokenRegistryMock: MockManager<contractWrappersModule.SecurityTokenRegistry>;
+  let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test
@@ -55,10 +52,7 @@ describe('CreateSecurityToken', () => {
     );
 
     securityTokenRegistryMock.mock('tickerAvailable', Promise.resolve(false));
-    securityTokenRegistryMock.mock(
-      'isTickerRegisteredByCurrentIssuer',
-      Promise.resolve(true)
-    );
+    securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(true));
     securityTokenRegistryMock.mock('isTokenLaunched', Promise.resolve(false));
     securityTokenRegistryMock.mock(
       'getFees',
@@ -67,18 +61,12 @@ describe('CreateSecurityToken', () => {
     securityTokenRegistryMock.mock('address', Promise.resolve(params.address));
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
-    wrappersMock.set(
-      'securityTokenRegistry',
-      securityTokenRegistryMock.getMockInstance()
-    );
+    wrappersMock.set('securityTokenRegistry', securityTokenRegistryMock.getMockInstance());
 
     const ownerPromise = new Promise<string>((resolve, reject) => {
       resolve(params.owner);
     });
-    contextMock.set(
-      'currentWallet',
-      new Wallet({ address: () => ownerPromise })
-    );
+    contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
     securityTokenFactoryMock = ImportMock.mockClass(
@@ -135,17 +123,13 @@ describe('CreateSecurityToken', () => {
 
     test('should return the newly created security token', async () => {
       const creationObject = {
-        creation: {
-          name: () => params.name,
-          owner: () => params.owner,
-          address: () => params.address,
-        },
+        name: () => params.name,
+        owner: () => params.owner,
+        address: () => params.address,
       };
-      const createStub = securityTokenFactoryMock.mock(
-        'create',
-        creationObject
-      );
-      ImportMock.mockFunction(utilsModule, 'findEvents', [
+
+      const createStub = securityTokenFactoryMock.mock('create', creationObject);
+      const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
             _ticker: params.symbol,
@@ -158,16 +142,33 @@ describe('CreateSecurityToken', () => {
 
       // Real call
       const resolver = await target.prepareTransactions();
-      await resolver.run({} as TransactionReceiptWithDecodedLogs);
+      const receipt = {} as TransactionReceiptWithDecodedLogs;
+      await resolver.run(receipt);
+
+      // Verification for resolver result
       expect(resolver.result).toEqual(creationObject);
+      // Verification for fetch
+      expect(
+        createStub
+          .getCall(0)
+          .calledWithExactly(SecurityToken.generateId({ symbol: params.symbol }), {
+            name: params.name,
+            owner: params.owner,
+            address: params.address,
+          })
+      ).toEqual(true);
       expect(createStub.callCount).toBe(1);
+      // Verifications for findEvents
+      expect(
+        findEventsStub.getCall(0).calledWithMatch({
+          eventName: SecurityTokenRegistryEvents.NewSecurityToken,
+        })
+      ).toEqual(true);
+      expect(findEventsStub.callCount).toBe(1);
     });
 
     test('should throw error if token has been reserved by other user', async () => {
-      securityTokenRegistryMock.mock(
-        'isTickerRegisteredByCurrentIssuer',
-        Promise.resolve(false)
-      );
+      securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(false));
       // Real call
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
@@ -200,9 +201,7 @@ describe('CreateSecurityToken', () => {
       expect(
         addTransactionSpy
           .getCall(0)
-          .calledWith(
-            securityTokenRegistryMock.getMockInstance().generateNewSecurityToken
-          )
+          .calledWith(securityTokenRegistryMock.getMockInstance().generateNewSecurityToken)
       ).toEqual(true);
 
       expect(addTransactionSpy.callCount).toEqual(1);

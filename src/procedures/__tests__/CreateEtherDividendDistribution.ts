@@ -1,18 +1,19 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, EtherDividendCheckpointEvents } from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { CreateEtherDividendDistribution } from '../../procedures/CreateEtherDividendDistribution';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
-import { ErrorCode, ProcedureType } from '~/types';
+import { DividendType, ErrorCode, ProcedureType } from '~/types';
 import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/factories/DividendDistributionFactory';
 import * as utilsModule from '~/utils';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { mockFactories } from '~/testUtils/mockFactories';
+import { DividendDistribution, SecurityToken } from '~/entities';
 
 const params = {
   symbol: 'TEST1',
@@ -27,15 +28,9 @@ describe('CreateEtherDividendDistribution', () => {
   let target: CreateEtherDividendDistribution;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<
-    tokenFactoryModule.MockedTokenFactoryObject
-  >;
-  let gpmMock: MockManager<
-    contractWrappersModule.GeneralPermissionManager_3_0_0
-  >;
-  let etherDividendsMock: MockManager<
-    contractWrappersModule.EtherDividendCheckpoint_3_0_0
-  >;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+  let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
+  let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
 
   let dividendDistributionFactoryMock: MockManager<
     dividendDistributionSecurityTokenFactoryModule.DividendDistributionFactory
@@ -45,17 +40,11 @@ describe('CreateEtherDividendDistribution', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(
-      tokenFactoryModule,
-      'MockedTokenFactoryObject'
-    );
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
-    gpmMock = ImportMock.mockClass(
-      contractWrappersModule,
-      'GeneralPermissionManager_3_0_0'
-    );
+    gpmMock = ImportMock.mockClass(contractWrappersModule, 'GeneralPermissionManager_3_0_0');
     etherDividendsMock = ImportMock.mockClass(
       contractWrappersModule,
       'EtherDividendCheckpoint_3_0_0'
@@ -75,10 +64,7 @@ describe('CreateEtherDividendDistribution', () => {
     contextMock.set('factories', factoryMockSetup);
 
     // Instantiate CreateEtherDividendDistribution
-    target = new CreateEtherDividendDistribution(
-      params,
-      contextMock.getMockInstance()
-    );
+    target = new CreateEtherDividendDistribution(params, contextMock.getMockInstance());
   });
   afterEach(() => {
     restore();
@@ -102,8 +88,7 @@ describe('CreateEtherDividendDistribution', () => {
         addTransactionSpy
           .getCall(0)
           .calledWith(
-            etherDividendsMock.getMockInstance()
-              .createDividendWithCheckpointAndExclusions
+            etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
       expect(addTransactionSpy.callCount).toEqual(1);
@@ -132,14 +117,11 @@ describe('CreateEtherDividendDistribution', () => {
         addTransactionSpy
           .getCall(0)
           .calledWith(
-            etherDividendsMock.getMockInstance()
-              .createDividendWithCheckpointAndExclusions
+            etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
       expect(
-        addTransactionSpy
-          .getCall(1)
-          .calledWith(etherDividendsMock.getMockInstance().setWithholding)
+        addTransactionSpy.getCall(1).calledWith(etherDividendsMock.getMockInstance().setWithholding)
       ).toEqual(true);
       expect(addTransactionSpy.callCount).toEqual(2);
     });
@@ -160,20 +142,17 @@ describe('CreateEtherDividendDistribution', () => {
     });
 
     test('should return the newly created eth dividend distribution', async () => {
+      const dividendIndex = 1;
       const dividendObject = {
-        permissions: {
-          securityTokenId: () => 'Id',
-          index: () => 1,
-        },
+        securityTokenId: () => 'Id',
+        index: () => dividendIndex,
       };
-      const fetchStub = dividendDistributionFactoryMock.mock(
-        'fetch',
-        dividendObject
-      );
-      ImportMock.mockFunction(utilsModule, 'findEvents', [
+
+      const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
+      const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
-            _dividendIndex: new BigNumber(1),
+            _dividendIndex: new BigNumber(dividendIndex),
           },
         },
       ]);
@@ -181,8 +160,29 @@ describe('CreateEtherDividendDistribution', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      expect(resolver.result).toEqual(dividendObject);
+
+      // Verification for resolver result
+      expect(await resolver.result).toEqual(dividendObject);
+      // Verification for fetch
+      expect(
+        fetchStub.getCall(0).calledWithExactly(
+          DividendDistribution.generateId({
+            securityTokenId: SecurityToken.generateId({
+              symbol: params.symbol,
+            }),
+            dividendType: DividendType.Eth,
+            index: dividendIndex,
+          })
+        )
+      ).toEqual(true);
       expect(fetchStub.callCount).toBe(1);
+      // Verifications for findEvents
+      expect(
+        findEventsStub.getCall(0).calledWithMatch({
+          eventName: EtherDividendCheckpointEvents.EtherDividendDeposited,
+        })
+      ).toEqual(true);
+      expect(findEventsStub.callCount).toBe(1);
     });
 
     test('should throw if eth dividends manager has not been enabled', async () => {

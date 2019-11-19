@@ -7,10 +7,14 @@ import * as wrappersModule from '../../PolymathBase';
 import { Wallet } from '../../Wallet';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
+import * as controllerTransferModule from '../../procedures/ControllerTransfer';
 import { Procedure } from '~/procedures/Procedure';
 import { PolymathError } from '~/PolymathError';
 import { ErrorCode, ProcedureType } from '~/types';
 import { mockFactories } from '~/testUtils/mockFactories';
+import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
+import { Factories } from '../../Context';
+import { SecurityToken, Shareholder } from '~/entities';
 
 const params = {
   symbol: 'TEST1',
@@ -26,21 +30,16 @@ describe('ControllerTransfer', () => {
   let target: ControllerTransfer;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<
-    tokenFactoryModule.MockedTokenFactoryObject
-  >;
-  let securityTokenMock: MockManager<
-    contractWrappersModule.SecurityToken_3_0_0
-  >;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+  let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
+  let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
+  let factoriesMockedSetup: Factories;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(
-      tokenFactoryModule,
-      'MockedTokenFactoryObject'
-    );
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
     securityTokenMock.mock('balanceOf', Promise.resolve(params.amount));
@@ -49,10 +48,7 @@ describe('ControllerTransfer', () => {
     const ownerPromise = new Promise<string>((resolve, reject) => {
       resolve(params.owner);
     });
-    contextMock.set(
-      'currentWallet',
-      new Wallet({ address: () => ownerPromise })
-    );
+    contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
@@ -60,8 +56,10 @@ describe('ControllerTransfer', () => {
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
-
-    contextMock.set('factories', mockFactories());
+    shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
+    factoriesMockedSetup = mockFactories();
+    factoriesMockedSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
+    contextMock.set('factories', factoriesMockedSetup);
 
     // Instantiate ControllerTransfer
     target = new ControllerTransfer(params, contextMock.getMockInstance());
@@ -160,5 +158,34 @@ describe('ControllerTransfer', () => {
         })
       );
     });
+  });
+
+  test('should successfully resolve controller transfer', async () => {
+    const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve(undefined));
+    const securityTokenId = SecurityToken.generateId({ symbol: params.symbol });
+    const resolverValue = await controllerTransferModule.createControllerTransferResolver(
+      factoriesMockedSetup,
+      params.symbol,
+      params.from,
+      params.to
+    )();
+    expect(
+      refreshStub.getCall(0).calledWithExactly(
+        Shareholder.generateId({
+          securityTokenId,
+          address: params.from,
+        })
+      )
+    ).toEqual(true);
+    expect(
+      refreshStub.getCall(1).calledWithExactly(
+        Shareholder.generateId({
+          securityTokenId,
+          address: params.to,
+        })
+      )
+    ).toEqual(true);
+    await expect(resolverValue).toEqual([undefined, undefined]);
+    expect(refreshStub.callCount).toEqual(2);
   });
 });
