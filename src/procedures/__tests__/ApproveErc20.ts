@@ -87,6 +87,7 @@ describe('ApproveErc20', () => {
     target = new ApproveErc20(params, contextMock.getMockInstance());
 
     const addTransactionSpy = spy(target, 'addTransaction');
+    polyTokenMock.mock('approve', Promise.resolve('Approve'));
 
     // Real call
     await target.prepareTransactions();
@@ -111,13 +112,14 @@ describe('ApproveErc20', () => {
     target = new ApproveErc20({ ...params, tokenAddress }, contextMock.getMockInstance());
 
     const addTransactionSpy = spy(target, 'addTransaction');
+    erc20Mock.mock('approve', Promise.resolve('Approve'));
 
     // Real call
     await target.prepareTransactions();
 
     // Verifications
     expect(
-      addTransactionSpy.getCall(0).calledWithExactly(polyTokenMock.getMockInstance().approve, {
+      addTransactionSpy.getCall(0).calledWithExactly(erc20Mock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
       })
     ).toEqual(true);
@@ -151,6 +153,8 @@ describe('ApproveErc20', () => {
     target = new ApproveErc20(params, contextMock.getMockInstance());
 
     const addTransactionSpy = spy(target, 'addTransaction');
+    polyTokenMock.mock('approve', Promise.resolve('Approve'));
+    wrappersMock.mock('getPolyTokens', Promise.resolve('GetPolyTokens'));
 
     // Real call
     await target.prepareTransactions();
