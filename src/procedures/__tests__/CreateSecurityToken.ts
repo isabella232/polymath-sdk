@@ -2,20 +2,20 @@ import { ImportMock, MockManager } from 'ts-mock-imports';
 import { BigNumber, SecurityTokenRegistryEvents } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { spy, restore } from 'sinon';
+import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as approvalModule from '../ApproveErc20';
 import { CreateSecurityToken } from '../../procedures/CreateSecurityToken';
-import { Procedure } from '~/procedures/Procedure';
-import { Wallet } from '~/Wallet';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, ProcedureType } from '~/types';
+import { Procedure } from '../../procedures/Procedure';
+import { Wallet } from '../../Wallet';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import { ApproveErc20 } from '../ApproveErc20';
-import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
-import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
-import * as utilsModule from '~/utils';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { SecurityToken } from '~/entities';
+import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
+import * as utilsModule from '../../utils';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { SecurityToken } from '../../entities';
 
 const params = {
   symbol: 'TEST1',
@@ -25,6 +25,9 @@ const params = {
   amount: new BigNumber(1),
   divisible: false,
 };
+
+const costInPoly = new BigNumber(5);
+const costInUsd = new BigNumber(6);
 
 describe('CreateSecurityToken', () => {
   let target: CreateSecurityToken;
@@ -54,16 +57,14 @@ describe('CreateSecurityToken', () => {
     securityTokenRegistryMock.mock('tickerAvailable', Promise.resolve(false));
     securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(true));
     securityTokenRegistryMock.mock('isTokenLaunched', Promise.resolve(false));
-    securityTokenRegistryMock.mock(
-      'getFees',
-      Promise.resolve([new BigNumber(1), new BigNumber(1)])
-    );
+    securityTokenRegistryMock.mock('getFees', Promise.resolve([costInUsd, costInPoly]));
     securityTokenRegistryMock.mock('address', Promise.resolve(params.address));
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('securityTokenRegistry', securityTokenRegistryMock.getMockInstance());
 
     contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(params.owner) }));
+
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
     securityTokenFactoryMock = ImportMock.mockClass(
@@ -142,9 +143,8 @@ describe('CreateSecurityToken', () => {
       const receipt = {} as TransactionReceiptWithDecodedLogs;
       await resolver.run(receipt);
 
-      // Verification for resolver result
+      // Verifications
       expect(resolver.result).toEqual(creationObject);
-      // Verification for fetch
       expect(
         createStub
           .getCall(0)
@@ -191,6 +191,11 @@ describe('CreateSecurityToken', () => {
     test('should add the transaction to the queue to create the security token and approve erc20 transfer', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenRegistryMock.mock(
+        'generateNewSecurityToken',
+        Promise.resolve('GenerateNewSecurityToken')
+      );
+
       // Real call
       await target.prepareTransactions();
 
@@ -200,9 +205,15 @@ describe('CreateSecurityToken', () => {
           .getCall(0)
           .calledWith(securityTokenRegistryMock.getMockInstance().generateNewSecurityToken)
       ).toEqual(true);
-
+      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+        usd: costInUsd,
+        poly: costInPoly,
+      });
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateSecurityToken
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWith(ApproveErc20)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 

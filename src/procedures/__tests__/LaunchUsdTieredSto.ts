@@ -8,19 +8,25 @@ import {
 } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { LaunchUsdTieredSto } from '../../procedures/LaunchUsdTieredSto';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, LaunchUsdTieredStoProcedureArgs, ProcedureType, StoType } from '~/types';
+import { Procedure } from '../Procedure';
+import { PolymathError } from '../../PolymathError';
+import {
+  ErrorCode,
+  LaunchUsdTieredStoProcedureArgs,
+  PolyTransactionTag,
+  ProcedureType,
+  StoType,
+} from '../../types';
 import * as usdTieredStoFactoryModule from '~/entities/factories/UsdTieredStoFactory';
-import * as utilsModule from '~/utils';
+import * as utilsModule from '../../utils';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { Wallet } from '~/Wallet';
-import { TransferErc20 } from '~/procedures';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { SecurityToken, UsdTieredSto } from '~/entities';
+import { Wallet } from '../../Wallet';
+import { TransferErc20 } from '../../procedures';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { SecurityToken, UsdTieredSto } from '../../entities';
 
 const params: LaunchUsdTieredStoProcedureArgs = {
   symbol: 'TEST1',
@@ -39,6 +45,13 @@ const params: LaunchUsdTieredStoProcedureArgs = {
   currencies: [Currency.StableCoin],
   usdTokenAddresses: ['0x7777777777777777777777777777777777777777'],
 };
+
+const currentWallet = '0x8888888888888888888888888888888888888888';
+const securityTokenAddress = '0x9999999999999999999999999999999999999999';
+const polyTokenAddress = '0x5555555555555555555555555555555555555555';
+const moduleFactoryAddress = '0x4444444444444444444444444444444444444444';
+const costInPoly = new BigNumber(5);
+const costInUsd = new BigNumber(6);
 
 describe('LaunchUsdTieredSto', () => {
   let target: LaunchUsdTieredSto;
@@ -76,13 +89,13 @@ describe('LaunchUsdTieredSto', () => {
     wrappersMock.set('moduleFactory', moduleWrapperFactoryMock.getMockInstance());
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    securityTokenMock.mock('address', Promise.resolve(params.storageWallet));
-    securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(1)));
+    securityTokenMock.mock('address', Promise.resolve(securityTokenAddress));
+    securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(10)));
 
     moduleFactoryMock = ImportMock.mockClass(contractWrappersModule, 'ModuleFactory_3_0_0');
-    moduleFactoryMock.mock('setupCostInPoly', Promise.resolve(new BigNumber(1)));
+    moduleFactoryMock.mock('setupCostInPoly', Promise.resolve(costInPoly));
     moduleFactoryMock.mock('isCostInPoly', Promise.resolve(false));
-    moduleFactoryMock.mock('setupCost', Promise.resolve(new BigNumber(1)));
+    moduleFactoryMock.mock('setupCost', Promise.resolve(costInUsd));
 
     tokenFactoryStub = tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
@@ -100,21 +113,18 @@ describe('LaunchUsdTieredSto', () => {
     const factoryMockSetup = mockFactories();
     factoryMockSetup.usdTieredStoFactory = usdTieredStoFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
-    contextMock.set(
-      'currentWallet',
-      new Wallet({ address: () => Promise.resolve(params.storageWallet) })
-    );
+    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(currentWallet) }));
 
     polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
-    polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
-    polyTokenMock.mock('address', Promise.resolve(params.treasuryWallet));
+    polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(20)));
+    polyTokenMock.mock('address', Promise.resolve(polyTokenAddress));
     polyTokenMock.mock('allowance', Promise.resolve(new BigNumber(0)));
     wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
     getAttachedModulesFactoryAddressStub = wrappersMock.mock(
       'getModuleFactoryAddress',
-      Promise.resolve(params.treasuryWallet)
+      Promise.resolve(moduleFactoryAddress)
     );
 
     // Instantiate LaunchUsdTieredSto
@@ -135,6 +145,8 @@ describe('LaunchUsdTieredSto', () => {
     test('should add the transaction to the queue to launch usd tiered sto and add a procedure to transfer erc20 token', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+
       // Real call
       await target.prepareTransactions();
 
@@ -144,16 +156,24 @@ describe('LaunchUsdTieredSto', () => {
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+        usd: costInUsd,
+        poly: costInPoly,
+      });
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.EnableUsdTieredSto
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(TransferErc20)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
     test('should add the transaction to the queue to launch usd tiered sto with cost in poly', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
-
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
       moduleFactoryMock.mock('isCostInPoly', Promise.resolve(true));
+
       // Real call
       await target.prepareTransactions();
 
@@ -163,8 +183,15 @@ describe('LaunchUsdTieredSto', () => {
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+        usd: null,
+        poly: costInPoly,
+      });
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.EnableUsdTieredSto
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(TransferErc20)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
@@ -183,13 +210,13 @@ describe('LaunchUsdTieredSto', () => {
       );
     });
 
-    test('should return the usd tiered sto', async () => {
+    test('should return the usd tiered sto object information', async () => {
       const stoObject = {
-        securityTokenId: () => Promise.resolve(params.symbol),
-        stoType: () => Promise.resolve(StoType.UsdTiered),
-        address: () => Promise.resolve(params.storageWallet),
+        securityTokenId: params.symbol,
+        stoType: StoType.UsdTiered,
+        address: securityTokenAddress,
       };
-      const fetchStub = usdTieredStoFactoryMock.mock('fetch', stoObject);
+      const fetchStub = usdTieredStoFactoryMock.mock('fetch', Promise.resolve(stoObject));
       const moduleAddress = '0x3333333333333333333333333333333333333333';
       findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {

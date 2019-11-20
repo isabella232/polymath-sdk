@@ -2,22 +2,23 @@ import { ImportMock, MockManager, StaticMockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import { cloneDeep } from 'lodash';
 import { MintTokens } from '../../procedures/MintTokens';
-import { Procedure } from '~/procedures/Procedure';
-import * as shareholdersEntityModule from '~/entities/SecurityToken/Shareholders';
-import * as securityTokenEntityModule from '~/entities/SecurityToken/SecurityToken';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, MintTokensProcedureArgs, ProcedureType } from '~/types';
-import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
-import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
+import { Procedure } from '../../procedures/Procedure';
+import * as shareholdersEntityModule from '../../entities/SecurityToken/Shareholders';
+import * as securityTokenEntityModule from '../../entities/SecurityToken/SecurityToken';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, MintTokensProcedureArgs, PolyTransactionTag, ProcedureType } from '../../types';
+import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
+import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { ModifyShareholderData } from '~/procedures';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { Shareholder } from '~/entities';
-import { SecurityToken } from '~/entities/SecurityToken/SecurityToken';
+import { ModifyShareholderData } from '../../procedures';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { Shareholder } from '../../entities';
+import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
 
 const securityTokenId = 'ST ID';
 const testAddress = '0x6666666666666666666666666666666666666666';
@@ -98,7 +99,7 @@ describe('MintTokens', () => {
 
     const factoryMockSetup = mockFactories();
 
-    wrappersMock.mock('getAttachedModules', Promise.resolve(''));
+    wrappersMock.mock('getAttachedModules', Promise.resolve([]));
 
     const shareHolders = [
       {
@@ -145,6 +146,8 @@ describe('MintTokens', () => {
     test('should add the transaction to the queue to mint tokens and add a procedure to modify shareholder data', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('issueMulti', Promise.resolve('IssueMulti'));
+
       // Real call
       await target.prepareTransactions();
 
@@ -152,22 +155,23 @@ describe('MintTokens', () => {
       expect(
         addTransactionSpy.getCall(0).calledWith(securityTokenMock.getMockInstance().issueMulti)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.IssueMulti);
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWith(ModifyShareholderData)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ModifyShareholderData)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
-    test('should return the minted tokens shareholders object', async () => {
+    test('should return an array of the shareholders for whom tokens were minted', async () => {
       const shareholderObject = {
-        securityTokenId: () => Promise.resolve(params.symbol),
-        address: () => Promise.resolve(testAddress),
+        securityTokenId: params.symbol,
+        address: testAddress,
       };
-      const fetchStub = shareholderFactoryMock.mock('fetch', shareholderObject);
+      const fetchStub = shareholderFactoryMock.mock('fetch', Promise.resolve(shareholderObject));
 
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      await expect(resolver.result).toEqual([shareholderObject, shareholderObject]);
+      expect(resolver.result).toEqual([shareholderObject, shareholderObject]);
 
       // Verification for fetch
       expect(
@@ -221,7 +225,7 @@ describe('MintTokens', () => {
     });
 
     test('should throw an error for an expired Kyc', async () => {
-      const expiredParams = params;
+      const expiredParams = cloneDeep(params);
       expiredParams.mintingData[0].shareholderData = {
         canSendAfter: new Date(Date.now()),
         canReceiveAfter: new Date(2035, 1),

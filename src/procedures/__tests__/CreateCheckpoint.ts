@@ -5,16 +5,16 @@ import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SecurityTokenEvents } from '@polymathnetwork/contract-wrappers';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, ProcedureType } from '~/types';
+import { Procedure } from '../../procedures/Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import * as utilsModule from '../../utils';
-import * as checkpointFactoryModule from '~/entities/factories/CheckpointFactory';
+import * as checkpointFactoryModule from '../../entities/factories/CheckpointFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { Checkpoint, SecurityToken } from '~/entities';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { Checkpoint, SecurityToken } from '../../entities';
 
 const params = {
   symbol: 'TEST1',
@@ -30,6 +30,7 @@ describe('CreateCheckpoint', () => {
 
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
+
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
 
   // Mock factories
@@ -39,8 +40,10 @@ describe('CreateCheckpoint', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
+
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
+
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
@@ -70,6 +73,7 @@ describe('CreateCheckpoint', () => {
   describe('createCheckpoint', () => {
     test('should add a transaction to the queue to create a new checkpoint', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('createCheckpoint', Promise.resolve('CreateCheckpoint'));
 
       // Real call
       await target.prepareTransactions();
@@ -77,8 +81,9 @@ describe('CreateCheckpoint', () => {
       expect(
         addTransactionSpy
           .getCall(0)
-          .calledWith(securityTokenMock.getMockInstance().controllerTransfer)
+          .calledWith(securityTokenMock.getMockInstance().createCheckpoint)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.CreateCheckpoint);
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
@@ -104,7 +109,6 @@ describe('CreateCheckpoint', () => {
         index: () => indexValue,
       };
 
-      // Better test this
       const fetchStub = checkpointFactoryMock.mock('fetch', Promise.resolve(checkpointObject));
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {

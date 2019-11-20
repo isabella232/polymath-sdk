@@ -4,16 +4,16 @@ import { BigNumber, EtherDividendCheckpointEvents } from '@polymathnetwork/contr
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { CreateEtherDividendDistribution } from '../../procedures/CreateEtherDividendDistribution';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { DividendType, ErrorCode, ProcedureType } from '~/types';
-import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/factories/DividendDistributionFactory';
-import * as utilsModule from '~/utils';
+import { Procedure } from '../Procedure';
+import { PolymathError } from '../../PolymathError';
+import { DividendType, ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
+import * as dividendDistributionSecurityTokenFactoryModule from '../../entities/factories/DividendDistributionFactory';
+import * as utilsModule from '../../utils';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { DividendDistribution, SecurityToken } from '~/entities';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { DividendDistribution, SecurityToken } from '../../entities';
 
 const params = {
   symbol: 'TEST1',
@@ -28,7 +28,9 @@ describe('CreateEtherDividendDistribution', () => {
   let target: CreateEtherDividendDistribution;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
+
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
+
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
 
@@ -81,6 +83,11 @@ describe('CreateEtherDividendDistribution', () => {
   describe('CreateEtherDividendDistribution', () => {
     test('should add the transaction to the queue to create an ether dividend distribution', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      etherDividendsMock.mock(
+        'createDividendWithCheckpointAndExclusions',
+        Promise.resolve('CreateDividendWithCheckpointAndExclusions')
+      );
+
       // Real call
       await target.prepareTransactions();
 
@@ -92,6 +99,9 @@ describe('CreateEtherDividendDistribution', () => {
             etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateEtherDividendDistribution
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
@@ -110,6 +120,12 @@ describe('CreateEtherDividendDistribution', () => {
       );
 
       const addTransactionSpy = spy(target, 'addTransaction');
+      etherDividendsMock.mock(
+        'createDividendWithCheckpointAndExclusions',
+        Promise.resolve('CreateDividendWithCheckpointAndExclusions')
+      );
+      etherDividendsMock.mock('setWithholding', Promise.resolve('SetWithholding'));
+
       // Real call
       await target.prepareTransactions();
 
@@ -121,9 +137,15 @@ describe('CreateEtherDividendDistribution', () => {
             etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateEtherDividendDistribution
+      );
       expect(
         addTransactionSpy.getCall(1).calledWith(etherDividendsMock.getMockInstance().setWithholding)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(1).lastArg.tag).toEqual(
+        PolyTransactionTag.SetEtherTaxWithholding
+      );
       expect(addTransactionSpy.callCount).toEqual(2);
     });
 
@@ -149,8 +171,10 @@ describe('CreateEtherDividendDistribution', () => {
         index: () => dividendIndex,
       };
 
-      const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
-
+      const fetchStub = dividendDistributionFactoryMock.mock(
+        'fetch',
+        Promise.resolve(dividendObject)
+      );
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {

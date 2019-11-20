@@ -6,16 +6,17 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { EnableDividendManagers } from '../../procedures/EnableDividendManagers';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, PolyTransactionTag } from '~/types';
+import { Procedure } from '../Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, PolyTransactionTag } from '../../types';
 
 const params = {
   symbol: 'TEST1',
   storageWalletAddress: '0x5555555555555555555555555555555555555555',
 };
 
-const testAddress = '0x2222222222222222222222222222222222222222';
+const securityTokenAddress = '0x2222222222222222222222222222222222222222';
+const moduleFactoryAddress = '0x3333333333333333333333333333333333333333';
 
 describe('EnableDividendManagers', () => {
   let target: EnableDividendManagers;
@@ -34,13 +35,13 @@ describe('EnableDividendManagers', () => {
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    securityTokenMock.mock('address', Promise.resolve(testAddress));
+    securityTokenMock.mock('address', Promise.resolve(securityTokenAddress));
 
     etherDividendsMock = ImportMock.mockClass(
       contractWrappersModule,
       'EtherDividendCheckpoint_3_0_0'
     );
-    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(testAddress));
+    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(moduleFactoryAddress));
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
@@ -63,6 +64,8 @@ describe('EnableDividendManagers', () => {
   describe('EnableDividendManagers', () => {
     test('should add a transaction to the queue to enable dividend managers', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+
       // Real call
       await target.prepareTransactions();
 
