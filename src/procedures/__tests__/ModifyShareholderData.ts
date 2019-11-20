@@ -123,7 +123,7 @@ describe('ModifyShareholderData', () => {
 
     gtmMock = ImportMock.mockClass(contractWrappersModule, 'GeneralTransferManager_3_0_0');
     gtmMockInstance = gtmMock.getMockInstance();
-    wrappersMock.mock('getAttachedModules', [gtmMockInstance]);
+    wrappersMock.mock('getAttachedModules', Promise.resolve([gtmMockInstance]));
 
     // Instantiate ModifyShareholderData
     target = new ModifyShareholderData(params, contextMock.getMockInstance());
