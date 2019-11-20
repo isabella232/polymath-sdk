@@ -6,16 +6,16 @@ import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as approveModule from '../ApproveErc20';
-import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { CreateErc20DividendDistribution } from '../../procedures/CreateErc20DividendDistribution';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { DividendType, ErrorCode, ProcedureType } from '~/types';
+import { Procedure } from '../Procedure';
+import { PolymathError } from '../../PolymathError';
+import { DividendType, ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import { ApproveErc20 } from '../ApproveErc20';
-import * as dividendDistributionSecurityTokenFactoryModule from '~/entities/factories/DividendDistributionFactory';
-import * as utilsModule from '~/utils';
-import { mockFactories } from '~/testUtils/mockFactories';
-import { DividendDistribution, SecurityToken } from '~/entities';
+import * as dividendDistributionSecurityTokenFactoryModule from '../../entities/factories/DividendDistributionFactory';
+import * as utilsModule from '../../utils';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { DividendDistribution, SecurityToken } from '../../entities';
 
 const params = {
   symbol: 'TEST1',
@@ -32,7 +32,8 @@ describe('CreateErc20DividendDistribution', () => {
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let approvalMock: MockManager<approveModule.ApproveErc20>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
+
   let gpmMock: MockManager<contractWrappersModule.GeneralPermissionManager_3_0_0>;
   let erc20DividendsMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
 
@@ -44,7 +45,8 @@ describe('CreateErc20DividendDistribution', () => {
     // Mock the context, wrappers, and tokenFactory to test CreateErc20DividendDistribution
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
+
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
 
     // Import mock out of ApproveErc20
     approvalMock = ImportMock.mockClass(approveModule, 'ApproveErc20');
@@ -95,11 +97,16 @@ describe('CreateErc20DividendDistribution', () => {
     test('should add a transaction to the queue to create an erc20 dividend distribution and to approve erc20 token', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
+      erc20DividendsMock.mock(
+        'createDividendWithCheckpointAndExclusions',
+        Promise.resolve('CreateDividendWithCheckpointAndExclusions')
+      );
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(addProcedureSpy.getCall(0).calledWith(ApproveErc20)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
       expect(
         addTransactionSpy
           .getCall(0)
@@ -107,6 +114,9 @@ describe('CreateErc20DividendDistribution', () => {
             erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateErc20DividendDistribution
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
@@ -126,11 +136,17 @@ describe('CreateErc20DividendDistribution', () => {
       );
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
+      erc20DividendsMock.mock(
+        'createDividendWithCheckpointAndExclusions',
+        Promise.resolve('CreateDividendWithCheckpointAndExclusions')
+      );
+      erc20DividendsMock.mock('setWithholding', Promise.resolve('SetWithholding'));
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(addProcedureSpy.getCall(0).calledWith(ApproveErc20)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
       expect(
         addTransactionSpy
           .getCall(0)
@@ -138,9 +154,15 @@ describe('CreateErc20DividendDistribution', () => {
             erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateErc20DividendDistribution
+      );
       expect(
         addTransactionSpy.getCall(1).calledWith(erc20DividendsMock.getMockInstance().setWithholding)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(1).lastArg.tag).toEqual(
+        PolyTransactionTag.SetErc20TaxWithholding
+      );
       expect(addTransactionSpy.callCount).toEqual(2);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
@@ -181,7 +203,10 @@ describe('CreateErc20DividendDistribution', () => {
         index: () => Promise.resolve(dividendIndex),
       };
 
-      const fetchStub = dividendDistributionFactoryMock.mock('fetch', dividendObject);
+      const fetchStub = dividendDistributionFactoryMock.mock(
+        'fetch',
+        Promise.resolve(dividendObject)
+      );
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
