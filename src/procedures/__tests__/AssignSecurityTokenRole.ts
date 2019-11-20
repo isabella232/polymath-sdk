@@ -6,11 +6,11 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { AssignSecurityTokenRole } from '../../procedures/AssignSecurityTokenRole';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, Feature, PolyTransactionTag, SecurityTokenRole } from '~/types';
-import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
-import { mockFactories } from '~/testUtils/mockFactories';
+import { Procedure } from '../Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, Feature, PolyTransactionTag, SecurityTokenRole } from '../../types';
+import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
+import { mockFactories } from '../../testUtils/mockFactories';
 
 const params = {
   symbol: 'TEST1',
@@ -35,6 +35,7 @@ describe('AssignSecurityTokenRole', () => {
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
 
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
+
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
@@ -83,6 +84,8 @@ describe('AssignSecurityTokenRole', () => {
   describe('AssignSecurityTokenRole', () => {
     test('should add a change permission transaction to the queue with an existing delegate address', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      gpmMock.mock('changePermission', Promise.resolve('ChangePermission'));
+
       // Real call
       await target.prepareTransactions();
 
@@ -98,6 +101,9 @@ describe('AssignSecurityTokenRole', () => {
     test('should add transactions to the queue for add delegate and change permissions with a new delegate address', async () => {
       gpmMock.mock('getAllDelegates', Promise.resolve([]));
       const addTransactionSpy = spy(target, 'addTransaction');
+      gpmMock.mock('addDelegate', Promise.resolve('AddDelegate'));
+      gpmMock.mock('changePermission', Promise.resolve('ChangePermission'));
+
       // Real call
       await target.prepareTransactions();
 

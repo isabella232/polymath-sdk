@@ -8,13 +8,13 @@ import { Wallet } from '../../Wallet';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import * as controllerTransferModule from '../../procedures/ControllerTransfer';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, ProcedureType } from '~/types';
-import { mockFactories } from '~/testUtils/mockFactories';
-import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
+import { Procedure } from '../../procedures/Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
+import { mockFactories } from '../../testUtils/mockFactories';
+import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
 import { Factories } from '../../Context';
-import { SecurityToken, Shareholder } from '~/entities';
+import { SecurityToken, Shareholder } from '../../entities';
 
 const params = {
   symbol: 'TEST1',
@@ -30,6 +30,7 @@ describe('ControllerTransfer', () => {
   let target: ControllerTransfer;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
+
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
@@ -75,6 +76,8 @@ describe('ControllerTransfer', () => {
   describe('ControllerTransfer', () => {
     test('should add a transaction to the queue to execute a controller transfer', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('controllerTransfer', Promise.resolve('ControllerTransfer'));
+
       // Real call
       await target.prepareTransactions();
 
@@ -84,6 +87,9 @@ describe('ControllerTransfer', () => {
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().controllerTransfer)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.ControllerTransfer
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
@@ -161,7 +167,7 @@ describe('ControllerTransfer', () => {
   });
 
   test('should successfully resolve controller transfer', async () => {
-    const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve(undefined));
+    const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve());
     const securityTokenId = SecurityToken.generateId({ symbol: params.symbol });
     const resolverValue = await controllerTransferModule.createControllerTransferResolver(
       factoriesMockedSetup,

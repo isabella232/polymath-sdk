@@ -6,14 +6,16 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { EnableGeneralPermissionManager } from '../../procedures/EnableGeneralPermissionManager';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, PolyTransactionTag } from '~/types';
+import { Procedure } from '../Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, PolyTransactionTag } from '../../types';
 
 const params = {
   symbol: 'TEST1',
   address: '0x4444444444444444444444444444444444444444',
 };
+const securityTokenAddress = '0x2222222222222222222222222222222222222222';
+const moduleFactoryAddress = '0x3333333333333333333333333333333333333333';
 
 describe('EnableGeneralPermissionManager', () => {
   let target: EnableGeneralPermissionManager;
@@ -32,13 +34,13 @@ describe('EnableGeneralPermissionManager', () => {
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    securityTokenMock.mock('address', Promise.resolve(params.address));
+    securityTokenMock.mock('address', Promise.resolve(securityTokenAddress));
 
     etherDividendsMock = ImportMock.mockClass(
       contractWrappersModule,
       'EtherDividendCheckpoint_3_0_0'
     );
-    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(params.address));
+    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(moduleFactoryAddress));
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
@@ -61,6 +63,8 @@ describe('EnableGeneralPermissionManager', () => {
   describe('EnableGeneralPermissionManager', () => {
     test('should add a transaction to the queue to enable general permission manager', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+
       // Real call
       await target.prepareTransactions();
 
