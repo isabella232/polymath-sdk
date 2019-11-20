@@ -142,6 +142,8 @@ describe('ModifyShareholderData', () => {
   describe('ModifyShareholderData', () => {
     test('should add a transaction to the queue to modify the shareholders kyc data and flags', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      gtmMock.mock('modifyKYCDataMulti', Promise.resolve('ModifyKYCDataMulti'));
+      gtmMock.mock('modifyInvestorFlagMulti', Promise.resolve('ModifyInvestorFlagMulti'));
 
       // Real call
       await target.prepareTransactions();
@@ -245,6 +247,7 @@ describe('ModifyShareholderData', () => {
       paramsWithoutFlagsChange.shareholderData[1].canBuyFromSto = false;
       target = new ModifyShareholderData(paramsWithoutFlagsChange, contextMock.getMockInstance());
       const addTransactionSpy = spy(target, 'addTransaction');
+      gtmMock.mock('modifyKYCDataMulti', Promise.resolve('ModifyKYCDataMulti'));
 
       // Real call
       await target.prepareTransactions();

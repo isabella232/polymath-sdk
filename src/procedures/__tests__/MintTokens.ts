@@ -146,6 +146,8 @@ describe('MintTokens', () => {
     test('should add the transaction to the queue to mint tokens and add a procedure to modify shareholder data', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('issueMulti', Promise.resolve('IssueMulti'));
+
       // Real call
       await target.prepareTransactions();
 
