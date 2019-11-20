@@ -83,6 +83,8 @@ describe('AssignSecurityTokenRole', () => {
   describe('AssignSecurityTokenRole', () => {
     test('should add a change permission transaction to the queue with an existing delegate address', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      gpmMock.mock('changePermission', Promise.resolve('ChangePermission'));
+
       // Real call
       await target.prepareTransactions();
 
@@ -98,6 +100,9 @@ describe('AssignSecurityTokenRole', () => {
     test('should add transactions to the queue for add delegate and change permissions with a new delegate address', async () => {
       gpmMock.mock('getAllDelegates', Promise.resolve([]));
       const addTransactionSpy = spy(target, 'addTransaction');
+      gpmMock.mock('addDelegate', Promise.resolve('AddDelegate'));
+      gpmMock.mock('changePermission', Promise.resolve('ChangePermission'));
+
       // Real call
       await target.prepareTransactions();
 

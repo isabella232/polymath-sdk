@@ -53,6 +53,8 @@ describe('AssignStoRole', () => {
   describe('AssignStoRole', () => {
     test('should add transaction to the queue to change permission for an sto', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      gpmMock.mock('changePermission', Promise.resolve('ChangePermission'));
+
       // Real call
       await target.prepareTransactions();
 
@@ -68,6 +70,9 @@ describe('AssignStoRole', () => {
     test('should add transaction to the queue to add delegate and change permission for a new delegate in an sto', async () => {
       gpmMock.mock('getAllDelegates', Promise.resolve([]));
       const addTransactionSpy = spy(target, 'addTransaction');
+      gpmMock.mock('addDelegate', Promise.resolve('AddDelegate'));
+      gpmMock.mock('changePermission', Promise.resolve('ChangePermission'));
+
       // Real call
       await target.prepareTransactions();
 
@@ -91,6 +96,8 @@ describe('AssignStoRole', () => {
         contextMock.getMockInstance()
       );
       const addTransactionSpy = spy(target, 'addTransaction');
+      gpmMock.mock('changePermission', Promise.resolve('ChangePermission'));
+
       // Real call
       await target.prepareTransactions();
 
