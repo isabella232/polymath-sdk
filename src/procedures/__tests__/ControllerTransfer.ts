@@ -76,6 +76,8 @@ describe('ControllerTransfer', () => {
   describe('ControllerTransfer', () => {
     test('should add a transaction to the queue to execute a controller transfer', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('controllerTransfer', Promise.resolve('ControllerTransfer'));
+
       // Real call
       await target.prepareTransactions();
 
