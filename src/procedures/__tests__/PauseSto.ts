@@ -53,7 +53,7 @@ describe('PauseSto', () => {
   let usdTieredStoFactoryMock: MockManager<usdTieredStoFactoryModule.UsdTieredStoFactory>;
 
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
-  let moduleFactoryMock: MockManager<contractWrappersModule.ModuleFactory_3_0_0>;
+
   let factoryMockSetup: Factories;
   let securityTokenId: string;
 
@@ -73,14 +73,10 @@ describe('PauseSto', () => {
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
 
-    moduleFactoryMock = ImportMock.mockClass(contractWrappersModule, 'ModuleFactory_3_0_0');
-
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
-
-    moduleWrapperFactoryMock.mock('getModuleInstance', moduleFactoryMock.getMockInstance());
 
     cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryModule, 'CappedStoFactory');
 
@@ -99,6 +95,8 @@ describe('PauseSto', () => {
 
     securityTokenId = SecurityToken.generateId({ symbol: cappedParams.symbol });
 
+    moduleWrapperFactoryMock.mock('getModuleInstance', cappedStoMock.getMockInstance());
+
     // Instantiate PauseSto
     target = new PauseSto(cappedParams, contextMock.getMockInstance());
   });
@@ -116,10 +114,12 @@ describe('PauseSto', () => {
   describe('PauseSto', () => {
     test('should add the transaction to the queue to pause a capped sto', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      cappedStoMock.mock('pause', Promise.resolve('Pause'));
+
       // Real call
       await target.prepareTransactions();
 
-      // Verifications
+      // Verifications\
       expect(
         addTransactionSpy.getCall(0).calledWith(cappedStoMock.getMockInstance().pause)
       ).toEqual(true);
@@ -128,9 +128,12 @@ describe('PauseSto', () => {
     });
 
     test('should add the transaction to the queue to pause a usdTiered sto', async () => {
+      moduleWrapperFactoryMock.mock('getModuleInstance', usdTieredStoMock.getMockInstance());
       target = new PauseSto(usdTieredParams, contextMock.getMockInstance());
 
       const addTransactionSpy = spy(target, 'addTransaction');
+      usdTieredStoMock.mock('pause', Promise.resolve('Pause'));
+
       // Real call
       await target.prepareTransactions();
 
