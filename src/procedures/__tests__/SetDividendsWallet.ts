@@ -158,6 +158,7 @@ describe('SetDividendsWallet', () => {
       );
 
       const addTransactionSpy = spy(target, 'addTransaction');
+      erc20DividendMock.mock('changeWallet', Promise.resolve('ChangeWallet'));
 
       // Real call
       await target.prepareTransactions();
@@ -186,6 +187,7 @@ describe('SetDividendsWallet', () => {
       wrappersMock.mock('getAttachedModules', Promise.resolve([ethDividendMock.getMockInstance()]));
 
       const addTransactionSpy = spy(target, 'addTransaction');
+      ethDividendMock.mock('changeWallet', Promise.resolve('ChangeWallet'));
 
       // Real call
       await target.prepareTransactions();
