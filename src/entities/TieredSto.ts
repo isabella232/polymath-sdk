@@ -97,7 +97,6 @@ export class TieredSto extends Sto<Params> {
     const { address: stoAddress, securityTokenSymbol: symbol } = this;
 
     const procedure = new ModifyTieredStoData({ stoAddress, symbol, ...args }, this.context);
-    this.invest({ minTokens: new BigNumber(0), amount: new BigNumber(0), currency: Currency.ETH });
 
     return procedure.prepare();
   }

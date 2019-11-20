@@ -46,7 +46,7 @@ export class CappedSto extends Sto<Params> {
    * @param amount amount to spend
    * @param beneficiary address that will receive the purchased tokens (defaults to current wallet, will fail if beneficial investments are not allowed for the STO, only applicable if the STO currency is ETH)
    */
-  public async invest(args: { amount: BigNumber; beneficiary?: string }): Promise<any> {
+  public async invest(args: { amount: BigNumber; beneficiary?: string }) {
     const { address: stoAddress, securityTokenSymbol: symbol } = this;
 
     const procedure = new InvestInCappedSto({ stoAddress, symbol, ...args }, this.context);
