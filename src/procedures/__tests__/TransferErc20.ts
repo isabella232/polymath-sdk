@@ -112,6 +112,7 @@ describe('TransferErc20', () => {
   describe('TransferErc20', () => {
     test('should add a transaction to the queue to transfer an erc20 token with specified token address to a specified receiving address', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      erc20Mock.mock('transfer', Promise.resolve('Transfer'));
       // Real call
       await target.prepareTransactions();
 
@@ -153,6 +154,8 @@ describe('TransferErc20', () => {
       wrappersMock.mock('isTestnet', Promise.resolve(true));
       polyTokenMock.mock('address', Promise.resolve(params.tokenAddress));
       erc20Mock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
+      erc20Mock.mock('transfer', Promise.resolve('Transfer'));
+      wrappersMock.mock('getPolyTokens', Promise.resolve('GetPolyTokens'));
       const addTransactionSpy = spy(target, 'addTransaction');
       // Real call
       await target.prepareTransactions();
