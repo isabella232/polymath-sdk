@@ -97,11 +97,16 @@ describe('CreateErc20DividendDistribution', () => {
     test('should add a transaction to the queue to create an erc20 dividend distribution and to approve erc20 token', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
+      erc20DividendsMock.mock(
+        'createDividendWithCheckpointAndExclusions',
+        Promise.resolve('CreateDividendWithCheckpointAndExclusions')
+      );
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(addProcedureSpy.getCall(0).calledWith(ApproveErc20)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
       expect(
         addTransactionSpy
           .getCall(0)
@@ -131,11 +136,17 @@ describe('CreateErc20DividendDistribution', () => {
       );
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
+      erc20DividendsMock.mock(
+        'createDividendWithCheckpointAndExclusions',
+        Promise.resolve('CreateDividendWithCheckpointAndExclusions')
+      );
+      erc20DividendsMock.mock('setWithholding', Promise.resolve('SetWithholding'));
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(addProcedureSpy.getCall(0).calledWith(ApproveErc20)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
       expect(
         addTransactionSpy
           .getCall(0)

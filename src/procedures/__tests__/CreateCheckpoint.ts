@@ -73,6 +73,7 @@ describe('CreateCheckpoint', () => {
   describe('createCheckpoint', () => {
     test('should add a transaction to the queue to create a new checkpoint', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('createCheckpoint', Promise.resolve('CreateCheckpoint'));
 
       // Real call
       await target.prepareTransactions();
