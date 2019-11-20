@@ -191,6 +191,11 @@ describe('CreateSecurityToken', () => {
     test('should add the transaction to the queue to create the security token and approve erc20 transfer', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenRegistryMock.mock(
+        'generateNewSecurityToken',
+        Promise.resolve('GenerateNewSecurityToken')
+      );
+
       // Real call
       await target.prepareTransactions();
 

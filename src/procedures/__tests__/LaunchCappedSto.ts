@@ -125,6 +125,8 @@ describe('LaunchCappedSto', () => {
     test('should add a transaction to the queue to launch a capped sto with cost in usd', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+
       // Real call
       await target.prepareTransactions();
 
@@ -140,7 +142,7 @@ describe('LaunchCappedSto', () => {
       });
       expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(TransferErc20)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
@@ -149,6 +151,7 @@ describe('LaunchCappedSto', () => {
       const addTransactionSpy = spy(target, 'addTransaction');
 
       moduleFactoryMock.mock('isCostInPoly', Promise.resolve(true));
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
 
       // Real call
       await target.prepareTransactions();
@@ -165,7 +168,7 @@ describe('LaunchCappedSto', () => {
       });
       expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(TransferErc20)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 

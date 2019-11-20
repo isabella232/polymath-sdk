@@ -83,6 +83,11 @@ describe('CreateEtherDividendDistribution', () => {
   describe('CreateEtherDividendDistribution', () => {
     test('should add the transaction to the queue to create an ether dividend distribution', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      etherDividendsMock.mock(
+        'createDividendWithCheckpointAndExclusions',
+        Promise.resolve('CreateDividendWithCheckpointAndExclusions')
+      );
+
       // Real call
       await target.prepareTransactions();
 
@@ -115,6 +120,12 @@ describe('CreateEtherDividendDistribution', () => {
       );
 
       const addTransactionSpy = spy(target, 'addTransaction');
+      etherDividendsMock.mock(
+        'createDividendWithCheckpointAndExclusions',
+        Promise.resolve('CreateDividendWithCheckpointAndExclusions')
+      );
+      etherDividendsMock.mock('setWithholding', Promise.resolve('SetWithholding'));
+
       // Real call
       await target.prepareTransactions();
 

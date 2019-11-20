@@ -63,6 +63,8 @@ describe('EnableGeneralPermissionManager', () => {
   describe('EnableGeneralPermissionManager', () => {
     test('should add a transaction to the queue to enable general permission manager', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+
       // Real call
       await target.prepareTransactions();
 
