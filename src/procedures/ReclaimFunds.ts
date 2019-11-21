@@ -9,6 +9,22 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { DividendDistribution, SecurityToken } from '../entities';
+import { Factories } from '~/Context';
+
+export const createReclaimFundsResolver = (
+  dividendType: DividendType,
+  dividendIndex: number,
+  factories: Factories,
+  symbol: string
+) => async () => {
+  return factories.dividendDistributionFactory.refresh(
+    DividendDistribution.generateId({
+      securityTokenId: SecurityToken.generateId({ symbol }),
+      dividendType,
+      index: dividendIndex,
+    })
+  );
+};
 
 export class ReclaimFunds extends Procedure<ReclaimFundsProcedureArgs> {
   public type = ProcedureType.ReclaimFunds;
@@ -54,15 +70,7 @@ export class ReclaimFunds extends Procedure<ReclaimFundsProcedureArgs> {
 
     await this.addTransaction(dividendModule.reclaimDividend, {
       tag: PolyTransactionTag.ReclaimDividendFunds,
-      resolver: async () => {
-        return factories.dividendDistributionFactory.refresh(
-          DividendDistribution.generateId({
-            securityTokenId: SecurityToken.generateId({ symbol }),
-            dividendType,
-            index: dividendIndex,
-          })
-        );
-      },
+      resolver: createReclaimFundsResolver(dividendType, dividendIndex, factories, symbol),
     })({ dividendIndex });
   }
 }
