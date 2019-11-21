@@ -13,11 +13,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { Factories } from '../Context';
-import {
-  SecurityToken,
-  Erc20DividendsManager,
-  EthDividendsManager,
-} from '../entities';
+import { SecurityToken, Erc20DividendsManager, EthDividendsManager } from '../entities';
 
 export const createSetDividendsWalletResolver = (
   dividendType: DividendType,
@@ -48,9 +44,7 @@ export const createSetDividendsWalletResolver = (
   return refresh;
 };
 
-export class SetDividendsWallet extends Procedure<
-  SetDividendsWalletProcedureArgs
-> {
+export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArgs> {
   public type = ProcedureType.SetDividendsWallet;
 
   public async prepareTransactions() {
@@ -58,9 +52,7 @@ export class SetDividendsWallet extends Procedure<
     const { contractWrappers, factories } = this.context;
 
     try {
-      await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
-        symbol
-      );
+      await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
     } catch (err) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
@@ -68,10 +60,7 @@ export class SetDividendsWallet extends Procedure<
       });
     }
 
-    let dividendModule:
-      | ERC20DividendCheckpoint
-      | EtherDividendCheckpoint
-      | null = null;
+    let dividendModule: ERC20DividendCheckpoint | EtherDividendCheckpoint | null = null;
 
     switch (dividendType) {
       case DividendType.Erc20: {
@@ -102,11 +91,7 @@ export class SetDividendsWallet extends Procedure<
 
     await this.addTransaction(dividendModule.changeWallet, {
       tag: PolyTransactionTag.SetDividendsWallet,
-      resolver: createSetDividendsWalletResolver(
-        dividendType,
-        factories,
-        symbol
-      ),
+      resolver: createSetDividendsWalletResolver(dividendType, factories, symbol),
     })({ wallet: address });
   }
 }

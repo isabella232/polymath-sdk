@@ -186,7 +186,7 @@ export class Permissions extends SubModule {
   };
 
   /**
-   * Returns the list of delegate addresses that hold a specific role
+   * Returns the list of delegate addresses and details that hold a specific role
    *
    * @param role role for which delegates must be fetched
    */
@@ -217,14 +217,25 @@ export class Permissions extends SubModule {
       { unarchived: true }
     ))[0];
 
-    return generalPermissionManager.getAllDelegatesWithPerm({
+    const delegatesWithPerm = await generalPermissionManager.getAllDelegatesWithPerm({
       module: moduleAddress,
       perm: permission,
+    });
+
+    return P.map(delegatesWithPerm, async delegateAddress => {
+      const description = await generalPermissionManager.delegateDetails({
+        delegate: delegateAddress,
+      });
+
+      return {
+        address: delegateAddress,
+        description,
+      };
     });
   };
 
   /**
-   * Returns a list of all delegates with their respective roles
+   * Returns a list of all delegates with their respective details and roles
    */
   public getAllDelegates = async () => {
     const {
@@ -248,11 +259,17 @@ export class Permissions extends SubModule {
     const delegates = await generalPermissionManager.getAllDelegates();
 
     return P.map(delegates, async delegateAddress => {
-      const roles = await this.getAssignedRoles({ delegateAddress });
+      const [roles, description] = await Promise.all([
+        this.getAssignedRoles({ delegateAddress }),
+        generalPermissionManager.delegateDetails({
+          delegate: delegateAddress,
+        }),
+      ]);
 
       return {
-        delegateAddress,
+        address: delegateAddress,
         roles,
+        description,
       };
     });
   };
@@ -267,6 +284,9 @@ export class Permissions extends SubModule {
     [Feature.EtherDividends]: [
       SecurityTokenRole.EtherDividendsAdministrator,
       SecurityTokenRole.EtherDividendsOperator,
+    ],
+    [Feature.ShareholderCountRestrictions]: [
+      SecurityTokenRole.ShareholderCountRestrictionsAdministrator,
     ],
   };
 }
