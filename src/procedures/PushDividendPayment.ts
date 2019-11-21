@@ -34,24 +34,15 @@ export const createPushDividendPaymentResolver = (
   );
 };
 
-export class PushDividendPayment extends Procedure<
-  PushDividendPaymentProcedureArgs
-> {
+export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureArgs> {
   public type = ProcedureType.PushDividendPayment;
 
   public async prepareTransactions() {
-    const {
-      symbol,
-      dividendIndex,
-      shareholderAddresses,
-      dividendType,
-    } = this.args;
+    const { symbol, dividendIndex, shareholderAddresses, dividendType } = this.args;
     const { contractWrappers, factories } = this.context;
 
     try {
-      await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
-        symbol
-      );
+      await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
     } catch (err) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
@@ -59,10 +50,7 @@ export class PushDividendPayment extends Procedure<
       });
     }
 
-    let dividendsModule:
-      | ERC20DividendCheckpoint
-      | EtherDividendCheckpoint
-      | undefined;
+    let dividendsModule: ERC20DividendCheckpoint | EtherDividendCheckpoint | undefined;
 
     if (dividendType === DividendType.Erc20) {
       [dividendsModule] = await contractWrappers.getAttachedModules(
@@ -97,34 +85,25 @@ export class PushDividendPayment extends Procedure<
 
     if (shareholderAddresses) {
       shareholderStatuses = shareholderStatuses.filter(
-        status =>
-          !!shareholderAddresses.find(address => address === status.address)
+        status => !!shareholderAddresses.find(address => address === status.address)
       );
     }
 
     const unpaidShareholders = shareholderStatuses
-      .filter(status => status.paymentReceived)
+      .filter(status => !status.paymentReceived)
       .map(status => status.address);
 
     const shareholderAddressChunks = chunk(unpaidShareholders, CHUNK_SIZE);
 
     await P.each(shareholderAddressChunks, async (addresses, index) => {
-      await this.addTransaction(
-        dividendsModule!.pushDividendPaymentToAddresses,
-        {
-          tag: PolyTransactionTag.PushDividendPayment,
-          // Only add resolver to the last transaction
-          resolver:
-            index < shareholderAddressChunks.length - 1
-              ? undefined
-              : createPushDividendPaymentResolver(
-                  factories,
-                  symbol,
-                  dividendType,
-                  index
-                ),
-        }
-      )({
+      await this.addTransaction(dividendsModule!.pushDividendPaymentToAddresses, {
+        tag: PolyTransactionTag.PushDividendPayment,
+        // Only add resolver to the last transaction
+        resolver:
+          index < shareholderAddressChunks.length - 1
+            ? undefined
+            : createPushDividendPaymentResolver(factories, symbol, dividendType, index),
+      })({
         dividendIndex,
         payees: addresses,
       });
