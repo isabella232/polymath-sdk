@@ -38,7 +38,7 @@ export class ReclaimFunds extends Procedure<ReclaimFundsProcedureArgs> {
       }
       case DividendType.Eth: {
         [dividendModule] = await contractWrappers.getAttachedModules(
-          { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
+          { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
           { unarchived: true }
         );
         break;
