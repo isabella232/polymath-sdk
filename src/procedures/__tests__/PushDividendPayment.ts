@@ -3,7 +3,7 @@ import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
-import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
+import * as tokenFactoryModule from '../../testUtils/mockedTokenFactoryModule';
 import * as dividendFactoryModule from '~/entities/factories/DividendDistributionFactory';
 import * as pushDividendPaymentModule from '../../procedures/PushDividendPayment';
 import { PushDividendPayment } from '../../procedures/PushDividendPayment';
@@ -26,7 +26,7 @@ describe('PushDividendPayment', () => {
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<
-    tokenFactoryModule.MockedTokenFactoryObject
+    tokenFactoryModule.MockedTokenFactoryModule
   >;
   let securityTokenMock: MockManager<
     contractWrappersModule.SecurityToken_3_0_0
@@ -48,7 +48,7 @@ describe('PushDividendPayment', () => {
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(
       tokenFactoryModule,
-      'MockedTokenFactoryObject'
+      'MockedTokenFactoryModule'
     );
     securityTokenMock = ImportMock.mockClass(
       contractWrappersModule,
