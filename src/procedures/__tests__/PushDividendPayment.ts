@@ -3,7 +3,7 @@ import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
-import * as tokenFactoryModule from '../../testUtils/mockedTokenFactoryModule';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as dividendFactoryModule from '~/entities/factories/DividendDistributionFactory';
 import * as pushDividendPaymentModule from '../../procedures/PushDividendPayment';
 import { PushDividendPayment } from '../../procedures/PushDividendPayment';
