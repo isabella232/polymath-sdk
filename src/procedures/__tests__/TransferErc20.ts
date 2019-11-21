@@ -124,6 +124,27 @@ describe('TransferErc20', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
+    test('should add a transaction to the queue to transfer an erc20 token with specified token address without a specified receiving address', async () => {
+      target = new TransferErc20(
+        { ...params, tokenAddress: undefined },
+        contextMock.getMockInstance()
+      );
+      polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(20)));
+
+      const addTransactionSpy = spy(target, 'addTransaction');
+      polyTokenMock.mock('transfer', Promise.resolve('Transfer'));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy.getCall(0).calledWith(polyTokenMock.getMockInstance().transfer)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.TransferErc20);
+      expect(addTransactionSpy.callCount).toEqual(1);
+    });
+
     test('should throw if supplied address does not correspond to a valid erc20 token', async () => {
       wrappersMock
         .mock('getERC20TokenWrapper')
@@ -150,9 +171,10 @@ describe('TransferErc20', () => {
       );
     });
 
-    test('should add a transaction to the queue to transfer an erc20 token getting poly token funds if there are not enough funds, only on testnet', async () => {
+    test('should add an extra transaction to get POLY from the faucet if the balance is insufficient, specifically on testnet', async () => {
       wrappersMock.mock('isTestnet', Promise.resolve(true));
-      polyTokenMock.mock('address', Promise.resolve(params.tokenAddress));
+      polyTokenMock.mock('address', Promise.resolve(polyTokenAddress));
+      erc20Mock.mock('address', Promise.resolve(polyTokenAddress));
       erc20Mock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
       erc20Mock.mock('transfer', Promise.resolve('Transfer'));
       wrappersMock.mock('getPolyTokens', Promise.resolve('GetPolyTokens'));
@@ -183,7 +205,7 @@ describe('TransferErc20', () => {
       );
     });
 
-    test('should successfully create erc20 transfer resolver', async () => {
+    test('should successfully refresh the corresponding ERC20 Balance Entity', async () => {
       const refreshStub = erc20TokenBalanceFactoryMock.mock('refresh', Promise.resolve());
       const address = params.tokenAddress ? params.tokenAddress : '';
       const erc20TokenBalanceGeneratedId = Erc20TokenBalance.generateId({
