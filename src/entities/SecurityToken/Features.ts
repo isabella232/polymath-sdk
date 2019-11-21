@@ -13,18 +13,25 @@ import {
   EnableDividendManagersProcedureArgs,
   DividendType,
   DisableFeatureProcedureArgs,
+  EnableCountTransferManagerProcedureArgs,
+  EnableGeneralTransferManagerProcedureArgs,
 } from '../../types';
 import { PolymathError } from '../../PolymathError';
 import { TransactionQueue } from '../TransactionQueue';
+import { EnableCountTransferManager } from '../../procedures/EnableCountTransferManager';
 
 export interface FeatureStatuses {
   [Feature.Permissions]: boolean;
   [Feature.Shareholders]: boolean;
   [Feature.Erc20Dividends]: boolean;
   [Feature.EtherDividends]: boolean;
+  [Feature.ShareholderCountRestrictions]: boolean;
 }
 
-type EnableOpts = EnableErc20DividendsOpts | EnableEtherDividendsOpts;
+type EnableOpts =
+  | EnableErc20DividendsOpts
+  | EnableEtherDividendsOpts
+  | EnableShareholderCountRestrictionsOpts;
 
 export interface EnableErc20DividendsOpts {
   storageWalletAddress: string;
@@ -34,17 +41,27 @@ export interface EnableEtherDividendsOpts {
   storageWalletAddress: string;
 }
 
+export interface EnableShareholderCountRestrictionsOpts {
+  maxHolderCount: number;
+}
+
 export interface Enable {
   (args: { feature: Feature.Permissions }): Promise<
     TransactionQueue<EnableGeneralPermissionManagerProcedureArgs>
   >;
-  (args: { feature: Feature.Shareholders }): Promise<TransactionQueue>; // poorly typed because the corresponding procedure doesn't exist yet
+  (args: { feature: Feature.Shareholders }): Promise<
+    TransactionQueue<EnableGeneralTransferManagerProcedureArgs>
+  >;
   (args: { feature: Feature.Erc20Dividends }, opts: EnableErc20DividendsOpts): Promise<
     TransactionQueue<EnableDividendManagersProcedureArgs>
   >;
   (args: { feature: Feature.EtherDividends }, opts: EnableEtherDividendsOpts): Promise<
     TransactionQueue<EnableDividendManagersProcedureArgs>
   >;
+  (
+    args: { feature: Feature.ShareholderCountRestrictions },
+    opts: EnableShareholderCountRestrictionsOpts
+  ): Promise<TransactionQueue<EnableCountTransferManagerProcedureArgs>>;
 }
 
 export class Features extends SubModule {
@@ -56,6 +73,7 @@ export class Features extends SubModule {
     Feature.Shareholders,
     Feature.Erc20Dividends,
     Feature.EtherDividends,
+    Feature.ShareholderCountRestrictions,
   ];
 
   /**
@@ -89,6 +107,7 @@ export class Features extends SubModule {
       shareholdersEnabled,
       erc20DividendsEnabled,
       etherDividendsEnabled,
+      countTransferManagerEnabled,
     ] = await Promise.all(list.map(feature => this.isEnabled({ feature })));
 
     const result: FeatureStatuses = {
@@ -96,6 +115,7 @@ export class Features extends SubModule {
       [Feature.Shareholders]: shareholdersEnabled,
       [Feature.Erc20Dividends]: erc20DividendsEnabled,
       [Feature.EtherDividends]: etherDividendsEnabled,
+      [Feature.ShareholderCountRestrictions]: countTransferManagerEnabled,
     };
 
     return result;
@@ -159,6 +179,13 @@ export class Features extends SubModule {
         );
         break;
       }
+      case Feature.ShareholderCountRestrictions: {
+        procedure = new EnableCountTransferManager(
+          { symbol, ...(opts as EnableShareholderCountRestrictionsOpts) },
+          this.context
+        );
+        break;
+      }
       default: {
         throw new PolymathError({
           code: ErrorCode.FetcherValidationError,
@@ -216,6 +243,9 @@ export class Features extends SubModule {
         break;
       case Feature.EtherDividends:
         moduleName = ModuleName.EtherDividendCheckpoint;
+        break;
+      case Feature.ShareholderCountRestrictions:
+        moduleName = ModuleName.CountTransferManager;
         break;
       default:
         throw new PolymathError({

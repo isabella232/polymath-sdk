@@ -666,6 +666,9 @@ export class PolymathBase extends PolymathAPI {
     } else if (role === SecurityTokenRole.PermissionsAdministrator) {
       moduleName = ModuleName.GeneralPermissionManager;
       permission = Perm.Admin;
+    } else if (role === SecurityTokenRole.ShareholderCountRestrictionsAdministrator) {
+      moduleName = ModuleName.CountTransferManager;
+      permission = Perm.Admin;
     } else if (
       [
         SecurityTokenRole.Erc20DividendsAdministrator,
