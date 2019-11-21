@@ -17,6 +17,7 @@ import {
   BlacklistTransferManager,
   LockUpTransferManager,
   RestrictedPartialSaleTransferManager,
+  ModuleName,
 } from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
@@ -102,6 +103,8 @@ export enum ProcedureType {
   CreateCheckpoint = 'CreateCheckpoint',
   EnableDividendManagers = 'EnableDividendManagers',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
+  EnableGeneralTransferManager = 'EnableGeneralTransferManager',
+  EnableCountTransferManager = 'EnableCountTransferManager',
   LaunchCappedSto = 'LaunchCappedSto',
   LaunchUsdTieredSto = 'LaunchUsdTieredSto',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
@@ -121,6 +124,7 @@ export enum ProcedureType {
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
   MintTokens = 'MintTokens',
+  ModifyMaxHolderCount = 'ModifyMaxHolderCount',
 }
 
 export enum PolyTransactionTag {
@@ -139,10 +143,14 @@ export enum PolyTransactionTag {
   EnableCappedSto = 'EnableCappedSto',
   EnableUsdTieredSto = 'EnableUsdTieredSto',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
+  EnableGeneralTransferManager = 'EnableGeneralTransferManager',
+  EnableCountTransferManager = 'EnableCountTransferManager',
+  DisableFeature = 'DisableFeature',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
   PushDividendPayment = 'PushDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
+  AddDelegate = 'AddDelegate',
   ChangePermission = 'ChangePermission',
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
@@ -150,6 +158,7 @@ export enum PolyTransactionTag {
   ModifyKycDataMulti = 'ModifyKycDataMulti',
   ModifyInvestorFlagMulti = 'ModifyInvestorFlagMulti',
   IssueMulti = 'IssueMulti',
+  ChangeHolderCount = 'ChangeHolderCount',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -241,6 +250,20 @@ export interface EnableGeneralPermissionManagerProcedureArgs {
   symbol: string;
 }
 
+export interface EnableGeneralTransferManagerProcedureArgs {
+  symbol: string;
+}
+
+export interface EnableCountTransferManagerProcedureArgs {
+  symbol: string;
+  maxHolderCount: number;
+}
+
+export interface DisableFeatureProcedureArgs {
+  symbol: string;
+  moduleName: ModuleName;
+}
+
 export interface LaunchCappedStoProcedureArgs {
   symbol: string;
   startDate: Date;
@@ -325,7 +348,7 @@ export interface AssignSecurityTokenRoleProcedureArgs {
   delegateAddress: string;
   role: SecurityTokenRole;
   assign: boolean;
-  description?: string;
+  description: string;
 }
 
 export interface AssignStoRoleProcedureArgs {
@@ -394,6 +417,11 @@ export interface RevokeKycProcedureArgs {
   shareholderAddresses: string[];
 }
 
+export interface ModifyMaxHolderCountProcedureArgs {
+  symbol: string;
+  maxHolderCount: number;
+}
+
 export interface ProcedureArguments {
   [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
   [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
@@ -402,6 +430,9 @@ export interface ProcedureArguments {
   [ProcedureType.CreateEtherDividendDistribution]: CreateEtherDividendDistributionProcedureArgs;
   [ProcedureType.CreateSecurityToken]: CreateSecurityTokenProcedureArgs;
   [ProcedureType.EnableDividendManagers]: EnableDividendManagersProcedureArgs;
+  [ProcedureType.EnableGeneralPermissionManager]: EnableGeneralPermissionManagerProcedureArgs;
+  [ProcedureType.EnableGeneralTransferManager]: EnableGeneralTransferManagerProcedureArgs;
+  [ProcedureType.EnableCountTransferManager]: EnableCountTransferManagerProcedureArgs;
   [ProcedureType.ReclaimFunds]: ReclaimFundsProcedureArgs;
   [ProcedureType.ReserveSecurityToken]: ReserveSecurityTokenProcedureArgs;
   [ProcedureType.WithdrawTaxes]: WithdrawTaxesProcedureArgs;
@@ -482,6 +513,7 @@ export enum Feature {
   Shareholders = 'Shareholders',
   Erc20Dividends = 'Erc20Dividends',
   EtherDividends = 'EtherDividends',
+  ShareholderCountRestrictions = 'ShareholderCountRestrictions',
 }
 
 export enum SecurityTokenRole {
@@ -491,6 +523,7 @@ export enum SecurityTokenRole {
   EtherDividendsOperator = 'EtherDividendsOperator',
   EtherDividendsAdministrator = 'EtherDividendsAdministrator',
   ShareholdersAdministrator = 'ShareholdersAdministrator',
+  ShareholderCountRestrictionsAdministrator = 'ShareholderCountRestrictionsAdministrator',
 }
 
 export enum StoRole {

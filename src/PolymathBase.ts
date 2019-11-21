@@ -209,6 +209,7 @@ export class PolymathBase extends PolymathAPI {
       [ModuleName.EtherDividendCheckpoint]: ModuleType.Dividends,
       [ModuleName.GeneralPermissionManager]: ModuleType.PermissionManager,
       [ModuleName.VestingEscrowWallet]: ModuleType.Wallet,
+      [ModuleName.AdvancedPLCRVotingCheckpoint]: ModuleType.Dividends,
     };
 
     const availableModules = await this.moduleRegistry.getModulesByTypeAndToken({
@@ -275,7 +276,7 @@ export class PolymathBase extends PolymathAPI {
   ): Promise<any[]> => {
     const { moduleFactory } = this;
 
-    const moduleAddresses = await this.getModuleAddressesByName({ moduleName, symbol });
+    const moduleAddresses = await this.getModuleAddressesByName({ moduleName, symbol }, opts);
 
     const { getModuleInstance } = moduleFactory;
 
@@ -664,6 +665,9 @@ export class PolymathBase extends PolymathAPI {
       permission = Perm.Admin;
     } else if (role === SecurityTokenRole.PermissionsAdministrator) {
       moduleName = ModuleName.GeneralPermissionManager;
+      permission = Perm.Admin;
+    } else if (role === SecurityTokenRole.ShareholderCountRestrictionsAdministrator) {
+      moduleName = ModuleName.CountTransferManager;
       permission = Perm.Admin;
     } else if (
       [

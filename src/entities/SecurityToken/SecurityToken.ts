@@ -9,6 +9,7 @@ import { Permissions } from './Permissions';
 import { Transfers } from './Transfers';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
+import { Restrictions } from './Restrictions';
 
 export interface UniqueIdentifiers {
   symbol: string;
@@ -70,6 +71,8 @@ export class SecurityToken extends Entity<Params> {
 
   public transfers: Transfers;
 
+  public restrictions: Restrictions;
+
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
@@ -86,6 +89,7 @@ export class SecurityToken extends Entity<Params> {
     this.offerings = new Offerings(this, context);
     this.permissions = new Permissions(this, context);
     this.transfers = new Transfers(this, context);
+    this.restrictions = new Restrictions(this, context);
   }
 
   public toPojo() {

@@ -1,21 +1,27 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub, stub, spy } from 'sinon';
-import BigNumber from 'bignumber.js';
+import { spy } from 'sinon';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import { Wallet } from '../../Wallet';
-import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, ProcedureType } from '~/types';
-import { mockFactories } from '~/testUtils/MockFactories';
+import * as controllerTransferModule from '../../procedures/ControllerTransfer';
+import { Procedure } from '../../procedures/Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
+import { mockFactories } from '../../testUtils/mockFactories';
+import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
+import { Factories } from '../../Context';
+import { SecurityToken, Shareholder } from '../../entities';
 
-const params1 = {
+const params = {
   symbol: 'TEST1',
   name: 'Test Token 1',
   address: '0x1111111111111111111111111111111111111111',
+  from: '0x2222222222222222222222222222222222222222',
+  to: '0x4444444444444444444444444444444444444444',
   owner: '0x3333333333333333333333333333333333333333',
   amount: new BigNumber(1),
 };
@@ -24,43 +30,40 @@ describe('ControllerTransfer', () => {
   let target: ControllerTransfer;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
-  let tokenFactoryMockStub: SinonStub<any, any>;
+  let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
+  let factoriesMockedSetup: Factories;
 
   beforeEach(() => {
-    // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
+    // Mock the context, wrappers, and tokenFactory to test ControllerTransfer
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    securityTokenMock.mock('balanceOf', Promise.resolve(params1.amount));
-    securityTokenMock.mock('controller', Promise.resolve(params1.owner));
+    securityTokenMock.mock('balanceOf', Promise.resolve(params.amount));
+    securityTokenMock.mock('controller', Promise.resolve(params.owner));
+
     const ownerPromise = new Promise<string>((resolve, reject) => {
-      resolve(params1.owner);
+      resolve(params.owner);
     });
     contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
-    tokenFactoryMockStub = tokenFactoryMock.mock(
+    tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
-
-    contextMock.set('factories', mockFactories());
+    shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
+    factoriesMockedSetup = mockFactories();
+    factoriesMockedSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
+    contextMock.set('factories', factoriesMockedSetup);
 
     // Instantiate ControllerTransfer
-    target = new ControllerTransfer(
-      {
-        from: params1.address,
-        to: params1.owner,
-        amount: params1.amount,
-        symbol: params1.symbol,
-      },
-      contextMock.getMockInstance()
-    );
+    target = new ControllerTransfer(params, contextMock.getMockInstance());
   });
 
   describe('Types', () => {
@@ -71,33 +74,35 @@ describe('ControllerTransfer', () => {
   });
 
   describe('ControllerTransfer', () => {
-    test('should send the transaction to ControllerTransfer', async () => {
+    test('should add a transaction to the queue to execute a controller transfer', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('controllerTransfer', Promise.resolve('ControllerTransfer'));
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-
       expect(
         addTransactionSpy
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().controllerTransfer)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.ControllerTransfer
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params1.symbol })
-          .throws()
-      );
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${params1.symbol}`,
+          message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
     });
@@ -105,18 +110,18 @@ describe('ControllerTransfer', () => {
     test('should throw error if balanceOf is less than amount being transferred', async () => {
       securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(0)));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.InsufficientBalance,
-          message: `Sender's balance of 0 is less than the requested amount of ${params1.amount.toNumber()}`,
+          message: `Sender's balance of 0 is less than the requested amount of ${params.amount.toNumber()}`,
         })
       );
     });
 
-    test('should throw error if current wallet is not controller to perform forced transfers', async () => {
+    test('should throw an error if the current wallet is not the Security Token controller', async () => {
       securityTokenMock.mock('controller', Promise.resolve('Random'));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `You must be the controller of this Security Token to perform forced transfers. Did you remember to call "setController"?`,
@@ -124,24 +129,69 @@ describe('ControllerTransfer', () => {
       );
     });
 
-    test('should call error on inappropriate params address', async () => {
+    test('should call error on inappropriate params "to" address', async () => {
       // Instantiate ControllerTransfer with incorrect args instead
       target = new ControllerTransfer(
         {
-          from: params1.owner,
+          ...params,
           to: 'Inappropriate',
-          amount: params1.amount,
-          symbol: params1.symbol,
         },
         contextMock.getMockInstance()
       );
       // Real call rejects
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.InvalidAddress,
           message: `Provided "to" address is invalid: Inappropriate`,
         })
       );
     });
+
+    test('should call error on inappropriate params "from" address', async () => {
+      // Instantiate ControllerTransfer with incorrect args instead
+      target = new ControllerTransfer(
+        {
+          ...params,
+          from: 'Inappropriate',
+        },
+        contextMock.getMockInstance()
+      );
+      // Real call rejects
+      await expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.InvalidAddress,
+          message: `Provided "from" address is invalid: Inappropriate`,
+        })
+      );
+    });
+  });
+
+  test('should successfully resolve controller transfer', async () => {
+    const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve());
+    const securityTokenId = SecurityToken.generateId({ symbol: params.symbol });
+    const resolverValue = await controllerTransferModule.createControllerTransferResolver(
+      factoriesMockedSetup,
+      params.symbol,
+      params.from,
+      params.to
+    )();
+    expect(
+      refreshStub.getCall(0).calledWithExactly(
+        Shareholder.generateId({
+          securityTokenId,
+          address: params.from,
+        })
+      )
+    ).toEqual(true);
+    expect(
+      refreshStub.getCall(1).calledWithExactly(
+        Shareholder.generateId({
+          securityTokenId,
+          address: params.to,
+        })
+      )
+    ).toEqual(true);
+    expect(resolverValue).toEqual([undefined, undefined]);
+    expect(refreshStub.callCount).toEqual(2);
   });
 });

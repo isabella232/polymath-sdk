@@ -1,67 +1,54 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub, stub, spy, restore } from 'sinon';
-import BigNumber from 'bignumber.js';
+import { spy, restore } from 'sinon';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
-import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { EnableDividendManagers } from '../../procedures/EnableDividendManagers';
-import { Procedure } from '~/procedures/Procedure';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, PolyTransactionTag } from '~/types';
+import { Procedure } from '../Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, PolyTransactionTag } from '../../types';
 
-const params1 = {
+const params = {
   symbol: 'TEST1',
-  name: 'Test Token 1',
-  amount: new BigNumber(1),
-  checkpointIndex: 1,
-  maturityDate: new Date(2030, 1),
-  expiryDate: new Date(2031, 1),
-  address: '0x4444444444444444444444444444444444444444',
+  storageWalletAddress: '0x5555555555555555555555555555555555555555',
 };
+
+const securityTokenAddress = '0x2222222222222222222222222222222222222222';
+const moduleFactoryAddress = '0x3333333333333333333333333333333333333333';
 
 describe('EnableDividendManagers', () => {
   let target: EnableDividendManagers;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryObject>;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
-  let tokenFactoryMockStub: SinonStub<any, any>;
-  let getAttachedModulesMockStub: SinonStub<any, any>;
 
   beforeAll(() => {
-    // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
+    // Mock the context, wrappers, and tokenFactory to test EnableDividendManagers
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryObject');
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    securityTokenMock.mock('address', Promise.resolve(params1.address));
+    securityTokenMock.mock('address', Promise.resolve(securityTokenAddress));
 
     etherDividendsMock = ImportMock.mockClass(
       contractWrappersModule,
       'EtherDividendCheckpoint_3_0_0'
     );
-    getAttachedModulesMockStub = wrappersMock.mock(
-      'getModuleFactoryAddress',
-      Promise.resolve(params1.address)
-    );
-    tokenFactoryMockStub = tokenFactoryMock.mock(
+    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(moduleFactoryAddress));
+    tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
 
     // Instantiate EnableDividendManagers
-    target = new EnableDividendManagers(
-      {
-        symbol: params1.symbol,
-        storageWalletAddress: params1.address,
-      },
-      contextMock.getMockInstance()
-    );
+    target = new EnableDividendManagers(params, contextMock.getMockInstance());
   });
   afterEach(() => {
     restore();
@@ -75,8 +62,10 @@ describe('EnableDividendManagers', () => {
   });
 
   describe('EnableDividendManagers', () => {
-    test('should send the transaction to EnableDividendManagers', async () => {
+    test('should add a transaction to the queue to enable dividend managers', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+
       // Real call
       await target.prepareTransactions();
 
@@ -99,17 +88,15 @@ describe('EnableDividendManagers', () => {
     });
 
     test('should throw if there is no valid security token supplied', async () => {
-      tokenFactoryMock.set(
-        'getSecurityTokenInstanceFromTicker',
-        stub()
-          .withArgs({ address: params1.symbol })
-          .throws()
-      );
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
 
-      expect(target.prepareTransactions()).rejects.toThrow(
+      await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${params1.symbol}`,
+          message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
     });

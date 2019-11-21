@@ -1,24 +1,37 @@
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { SubModule } from './SubModule';
-import { EnableGeneralPermissionManager, EnableDividendManagers } from '../../procedures';
+import {
+  EnableGeneralPermissionManager,
+  EnableDividendManagers,
+  EnableGeneralTransferManager,
+  DisableFeature,
+} from '../../procedures';
 import {
   Feature,
   ErrorCode,
   EnableGeneralPermissionManagerProcedureArgs,
   EnableDividendManagersProcedureArgs,
   DividendType,
+  DisableFeatureProcedureArgs,
+  EnableCountTransferManagerProcedureArgs,
+  EnableGeneralTransferManagerProcedureArgs,
 } from '../../types';
 import { PolymathError } from '../../PolymathError';
 import { TransactionQueue } from '../TransactionQueue';
+import { EnableCountTransferManager } from '../../procedures/EnableCountTransferManager';
 
 export interface FeatureStatuses {
   [Feature.Permissions]: boolean;
   [Feature.Shareholders]: boolean;
   [Feature.Erc20Dividends]: boolean;
   [Feature.EtherDividends]: boolean;
+  [Feature.ShareholderCountRestrictions]: boolean;
 }
 
-type EnableOpts = EnableErc20DividendsOpts | EnableEtherDividendsOpts;
+type EnableOpts =
+  | EnableErc20DividendsOpts
+  | EnableEtherDividendsOpts
+  | EnableShareholderCountRestrictionsOpts;
 
 export interface EnableErc20DividendsOpts {
   storageWalletAddress: string;
@@ -28,17 +41,27 @@ export interface EnableEtherDividendsOpts {
   storageWalletAddress: string;
 }
 
+export interface EnableShareholderCountRestrictionsOpts {
+  maxHolderCount: number;
+}
+
 export interface Enable {
   (args: { feature: Feature.Permissions }): Promise<
     TransactionQueue<EnableGeneralPermissionManagerProcedureArgs>
   >;
-  (args: { feature: Feature.Shareholders }): Promise<TransactionQueue>; // poorly typed because the corresponding procedure doesn't exist yet
+  (args: { feature: Feature.Shareholders }): Promise<
+    TransactionQueue<EnableGeneralTransferManagerProcedureArgs>
+  >;
   (args: { feature: Feature.Erc20Dividends }, opts: EnableErc20DividendsOpts): Promise<
     TransactionQueue<EnableDividendManagersProcedureArgs>
   >;
   (args: { feature: Feature.EtherDividends }, opts: EnableEtherDividendsOpts): Promise<
     TransactionQueue<EnableDividendManagersProcedureArgs>
   >;
+  (
+    args: { feature: Feature.ShareholderCountRestrictions },
+    opts: EnableShareholderCountRestrictionsOpts
+  ): Promise<TransactionQueue<EnableCountTransferManagerProcedureArgs>>;
 }
 
 export class Features extends SubModule {
@@ -50,6 +73,7 @@ export class Features extends SubModule {
     Feature.Shareholders,
     Feature.Erc20Dividends,
     Feature.EtherDividends,
+    Feature.ShareholderCountRestrictions,
   ];
 
   /**
@@ -63,43 +87,11 @@ export class Features extends SubModule {
       context: { contractWrappers },
       securityToken: { symbol },
     } = this;
-    let attachedModule;
-    switch (feature) {
-      case Feature.Permissions: {
-        attachedModule = (await contractWrappers.getAttachedModules(
-          { symbol, moduleName: ModuleName.GeneralPermissionManager },
-          { unarchived: true }
-        ))[0];
-        break;
-      }
-      case Feature.Shareholders: {
-        attachedModule = (await contractWrappers.getAttachedModules(
-          { symbol, moduleName: ModuleName.GeneralTransferManager },
-          { unarchived: true }
-        ))[0];
-        break;
-      }
-      case Feature.Erc20Dividends: {
-        attachedModule = (await contractWrappers.getAttachedModules(
-          { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
-          { unarchived: true }
-        ))[0];
-        break;
-      }
-      case Feature.EtherDividends: {
-        attachedModule = (await contractWrappers.getAttachedModules(
-          { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
-          { unarchived: true }
-        ))[0];
-        break;
-      }
-      default: {
-        throw new PolymathError({
-          code: ErrorCode.FetcherValidationError,
-          message: `Feature '${feature}' is not supported`,
-        });
-      }
-    }
+    const moduleName = this.getModuleNameFromFeature(feature);
+    const attachedModule = (await contractWrappers.getAttachedModules(
+      { symbol, moduleName },
+      { unarchived: true }
+    ))[0];
 
     return !!attachedModule;
   };
@@ -115,6 +107,7 @@ export class Features extends SubModule {
       shareholdersEnabled,
       erc20DividendsEnabled,
       etherDividendsEnabled,
+      countTransferManagerEnabled,
     ] = await Promise.all(list.map(feature => this.isEnabled({ feature })));
 
     const result: FeatureStatuses = {
@@ -122,6 +115,7 @@ export class Features extends SubModule {
       [Feature.Shareholders]: shareholdersEnabled,
       [Feature.Erc20Dividends]: erc20DividendsEnabled,
       [Feature.EtherDividends]: etherDividendsEnabled,
+      [Feature.ShareholderCountRestrictions]: countTransferManagerEnabled,
     };
 
     return result;
@@ -162,12 +156,14 @@ export class Features extends SubModule {
         break;
       }
       case Feature.Shareholders: {
-        // TODO @monitz87: add logic here when the GTM attaching procedure is implemented
-        throw new PolymathError({
-          code: ErrorCode.FatalError,
-          message: 'Cannot enable/disable the Shareholders feature',
-        });
-        // break;
+        procedure = new EnableGeneralTransferManager(
+          {
+            symbol,
+            ...opts,
+          },
+          this.context
+        );
+        break;
       }
       case Feature.Erc20Dividends: {
         procedure = new EnableDividendManagers(
@@ -183,6 +179,13 @@ export class Features extends SubModule {
         );
         break;
       }
+      case Feature.ShareholderCountRestrictions: {
+        procedure = new EnableCountTransferManager(
+          { symbol, ...(opts as EnableShareholderCountRestrictionsOpts) },
+          this.context
+        );
+        break;
+      }
       default: {
         throw new PolymathError({
           code: ErrorCode.FetcherValidationError,
@@ -192,5 +195,65 @@ export class Features extends SubModule {
     }
 
     return procedure.prepare();
+  };
+
+  /**
+   * Disable a feature
+   *
+   * @param feature feature to enable
+   */
+  public disable = async (args: {
+    feature: Feature;
+  }): Promise<TransactionQueue<DisableFeatureProcedureArgs>> => {
+    const { feature } = args;
+
+    const alreadyDisabled = !(await this.isEnabled({ feature }));
+
+    if (alreadyDisabled) {
+      throw new PolymathError({
+        code: ErrorCode.FatalError,
+        message: `Feature '${feature}' already disabled`,
+      });
+    }
+
+    const { symbol } = this.securityToken;
+    const moduleName = this.getModuleNameFromFeature(feature);
+    const procedure = new DisableFeature(
+      {
+        symbol,
+        moduleName,
+      },
+      this.context
+    );
+
+    return procedure.prepare();
+  };
+
+  private getModuleNameFromFeature = (feature: Feature): ModuleName => {
+    let moduleName: ModuleName;
+    switch (feature) {
+      case Feature.Permissions:
+        moduleName = ModuleName.GeneralPermissionManager;
+        break;
+      case Feature.Shareholders:
+        moduleName = ModuleName.GeneralTransferManager;
+        break;
+      case Feature.Erc20Dividends:
+        moduleName = ModuleName.ERC20DividendCheckpoint;
+        break;
+      case Feature.EtherDividends:
+        moduleName = ModuleName.EtherDividendCheckpoint;
+        break;
+      case Feature.ShareholderCountRestrictions:
+        moduleName = ModuleName.CountTransferManager;
+        break;
+      default:
+        throw new PolymathError({
+          code: ErrorCode.FetcherValidationError,
+          message: `Feature '${feature}' is not supported`,
+        });
+    }
+
+    return moduleName;
   };
 }

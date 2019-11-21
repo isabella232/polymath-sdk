@@ -1,6 +1,6 @@
 import {
   ModuleName,
-  EtherDividendCheckpointEvents_3_0_0,
+  EtherDividendCheckpointEvents,
   BigNumber,
 } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
@@ -67,7 +67,7 @@ export class CreateEtherDividendDistribution extends Procedure<
           const { logs } = receipt;
 
           const [event] = findEvents({
-            eventName: EtherDividendCheckpointEvents_3_0_0.EtherDividendDeposited,
+            eventName: EtherDividendCheckpointEvents.EtherDividendDeposited,
             logs,
           });
 
