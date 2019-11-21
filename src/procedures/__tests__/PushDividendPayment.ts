@@ -195,6 +195,53 @@ describe('PushDividendPayment', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
+    test('should add a transaction to push a dividend payment of an attached ERC20 dividends module with undefined shareholderAddresses parameter', async () => {
+      // Instantiate PushDividendPayment
+      target = new PushDividendPayment(
+        {
+          ...params,
+          shareholderAddresses: undefined,
+          dividendType: DividendType.Erc20,
+        },
+        contextMock.getMockInstance()
+      );
+
+      const shareholders = [];
+      for (let i = 0; i < 105; i++) {
+        shareholders.push({
+          address: `0x${Math.floor(Math.random() * 999 + 1)}`,
+          paymentReceived: true,
+        });
+      }
+
+      wrappersMock.mock(
+        'getDividend',
+        Promise.resolve({
+          shareholders,
+        })
+      );
+
+      wrappersMock.mock(
+        'getAttachedModules',
+        Promise.resolve([erc20DividendsMock.getMockInstance()])
+      );
+
+      const addTransactionSpy = spy(target, 'addTransaction');
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(
+            erc20DividendsMock.getMockInstance().pushDividendPaymentToAddresses
+          )
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(2);
+    });
+
     test('should add a transaction to push a dividend payment of an attached Eth dividends module', async () => {
       // Instantiate PushDividendPayment
       target = new PushDividendPayment(
@@ -234,7 +281,7 @@ describe('PushDividendPayment', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should successfully refresh ERC20 dividends distribution factory', async () => {
+    test('should refresh the ERC20 dividend distribution for which payments were pushed', async () => {
       const refreshStub = dividendFactoryMock.mock(
         'refresh',
         Promise.resolve(undefined)
@@ -262,7 +309,7 @@ describe('PushDividendPayment', () => {
       expect(refreshStub.callCount).toEqual(1);
     });
 
-    test('should successfully refresh Eth dividends distribution factory', async () => {
+    test('should refresh the ETH dividend distribution for which payments were pushed', async () => {
       const refreshStub = dividendFactoryMock.mock(
         'refresh',
         Promise.resolve(undefined)
