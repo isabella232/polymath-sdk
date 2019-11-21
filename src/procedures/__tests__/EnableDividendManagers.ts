@@ -8,7 +8,7 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { EnableDividendManagers } from '../../procedures/EnableDividendManagers';
 import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, PolyTransactionTag } from '../../types';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 
 const params = {
   symbol: 'TEST1',
@@ -57,7 +57,7 @@ describe('EnableDividendManagers', () => {
   describe('Types', () => {
     test('should extend procedure and have EnableDividendManagers type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('EnableDividendManagers');
+      expect(target.type).toBe(ProcedureType.EnableDividendManagers);
     });
   });
 

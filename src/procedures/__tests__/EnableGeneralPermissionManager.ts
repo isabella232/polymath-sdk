@@ -8,7 +8,7 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { EnableGeneralPermissionManager } from '../../procedures/EnableGeneralPermissionManager';
 import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, PolyTransactionTag } from '../../types';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 
 const params = {
   symbol: 'TEST1',
@@ -56,7 +56,7 @@ describe('EnableGeneralPermissionManager', () => {
   describe('Types', () => {
     test('should extend procedure and have EnableGeneralPermissionManager type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('EnableGeneralPermissionManager');
+      expect(target.type).toBe(ProcedureType.EnableGeneralPermissionManager);
     });
   });
 

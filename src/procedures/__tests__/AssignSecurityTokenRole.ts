@@ -8,7 +8,13 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { AssignSecurityTokenRole } from '../../procedures/AssignSecurityTokenRole';
 import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, Feature, PolyTransactionTag, SecurityTokenRole } from '../../types';
+import {
+  ErrorCode,
+  Feature,
+  PolyTransactionTag,
+  ProcedureType,
+  SecurityTokenRole,
+} from '../../types';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import { mockFactories } from '../../testUtils/mockFactories';
 
@@ -76,7 +82,7 @@ describe('AssignSecurityTokenRole', () => {
   describe('Types', () => {
     test('should extend procedure and have AssignSecurityTokenRole type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('AssignSecurityTokenRole');
+      expect(target.type).toBe(ProcedureType.AssignSecurityTokenRole);
     });
   });
 
