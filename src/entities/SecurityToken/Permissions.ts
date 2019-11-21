@@ -285,5 +285,8 @@ export class Permissions extends SubModule {
       SecurityTokenRole.EtherDividendsAdministrator,
       SecurityTokenRole.EtherDividendsOperator,
     ],
+    [Feature.ShareholderCountRestrictions]: [
+      SecurityTokenRole.ShareholderCountRestrictionsAdministrator,
+    ],
   };
 }

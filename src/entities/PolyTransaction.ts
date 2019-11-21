@@ -103,12 +103,18 @@ export class PolyTransaction<Args = any, R extends any = void> extends Entity<vo
       this.updateStatus(TransactionStatus.Succeeded);
       this.resolve(receipt);
     } catch (err) {
+      let error: PolymathError = err;
+
+      if (!(err instanceof PolymathError)) {
+        error = new PolymathError({ code: ErrorCode.TransactionReverted, message: err.message });
+      }
+
       if (err.code === ErrorCode.TransactionRejectedByUser) {
         this.updateStatus(TransactionStatus.Rejected);
       } else {
         this.updateStatus(TransactionStatus.Failed);
       }
-      this.reject(err);
+      this.reject(error);
     }
 
     await this.promise;
