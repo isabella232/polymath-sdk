@@ -1,20 +1,10 @@
-import {
-  ModuleName,
-  USDTieredSTOEvents,
-  BlockParamLiteral,
-  conversionUtils,
-  FULL_DECIMALS,
-  isUSDTieredSTO_3_1_0,
-} from '@polymathnetwork/contract-wrappers';
+import { ModuleName, isUSDTieredSTO_3_1_0 } from '@polymathnetwork/contract-wrappers';
 import { range } from 'lodash';
 import { Factory } from './Factory';
 import { Context } from '../../Context';
 import { Currency } from '../../types';
 import { SecurityToken } from '../SecurityToken';
-import { Investment } from '../Investment';
 import { TieredSto, Params, UniqueIdentifiers, Tier } from '../TieredSto';
-
-const { weiToValue } = conversionUtils;
 
 export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
@@ -22,30 +12,13 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
 
     const { symbol } = SecurityToken.unserialize(securityTokenId);
     const {
-      context: { factories, contractWrappers },
+      context: { contractWrappers },
     } = this;
 
     const module = await contractWrappers.moduleFactory.getModuleInstance({
       name: ModuleName.UsdTieredSTO,
       address,
     });
-
-    const tokenPurchases = await module.getLogsAsync({
-      eventName: USDTieredSTOEvents.TokenPurchase,
-      blockRange: {
-        fromBlock: BlockParamLiteral.Earliest,
-        toBlock: BlockParamLiteral.Latest,
-      },
-      indexFilterValues: {},
-    });
-    const investments = tokenPurchases.map(
-      ({ args: { _beneficiary, _usdAmount, _tokens } }, index) => ({
-        address: _beneficiary,
-        tokenAmount: weiToValue(_tokens, FULL_DECIMALS),
-        investedFunds: weiToValue(_usdAmount, FULL_DECIMALS),
-        index,
-      })
-    );
 
     const [
       isPaused,
@@ -132,13 +105,6 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       address,
     });
 
-    const investmentEntities = investments.map(({ index, ...investment }) =>
-      factories.investmentFactory.create(Investment.generateId({ securityTokenId, stoId, index }), {
-        securityTokenSymbol: symbol,
-        ...investment,
-      })
-    );
-
     const currencies = [];
 
     if (isRaisedInETH) {
@@ -158,7 +124,7 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       raisedFundsWallet,
       unsoldTokensWallet,
       raisedAmount: fundsRaised,
-      investorAmount: investorCount,
+      investorCount,
       soldTokensAmount: tokensSold,
       startDate,
       endDate,
@@ -166,7 +132,6 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       securityTokenId,
       securityTokenSymbol: symbol,
       tiers,
-      investments: investmentEntities,
       stoType,
       address,
       isPaused,

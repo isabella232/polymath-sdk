@@ -1,4 +1,4 @@
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, CappedSTOEvents } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
 import { StoType, isStoType, Currency, ErrorCode, StoRole } from '../types';
@@ -7,6 +7,8 @@ import { PolymathError } from '../PolymathError';
 import { Context } from '../Context';
 import { PauseSto, AssignStoRole, FinalizeSto, ModifyBeneficialInvestments } from '../procedures';
 import { ModifyPreMinting } from '../procedures/ModifyPreMinting';
+import { CappedSto } from './CappedSto';
+import { TieredSto } from './TieredSto';
 
 export interface UniqueIdentifiers {
   securityTokenId: string;
@@ -29,8 +31,7 @@ export interface Params {
   unsoldTokensWallet: string;
   raisedAmount: BigNumber;
   soldTokensAmount: BigNumber;
-  investorAmount: number;
-  investments: Investment[];
+  investorCount: number;
   isPaused: boolean;
   capReached: boolean;
   isFinalized: boolean;
@@ -61,9 +62,7 @@ export abstract class Sto<P> extends Entity<P> {
 
   public soldTokensAmount: BigNumber;
 
-  public investorAmount: number;
-
-  public investments: Investment[];
+  public investorCount: number;
 
   public currencies: Currency[];
 
@@ -107,8 +106,7 @@ export abstract class Sto<P> extends Entity<P> {
       unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
-      investorAmount,
-      investments,
+      investorCount,
       isPaused,
       capReached,
       isFinalized,
@@ -126,8 +124,7 @@ export abstract class Sto<P> extends Entity<P> {
     this.unsoldTokensWallet = unsoldTokensWallet;
     this.raisedAmount = raisedAmount;
     this.soldTokensAmount = soldTokensAmount;
-    this.investorAmount = investorAmount;
-    this.investments = investments;
+    this.investorCount = investorCount;
     this.currencies = currencies;
     this.isPaused = isPaused;
     this.capReached = capReached;
@@ -278,8 +275,7 @@ export abstract class Sto<P> extends Entity<P> {
       unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
-      investorAmount,
-      investments,
+      investorCount,
       startDate,
       endDate,
       capReached,
@@ -299,7 +295,7 @@ export abstract class Sto<P> extends Entity<P> {
       unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
-      investorAmount,
+      investorCount,
       startDate,
       endDate,
       capReached,
@@ -307,7 +303,6 @@ export abstract class Sto<P> extends Entity<P> {
       isPaused,
       preMintAllowed,
       beneficialInvestmentsAllowed,
-      investments: investments.map(investment => investment.toPojo()),
     };
   }
 
@@ -321,8 +316,7 @@ export abstract class Sto<P> extends Entity<P> {
       unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
-      investorAmount,
-      investments,
+      investorCount,
       isPaused,
       capReached,
       isFinalized,
@@ -362,12 +356,8 @@ export abstract class Sto<P> extends Entity<P> {
       this.soldTokensAmount = soldTokensAmount;
     }
 
-    if (investorAmount) {
-      this.investorAmount = investorAmount;
-    }
-
-    if (investments) {
-      this.investments = investments;
+    if (investorCount) {
+      this.investorCount = investorCount;
     }
 
     if (isPaused !== undefined) {

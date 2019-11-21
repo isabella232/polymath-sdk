@@ -1,10 +1,20 @@
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import {
+  BigNumber,
+  ModuleName,
+  USDTieredSTOEvents,
+  BlockParamLiteral,
+  FULL_DECIMALS,
+  conversionUtils,
+} from '@polymathnetwork/contract-wrappers';
 import { serialize } from '../utils';
 import { Sto, UniqueIdentifiers, Params as StoParams } from './Sto';
 import { Context } from '../Context';
 import { StoTier, Currency, InvestInTieredStoProcedureArgs } from '../types';
 import { ModifyTieredStoData, InvestInTieredSto } from '../procedures';
 import { TransactionQueue } from './TransactionQueue';
+import { Investment } from './Investment';
+
+const { weiToValue } = conversionUtils;
 
 export { UniqueIdentifiers };
 
@@ -64,6 +74,50 @@ export class TieredSto extends Sto<Params> {
     this.currentTier = currentTier;
     this.tiers = tiers;
     this.uid = TieredSto.generateId({ address, stoType, securityTokenId });
+  }
+
+  /**
+   * Retrieve all investments that have been made on this STO
+   */
+  public async getInvestments(): Promise<Investment[]> {
+    const {
+      context: { contractWrappers, factories },
+      address,
+      securityTokenSymbol: symbol,
+      securityTokenId,
+      uid: stoId,
+    } = this;
+
+    const module = await contractWrappers.moduleFactory.getModuleInstance({
+      name: ModuleName.UsdTieredSTO,
+      address,
+    });
+
+    const tokenPurchases = await module.getLogsAsync({
+      eventName: USDTieredSTOEvents.TokenPurchase,
+      blockRange: {
+        fromBlock: BlockParamLiteral.Earliest,
+        toBlock: BlockParamLiteral.Latest,
+      },
+      indexFilterValues: {},
+    });
+    const investments = tokenPurchases.map(
+      ({ args: { _beneficiary, _usdAmount, _tokens } }, index) => ({
+        address: _beneficiary,
+        tokenAmount: weiToValue(_tokens, FULL_DECIMALS),
+        investedFunds: weiToValue(_usdAmount, FULL_DECIMALS),
+        index,
+      })
+    );
+
+    const investmentEntities = investments.map(({ index, ...investment }) =>
+      factories.investmentFactory.create(Investment.generateId({ securityTokenId, stoId, index }), {
+        securityTokenSymbol: symbol,
+        ...investment,
+      })
+    );
+
+    return investmentEntities;
   }
 
   /**

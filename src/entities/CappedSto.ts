@@ -1,10 +1,20 @@
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import {
+  BigNumber,
+  ModuleName,
+  CappedSTOEvents,
+  BlockParamLiteral,
+  conversionUtils,
+  FULL_DECIMALS,
+} from '@polymathnetwork/contract-wrappers';
 import { serialize } from '../utils';
 import { Sto, UniqueIdentifiers, Params as StoParams } from './Sto';
 import { Context } from '../Context';
 import { InvestInCappedStoProcedureArgs, Currency } from '../types';
 import { TransactionQueue } from './TransactionQueue';
 import { InvestInCappedSto } from '../procedures';
+import { Investment } from './Investment';
+
+const { weiToValue } = conversionUtils;
 
 export interface Params extends StoParams {
   cap: BigNumber;
@@ -38,6 +48,48 @@ export class CappedSto extends Sto<Params> {
     this.cap = cap;
     this.rate = rate;
     this.uid = CappedSto.generateId({ address, stoType, securityTokenId });
+  }
+
+  /**
+   * Retrieve all investments that have been made on this STO
+   */
+  public async getInvestments(): Promise<Investment[]> {
+    const {
+      context: { contractWrappers, factories },
+      address,
+      securityTokenSymbol: symbol,
+      securityTokenId,
+      uid: stoId,
+    } = this;
+
+    const module = await contractWrappers.moduleFactory.getModuleInstance({
+      name: ModuleName.CappedSTO,
+      address,
+    });
+
+    const tokenPurchases = await module.getLogsAsync({
+      eventName: CappedSTOEvents.TokenPurchase,
+      blockRange: {
+        fromBlock: BlockParamLiteral.Earliest,
+        toBlock: BlockParamLiteral.Latest,
+      },
+      indexFilterValues: {},
+    });
+    const investments = tokenPurchases.map(({ args: { beneficiary, amount, value } }, index) => ({
+      address: beneficiary,
+      tokenAmount: weiToValue(amount, FULL_DECIMALS),
+      investedFunds: weiToValue(value, FULL_DECIMALS),
+      index,
+    }));
+
+    const investmentEntities = investments.map(({ index, ...investment }) =>
+      factories.investmentFactory.create(Investment.generateId({ securityTokenId, stoId, index }), {
+        securityTokenSymbol: symbol,
+        ...investment,
+      })
+    );
+
+    return investmentEntities;
   }
 
   /**
