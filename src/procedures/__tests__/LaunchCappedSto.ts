@@ -16,6 +16,7 @@ import {
   PolyTransactionTag,
   ProcedureType,
   StoType,
+  Currency,
 } from '../../types';
 import * as cappedStoFactoryModule from '../../entities/factories/CappedStoFactory';
 import * as utilsModule from '../../utils';
@@ -27,6 +28,7 @@ import { Wallet } from '../../Wallet';
 import { TransferErc20 } from '../../procedures';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { CappedSto, SecurityToken } from '../../entities';
+import { PostTransactionResolver } from '../../PostTransactionResolver';
 
 const params: LaunchCappedStoProcedureArgs = {
   symbol: 'TEST1',
@@ -34,9 +36,9 @@ const params: LaunchCappedStoProcedureArgs = {
   endDate: new Date(2031, 1),
   tokensOnSale: new BigNumber(1000),
   rate: new BigNumber(10),
-  currency: CappedStoCurrency.ETH,
-  storageWallet: '0x6666666666666666666666666666666666666666',
-  treasuryWallet: '0x7777777777777777777777777777777777777777',
+  currency: Currency.ETH,
+  raisedFundsWallet: '0x6666666666666666666666666666666666666666',
+  unsoldTokensWallet: '0x7777777777777777777777777777777777777777',
 };
 
 const currentWallet = '0x8888888888888888888888888888888888888888';

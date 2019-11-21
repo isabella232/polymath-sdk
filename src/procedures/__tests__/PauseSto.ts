@@ -13,19 +13,19 @@ import {
 } from '../../types';
 import * as pauseStoModule from '../../procedures/PauseSto';
 import * as cappedStoFactoryModule from '../../entities/factories/CappedStoFactory';
-import * as usdTieredStoFactoryModule from '../../entities/factories/UsdTieredStoFactory';
+import * as tieredStoFactoryModule from '../../entities/factories/TieredStoFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { Factories } from '../../Context';
-import { CappedSto, SecurityToken, UsdTieredSto } from '../../entities';
+import { CappedSto, SecurityToken, TieredSto } from '../../entities';
 
-const usdTieredParams: PauseStoProcedureArgs = {
+const tieredParams: PauseStoProcedureArgs = {
   symbol: 'TEST1',
   stoAddress: '0x6666666666666666666666666666666666666666',
-  stoType: StoType.UsdTiered,
+  stoType: StoType.Tiered,
 };
 
 const cappedParams: PauseStoProcedureArgs = {
@@ -45,12 +45,12 @@ describe('PauseSto', () => {
     moduleWrapperFactoryModule.MockedModuleWrapperFactoryModule
   >;
   let cappedStoMock: MockManager<contractWrappersModule.CappedSTO_3_0_0>;
-  let usdTieredStoMock: MockManager<contractWrappersModule.USDTieredSTO_3_0_0>;
+  let tieredStoMock: MockManager<contractWrappersModule.USDTieredSTO_3_0_0>;
 
   // Mock factories
   let cappedStoFactoryMock: MockManager<cappedStoFactoryModule.CappedStoFactory>;
 
-  let usdTieredStoFactoryMock: MockManager<usdTieredStoFactoryModule.UsdTieredStoFactory>;
+  let tieredStoFactoryMock: MockManager<tieredStoFactoryModule.TieredStoFactory>;
 
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
 
@@ -80,17 +80,14 @@ describe('PauseSto', () => {
 
     cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryModule, 'CappedStoFactory');
 
-    usdTieredStoFactoryMock = ImportMock.mockClass(
-      usdTieredStoFactoryModule,
-      'UsdTieredStoFactory'
-    );
+    tieredStoFactoryMock = ImportMock.mockClass(tieredStoFactoryModule, 'TieredStoFactory');
 
     factoryMockSetup = mockFactories();
     factoryMockSetup.cappedStoFactory = cappedStoFactoryMock.getMockInstance();
-    factoryMockSetup.usdTieredStoFactory = usdTieredStoFactoryMock.getMockInstance();
+    factoryMockSetup.tieredStoFactory = tieredStoFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
 
-    usdTieredStoMock = ImportMock.mockClass(contractWrappersModule, 'USDTieredSTO_3_0_0');
+    tieredStoMock = ImportMock.mockClass(contractWrappersModule, 'USDTieredSTO_3_0_0');
     cappedStoMock = ImportMock.mockClass(contractWrappersModule, 'CappedSTO_3_0_0');
 
     securityTokenId = SecurityToken.generateId({ symbol: cappedParams.symbol });
@@ -127,19 +124,19 @@ describe('PauseSto', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add the transaction to the queue to pause a usdTiered sto', async () => {
-      moduleWrapperFactoryMock.mock('getModuleInstance', usdTieredStoMock.getMockInstance());
-      target = new PauseSto(usdTieredParams, contextMock.getMockInstance());
+    test('should add the transaction to the queue to pause a tiered sto', async () => {
+      moduleWrapperFactoryMock.mock('getModuleInstance', tieredStoMock.getMockInstance());
+      target = new PauseSto(tieredParams, contextMock.getMockInstance());
 
       const addTransactionSpy = spy(target, 'addTransaction');
-      usdTieredStoMock.mock('pause', Promise.resolve('Pause'));
+      tieredStoMock.mock('pause', Promise.resolve('Pause'));
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        addTransactionSpy.getCall(0).calledWith(usdTieredStoMock.getMockInstance().pause)
+        addTransactionSpy.getCall(0).calledWith(tieredStoMock.getMockInstance().pause)
       ).toEqual(true);
       expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.PauseSto);
       expect(addTransactionSpy.callCount).toEqual(1);
@@ -184,7 +181,7 @@ describe('PauseSto', () => {
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `STO ${cappedParams.stoAddress} is either archived or hasn't been launched.`,
+          message: `STO ${cappedParams.stoAddress} is either archived or hasn't been launched`,
         })
       );
     });
@@ -210,20 +207,20 @@ describe('PauseSto', () => {
     });
 
     test('should successfully resolve pause sto with usd tiered sto params', async () => {
-      target = new PauseSto(usdTieredParams, contextMock.getMockInstance());
-      const refreshStub = usdTieredStoFactoryMock.mock('refresh', Promise.resolve());
+      target = new PauseSto(tieredParams, contextMock.getMockInstance());
+      const refreshStub = tieredStoFactoryMock.mock('refresh', Promise.resolve());
       await pauseStoModule.createPauseStoResolver(
         factoryMockSetup,
-        usdTieredParams.symbol,
-        usdTieredParams.stoType,
-        usdTieredParams.stoAddress
+        tieredParams.symbol,
+        tieredParams.stoType,
+        tieredParams.stoAddress
       )();
       expect(
         refreshStub.getCall(0).calledWithExactly(
-          UsdTieredSto.generateId({
+          TieredSto.generateId({
             securityTokenId,
-            stoType: StoType.UsdTiered,
-            address: usdTieredParams.stoAddress,
+            stoType: StoType.Tiered,
+            address: tieredParams.stoAddress,
           })
         )
       ).toEqual(true);
