@@ -1,9 +1,9 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { stub, spy, restore } from 'sinon';
+import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
-import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { SetController } from '../../procedures/SetController';
 import { Procedure } from '~/procedures/Procedure';
 import { ProcedureType, PolyTransactionTag, ErrorCode } from '~/types';
@@ -20,7 +20,7 @@ describe('SetController', () => {
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<
-    tokenFactoryModule.MockedTokenFactoryObject
+    tokenFactoryModule.MockedTokenFactoryModule
   >;
   let securityTokenMock: MockManager<
     contractWrappersModule.SecurityToken_3_0_0
@@ -32,7 +32,7 @@ describe('SetController', () => {
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(
       tokenFactoryModule,
-      'MockedTokenFactoryObject'
+      'MockedTokenFactoryModule'
     );
     securityTokenMock = ImportMock.mockClass(
       contractWrappersModule,
@@ -78,7 +78,7 @@ describe('SetController', () => {
       );
     });
 
-    test('should call error on inappropriate params address', async () => {
+    test('should call error on inappropriate controller address', async () => {
       // Instantiate SetController with incorrect args instead
       target = new SetController(
         {
