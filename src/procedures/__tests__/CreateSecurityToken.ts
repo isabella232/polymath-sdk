@@ -1,20 +1,21 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, SecurityTokenRegistryEvents } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { spy, restore } from 'sinon';
+import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as approvalModule from '../ApproveErc20';
 import { CreateSecurityToken } from '../../procedures/CreateSecurityToken';
-import { Procedure } from '~/procedures/Procedure';
-import { Wallet } from '~/Wallet';
-import { PolymathError } from '~/PolymathError';
-import { ErrorCode, ProcedureType } from '~/types';
+import { Procedure } from '../../procedures/Procedure';
+import { Wallet } from '../../Wallet';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import { ApproveErc20 } from '../ApproveErc20';
-import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
-import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
-import * as utilsModule from '~/utils';
-import { mockFactories } from '~/testUtils/mockFactories';
+import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
+import * as utilsModule from '../../utils';
+import { mockFactories } from '../../testUtils/mockFactories';
+import { SecurityToken } from '../../entities';
 
 const params = {
   symbol: 'TEST1',
@@ -24,6 +25,9 @@ const params = {
   amount: new BigNumber(1),
   divisible: false,
 };
+
+const costInPoly = new BigNumber(5);
+const costInUsd = new BigNumber(6);
 
 describe('CreateSecurityToken', () => {
   let target: CreateSecurityToken;
@@ -53,19 +57,14 @@ describe('CreateSecurityToken', () => {
     securityTokenRegistryMock.mock('tickerAvailable', Promise.resolve(false));
     securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(true));
     securityTokenRegistryMock.mock('isTokenLaunched', Promise.resolve(false));
-    securityTokenRegistryMock.mock(
-      'getFees',
-      Promise.resolve([new BigNumber(1), new BigNumber(1)])
-    );
+    securityTokenRegistryMock.mock('getFees', Promise.resolve([costInUsd, costInPoly]));
     securityTokenRegistryMock.mock('address', Promise.resolve(params.address));
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('securityTokenRegistry', securityTokenRegistryMock.getMockInstance());
 
-    const ownerPromise = new Promise<string>((resolve, reject) => {
-      resolve(params.owner);
-    });
-    contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
+    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(params.owner) }));
+
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
     securityTokenFactoryMock = ImportMock.mockClass(
@@ -95,7 +94,7 @@ describe('CreateSecurityToken', () => {
     test('should throw error if token is not reserved ', async () => {
       securityTokenRegistryMock.mock('tickerAvailable', Promise.resolve(true));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `The security token symbol ${
@@ -111,7 +110,7 @@ describe('CreateSecurityToken', () => {
       // Real call
       const resolver = await target.prepareTransactions();
 
-      expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
+      await expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
@@ -122,14 +121,13 @@ describe('CreateSecurityToken', () => {
 
     test('should return the newly created security token', async () => {
       const creationObject = {
-        creation: {
-          name: () => params.name,
-          owner: () => params.owner,
-          address: () => params.address,
-        },
+        name: () => params.name,
+        owner: () => params.owner,
+        address: () => params.address,
       };
+
       const createStub = securityTokenFactoryMock.mock('create', creationObject);
-      ImportMock.mockFunction(utilsModule, 'findEvents', [
+      const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
           args: {
             _ticker: params.symbol,
@@ -142,15 +140,34 @@ describe('CreateSecurityToken', () => {
 
       // Real call
       const resolver = await target.prepareTransactions();
-      await resolver.run({} as TransactionReceiptWithDecodedLogs);
+      const receipt = {} as TransactionReceiptWithDecodedLogs;
+      await resolver.run(receipt);
+
+      // Verifications
       expect(resolver.result).toEqual(creationObject);
+      expect(
+        createStub
+          .getCall(0)
+          .calledWithExactly(SecurityToken.generateId({ symbol: params.symbol }), {
+            name: params.name,
+            owner: params.owner,
+            address: params.address,
+          })
+      ).toEqual(true);
       expect(createStub.callCount).toBe(1);
+      // Verifications for findEvents
+      expect(
+        findEventsStub.getCall(0).calledWithMatch({
+          eventName: SecurityTokenRegistryEvents.NewSecurityToken,
+        })
+      ).toEqual(true);
+      expect(findEventsStub.callCount).toBe(1);
     });
 
     test('should throw error if token has been reserved by other user', async () => {
       securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(false));
       // Real call
-      expect(target.prepareTransactions()).rejects.toThrowError(
+      await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `The security token symbol ${
@@ -174,6 +191,11 @@ describe('CreateSecurityToken', () => {
     test('should add the transaction to the queue to create the security token and approve erc20 transfer', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenRegistryMock.mock(
+        'generateNewSecurityToken',
+        Promise.resolve('GenerateNewSecurityToken')
+      );
+
       // Real call
       await target.prepareTransactions();
 
@@ -183,9 +205,15 @@ describe('CreateSecurityToken', () => {
           .getCall(0)
           .calledWith(securityTokenRegistryMock.getMockInstance().generateNewSecurityToken)
       ).toEqual(true);
-
+      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+        usd: costInUsd,
+        poly: costInPoly,
+      });
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateSecurityToken
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWith(ApproveErc20)).toEqual(true);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 

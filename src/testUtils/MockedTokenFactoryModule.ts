@@ -3,7 +3,7 @@ import SecurityTokenRegistryWrapper from '@polymathnetwork/contract-wrappers/lib
 import ERC20TokenWrapper from '@polymathnetwork/contract-wrappers/lib/contract_wrappers/tokens/erc20_wrapper';
 import ContractFactory from '@polymathnetwork/contract-wrappers/lib/factories/contractFactory';
 
-export abstract class MockedTokenFactoryObject {
+export abstract class MockedTokenFactoryModule {
   public readonly web3Wrapper: Web3Wrapper;
 
   public contractFactory: ContractFactory;

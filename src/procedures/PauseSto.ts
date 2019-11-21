@@ -10,6 +10,7 @@ import {
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, CappedSto, TieredSto } from '../entities';
+import { Factories } from '~/Context';
 
 export class PauseSto extends Procedure<PauseStoProcedureArgs> {
   public type = ProcedureType.PauseSto;
@@ -67,32 +68,37 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
 
     await this.addTransaction(stoModule.pause, {
       tag: PolyTransactionTag.PauseSto,
-      resolvers: [
-        async () => {
-          const securityTokenId = SecurityToken.generateId({ symbol });
-
-          switch (stoType) {
-            case StoType.Capped: {
-              return factories.cappedStoFactory.refresh(
-                CappedSto.generateId({
-                  securityTokenId,
-                  stoType: StoType.Capped,
-                  address: stoAddress,
-                })
-              );
-            }
-            case StoType.Tiered: {
-              return factories.tieredStoFactory.refresh(
-                TieredSto.generateId({
-                  securityTokenId,
-                  stoType: StoType.Tiered,
-                  address: stoAddress,
-                })
-              );
-            }
-          }
-        },
-      ],
+      resolvers: [createPauseStoResolver(factories, symbol, stoType, stoAddress)],
     })({});
   }
 }
+
+export const createPauseStoResolver = (
+  factories: Factories,
+  symbol: string,
+  stoType: StoType,
+  stoAddress: string
+) => async () => {
+  const securityTokenId = SecurityToken.generateId({ symbol });
+
+  switch (stoType) {
+    case StoType.Capped: {
+      return factories.cappedStoFactory.refresh(
+        CappedSto.generateId({
+          securityTokenId,
+          stoType: StoType.Capped,
+          address: stoAddress,
+        })
+      );
+    }
+    case StoType.Tiered: {
+      return factories.tieredStoFactory.refresh(
+        TieredSto.generateId({
+          securityTokenId,
+          stoType: StoType.Tiered,
+          address: stoAddress,
+        })
+      );
+    }
+  }
+};
