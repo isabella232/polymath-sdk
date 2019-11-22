@@ -207,14 +207,13 @@ describe('TransferErc20', () => {
 
     test('should successfully refresh the corresponding ERC20 Balance Entity', async () => {
       const refreshStub = erc20TokenBalanceFactoryMock.mock('refresh', Promise.resolve());
-      const address = params.tokenAddress ? params.tokenAddress : '';
       const erc20TokenBalanceGeneratedId = Erc20TokenBalance.generateId({
-        tokenAddress: address,
+        tokenAddress: params.tokenAddress!,
         walletAddress: params.receiver,
       });
       const resolverValue = await transferErc20Module.createTransferErc20Resolver(
         factoryMockSetup,
-        address,
+        params.tokenAddress!,
         params.receiver
       )();
       expect(refreshStub.getCall(0).calledWithExactly(erc20TokenBalanceGeneratedId)).toEqual(true);
