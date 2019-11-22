@@ -4,15 +4,20 @@ import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
-import * as dividendFactoryModule from '~/entities/factories/DividendDistributionFactory';
+import * as dividendFactoryModule from '../../entities/factories/DividendDistributionFactory';
 import * as pushDividendPaymentModule from '../../procedures/PushDividendPayment';
 import { PushDividendPayment } from '../../procedures/PushDividendPayment';
-import { Procedure } from '~/procedures/Procedure';
-import { ProcedureType, DividendType, ErrorCode } from '~/types';
-import { PolymathError } from '~/PolymathError';
-import { mockFactories } from '~/testUtils/mockFactories';
+import { Procedure } from '../../procedures/Procedure';
+import {
+  ProcedureType,
+  DividendType,
+  ErrorCode,
+  PolyTransactionTag,
+} from '../../types';
+import { PolymathError } from '../../PolymathError';
+import { mockFactories } from '../../testUtils/mockFactories';
 import { Factories } from '../../Context';
-import { SecurityToken, DividendDistribution } from '~/entities';
+import { SecurityToken, DividendDistribution } from '../../entities';
 
 const params = {
   symbol: 'TEST1',
@@ -25,19 +30,35 @@ describe('PushDividendPayment', () => {
   let target: PushDividendPayment;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
-  let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
-  let erc20DividendsMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
-  let ethDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
-  let dividendFactoryMock: MockManager<dividendFactoryModule.DividendDistributionFactory>;
+  let tokenFactoryMock: MockManager<
+    tokenFactoryModule.MockedTokenFactoryModule
+  >;
+  let securityTokenMock: MockManager<
+    contractWrappersModule.SecurityToken_3_0_0
+  >;
+  let erc20DividendsMock: MockManager<
+    contractWrappersModule.ERC20DividendCheckpoint_3_0_0
+  >;
+  let ethDividendsMock: MockManager<
+    contractWrappersModule.EtherDividendCheckpoint_3_0_0
+  >;
+  let dividendFactoryMock: MockManager<
+    dividendFactoryModule.DividendDistributionFactory
+  >;
   let factoriesMockedSetup: Factories;
 
   beforeEach(() => {
     // Mock the context, wrappers, tokenFactory and securityToken to test PushDividendPayment
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
-    securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
+    tokenFactoryMock = ImportMock.mockClass(
+      tokenFactoryModule,
+      'MockedTokenFactoryModule'
+    );
+    securityTokenMock = ImportMock.mockClass(
+      contractWrappersModule,
+      'SecurityToken_3_0_0'
+    );
     erc20DividendsMock = ImportMock.mockClass(
       contractWrappersModule,
       'ERC20DividendCheckpoint_3_0_0'
@@ -75,7 +96,6 @@ describe('PushDividendPayment', () => {
 
   describe('PushDividendPayment', () => {
     test('should throw if there is no valid security token being provided', async () => {
-      // Instantiate PushDividendPayment with incorrect security symbol
       target = new PushDividendPayment(params, contextMock.getMockInstance());
 
       tokenFactoryMock
@@ -107,6 +127,7 @@ describe('PushDividendPayment', () => {
     });
 
     test('should throw if an Erc20 dividend module is not attached', async () => {
+      // Instantiate PushDividendPayment with ERC20 dividend type
       target = new PushDividendPayment(
         { ...params, dividendType: DividendType.Erc20 },
         contextMock.getMockInstance()
@@ -124,6 +145,7 @@ describe('PushDividendPayment', () => {
     });
 
     test('should throw if an Eth dividend module is not attached', async () => {
+      // Instantiate PushDividendPayment with ETH dividend type
       target = new PushDividendPayment(
         { ...params, dividendType: DividendType.Eth },
         contextMock.getMockInstance()
@@ -140,8 +162,8 @@ describe('PushDividendPayment', () => {
       );
     });
 
-    test('should add a transaction to push a dividend payment of an attached ERC20 dividends module', async () => {
-      // Instantiate PushDividendPayment
+    test('should add a transaction to push a dividend payment for an attached ERC20 dividends module', async () => {
+      // Instantiate PushDividendPayment with ERC20 dividend type
       target = new PushDividendPayment(
         { ...params, dividendType: DividendType.Erc20 },
         contextMock.getMockInstance()
@@ -163,6 +185,11 @@ describe('PushDividendPayment', () => {
         Promise.resolve([erc20DividendsMock.getMockInstance()])
       );
 
+      erc20DividendsMock.mock(
+        'pushDividendPaymentToAddresses',
+        Promise.resolve('PushDividendPaymentToAddresses')
+      );
+
       const addTransactionSpy = spy(target, 'addTransaction');
 
       // Real call
@@ -172,13 +199,18 @@ describe('PushDividendPayment', () => {
       expect(
         addTransactionSpy
           .getCall(0)
-          .calledWith(erc20DividendsMock.getMockInstance().pushDividendPaymentToAddresses)
+          .calledWith(
+            erc20DividendsMock.getMockInstance().pushDividendPaymentToAddresses
+          )
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.PushDividendPayment
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
     test('should add a transaction to push a dividend payment of an attached ERC20 dividends module with undefined shareholderAddresses parameter', async () => {
-      // Instantiate PushDividendPayment
+      // Instantiate PushDividendPayment with undefined shareholder address and ERC20 dividend type
       target = new PushDividendPayment(
         {
           ...params,
@@ -208,6 +240,11 @@ describe('PushDividendPayment', () => {
         Promise.resolve([erc20DividendsMock.getMockInstance()])
       );
 
+      erc20DividendsMock.mock(
+        'pushDividendPaymentToAddresses',
+        Promise.resolve('PushDividendPaymentToAddresses')
+      );
+
       const addTransactionSpy = spy(target, 'addTransaction');
 
       // Real call
@@ -217,13 +254,18 @@ describe('PushDividendPayment', () => {
       expect(
         addTransactionSpy
           .getCall(0)
-          .calledWith(erc20DividendsMock.getMockInstance().pushDividendPaymentToAddresses)
+          .calledWith(
+            erc20DividendsMock.getMockInstance().pushDividendPaymentToAddresses
+          )
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.PushDividendPayment
+      );
       expect(addTransactionSpy.callCount).toEqual(2);
     });
 
     test('should add a transaction to push a dividend payment of an attached ETH dividends module', async () => {
-      // Instantiate PushDividendPayment
+      // Instantiate PushDividendPayment with ETH dividend type
       target = new PushDividendPayment(
         { ...params, dividendType: DividendType.Eth },
         contextMock.getMockInstance()
@@ -245,6 +287,11 @@ describe('PushDividendPayment', () => {
         Promise.resolve([ethDividendsMock.getMockInstance()])
       );
 
+      ethDividendsMock.mock(
+        'pushDividendPaymentToAddresses',
+        Promise.resolve('PushDividendPaymentToAddresses')
+      );
+
       const addTransactionSpy = spy(target, 'addTransaction');
 
       // Real call
@@ -254,13 +301,21 @@ describe('PushDividendPayment', () => {
       expect(
         addTransactionSpy
           .getCall(0)
-          .calledWith(ethDividendsMock.getMockInstance().pushDividendPaymentToAddresses)
+          .calledWith(
+            ethDividendsMock.getMockInstance().pushDividendPaymentToAddresses
+          )
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.PushDividendPayment
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
     test('should refresh the ERC20 dividend distribution for which payments were pushed', async () => {
-      const refreshStub = dividendFactoryMock.mock('refresh', Promise.resolve(undefined));
+      const refreshStub = dividendFactoryMock.mock(
+        'refresh',
+        Promise.resolve(undefined)
+      );
 
       const resolverValue = await pushDividendPaymentModule.createPushDividendPaymentResolver(
         factoriesMockedSetup,
@@ -280,12 +335,15 @@ describe('PushDividendPayment', () => {
           })
         )
       ).toEqual(true);
-      expect(await resolverValue).toEqual(undefined);
+      expect(resolverValue).toEqual(undefined);
       expect(refreshStub.callCount).toEqual(1);
     });
 
     test('should refresh the ETH dividend distribution for which payments were pushed', async () => {
-      const refreshStub = dividendFactoryMock.mock('refresh', Promise.resolve(undefined));
+      const refreshStub = dividendFactoryMock.mock(
+        'refresh',
+        Promise.resolve(undefined)
+      );
 
       const resolverValue = await pushDividendPaymentModule.createPushDividendPaymentResolver(
         factoriesMockedSetup,
@@ -305,7 +363,7 @@ describe('PushDividendPayment', () => {
           })
         )
       ).toEqual(true);
-      expect(await resolverValue).toEqual(undefined);
+      expect(resolverValue).toEqual(undefined);
       expect(refreshStub.callCount).toEqual(1);
     });
   });
