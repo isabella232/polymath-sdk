@@ -10,7 +10,7 @@ import * as ethDividendsManagerFactoryModule from '~/entities/factories/EthDivid
 import * as investmentFactoryModule from '~/entities/factories/InvestmentFactory';
 import * as securityTokenReservationModule from '~/entities/factories/SecurityTokenReservationFactory';
 import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
-import * as tieredStoFactoryModule from '~/entities/factories/tieredStoFactory';
+import * as tieredStoFactoryModule from '~/entities/factories/TieredStoFactory';
 import * as taxWithholdingFactoryModule from '~/entities/factories/TaxWithholdingFactory';
 
 let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
