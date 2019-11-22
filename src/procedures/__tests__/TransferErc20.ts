@@ -124,7 +124,7 @@ describe('TransferErc20', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to transfer an erc20 token with specified token address without a specified receiving address', async () => {
+    test('should add a transaction to the queue to transfer poly as the parameters do not include token address', async () => {
       target = new TransferErc20(
         { ...params, tokenAddress: undefined },
         contextMock.getMockInstance()
@@ -173,7 +173,6 @@ describe('TransferErc20', () => {
 
     test('should add an extra transaction to get POLY from the faucet if the balance is insufficient, specifically on testnet', async () => {
       wrappersMock.mock('isTestnet', Promise.resolve(true));
-      polyTokenMock.mock('address', Promise.resolve(polyTokenAddress));
       erc20Mock.mock('address', Promise.resolve(polyTokenAddress));
       erc20Mock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
       erc20Mock.mock('transfer', Promise.resolve('Transfer'));
