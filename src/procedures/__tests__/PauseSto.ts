@@ -100,6 +100,7 @@ describe('PauseSto', () => {
     // Instantiate PauseSto
     target = new PauseSto(cappedParams, contextMock.getMockInstance());
   });
+
   afterEach(() => {
     restore();
   });
