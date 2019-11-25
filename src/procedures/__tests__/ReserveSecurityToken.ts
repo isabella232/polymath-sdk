@@ -21,6 +21,7 @@ import * as securityTokenReservationFactoryModule from '../../entities/factories
 import * as utilsModule from '../../utils';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { SecurityTokenReservation } from '../../entities';
+import { dateToBigNumber } from '../../utils';
 
 const params: ReserveSecurityTokenProcedureArgs = {
   symbol: 'TEST1',
@@ -111,11 +112,11 @@ describe('ReserveSecurityToken', () => {
     });
 
     test('should return an object reflecting a reserved security token', async () => {
-      const expiryDate = new BigNumber(0); // TODO make this a real date
-      const reservedAt = new BigNumber(0);
+      const expiryDate = new Date(2035, 0);
+      const reservedDate = new Date(2020, 0);
       const reservationObject = {
-        expiry: expiryDate,
-        reservedAt,
+        expiry: dateToBigNumber(expiryDate),
+        reservedAt: dateToBigNumber(reservedDate),
         ownerAddress: params.owner,
       };
 
@@ -124,9 +125,9 @@ describe('ReserveSecurityToken', () => {
         {
           args: {
             _ticker: params.symbol,
-            _expiryDate: expiryDate,
+            _expiryDate: dateToBigNumber(expiryDate),
             _owner: params.owner,
-            _registrationDate: reservedAt,
+            _registrationDate: dateToBigNumber(reservedDate),
           },
         },
       ]);
@@ -138,14 +139,12 @@ describe('ReserveSecurityToken', () => {
 
       // Verifications
       expect(resolver.result).toEqual(reservationObject);
-      console.log(createStub.getCall(0));
-      console.log(new Date(expiryDate.toNumber()));
       expect(
         createStub
           .getCall(0)
           .calledWithExactly(SecurityTokenReservation.generateId({ symbol: params.symbol }), {
-            expiry: new Date(expiryDate.toNumber()),
-            reservedAt: new Date(reservedAt.toNumber()),
+            expiry: expiryDate,
+            reservedAt: reservedDate,
             ownerAddress: params.owner,
           })
       ).toEqual(true);
