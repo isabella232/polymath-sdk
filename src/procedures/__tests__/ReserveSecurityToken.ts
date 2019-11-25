@@ -30,7 +30,8 @@ const params: ReserveSecurityTokenProcedureArgs = {
 
 const costInPoly = new BigNumber(5);
 const costInUsd = new BigNumber(6);
-const securityTokenAddress = '0x3333333333333333333333333333333333333333';
+const securityTokenRegistryAddress = '0x5555555555555555555555555555555555555555';
+const currentWalletAddress = '0x4444444444444444444444444444444444444444';
 
 describe('ReserveSecurityToken', () => {
   let target: ReserveSecurityToken;
@@ -63,12 +64,15 @@ describe('ReserveSecurityToken', () => {
     securityTokenRegistryMock.mock('isTickerRegisteredByCurrentIssuer', Promise.resolve(true));
 
     securityTokenRegistryMock.mock('getFees', Promise.resolve([costInUsd, costInPoly]));
-    securityTokenRegistryMock.mock('address', Promise.resolve(securityTokenAddress));
+    securityTokenRegistryMock.mock('address', Promise.resolve(securityTokenRegistryAddress));
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('securityTokenRegistry', securityTokenRegistryMock.getMockInstance());
 
-    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(params.owner!) }));
+    contextMock.set(
+      'currentWallet',
+      new Wallet({ address: () => Promise.resolve(currentWalletAddress) })
+    );
 
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
@@ -107,6 +111,17 @@ describe('ReserveSecurityToken', () => {
           code: ErrorCode.UnexpectedEventLogs,
           message:
             "The Security Token was successfully reserved but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
+        })
+      );
+    });
+
+    test('should throw if ticker being reserved is not available', async () => {
+      securityTokenRegistryMock.mock('tickerAvailable', Promise.resolve(false));
+
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          message: `Ticker ${params.symbol} has already been registered`,
+          code: ErrorCode.ProcedureValidationError,
         })
       );
     });
@@ -159,7 +174,34 @@ describe('ReserveSecurityToken', () => {
       expect(findEventsStub.callCount).toBe(1);
     });
 
-    test('should add a transaction to the queue to reserve the security token', async () => {
+    test('should add a transaction to the queue to reserve the security token, specifying an owner address', async () => {
+      const addProcedureSpy = spy(target, 'addProcedure');
+      const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenRegistryMock.mock('registerNewTicker', Promise.resolve('RegisterNewTicker'));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(securityTokenRegistryMock.getMockInstance().registerNewTicker)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+        usd: costInUsd,
+        poly: costInPoly,
+      });
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.ReserveSecurityToken
+      );
+      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(addProcedureSpy.callCount).toEqual(1);
+    });
+
+    test('should add a transaction to the queue to reserve the security token using the current wallet address as the owner address', async () => {
+      target = new ReserveSecurityToken({ symbol: params.symbol }, contextMock.getMockInstance());
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
       securityTokenRegistryMock.mock('registerNewTicker', Promise.resolve('RegisterNewTicker'));
