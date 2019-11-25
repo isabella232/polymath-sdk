@@ -9,7 +9,7 @@ import {
 import { PolymathError } from '../PolymathError';
 
 export class DisableFeature extends Procedure<DisableFeatureProcedureArgs> {
-  public type = ProcedureType.EnableDividendManagers;
+  public type = ProcedureType.DisableFeature;
 
   public async prepareTransactions() {
     const { symbol, moduleName } = this.args;
