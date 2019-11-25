@@ -30,7 +30,6 @@ import {
   EtherDividendCheckpointEtherDividendReclaimedEventArgs,
   EtherDividendCheckpointSetWalletEventArgs,
   EtherDividendCheckpointSetWithholdingEventArgs,
-  BigNumber,
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
 import { Pojo } from '../types';
@@ -69,10 +68,6 @@ export function unserialize(id: string) {
 
 export function isValidAddress(address: string) {
   return isAddress(address);
-}
-
-export function dateToBigNumber(value: Date) {
-  return new BigNumber(parseInt((value.getTime() / 1000).toFixed(0), 10));
 }
 
 interface FindEventParams {

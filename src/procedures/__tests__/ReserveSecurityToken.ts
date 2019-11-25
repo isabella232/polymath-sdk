@@ -1,5 +1,9 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { BigNumber, SecurityTokenRegistryEvents } from '@polymathnetwork/contract-wrappers';
+import {
+  BigNumber,
+  SecurityTokenRegistryEvents,
+  conversionUtils,
+} from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { spy, restore } from 'sinon';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
@@ -21,7 +25,8 @@ import * as securityTokenReservationFactoryModule from '../../entities/factories
 import * as utilsModule from '../../utils';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { SecurityTokenReservation } from '../../entities';
-import { dateToBigNumber } from '../../utils';
+
+const { dateToBigNumber } = conversionUtils;
 
 const params: ReserveSecurityTokenProcedureArgs = {
   symbol: 'TEST1',
@@ -130,8 +135,8 @@ describe('ReserveSecurityToken', () => {
       const expiryDate = new Date(2035, 0);
       const reservedDate = new Date(2020, 0);
       const reservationObject = {
-        expiry: dateToBigNumber(expiryDate),
-        reservedAt: dateToBigNumber(reservedDate),
+        expiry: expiryDate,
+        reservedAt: reservedDate,
         ownerAddress: params.owner,
       };
 
