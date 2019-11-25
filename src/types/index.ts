@@ -110,6 +110,7 @@ export enum ProcedureType {
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
+  DisableFeature = 'DisableFeature',
   ReclaimFunds = 'ReclaimFunds',
   ReserveSecurityToken = 'ReserveSecurityToken',
   WithdrawTaxes = 'WithdrawTaxes',
