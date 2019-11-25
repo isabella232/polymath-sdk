@@ -20,6 +20,8 @@ const params = {
   description: 'Description',
 };
 
+const moduleAddress = '0x9999999999999999999999999999999999999999';
+
 describe('AssignSecurityTokenRole', () => {
   let target: AssignSecurityTokenRole;
   let contextMock: MockManager<contextModule.Context>;
@@ -66,7 +68,7 @@ describe('AssignSecurityTokenRole', () => {
       moduleName: ModuleName.PercentageTransferManager,
       permission: Perm.Operator,
     });
-    wrappersMock.mock('getModuleAddressesByName', [params.delegateAddress]);
+    wrappersMock.mock('getModuleAddressesByName', [moduleAddress]);
 
     // Instantiate AssignSecurityTokenRole
     target = new AssignSecurityTokenRole(params, contextMock.getMockInstance());
