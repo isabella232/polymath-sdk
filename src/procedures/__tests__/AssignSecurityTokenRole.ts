@@ -149,7 +149,7 @@ describe('AssignSecurityTokenRole', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: 'You must enable the Permissions feature',
+          message: 'You must enable the Permissions feature in order to assign roles',
         })
       );
     });
@@ -191,7 +191,7 @@ describe('AssignSecurityTokenRole', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.FeatureNotEnabled,
-          message: `You must enable the Permissions feature`,
+          message: `You must enable the Permissions feature in order to assign the PermissionsAdministrator role`,
         })
       );
     });
