@@ -72,7 +72,7 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
     await P.each(shareholderAddressChunks, async (addresses, chunkIndex) => {
       const percentageChunk = percentageChunks[chunkIndex];
       await this.addTransaction(dividendsModule!.setWithholding, {
-        tag: PolyTransactionTag.SetErc20TaxWithholding,
+        tag: transactionTag!,
         // Update all affected tax withholding entities.
         // We do this without fetching the data from the contracts
         // because it would take too many requests and it's only one value that changes
