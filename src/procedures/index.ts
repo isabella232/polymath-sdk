@@ -26,3 +26,6 @@ export { RevokeKyc } from './RevokeKyc';
 export { MintTokens } from './MintTokens';
 export { EnableCountTransferManager } from './EnableCountTransferManager';
 export { ModifyMaxHolderCount } from './ModifyMaxHolderCount';
+export { EnablePercentageTransferManager } from './EnablePercentageTransferManager';
+export { ModifyMaxHolderPercentage } from './ModifyMaxHolderPercentage';
+export { ModifyPercentageExemptions } from './ModifyPercentageExemptions';

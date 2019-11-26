@@ -1,10 +1,11 @@
-import { ModuleName } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SubModule } from './SubModule';
 import {
   EnableGeneralPermissionManager,
   EnableDividendManagers,
   EnableGeneralTransferManager,
   DisableFeature,
+  EnablePercentageTransferManager,
 } from '../../procedures';
 import {
   Feature,
@@ -26,12 +27,14 @@ export interface FeatureStatuses {
   [Feature.Erc20Dividends]: boolean;
   [Feature.EtherDividends]: boolean;
   [Feature.ShareholderCountRestrictions]: boolean;
+  [Feature.PercentageOwnershipRestrictions]: boolean;
 }
 
 type EnableOpts =
   | EnableErc20DividendsOpts
   | EnableEtherDividendsOpts
-  | EnableShareholderCountRestrictionsOpts;
+  | EnableShareholderCountRestrictionsOpts
+  | EnablePercentageOwnershipRestrictionsOpts;
 
 export interface EnableErc20DividendsOpts {
   storageWalletAddress: string;
@@ -43,6 +46,11 @@ export interface EnableEtherDividendsOpts {
 
 export interface EnableShareholderCountRestrictionsOpts {
   maxHolderCount: number;
+}
+
+export interface EnablePercentageOwnershipRestrictionsOpts {
+  maxHolderPercentage: BigNumber;
+  allowPrimaryIssuance?: boolean;
 }
 
 export interface Enable {
@@ -62,6 +70,10 @@ export interface Enable {
     args: { feature: Feature.ShareholderCountRestrictions },
     opts: EnableShareholderCountRestrictionsOpts
   ): Promise<TransactionQueue<EnableCountTransferManagerProcedureArgs>>;
+  (
+    args: { feature: Feature.PercentageOwnershipRestrictions },
+    opts: EnablePercentageOwnershipRestrictionsOpts
+  ): Promise<TransactionQueue<EnableDividendManagersProcedureArgs>>;
 }
 
 export class Features extends SubModule {
@@ -74,6 +86,7 @@ export class Features extends SubModule {
     Feature.Erc20Dividends,
     Feature.EtherDividends,
     Feature.ShareholderCountRestrictions,
+    Feature.PercentageOwnershipRestrictions,
   ];
 
   /**
@@ -108,6 +121,7 @@ export class Features extends SubModule {
       erc20DividendsEnabled,
       etherDividendsEnabled,
       countTransferManagerEnabled,
+      percentageTransferManagerEnabled,
     ] = await Promise.all(list.map(feature => this.isEnabled({ feature })));
 
     const result: FeatureStatuses = {
@@ -116,6 +130,7 @@ export class Features extends SubModule {
       [Feature.Erc20Dividends]: erc20DividendsEnabled,
       [Feature.EtherDividends]: etherDividendsEnabled,
       [Feature.ShareholderCountRestrictions]: countTransferManagerEnabled,
+      [Feature.PercentageOwnershipRestrictions]: percentageTransferManagerEnabled,
     };
 
     return result;
@@ -186,6 +201,13 @@ export class Features extends SubModule {
         );
         break;
       }
+      case Feature.PercentageOwnershipRestrictions: {
+        procedure = new EnablePercentageTransferManager(
+          { symbol, ...(opts as EnablePercentageOwnershipRestrictionsOpts) },
+          this.context
+        );
+        break;
+      }
       default: {
         throw new PolymathError({
           code: ErrorCode.FetcherValidationError,
@@ -246,6 +268,9 @@ export class Features extends SubModule {
         break;
       case Feature.ShareholderCountRestrictions:
         moduleName = ModuleName.CountTransferManager;
+        break;
+      case Feature.PercentageOwnershipRestrictions:
+        moduleName = ModuleName.PercentageTransferManager;
         break;
       default:
         throw new PolymathError({
