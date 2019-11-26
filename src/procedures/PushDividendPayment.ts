@@ -13,10 +13,26 @@ import {
   PolyTransactionTag,
   ErrorCode,
 } from '../types';
+import { Factories } from '../Context';
 import { PolymathError } from '../PolymathError';
 import { DividendDistribution, SecurityToken } from '../entities';
 
 const CHUNK_SIZE = 100;
+
+export const createPushDividendPaymentResolver = (
+  factories: Factories,
+  symbol: string,
+  dividendType: DividendType,
+  index: number
+) => async () => {
+  return factories.dividendDistributionFactory.refresh(
+    DividendDistribution.generateId({
+      securityTokenId: SecurityToken.generateId({ symbol }),
+      dividendType,
+      index,
+    })
+  );
+};
 
 export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureArgs> {
   public type = ProcedureType.PushDividendPayment;
@@ -74,7 +90,7 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
     }
 
     const unpaidShareholders = shareholderStatuses
-      .filter(status => status.paymentReceived)
+      .filter(status => !status.paymentReceived)
       .map(status => status.address);
 
     const shareholderAddressChunks = chunk(unpaidShareholders, CHUNK_SIZE);
@@ -86,15 +102,7 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
         resolver:
           index < shareholderAddressChunks.length - 1
             ? undefined
-            : async () => {
-                return factories.dividendDistributionFactory.refresh(
-                  DividendDistribution.generateId({
-                    securityTokenId: SecurityToken.generateId({ symbol }),
-                    dividendType,
-                    index,
-                  })
-                );
-              },
+            : createPushDividendPaymentResolver(factories, symbol, dividendType, index),
       })({
         dividendIndex,
         payees: addresses,

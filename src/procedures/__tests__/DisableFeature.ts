@@ -1,69 +1,70 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { restore, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import { ModuleName } from '@polymathnetwork/contract-wrappers';
+import { PolymathError } from '../../PolymathError';
+import {
+  DisableFeatureProcedureArgs,
+  ErrorCode,
+  PolyTransactionTag,
+  ProcedureType,
+} from '../../types';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
-import { EnableGeneralPermissionManager } from '../../procedures/EnableGeneralPermissionManager';
-import { Procedure } from '../Procedure';
-import { PolymathError } from '../../PolymathError';
-import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
+import { DisableFeature } from '~/procedures';
 
-const params = {
+const params: DisableFeatureProcedureArgs = {
   symbol: 'TEST1',
-  address: '0x4444444444444444444444444444444444444444',
+  moduleName: ModuleName.GeneralTransferManager,
 };
-const securityTokenAddress = '0x2222222222222222222222222222222222222222';
-const moduleFactoryAddress = '0x3333333333333333333333333333333333333333';
 
-describe('EnableGeneralPermissionManager', () => {
-  let target: EnableGeneralPermissionManager;
+const moduleAddress = '0x9999999999999999999999999999999999999999';
+
+describe('DisableFeature', () => {
+  let target: DisableFeature;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
-  let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
+
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
 
-  beforeAll(() => {
-    // Mock the context, wrappers, and tokenFactory to test EnableGeneralPermissionManagers
+  beforeEach(() => {
+    // Mock the context, wrappers, and tokenFactory to test DisableFeature
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
+
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
+    wrappersMock.mock('getModuleAddressesByName', [moduleAddress]);
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
-    securityTokenMock.mock('address', Promise.resolve(securityTokenAddress));
 
-    etherDividendsMock = ImportMock.mockClass(
-      contractWrappersModule,
-      'EtherDividendCheckpoint_3_0_0'
-    );
-    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(moduleFactoryAddress));
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
 
-    // Instantiate EnableGeneralPermissionManagers
-    target = new EnableGeneralPermissionManager(params, contextMock.getMockInstance());
+    // Instantiate DisableFeature
+    target = new DisableFeature(params, contextMock.getMockInstance());
   });
+
   afterEach(() => {
     restore();
   });
 
   describe('Types', () => {
-    test('should extend procedure and have EnableGeneralPermissionManager type', async () => {
-      expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe(ProcedureType.EnableGeneralPermissionManager);
+    test('should extend procedure and have DisableFeature type', async () => {
+      expect(target instanceof DisableFeature).toBe(true);
+      expect(target.type).toBe(ProcedureType.DisableFeature);
     });
   });
 
-  describe('EnableGeneralPermissionManager', () => {
-    test('should add a transaction to the queue to enable general permission manager', async () => {
+  describe('DisableFeature', () => {
+    test('should add the transaction to the queue to disable a feature (archiving the module)', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
-      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      securityTokenMock.mock('archiveModule', Promise.resolve('ArchiveModule'));
 
       // Real call
       await target.prepareTransactions();
@@ -72,8 +73,8 @@ describe('EnableGeneralPermissionManager', () => {
       expect(
         addTransactionSpy
           .getCall(0)
-          .calledWithExactly(securityTokenMock.getMockInstance().addModuleWithLabel, {
-            tag: PolyTransactionTag.EnableGeneralPermissionManager,
+          .calledWithExactly(securityTokenMock.getMockInstance().archiveModule, {
+            tag: PolyTransactionTag.DisableFeature,
           })
       ).toEqual(true);
       expect(addTransactionSpy.callCount).toEqual(1);

@@ -1,23 +1,19 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { stub, spy, restore } from 'sinon';
+import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import { Factories } from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
-import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryObject';
+import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { SetDividendsWallet } from '../../procedures/SetDividendsWallet';
 import * as setDividendsWalletModule from '../../procedures/SetDividendsWallet';
-import { Procedure } from '~/procedures/Procedure';
-import { ProcedureType, DividendType, ErrorCode } from '~/types';
-import { PolymathError } from '~/PolymathError';
-import { mockFactories } from '~/testUtils/mockFactories';
-import * as erc20FactoryModule from '~/entities/factories/Erc20DividendsManagerFactory';
-import * as ethFactoryModule from '~/entities/factories/EthDividendsManagerFactory';
-import {
-  SecurityToken,
-  Erc20DividendsManager,
-  EthDividendsManager,
-} from '~/entities';
+import { Procedure } from '../../procedures/Procedure';
+import { ProcedureType, DividendType, ErrorCode, PolyTransactionTag } from '../../types';
+import { PolymathError } from '../../PolymathError';
+import { mockFactories } from '../../testUtils/mockFactories';
+import * as erc20FactoryModule from '../../entities/factories/Erc20DividendsManagerFactory';
+import * as ethFactoryModule from '../../entities/factories/EthDividendsManagerFactory';
+import { SecurityToken, Erc20DividendsManager, EthDividendsManager } from '../../entities';
 
 const params = {
   symbol: 'TEST1',
@@ -28,21 +24,11 @@ describe('SetDividendsWallet', () => {
   let target: SetDividendsWallet;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<
-    tokenFactoryModule.MockedTokenFactoryObject
-  >;
-  let securityTokenMock: MockManager<
-    contractWrappersModule.SecurityToken_3_0_0
-  >;
-  let erc20DividendMock: MockManager<
-    contractWrappersModule.ERC20DividendCheckpointContract_3_0_0
-  >;
-  let ethDividendMock: MockManager<
-    contractWrappersModule.EtherDividendCheckpointContract_3_0_0
-  >;
-  let erc20FactoryMock: MockManager<
-    erc20FactoryModule.Erc20DividendsManagerFactory
-  >;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
+  let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
+  let erc20DividendMock: MockManager<contractWrappersModule.ERC20DividendCheckpointContract_3_0_0>;
+  let ethDividendMock: MockManager<contractWrappersModule.EtherDividendCheckpointContract_3_0_0>;
+  let erc20FactoryMock: MockManager<erc20FactoryModule.Erc20DividendsManagerFactory>;
   let ethFactoryMock: MockManager<ethFactoryModule.EthDividendsManagerFactory>;
   let factoriesMockedSetup: Factories;
 
@@ -50,14 +36,9 @@ describe('SetDividendsWallet', () => {
     // Mock the context, wrappers, tokenFactory and securityToken to test SetDividendsWallet
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(
-      tokenFactoryModule,
-      'MockedTokenFactoryObject'
-    );
-    securityTokenMock = ImportMock.mockClass(
-      contractWrappersModule,
-      'SecurityToken_3_0_0'
-    );
+
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
+    securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
 
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
@@ -67,14 +48,8 @@ describe('SetDividendsWallet', () => {
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
-    erc20FactoryMock = ImportMock.mockClass(
-      erc20FactoryModule,
-      'Erc20DividendsManagerFactory'
-    );
-    ethFactoryMock = ImportMock.mockClass(
-      ethFactoryModule,
-      'EthDividendsManagerFactory'
-    );
+    erc20FactoryMock = ImportMock.mockClass(erc20FactoryModule, 'Erc20DividendsManagerFactory');
+    ethFactoryMock = ImportMock.mockClass(ethFactoryModule, 'EthDividendsManagerFactory');
     factoriesMockedSetup = mockFactories();
     factoriesMockedSetup.erc20DividendsManagerFactory = erc20FactoryMock.getMockInstance();
     factoriesMockedSetup.ethDividendsManagerFactory = ethFactoryMock.getMockInstance();
@@ -183,16 +158,18 @@ describe('SetDividendsWallet', () => {
       );
 
       const addTransactionSpy = spy(target, 'addTransaction');
+      erc20DividendMock.mock('changeWallet', Promise.resolve('ChangeWallet'));
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        addTransactionSpy
-          .getCall(0)
-          .calledWith(erc20DividendMock.getMockInstance().changeWallet)
+        addTransactionSpy.getCall(0).calledWith(erc20DividendMock.getMockInstance().changeWallet)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.SetDividendsWallet
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
@@ -207,30 +184,26 @@ describe('SetDividendsWallet', () => {
         contextMock.getMockInstance()
       );
 
-      wrappersMock.mock(
-        'getAttachedModules',
-        Promise.resolve([ethDividendMock.getMockInstance()])
-      );
+      wrappersMock.mock('getAttachedModules', Promise.resolve([ethDividendMock.getMockInstance()]));
 
       const addTransactionSpy = spy(target, 'addTransaction');
+      ethDividendMock.mock('changeWallet', Promise.resolve('ChangeWallet'));
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        addTransactionSpy
-          .getCall(0)
-          .calledWith(ethDividendMock.getMockInstance().changeWallet)
+        addTransactionSpy.getCall(0).calledWith(ethDividendMock.getMockInstance().changeWallet)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.SetDividendsWallet
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
     test('should successfully refresh ERC20 dividends factory', async () => {
-      const refreshStub = erc20FactoryMock.mock(
-        'refresh',
-        Promise.resolve(undefined)
-      );
+      const refreshStub = erc20FactoryMock.mock('refresh', Promise.resolve());
 
       const resolverValue = await setDividendsWalletModule.createSetDividendsWalletResolver(
         DividendType.Erc20,
@@ -254,10 +227,7 @@ describe('SetDividendsWallet', () => {
   });
 
   test('should successfully refresh Eth dividends factory', async () => {
-    const refreshStub = ethFactoryMock.mock(
-      'refresh',
-      Promise.resolve(undefined)
-    );
+    const refreshStub = ethFactoryMock.mock('refresh', Promise.resolve());
 
     const resolverValue = await setDividendsWalletModule.createSetDividendsWalletResolver(
       DividendType.Eth,
