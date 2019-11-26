@@ -6,7 +6,7 @@ import { PolymathError } from '../PolymathError';
 import { Shareholder, SecurityToken } from '../entities';
 
 export class RevokeKyc extends Procedure<RevokeKycProcedureArgs, Shareholder[]> {
-  public type = ProcedureType.CreateErc20DividendDistribution;
+  public type = ProcedureType.RevokeKyc;
 
   public async prepareTransactions() {
     const { symbol, shareholderAddresses } = this.args;
