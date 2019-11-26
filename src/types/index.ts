@@ -557,6 +557,7 @@ export enum SecurityTokenRole {
   EtherDividendsAdministrator = 'EtherDividendsAdministrator',
   ShareholdersAdministrator = 'ShareholdersAdministrator',
   ShareholderCountRestrictionsAdministrator = 'ShareholderCountRestrictionsAdministrator',
+  PercentageOwnershipRestrictionsAdministrator = 'PercentageOwnershipRestrictionsAdministrator',
 }
 
 export enum StoRole {

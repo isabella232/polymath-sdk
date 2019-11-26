@@ -288,5 +288,8 @@ export class Permissions extends SubModule {
     [Feature.ShareholderCountRestrictions]: [
       SecurityTokenRole.ShareholderCountRestrictionsAdministrator,
     ],
+    [Feature.PercentageOwnershipRestrictions]: [
+      SecurityTokenRole.PercentageOwnershipRestrictionsAdministrator,
+    ],
   };
 }
