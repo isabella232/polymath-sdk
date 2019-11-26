@@ -38,6 +38,7 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
     }
 
     let dividendsModule: ERC20DividendCheckpoint | EtherDividendCheckpoint | undefined;
+    let transactionTag: PolyTransactionTag | undefined;
 
     switch (dividendType) {
       case DividendType.Erc20: {
@@ -45,6 +46,7 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
           { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
           { unarchived: true }
         );
+        transactionTag = PolyTransactionTag.SetErc20TaxWithholding;
         break;
       }
       case DividendType.Eth: {
@@ -52,6 +54,7 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
           { moduleName: ModuleName.EtherDividendCheckpoint, symbol },
           { unarchived: true }
         );
+        transactionTag = PolyTransactionTag.SetEtherTaxWithholding;
         break;
       }
     }
