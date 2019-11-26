@@ -105,6 +105,7 @@ export enum ProcedureType {
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   EnableGeneralTransferManager = 'EnableGeneralTransferManager',
   EnableCountTransferManager = 'EnableCountTransferManager',
+  EnablePercentageTransferManager = 'EnablePercentageTransferManager',
   LaunchCappedSto = 'LaunchCappedSto',
   LaunchUsdTieredSto = 'LaunchUsdTieredSto',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
@@ -126,6 +127,8 @@ export enum ProcedureType {
   RevokeKyc = 'RevokeKyc',
   MintTokens = 'MintTokens',
   ModifyMaxHolderCount = 'ModifyMaxHolderCount',
+  ModifyMaxHolderPercentage = 'ModifyMaxHolderPercentage',
+  ModifyPercentageWhitelist = 'ModifyPercentageWhitelist',
 }
 
 export enum PolyTransactionTag {
@@ -146,6 +149,7 @@ export enum PolyTransactionTag {
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   EnableGeneralTransferManager = 'EnableGeneralTransferManager',
   EnableCountTransferManager = 'EnableCountTransferManager',
+  EnablePercentageTransferManager = 'EnablePercentageTransferManager',
   DisableFeature = 'DisableFeature',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
@@ -160,6 +164,8 @@ export enum PolyTransactionTag {
   ModifyInvestorFlagMulti = 'ModifyInvestorFlagMulti',
   IssueMulti = 'IssueMulti',
   ChangeHolderCount = 'ChangeHolderCount',
+  ChangeHolderPercentage = 'ChangeHolderPercentage',
+  ModifyWhitelistMulti = 'ModifyWhitelistMulti',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -258,6 +264,12 @@ export interface EnableGeneralTransferManagerProcedureArgs {
 export interface EnableCountTransferManagerProcedureArgs {
   symbol: string;
   maxHolderCount: number;
+}
+
+export interface EnablePercentageTransferManagerProcedureArgs {
+  symbol: string;
+  maxHolderPercentage: BigNumber;
+  allowPrimaryIssuance?: boolean;
 }
 
 export interface DisableFeatureProcedureArgs {
@@ -423,6 +435,21 @@ export interface ModifyMaxHolderCountProcedureArgs {
   maxHolderCount: number;
 }
 
+export interface ModifyMaxHolderPercentageProcedureArgs {
+  symbol: string;
+  maxHolderPercentage: BigNumber;
+}
+
+export interface PercentageWhitelistEntry {
+  address: string;
+  whitelisted: boolean;
+}
+
+export interface ModifyPercentageWhitelistProcedureArgs {
+  symbol: string;
+  entries: PercentageWhitelistEntry[];
+}
+
 export interface ProcedureArguments {
   [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
   [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
@@ -434,6 +461,7 @@ export interface ProcedureArguments {
   [ProcedureType.EnableGeneralPermissionManager]: EnableGeneralPermissionManagerProcedureArgs;
   [ProcedureType.EnableGeneralTransferManager]: EnableGeneralTransferManagerProcedureArgs;
   [ProcedureType.EnableCountTransferManager]: EnableCountTransferManagerProcedureArgs;
+  [ProcedureType.EnablePercentageTransferManager]: EnablePercentageTransferManagerProcedureArgs;
   [ProcedureType.ReclaimFunds]: ReclaimFundsProcedureArgs;
   [ProcedureType.ReserveSecurityToken]: ReserveSecurityTokenProcedureArgs;
   [ProcedureType.WithdrawTaxes]: WithdrawTaxesProcedureArgs;
@@ -450,6 +478,9 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
   [ProcedureType.MintTokens]: MintTokensProcedureArgs;
+  [ProcedureType.ModifyMaxHolderCount]: ModifyMaxHolderCountProcedureArgs;
+  [ProcedureType.ModifyMaxHolderPercentage]: ModifyMaxHolderPercentageProcedureArgs;
+  [ProcedureType.ModifyPercentageWhitelist]: ModifyPercentageWhitelistProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 
@@ -515,6 +546,7 @@ export enum Feature {
   Erc20Dividends = 'Erc20Dividends',
   EtherDividends = 'EtherDividends',
   ShareholderCountRestrictions = 'ShareholderCountRestrictions',
+  PercentageOwnershipRestrictions = 'PercentageOwnershipRestrictions',
 }
 
 export enum SecurityTokenRole {
