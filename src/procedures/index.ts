@@ -28,4 +28,4 @@ export { EnableCountTransferManager } from './EnableCountTransferManager';
 export { ModifyMaxHolderCount } from './ModifyMaxHolderCount';
 export { EnablePercentageTransferManager } from './EnablePercentageTransferManager';
 export { ModifyMaxHolderPercentage } from './ModifyMaxHolderPercentage';
-export { ModifyPercentageWhitelist } from './ModifyPercentageWhitelist';
+export { ModifyPercentageExemptions } from './ModifyPercentageExemptions';

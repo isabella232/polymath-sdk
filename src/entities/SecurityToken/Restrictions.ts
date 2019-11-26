@@ -4,24 +4,47 @@ import {
   PercentageTransferManagerEvents,
 } from '@polymathnetwork/contract-wrappers';
 import { keys } from 'lodash';
-import { ErrorCode, PercentageWhitelistEntry } from '../../types';
+import {
+  ErrorCode,
+  PercentageWhitelistEntry,
+  ModifyPercentageExemptionsProcedureArgs,
+} from '../../types';
 import {
   ModifyMaxHolderCount,
   ModifyMaxHolderPercentage,
-  ModifyPercentageWhitelist,
+  ModifyPercentageExemptions,
 } from '../../procedures';
 import { SubModule } from './SubModule';
 import { PolymathError } from '../../PolymathError';
+import { TransactionQueue } from '../TransactionQueue';
+
+interface WhitelistParams {
+  whitelistEntries: PercentageWhitelistEntry[];
+}
+
+interface IssuanceParams {
+  allowPrimaryIssuance: boolean;
+}
+
+interface ModifyPercentageExemptionsMethod {
+  (params: WhitelistParams): Promise<TransactionQueue<ModifyPercentageExemptionsProcedureArgs>>;
+  (params: IssuanceParams): Promise<TransactionQueue<ModifyPercentageExemptionsProcedureArgs>>;
+}
 
 export class Restrictions extends SubModule {
   /**
-   * Modify the list of addresses which are exempt from percentage restrictions
+   * Modify the conditions for exemption from percentage ownership restrictions
    *
-   * @param entries.address address to modify
-   * @param entries.whitelisted whether the address should be exempt or not
+   * @param whitelistEntries list of addresses to add/remove from the whitelist
+   * @param whitelistEntries.address address to modify
+   * @param whitelistEntries.whitelisted whether the address should be exempt or not
+   * @param allowPrimaryIssuance if set to true, minting tokens to an address is allowed even if it would leave said address over the percentage ownership limit
    */
-  public modifyPercentageWhitelist = async (args: { entries: PercentageWhitelistEntry[] }) => {
-    const procedure = new ModifyPercentageWhitelist(
+  public modifyPercentageExemptions: ModifyPercentageExemptionsMethod = async (args: {
+    whitelistEntries?: PercentageWhitelistEntry[];
+    allowPrimaryIssuance?: boolean;
+  }) => {
+    const procedure = new ModifyPercentageExemptions(
       {
         symbol: this.securityToken.symbol,
         ...args,
@@ -32,7 +55,35 @@ export class Restrictions extends SubModule {
   };
 
   /**
-   * Retrieve the list of shareholder addresses that are exempt from percentage ownership restrictions
+   * Retrieve whether primary issuance is allowed. If true, minting tokens can bypass percentage ownership restrictions.
+   * Can be modified with `modifyPercentageExemptions`
+   */
+  public isPrimaryIssuanceAllowed = async () => {
+    const {
+      context: { contractWrappers },
+      securityToken,
+    } = this;
+
+    const { symbol } = securityToken;
+
+    const percentageTransferManagerModule = (await contractWrappers.getAttachedModules(
+      { moduleName: ModuleName.PercentageTransferManager, symbol },
+      { unarchived: true }
+    ))[0];
+
+    if (!percentageTransferManagerModule) {
+      throw new PolymathError({
+        code: ErrorCode.FeatureNotEnabled,
+        message: 'You must enable the PercentageOwnershipRestrictions Feature',
+      });
+    }
+
+    return percentageTransferManagerModule.allowPrimaryIssuance();
+  };
+
+  /**
+   * Retrieve the list of shareholder addresses that are exempt from percentage ownership restrictions.
+   * Can be modified with `modifyPercentageExemptions`
    */
   public getPercentageWhitelist = async () => {
     const {

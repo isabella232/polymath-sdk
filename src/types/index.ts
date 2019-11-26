@@ -128,7 +128,7 @@ export enum ProcedureType {
   MintTokens = 'MintTokens',
   ModifyMaxHolderCount = 'ModifyMaxHolderCount',
   ModifyMaxHolderPercentage = 'ModifyMaxHolderPercentage',
-  ModifyPercentageWhitelist = 'ModifyPercentageWhitelist',
+  ModifyPercentageExemptions = 'ModifyPercentageExemptions',
 }
 
 export enum PolyTransactionTag {
@@ -166,6 +166,7 @@ export enum PolyTransactionTag {
   ChangeHolderCount = 'ChangeHolderCount',
   ChangeHolderPercentage = 'ChangeHolderPercentage',
   ModifyWhitelistMulti = 'ModifyWhitelistMulti',
+  SetAllowPrimaryIssuance = 'SetAllowPrimaryIssuance',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -445,9 +446,10 @@ export interface PercentageWhitelistEntry {
   whitelisted: boolean;
 }
 
-export interface ModifyPercentageWhitelistProcedureArgs {
+export interface ModifyPercentageExemptionsProcedureArgs {
   symbol: string;
-  entries: PercentageWhitelistEntry[];
+  whitelistEntries?: PercentageWhitelistEntry[];
+  allowPrimaryIssuance?: boolean;
 }
 
 export interface ProcedureArguments {
@@ -480,7 +482,7 @@ export interface ProcedureArguments {
   [ProcedureType.MintTokens]: MintTokensProcedureArgs;
   [ProcedureType.ModifyMaxHolderCount]: ModifyMaxHolderCountProcedureArgs;
   [ProcedureType.ModifyMaxHolderPercentage]: ModifyMaxHolderPercentageProcedureArgs;
-  [ProcedureType.ModifyPercentageWhitelist]: ModifyPercentageWhitelistProcedureArgs;
+  [ProcedureType.ModifyPercentageExemptions]: ModifyPercentageExemptionsProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 
