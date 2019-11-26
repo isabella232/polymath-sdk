@@ -201,7 +201,7 @@ export class Features extends SubModule {
         );
         break;
       }
-      case Feature.ShareholderCountRestrictions: {
+      case Feature.PercentageOwnershipRestrictions: {
         procedure = new EnablePercentageTransferManager(
           { symbol, ...(opts as EnablePercentageOwnershipRestrictionsOpts) },
           this.context
