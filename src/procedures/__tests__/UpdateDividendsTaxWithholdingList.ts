@@ -18,6 +18,7 @@ import {
 } from '../../types';
 import { PolymathError } from '../../PolymathError';
 import { mockFactories } from '../../testUtils/mockFactories';
+import { SecurityToken, TaxWithholding } from '../../entities';
 
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
@@ -39,6 +40,7 @@ describe('UpdateDividendsTaxWithholdingList', () => {
   let ethDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
   let taxWithholdingFactoryMock: MockManager<taxWithholdingFactoryModule.TaxWithholdingFactory>;
   let factoriesMockedSetup: Factories;
+  let securityTokenId: string;
 
   beforeEach(() => {
     // Mock the context, wrappers, tokenFactory and securityToken to test update dividends tax withholding list
@@ -67,6 +69,10 @@ describe('UpdateDividendsTaxWithholdingList', () => {
     factoriesMockedSetup = mockFactories();
     factoriesMockedSetup.taxWithholdingFactory = taxWithholdingFactoryMock.getMockInstance();
     contextMock.set('factories', factoriesMockedSetup);
+
+    securityTokenId = SecurityToken.generateId({
+      symbol: params.symbol,
+    });
 
     target = new UpdateDividendsTaxWithholdingList(params, contextMock.getMockInstance());
   });
@@ -194,30 +200,79 @@ describe('UpdateDividendsTaxWithholdingList', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    // TODO test the resolver
-    test('should update the dividends tax withholding list for erc20 token', async () => {
-      const updateStub = taxWithholdingFactoryMock.mock('update', Promise.resolve());
+    test('should update the dividends tax withholding list for erc20 dividend type', async () => {
+      const updateStub = taxWithholdingFactoryMock.mock('update', Promise.resolve(undefined));
 
       const resolverValue = await updateDividendsTaxWithholdingListModule.updateDividendsTaxWithholdingListResolver(
         factoriesMockedSetup,
         params.symbol,
-        DividendType.Erc20,
-        [10, 20],
-        [testAddress, testAddress2]
-      );
-      // expect(
-      //   updateStub.getCall(0).calledWithExactly(
-      //     TaxWithholding.generateId({
-      //       securityTokenId: SecurityToken.generateId({
-      //         symbol: params.symbol,
-      //       }),
-      //       dividendType: DividendType.Erc20,
-      //         shareholderAddress: testAddress,
-      //     })
-      //   )
-      // ).toEqual(true);
-      // expect(resolverValue).toEqual(Promise.resolve());
-      // expect(updateStub.callCount).toEqual(1);
+        params.dividendType,
+        params.percentages,
+        params.shareholderAddresses
+      )();
+
+      expect(
+        updateStub.getCall(0).calledWithExactly(
+          TaxWithholding.generateId({
+            securityTokenId,
+            dividendType: params.dividendType,
+            shareholderAddress: params.shareholderAddresses[0],
+          }),
+          { percentage: params.percentages[0] }
+        )
+      ).toEqual(true);
+
+      expect(
+        updateStub.getCall(1).calledWithExactly(
+          TaxWithholding.generateId({
+            securityTokenId,
+            dividendType: params.dividendType,
+            shareholderAddress: params.shareholderAddresses[1],
+          }),
+          { percentage: params.percentages[1] }
+        )
+      ).toEqual(true);
+
+      expect(resolverValue).toEqual(undefined);
+      expect(updateStub.callCount).toEqual(2);
+    });
+
+    test('should update the dividends tax withholding list for ether dividend type', async () => {
+      const updateStub = taxWithholdingFactoryMock.mock('update', Promise.resolve(undefined));
+      const dividendType = DividendType.Erc20;
+
+      const resolverValue = await updateDividendsTaxWithholdingListModule.updateDividendsTaxWithholdingListResolver(
+        factoriesMockedSetup,
+        params.symbol,
+        dividendType,
+        params.percentages,
+        params.shareholderAddresses
+      )();
+
+      expect(
+        updateStub.getCall(0).calledWithExactly(
+          TaxWithholding.generateId({
+            securityTokenId,
+            dividendType,
+            shareholderAddress: params.shareholderAddresses[0],
+          }),
+          { percentage: params.percentages[0] }
+        )
+      ).toEqual(true);
+
+      expect(
+        updateStub.getCall(1).calledWithExactly(
+          TaxWithholding.generateId({
+            securityTokenId,
+            dividendType,
+            shareholderAddress: params.shareholderAddresses[1],
+          }),
+          { percentage: params.percentages[1] }
+        )
+      ).toEqual(true);
+
+      expect(resolverValue).toEqual(undefined);
+      expect(updateStub.callCount).toEqual(2);
     });
   });
 });
