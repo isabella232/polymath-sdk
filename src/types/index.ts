@@ -121,6 +121,7 @@ export enum ProcedureType {
   AssignSecurityTokenRole = 'AssignSecurityTokenRole',
   AssignStoRole = 'AssignStoRole',
   ControllerTransfer = 'ControllerTransfer',
+  ControllerRedeem = 'ControllerRedeem',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
   ModifyShareholderData = 'ModifyShareholderData',
@@ -158,6 +159,7 @@ export enum PolyTransactionTag {
   AddDelegate = 'AddDelegate',
   ChangePermission = 'ChangePermission',
   ControllerTransfer = 'ControllerTransfer',
+  ControllerRedeem = 'ControllerRedeem',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
   ModifyKycDataMulti = 'ModifyKycDataMulti',
@@ -377,6 +379,14 @@ export interface AssignStoRoleProcedureArgs {
 export interface ControllerTransferProcedureArgs {
   from: string;
   to: string;
+  symbol: string;
+  amount: BigNumber;
+  data?: string;
+  log?: string;
+}
+
+export interface ControllerRedeemProcedureArgs {
+  from: string;
   symbol: string;
   amount: BigNumber;
   data?: string;
