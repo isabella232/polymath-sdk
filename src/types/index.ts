@@ -80,6 +80,7 @@ export enum ErrorCode {
   InvalidAddress = 'InvalidAddress',
   InsufficientBalance = 'InsufficientBalance',
   InexistentModule = 'InexistentModule',
+  TransferError = 'TransferError',
 }
 
 export interface ShareholderBalance {
@@ -129,6 +130,7 @@ export enum ProcedureType {
   ModifyMaxHolderCount = 'ModifyMaxHolderCount',
   ModifyMaxHolderPercentage = 'ModifyMaxHolderPercentage',
   ModifyPercentageExemptions = 'ModifyPercentageExemptions',
+  TransferSecurityTokens = 'TransferSecurityTokens',
 }
 
 export enum PolyTransactionTag {
@@ -167,6 +169,7 @@ export enum PolyTransactionTag {
   ChangeHolderPercentage = 'ChangeHolderPercentage',
   ModifyWhitelistMulti = 'ModifyWhitelistMulti',
   SetAllowPrimaryIssuance = 'SetAllowPrimaryIssuance',
+  TransferSecurityTokens = 'TransferSecurityTokens',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -452,6 +455,14 @@ export interface ModifyPercentageExemptionsProcedureArgs {
   allowPrimaryIssuance?: boolean;
 }
 
+export interface TransferSecurityTokensProcedureArgs {
+  symbol: string;
+  to: string;
+  amount: BigNumber;
+  data?: string;
+  from?: string;
+}
+
 export interface ProcedureArguments {
   [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
   [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
@@ -483,6 +494,7 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyMaxHolderCount]: ModifyMaxHolderCountProcedureArgs;
   [ProcedureType.ModifyMaxHolderPercentage]: ModifyMaxHolderPercentageProcedureArgs;
   [ProcedureType.ModifyPercentageExemptions]: ModifyPercentageExemptionsProcedureArgs;
+  [ProcedureType.TransferSecurityTokens]: TransferSecurityTokensProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 
