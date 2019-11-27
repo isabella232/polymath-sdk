@@ -16,7 +16,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { SecurityToken, TaxWithholding } from '../entities';
-import { Factories } from '~/Context';
+import { Factories } from '../Context';
 
 const CHUNK_SIZE = 200;
 export const updateDividendsTaxWithholdingListResolver = (
@@ -26,7 +26,6 @@ export const updateDividendsTaxWithholdingListResolver = (
   percentageChunk: number[],
   addresses: string[]
 ) => async () => {
-  console.log('happened');
   addresses.forEach((address, addressIndex) => {
     factories.taxWithholdingFactory.update(
       TaxWithholding.generateId({
