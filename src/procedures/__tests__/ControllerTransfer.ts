@@ -10,21 +10,25 @@ import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import * as controllerTransferModule from '../../procedures/ControllerTransfer';
 import { Procedure } from '../../procedures/Procedure';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
+import {
+  ControllerTransferProcedureArgs,
+  ErrorCode,
+  PolyTransactionTag,
+  ProcedureType,
+} from '../../types';
 import { mockFactories } from '../../testUtils/mockFactories';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
 import { Factories } from '../../Context';
 import { SecurityToken, Shareholder } from '../../entities';
 
-const params = {
+const params: ControllerTransferProcedureArgs = {
   symbol: 'TEST1',
-  name: 'Test Token 1',
-  address: '0x1111111111111111111111111111111111111111',
   from: '0x2222222222222222222222222222222222222222',
   to: '0x4444444444444444444444444444444444444444',
-  owner: '0x3333333333333333333333333333333333333333',
   amount: new BigNumber(1),
 };
+
+const ownerAddress = '0x5555555555555555555555555555555555555555';
 
 describe('ControllerTransfer', () => {
   let target: ControllerTransfer;
@@ -44,12 +48,9 @@ describe('ControllerTransfer', () => {
 
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
     securityTokenMock.mock('balanceOf', Promise.resolve(params.amount));
-    securityTokenMock.mock('controller', Promise.resolve(params.owner));
+    securityTokenMock.mock('controller', Promise.resolve(ownerAddress));
 
-    const ownerPromise = new Promise<string>((resolve, reject) => {
-      resolve(params.owner);
-    });
-    contextMock.set('currentWallet', new Wallet({ address: () => ownerPromise }));
+    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(ownerAddress) }));
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
