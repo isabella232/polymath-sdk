@@ -131,12 +131,6 @@ describe('UpdateDividendsTaxWithholdingList', () => {
     });
 
     test('should throw if an Eth dividend module is not attached', async () => {
-      // Instantiate UpdateDividendsTaxWithholdingList with ETH dividend type
-      target = new UpdateDividendsTaxWithholdingList(
-        { ...params, dividendType: DividendType.Eth },
-        contextMock.getMockInstance()
-      );
-
       wrappersMock.mock('getAttachedModules', Promise.resolve([]));
 
       // Real call
@@ -178,12 +172,6 @@ describe('UpdateDividendsTaxWithholdingList', () => {
     });
 
     test('should add a transaction to push a dividend payment of an attached ETH dividends module', async () => {
-      // Instantiate UpdateDividendsTaxWithholdingList with ETH dividend type
-      target = new UpdateDividendsTaxWithholdingList(
-        { ...params, dividendType: DividendType.Eth },
-        contextMock.getMockInstance()
-      );
-
       wrappersMock.mock(
         'getAttachedModules',
         Promise.resolve([ethDividendsMock.getMockInstance()])
@@ -206,20 +194,17 @@ describe('UpdateDividendsTaxWithholdingList', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    /*
+    // TODO test the resolver
     test('should update the dividends tax withholding list for erc20 token', async () => {
-      const updateStub = taxWithholdingFactoryMock.mock(
-        'update',
-        Promise.resolve()
-      );
+      const updateStub = taxWithholdingFactoryMock.mock('update', Promise.resolve());
 
       const resolverValue = await updateDividendsTaxWithholdingListModule.updateDividendsTaxWithholdingListResolver(
         factoriesMockedSetup,
         params.symbol,
         DividendType.Erc20,
-        [10,20],
-        [testAddress, testAddress2],
-    );
+        [10, 20],
+        [testAddress, testAddress2]
+      );
       // expect(
       //   updateStub.getCall(0).calledWithExactly(
       //     TaxWithholding.generateId({
@@ -234,6 +219,5 @@ describe('UpdateDividendsTaxWithholdingList', () => {
       // expect(resolverValue).toEqual(Promise.resolve());
       // expect(updateStub.callCount).toEqual(1);
     });
-    */
   });
 });
