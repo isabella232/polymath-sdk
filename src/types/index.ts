@@ -124,6 +124,7 @@ export enum ProcedureType {
   ControllerRedeem = 'ControllerRedeem',
   PauseSto = 'PauseSto',
   SetController = 'SetController',
+  DisableController = 'DisableController',
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
   MintTokens = 'MintTokens',
@@ -151,6 +152,7 @@ export enum PolyTransactionTag {
   EnableGeneralTransferManager = 'EnableGeneralTransferManager',
   EnableCountTransferManager = 'EnableCountTransferManager',
   EnablePercentageTransferManager = 'EnablePercentageTransferManager',
+  DisableController = 'DisableController',
   DisableFeature = 'DisableFeature',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
@@ -402,6 +404,11 @@ export interface PauseStoProcedureArgs {
 export interface SetControllerProcedureArgs {
   symbol: string;
   controller: string;
+}
+
+export interface DisableControllerProcedureArgs {
+  symbol: string;
+  signature: string;
 }
 
 export interface ShareholderDataEntry {
