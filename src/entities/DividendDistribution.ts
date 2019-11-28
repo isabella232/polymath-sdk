@@ -2,7 +2,7 @@ import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
 import { DividendType, DividendShareholderStatus, isDividendType, ErrorCode } from '../types';
-import { PushDividendPayment, WithdrawTaxes } from '../procedures';
+import { PushDividendPayment, WithdrawTaxes, PullDividendPayment } from '../procedures';
 import { Context } from '../Context';
 import { PolymathError } from '../PolymathError';
 
@@ -155,6 +155,22 @@ export class DividendDistribution extends Entity<Params> {
   public pushPayment = async () => {
     const { securityTokenSymbol: symbol, dividendType, index: dividendIndex } = this;
     const procedure = new PushDividendPayment(
+      {
+        symbol,
+        dividendType,
+        dividendIndex,
+      },
+      this.context
+    );
+    return procedure.prepare();
+  };
+
+  /**
+   * Pull payment from this dividend distribution to the current address
+   */
+  public pullPayment = async () => {
+    const { securityTokenSymbol: symbol, dividendType, index: dividendIndex } = this;
+    const procedure = new PullDividendPayment(
       {
         symbol,
         dividendType,
