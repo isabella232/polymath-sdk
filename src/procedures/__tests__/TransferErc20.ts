@@ -166,7 +166,7 @@ describe('TransferErc20', () => {
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message:
-            "This address belongs to a Security Token. To transfer Security Tokens, use the functions in the Security Token's transfers namespace",
+            "This address belongs to a Security Token. To transfer Security Tokens, use the functions in the Security Token's controller namespace",
         })
       );
     });

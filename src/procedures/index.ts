@@ -17,6 +17,7 @@ export { EnableGeneralPermissionManager } from './EnableGeneralPermissionManager
 export { EnableGeneralTransferManager } from './EnableGeneralTransferManager';
 export { DisableFeature } from './DisableFeature';
 export { ControllerTransfer } from './ControllerTransfer';
+export { ControllerRedeem } from './ControllerRedeem';
 export { PauseSto } from './PauseSto';
 export { SetController } from './SetController';
 export { LaunchCappedSto } from './LaunchCappedSto';
