@@ -80,7 +80,6 @@ export enum ErrorCode {
   InvalidAddress = 'InvalidAddress',
   InsufficientBalance = 'InsufficientBalance',
   InexistentModule = 'InexistentModule',
-  TransferError = 'TransferError',
 }
 
 export interface ShareholderBalance {

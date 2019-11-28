@@ -1,4 +1,4 @@
-import { BigNumber, TransferStatusCode } from '@polymathnetwork/contract-wrappers';
+import { TransferStatusCode } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   TransferSecurityTokensProcedureArgs,
@@ -8,7 +8,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { SecurityToken, Shareholder } from '../entities';
-import { Factories } from '~/Context';
+import { Factories } from '../Context';
 
 /**
  * Procedure to transfer security tokens.
@@ -25,7 +25,7 @@ export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProc
   ) {
     if (statusCode !== TransferStatusCode.TransferSuccess) {
       throw new PolymathError({
-        code: ErrorCode.TransferError,
+        code: ErrorCode.ProcedureValidationError,
         message: `[${statusCode}] ${fromAddress} is not allowed to transfer ${symbol} to ${to}. Possible reason: ${reasonCode}`,
       });
     }
@@ -34,8 +34,6 @@ export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProc
   public async prepareTransactions() {
     const { symbol, to, amount, data = '', from } = this.args;
     const { contractWrappers, currentWallet, factories } = this.context;
-
-    let fromAddress = await currentWallet.address();
 
     let securityToken;
 
@@ -50,8 +48,9 @@ export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProc
       });
     }
 
+    const fromAddress = await currentWallet.address();
+
     if (from && from !== fromAddress) {
-      fromAddress = from;
       const { statusCode, reasonCode } = await securityToken.canTransferFrom({
         to,
         value: amount,
