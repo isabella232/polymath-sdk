@@ -42,7 +42,6 @@ describe('ModifyMaxHolderCount', () => {
     securityTokenMock.mock('address', Promise.resolve(securityTokenAddress));
 
     countTransferMock = ImportMock.mockClass(contractWrappersModule, 'CountTransferManager_3_0_0');
-    //  countTransferMock.mock('getAllDelegates', Promise.resolve([params.delegateAddress]));
 
     wrappersMock.mock('getAttachedModules', Promise.resolve([countTransferMock.getMockInstance()]));
     tokenFactoryMock.mock(
