@@ -68,6 +68,7 @@ describe('ModifyPercentageExemptions', () => {
     // Instantiate ModifyPercentageExemptions
     target = new ModifyPercentageExemptions(params, contextMock.getMockInstance());
   });
+
   afterEach(() => {
     restore();
   });
