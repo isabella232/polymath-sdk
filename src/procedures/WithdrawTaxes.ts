@@ -9,6 +9,22 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { DividendDistribution, SecurityToken } from '../entities';
+import { Factories } from '../Context';
+
+export const createWithdrawTaxesResolver = (
+  dividendType: DividendType,
+  dividendIndex: number,
+  factories: Factories,
+  symbol: string
+) => async () => {
+  return factories.dividendDistributionFactory.refresh(
+    DividendDistribution.generateId({
+      securityTokenId: SecurityToken.generateId({ symbol }),
+      dividendType,
+      index: dividendIndex,
+    })
+  );
+};
 
 export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
   public type = ProcedureType.WithdrawTaxes;
@@ -54,15 +70,7 @@ export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
 
     await this.addTransaction(dividendModule.withdrawWithholding, {
       tag: PolyTransactionTag.WithdrawTaxWithholdings,
-      resolver: async () => {
-        return factories.dividendDistributionFactory.refresh(
-          DividendDistribution.generateId({
-            securityTokenId: SecurityToken.generateId({ symbol }),
-            dividendType,
-            index: dividendIndex,
-          })
-        );
-      },
+      resolver: createWithdrawTaxesResolver(dividendType, dividendIndex, factories, symbol),
     })({ dividendIndex });
   }
 }
