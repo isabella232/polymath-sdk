@@ -15,3 +15,4 @@ export { UsdTieredSto } from './UsdTieredSto';
 export { Investment } from './Investment';
 export { Sto } from './Sto';
 export { Shareholder } from './Shareholder';
+export { Wallet } from './Wallet';
