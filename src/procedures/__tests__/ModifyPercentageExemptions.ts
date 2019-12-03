@@ -62,7 +62,6 @@ describe('ModifyPercentageExemptions', () => {
     );
 
     percentageTransferMock.mock('allowPrimaryIssuance', Promise.resolve(true));
-    percentageTransferMock.mock('modifyWhitelistMulti', Promise.resolve('ModifyWhitelistMulti'));
     percentageTransferMock.mock('whitelist', Promise.resolve(false));
 
     // Instantiate ModifyPercentageExemptions
@@ -88,6 +87,11 @@ describe('ModifyPercentageExemptions', () => {
         contextMock.getMockInstance()
       );
       const addTransactionSpy = spy(target, 'addTransaction');
+
+      percentageTransferMock.mock(
+        'setAllowPrimaryIssuance',
+        Promise.resolve('SetAllowPrimaryIssuance')
+      );
       percentageTransferMock.mock('allowPrimaryIssuance', Promise.resolve(false));
 
       // Real call
@@ -106,6 +110,12 @@ describe('ModifyPercentageExemptions', () => {
 
     test('should add a transaction to the queue to modify percentage exemptions and make a change to allow primary issuance', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
+
+      percentageTransferMock.mock(
+        'setAllowPrimaryIssuance',
+        Promise.resolve('SetAllowPrimaryIssuance')
+      );
+      percentageTransferMock.mock('modifyWhitelistMulti', Promise.resolve('ModifyWhitelistMulti'));
       percentageTransferMock.mock('allowPrimaryIssuance', Promise.resolve(false));
 
       // Real call
@@ -136,6 +146,8 @@ describe('ModifyPercentageExemptions', () => {
         { symbol: params.symbol, whitelistEntries: params.whitelistEntries },
         contextMock.getMockInstance()
       );
+
+      percentageTransferMock.mock('modifyWhitelistMulti', Promise.resolve('ModifyWhitelistMulti'));
       const addTransactionSpy = spy(target, 'addTransaction');
 
       // Real call
