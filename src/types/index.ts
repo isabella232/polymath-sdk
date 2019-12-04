@@ -112,6 +112,7 @@ export enum ProcedureType {
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
   DisableFeature = 'DisableFeature',
+  FreezeIssuance = 'FreezeIssuance',
   ReclaimFunds = 'ReclaimFunds',
   ReserveSecurityToken = 'ReserveSecurityToken',
   WithdrawTaxes = 'WithdrawTaxes',
@@ -153,6 +154,7 @@ export enum PolyTransactionTag {
   EnableCountTransferManager = 'EnableCountTransferManager',
   EnablePercentageTransferManager = 'EnablePercentageTransferManager',
   DisableController = 'DisableController',
+  FreezeIssuance = 'FreezeIssuance',
   DisableFeature = 'DisableFeature',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
@@ -404,6 +406,11 @@ export interface PauseStoProcedureArgs {
 export interface SetControllerProcedureArgs {
   symbol: string;
   controller: string;
+}
+
+export interface FreezeIssuanceProcedureArgs {
+  symbol: string;
+  signature?: string;
 }
 
 export interface DisableControllerProcedureArgs {

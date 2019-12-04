@@ -3,7 +3,13 @@ import {
   SecurityToken as SecurityTokenWrapper,
 } from '@polymathnetwork/contract-wrappers';
 import { ShareholderDataEntry, ErrorCode, MintingDataEntry } from '../../types';
-import { ModifyShareholderData, CreateCheckpoint, RevokeKyc, MintTokens } from '../../procedures';
+import {
+  ModifyShareholderData,
+  CreateCheckpoint,
+  RevokeKyc,
+  MintTokens,
+  FreezeIssuance,
+} from '../../procedures';
 import { SubModule } from './SubModule';
 import { Checkpoint } from '../Checkpoint';
 import { PolymathError } from '../../PolymathError';
@@ -234,5 +240,19 @@ export class Shareholders extends SubModule {
     }
 
     return shareholders;
+  };
+
+  /**
+   * Used by the issuer to permanently freeze issuance of the security token
+   * Signature is optional, and will be generated if it is not passed in
+   */
+  public freezeIssuance = async (args: { signature?: string }) => {
+    const { signature } = args;
+    const { symbol } = this.securityToken;
+    const procedure = new FreezeIssuance(
+      signature ? { symbol, signature } : { symbol },
+      this.context
+    );
+    return procedure.prepare();
   };
 }
