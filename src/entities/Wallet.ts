@@ -44,7 +44,7 @@ export class Wallet extends Entity<Params> {
 
   private contractWrappers: PolymathBase;
 
-  constructor(params: Params & UniqueIdentifier, context: Context) {
+  constructor(params: Params, context: Context) {
     super();
 
     const { address } = params;
