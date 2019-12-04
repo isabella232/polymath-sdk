@@ -408,7 +408,7 @@ export interface SetControllerProcedureArgs {
 
 export interface DisableControllerProcedureArgs {
   symbol: string;
-  signature: string;
+  signature?: string;
 }
 
 export interface ShareholderDataEntry {

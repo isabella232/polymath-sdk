@@ -49,6 +49,6 @@ export class DisableController extends Procedure<DisableControllerProcedureArgs>
      */
     await this.addTransaction(securityToken.disableController, {
       tag: PolyTransactionTag.DisableController,
-    })({ signature });
+    })({ signature: signature || await securityToken.signDisableControllerAck({}) });
   }
 }

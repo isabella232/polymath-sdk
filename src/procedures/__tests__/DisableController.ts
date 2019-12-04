@@ -17,10 +17,10 @@ import { Wallet } from '../../Wallet';
 
 const params: DisableControllerProcedureArgs = {
   symbol: 'TEST1',
-  signature: 'Signature',
 };
 
 const ownerAddress = '0x01';
+const randomSignature = 'Random disable controller signature ack';
 
 describe('DisableController', () => {
   let target: DisableController;
@@ -102,7 +102,30 @@ describe('DisableController', () => {
       );
     });
 
-    test('should add a transaction to the queue to set a controller on the security token', async () => {
+    test('should add a transaction to the queue to disable controller of the security token, without passing in a signature', async () => {
+      const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('signDisableControllerAck', randomSignature);
+      securityTokenMock.mock('disableController', 'DisableController');
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWithExactly(securityTokenMock.getMockInstance().disableController, {
+            tag: PolyTransactionTag.DisableController,
+          })
+      ).toEqual(true);
+      expect(addTransactionSpy.callCount).toEqual(1);
+    });
+
+    test('should add a transaction to the queue to disable controller of the security token, passing in your own hex signature', async () => {
+      target = new DisableController(
+        { ...params, signature: randomSignature },
+        contextMock.getMockInstance()
+      );
       const addTransactionSpy = spy(target, 'addTransaction');
       securityTokenMock.mock('disableController', 'DisableController');
 
