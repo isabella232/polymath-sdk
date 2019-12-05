@@ -1,4 +1,4 @@
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import {
   TransactionSpec,
   ErrorCode,
@@ -8,6 +8,7 @@ import {
   ProcedureType,
   PolyTransactionTag,
   Fees,
+  SignatureRequest,
   FutureLowLevelMethod,
   ResolverArray,
   PostTransactionResolverArray,
@@ -142,7 +143,7 @@ export abstract class Procedure<Args, ReturnType = void> {
     return async (args: MapMaybeResolver<A>) => {
       const postTransactionResolvers = resolvers.map(
         resolver => new PostTransactionResolver(resolver)
-      ) as PostTransactionResolverArray<R>;
+      ) as PostTransactionResolverArray<R, TransactionReceiptWithDecodedLogs>;
 
       if (fees) {
         this.fees.push(fees);
@@ -158,6 +159,33 @@ export abstract class Procedure<Args, ReturnType = void> {
       this.transactions.push(transaction);
 
       return postTransactionResolvers;
+    };
+  };
+
+  /**
+   * Appends a signature request into the TransactionQueue's queue. This defines
+   * what will be run by the TransactionQueue when it is started.
+   *
+   * @param request A signature request that will be run in the Procedure's TransactionQueue
+   *
+   * @returns a PostTransactionResolver that resolves to the signed data
+   */
+  public addSignatureRequest = <A>(request: SignatureRequest<A>) => {
+    return async (args: MapMaybeResolver<A>) => {
+      const postTransactionResolver = new PostTransactionResolver<string, string>(
+        async receipt => receipt
+      );
+
+      const transaction = {
+        method: request,
+        args,
+        postTransactionResolver,
+        tag: PolyTransactionTag.Signature,
+      };
+
+      this.transactions.push(transaction);
+
+      return postTransactionResolver;
     };
   };
 

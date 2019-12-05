@@ -30,7 +30,7 @@ const mapValuesDeep = (
   mapValues(obj, (val, key) => (isPlainObject(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)));
 
 // TODO @monitz87: Make properties private where appliccable
-export class PolyTransaction<Args = any, R extends any[] = any[]> extends Entity<void> {
+export class PolyTransaction<Args = any, Values extends any[] = any[]> extends Entity<void> {
   public static generateId() {
     return serialize('transaction', {
       random: v4(),
@@ -47,23 +47,34 @@ export class PolyTransaction<Args = any, R extends any[] = any[]> extends Entity
 
   public error?: PolymathError;
 
-  public receipt?: TransactionReceiptWithDecodedLogs;
+  public receipt?: TransactionReceiptWithDecodedLogs | string;
 
   public tag: PolyTransactionTag;
 
   public txHash?: string;
 
-  public args: TransactionSpec<Args, R>['args'];
+  public args: TransactionSpec<Args, Values, TransactionReceiptWithDecodedLogs | string>['args'];
 
-  protected method: TransactionSpec<Args, R>['method'];
+  protected method: TransactionSpec<
+    Args,
+    Values,
+    TransactionReceiptWithDecodedLogs | string
+  >['method'];
 
   private postResolvers: PostTransactionResolverArray<
-    R
-  > = ([] as unknown) as PostTransactionResolverArray<R>;
+    Values,
+    TransactionReceiptWithDecodedLogs | string
+  > = ([] as unknown) as PostTransactionResolverArray<
+    Values,
+    TransactionReceiptWithDecodedLogs | string
+  >;
 
   private emitter: EventEmitter;
 
-  constructor(transaction: TransactionSpec<Args, R>, transactionQueue: TransactionQueue<any, any>) {
+  constructor(
+    transaction: TransactionSpec<Args, Values, TransactionReceiptWithDecodedLogs | string>,
+    transactionQueue: TransactionQueue<any, any>
+  ) {
     super();
 
     if (transaction.postTransactionResolvers) {
@@ -150,23 +161,27 @@ export class PolyTransaction<Args = any, R extends any[] = any[]> extends Entity
 
     const { method } = this;
 
-    let polyResponse: PolyResponse;
+    let response;
 
     if (method instanceof Function) {
-      polyResponse = await method(unwrappedArgs);
+      response = await method(unwrappedArgs);
     } else {
       const returnedMethod = await method.futureMethod(method.futureValue.result);
-      polyResponse = await returnedMethod(unwrappedArgs);
+      response = await returnedMethod(unwrappedArgs);
     }
 
     // Set the Transaction as Running once it is approved by the user
-    this.txHash = polyResponse.txHash;
     this.updateStatus(TransactionStatus.Running);
 
-    let result: TransactionReceiptWithDecodedLogs;
+    let result: TransactionReceiptWithDecodedLogs | string;
 
     try {
-      result = await polyResponse.receiptAsync;
+      if (typeof response !== 'string') {
+        this.txHash = response.txHash;
+        result = await response.receiptAsync;
+      } else {
+        result = response;
+      }
     } catch (err) {
       // Wrap with PolymathError
       if (err.message.indexOf('MetaMask Tx Signature') > -1) {
