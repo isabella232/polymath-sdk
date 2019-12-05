@@ -374,7 +374,7 @@ export class Dividends extends SubModule {
       default: {
         throw new PolymathError({
           code: ErrorCode.FetcherValidationError,
-          message: 'Invalid dividend type. Must be "Erc20" or "Eth".',
+          message: 'Invalid dividend type. Must be "Erc20" or "Eth"',
         });
       }
     }

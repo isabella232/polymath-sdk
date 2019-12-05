@@ -1,4 +1,4 @@
-import { ModuleName, SecurityToken } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, SecurityToken, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import P from 'bluebird';
 import { Procedure } from './Procedure';
 import {
@@ -61,9 +61,12 @@ export class EnableDividendManagers extends Procedure<EnableDividendManagersProc
         moduleName,
       });
 
-      await this.addTransaction<AddDividendCheckpointParams>(securityToken.addModuleWithLabel, {
-        tag: PolyTransactionTag.EnableDividends,
-      })({
+      await this.addTransaction<TransactionParams.SecurityToken.AddDividendCheckpoint>(
+        securityToken.addModuleWithLabel,
+        {
+          tag: PolyTransactionTag.EnableDividends,
+        }
+      )({
         moduleName,
         address: moduleAddress,
         data: { wallet: storageWalletAddress },

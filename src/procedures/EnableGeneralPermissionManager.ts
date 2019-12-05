@@ -1,4 +1,4 @@
-import { ModuleName } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,
@@ -7,13 +7,6 @@ import {
   ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-
-interface AddGeneralPermissionManagerParams {
-  moduleName: ModuleName.GeneralPermissionManager;
-  address: string;
-  archived: boolean;
-  label?: string;
-}
 
 export class EnableGeneralPermissionManager extends Procedure<
   EnableGeneralPermissionManagerProcedureArgs
@@ -45,9 +38,12 @@ export class EnableGeneralPermissionManager extends Procedure<
       moduleName,
     });
 
-    await this.addTransaction<AddGeneralPermissionManagerParams>(securityToken.addModuleWithLabel, {
-      tag: PolyTransactionTag.EnableGeneralPermissionManager,
-    })({
+    await this.addTransaction<TransactionParams.SecurityToken.AddNoDataModule>(
+      securityToken.addModuleWithLabel,
+      {
+        tag: PolyTransactionTag.EnableGeneralPermissionManager,
+      }
+    )({
       moduleName,
       address: moduleAddress,
       archived: false,
