@@ -21,7 +21,7 @@ const mapValuesDeep = (
   mapValues(obj, (val, key) => (isPlainObject(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)));
 
 // TODO @monitz87: Make properties private where appliccable
-export class PolyTransaction<Args = any, R extends any = void> extends Entity<void> {
+export class PolyTransaction<Args = any, Value extends any = void> extends Entity<void> {
   public static generateId() {
     return serialize('transaction', {
       random: v4(),
@@ -38,21 +38,31 @@ export class PolyTransaction<Args = any, R extends any = void> extends Entity<vo
 
   public error?: PolymathError;
 
-  public receipt?: TransactionReceiptWithDecodedLogs;
+  public receipt?: TransactionReceiptWithDecodedLogs | string;
 
   public tag: PolyTransactionTag;
 
   public txHash?: string;
 
-  public args: TransactionSpec<Args, R>['args'];
+  public args: TransactionSpec<Args, Value, TransactionReceiptWithDecodedLogs | string>['args'];
 
-  protected method: TransactionSpec<Args, R>['method'];
+  protected method: TransactionSpec<
+    Args,
+    Value,
+    TransactionReceiptWithDecodedLogs | string
+  >['method'];
 
-  private postResolver: PostTransactionResolver<R> = new PostTransactionResolver<R>();
+  private postResolver: PostTransactionResolver<
+    Value,
+    TransactionReceiptWithDecodedLogs | string
+  > = new PostTransactionResolver<Value, TransactionReceiptWithDecodedLogs | string>();
 
   private emitter: EventEmitter;
 
-  constructor(transaction: TransactionSpec<Args, R>, transactionQueue: TransactionQueue<any, any>) {
+  constructor(
+    transaction: TransactionSpec<Args, Value, TransactionReceiptWithDecodedLogs | string>,
+    transactionQueue: TransactionQueue<any, any>
+  ) {
     super();
 
     if (transaction.postTransactionResolver) {
@@ -136,16 +146,20 @@ export class PolyTransaction<Args = any, R extends any = void> extends Entity<vo
     this.updateStatus(TransactionStatus.Unapproved);
 
     const unwrappedArgs = this.unwrapArgs(this.args);
-    const polyResponse = await this.method(unwrappedArgs);
+    const response = await this.method(unwrappedArgs);
 
     // Set the Transaction as Running once it is approved by the user
-    this.txHash = polyResponse.txHash;
     this.updateStatus(TransactionStatus.Running);
 
-    let result: TransactionReceiptWithDecodedLogs;
+    let result: TransactionReceiptWithDecodedLogs | string;
 
     try {
-      result = await polyResponse.receiptAsync;
+      if (typeof response !== 'string') {
+        this.txHash = response.txHash;
+        result = await response.receiptAsync;
+      } else {
+        result = response;
+      }
     } catch (err) {
       // Wrap with PolymathError
       if (err.message.indexOf('MetaMask Tx Signature') > -1) {

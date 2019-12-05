@@ -18,6 +18,7 @@ import {
   LockUpTransferManager,
   RestrictedPartialSaleTransferManager,
   ModuleName,
+  TransactionReceiptWithDecodedLogs,
 } from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
@@ -88,11 +89,12 @@ export interface ShareholderBalance {
 }
 
 export type LowLevelMethod<A> = (args: A) => Promise<PolyResponse>;
+export type SignatureRequest<A> = (args: A) => Promise<string>;
 
-export interface TransactionSpec<Args = any, R extends any = any> {
-  method: LowLevelMethod<Args>;
+export interface TransactionSpec<Args = any, Value extends any = any, Receipt extends any = any> {
+  method: LowLevelMethod<Args> | SignatureRequest<Args>;
   args: MapMaybeResolver<Args>;
-  postTransactionResolver?: PostTransactionResolver<R>;
+  postTransactionResolver?: PostTransactionResolver<Value, Receipt>;
   tag?: PolyTransactionTag;
 }
 
@@ -167,6 +169,7 @@ export enum PolyTransactionTag {
   ChangeHolderPercentage = 'ChangeHolderPercentage',
   ModifyWhitelistMulti = 'ModifyWhitelistMulti',
   SetAllowPrimaryIssuance = 'SetAllowPrimaryIssuance',
+  Signature = 'Signature',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;

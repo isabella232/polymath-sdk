@@ -8,6 +8,7 @@ import {
   ProcedureType,
   PolyTransactionTag,
   Fees,
+  SignatureRequest,
 } from '../types';
 import { TransactionQueue } from '../entities/TransactionQueue';
 import { Context } from '../Context';
@@ -142,6 +143,33 @@ export abstract class Procedure<Args, ReturnType = void> {
         args,
         postTransactionResolver,
         tag,
+      };
+
+      this.transactions.push(transaction);
+
+      return postTransactionResolver;
+    };
+  };
+
+  /**
+   * Appends a signature request into the TransactionQueue's queue. This defines
+   * what will be run by the TransactionQueue when it is started.
+   *
+   * @param request A signature request that will be run in the Procedure's TransactionQueue
+   *
+   * @returns a PostTransactionResolver that resolves to the signed data
+   */
+  public addSignatureRequest = <A>(request: SignatureRequest<A>) => {
+    return async (args: MapMaybeResolver<A>) => {
+      const postTransactionResolver = new PostTransactionResolver<string, string>(
+        async receipt => receipt
+      );
+
+      const transaction = {
+        method: request,
+        args,
+        postTransactionResolver,
+        tag: PolyTransactionTag.Signature,
       };
 
       this.transactions.push(transaction);

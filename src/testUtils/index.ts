@@ -1,5 +1,9 @@
-import { PolyResponse } from '@polymathnetwork/contract-wrappers';
+import {
+  PolyResponse,
+  TransactionReceiptWithDecodedLogs,
+} from '@polymathnetwork/contract-wrappers';
 import { PostTransactionResolver } from '../PostTransactionResolver';
+import { TransactionSpec } from '../types';
 
 const originalWindow = {
   ...window,
@@ -170,7 +174,7 @@ export const getMockTransactionSpec = (
   method: (args: any) => Promise<any>,
   args: any,
   resolver = async () => {}
-) => ({
+): TransactionSpec<any, any, string | TransactionReceiptWithDecodedLogs> => ({
   method,
   args,
   postTransactionResolver: new PostTransactionResolver(resolver),
