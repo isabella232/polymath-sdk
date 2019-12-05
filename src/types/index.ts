@@ -16,8 +16,8 @@ import {
   BlacklistTransferManager,
   LockUpTransferManager,
   RestrictedPartialSaleTransferManager,
-  TransactionReceiptWithDecodedLogs,
   ModuleName,
+  TransactionReceiptWithDecodedLogs,
 } from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
@@ -89,6 +89,7 @@ export interface ShareholderBalance {
 }
 
 export type LowLevelMethod<A> = (args: A) => Promise<PolyResponse>;
+export type SignatureRequest<A> = (args: A) => Promise<string>;
 
 /**
  * Represents a contract method that doesn't exist yet but will exist
@@ -106,14 +107,19 @@ export type ResolverArray<R extends any[]> = {
   [P in keyof R]: (receipt: TransactionReceiptWithDecodedLogs) => Promise<R[P]>
 };
 
-export type PostTransactionResolverArray<R extends any[]> = {
-  [P in keyof R]: PostTransactionResolver<R[P]>
+export type PostTransactionResolverArray<Value extends any[], Receipt extends any> = {
+  [P in keyof Value]: PostTransactionResolver<Value[P], Receipt>
 };
 
-export interface TransactionSpec<Args = any, R extends any[] = any[], V extends any = any> {
-  method: LowLevelMethod<Args> | FutureLowLevelMethod<V, Args>;
+export interface TransactionSpec<
+  Args = any,
+  Value extends any[] = any[],
+  Receipt extends any = any,
+  FutureValue extends any = any
+> {
+  method: LowLevelMethod<Args> | SignatureRequest<Args> | FutureLowLevelMethod<FutureValue, Args>;
   args: MapMaybeResolver<Args>;
-  postTransactionResolvers?: PostTransactionResolverArray<R>;
+  postTransactionResolvers?: PostTransactionResolverArray<Value, Receipt>;
   tag?: PolyTransactionTag;
 }
 
@@ -211,6 +217,7 @@ export enum PolyTransactionTag {
   ChangeHolderPercentage = 'ChangeHolderPercentage',
   ModifyWhitelistMulti = 'ModifyWhitelistMulti',
   SetAllowPrimaryIssuance = 'SetAllowPrimaryIssuance',
+  Signature = 'Signature',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
