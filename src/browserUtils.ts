@@ -170,9 +170,7 @@ export async function getCurrentAddress() {
 export function onAddressChange(cb: (newAddress: string, previousAddress?: string) => void) {
   if (isUnsupported(window as ExtendedWindow)) {
     // eslint-disable-next-line no-console
-    console.warn(
-      '"onAddressChange" Was called, but the current browser does not support Ethereum.'
-    );
+    console.warn('"onAddressChange" Was called, but the current browser does not support Ethereum');
     return () => {};
   }
 
@@ -206,9 +204,7 @@ export function onAddressChange(cb: (newAddress: string, previousAddress?: strin
 export function onNetworkChange(cb: (newNetwork: number, previousNetwork?: number) => void) {
   if (isUnsupported(window as ExtendedWindow)) {
     // eslint-disable-next-line no-console
-    console.warn(
-      '"onNetworkChange" Was called, but the current browser does not support Ethereum.'
-    );
+    console.warn('"onNetworkChange" Was called, but the current browser does not support Ethereum');
     return () => {};
   }
 

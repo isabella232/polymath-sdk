@@ -2,6 +2,7 @@ import {
   ModuleName,
   ERC20DividendCheckpointEvents,
   BigNumber,
+  TransactionParams,
 } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
@@ -67,11 +68,13 @@ export class CreateErc20DividendDistribution extends Procedure<
       tokenAddress: erc20Address,
     });
 
-    const distribution = await this.addTransaction(
-      erc20Module.createDividendWithCheckpointAndExclusions,
-      {
-        tag: PolyTransactionTag.CreateErc20DividendDistribution,
-        resolver: async receipt => {
+    const [distribution] = await this.addTransaction<
+      TransactionParams.ERC20DividendCheckpoint.CreateDividendWithCheckpointAndExclusions,
+      [DividendDistribution]
+    >(erc20Module.createDividendWithCheckpointAndExclusions, {
+      tag: PolyTransactionTag.CreateErc20DividendDistribution,
+      resolvers: [
+        async receipt => {
           const { logs } = receipt;
 
           const [event] = findEvents({
@@ -98,8 +101,8 @@ export class CreateErc20DividendDistribution extends Procedure<
               "The ERC20 Dividend Distribution was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
           });
         },
-      }
-    )({
+      ],
+    })({
       maturity: maturityDate,
       expiry: expiryDate,
       token: erc20Address,

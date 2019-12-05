@@ -2,6 +2,7 @@ import {
   SecurityTokenRegistryEvents,
   conversionUtils,
   FeeType,
+  TransactionParams,
 } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import { ApproveErc20 } from './ApproveErc20';
@@ -59,40 +60,45 @@ export class ReserveSecurityToken extends Procedure<
       spender: await securityTokenRegistry.address(),
     });
 
-    const reservation = await addTransaction(securityTokenRegistry.registerNewTicker, {
+    const [reservation] = await addTransaction<
+      TransactionParams.SecurityTokenRegistry.RegisterNewTicker,
+      [SecurityTokenReservation]
+    >(securityTokenRegistry.registerNewTicker, {
       tag: PolyTransactionTag.ReserveSecurityToken,
       fees: {
         poly: polyFee,
         usd: usdFee,
       },
-      resolver: async receipt => {
-        const { logs } = receipt;
+      resolvers: [
+        async receipt => {
+          const { logs } = receipt;
 
-        const [event] = findEvents({
-          logs,
-          eventName: SecurityTokenRegistryEvents.RegisterTicker,
-        });
+          const [event] = findEvents({
+            logs,
+            eventName: SecurityTokenRegistryEvents.RegisterTicker,
+          });
 
-        if (event) {
-          const { args: eventArgs } = event;
+          if (event) {
+            const { args: eventArgs } = event;
 
-          const { _ticker, _expiryDate, _owner, _registrationDate } = eventArgs;
+            const { _ticker, _expiryDate, _owner, _registrationDate } = eventArgs;
 
-          return securityTokenReservationFactory.create(
-            SecurityTokenReservation.generateId({ symbol: _ticker }),
-            {
-              expiry: bigNumberToDate(_expiryDate),
-              reservedAt: bigNumberToDate(_registrationDate),
-              ownerAddress: _owner,
-            }
-          );
-        }
-        throw new PolymathError({
-          code: ErrorCode.UnexpectedEventLogs,
-          message:
-            "The Security Token was successfully reserved but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
-        });
-      },
+            return securityTokenReservationFactory.create(
+              SecurityTokenReservation.generateId({ symbol: _ticker }),
+              {
+                expiry: bigNumberToDate(_expiryDate),
+                reservedAt: bigNumberToDate(_registrationDate),
+                ownerAddress: _owner,
+              }
+            );
+          }
+          throw new PolymathError({
+            code: ErrorCode.UnexpectedEventLogs,
+            message:
+              "The Security Token was successfully reserved but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
+          });
+        },
+      ],
     })({ owner: ownerAddress, ticker: symbol });
 
     return reservation;

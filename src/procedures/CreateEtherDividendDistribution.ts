@@ -2,6 +2,7 @@ import {
   ModuleName,
   EtherDividendCheckpointEvents,
   BigNumber,
+  TransactionParams,
 } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
@@ -59,11 +60,13 @@ export class CreateEtherDividendDistribution extends Procedure<
       });
     }
 
-    const distribution = await this.addTransaction(
-      etherModule.createDividendWithCheckpointAndExclusions,
-      {
-        tag: PolyTransactionTag.CreateEtherDividendDistribution,
-        resolver: async receipt => {
+    const [distribution] = await this.addTransaction<
+      TransactionParams.EtherDividendCheckpoint.CreateDividendWithCheckpointAndExclusions,
+      [DividendDistribution]
+    >(etherModule.createDividendWithCheckpointAndExclusions, {
+      tag: PolyTransactionTag.CreateEtherDividendDistribution,
+      resolvers: [
+        async receipt => {
           const { logs } = receipt;
 
           const [event] = findEvents({
@@ -90,8 +93,8 @@ export class CreateEtherDividendDistribution extends Procedure<
               "The ETH Dividend Distribution was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
           });
         },
-      }
-    )({
+      ],
+    })({
       maturity: maturityDate,
       expiry: expiryDate,
       value: amount,
