@@ -67,7 +67,7 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
      */
     await this.addTransaction(securityToken.controllerRedeem, {
       tag: PolyTransactionTag.ControllerRedeem,
-      resolver: createControllerRedeemResolver(factories, symbol, from),
+      resolvers: [createControllerRedeemResolver(factories, symbol, from)],
     })({ from, value: amount, data, operatorData: log });
   }
 }
