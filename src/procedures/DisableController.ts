@@ -27,8 +27,7 @@ export class DisableController extends Procedure<DisableControllerProcedureArgs>
       });
     }
 
-    const owner = await securityToken.owner();
-    const account = await currentWallet.address();
+    const [owner, account] = await Promise.all([securityToken.owner(), currentWallet.address()]);
 
     if (account !== owner) {
       throw new PolymathError({
@@ -49,6 +48,6 @@ export class DisableController extends Procedure<DisableControllerProcedureArgs>
      */
     await this.addTransaction(securityToken.disableController, {
       tag: PolyTransactionTag.DisableController,
-    })({ signature: signature || await securityToken.signDisableControllerAck({}) });
+    })({ signature: signature || (await securityToken.signDisableControllerAck({})) });
   }
 }
