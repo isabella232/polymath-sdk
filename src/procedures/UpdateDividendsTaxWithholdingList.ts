@@ -73,18 +73,22 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
         // Update all affected tax withholding entities.
         // We do this without fetching the data from the contracts
         // because it would take too many requests and it's only one value that changes
-        resolver: async () => {
-          addresses.forEach((address, addressIndex) => {
-            factories.taxWithholdingFactory.update(
-              TaxWithholding.generateId({
-                securityTokenId: SecurityToken.generateId({ symbol }),
-                dividendType,
-                shareholderAddress: address,
-              }),
-              { percentage: percentageChunk[addressIndex] }
+        resolvers: [
+          async () => {
+            return Promise.all(
+              addresses.map((address, addressIndex) => {
+                factories.taxWithholdingFactory.update(
+                  TaxWithholding.generateId({
+                    securityTokenId: SecurityToken.generateId({ symbol }),
+                    dividendType,
+                    shareholderAddress: address,
+                  }),
+                  { percentage: percentageChunk[addressIndex] }
+                );
+              })
             );
-          });
-        },
+          },
+        ],
       })({
         investors: addresses,
         withholding: percentageChunk.map(percentage => new BigNumber(percentage)),

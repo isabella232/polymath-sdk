@@ -52,9 +52,7 @@ export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArg
     const { contractWrappers, factories } = this.context;
 
     try {
-      await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
-        symbol
-      );
+      await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
     } catch (err) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
@@ -62,10 +60,7 @@ export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArg
       });
     }
 
-    let dividendModule:
-      | ERC20DividendCheckpoint
-      | EtherDividendCheckpoint
-      | null = null;
+    let dividendModule: ERC20DividendCheckpoint | EtherDividendCheckpoint | null = null;
 
     switch (dividendType) {
       case DividendType.Erc20: {
@@ -96,7 +91,7 @@ export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArg
 
     await this.addTransaction(dividendModule.changeWallet, {
       tag: PolyTransactionTag.SetDividendsWallet,
-      resolver: createSetDividendsWalletResolver(dividendType, factories, symbol),
+      resolvers: [createSetDividendsWalletResolver(dividendType, factories, symbol)],
     })({ wallet: address });
   }
 }
