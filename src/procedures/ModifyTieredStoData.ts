@@ -250,14 +250,14 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       })({
         treasuryWallet: unsoldTokensWallet,
         wallet: raisedFundsWallet,
-        usdTokens: stableCoinAddresses,
+        stableTokens: stableCoinAddresses,
       });
     }
 
     if (addedTransactions.length === 0) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: 'Modify STO data failed: nodthing to modify',
+        message: 'Modify STO data failed: nothing to modify',
       });
     }
   }
