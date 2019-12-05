@@ -3,7 +3,7 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  PauseStoProcedureArgs,
+  TogglePauseStoProcedureArgs,
   ErrorCode,
   StoType,
 } from '../types';
@@ -12,11 +12,11 @@ import { isValidAddress } from '../utils';
 import { SecurityToken, CappedSto, TieredSto } from '../entities';
 import { Factories } from '~/Context';
 
-export class PauseSto extends Procedure<PauseStoProcedureArgs> {
-  public type = ProcedureType.PauseSto;
+export class TogglePauseSto extends Procedure<TogglePauseStoProcedureArgs> {
+  public type = ProcedureType.TogglePauseSto;
 
   public async prepareTransactions() {
-    const { stoAddress, stoType, symbol } = this.args;
+    const { stoAddress, stoType, symbol, pause } = this.args;
     const { contractWrappers, factories } = this.context;
 
     /**
@@ -65,15 +65,14 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
     /**
      * Transactions
      */
-
-    await this.addTransaction(stoModule.pause, {
-      tag: PolyTransactionTag.PauseSto,
-      resolvers: [createPauseStoResolver(factories, symbol, stoType, stoAddress)],
+    await this.addTransaction(pause ? stoModule.pause : stoModule.unpause, {
+      tag: pause ? PolyTransactionTag.PauseSto : PolyTransactionTag.UnpauseSto,
+      resolvers: [createTogglePauseStoResolver(factories, symbol, stoType, stoAddress)],
     })({});
   }
 }
 
-export const createPauseStoResolver = (
+export const createTogglePauseStoResolver = (
   factories: Factories,
   symbol: string,
   stoType: StoType,

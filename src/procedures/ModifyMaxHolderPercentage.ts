@@ -4,15 +4,15 @@ import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
-  ModifyMaxHolderCountProcedureArgs,
+  ModifyMaxHolderPercentageProcedureArgs,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
-export class ModifyMaxHolderCount extends Procedure<ModifyMaxHolderCountProcedureArgs> {
-  public type = ProcedureType.ModifyMaxHolderCount;
+export class ModifyMaxHolderPercentage extends Procedure<ModifyMaxHolderPercentageProcedureArgs> {
+  public type = ProcedureType.ModifyMaxHolderPercentage;
 
   public async prepareTransactions() {
-    const { symbol, maxHolderCount } = this.args;
+    const { symbol, maxHolderPercentage } = this.args;
     const { contractWrappers } = this.context;
 
     try {
@@ -24,20 +24,20 @@ export class ModifyMaxHolderCount extends Procedure<ModifyMaxHolderCountProcedur
       });
     }
 
-    const countTransferManagerModule = (await contractWrappers.getAttachedModules(
-      { moduleName: ModuleName.CountTransferManager, symbol },
+    const percentageTransferManagerModule = (await contractWrappers.getAttachedModules(
+      { moduleName: ModuleName.PercentageTransferManager, symbol },
       { unarchived: true }
     ))[0];
 
-    if (!countTransferManagerModule) {
+    if (!percentageTransferManagerModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: 'You must enable the ShareholderCountRestrictions Feature',
+        message: 'You must enable the PercentageOwnershipRestrictions Feature',
       });
     }
 
-    await this.addTransaction(countTransferManagerModule.changeHolderCount, {
-      tag: PolyTransactionTag.ChangeHolderCount,
-    })({ maxHolderCount });
+    await this.addTransaction(percentageTransferManagerModule.changeHolderPercentage, {
+      tag: PolyTransactionTag.ChangeHolderPercentage,
+    })({ maxHolderPercentage });
   }
 }

@@ -8,7 +8,13 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { AssignSecurityTokenRole } from '../../procedures/AssignSecurityTokenRole';
 import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, Feature, PolyTransactionTag, SecurityTokenRole } from '../../types';
+import {
+  ErrorCode,
+  Feature,
+  PolyTransactionTag,
+  ProcedureType,
+  SecurityTokenRole,
+} from '../../types';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import { mockFactories } from '../../testUtils/mockFactories';
 
@@ -19,6 +25,8 @@ const params = {
   role: SecurityTokenRole.PermissionsAdministrator,
   description: 'Description',
 };
+
+const moduleAddress = '0x9999999999999999999999999999999999999999';
 
 describe('AssignSecurityTokenRole', () => {
   let target: AssignSecurityTokenRole;
@@ -33,6 +41,7 @@ describe('AssignSecurityTokenRole', () => {
     // Mock the context, wrappers, and tokenFactory to test AssignSecurityTokenRole
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
+
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
@@ -65,7 +74,7 @@ describe('AssignSecurityTokenRole', () => {
       moduleName: ModuleName.PercentageTransferManager,
       permission: Perm.Operator,
     });
-    wrappersMock.mock('getModuleAddressesByName', [params.delegateAddress]);
+    wrappersMock.mock('getModuleAddressesByName', [moduleAddress]);
 
     // Instantiate AssignSecurityTokenRole
     target = new AssignSecurityTokenRole(params, contextMock.getMockInstance());
@@ -76,7 +85,7 @@ describe('AssignSecurityTokenRole', () => {
   describe('Types', () => {
     test('should extend procedure and have AssignSecurityTokenRole type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('AssignSecurityTokenRole');
+      expect(target.type).toBe(ProcedureType.AssignSecurityTokenRole);
     });
   });
 
@@ -140,7 +149,7 @@ describe('AssignSecurityTokenRole', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: 'You must enable the Permissions feature',
+          message: 'You must enable the Permissions feature in order to assign roles',
         })
       );
     });
@@ -182,7 +191,7 @@ describe('AssignSecurityTokenRole', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.FeatureNotEnabled,
-          message: `You must enable the Permissions feature`,
+          message: `You must enable the Permissions feature in order to assign the PermissionsAdministrator role`,
         })
       );
     });

@@ -17,7 +17,7 @@ export { EnableGeneralPermissionManager } from './EnableGeneralPermissionManager
 export { EnableGeneralTransferManager } from './EnableGeneralTransferManager';
 export { DisableFeature } from './DisableFeature';
 export { ControllerTransfer } from './ControllerTransfer';
-export { PauseSto } from './PauseSto';
+export { TogglePauseSto } from './TogglePauseSto';
 export { SetController } from './SetController';
 export { LaunchCappedSto } from './LaunchCappedSto';
 export { LaunchTieredSto } from './LaunchTieredSto';
@@ -31,3 +31,6 @@ export { InvestInTieredSto } from './InvestInTieredSto';
 export { InvestInCappedSto } from './InvestInCappedSto';
 export { EnableCountTransferManager } from './EnableCountTransferManager';
 export { ModifyMaxHolderCount } from './ModifyMaxHolderCount';
+export { EnablePercentageTransferManager } from './EnablePercentageTransferManager';
+export { ModifyMaxHolderPercentage } from './ModifyMaxHolderPercentage';
+export { ModifyPercentageExemptions } from './ModifyPercentageExemptions';

@@ -34,7 +34,7 @@ export class AssignSecurityTokenRole extends Procedure<AssignSecurityTokenRolePr
     if (!permissionModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: 'You must enable the Permissions feature',
+        message: 'You must enable the Permissions feature in order to assign roles',
       });
     }
 
@@ -51,7 +51,7 @@ export class AssignSecurityTokenRole extends Procedure<AssignSecurityTokenRolePr
     if (!isAvailable) {
       throw new PolymathError({
         code: ErrorCode.FeatureNotEnabled,
-        message: `You must enable the ${requiredFeature} feature`,
+        message: `You must enable the ${requiredFeature} feature in order to assign the ${role} role`,
       });
     }
 

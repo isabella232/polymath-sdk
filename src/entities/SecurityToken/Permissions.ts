@@ -197,11 +197,22 @@ export class Permissions extends SubModule {
       securityToken: { symbol, features },
     } = this;
 
-    const isPermissionsEnabled = await features.isEnabled({ feature: Feature.Permissions });
+    const [isPermissionsEnabled, requiredFeature] = await Promise.all([
+      features.isEnabled({ feature: Feature.Permissions }),
+      this.getFeatureFromRole({ role }),
+    ]);
     if (!isPermissionsEnabled) {
       throw new PolymathError({
         code: ErrorCode.FeatureNotEnabled,
         message: 'You must enable the Permissions feature',
+      });
+    }
+
+    const isFeatureEnabled = await features.isEnabled({ feature: requiredFeature });
+    if (!isFeatureEnabled) {
+      throw new PolymathError({
+        code: ErrorCode.FeatureNotEnabled,
+        message: `You must enable the ${requiredFeature} feature to check delegates for role ${role}`,
       });
     }
 
@@ -287,6 +298,9 @@ export class Permissions extends SubModule {
     ],
     [Feature.ShareholderCountRestrictions]: [
       SecurityTokenRole.ShareholderCountRestrictionsAdministrator,
+    ],
+    [Feature.PercentageOwnershipRestrictions]: [
+      SecurityTokenRole.PercentageOwnershipRestrictionsAdministrator,
     ],
   };
 }

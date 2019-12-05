@@ -7,7 +7,7 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { AssignStoRole } from '../../procedures/AssignStoRole';
 import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, PolyTransactionTag, StoRole } from '../../types';
+import { ErrorCode, PolyTransactionTag, ProcedureType, StoRole } from '../../types';
 
 const params = {
   symbol: 'TEST1',
@@ -46,7 +46,7 @@ describe('AssignStoRole', () => {
   describe('Types', () => {
     test('should extend procedure and have AssignStoRole type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe('AssignStoRole');
+      expect(target.type).toBe(ProcedureType.AssignStoRole);
     });
   });
 

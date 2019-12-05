@@ -126,11 +126,13 @@ export enum ProcedureType {
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   EnableGeneralTransferManager = 'EnableGeneralTransferManager',
   EnableCountTransferManager = 'EnableCountTransferManager',
+  EnablePercentageTransferManager = 'EnablePercentageTransferManager',
   LaunchCappedSto = 'LaunchCappedSto',
   LaunchTieredSto = 'LaunchTieredSto',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
+  DisableFeature = 'DisableFeature',
   ReclaimFunds = 'ReclaimFunds',
   ReserveSecurityToken = 'ReserveSecurityToken',
   WithdrawTaxes = 'WithdrawTaxes',
@@ -140,7 +142,7 @@ export enum ProcedureType {
   AssignSecurityTokenRole = 'AssignSecurityTokenRole',
   AssignStoRole = 'AssignStoRole',
   ControllerTransfer = 'ControllerTransfer',
-  PauseSto = 'PauseSto',
+  TogglePauseSto = 'PauseSto',
   FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
   ModifyShareholderData = 'ModifyShareholderData',
@@ -151,8 +153,9 @@ export enum ProcedureType {
   ModifyTieredStoData = 'ModifyTieredStoData',
   InvestInTieredSto = 'InvestInTieredSto',
   InvestInCappedSto = 'InvestInCappedSto',
-  DisableFeature = 'DisableFeature',
   ModifyMaxHolderCount = 'ModifyMaxHolderCount',
+  ModifyMaxHolderPercentage = 'ModifyMaxHolderPercentage',
+  ModifyPercentageExemptions = 'ModifyPercentageExemptions',
 }
 
 export enum PolyTransactionTag {
@@ -173,6 +176,7 @@ export enum PolyTransactionTag {
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   EnableGeneralTransferManager = 'EnableGeneralTransferManager',
   EnableCountTransferManager = 'EnableCountTransferManager',
+  EnablePercentageTransferManager = 'EnablePercentageTransferManager',
   DisableFeature = 'DisableFeature',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
@@ -182,6 +186,7 @@ export enum PolyTransactionTag {
   ChangePermission = 'ChangePermission',
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
+  UnpauseSto = 'UnpauseSto',
   FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
   ModifyKycDataMulti = 'ModifyKycDataMulti',
@@ -201,6 +206,9 @@ export enum PolyTransactionTag {
   BuyTokens = 'BuyTokens',
   BuyTokensWithPoly = 'BuyTokensWithPoly',
   ChangeHolderCount = 'ChangeHolderCount',
+  ChangeHolderPercentage = 'ChangeHolderPercentage',
+  ModifyWhitelistMulti = 'ModifyWhitelistMulti',
+  SetAllowPrimaryIssuance = 'SetAllowPrimaryIssuance',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;
@@ -299,6 +307,12 @@ export interface EnableGeneralTransferManagerProcedureArgs {
 export interface EnableCountTransferManagerProcedureArgs {
   symbol: string;
   maxHolderCount: number;
+}
+
+export interface EnablePercentageTransferManagerProcedureArgs {
+  symbol: string;
+  maxHolderPercentage: BigNumber;
+  allowPrimaryIssuance?: boolean;
 }
 
 export interface DisableFeatureProcedureArgs {
@@ -466,10 +480,11 @@ export interface ControllerTransferProcedureArgs {
   log?: string;
 }
 
-export interface PauseStoProcedureArgs {
+export interface TogglePauseStoProcedureArgs {
   symbol: string;
   stoAddress: string;
   stoType: StoType;
+  pause: boolean;
 }
 
 export interface FinalizeStoProcedureArgs {
@@ -525,6 +540,22 @@ export interface ModifyMaxHolderCountProcedureArgs {
   maxHolderCount: number;
 }
 
+export interface ModifyMaxHolderPercentageProcedureArgs {
+  symbol: string;
+  maxHolderPercentage: BigNumber;
+}
+
+export interface PercentageWhitelistEntry {
+  address: string;
+  whitelisted: boolean;
+}
+
+export interface ModifyPercentageExemptionsProcedureArgs {
+  symbol: string;
+  whitelistEntries?: PercentageWhitelistEntry[];
+  allowPrimaryIssuance?: boolean;
+}
+
 export interface ProcedureArguments {
   [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
   [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
@@ -536,6 +567,7 @@ export interface ProcedureArguments {
   [ProcedureType.EnableGeneralPermissionManager]: EnableGeneralPermissionManagerProcedureArgs;
   [ProcedureType.EnableGeneralTransferManager]: EnableGeneralTransferManagerProcedureArgs;
   [ProcedureType.EnableCountTransferManager]: EnableCountTransferManagerProcedureArgs;
+  [ProcedureType.EnablePercentageTransferManager]: EnablePercentageTransferManagerProcedureArgs;
   [ProcedureType.ReclaimFunds]: ReclaimFundsProcedureArgs;
   [ProcedureType.ReserveSecurityToken]: ReserveSecurityTokenProcedureArgs;
   [ProcedureType.WithdrawTaxes]: WithdrawTaxesProcedureArgs;
@@ -544,7 +576,7 @@ export interface ProcedureArguments {
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
   [ProcedureType.LaunchCappedSto]: LaunchCappedStoProcedureArgs;
   [ProcedureType.LaunchTieredSto]: LaunchTieredStoProcedureArgs;
-  [ProcedureType.PauseSto]: PauseStoProcedureArgs;
+  [ProcedureType.TogglePauseSto]: TogglePauseStoProcedureArgs;
   [ProcedureType.ControllerTransfer]: ControllerTransferProcedureArgs;
   [ProcedureType.SetController]: SetControllerProcedureArgs;
   [ProcedureType.AssignSecurityTokenRole]: AssignSecurityTokenRoleProcedureArgs;
@@ -561,6 +593,9 @@ export interface ProcedureArguments {
   [ProcedureType.InvestInCappedSto]: InvestInCappedStoProcedureArgs;
   [ProcedureType.EnableGeneralPermissionManager]: EnableGeneralPermissionManagerProcedureArgs;
   [ProcedureType.EnableGeneralTransferManager]: EnableGeneralTransferManagerProcedureArgs;
+  [ProcedureType.ModifyMaxHolderCount]: ModifyMaxHolderCountProcedureArgs;
+  [ProcedureType.ModifyMaxHolderPercentage]: ModifyMaxHolderPercentageProcedureArgs;
+  [ProcedureType.ModifyPercentageExemptions]: ModifyPercentageExemptionsProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 
@@ -626,6 +661,7 @@ export enum Feature {
   Erc20Dividends = 'Erc20Dividends',
   EtherDividends = 'EtherDividends',
   ShareholderCountRestrictions = 'ShareholderCountRestrictions',
+  PercentageOwnershipRestrictions = 'PercentageOwnershipRestrictions',
 }
 
 export enum SecurityTokenRole {
@@ -636,6 +672,7 @@ export enum SecurityTokenRole {
   EtherDividendsAdministrator = 'EtherDividendsAdministrator',
   ShareholdersAdministrator = 'ShareholdersAdministrator',
   ShareholderCountRestrictionsAdministrator = 'ShareholderCountRestrictionsAdministrator',
+  PercentageOwnershipRestrictionsAdministrator = 'PercentageOwnershipRestrictionsAdministrator',
 }
 
 export enum StoRole {

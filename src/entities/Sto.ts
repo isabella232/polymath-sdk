@@ -5,7 +5,12 @@ import { StoType, isStoType, Currency, ErrorCode, StoRole } from '../types';
 import { Investment } from './Investment';
 import { PolymathError } from '../PolymathError';
 import { Context } from '../Context';
-import { PauseSto, AssignStoRole, FinalizeSto, ModifyBeneficialInvestments } from '../procedures';
+import {
+  TogglePauseSto,
+  AssignStoRole,
+  FinalizeSto,
+  ModifyBeneficialInvestments,
+} from '../procedures';
 import { ModifyPreMinting } from '../procedures/ModifyPreMinting';
 import { CappedSto } from './CappedSto';
 import { TieredSto } from './TieredSto';
@@ -140,7 +145,24 @@ export abstract class Sto<P> extends Entity<P> {
   public pause = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
-    const procedure = new PauseSto({ stoAddress, stoType, symbol }, this.context);
+    const procedure = new TogglePauseSto(
+      { stoAddress, stoType, symbol, pause: true },
+      this.context
+    );
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Unpauses the offering
+   */
+  public unpause = async () => {
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
+
+    const procedure = new TogglePauseSto(
+      { stoAddress, stoType, symbol, pause: false },
+      this.context
+    );
 
     return procedure.prepare();
   };

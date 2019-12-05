@@ -3,6 +3,7 @@ import { Procedure } from './Procedure';
 import { TransferErc20ProcedureArgs, ErrorCode, ProcedureType, PolyTransactionTag } from '../types';
 import { PolymathError } from '../PolymathError';
 import { Erc20TokenBalance } from '../entities';
+import { Factories } from '~/Context';
 
 /**
  * Procedure to transfer funds of an ERC20 token. If no token address is specified, it defaults to POLY
@@ -34,7 +35,9 @@ export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
       }
 
       try {
-        token = await contractWrappers.getERC20TokenWrapper({ address: tokenAddress });
+        token = await contractWrappers.getERC20TokenWrapper({
+          address: tokenAddress,
+        });
       } catch (err) {
         throw new PolymathError({
           code: ErrorCode.ProcedureValidationError,
@@ -69,13 +72,20 @@ export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
 
     await this.addTransaction<TransactionParams.ERC20.Transfer>(token.transfer, {
       tag: PolyTransactionTag.TransferErc20,
-      resolvers: [
-        async _receipt => {
-          return factories.erc20TokenBalanceFactory.refresh(
-            Erc20TokenBalance.generateId({ tokenAddress: address, walletAddress: receiver })
-          );
-        },
-      ],
+      resolvers: [createTransferErc20Resolver(factories, address, receiver)],
     })({ to: receiver, value: amount });
   }
 }
+
+export const createTransferErc20Resolver = (
+  factories: Factories,
+  tokenAddress: string,
+  receiver: string
+) => async () => {
+  return factories.erc20TokenBalanceFactory.refresh(
+    Erc20TokenBalance.generateId({
+      tokenAddress,
+      walletAddress: receiver,
+    })
+  );
+};
