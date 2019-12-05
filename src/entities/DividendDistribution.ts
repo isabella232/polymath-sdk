@@ -55,7 +55,7 @@ export class DividendDistribution extends Entity<Params> {
     if (!isUniqueIdentifiers(unserialized)) {
       throw new PolymathError({
         code: ErrorCode.InvalidUuid,
-        message: 'Wrong Dividend Distribution ID format.',
+        message: 'Wrong Dividend Distribution ID format',
       });
     }
 

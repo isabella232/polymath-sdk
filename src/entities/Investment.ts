@@ -40,7 +40,7 @@ export class Investment extends Entity<Params> {
     if (!isUniqueIdentifiers(unserialized)) {
       throw new PolymathError({
         code: ErrorCode.InvalidUuid,
-        message: 'Wrong Investment ID format.',
+        message: 'Wrong Investment ID format',
       });
     }
 
