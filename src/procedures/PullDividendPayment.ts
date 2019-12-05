@@ -103,7 +103,9 @@ export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureA
 
     await this.addTransaction(dividendsModule!.pullDividendPayment, {
       tag: PolyTransactionTag.PullDividendPayment,
-      resolver: createPullDividendPaymentResolver(factories, symbol, dividendType, dividendIndex),
+      resolvers: [
+        createPullDividendPaymentResolver(factories, symbol, dividendType, dividendIndex),
+      ],
     })({
       dividendIndex,
     });
