@@ -26,16 +26,18 @@ export const updateDividendsTaxWithholdingListResolver = (
   percentageChunk: number[],
   addresses: string[]
 ) => async () => {
-  addresses.forEach((address, addressIndex) => {
-    factories.taxWithholdingFactory.update(
-      TaxWithholding.generateId({
-        securityTokenId: SecurityToken.generateId({ symbol }),
-        dividendType,
-        shareholderAddress: address,
-      }),
-      { percentage: percentageChunk[addressIndex] }
-    );
-  });
+  return Promise.all(
+    addresses.map((address, addressIndex) => {
+      factories.taxWithholdingFactory.update(
+        TaxWithholding.generateId({
+          securityTokenId: SecurityToken.generateId({ symbol }),
+          dividendType,
+          shareholderAddress: address,
+        }),
+        { percentage: percentageChunk[addressIndex] }
+      );
+    })
+  );
 };
 
 export class UpdateDividendsTaxWithholdingList extends Procedure<
@@ -95,13 +97,15 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
         // Update all affected tax withholding entities.
         // We do this without fetching the data from the contracts
         // because it would take too many requests and it's only one value that changes
-        resolver: updateDividendsTaxWithholdingListResolver(
-          factories,
-          symbol,
-          dividendType,
-          percentageChunk,
-          addresses
-        ),
+        resolvers: [
+          updateDividendsTaxWithholdingListResolver(
+            factories,
+            symbol,
+            dividendType,
+            percentageChunk,
+            addresses
+          ),
+        ],
       })({
         investors: addresses,
         withholding: percentageChunk.map(percentage => new BigNumber(percentage)),

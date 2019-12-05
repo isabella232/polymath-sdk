@@ -2,7 +2,6 @@ import {
   PolyResponse,
   BigNumber,
   FundRaiseType as Currency,
-  CappedSTOFundRaiseType as CappedStoCurrency,
   GeneralTransferManager,
   GeneralPermissionManager,
   CountTransferManager,
@@ -17,12 +16,13 @@ import {
   BlacklistTransferManager,
   LockUpTransferManager,
   RestrictedPartialSaleTransferManager,
+  TransactionReceiptWithDecodedLogs,
   ModuleName,
 } from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
 
-export { CappedStoCurrency, Currency };
+export { Currency };
 
 export interface DividendShareholderStatus {
   address: string;
@@ -43,12 +43,12 @@ export function isDividendType(type: any): type is DividendType {
 }
 
 export enum StoType {
-  Capped = 'Capped',
-  UsdTiered = 'UsdTiered',
+  Simple = 'Simple',
+  Tiered = 'Tiered',
 }
 
 export function isStoType(type: any): type is StoType {
-  return typeof type === 'string' && (type === StoType.UsdTiered || type === StoType.Capped);
+  return typeof type === 'string' && (type === StoType.Tiered || type === StoType.Simple);
 }
 
 export interface TaxWithholdingEntry {
@@ -80,6 +80,7 @@ export enum ErrorCode {
   InvalidAddress = 'InvalidAddress',
   InsufficientBalance = 'InsufficientBalance',
   InexistentModule = 'InexistentModule',
+  IncorrectVersion = 'IncorrecVersion',
 }
 
 export interface ShareholderBalance {
@@ -89,10 +90,30 @@ export interface ShareholderBalance {
 
 export type LowLevelMethod<A> = (args: A) => Promise<PolyResponse>;
 
-export interface TransactionSpec<Args = any, R extends any = any> {
-  method: LowLevelMethod<Args>;
+/**
+ * Represents a contract method that doesn't exist yet but will exist
+ * once a certain post transaction resolver is resolved
+ *
+ * @param futureMethod function that returns a low level method
+ * @param futureValue post transaction resolver that resolves into the value that is passed to the future method
+ */
+export interface FutureLowLevelMethod<T, U> {
+  futureMethod: (resolvedValue: T) => Promise<LowLevelMethod<U>>;
+  futureValue: PostTransactionResolver<T>;
+}
+
+export type ResolverArray<R extends any[]> = {
+  [P in keyof R]: (receipt: TransactionReceiptWithDecodedLogs) => Promise<R[P]>
+};
+
+export type PostTransactionResolverArray<R extends any[]> = {
+  [P in keyof R]: PostTransactionResolver<R[P]>
+};
+
+export interface TransactionSpec<Args = any, R extends any[] = any[], V extends any = any> {
+  method: LowLevelMethod<Args> | FutureLowLevelMethod<V, Args>;
   args: MapMaybeResolver<Args>;
-  postTransactionResolver?: PostTransactionResolver<R>;
+  postTransactionResolvers?: PostTransactionResolverArray<R>;
   tag?: PolyTransactionTag;
 }
 
@@ -106,8 +127,8 @@ export enum ProcedureType {
   EnableGeneralTransferManager = 'EnableGeneralTransferManager',
   EnableCountTransferManager = 'EnableCountTransferManager',
   EnablePercentageTransferManager = 'EnablePercentageTransferManager',
-  LaunchCappedSto = 'LaunchCappedSto',
-  LaunchUsdTieredSto = 'LaunchUsdTieredSto',
+  LaunchSimpleSto = 'LaunchSimpleSto',
+  LaunchTieredSto = 'LaunchTieredSto',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
@@ -121,11 +142,17 @@ export enum ProcedureType {
   AssignSecurityTokenRole = 'AssignSecurityTokenRole',
   AssignStoRole = 'AssignStoRole',
   ControllerTransfer = 'ControllerTransfer',
-  PauseSto = 'PauseSto',
+  TogglePauseSto = 'PauseSto',
+  FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
   MintTokens = 'MintTokens',
+  ModifyPreMinting = 'ModifyPreMinting',
+  ModifyBeneficialInvestments = 'ModifyBeneificialInvestments',
+  ModifyTieredStoData = 'ModifyTieredStoData',
+  InvestInTieredSto = 'InvestInTieredSto',
+  InvestInCappedSto = 'InvestInCappedSto',
   ModifyMaxHolderCount = 'ModifyMaxHolderCount',
   ModifyMaxHolderPercentage = 'ModifyMaxHolderPercentage',
   ModifyPercentageExemptions = 'ModifyPercentageExemptions',
@@ -145,7 +172,7 @@ export enum PolyTransactionTag {
   SetEtherTaxWithholding = 'SetEtherTaxWithholding',
   EnableDividends = 'EnableDividends',
   EnableCappedSto = 'EnableCappedSto',
-  EnableUsdTieredSto = 'EnableUsdTieredSto',
+  EnableTieredSto = 'EnableTieredSto',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   EnableGeneralTransferManager = 'EnableGeneralTransferManager',
   EnableCountTransferManager = 'EnableCountTransferManager',
@@ -159,10 +186,25 @@ export enum PolyTransactionTag {
   ChangePermission = 'ChangePermission',
   ControllerTransfer = 'ControllerTransfer',
   PauseSto = 'PauseSto',
+  UnpauseSto = 'UnpauseSto',
+  FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
   ModifyKycDataMulti = 'ModifyKycDataMulti',
   ModifyInvestorFlagMulti = 'ModifyInvestorFlagMulti',
   IssueMulti = 'IssueMulti',
+  AllowPreMinting = 'AllowPreMinting',
+  RevokePreMinting = 'RevokePreMinting',
+  ChangeAllowBeneficialInvestments = 'ChangeAllowBeneficialInvestments',
+  ModifyTimes = 'ModifyTimes',
+  ModifyFunding = 'ModifyFunding',
+  ModifyAddresses = 'ModifyAddresses',
+  ModifyTiers = 'ModifiyTiers',
+  ModifyLimits = 'ModifyLimits',
+  BuyWithScRateLimited = 'BuyWithScRateLimited',
+  BuyWithPolyRateLimited = 'BuyWithPolyRateLimited',
+  BuyWithEthRateLimited = 'BuyWithEthRateLimited',
+  BuyTokens = 'BuyTokens',
+  BuyTokensWithPoly = 'BuyTokensWithPoly',
   ChangeHolderCount = 'ChangeHolderCount',
   ChangeHolderPercentage = 'ChangeHolderPercentage',
   ModifyWhitelistMulti = 'ModifyWhitelistMulti',
@@ -278,20 +320,74 @@ export interface DisableFeatureProcedureArgs {
   moduleName: ModuleName;
 }
 
-export interface LaunchCappedStoProcedureArgs {
+export interface LaunchSimpleStoProcedureArgs {
   symbol: string;
   startDate: Date;
   endDate: Date;
   tokensOnSale: BigNumber;
   rate: BigNumber;
-  currency: CappedStoCurrency;
-  storageWallet: string;
-  treasuryWallet: string;
+  currency: Currency.ETH | Currency.POLY;
+  raisedFundsWallet: string;
+  unsoldTokensWallet: string;
+  allowPreMinting?: boolean;
 }
 
 export interface MintTokensProcedureArgs {
   symbol: string;
   mintingData: MintingDataEntry[];
+}
+
+export interface ModifyPreMintingProcedureArgs {
+  symbol: string;
+  stoAddress: string;
+  stoType: StoType;
+  allowPreMinting: boolean;
+}
+
+export interface ModifyBeneficialInvestmentsProcedureArgs {
+  symbol: string;
+  stoAddress: string;
+  stoType: StoType;
+  allowBeneficialInvestments: boolean;
+}
+
+export interface ModifyTieredStoDataProcedureArgs
+  extends Omit<LaunchTieredStoProcedureArgs, 'allowPreMinting'> {
+  stoAddress: string;
+}
+
+interface InvestInTieredStoBaseProcedureArgs {
+  symbol: string;
+  stoAddress: string;
+  amount: BigNumber;
+  currency: Currency;
+  minTokens?: BigNumber;
+  beneficiary?: string;
+}
+
+export interface InvestWithStableCoinArgs extends InvestInTieredStoBaseProcedureArgs {
+  currency: Currency.StableCoin;
+  stableCoinAddress: string;
+}
+
+export type InvestInTieredStoProcedureArgs =
+  | InvestInTieredStoBaseProcedureArgs & {
+      currency: Currency.POLY | Currency.ETH;
+      stableCoinAddress?: undefined; // this is done this way on purpose for type safety
+    }
+  | InvestWithStableCoinArgs;
+
+export interface InvestInCappedStoProcedureArgs {
+  symbol: string;
+  stoAddress: string;
+  amount: BigNumber;
+  beneficiary?: string;
+}
+
+export function isInvestWithStableCoinArgs(args: any): args is InvestWithStableCoinArgs {
+  const { currency, stableCoinAddress } = args;
+
+  return currency === Currency.StableCoin && typeof stableCoinAddress === 'string';
 }
 
 export interface StoTier {
@@ -300,7 +396,7 @@ export interface StoTier {
    */
   tokensOnSale: BigNumber;
   /**
-   * Price of each token in this tier in USD
+   * Price of each token in this tier
    */
   price: BigNumber;
   /**
@@ -314,7 +410,7 @@ export interface StoTier {
   discountedPrice?: BigNumber;
 }
 
-export interface LaunchUsdTieredStoProcedureArgs {
+export interface LaunchTieredStoProcedureArgs {
   symbol: string;
   startDate: Date;
   endDate: Date;
@@ -322,9 +418,10 @@ export interface LaunchUsdTieredStoProcedureArgs {
   nonAccreditedInvestmentLimit: BigNumber;
   minimumInvestment: BigNumber;
   currencies: Currency[];
-  storageWallet: string;
-  treasuryWallet: string;
-  usdTokenAddresses: string[];
+  raisedFundsWallet: string;
+  unsoldTokensWallet: string;
+  stableCoinAddresses: string[];
+  allowPreMinting?: boolean;
 }
 
 export interface ReclaimFundsProcedureArgs {
@@ -383,7 +480,14 @@ export interface ControllerTransferProcedureArgs {
   log?: string;
 }
 
-export interface PauseStoProcedureArgs {
+export interface TogglePauseStoProcedureArgs {
+  symbol: string;
+  stoAddress: string;
+  stoType: StoType;
+  pause: boolean;
+}
+
+export interface FinalizeStoProcedureArgs {
   symbol: string;
   stoAddress: string;
   stoType: StoType;
@@ -470,9 +574,9 @@ export interface ProcedureArguments {
   [ProcedureType.UpdateDividendsTaxWithholdingList]: UpdateDividendsTaxWithholdingListProcedureArgs;
   [ProcedureType.PushDividendPayment]: PushDividendPaymentProcedureArgs;
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
-  [ProcedureType.LaunchCappedSto]: LaunchCappedStoProcedureArgs;
-  [ProcedureType.LaunchUsdTieredSto]: LaunchUsdTieredStoProcedureArgs;
-  [ProcedureType.PauseSto]: PauseStoProcedureArgs;
+  [ProcedureType.LaunchSimpleSto]: LaunchSimpleStoProcedureArgs;
+  [ProcedureType.LaunchTieredSto]: LaunchTieredStoProcedureArgs;
+  [ProcedureType.TogglePauseSto]: TogglePauseStoProcedureArgs;
   [ProcedureType.ControllerTransfer]: ControllerTransferProcedureArgs;
   [ProcedureType.SetController]: SetControllerProcedureArgs;
   [ProcedureType.AssignSecurityTokenRole]: AssignSecurityTokenRoleProcedureArgs;
@@ -480,6 +584,15 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
   [ProcedureType.MintTokens]: MintTokensProcedureArgs;
+  [ProcedureType.ModifyPreMinting]: ModifyPreMintingProcedureArgs;
+  [ProcedureType.DisableFeature]: DisableFeatureProcedureArgs;
+  [ProcedureType.FinalizeSto]: FinalizeStoProcedureArgs;
+  [ProcedureType.ModifyBeneficialInvestments]: ModifyBeneficialInvestmentsProcedureArgs;
+  [ProcedureType.ModifyTieredStoData]: ModifyTieredStoDataProcedureArgs;
+  [ProcedureType.InvestInTieredSto]: InvestInTieredStoProcedureArgs;
+  [ProcedureType.InvestInCappedSto]: InvestInCappedStoProcedureArgs;
+  [ProcedureType.EnableGeneralPermissionManager]: EnableGeneralPermissionManagerProcedureArgs;
+  [ProcedureType.EnableGeneralTransferManager]: EnableGeneralTransferManagerProcedureArgs;
   [ProcedureType.ModifyMaxHolderCount]: ModifyMaxHolderCountProcedureArgs;
   [ProcedureType.ModifyMaxHolderPercentage]: ModifyMaxHolderPercentageProcedureArgs;
   [ProcedureType.ModifyPercentageExemptions]: ModifyPercentageExemptionsProcedureArgs;

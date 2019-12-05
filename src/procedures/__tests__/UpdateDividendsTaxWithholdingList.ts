@@ -233,7 +233,7 @@ describe('UpdateDividendsTaxWithholdingList', () => {
         )
       ).toEqual(true);
 
-      expect(resolverValue).toEqual(undefined);
+      expect(resolverValue).toEqual([undefined, undefined]);
       expect(updateStub.callCount).toEqual(2);
     });
 
@@ -271,7 +271,7 @@ describe('UpdateDividendsTaxWithholdingList', () => {
         )
       ).toEqual(true);
 
-      expect(resolverValue).toEqual(undefined);
+      expect(resolverValue).toEqual([undefined, undefined]);
       expect(updateStub.callCount).toEqual(2);
     });
   });
