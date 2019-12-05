@@ -250,7 +250,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       })({
         treasuryWallet: unsoldTokensWallet,
         wallet: raisedFundsWallet,
-        usdTokens: stableCoinAddresses,
+        stableTokens: stableCoinAddresses,
       });
     }
 

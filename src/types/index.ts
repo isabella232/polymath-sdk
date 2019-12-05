@@ -434,6 +434,8 @@ export interface LaunchTieredStoProcedureArgs {
   raisedFundsWallet: string;
   unsoldTokensWallet: string;
   stableCoinAddresses: string[];
+  customOracleAddresses: string[];
+  denominatedCurrency: string;
   allowPreMinting?: boolean;
 }
 
