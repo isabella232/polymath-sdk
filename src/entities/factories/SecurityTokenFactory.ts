@@ -1,3 +1,4 @@
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SecurityToken, Params, UniqueIdentifiers } from '../SecurityToken';
 import { Factory } from './Factory';
 import { Context } from '../../Context';
@@ -21,13 +22,39 @@ export class SecurityTokenFactory extends Factory<SecurityToken, Params, UniqueI
       });
     }
 
-    const [name, owner, address] = await Promise.all([
+    const [
+      name,
+      owner,
+      address,
+      tokenDetails,
+      version,
+      granularity,
+      totalSupply,
+      treasuryWallet,
+      currentCheckpoint,
+    ] = await Promise.all([
       securityToken.name(),
       securityToken.owner(),
       securityToken.address(),
+      securityToken.tokenDetails(),
+      securityToken.getVersion(),
+      securityToken.granularity(),
+      securityToken.totalSupply(),
+      securityToken.getTreasuryWallet(),
+      securityToken.currentCheckpointId(),
     ]);
 
-    return { name, owner, address };
+    return {
+      name,
+      owner,
+      address,
+      tokenDetails,
+      version,
+      granularity,
+      totalSupply,
+      currentCheckpoint: currentCheckpoint.toNumber(),
+      treasuryWallet,
+    };
   };
 
   constructor(context: Context) {
