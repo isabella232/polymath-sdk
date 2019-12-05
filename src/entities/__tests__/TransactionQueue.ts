@@ -76,11 +76,11 @@ describe('TransactionQueue', () => {
       const t2Promise = transactionQueue.transactions[1].promise;
 
       transactionQueue.transactions[0].promise.then(() => {
-        expect(txOne.method).toHaveBeenCalled();
-        expect(txTwo.method).not.toHaveBeenCalled();
+        expect(testContract.fakeTxOneSpy).toHaveBeenCalled();
+        expect(testContract.fakeTxTwoSpy).not.toHaveBeenCalled();
       });
       transactionQueue.transactions[1].promise.then(() => {
-        expect(txTwo.method).toHaveBeenCalled();
+        expect(testContract.fakeTxTwoSpy).toHaveBeenCalled();
       });
 
       await transactionQueue.run();

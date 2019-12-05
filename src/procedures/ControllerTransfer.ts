@@ -71,7 +71,7 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
 
     await this.addTransaction(securityToken.controllerTransfer, {
       tag: PolyTransactionTag.ControllerTransfer,
-      resolver: createControllerTransferResolver(factories, symbol, from, to),
+      resolvers: [createControllerTransferResolver(factories, symbol, from, to)],
     })({ from, to, value: amount, data, operatorData: log });
   }
 }
