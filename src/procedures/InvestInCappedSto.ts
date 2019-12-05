@@ -10,7 +10,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
-import { SecurityToken, CappedSto } from '../entities';
+import { SecurityToken, SimpleSto } from '../entities';
 import { ApproveErc20 } from './ApproveErc20';
 
 export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs> {
@@ -23,7 +23,7 @@ export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs>
 
     const {
       contractWrappers,
-      factories: { cappedStoFactory },
+      factories: { simpleStoFactory },
     } = context;
 
     /**
@@ -59,13 +59,13 @@ export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs>
     }
 
     const securityTokenId = SecurityToken.generateId({ symbol });
-    const cappedStoId = CappedSto.generateId({
+    const simpleStoId = SimpleSto.generateId({
       securityTokenId,
-      stoType: StoType.Capped,
+      stoType: StoType.Simple,
       address: stoAddress,
     });
 
-    const sto = await cappedStoFactory.fetch(cappedStoId);
+    const sto = await simpleStoFactory.fetch(simpleStoId);
 
     const {
       isFinalized,
@@ -107,7 +107,7 @@ export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs>
 
     const resolvers = [
       async () => {
-        return cappedStoFactory.refresh(cappedStoId);
+        return simpleStoFactory.refresh(simpleStoId);
       },
     ];
 

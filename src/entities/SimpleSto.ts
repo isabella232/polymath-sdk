@@ -9,8 +9,6 @@ import {
 import { serialize } from '../utils';
 import { Sto, UniqueIdentifiers, Params as StoParams } from './Sto';
 import { Context } from '../Context';
-import { InvestInCappedStoProcedureArgs, Currency } from '../types';
-import { TransactionQueue } from './TransactionQueue';
 import { InvestInCappedSto } from '../procedures';
 import { Investment } from './Investment';
 
@@ -23,9 +21,9 @@ export interface Params extends StoParams {
 
 export { UniqueIdentifiers };
 
-export class CappedSto extends Sto<Params> {
+export class SimpleSto extends Sto<Params> {
   public static generateId({ securityTokenId, stoType, address }: UniqueIdentifiers) {
-    return serialize('cappedSto', {
+    return serialize('simpleSto', {
       securityTokenId,
       stoType,
       address,
@@ -47,7 +45,7 @@ export class CappedSto extends Sto<Params> {
 
     this.cap = cap;
     this.rate = rate;
-    this.uid = CappedSto.generateId({ address, stoType, securityTokenId });
+    this.uid = SimpleSto.generateId({ address, stoType, securityTokenId });
   }
 
   /**

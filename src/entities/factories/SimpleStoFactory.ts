@@ -2,12 +2,12 @@ import { ModuleName, isCappedSTO_3_1_0 } from '@polymathnetwork/contract-wrapper
 import { Factory } from './Factory';
 import { Context } from '../../Context';
 import { Currency } from '../../types';
-import { CappedSto, Params, UniqueIdentifiers } from '../CappedSto';
+import { SimpleSto, Params, UniqueIdentifiers } from '../SimpleSto';
 import { SecurityToken } from '../SecurityToken';
 
-export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifiers> {
+export class SimpleStoFactory extends Factory<SimpleSto, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
-    const { securityTokenId, stoType, address } = CappedSto.unserialize(uid);
+    const { securityTokenId, stoType, address } = SimpleSto.unserialize(uid);
 
     const { symbol } = SecurityToken.unserialize(securityTokenId);
     const {
@@ -53,12 +53,6 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
       ]);
     }
 
-    const stoId = CappedSto.generateId({
-      securityTokenId,
-      stoType,
-      address,
-    });
-
     return {
       currencies: isRaisedInPoly ? [Currency.POLY] : [Currency.ETH],
       raisedFundsWallet,
@@ -82,6 +76,6 @@ export class CappedStoFactory extends Factory<CappedSto, Params, UniqueIdentifie
   };
 
   constructor(context: Context) {
-    super(CappedSto, context);
+    super(SimpleSto, context);
   }
 }

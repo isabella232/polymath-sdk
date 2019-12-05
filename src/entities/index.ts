@@ -10,7 +10,7 @@ export { TaxWithholding } from './TaxWithholding';
 export { PolyTransaction } from './PolyTransaction';
 export { TransactionQueue } from './TransactionQueue';
 export { Erc20TokenBalance } from './Erc20TokenBalance';
-export { CappedSto } from './CappedSto';
+export { SimpleSto } from './SimpleSto';
 export { TieredSto } from './TieredSto';
 export { Investment } from './Investment';
 export { Sto } from './Sto';

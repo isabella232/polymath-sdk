@@ -9,7 +9,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
-import { SecurityToken, CappedSto, TieredSto } from '../entities';
+import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 import { Factories } from '~/Context';
 
 export class TogglePauseSto extends Procedure<TogglePauseStoProcedureArgs> {
@@ -33,7 +33,7 @@ export class TogglePauseSto extends Procedure<TogglePauseStoProcedureArgs> {
     let stoModule;
 
     switch (stoType) {
-      case StoType.Capped: {
+      case StoType.Simple: {
         stoModule = await contractWrappers.moduleFactory.getModuleInstance({
           name: ModuleName.CappedSTO,
           address: stoAddress,
@@ -81,11 +81,11 @@ export const createTogglePauseStoResolver = (
   const securityTokenId = SecurityToken.generateId({ symbol });
 
   switch (stoType) {
-    case StoType.Capped: {
-      return factories.cappedStoFactory.refresh(
-        CappedSto.generateId({
+    case StoType.Simple: {
+      return factories.simpleStoFactory.refresh(
+        SimpleSto.generateId({
           securityTokenId,
-          stoType: StoType.Capped,
+          stoType,
           address: stoAddress,
         })
       );
@@ -94,7 +94,7 @@ export const createTogglePauseStoResolver = (
       return factories.tieredStoFactory.refresh(
         TieredSto.generateId({
           securityTokenId,
-          stoType: StoType.Tiered,
+          stoType,
           address: stoAddress,
         })
       );

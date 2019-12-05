@@ -1,8 +1,7 @@
-import { BigNumber, CappedSTOEvents } from '@polymathnetwork/contract-wrappers';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
 import { StoType, isStoType, Currency, ErrorCode, StoRole } from '../types';
-import { Investment } from './Investment';
 import { PolymathError } from '../PolymathError';
 import { Context } from '../Context';
 import {
@@ -12,8 +11,6 @@ import {
   ModifyBeneficialInvestments,
 } from '../procedures';
 import { ModifyPreMinting } from '../procedures/ModifyPreMinting';
-import { CappedSto } from './CappedSto';
-import { TieredSto } from './TieredSto';
 
 export interface UniqueIdentifiers {
   securityTokenId: string;

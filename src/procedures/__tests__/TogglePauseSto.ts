@@ -12,7 +12,7 @@ import {
   StoType,
 } from '../../types';
 import * as pauseStoModule from '../TogglePauseSto';
-import * as cappedStoFactoryModule from '../../entities/factories/CappedStoFactory';
+import * as simpleStoFactoryModule from '../../entities/factories/SimpleStoFactory';
 import * as tieredStoFactoryModule from '../../entities/factories/TieredStoFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -20,7 +20,7 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { Factories } from '../../Context';
-import { CappedSto, SecurityToken, TieredSto } from '../../entities';
+import { SimpleSto, SecurityToken, TieredSto } from '../../entities';
 
 const tieredParams: TogglePauseStoProcedureArgs = {
   symbol: 'TEST1',
@@ -29,10 +29,10 @@ const tieredParams: TogglePauseStoProcedureArgs = {
   pause: true,
 };
 
-const cappedParams: TogglePauseStoProcedureArgs = {
+const simpleParams: TogglePauseStoProcedureArgs = {
   symbol: 'TEST1',
   stoAddress: '0x5555555555555555555555555555555555555555',
-  stoType: StoType.Capped,
+  stoType: StoType.Simple,
   pause: true,
 };
 
@@ -46,11 +46,11 @@ describe('PauseSto', () => {
   let moduleWrapperFactoryMock: MockManager<
     moduleWrapperFactoryModule.MockedModuleWrapperFactoryModule
   >;
-  let cappedStoMock: MockManager<contractWrappersModule.CappedSTO_3_0_0>;
+  let simpleStoMock: MockManager<contractWrappersModule.CappedSTO_3_0_0>;
   let tieredStoMock: MockManager<contractWrappersModule.USDTieredSTO_3_0_0>;
 
   // Mock factories
-  let cappedStoFactoryMock: MockManager<cappedStoFactoryModule.CappedStoFactory>;
+  let simpleStoFactoryMock: MockManager<simpleStoFactoryModule.SimpleStoFactory>;
 
   let tieredStoFactoryMock: MockManager<tieredStoFactoryModule.TieredStoFactory>;
 
@@ -80,24 +80,24 @@ describe('PauseSto', () => {
       securityTokenMock.getMockInstance()
     );
 
-    cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryModule, 'CappedStoFactory');
+    simpleStoFactoryMock = ImportMock.mockClass(simpleStoFactoryModule, 'SimpleStoFactory');
 
     tieredStoFactoryMock = ImportMock.mockClass(tieredStoFactoryModule, 'TieredStoFactory');
 
     factoryMockSetup = mockFactories();
-    factoryMockSetup.cappedStoFactory = cappedStoFactoryMock.getMockInstance();
+    factoryMockSetup.simpleStoFactory = simpleStoFactoryMock.getMockInstance();
     factoryMockSetup.tieredStoFactory = tieredStoFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
 
     tieredStoMock = ImportMock.mockClass(contractWrappersModule, 'USDTieredSTO_3_0_0');
-    cappedStoMock = ImportMock.mockClass(contractWrappersModule, 'CappedSTO_3_0_0');
+    simpleStoMock = ImportMock.mockClass(contractWrappersModule, 'CappedSTO_3_0_0');
 
-    securityTokenId = SecurityToken.generateId({ symbol: cappedParams.symbol });
+    securityTokenId = SecurityToken.generateId({ symbol: simpleParams.symbol });
 
-    moduleWrapperFactoryMock.mock('getModuleInstance', cappedStoMock.getMockInstance());
+    moduleWrapperFactoryMock.mock('getModuleInstance', simpleStoMock.getMockInstance());
 
     // Instantiate TogglePauseSto
-    target = new TogglePauseSto(cappedParams, contextMock.getMockInstance());
+    target = new TogglePauseSto(simpleParams, contextMock.getMockInstance());
   });
 
   afterEach(() => {
@@ -114,14 +114,14 @@ describe('PauseSto', () => {
   describe('TogglePauseSto', () => {
     test('should add the transaction to the queue to pause a capped sto', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
-      cappedStoMock.mock('pause', Promise.resolve('Pause'));
+      simpleStoMock.mock('pause', Promise.resolve('Pause'));
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications\
       expect(
-        addTransactionSpy.getCall(0).calledWith(cappedStoMock.getMockInstance().pause)
+        addTransactionSpy.getCall(0).calledWith(simpleStoMock.getMockInstance().pause)
       ).toEqual(true);
       expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.PauseSto);
       expect(addTransactionSpy.callCount).toEqual(1);
@@ -130,21 +130,21 @@ describe('PauseSto', () => {
     test('should add the transaction to the queue to unpause a capped sto', async () => {
       target = new TogglePauseSto(
         {
-          ...cappedParams,
+          ...simpleParams,
           pause: false,
         },
         contextMock.getMockInstance()
       );
 
       const addTransactionSpy = spy(target, 'addTransaction');
-      cappedStoMock.mock('unpause', Promise.resolve('Unpause'));
+      simpleStoMock.mock('unpause', Promise.resolve('Unpause'));
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications\
       expect(
-        addTransactionSpy.getCall(0).calledWith(cappedStoMock.getMockInstance().unpause)
+        addTransactionSpy.getCall(0).calledWith(simpleStoMock.getMockInstance().unpause)
       ).toEqual(true);
       expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.UnpauseSto);
       expect(addTransactionSpy.callCount).toEqual(1);
@@ -195,7 +195,7 @@ describe('PauseSto', () => {
     test('should throw if there is an invalid sto address', async () => {
       target = new TogglePauseSto(
         {
-          ...cappedParams,
+          ...simpleParams,
           stoAddress: 'invalid',
         },
         contextMock.getMockInstance()
@@ -211,7 +211,7 @@ describe('PauseSto', () => {
     test('should throw if there is an invalid sto type', async () => {
       target = new TogglePauseSto(
         {
-          ...cappedParams,
+          ...simpleParams,
           stoType: invalidSto as StoType,
         },
         contextMock.getMockInstance()
@@ -229,25 +229,25 @@ describe('PauseSto', () => {
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `STO ${cappedParams.stoAddress} is either archived or hasn't been launched`,
+          message: `STO ${simpleParams.stoAddress} is either archived or hasn't been launched`,
         })
       );
     });
 
     test('should successfully resolve pause sto with capped sto params', async () => {
-      const refreshStub = cappedStoFactoryMock.mock('refresh', Promise.resolve());
+      const refreshStub = simpleStoFactoryMock.mock('refresh', Promise.resolve());
       await pauseStoModule.createTogglePauseStoResolver(
         factoryMockSetup,
-        cappedParams.symbol,
-        cappedParams.stoType,
-        cappedParams.stoAddress
+        simpleParams.symbol,
+        simpleParams.stoType,
+        simpleParams.stoAddress
       )();
       expect(
         refreshStub.getCall(0).calledWithExactly(
-          CappedSto.generateId({
+          SimpleSto.generateId({
             securityTokenId,
-            stoType: StoType.Capped,
-            address: cappedParams.stoAddress,
+            stoType: StoType.Simple,
+            address: simpleParams.stoAddress,
           })
         )
       ).toEqual(true);

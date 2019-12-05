@@ -9,7 +9,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
-import { SecurityToken, CappedSto, TieredSto } from '../entities';
+import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 
 export class ModifyBeneficialInvestments extends Procedure<
   ModifyBeneficialInvestmentsProcedureArgs
@@ -34,7 +34,7 @@ export class ModifyBeneficialInvestments extends Procedure<
     let stoModule;
 
     switch (stoType) {
-      case StoType.Capped: {
+      case StoType.Simple: {
         stoModule = await contractWrappers.moduleFactory.getModuleInstance({
           name: ModuleName.CappedSTO,
           address: stoAddress,
@@ -87,11 +87,11 @@ export class ModifyBeneficialInvestments extends Procedure<
           const securityTokenId = SecurityToken.generateId({ symbol });
 
           switch (stoType) {
-            case StoType.Capped: {
-              return factories.cappedStoFactory.refresh(
-                CappedSto.generateId({
+            case StoType.Simple: {
+              return factories.simpleStoFactory.refresh(
+                SimpleSto.generateId({
                   securityTokenId,
-                  stoType: StoType.Capped,
+                  stoType,
                   address: stoAddress,
                 })
               );
@@ -100,7 +100,7 @@ export class ModifyBeneficialInvestments extends Procedure<
               return factories.tieredStoFactory.refresh(
                 TieredSto.generateId({
                   securityTokenId,
-                  stoType: StoType.Tiered,
+                  stoType,
                   address: stoAddress,
                 })
               );

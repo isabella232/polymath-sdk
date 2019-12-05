@@ -2,19 +2,19 @@ import { BigNumber, ModuleName } from '@polymathnetwork/contract-wrappers';
 import { includes } from 'lodash';
 import { SubModule } from './SubModule';
 import { StoTier, Currency, StoType, ErrorCode } from '../../types';
-import { LaunchCappedSto, LaunchTieredSto } from '../../procedures';
-import { CappedSto, TieredSto, Sto } from '..';
+import { LaunchSimpleSto, LaunchTieredSto } from '../../procedures';
+import { SimpleSto, TieredSto, Sto } from '..';
 import { PolymathError } from '../../PolymathError';
 
 interface GetSto {
-  (args: { stoType: StoType.Capped; address: string }): Promise<CappedSto>;
+  (args: { stoType: StoType.Simple; address: string }): Promise<SimpleSto>;
   (args: { stoType: StoType.Tiered; address: string }): Promise<TieredSto>;
-  (args: string): Promise<CappedSto | TieredSto>;
+  (args: string): Promise<SimpleSto | TieredSto>;
 }
 
 export class Offerings extends SubModule {
   /**
-   * Launch a Capped STO
+   * Launch a Simple STO
    *
    * @param startDate date when the STO should start
    * @param endDate date when the STO should end
@@ -25,7 +25,7 @@ export class Offerings extends SubModule {
    * @param unsoldTokensWallet wallet address that will receive unsold tokens
    * @param allowPreMinting whether to have all tokens minted on STO start. Default behavior is to mint on purchase
    */
-  public launchCappedSto = async (args: {
+  public launchSimpleSto = async (args: {
     startDate: Date;
     endDate: Date;
     tokensOnSale: BigNumber;
@@ -37,7 +37,7 @@ export class Offerings extends SubModule {
   }) => {
     const { context, securityToken } = this;
     const { symbol } = securityToken;
-    const procedure = new LaunchCappedSto(
+    const procedure = new LaunchSimpleSto(
       {
         symbol,
         ...args,
@@ -118,9 +118,9 @@ export class Offerings extends SubModule {
       securityToken: { uid },
     } = this;
 
-    if (stoType === StoType.Capped) {
-      return factories.cappedStoFactory.fetch(
-        CappedSto.generateId({ securityTokenId: uid, stoType, address })
+    if (stoType === StoType.Simple) {
+      return factories.simpleStoFactory.fetch(
+        SimpleSto.generateId({ securityTokenId: uid, stoType, address })
       );
     } else if (stoType === StoType.Tiered) {
       return factories.tieredStoFactory.fetch(
@@ -143,7 +143,7 @@ export class Offerings extends SubModule {
     opts: {
       stoTypes: StoType[];
     } = {
-      stoTypes: [StoType.Capped, StoType.Tiered],
+      stoTypes: [StoType.Simple, StoType.Tiered],
     }
   ) => {
     const { contractWrappers, factories } = this.context;
@@ -152,9 +152,9 @@ export class Offerings extends SubModule {
 
     const { stoTypes } = opts;
 
-    let stos: Promise<CappedSto | TieredSto>[] = [];
+    let stos: Promise<SimpleSto | TieredSto>[] = [];
 
-    if (includes(stoTypes, StoType.Capped)) {
+    if (includes(stoTypes, StoType.Simple)) {
       const fetchedModules = await contractWrappers.getAttachedModules(
         { symbol: securityTokenSymbol, moduleName: ModuleName.CappedSTO },
         { unarchived: true }
@@ -164,8 +164,8 @@ export class Offerings extends SubModule {
 
       stos = stos.concat(
         addresses.map(address =>
-          factories.cappedStoFactory.fetch(
-            CappedSto.generateId({ address, stoType: StoType.Capped, securityTokenId: uid })
+          factories.simpleStoFactory.fetch(
+            SimpleSto.generateId({ address, stoType: StoType.Simple, securityTokenId: uid })
           )
         )
       );
@@ -182,7 +182,7 @@ export class Offerings extends SubModule {
       stos = stos.concat(
         addresses.map(address =>
           factories.tieredStoFactory.fetch(
-            TieredSto.generateId({ address, stoType: StoType.Capped, securityTokenId: uid })
+            TieredSto.generateId({ address, stoType: StoType.Tiered, securityTokenId: uid })
           )
         )
       );

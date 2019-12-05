@@ -19,7 +19,7 @@ export { DisableFeature } from './DisableFeature';
 export { ControllerTransfer } from './ControllerTransfer';
 export { TogglePauseSto } from './TogglePauseSto';
 export { SetController } from './SetController';
-export { LaunchCappedSto } from './LaunchCappedSto';
+export { LaunchSimpleSto } from './LaunchSimpleSto';
 export { LaunchTieredSto } from './LaunchTieredSto';
 export { ModifyShareholderData } from './ModifyShareholderData';
 export { RevokeKyc } from './RevokeKyc';

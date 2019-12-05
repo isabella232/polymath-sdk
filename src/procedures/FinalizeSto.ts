@@ -9,7 +9,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
-import { SecurityToken, CappedSto, TieredSto } from '../entities';
+import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 
 export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
   public type = ProcedureType.FinalizeSto;
@@ -46,7 +46,7 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
     let remainingTokens: BigNumber;
 
     switch (stoType) {
-      case StoType.Capped: {
+      case StoType.Simple: {
         stoModule = await contractWrappers.moduleFactory.getModuleInstance({
           name: ModuleName.CappedSTO,
           address: stoAddress,
@@ -126,11 +126,11 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
           const securityTokenId = SecurityToken.generateId({ symbol });
 
           switch (stoType) {
-            case StoType.Capped: {
-              return factories.cappedStoFactory.refresh(
-                CappedSto.generateId({
+            case StoType.Simple: {
+              return factories.simpleStoFactory.refresh(
+                SimpleSto.generateId({
                   securityTokenId,
-                  stoType: StoType.Capped,
+                  stoType,
                   address: stoAddress,
                 })
               );
@@ -139,7 +139,7 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
               return factories.tieredStoFactory.refresh(
                 TieredSto.generateId({
                   securityTokenId,
-                  stoType: StoType.Tiered,
+                  stoType,
                   address: stoAddress,
                 })
               );

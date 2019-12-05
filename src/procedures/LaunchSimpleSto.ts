@@ -11,17 +11,17 @@ import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
-  LaunchCappedStoProcedureArgs,
+  LaunchSimpleStoProcedureArgs,
   StoType,
   Currency,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { TransferErc20 } from './TransferErc20';
-import { SecurityToken, CappedSto } from '../entities';
+import { SecurityToken, SimpleSto } from '../entities';
 import { findEvents } from '../utils';
 
-export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, CappedSto> {
-  public type = ProcedureType.LaunchCappedSto;
+export class LaunchSimpleSto extends Procedure<LaunchSimpleStoProcedureArgs, SimpleSto> {
+  public type = ProcedureType.LaunchSimpleSto;
 
   public async prepareTransactions() {
     const { args, context } = this;
@@ -38,7 +38,7 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
     } = args;
     const {
       contractWrappers,
-      factories: { cappedStoFactory },
+      factories: { simpleStoFactory },
     } = context;
 
     let securityToken;
@@ -84,7 +84,7 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
 
     const [newStoAddress, newSto] = await this.addTransaction<
       TransactionParams.SecurityToken.AddCappedSTO,
-      [string, CappedSto]
+      [string, SimpleSto]
     >(securityToken.addModuleWithLabel, {
       tag: PolyTransactionTag.EnableCappedSto,
       fees: {
@@ -126,10 +126,10 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
 
             const { _module } = eventArgs;
 
-            return cappedStoFactory.fetch(
-              CappedSto.generateId({
+            return simpleStoFactory.fetch(
+              SimpleSto.generateId({
                 securityTokenId: SecurityToken.generateId({ symbol }),
-                stoType: StoType.Capped,
+                stoType: StoType.Simple,
                 address: _module,
               })
             );
@@ -182,10 +182,10 @@ export class LaunchCappedSto extends Procedure<LaunchCappedStoProcedureArgs, Cap
           tag: PolyTransactionTag.AllowPreMinting,
           resolvers: [
             () => {
-              return cappedStoFactory.update(
-                CappedSto.generateId({
+              return simpleStoFactory.update(
+                SimpleSto.generateId({
                   securityTokenId: SecurityToken.generateId({ symbol }),
-                  stoType: StoType.Capped,
+                  stoType: StoType.Simple,
                   address: newStoAddress.result!,
                 }),
                 { preMintAllowed: true }

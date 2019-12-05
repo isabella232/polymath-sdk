@@ -43,12 +43,12 @@ export function isDividendType(type: any): type is DividendType {
 }
 
 export enum StoType {
-  Capped = 'Capped',
+  Simple = 'Simple',
   Tiered = 'Tiered',
 }
 
 export function isStoType(type: any): type is StoType {
-  return typeof type === 'string' && (type === StoType.Tiered || type === StoType.Capped);
+  return typeof type === 'string' && (type === StoType.Tiered || type === StoType.Simple);
 }
 
 export interface TaxWithholdingEntry {
@@ -127,7 +127,7 @@ export enum ProcedureType {
   EnableGeneralTransferManager = 'EnableGeneralTransferManager',
   EnableCountTransferManager = 'EnableCountTransferManager',
   EnablePercentageTransferManager = 'EnablePercentageTransferManager',
-  LaunchCappedSto = 'LaunchCappedSto',
+  LaunchSimpleSto = 'LaunchSimpleSto',
   LaunchTieredSto = 'LaunchTieredSto',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
@@ -320,7 +320,7 @@ export interface DisableFeatureProcedureArgs {
   moduleName: ModuleName;
 }
 
-export interface LaunchCappedStoProcedureArgs {
+export interface LaunchSimpleStoProcedureArgs {
   symbol: string;
   startDate: Date;
   endDate: Date;
@@ -574,7 +574,7 @@ export interface ProcedureArguments {
   [ProcedureType.UpdateDividendsTaxWithholdingList]: UpdateDividendsTaxWithholdingListProcedureArgs;
   [ProcedureType.PushDividendPayment]: PushDividendPaymentProcedureArgs;
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
-  [ProcedureType.LaunchCappedSto]: LaunchCappedStoProcedureArgs;
+  [ProcedureType.LaunchSimpleSto]: LaunchSimpleStoProcedureArgs;
   [ProcedureType.LaunchTieredSto]: LaunchTieredStoProcedureArgs;
   [ProcedureType.TogglePauseSto]: TogglePauseStoProcedureArgs;
   [ProcedureType.ControllerTransfer]: ControllerTransferProcedureArgs;
