@@ -39,7 +39,7 @@ export abstract class DividendsManager<P> extends Entity<P> {
     if (!isUniqueIdentifiers(unserialized)) {
       throw new PolymathError({
         code: ErrorCode.InvalidUuid,
-        message: 'Wrong Dividends Manager ID format.',
+        message: 'Wrong Dividends Manager ID format',
       });
     }
 

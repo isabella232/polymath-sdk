@@ -2,10 +2,15 @@ import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
 import { StoType, isStoType, Currency, ErrorCode, StoRole } from '../types';
-import { Investment } from './Investment';
 import { PolymathError } from '../PolymathError';
 import { Context } from '../Context';
-import { PauseSto, AssignStoRole } from '../procedures';
+import {
+  TogglePauseSto,
+  AssignStoRole,
+  FinalizeSto,
+  ModifyBeneficialInvestments,
+} from '../procedures';
+import { ModifyPreMinting } from '../procedures/ModifyPreMinting';
 
 export interface UniqueIdentifiers {
   securityTokenId: string;
@@ -21,15 +26,19 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 
 export interface Params {
   securityTokenSymbol: string;
-  startTime: Date;
-  endTime: Date;
-  fundraiseTypes: Currency[];
+  startDate: Date;
+  endDate: Date;
+  currencies: Currency[];
+  raisedFundsWallet: string;
+  unsoldTokensWallet: string;
   raisedAmount: BigNumber;
   soldTokensAmount: BigNumber;
-  investorAmount: number;
-  investments: Investment[];
-  paused: boolean;
+  investorCount: number;
+  isPaused: boolean;
   capReached: boolean;
+  isFinalized: boolean;
+  preMintAllowed: boolean;
+  beneficialInvestmentsAllowed: boolean;
 }
 
 export abstract class Sto<P> extends Entity<P> {
@@ -43,23 +52,31 @@ export abstract class Sto<P> extends Entity<P> {
 
   public stoType: StoType;
 
-  public startTime: Date;
+  public startDate: Date;
 
-  public endTime: Date;
+  public endDate: Date;
+
+  public raisedFundsWallet: string;
+
+  public unsoldTokensWallet: string;
 
   public raisedAmount: BigNumber;
 
   public soldTokensAmount: BigNumber;
 
-  public investorAmount: number;
+  public investorCount: number;
 
-  public investments: Investment[];
+  public currencies: Currency[];
 
-  public fundraiseTypes: Currency[];
-
-  public paused: boolean;
+  public isPaused: boolean;
 
   public capReached: boolean;
+
+  public isFinalized: boolean;
+
+  public preMintAllowed: boolean;
+
+  public beneficialInvestmentsAllowed: boolean;
 
   protected context: Context;
 
@@ -69,7 +86,7 @@ export abstract class Sto<P> extends Entity<P> {
     if (!isUniqueIdentifiers(unserialized)) {
       throw new PolymathError({
         code: ErrorCode.InvalidUuid,
-        message: 'Wrong STO ID format.',
+        message: 'Wrong STO ID format',
       });
     }
 
@@ -84,40 +101,135 @@ export abstract class Sto<P> extends Entity<P> {
       securityTokenSymbol,
       securityTokenId,
       stoType,
-      fundraiseTypes,
-      startTime,
-      endTime,
+      currencies,
+      startDate,
+      endDate,
+      raisedFundsWallet,
+      unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
-      investorAmount,
-      investments,
-      paused,
+      investorCount,
+      isPaused,
       capReached,
+      isFinalized,
+      preMintAllowed,
+      beneficialInvestmentsAllowed,
     } = params;
 
     this.address = address;
     this.securityTokenSymbol = securityTokenSymbol;
     this.securityTokenId = securityTokenId;
     this.stoType = stoType;
-    this.startTime = startTime;
-    this.endTime = endTime;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.raisedFundsWallet = raisedFundsWallet;
+    this.unsoldTokensWallet = unsoldTokensWallet;
     this.raisedAmount = raisedAmount;
     this.soldTokensAmount = soldTokensAmount;
-    this.investorAmount = investorAmount;
-    this.investments = investments;
-    this.fundraiseTypes = fundraiseTypes;
-    this.paused = paused;
+    this.investorCount = investorCount;
+    this.currencies = currencies;
+    this.isPaused = isPaused;
     this.capReached = capReached;
+    this.isFinalized = isFinalized;
+    this.preMintAllowed = preMintAllowed;
+    this.beneficialInvestmentsAllowed = beneficialInvestmentsAllowed;
     this.context = context;
   }
 
   /**
-   * Pause the offering
+   * Pauses the offering
    */
   public pause = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
-    const procedure = new PauseSto({ stoAddress, stoType, symbol }, this.context);
+    const procedure = new TogglePauseSto(
+      { stoAddress, stoType, symbol, pause: true },
+      this.context
+    );
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Unpauses the offering
+   */
+  public unpause = async () => {
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
+
+    const procedure = new TogglePauseSto(
+      { stoAddress, stoType, symbol, pause: false },
+      this.context
+    );
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Finalizes the offering. The offering's treasury wallet (or the Security Token's treasury wallet if one was not specified for the offering)
+   * will receive the remaining unsold tokens. Throws an error if there are transfer restrictions which do not permit the wallet to receive that amount of tokens
+   */
+  public finalize = async () => {
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
+
+    const procedure = new FinalizeSto({ stoAddress, stoType, symbol }, this.context);
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Enables all offered tokens to be minted instantly at STO start (default behavior is to mint on purchase)
+   * Can be disabled *BEFORE* the STO starts by calling disallowPreMinting
+   */
+  public allowPreMinting = async () => {
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
+
+    const procedure = new ModifyPreMinting(
+      { stoAddress, stoType, symbol, allowPreMinting: true },
+      this.context
+    );
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Disables pre-minting of offered tokens at STO start (goes back to default behavior, which is to mint on purchase)
+   * Can be re-enabled *BEFORE* the STO starts by calling allowPreMinting
+   */
+  public disallowPreMinting = async () => {
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
+
+    const procedure = new ModifyPreMinting(
+      { stoAddress, stoType, symbol, allowPreMinting: false },
+      this.context
+    );
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Enables a party to invest in the STO on behalf of another party
+   */
+  public allowBeneficialInvestments = async () => {
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
+
+    const procedure = new ModifyBeneficialInvestments(
+      { stoAddress, stoType, symbol, allowBeneficialInvestments: true },
+      this.context
+    );
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Disables the possibility for a party to invest in the STO on behalf of another party
+   */
+  public disallowBeneficialInvestments = async () => {
+    const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
+
+    const procedure = new ModifyBeneficialInvestments(
+      { stoAddress, stoType, symbol, allowBeneficialInvestments: false },
+      this.context
+    );
 
     return procedure.prepare();
   };
@@ -175,58 +287,84 @@ export abstract class Sto<P> extends Entity<P> {
     const {
       uid,
       securityTokenId,
+      address,
       securityTokenSymbol,
-      fundraiseTypes,
+      currencies,
+      raisedFundsWallet,
+      unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
-      investorAmount,
-      investments,
-      startTime,
-      endTime,
+      investorCount,
+      startDate,
+      endDate,
+      capReached,
+      isFinalized,
+      isPaused,
+      preMintAllowed,
+      beneficialInvestmentsAllowed,
     } = this;
 
     return {
       uid,
       securityTokenId,
+      address,
       securityTokenSymbol,
-      fundraiseTypes,
+      currencies,
+      raisedFundsWallet,
+      unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
-      investorAmount,
-      startTime,
-      endTime,
-      investments: investments.map(investment => investment.toPojo()),
+      investorCount,
+      startDate,
+      endDate,
+      capReached,
+      isFinalized,
+      isPaused,
+      preMintAllowed,
+      beneficialInvestmentsAllowed,
     };
   }
 
   public _refresh(params: Partial<Params>) {
     const {
       securityTokenSymbol,
-      startTime,
-      endTime,
-      fundraiseTypes,
+      startDate,
+      endDate,
+      currencies,
+      raisedFundsWallet,
+      unsoldTokensWallet,
       raisedAmount,
       soldTokensAmount,
-      investorAmount,
-      investments,
-      paused,
+      investorCount,
+      isPaused,
       capReached,
+      isFinalized,
+      preMintAllowed,
+      beneficialInvestmentsAllowed,
     } = params;
 
     if (securityTokenSymbol) {
       this.securityTokenSymbol = securityTokenSymbol;
     }
 
-    if (startTime) {
-      this.startTime = startTime;
+    if (startDate) {
+      this.startDate = startDate;
     }
 
-    if (endTime) {
-      this.endTime = endTime;
+    if (endDate) {
+      this.endDate = endDate;
     }
 
-    if (fundraiseTypes) {
-      this.fundraiseTypes = fundraiseTypes;
+    if (currencies) {
+      this.currencies = currencies;
+    }
+
+    if (raisedFundsWallet) {
+      this.raisedFundsWallet = raisedFundsWallet;
+    }
+
+    if (unsoldTokensWallet) {
+      this.unsoldTokensWallet = unsoldTokensWallet;
     }
 
     if (raisedAmount) {
@@ -237,20 +375,28 @@ export abstract class Sto<P> extends Entity<P> {
       this.soldTokensAmount = soldTokensAmount;
     }
 
-    if (investorAmount) {
-      this.investorAmount = investorAmount;
+    if (investorCount) {
+      this.investorCount = investorCount;
     }
 
-    if (investments) {
-      this.investments = investments;
-    }
-
-    if (paused !== undefined) {
-      this.paused = paused;
+    if (isPaused !== undefined) {
+      this.isPaused = isPaused;
     }
 
     if (capReached !== undefined) {
       this.capReached = capReached;
+    }
+
+    if (isFinalized !== undefined) {
+      this.isFinalized = isFinalized;
+    }
+
+    if (preMintAllowed !== undefined) {
+      this.preMintAllowed = preMintAllowed;
+    }
+
+    if (beneficialInvestmentsAllowed !== undefined) {
+      this.beneficialInvestmentsAllowed = beneficialInvestmentsAllowed;
     }
   }
 }

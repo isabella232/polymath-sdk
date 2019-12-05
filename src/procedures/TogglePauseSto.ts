@@ -3,20 +3,20 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  PauseStoProcedureArgs,
+  TogglePauseStoProcedureArgs,
   ErrorCode,
   StoType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
-import { SecurityToken, CappedSto, UsdTieredSto } from '../entities';
+import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 import { Factories } from '~/Context';
 
-export class PauseSto extends Procedure<PauseStoProcedureArgs> {
-  public type = ProcedureType.PauseSto;
+export class TogglePauseSto extends Procedure<TogglePauseStoProcedureArgs> {
+  public type = ProcedureType.TogglePauseSto;
 
   public async prepareTransactions() {
-    const { stoAddress, stoType, symbol } = this.args;
+    const { stoAddress, stoType, symbol, pause } = this.args;
     const { contractWrappers, factories } = this.context;
 
     /**
@@ -33,14 +33,14 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
     let stoModule;
 
     switch (stoType) {
-      case StoType.Capped: {
+      case StoType.Simple: {
         stoModule = await contractWrappers.moduleFactory.getModuleInstance({
           name: ModuleName.CappedSTO,
           address: stoAddress,
         });
         break;
       }
-      case StoType.UsdTiered: {
+      case StoType.Tiered: {
         stoModule = await contractWrappers.moduleFactory.getModuleInstance({
           name: ModuleName.UsdTieredSTO,
           address: stoAddress,
@@ -58,22 +58,21 @@ export class PauseSto extends Procedure<PauseStoProcedureArgs> {
     if (!stoModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `STO ${stoAddress} is either archived or hasn't been launched.`,
+        message: `STO ${stoAddress} is either archived or hasn't been launched`,
       });
     }
 
     /**
      * Transactions
      */
-
-    await this.addTransaction(stoModule.pause, {
-      tag: PolyTransactionTag.PauseSto,
-      resolver: createPauseStoResolver(factories, symbol, stoType, stoAddress),
+    await this.addTransaction(pause ? stoModule.pause : stoModule.unpause, {
+      tag: pause ? PolyTransactionTag.PauseSto : PolyTransactionTag.UnpauseSto,
+      resolvers: [createTogglePauseStoResolver(factories, symbol, stoType, stoAddress)],
     })({});
   }
 }
 
-export const createPauseStoResolver = (
+export const createTogglePauseStoResolver = (
   factories: Factories,
   symbol: string,
   stoType: StoType,
@@ -82,20 +81,20 @@ export const createPauseStoResolver = (
   const securityTokenId = SecurityToken.generateId({ symbol });
 
   switch (stoType) {
-    case StoType.Capped: {
-      return factories.cappedStoFactory.refresh(
-        CappedSto.generateId({
+    case StoType.Simple: {
+      return factories.simpleStoFactory.refresh(
+        SimpleSto.generateId({
           securityTokenId,
-          stoType: StoType.Capped,
+          stoType,
           address: stoAddress,
         })
       );
     }
-    case StoType.UsdTiered: {
-      return factories.usdTieredStoFactory.refresh(
-        UsdTieredSto.generateId({
+    case StoType.Tiered: {
+      return factories.tieredStoFactory.refresh(
+        TieredSto.generateId({
           securityTokenId,
-          stoType: StoType.UsdTiered,
+          stoType,
           address: stoAddress,
         })
       );

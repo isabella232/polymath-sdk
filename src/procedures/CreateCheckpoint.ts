@@ -1,4 +1,4 @@
-import { SecurityTokenEvents } from '@polymathnetwork/contract-wrappers';
+import { SecurityTokenEvents, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   CreateCheckpointProcedureArgs,
@@ -31,34 +31,39 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
       });
     }
 
-    const checkpoint = await this.addTransaction(securityToken.createCheckpoint, {
-      tag: PolyTransactionTag.CreateCheckpoint,
-      resolver: async receipt => {
-        const { logs } = receipt;
+    const [checkpoint] = await this.addTransaction<{}, [Checkpoint]>(
+      securityToken.createCheckpoint,
+      {
+        tag: PolyTransactionTag.CreateCheckpoint,
+        resolvers: [
+          async receipt => {
+            const { logs } = receipt;
 
-        const [event] = findEvents({
-          logs,
-          eventName: SecurityTokenEvents.CheckpointCreated,
-        });
-        if (event) {
-          const { args: eventArgs } = event;
+            const [event] = findEvents({
+              logs,
+              eventName: SecurityTokenEvents.CheckpointCreated,
+            });
+            if (event) {
+              const { args: eventArgs } = event;
 
-          const { _checkpointId } = eventArgs;
+              const { _checkpointId } = eventArgs;
 
-          return factories.checkpointFactory.fetch(
-            Checkpoint.generateId({
-              securityTokenId: SecurityToken.generateId({ symbol }),
-              index: _checkpointId.toNumber(),
-            })
-          );
-        }
-        throw new PolymathError({
-          code: ErrorCode.UnexpectedEventLogs,
-          message:
-            "The Checkpoint was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
-        });
-      },
-    })({});
+              return factories.checkpointFactory.fetch(
+                Checkpoint.generateId({
+                  securityTokenId: SecurityToken.generateId({ symbol }),
+                  index: _checkpointId.toNumber(),
+                })
+              );
+            }
+            throw new PolymathError({
+              code: ErrorCode.UnexpectedEventLogs,
+              message:
+                "The Checkpoint was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
+            });
+          },
+        ],
+      }
+    )({});
 
     return checkpoint;
   }

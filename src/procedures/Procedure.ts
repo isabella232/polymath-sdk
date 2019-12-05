@@ -1,4 +1,4 @@
-import { TransactionReceiptWithDecodedLogs, BigNumber } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import {
   TransactionSpec,
   ErrorCode,
@@ -9,6 +9,9 @@ import {
   PolyTransactionTag,
   Fees,
   SignatureRequest,
+  FutureLowLevelMethod,
+  ResolverArray,
+  PostTransactionResolverArray,
 } from '../types';
 import { TransactionQueue } from '../entities/TransactionQueue';
 import { Context } from '../Context';
@@ -107,10 +110,16 @@ export abstract class Procedure<Args, ReturnType = void> {
   };
 
   /**
-   * Appends a method into the TransactionQueue's queue. This defines
+   * TODO @monitz87: add an array of PostTransactionResolvers whose resolved values get passed
+   * as an optional parameter to the resolver functions (same concept as futureValue but for resolver functions)
+   */
+  /**
+   * Appends a method or future method into the TransactionQueue's queue. This defines
    * what will be run by the TransactionQueue when it is started.
    *
-   * @param method A method that will be run in the Procedure's TransactionQueue
+   * @param method A method (or future method) that will be run in the Procedure's TransactionQueue.
+   * A future method is a transaction that doesn't exist at prepare time
+   * (for example a transaction on a module that hasn't been attached but will be by the time the previous transactions are run)
    * @param options.tag An optional tag for SDK users to identify this transaction, this
    * can be used for doing things such as mapping descriptions to tags in the UI
    * @param options.fee Value in POLY of the transaction (defaults to 0)
@@ -119,20 +128,22 @@ export abstract class Procedure<Args, ReturnType = void> {
    *
    * @returns a PostTransactionResolver that resolves to the value returned by the resolver function, or undefined if no resolver function was passed
    */
-  public addTransaction = <A, R extends any = any>(
-    method: LowLevelMethod<A>,
+  public addTransaction = <A = any, R extends any[] = [void], V extends any = any>(
+    method: LowLevelMethod<A> | FutureLowLevelMethod<V, A>,
     {
       tag,
       fees,
-      resolver = (() => {}) as () => Promise<R>,
+      resolvers = ([] as unknown) as ResolverArray<R>,
     }: {
       tag?: PolyTransactionTag;
       fees?: Fees;
-      resolver?: (receipt: TransactionReceiptWithDecodedLogs) => Promise<R>;
+      resolvers?: ResolverArray<R>;
     } = {}
   ) => {
     return async (args: MapMaybeResolver<A>) => {
-      const postTransactionResolver = new PostTransactionResolver(resolver);
+      const postTransactionResolvers = resolvers.map(
+        resolver => new PostTransactionResolver(resolver)
+      ) as PostTransactionResolverArray<R, TransactionReceiptWithDecodedLogs>;
 
       if (fees) {
         this.fees.push(fees);
@@ -141,13 +152,13 @@ export abstract class Procedure<Args, ReturnType = void> {
       const transaction = {
         method,
         args,
-        postTransactionResolver,
+        postTransactionResolvers,
         tag,
       };
 
       this.transactions.push(transaction);
 
-      return postTransactionResolver;
+      return postTransactionResolvers;
     };
   };
 
