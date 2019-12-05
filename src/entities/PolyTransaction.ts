@@ -1,9 +1,18 @@
 import { mapValues, isPlainObject, pickBy } from 'lodash';
 import { EventEmitter } from 'events';
 import v4 from 'uuid/v4';
-import { TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
+import {
+  TransactionReceiptWithDecodedLogs,
+  PolyResponse,
+} from '@polymathnetwork/contract-wrappers';
 import { PostTransactionResolver, isPostTransactionResolver } from '../PostTransactionResolver';
-import { TransactionSpec, ErrorCode, TransactionStatus, PolyTransactionTag } from '../types';
+import {
+  TransactionSpec,
+  ErrorCode,
+  TransactionStatus,
+  PolyTransactionTag,
+  PostTransactionResolverArray,
+} from '../types';
 import { PolymathError } from '../PolymathError';
 import { Entity } from './Entity';
 import { TransactionQueue } from './TransactionQueue';
@@ -21,7 +30,7 @@ const mapValuesDeep = (
   mapValues(obj, (val, key) => (isPlainObject(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)));
 
 // TODO @monitz87: Make properties private where appliccable
-export class PolyTransaction<Args = any, R extends any = void> extends Entity<void> {
+export class PolyTransaction<Args = any, R extends any[] = any[]> extends Entity<void> {
   public static generateId() {
     return serialize('transaction', {
       random: v4(),
@@ -48,15 +57,17 @@ export class PolyTransaction<Args = any, R extends any = void> extends Entity<vo
 
   protected method: TransactionSpec<Args, R>['method'];
 
-  private postResolver: PostTransactionResolver<R> = new PostTransactionResolver<R>();
+  private postResolvers: PostTransactionResolverArray<
+    R
+  > = ([] as unknown) as PostTransactionResolverArray<R>;
 
   private emitter: EventEmitter;
 
   constructor(transaction: TransactionSpec<Args, R>, transactionQueue: TransactionQueue<any, any>) {
     super();
 
-    if (transaction.postTransactionResolver) {
-      this.postResolver = transaction.postTransactionResolver;
+    if (transaction.postTransactionResolvers) {
+      this.postResolvers = transaction.postTransactionResolvers;
     }
 
     this.emitter = new EventEmitter();
@@ -136,7 +147,17 @@ export class PolyTransaction<Args = any, R extends any = void> extends Entity<vo
     this.updateStatus(TransactionStatus.Unapproved);
 
     const unwrappedArgs = this.unwrapArgs(this.args);
-    const polyResponse = await this.method(unwrappedArgs);
+
+    const { method } = this;
+
+    let polyResponse: PolyResponse;
+
+    if (method instanceof Function) {
+      polyResponse = await method(unwrappedArgs);
+    } else {
+      const returnedMethod = await method.futureMethod(method.futureValue.result);
+      polyResponse = await returnedMethod(unwrappedArgs);
+    }
 
     // Set the Transaction as Running once it is approved by the user
     this.txHash = polyResponse.txHash;
@@ -162,7 +183,7 @@ export class PolyTransaction<Args = any, R extends any = void> extends Entity<vo
       throw this.error;
     }
 
-    await this.postResolver.run(result);
+    await Promise.all(this.postResolvers.map(resolver => resolver.run(result)));
 
     return result;
   }

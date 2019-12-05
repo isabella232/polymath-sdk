@@ -35,7 +35,7 @@ export class SecurityTokenReservation extends Entity<Params> {
     if (!isUniqueIdentifiers(unserialized)) {
       throw new PolymathError({
         code: ErrorCode.InvalidUuid,
-        message: 'Wrong Security Token Reservation ID format.',
+        message: 'Wrong Security Token Reservation ID format',
       });
     }
 

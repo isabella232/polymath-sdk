@@ -1,4 +1,4 @@
-import { ModuleName } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   WithdrawTaxesProcedureArgs,
@@ -68,9 +68,12 @@ export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
       });
     }
 
-    await this.addTransaction(dividendModule.withdrawWithholding, {
-      tag: PolyTransactionTag.WithdrawTaxWithholdings,
-      resolver: createWithdrawTaxesResolver(dividendType, dividendIndex, factories, symbol),
-    })({ dividendIndex });
+    await this.addTransaction<TransactionParams.DividendCheckpoint.WithdrawWithholding>(
+      dividendModule.withdrawWithholding,
+      {
+        tag: PolyTransactionTag.WithdrawTaxWithholdings,
+        resolvers: [createWithdrawTaxesResolver(dividendType, dividendIndex, factories, symbol)],
+      }
+    )({ dividendIndex });
   }
 }

@@ -183,7 +183,7 @@ describe('CreateSecurityToken', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `The security token symbol ${params.symbol} has already been launched.`,
+          message: `The security token symbol ${params.symbol} has already been launched`,
         })
       );
     });
