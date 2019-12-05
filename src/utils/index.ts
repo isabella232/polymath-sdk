@@ -30,6 +30,8 @@ import {
   EtherDividendCheckpointEtherDividendReclaimedEventArgs,
   EtherDividendCheckpointSetWalletEventArgs,
   EtherDividendCheckpointSetWithholdingEventArgs,
+  USDTieredSTOAllowPreMintFlagEventArgs,
+  CappedSTOAllowPreMintFlagEventArgs,
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
 import { Pojo } from '../types';
@@ -42,6 +44,10 @@ export const delay = async (amount: number) => {
   });
 };
 
+export function areSameAddress(a: string, b: string) {
+  return a.toUpperCase() === b.toUpperCase();
+}
+
 export function serialize(entityType: string, pojo: Pojo) {
   return Buffer.from(`${entityType}:${stringify(pojo)}`).toString('base64');
 }
@@ -51,7 +57,7 @@ export function unserialize(id: string) {
 
   const matched = unserialized.match(/^.*?:(.*)/);
 
-  const errorMsg = 'Wrong ID format.';
+  const errorMsg = 'Wrong ID format';
 
   if (!matched) {
     throw new Error(errorMsg);
@@ -115,8 +121,16 @@ interface FindCappedStoPauseParams extends FindEventParams {
   eventName: typeof CappedSTOEvents.Pause;
 }
 
-interface FindUsdTieredStoPauseParams extends FindEventParams {
+interface FindCappedStoPreMintAllowedParams extends FindEventParams {
+  eventName: typeof CappedSTOEvents.AllowPreMintFlag;
+}
+
+interface FindTieredStoPauseParams extends FindEventParams {
   eventName: typeof USDTieredSTOEvents.Pause;
+}
+
+interface FindTieredStoPreMintAllowedParams extends FindEventParams {
+  eventName: typeof USDTieredSTOEvents.AllowPreMintFlag;
 }
 
 interface FindErc20DividendClaimedParams extends FindEventParams {
@@ -178,7 +192,13 @@ interface FindEvents {
     GeneralTransferManagerModifyInvestorFlagEventArgs
   >[];
   (params: FindCappedStoPauseParams): LogWithDecodedArgs<CappedSTOPauseEventArgs>[];
-  (params: FindUsdTieredStoPauseParams): LogWithDecodedArgs<USDTieredSTOPauseEventArgs>[];
+  (params: FindCappedStoPreMintAllowedParams): LogWithDecodedArgs<
+    CappedSTOAllowPreMintFlagEventArgs
+  >[];
+  (params: FindTieredStoPauseParams): LogWithDecodedArgs<USDTieredSTOPauseEventArgs>[];
+  (params: FindTieredStoPreMintAllowedParams): LogWithDecodedArgs<
+    USDTieredSTOAllowPreMintFlagEventArgs
+  >[];
   (params: FindErc20DividendClaimedParams): LogWithDecodedArgs<
     ERC20DividendCheckpointERC20DividendClaimedEventArgs
   >[];
