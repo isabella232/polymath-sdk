@@ -118,6 +118,8 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
       tag: PolyTransactionTag.IssueMulti,
       resolvers: [
         async () => {
+          await factories.securityTokenFactory.refresh(securityTokenId);
+
           const fetchingShareholders = investors.map(address => {
             return factories.shareholderFactory.fetch(
               Shareholder.generateId({
@@ -126,7 +128,6 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
               })
             );
           });
-
           return Promise.all(fetchingShareholders);
         },
       ],
