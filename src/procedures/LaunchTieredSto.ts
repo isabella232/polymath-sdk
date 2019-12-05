@@ -1,45 +1,25 @@
 import {
   ModuleName,
   BigNumber,
-  FundRaiseType,
   SecurityTokenEvents,
+  isUSDTieredSTO_3_0_0,
+  TransactionParams,
 } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
-  LaunchUsdTieredStoProcedureArgs,
+  LaunchTieredStoProcedureArgs,
   StoType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { TransferErc20 } from './TransferErc20';
 import { findEvents } from '../utils';
-import { SecurityToken, UsdTieredSto } from '../entities';
+import { SecurityToken, TieredSto } from '../entities';
 
-interface AddUSDTieredSTOParams {
-  moduleName: ModuleName.UsdTieredSTO;
-  address: string;
-  data: {
-    startTime: Date;
-    endTime: Date;
-    ratePerTier: BigNumber[];
-    ratePerTierDiscountPoly: BigNumber[];
-    tokensPerTierTotal: BigNumber[];
-    tokensPerTierDiscountPoly: BigNumber[];
-    nonAccreditedLimitUSD: BigNumber;
-    minimumInvestmentUSD: BigNumber;
-    fundRaiseTypes: FundRaiseType[];
-    wallet: string;
-    treasuryWallet: string;
-    usdTokens: string[];
-  };
-  archived: boolean;
-  label?: string;
-}
-
-export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArgs, UsdTieredSto> {
-  public type = ProcedureType.LaunchUsdTieredSto;
+export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, TieredSto> {
+  public type = ProcedureType.LaunchTieredSto;
 
   public async prepareTransactions() {
     const { args, context } = this;
@@ -51,13 +31,14 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
       nonAccreditedInvestmentLimit,
       minimumInvestment,
       currencies,
-      storageWallet,
-      treasuryWallet,
-      usdTokenAddresses,
+      raisedFundsWallet,
+      unsoldTokensWallet,
+      stableCoinAddresses,
+      allowPreMinting = false,
     } = args;
     const {
       contractWrappers,
-      factories: { usdTieredStoFactory },
+      factories: { tieredStoFactory },
     } = context;
 
     let securityToken;
@@ -117,15 +98,17 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
       }
     );
 
-    const newSto = await this.addTransaction<AddUSDTieredSTOParams, UsdTieredSto>(
-      securityToken.addModuleWithLabel,
-      {
-        tag: PolyTransactionTag.EnableUsdTieredSto,
-        fees: {
-          usd: usdCost,
-          poly: polyCost,
-        },
-        resolver: async receipt => {
+    const [newStoAddress, newSto] = await this.addTransaction<
+      TransactionParams.SecurityToken.AddUSDTieredSTO,
+      [string, TieredSto]
+    >(securityToken.addModuleWithLabel, {
+      tag: PolyTransactionTag.EnableTieredSto,
+      fees: {
+        usd: usdCost,
+        poly: polyCost,
+      },
+      resolvers: [
+        async receipt => {
           const { logs } = receipt;
 
           const [event] = findEvents({
@@ -138,10 +121,31 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
 
             const { _module } = eventArgs;
 
-            return usdTieredStoFactory.fetch(
-              UsdTieredSto.generateId({
+            return _module;
+          }
+          throw new PolymathError({
+            code: ErrorCode.UnexpectedEventLogs,
+            message:
+              "The Tiered STO was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
+          });
+        },
+        async receipt => {
+          const { logs } = receipt;
+
+          const [event] = findEvents({
+            eventName: SecurityTokenEvents.ModuleAdded,
+            logs,
+          });
+
+          if (event) {
+            const { args: eventArgs } = event;
+
+            const { _module } = eventArgs;
+
+            return tieredStoFactory.fetch(
+              TieredSto.generateId({
                 securityTokenId: SecurityToken.generateId({ symbol }),
-                stoType: StoType.UsdTiered,
+                stoType: StoType.Tiered,
                 address: _module,
               })
             );
@@ -149,11 +153,11 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
           throw new PolymathError({
             code: ErrorCode.UnexpectedEventLogs,
             message:
-              "The USD Tiered STO was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
+              "The Tiered STO was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
           });
         },
-      }
-    )({
+      ],
+    })({
       moduleName,
       address: factoryAddress,
       data: {
@@ -166,12 +170,40 @@ export class LaunchUsdTieredSto extends Procedure<LaunchUsdTieredStoProcedureArg
         nonAccreditedLimitUSD: nonAccreditedInvestmentLimit,
         minimumInvestmentUSD: minimumInvestment,
         fundRaiseTypes: currencies,
-        wallet: storageWallet,
-        treasuryWallet,
-        usdTokens: usdTokenAddresses,
+        wallet: raisedFundsWallet,
+        treasuryWallet: unsoldTokensWallet,
+        usdTokens: stableCoinAddresses,
       },
+      maxCost: polyCost,
       archived: false,
     });
+
+    if (allowPreMinting) {
+      await this.addTransaction(
+        {
+          futureValue: newStoAddress,
+          futureMethod: async address => {
+            const stoModule = await contractWrappers.moduleFactory.getModuleInstance({
+              name: ModuleName.UsdTieredSTO,
+              address,
+            });
+
+            if (isUSDTieredSTO_3_0_0(stoModule)) {
+              throw new PolymathError({
+                code: ErrorCode.IncorrectVersion,
+                message:
+                  'STO version is 3.0.0. Version 3.1.0 or greater is required for pre-minting',
+              });
+            }
+
+            return stoModule.allowPreMinting;
+          },
+        },
+        {
+          tag: PolyTransactionTag.AllowPreMinting,
+        }
+      )({});
+    }
 
     return newSto;
   }

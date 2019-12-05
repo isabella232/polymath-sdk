@@ -114,20 +114,22 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
     }
     const { uid: securityTokenId } = securityTokenEntity;
 
-    const newShareholders = await this.addTransaction(securityToken.issueMulti, {
+    const [newShareholders] = await this.addTransaction(securityToken.issueMulti, {
       tag: PolyTransactionTag.IssueMulti,
-      resolver: async () => {
-        const fetchingShareholders = investors.map(address => {
-          return factories.shareholderFactory.fetch(
-            Shareholder.generateId({
-              securityTokenId,
-              address,
-            })
-          );
-        });
+      resolvers: [
+        async () => {
+          const fetchingShareholders = investors.map(address => {
+            return factories.shareholderFactory.fetch(
+              Shareholder.generateId({
+                securityTokenId,
+                address,
+              })
+            );
+          });
 
-        return Promise.all(fetchingShareholders);
-      },
+          return Promise.all(fetchingShareholders);
+        },
+      ],
     })({ investors, values });
 
     return newShareholders;

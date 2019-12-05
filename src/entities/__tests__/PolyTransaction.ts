@@ -49,7 +49,7 @@ describe('PolyTransaction', () => {
 
     await polyTransaction.run();
 
-    expect(transaction.method).toHaveBeenCalledWith({ a: 'argA' });
+    await expect(testContract.fakeTxOneSpy).toHaveBeenCalledWith({ a: 'argA' });
   });
 
   describe('#onStatusChange', () => {

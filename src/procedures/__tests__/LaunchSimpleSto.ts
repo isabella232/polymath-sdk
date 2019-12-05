@@ -7,36 +7,38 @@ import {
   SecurityTokenEvents,
   TransactionReceiptWithDecodedLogs,
 } from '@polymathnetwork/contract-wrappers';
-import { LaunchCappedSto } from '../../procedures/LaunchCappedSto';
-import { Procedure } from '../../procedures/Procedure';
+import { LaunchSimpleSto } from '../LaunchSimpleSto';
+import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
 import {
   ErrorCode,
-  LaunchCappedStoProcedureArgs,
+  LaunchSimpleStoProcedureArgs,
   PolyTransactionTag,
   ProcedureType,
   StoType,
+  Currency,
 } from '../../types';
-import * as cappedStoFactoryModule from '../../entities/factories/CappedStoFactory';
+import * as simpleStoFactoryModule from '../../entities/factories/SimpleStoFactory';
 import * as utilsModule from '../../utils';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { Wallet } from '../../Wallet';
-import { TransferErc20 } from '../../procedures';
+import { TransferErc20 } from '..';
 import { mockFactories } from '../../testUtils/mockFactories';
-import { CappedSto, SecurityToken } from '../../entities';
+import { SimpleSto, SecurityToken } from '../../entities';
+import { PostTransactionResolver } from '../../PostTransactionResolver';
 
-const params: LaunchCappedStoProcedureArgs = {
+const params: LaunchSimpleStoProcedureArgs = {
   symbol: 'TEST1',
   startDate: new Date(2030, 1),
   endDate: new Date(2031, 1),
   tokensOnSale: new BigNumber(1000),
   rate: new BigNumber(10),
-  currency: CappedStoCurrency.ETH,
-  storageWallet: '0x6666666666666666666666666666666666666666',
-  treasuryWallet: '0x7777777777777777777777777777777777777777',
+  currency: Currency.ETH,
+  raisedFundsWallet: '0x6666666666666666666666666666666666666666',
+  unsoldTokensWallet: '0x7777777777777777777777777777777777777777',
 };
 
 const currentWallet = '0x8888888888888888888888888888888888888888';
@@ -46,8 +48,8 @@ const moduleFactoryAddress = '0x4444444444444444444444444444444444444444';
 const costInPoly = new BigNumber(5);
 const costInUsd = new BigNumber(6);
 
-describe('LaunchCappedSto', () => {
-  let target: LaunchCappedSto;
+describe('LaunchSimpleSto', () => {
+  let target: LaunchSimpleSto;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
@@ -57,7 +59,7 @@ describe('LaunchCappedSto', () => {
   let polyTokenMock: MockManager<contractWrappersModule.PolyToken>;
 
   // Mock factories
-  let cappedStoFactoryMock: MockManager<cappedStoFactoryModule.CappedStoFactory>;
+  let simpleStoFactoryMock: MockManager<simpleStoFactoryModule.SimpleStoFactory>;
 
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let moduleFactoryMock: MockManager<contractWrappersModule.ModuleFactory_3_0_0>;
@@ -91,10 +93,10 @@ describe('LaunchCappedSto', () => {
     );
     moduleWrapperFactoryMock.mock('getModuleFactory', moduleFactoryMock.getMockInstance());
 
-    cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryModule, 'CappedStoFactory');
+    simpleStoFactoryMock = ImportMock.mockClass(simpleStoFactoryModule, 'SimpleStoFactory');
 
     const factoryMockSetup = mockFactories();
-    factoryMockSetup.cappedStoFactory = cappedStoFactoryMock.getMockInstance();
+    factoryMockSetup.simpleStoFactory = simpleStoFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
     contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(currentWallet) }));
 
@@ -107,21 +109,21 @@ describe('LaunchCappedSto', () => {
     wrappersMock.mock('isTestnet', Promise.resolve(false));
     wrappersMock.mock('getModuleFactoryAddress', moduleFactoryAddress);
 
-    // Instantiate LaunchCappedSto
-    target = new LaunchCappedSto(params, contextMock.getMockInstance());
+    // Instantiate LaunchSimpleSto
+    target = new LaunchSimpleSto(params, contextMock.getMockInstance());
   });
   afterEach(() => {
     restore();
   });
 
   describe('Types', () => {
-    test('should extend procedure and have LaunchCappedSto type', async () => {
+    test('should extend procedure and have LaunchSimpleSto type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe(ProcedureType.LaunchCappedSto);
+      expect(target.type).toBe(ProcedureType.LaunchSimpleSto);
     });
   });
 
-  describe('LaunchCappedSto', () => {
+  describe('LaunchSimpleSto', () => {
     test('should add a transaction to the queue to launch a capped sto with cost in usd', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
@@ -190,10 +192,10 @@ describe('LaunchCappedSto', () => {
     test('should return the capped sto object information', async () => {
       const stoObject = {
         securityTokenId: params.symbol,
-        stoType: StoType.Capped,
+        stoType: StoType.Simple,
         address: securityTokenAddress,
       };
-      const fetchStub = cappedStoFactoryMock.mock('fetch', Promise.resolve(stoObject));
+      const fetchStub = simpleStoFactoryMock.mock('fetch', Promise.resolve(stoObject));
       const moduleAddress = '0x3333333333333333333333333333333333333333';
       const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
         {
@@ -212,11 +214,11 @@ describe('LaunchCappedSto', () => {
       // Verification for fetch
       expect(
         fetchStub.getCall(0).calledWithExactly(
-          CappedSto.generateId({
+          SimpleSto.generateId({
             securityTokenId: SecurityToken.generateId({
               symbol: params.symbol,
             }),
-            stoType: StoType.Capped,
+            stoType: StoType.Simple,
             address: moduleAddress,
           })
         )

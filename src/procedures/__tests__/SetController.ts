@@ -19,25 +19,15 @@ describe('SetController', () => {
   let target: SetController;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<
-    tokenFactoryModule.MockedTokenFactoryModule
-  >;
-  let securityTokenMock: MockManager<
-    contractWrappersModule.SecurityToken_3_0_0
-  >;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
+  let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
 
   beforeEach(() => {
     // Mock the context, wrappers, tokenFactory and securityToken to test SetController
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(
-      tokenFactoryModule,
-      'MockedTokenFactoryModule'
-    );
-    securityTokenMock = ImportMock.mockClass(
-      contractWrappersModule,
-      'SecurityToken_3_0_0'
-    );
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
+    securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
 
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
@@ -99,10 +89,7 @@ describe('SetController', () => {
 
     test('should throw if account address is different than owner address', async () => {
       securityTokenMock.mock('owner', Promise.resolve('0x01'));
-      contextMock.set(
-        'currentWallet',
-        new Wallet({ address: () => Promise.resolve('0x02') })
-      );
+      contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve('0x02') }));
 
       // Instantiate SetController
       target = new SetController(params, contextMock.getMockInstance());
@@ -118,10 +105,7 @@ describe('SetController', () => {
 
     test('should add a transaction to the queue to set a controller on the security token', async () => {
       securityTokenMock.mock('owner', Promise.resolve('0x01'));
-      contextMock.set(
-        'currentWallet',
-        new Wallet({ address: () => Promise.resolve('0x01') })
-      );
+      contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve('0x01') }));
 
       target = new SetController(params, contextMock.getMockInstance());
 
@@ -134,12 +118,9 @@ describe('SetController', () => {
       expect(
         addTransactionSpy
           .getCall(0)
-          .calledWithExactly(
-            securityTokenMock.getMockInstance().setController,
-            {
-              tag: PolyTransactionTag.SetController,
-            }
-          )
+          .calledWithExactly(securityTokenMock.getMockInstance().setController, {
+            tag: PolyTransactionTag.SetController,
+          })
       ).toEqual(true);
       expect(addTransactionSpy.callCount).toEqual(1);
     });
