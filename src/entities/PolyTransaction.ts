@@ -1,9 +1,18 @@
 import { mapValues, isPlainObject, pickBy } from 'lodash';
 import { EventEmitter } from 'events';
 import v4 from 'uuid/v4';
-import { TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
+import {
+  TransactionReceiptWithDecodedLogs,
+  PolyResponse,
+} from '@polymathnetwork/contract-wrappers';
 import { PostTransactionResolver, isPostTransactionResolver } from '../PostTransactionResolver';
-import { TransactionSpec, ErrorCode, TransactionStatus, PolyTransactionTag } from '../types';
+import {
+  TransactionSpec,
+  ErrorCode,
+  TransactionStatus,
+  PolyTransactionTag,
+  PostTransactionResolverArray,
+} from '../types';
 import { PolymathError } from '../PolymathError';
 import { Entity } from './Entity';
 import { TransactionQueue } from './TransactionQueue';
@@ -21,7 +30,7 @@ const mapValuesDeep = (
   mapValues(obj, (val, key) => (isPlainObject(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)));
 
 // TODO @monitz87: Make properties private where appliccable
-export class PolyTransaction<Args = any, R extends any = void> extends Entity<void> {
+export class PolyTransaction<Args = any, Values extends any[] = any[]> extends Entity<void> {
   public static generateId() {
     return serialize('transaction', {
       random: v4(),
@@ -38,25 +47,38 @@ export class PolyTransaction<Args = any, R extends any = void> extends Entity<vo
 
   public error?: PolymathError;
 
-  public receipt?: TransactionReceiptWithDecodedLogs;
+  public receipt?: TransactionReceiptWithDecodedLogs | string;
 
   public tag: PolyTransactionTag;
 
   public txHash?: string;
 
-  public args: TransactionSpec<Args, R>['args'];
+  public args: TransactionSpec<Args, Values, TransactionReceiptWithDecodedLogs | string>['args'];
 
-  protected method: TransactionSpec<Args, R>['method'];
+  protected method: TransactionSpec<
+    Args,
+    Values,
+    TransactionReceiptWithDecodedLogs | string
+  >['method'];
 
-  private postResolver: PostTransactionResolver<R> = new PostTransactionResolver<R>();
+  private postResolvers: PostTransactionResolverArray<
+    Values,
+    TransactionReceiptWithDecodedLogs | string
+  > = ([] as unknown) as PostTransactionResolverArray<
+    Values,
+    TransactionReceiptWithDecodedLogs | string
+  >;
 
   private emitter: EventEmitter;
 
-  constructor(transaction: TransactionSpec<Args, R>, transactionQueue: TransactionQueue<any, any>) {
+  constructor(
+    transaction: TransactionSpec<Args, Values, TransactionReceiptWithDecodedLogs | string>,
+    transactionQueue: TransactionQueue<any, any>
+  ) {
     super();
 
-    if (transaction.postTransactionResolver) {
-      this.postResolver = transaction.postTransactionResolver;
+    if (transaction.postTransactionResolvers) {
+      this.postResolvers = transaction.postTransactionResolvers;
     }
 
     this.emitter = new EventEmitter();
@@ -136,16 +158,30 @@ export class PolyTransaction<Args = any, R extends any = void> extends Entity<vo
     this.updateStatus(TransactionStatus.Unapproved);
 
     const unwrappedArgs = this.unwrapArgs(this.args);
-    const polyResponse = await this.method(unwrappedArgs);
+
+    const { method } = this;
+
+    let response;
+
+    if (method instanceof Function) {
+      response = await method(unwrappedArgs);
+    } else {
+      const returnedMethod = await method.futureMethod(method.futureValue.result);
+      response = await returnedMethod(unwrappedArgs);
+    }
 
     // Set the Transaction as Running once it is approved by the user
-    this.txHash = polyResponse.txHash;
     this.updateStatus(TransactionStatus.Running);
 
-    let result: TransactionReceiptWithDecodedLogs;
+    let result: TransactionReceiptWithDecodedLogs | string;
 
     try {
-      result = await polyResponse.receiptAsync;
+      if (typeof response !== 'string') {
+        this.txHash = response.txHash;
+        result = await response.receiptAsync;
+      } else {
+        result = response;
+      }
     } catch (err) {
       // Wrap with PolymathError
       if (err.message.indexOf('MetaMask Tx Signature') > -1) {
@@ -162,7 +198,7 @@ export class PolyTransaction<Args = any, R extends any = void> extends Entity<vo
       throw this.error;
     }
 
-    await this.postResolver.run(result);
+    await Promise.all(this.postResolvers.map(resolver => resolver.run(result)));
 
     return result;
   }

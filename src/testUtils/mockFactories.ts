@@ -1,8 +1,7 @@
-import { BigNumber } from '@polymathnetwork/abi-wrappers';
 import { Factories } from '~/Context';
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import * as securityTokenFactoryModule from '~/entities/factories/SecurityTokenFactory';
-import * as cappedStoFactoryModule from '~/entities/factories/CappedStoFactory';
+import * as securityTokenFactoryModule from '../entities/factories/SecurityTokenFactory';
+import * as simpleStoFactoryModule from '~/entities/factories/SimpleStoFactory';
 import * as checkpointFactoryModule from '~/entities/factories/CheckpointFactory';
 import * as dividendDistributionFactoryModule from '~/entities/factories/DividendDistributionFactory';
 import * as erc20DividendsManagerFactoryModule from '~/entities/factories/Erc20DividendsManagerFactory';
@@ -11,11 +10,11 @@ import * as ethDividendsManagerFactoryModule from '~/entities/factories/EthDivid
 import * as investmentFactoryModule from '~/entities/factories/InvestmentFactory';
 import * as securityTokenReservationModule from '~/entities/factories/SecurityTokenReservationFactory';
 import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
-import * as usdTieredStoFactoryModule from '~/entities/factories/UsdTieredStoFactory';
+import * as tieredStoFactoryModule from '~/entities/factories/TieredStoFactory';
 import * as taxWithholdingFactoryModule from '~/entities/factories/TaxWithholdingFactory';
 
 let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
-let cappedStoFactoryMock: MockManager<cappedStoFactoryModule.CappedStoFactory>;
+let simpleStoFactoryMock: MockManager<simpleStoFactoryModule.SimpleStoFactory>;
 let checkpointFactoryMock: MockManager<checkpointFactoryModule.CheckpointFactory>;
 let dividendDistributionFactoryMock: MockManager<
   dividendDistributionFactoryModule.DividendDistributionFactory
@@ -34,7 +33,7 @@ let securityTokenReservationFactoryMock: MockManager<
   securityTokenReservationModule.SecurityTokenReservationFactory
 >;
 let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
-let usdTieredStoFactoryMock: MockManager<usdTieredStoFactoryModule.UsdTieredStoFactory>;
+let tieredStoFactoryMock: MockManager<tieredStoFactoryModule.TieredStoFactory>;
 let taxWithholdingFactoryMock: MockManager<taxWithholdingFactoryModule.TaxWithholdingFactory>;
 
 /**
@@ -45,7 +44,7 @@ export const mockFactories = (): Factories => {
     securityTokenFactoryModule,
     'SecurityTokenFactory'
   );
-  cappedStoFactoryMock = ImportMock.mockClass(cappedStoFactoryModule, 'CappedStoFactory');
+  simpleStoFactoryMock = ImportMock.mockClass(simpleStoFactoryModule, 'SimpleStoFactory');
   checkpointFactoryMock = ImportMock.mockClass(checkpointFactoryModule, 'CheckpointFactory');
   dividendDistributionFactoryMock = ImportMock.mockClass(
     dividendDistributionFactoryModule,
@@ -69,7 +68,7 @@ export const mockFactories = (): Factories => {
     'SecurityTokenReservationFactory'
   );
   shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
-  usdTieredStoFactoryMock = ImportMock.mockClass(usdTieredStoFactoryModule, 'UsdTieredStoFactory');
+  tieredStoFactoryMock = ImportMock.mockClass(tieredStoFactoryModule, 'TieredStoFactory');
   taxWithholdingFactoryMock = ImportMock.mockClass(
     taxWithholdingFactoryModule,
     'TaxWithholdingFactory'
@@ -80,8 +79,8 @@ export const mockFactories = (): Factories => {
     securityTokenReservationFactory: securityTokenReservationFactoryMock.getMockInstance(),
     erc20TokenBalanceFactory: erc20TokenBalanceFactoryMock.getMockInstance(),
     investmentFactory: investmentFactoryMock.getMockInstance(),
-    cappedStoFactory: cappedStoFactoryMock.getMockInstance(),
-    usdTieredStoFactory: usdTieredStoFactoryMock.getMockInstance(),
+    simpleStoFactory: simpleStoFactoryMock.getMockInstance(),
+    tieredStoFactory: tieredStoFactoryMock.getMockInstance(),
     dividendDistributionFactory: dividendDistributionFactoryMock.getMockInstance(),
     checkpointFactory: checkpointFactoryMock.getMockInstance(),
     erc20DividendsManagerFactory: erc20DividendsManagerFactoryMock.getMockInstance(),
