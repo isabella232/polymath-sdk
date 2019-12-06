@@ -10,6 +10,7 @@ export { ReclaimFunds } from './ReclaimFunds';
 export { WithdrawTaxes } from './WithdrawTaxes';
 export { UpdateDividendsTaxWithholdingList } from './UpdateDividendsTaxWithholdingList';
 export { PushDividendPayment } from './PushDividendPayment';
+export { PullDividendPayment } from './PullDividendPayment';
 export { SetDividendsWallet } from './SetDividendsWallet';
 export { AssignSecurityTokenRole } from './AssignSecurityTokenRole';
 export { AssignStoRole } from './AssignStoRole';
@@ -35,3 +36,4 @@ export { EnablePercentageTransferManager } from './EnablePercentageTransferManag
 export { ModifyMaxHolderPercentage } from './ModifyMaxHolderPercentage';
 export { ModifyPercentageExemptions } from './ModifyPercentageExemptions';
 export { ToggleFreezeTransfers } from './ToggleFreezeTransfers';
+export { ModifyDividendsDefaultExclusionList } from './ModifyDividendsDefaultExclusionList';
