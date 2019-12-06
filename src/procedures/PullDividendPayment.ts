@@ -1,13 +1,11 @@
-import { chunk } from 'lodash';
 import {
   ModuleName,
   ERC20DividendCheckpoint,
   EtherDividendCheckpoint,
 } from '@polymathnetwork/contract-wrappers';
-import P from 'bluebird';
 import { Procedure } from './Procedure';
 import {
-  PushDividendPaymentProcedureArgs,
+  PullDividendPaymentProcedureArgs,
   DividendType,
   ProcedureType,
   PolyTransactionTag,
@@ -17,9 +15,7 @@ import { Factories } from '../Context';
 import { PolymathError } from '../PolymathError';
 import { DividendDistribution, SecurityToken } from '../entities';
 
-const CHUNK_SIZE = 100;
-
-export const createPushDividendPaymentResolver = (
+export const createPullDividendPaymentResolver = (
   factories: Factories,
   symbol: string,
   dividendType: DividendType,
@@ -34,12 +30,12 @@ export const createPushDividendPaymentResolver = (
   );
 };
 
-export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureArgs> {
-  public type = ProcedureType.PushDividendPayment;
+export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureArgs> {
+  public type = ProcedureType.PullDividendPayment;
 
   public async prepareTransactions() {
-    const { symbol, dividendIndex, shareholderAddresses, dividendType } = this.args;
-    const { contractWrappers, factories } = this.context;
+    const { symbol, dividendIndex, dividendType } = this.args;
+    const { contractWrappers, factories, currentWallet } = this.context;
 
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
@@ -81,32 +77,37 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
       dividendIndex,
       dividendsModule,
     });
-    let { shareholders: shareholderStatuses } = dividend;
+    const { shareholders: shareholderStatuses } = dividend;
 
-    if (shareholderAddresses) {
-      shareholderStatuses = shareholderStatuses.filter(
-        status => !!shareholderAddresses.find(address => address === status.address)
-      );
+    const thisShareholderAddress = await currentWallet.address();
+    const thisShareholder = shareholderStatuses.find(
+      ({ address }) => address === thisShareholderAddress
+    );
+
+    let reason: string = '';
+
+    if (!thisShareholder) {
+      reason = 'not a shareholder';
+    } else if (thisShareholder.paymentReceived) {
+      reason = 'already received payment';
+    } else if (thisShareholder.excluded) {
+      reason = 'address belongs to exclusion list';
     }
 
-    const unpaidShareholders = shareholderStatuses
-      .filter(status => !status.paymentReceived)
-      .map(status => status.address);
-
-    const shareholderAddressChunks = chunk(unpaidShareholders, CHUNK_SIZE);
-
-    await P.each(shareholderAddressChunks, async (addresses, index) => {
-      await this.addTransaction(dividendsModule!.pushDividendPaymentToAddresses, {
-        tag: PolyTransactionTag.PushDividendPayment,
-        // Only add resolver to the last transaction
-        resolvers:
-          index < shareholderAddressChunks.length - 1
-            ? undefined
-            : [createPushDividendPaymentResolver(factories, symbol, dividendType, index)],
-      })({
-        dividendIndex,
-        payees: addresses,
+    if (reason) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `Current wallet ${thisShareholderAddress} cannot receive dividend payments. Reason: ${reason}`,
       });
+    }
+
+    await this.addTransaction(dividendsModule!.pullDividendPayment, {
+      tag: PolyTransactionTag.PullDividendPayment,
+      resolvers: [
+        createPullDividendPaymentResolver(factories, symbol, dividendType, dividendIndex),
+      ],
+    })({
+      dividendIndex,
     });
   }
 }

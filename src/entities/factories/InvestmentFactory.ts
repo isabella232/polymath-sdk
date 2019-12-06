@@ -23,7 +23,7 @@ export class InvestmentFactory extends Factory<Investment, Params, UniqueIdentif
     const { stoType, address } = Sto.unserialize(stoId);
     const { symbol } = SecurityToken.unserialize(securityTokenId);
 
-    if (stoType === StoType.Capped) {
+    if (stoType === StoType.Simple) {
       const module = await this.context.contractWrappers.moduleFactory.getModuleInstance({
         name: ModuleName.CappedSTO,
         address,
@@ -57,7 +57,7 @@ export class InvestmentFactory extends Factory<Investment, Params, UniqueIdentif
         investedFunds: weiToValue(value, FULL_DECIMALS),
         securityTokenSymbol: symbol,
       };
-    } else if (stoType === StoType.UsdTiered) {
+    } else if (stoType === StoType.Tiered) {
       const module = await this.context.contractWrappers.moduleFactory.getModuleInstance({
         name: ModuleName.UsdTieredSTO,
         address,

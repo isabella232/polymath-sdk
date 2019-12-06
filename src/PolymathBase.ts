@@ -20,6 +20,20 @@ import {
   VestingEscrowWallet,
   RestrictedPartialSaleTransferManager,
   Perm,
+  isCappedSTO,
+  isCappedSTO_3_0_0,
+  isUSDTieredSTO,
+  isUSDTieredSTO_3_0_0,
+  isGeneralPermissionManager,
+  isGeneralPermissionManager_3_0_0,
+  isGeneralTransferManager,
+  isBlacklistTransferManager,
+  isLockUpTransferManager,
+  isCountTransferManager,
+  isManualApprovalTransferManager,
+  isPercentageTransferManager,
+  isVolumeRestrictionTransferManager,
+  isRestrictedPartialSaleTransferManager,
 } from '@polymathnetwork/contract-wrappers';
 import { range, flatten, includes } from 'lodash';
 import P from 'bluebird';
@@ -242,6 +256,63 @@ export class PolymathBase extends PolymathAPI {
       code: ErrorCode.InexistentModule,
       message: `Module factory for "${moduleName}" was not found.`,
     });
+  };
+
+  public getTreasuryWallet = async ({ module }: { module: Module }) => {
+    const stAddress = await module.securityToken();
+    const token = await this.tokenFactory.getSecurityTokenInstanceFromAddress(stAddress);
+    const defaultWallet = await token.getTreasuryWallet();
+
+    if (isCappedSTO(module)) {
+      if (isCappedSTO_3_0_0(module)) {
+        return defaultWallet;
+      }
+    }
+
+    if (isUSDTieredSTO(module)) {
+      if (isUSDTieredSTO_3_0_0(module)) {
+        const wallet = await module.treasuryWallet();
+        return wallet === '0x0000000000000000000000000000000000000000' ? defaultWallet : wallet;
+      }
+    }
+
+    if (isGeneralPermissionManager(module)) {
+      return defaultWallet;
+    }
+
+    if (isGeneralTransferManager(module)) {
+      return defaultWallet;
+    }
+
+    if (isBlacklistTransferManager(module)) {
+      return defaultWallet;
+    }
+
+    if (isLockUpTransferManager(module)) {
+      return defaultWallet;
+    }
+
+    if (isCountTransferManager(module)) {
+      return defaultWallet;
+    }
+
+    if (isManualApprovalTransferManager(module)) {
+      return defaultWallet;
+    }
+
+    if (isPercentageTransferManager(module)) {
+      return defaultWallet;
+    }
+
+    if (isVolumeRestrictionTransferManager(module)) {
+      return defaultWallet;
+    }
+
+    if (isRestrictedPartialSaleTransferManager(module)) {
+      return defaultWallet;
+    }
+
+    return module.getTreasuryWallet();
   };
 
   public getModuleAddressesByName = async (

@@ -7,6 +7,7 @@ import {
   CreateEtherDividendDistribution,
   UpdateDividendsTaxWithholdingList,
   SetDividendsWallet,
+  ModifyDividendsDefaultExclusionList,
 } from '../../procedures';
 import { Checkpoint } from '../Checkpoint';
 import { PolymathError } from '../../PolymathError';
@@ -183,6 +184,29 @@ export class Dividends extends SubModule {
       {
         symbol,
         ...args,
+      },
+      this.context
+    );
+    return procedure.prepare();
+  };
+
+  /**
+   * Set default exclusion list for a type of dividends. Addresses on this list won't be considered for dividend distribution. This operation overrides the previous default exclusion list
+   *
+   * @param dividendType type of dividends for which to modify the exclusion list
+   * @param shareholderAddresses array of shareholder addresses to be excluded from dividends
+   */
+  public modifyDefaultExclusionList = async (args: {
+    dividendType: DividendType;
+    shareholderAddresses: string[];
+  }) => {
+    const { shareholderAddresses, ...rest } = args;
+    const { symbol } = this.securityToken;
+    const procedure = new ModifyDividendsDefaultExclusionList(
+      {
+        symbol,
+        shareholderAddresses,
+        ...rest,
       },
       this.context
     );
@@ -374,9 +398,52 @@ export class Dividends extends SubModule {
       default: {
         throw new PolymathError({
           code: ErrorCode.FetcherValidationError,
-          message: 'Invalid dividend type. Must be "Erc20" or "Eth".',
+          message: 'Invalid dividend type. Must be "Erc20" or "Eth"',
         });
       }
     }
+  };
+
+  /**
+   * Retrieve the list of addresses which are excluded from receiving dividend payments by default
+   */
+  public getDefaultExclusionList = async (args: { dividendType: DividendType }) => {
+    const {
+      contractWrappers: { tokenFactory, getAttachedModules },
+    } = this.context;
+
+    const { dividendType } = args;
+    const { symbol } = this.securityToken;
+
+    try {
+      await tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+
+    let dividendsModule;
+    if (dividendType === DividendType.Erc20) {
+      [dividendsModule] = await getAttachedModules(
+        { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
+        { unarchived: true }
+      );
+    } else if (dividendType === DividendType.Eth) {
+      [dividendsModule] = await getAttachedModules(
+        { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
+        { unarchived: true }
+      );
+    }
+
+    if (!dividendsModule) {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message: "Dividends of the specified type haven't been enabled",
+      });
+    }
+
+    return dividendsModule.getDefaultExcluded();
   };
 }

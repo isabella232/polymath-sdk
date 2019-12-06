@@ -1,5 +1,9 @@
-import { PolyResponse } from '@polymathnetwork/contract-wrappers';
+import {
+  PolyResponse,
+  TransactionReceiptWithDecodedLogs,
+} from '@polymathnetwork/contract-wrappers';
 import { PostTransactionResolver } from '../PostTransactionResolver';
+import { TransactionSpec } from '../types';
 
 const originalWindow = {
   ...window,
@@ -118,7 +122,7 @@ export class MockedContract {
 
   public failureTxPolyResponse: MockPolyResponse;
 
-  public fakeTxOne = jest.fn(async () => {
+  public fakeTxOneSpy = jest.fn(async (_args: any) => {
     if (this.autoResolve) {
       this.fakeTxOnePolyResponse.resolve();
     }
@@ -126,13 +130,17 @@ export class MockedContract {
     return this.fakeTxOnePolyResponse;
   });
 
-  public fakeTxTwo = jest.fn(async () => {
+  public fakeTxTwoSpy = jest.fn(async (_args: any) => {
     if (this.autoResolve) {
       this.fakeTxTwoPolyResponse.resolve();
     }
 
     return this.fakeTxTwoPolyResponse;
   });
+
+  public fakeTxOne = (args: any) => this.fakeTxOneSpy(args);
+
+  public fakeTxTwo = (args: any) => this.fakeTxTwoSpy(args);
 
   public failureTx = jest.fn(async () => {
     if (this.autoResolve) {
@@ -169,11 +177,11 @@ export class MockedContract {
 export const getMockTransactionSpec = (
   method: (args: any) => Promise<any>,
   args: any,
-  resolver = async () => {}
-) => ({
+  resolvers = []
+): TransactionSpec<any, any[], string | TransactionReceiptWithDecodedLogs> => ({
   method,
   args,
-  postTransactionResolver: new PostTransactionResolver(resolver),
+  postTransactionResolvers: resolvers.map(resolver => new PostTransactionResolver(resolver)),
 });
 
 export async function getMockedPolyResponse(): Promise<PolyResponse> {
