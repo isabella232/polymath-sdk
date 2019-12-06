@@ -168,7 +168,8 @@ export enum PolyTransactionTag {
   ChangeHolderPercentage = 'ChangeHolderPercentage',
   ModifyWhitelistMulti = 'ModifyWhitelistMulti',
   SetAllowPrimaryIssuance = 'SetAllowPrimaryIssuance',
-  ToggleFreezeTransfers = 'ToggleFreezeTransfers',
+  UnfreezeTransfers = 'UnfreezeTransfers',
+  FreezeTransfers = 'FreezeTransfers',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T> | T;

@@ -33,8 +33,11 @@ export class ToggleFreezeTransfers extends Procedure<ToggleFreezeTransfersProced
       });
     }
 
-    const owner = await securityToken.owner();
-    const account = await currentWallet.address();
+    const [owner, account, isFrozen] = await Promise.all([
+      securityToken.owner(),
+      currentWallet.address(),
+      securityToken.transfersFrozen(),
+    ]);
 
     if (account !== owner) {
       throw new PolymathError({
@@ -44,8 +47,6 @@ export class ToggleFreezeTransfers extends Procedure<ToggleFreezeTransfersProced
         } the transfers`,
       });
     }
-
-    const isFrozen = await securityToken.transfersFrozen();
 
     if (isFrozen === freeze) {
       throw new PolymathError({
@@ -57,7 +58,7 @@ export class ToggleFreezeTransfers extends Procedure<ToggleFreezeTransfersProced
     await this.addTransaction(
       freeze ? securityToken.freezeTransfers : securityToken.unfreezeTransfers,
       {
-        tag: PolyTransactionTag.ToggleFreezeTransfers,
+        tag: freeze ? PolyTransactionTag.FreezeTransfers : PolyTransactionTag.UnfreezeTransfers,
         resolver: createToggleFreezeTransfersResolver(factories, symbol),
       }
     )({});
