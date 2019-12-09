@@ -1,23 +1,44 @@
 import { chunk } from 'lodash';
 import {
-  ModuleName,
   BigNumber,
   ERC20DividendCheckpoint,
   EtherDividendCheckpoint,
+  ModuleName,
 } from '@polymathnetwork/contract-wrappers';
 import P from 'bluebird';
 import { Procedure } from './Procedure';
 import {
-  UpdateDividendsTaxWithholdingListProcedureArgs,
-  ProcedureType,
-  PolyTransactionTag,
-  ErrorCode,
   DividendType,
+  ErrorCode,
+  PolyTransactionTag,
+  ProcedureType,
+  UpdateDividendsTaxWithholdingListProcedureArgs,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-import { TaxWithholding, SecurityToken } from '../entities';
+import { SecurityToken, TaxWithholding } from '../entities';
+import { Factories } from '../Context';
 
 const CHUNK_SIZE = 200;
+export const updateDividendsTaxWithholdingListResolver = (
+  factories: Factories,
+  symbol: string,
+  dividendType: DividendType,
+  percentageChunk: number[],
+  addresses: string[]
+) => async () => {
+  return Promise.all(
+    addresses.map((address, addressIndex) => {
+      factories.taxWithholdingFactory.update(
+        TaxWithholding.generateId({
+          securityTokenId: SecurityToken.generateId({ symbol }),
+          dividendType,
+          shareholderAddress: address,
+        }),
+        { percentage: percentageChunk[addressIndex] }
+      );
+    })
+  );
+};
 
 export class UpdateDividendsTaxWithholdingList extends Procedure<
   UpdateDividendsTaxWithholdingListProcedureArgs
@@ -38,6 +59,7 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
     }
 
     let dividendsModule: ERC20DividendCheckpoint | EtherDividendCheckpoint | undefined;
+    let transactionTag: PolyTransactionTag | undefined;
 
     switch (dividendType) {
       case DividendType.Erc20: {
@@ -45,6 +67,7 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
           { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
           { unarchived: true }
         );
+        transactionTag = PolyTransactionTag.SetErc20TaxWithholding;
         break;
       }
       case DividendType.Eth: {
@@ -52,6 +75,7 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
           { moduleName: ModuleName.EtherDividendCheckpoint, symbol },
           { unarchived: true }
         );
+        transactionTag = PolyTransactionTag.SetEtherTaxWithholding;
         break;
       }
     }
@@ -69,25 +93,18 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
     await P.each(shareholderAddressChunks, async (addresses, chunkIndex) => {
       const percentageChunk = percentageChunks[chunkIndex];
       await this.addTransaction(dividendsModule!.setWithholding, {
-        tag: PolyTransactionTag.SetErc20TaxWithholding,
+        tag: transactionTag!,
         // Update all affected tax withholding entities.
         // We do this without fetching the data from the contracts
         // because it would take too many requests and it's only one value that changes
         resolvers: [
-          async () => {
-            return Promise.all(
-              addresses.map((address, addressIndex) => {
-                factories.taxWithholdingFactory.update(
-                  TaxWithholding.generateId({
-                    securityTokenId: SecurityToken.generateId({ symbol }),
-                    dividendType,
-                    shareholderAddress: address,
-                  }),
-                  { percentage: percentageChunk[addressIndex] }
-                );
-              })
-            );
-          },
+          updateDividendsTaxWithholdingListResolver(
+            factories,
+            symbol,
+            dividendType,
+            percentageChunk,
+            addresses
+          ),
         ],
       })({
         investors: addresses,
