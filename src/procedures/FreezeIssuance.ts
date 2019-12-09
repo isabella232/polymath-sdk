@@ -37,18 +37,20 @@ export class FreezeIssuance extends Procedure<FreezeIssuanceProcedureArgs> {
       });
     }
 
-    if (!securityToken.isIssuable()) {
+    if (!(await securityToken.isIssuable())) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message: `The security token isIssuable method is not currently valid, freeze issuance method can only be called on issuable security tokens`,
       });
     }
+    // If there is no hex signature passed in, create a signature request to sign the freeze issuance acknowledgement
+    const requestedSignature = signature || await this.addSignatureRequest(securityToken.signFreezeIssuanceAck)({});
 
     /**
      * Transactions
      */
     await this.addTransaction(securityToken.freezeIssuance, {
       tag: PolyTransactionTag.FreezeIssuance,
-    })({ signature: signature || (await securityToken.signFreezeIssuanceAck({})) });
+    })({ signature: requestedSignature });
   }
 }

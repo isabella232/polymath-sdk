@@ -9,6 +9,7 @@ import {
   RevokeKyc,
   MintTokens,
   FreezeIssuance,
+  DisableController,
 } from '../../procedures';
 import { SubModule } from './SubModule';
 import { Checkpoint } from '../Checkpoint';
@@ -125,7 +126,10 @@ export class Shareholders extends SubModule {
     const checkpoints: BaseCheckpoint[] = await contractWrappers.getCheckpoints({ securityToken });
 
     return checkpoints.map(({ index, ...checkpoint }) => {
-      const checkpointId = Checkpoint.generateId({ securityTokenId: uid, index });
+      const checkpointId = Checkpoint.generateId({
+        securityTokenId: uid,
+        index,
+      });
 
       const checkpointDividends = allDividends.filter(dividend => dividend.checkpointId === index);
 
@@ -173,7 +177,10 @@ export class Shareholders extends SubModule {
     if (typeof args === 'string') {
       uid = args;
     } else {
-      uid = Checkpoint.generateId({ index: args.checkpointIndex, securityTokenId });
+      uid = Checkpoint.generateId({
+        index: args.checkpointIndex,
+        securityTokenId,
+      });
     }
 
     return factories.checkpointFactory.fetch(uid);
@@ -201,7 +208,10 @@ export class Shareholders extends SubModule {
     }
 
     const generalTransferManager = (await contractWrappers.getAttachedModules(
-      { moduleName: ModuleName.GeneralTransferManager, symbol: securityTokenSymbol },
+      {
+        moduleName: ModuleName.GeneralTransferManager,
+        symbol: securityTokenSymbol,
+      },
       { unarchived: true }
     ))[0];
 
@@ -246,13 +256,9 @@ export class Shareholders extends SubModule {
    * Used by the issuer to permanently freeze issuance of the security token
    * Signature is optional, and will be generated if it is not passed in
    */
-  public freezeIssuance = async (args: { signature?: string }) => {
-    const { signature } = args;
+  public freezeIssuance = async (args?: { signature?: string }) => {
     const { symbol } = this.securityToken;
-    const procedure = new FreezeIssuance(
-      signature ? { symbol, signature } : { symbol },
-      this.context
-    );
+    const procedure = new FreezeIssuance({ ...args, symbol }, this.context);
     return procedure.prepare();
   };
 }
