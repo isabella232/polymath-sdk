@@ -146,14 +146,14 @@ describe('TransferSecurityTokens', () => {
     );
   });
 
-  test('should successfully resolve controller transfer', async () => {
+  test('should successfully refresh the corresponding balance of each shareholder involved', async () => {
     const from = '0x1FB52cef867d95E69d398Fe9F6486fAF92C7ED7F';
     const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve());
     const securityTokenId = SecurityToken.generateId({ symbol: params.symbol });
     const resolverValue = await transferSecurityTokensModule.createTransferSecurityTokensResolver(
       factoriesMockedSetup,
       params.symbol,
-      '0x1FB52cef867d95E69d398Fe9F6486fAF92C7ED7F',
+      from,
       params.to
     )();
     expect(

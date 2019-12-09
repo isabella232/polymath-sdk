@@ -64,7 +64,7 @@ export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProc
 
     await this.addTransaction(securityToken.transferFromWithData, {
       tag: PolyTransactionTag.TransferSecurityTokens,
-      resolver: createTransferSecurityTokensResolver(factories, symbol, from || fromAddress, to),
+      resolvers: [createTransferSecurityTokensResolver(factories, symbol, from || fromAddress, to)],
     })({ from: from || fromAddress, to, value: amount, data });
   }
 }
