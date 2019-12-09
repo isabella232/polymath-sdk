@@ -146,6 +146,8 @@ export enum ProcedureType {
   UpdateDividendsTaxWithholdingList = 'UpdateDividendsTaxWithholdingList',
   SetDividendsWallet = 'SetDividendsWallet',
   PushDividendPayment = 'PushDividendPayment',
+  PullDividendPayment = 'PullDividendPayment',
+  ModifyDividendsDefaultExclusionList = 'ModifyDividendsDefaultExclusionList',
   AssignSecurityTokenRole = 'AssignSecurityTokenRole',
   AssignStoRole = 'AssignStoRole',
   ControllerTransfer = 'ControllerTransfer',
@@ -179,6 +181,7 @@ export enum PolyTransactionTag {
   CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   SetErc20TaxWithholding = 'SetErc20TaxWithholding',
   SetEtherTaxWithholding = 'SetEtherTaxWithholding',
+  SetDefaultExcluded = 'SetDefaultExcluded',
   EnableDividends = 'EnableDividends',
   EnableCappedSto = 'EnableCappedSto',
   EnableTieredSto = 'EnableTieredSto',
@@ -192,6 +195,7 @@ export enum PolyTransactionTag {
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
   PushDividendPayment = 'PushDividendPayment',
+  PullDividendPayment = 'PullDividendPayment',
   SetDividendsWallet = 'SetDividendsWallet',
   AddDelegate = 'AddDelegate',
   ChangePermission = 'ChangePermission',
@@ -293,6 +297,12 @@ export interface PushDividendPaymentProcedureArgs {
   dividendIndex: number;
   dividendType: DividendType;
   shareholderAddresses?: string[];
+}
+
+export interface PullDividendPaymentProcedureArgs {
+  symbol: string;
+  dividendIndex: number;
+  dividendType: DividendType;
 }
 
 export interface CreateSecurityTokenProcedureArgs {
@@ -469,6 +479,12 @@ export interface SetDividendsWalletProcedureArgs {
   address: string;
 }
 
+export interface ModifyDividendsDefaultExclusionListProcedureArgs {
+  symbol: string;
+  dividendType: DividendType;
+  shareholderAddresses: string[];
+}
+
 export interface AssignSecurityTokenRoleProcedureArgs {
   symbol: string;
   delegateAddress: string;
@@ -606,7 +622,9 @@ export interface ProcedureArguments {
   [ProcedureType.WithdrawTaxes]: WithdrawTaxesProcedureArgs;
   [ProcedureType.UpdateDividendsTaxWithholdingList]: UpdateDividendsTaxWithholdingListProcedureArgs;
   [ProcedureType.PushDividendPayment]: PushDividendPaymentProcedureArgs;
+  [ProcedureType.PullDividendPayment]: PullDividendPaymentProcedureArgs;
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
+  [ProcedureType.ModifyDividendsDefaultExclusionList]: ModifyDividendsDefaultExclusionListProcedureArgs;
   [ProcedureType.LaunchSimpleSto]: LaunchSimpleStoProcedureArgs;
   [ProcedureType.LaunchTieredSto]: LaunchTieredStoProcedureArgs;
   [ProcedureType.TogglePauseSto]: TogglePauseStoProcedureArgs;
