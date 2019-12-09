@@ -36,18 +36,21 @@ export class DisableController extends Procedure<DisableControllerProcedureArgs>
       });
     }
 
-    if (!securityToken.isControllable()) {
+    if (!(await securityToken.isControllable())) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message: `The security token isControllable method is not currently valid, disable controller method can only be called on controllable security tokens`,
       });
     }
 
+    // If there is no hex signature passed in, create a signature request to sign the disable controller acknowledgement
+    const requestedSignature = signature || await this.addSignatureRequest(securityToken.signDisableControllerAck)({});
+
     /**
      * Transactions
      */
     await this.addTransaction(securityToken.disableController, {
       tag: PolyTransactionTag.DisableController,
-    })({ signature: signature || (await securityToken.signDisableControllerAck({})) });
+    })({ signature: requestedSignature });
   }
 }
