@@ -59,7 +59,7 @@ export class ToggleFreezeTransfers extends Procedure<ToggleFreezeTransfersProced
       freeze ? securityToken.freezeTransfers : securityToken.unfreezeTransfers,
       {
         tag: freeze ? PolyTransactionTag.FreezeTransfers : PolyTransactionTag.UnfreezeTransfers,
-        resolver: createToggleFreezeTransfersResolver(factories, symbol),
+        resolvers: [createToggleFreezeTransfersResolver(factories, symbol)],
       }
     )({});
   }
