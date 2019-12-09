@@ -23,13 +23,9 @@ export class Controller extends SubModule {
    * Used by the issuer to permanently disable controller functionality
    * Signature is optional, and will be generated if it is not passed in
    */
-  public disableController = async (args: { signature?: string }) => {
-    const { signature } = args;
+  public disableController = async (args?: { signature?: string }) => {
     const { symbol } = this.securityToken;
-    const procedure = new DisableController(
-      signature ? { symbol, signature } : { symbol },
-      this.context
-    );
+    const procedure = new DisableController({ ...args, symbol }, this.context);
     return procedure.prepare();
   };
 

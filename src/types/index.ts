@@ -228,8 +228,7 @@ export enum PolyTransactionTag {
   Signature = 'Signature',
 }
 
-export type MaybeResolver<T> = PostTransactionResolver<T> | T;
-
+export type MaybeResolver<T> = PostTransactionResolver<T, any> | T;
 export type MapMaybeResolver<T> = { [K in keyof T]: MaybeResolver<T[K]> };
 
 // TODO @monitz87: remake this interface when contract-wrappers exports the tx arguments

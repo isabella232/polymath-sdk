@@ -179,7 +179,7 @@ export abstract class Procedure<Args, ReturnType = void> {
       const transaction = {
         method: request,
         args,
-        postTransactionResolver,
+        postTransactionResolvers: [postTransactionResolver],
         tag: PolyTransactionTag.Signature,
       };
 
