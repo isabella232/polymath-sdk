@@ -1,4 +1,4 @@
-import { ModuleName } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ReclaimFundsProcedureArgs,
@@ -68,9 +68,12 @@ export class ReclaimFunds extends Procedure<ReclaimFundsProcedureArgs> {
       });
     }
 
-    await this.addTransaction(dividendModule.reclaimDividend, {
-      tag: PolyTransactionTag.ReclaimDividendFunds,
-      resolver: createReclaimFundsResolver(dividendType, dividendIndex, factories, symbol),
-    })({ dividendIndex });
+    await this.addTransaction<TransactionParams.DividendCheckpoint.ReclaimDividend>(
+      dividendModule.reclaimDividend,
+      {
+        tag: PolyTransactionTag.ReclaimDividendFunds,
+        resolvers: [createReclaimFundsResolver(dividendType, dividendIndex, factories, symbol)],
+      }
+    )({ dividendIndex });
   }
 }

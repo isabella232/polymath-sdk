@@ -1,4 +1,4 @@
-import { ModuleName } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { difference } from 'lodash';
 import { Procedure } from './Procedure';
 import { ProcedureType, PolyTransactionTag, ErrorCode, RevokeKycProcedureArgs } from '../types';
@@ -6,7 +6,7 @@ import { PolymathError } from '../PolymathError';
 import { Shareholder, SecurityToken } from '../entities';
 
 export class RevokeKyc extends Procedure<RevokeKycProcedureArgs, Shareholder[]> {
-  public type = ProcedureType.CreateErc20DividendDistribution;
+  public type = ProcedureType.RevokeKyc;
 
   public async prepareTransactions() {
     const { symbol, shareholderAddresses } = this.args;
@@ -75,31 +75,36 @@ export class RevokeKyc extends Procedure<RevokeKycProcedureArgs, Shareholder[]> 
 
     let revokedShareholders;
 
-    revokedShareholders = await this.addTransaction(gtmModule.modifyKYCDataMulti, {
+    [revokedShareholders] = await this.addTransaction<
+      TransactionParams.GeneralTransferManager.ModifyKYCDataMulti,
+      [Shareholder[]]
+    >(gtmModule.modifyKYCDataMulti, {
       tag: PolyTransactionTag.ModifyKycDataMulti,
-      resolver: async () => {
-        const refreshingShareholders = shareholderAddresses.map(shareholder => {
-          return factories.shareholderFactory.refresh(
-            Shareholder.generateId({
-              securityTokenId,
-              address: shareholder,
-            })
-          );
-        });
+      resolvers: [
+        async () => {
+          const refreshingShareholders = shareholderAddresses.map(shareholder => {
+            return factories.shareholderFactory.refresh(
+              Shareholder.generateId({
+                securityTokenId,
+                address: shareholder,
+              })
+            );
+          });
 
-        await Promise.all(refreshingShareholders);
+          await Promise.all(refreshingShareholders);
 
-        const fetchingShareholders = shareholderAddresses.map(shareholder => {
-          return factories.shareholderFactory.fetch(
-            Shareholder.generateId({
-              securityTokenId,
-              address: shareholder,
-            })
-          );
-        });
+          const fetchingShareholders = shareholderAddresses.map(shareholder => {
+            return factories.shareholderFactory.fetch(
+              Shareholder.generateId({
+                securityTokenId,
+                address: shareholder,
+              })
+            );
+          });
 
-        return Promise.all(fetchingShareholders);
-      },
+          return Promise.all(fetchingShareholders);
+        },
+      ],
     })({
       investors: shareholderAddresses,
       canSendAfter,

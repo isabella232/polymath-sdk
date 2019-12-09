@@ -44,7 +44,7 @@ export class TaxWithholding extends Entity<Params> {
     if (!isUniqueIdentifiers(unserialized)) {
       throw new PolymathError({
         code: ErrorCode.InvalidUuid,
-        message: 'Wrong Tax Withholding ID format.',
+        message: 'Wrong Tax Withholding ID format',
       });
     }
 
