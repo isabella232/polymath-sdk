@@ -67,10 +67,21 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
      */
     await this.addTransaction(securityToken.controllerRedeem, {
       tag: PolyTransactionTag.ControllerRedeem,
-      resolvers: [createControllerRedeemResolver(factories, symbol, from)],
+      resolvers: [
+        createControllerRedeemResolver(factories, symbol, from),
+        refreshSecurityTokenFactoryResolver(factories, symbol),
+      ],
     })({ from, value: amount, data, operatorData: reason });
   }
 }
+
+export const refreshSecurityTokenFactoryResolver = (
+  factories: Factories,
+  symbol: string
+) => async () => {
+  return factories.securityTokenFactory.refresh(SecurityToken.generateId({ symbol }));
+};
+
 export const createControllerRedeemResolver = (
   factories: Factories,
   symbol: string,

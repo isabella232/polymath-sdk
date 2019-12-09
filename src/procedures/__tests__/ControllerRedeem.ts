@@ -18,6 +18,7 @@ import {
 } from '../../types';
 import { mockFactories } from '../../testUtils/mockFactories';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
+import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import { Factories } from '../../Context';
 import { SecurityToken, Shareholder } from '../../entities';
 
@@ -37,6 +38,7 @@ describe('ControllerRedeem', () => {
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
+  let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
   let factoriesMockedSetup: Factories;
 
   beforeEach(() => {
@@ -58,8 +60,13 @@ describe('ControllerRedeem', () => {
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
     shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
+    securityTokenFactoryMock = ImportMock.mockClass(
+      securityTokenFactoryModule,
+      'SecurityTokenFactory'
+    );
     factoriesMockedSetup = mockFactories();
     factoriesMockedSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
+    factoriesMockedSetup.securityTokenFactory = securityTokenFactoryMock.getMockInstance();
     contextMock.set('factories', factoriesMockedSetup);
 
     // Instantiate ControllerRedeem
@@ -163,6 +170,21 @@ describe('ControllerRedeem', () => {
       )
     ).toEqual(true);
 
+    expect(resolverValue).toEqual(undefined);
+    expect(refreshStub.callCount).toEqual(1);
+  });
+
+  test('should refresh the security token factory with resolver', async () => {
+    const refreshStub = securityTokenFactoryMock.mock('refresh', Promise.resolve(undefined));
+
+    const resolverValue = await controllerRedeemModule.refreshSecurityTokenFactoryResolver(
+      factoriesMockedSetup,
+      params.symbol
+    )();
+
+    expect(
+      refreshStub.getCall(0).calledWithExactly(SecurityToken.generateId({ symbol: params.symbol }))
+    ).toEqual(true);
     expect(resolverValue).toEqual(undefined);
     expect(refreshStub.callCount).toEqual(1);
   });
