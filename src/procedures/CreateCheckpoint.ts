@@ -31,6 +31,7 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
       });
     }
 
+    const securityTokenId = SecurityToken.generateId({ symbol });
     const [checkpoint] = await this.addTransaction<{}, [Checkpoint]>(
       securityToken.createCheckpoint,
       {
@@ -47,7 +48,7 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
               const { args: eventArgs } = event;
 
               const { _checkpointId } = eventArgs;
-
+              await factories.securityTokenFactory.refresh(securityTokenId); // Issue leaving this in separate resolver
               return factories.checkpointFactory.fetch(
                 Checkpoint.generateId({
                   securityTokenId: SecurityToken.generateId({ symbol }),
