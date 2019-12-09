@@ -513,7 +513,7 @@ export interface ControllerRedeemProcedureArgs {
   symbol: string;
   amount: BigNumber;
   data?: string;
-  log?: string;
+  reason?: string;
 }
 
 export interface TogglePauseStoProcedureArgs {

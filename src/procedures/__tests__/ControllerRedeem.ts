@@ -105,7 +105,7 @@ describe('ControllerRedeem', () => {
       );
     });
 
-    test('should throw error if balanceOf is less than amount being transferred', async () => {
+    test('should throw error if balanceOf is less than amount being redeemed', async () => {
       securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(0)));
       // Real call
       await expect(target.prepareTransactions()).rejects.toThrowError(
@@ -122,7 +122,7 @@ describe('ControllerRedeem', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `You must be the controller of this Security Token to perform forced transfers. Did you remember to call "setController"?`,
+          message: `You must be the controller of this Security Token to redeem tokens. Did you remember to call "setController"?`,
         })
       );
     });
@@ -140,7 +140,7 @@ describe('ControllerRedeem', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.InvalidAddress,
-          message: `Provided from address is invalid: Inappropriate`,
+          message: `Provided from address is invalid: \"Inappropriate\"`,
         })
       );
     });
