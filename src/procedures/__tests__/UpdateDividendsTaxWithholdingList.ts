@@ -148,7 +148,7 @@ describe('UpdateDividendsTaxWithholdingList', () => {
       );
     });
 
-    test('should add a transaction to push a dividend payment for an attached ERC20 dividends module', async () => {
+    test('should add a transaction to the queue update the dividends tax withholding list for an attached ERC20 dividends module', async () => {
       // Instantiate UpdateDividendsTaxWithholdingList with ERC20 dividend type
       target = new UpdateDividendsTaxWithholdingList(
         { ...params, dividendType: DividendType.Erc20 },
@@ -177,7 +177,7 @@ describe('UpdateDividendsTaxWithholdingList', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to push a dividend payment of an attached ETH dividends module', async () => {
+    test('should add a transaction to the queue to update the dividends tax withholding list for an attached ETH dividends module', async () => {
       wrappersMock.mock(
         'getAttachedModules',
         Promise.resolve([ethDividendsMock.getMockInstance()])
