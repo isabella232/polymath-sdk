@@ -4,11 +4,18 @@ import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/c
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { cloneDeep } from 'lodash';
 import { MintTokens } from '../../procedures/MintTokens';
+import * as mintTokensModule from '../../procedures/MintTokens';
 import { Procedure } from '../../procedures/Procedure';
 import * as shareholdersEntityModule from '../../entities/SecurityToken/Shareholders';
 import * as securityTokenEntityModule from '../../entities/SecurityToken/SecurityToken';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, MintTokensProcedureArgs, PolyTransactionTag, ProcedureType } from '../../types';
+import {
+  DividendType,
+  ErrorCode,
+  MintTokensProcedureArgs,
+  PolyTransactionTag,
+  ProcedureType,
+} from '../../types';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
 import * as contextModule from '../../Context';
@@ -17,8 +24,9 @@ import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { ModifyShareholderData } from '../../procedures';
 import { mockFactories } from '../../testUtils/mockFactories';
-import { Shareholder } from '../../entities';
+import { DividendDistribution, Shareholder } from '../../entities';
 import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
+import { Factories } from '../../Context';
 
 const securityTokenId = 'ST ID';
 const testAddress = '0x6666666666666666666666666666666666666666';
@@ -53,6 +61,7 @@ describe('MintTokens', () => {
   let moduleWrapperFactoryMock: MockManager<
     moduleWrapperFactoryModule.MockedModuleWrapperFactoryModule
   >;
+  let factoryMockSetup: Factories;
 
   // Mock factories
   let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
@@ -97,7 +106,7 @@ describe('MintTokens', () => {
       securityTokenMock.getMockInstance()
     );
 
-    const factoryMockSetup = mockFactories();
+    factoryMockSetup = mockFactories();
 
     wrappersMock.mock('getAttachedModules', Promise.resolve([]));
 
@@ -167,6 +176,7 @@ describe('MintTokens', () => {
         address: testAddress,
       };
       const fetchStub = shareholderFactoryMock.mock('fetch', Promise.resolve(shareholderObject));
+      const refreshStub = securityTokenEntityStaticMock.mock('refresh', Promise.resolve());
 
       // Real call
       const resolver = await target.prepareTransactions();
@@ -191,6 +201,24 @@ describe('MintTokens', () => {
         )
       ).toEqual(true);
       expect(fetchStub.callCount).toBe(2);
+
+      // Verification for fetch
+      expect(refreshStub.getCall(0).calledWithExactly(securityTokenId)).toEqual(true);
+      expect(refreshStub.getCall(1).calledWithExactly(securityTokenId)).toEqual(true);
+      expect(refreshStub.callCount).toBe(2);
+    });
+
+    test('should refresh the security token factory with resolver', async () => {
+      const refreshStub = securityTokenFactoryMock.mock('refresh', Promise.resolve(undefined));
+
+      const resolverValue = await mintTokensModule.refreshSecurityTokenFactoryResolver(
+        factoryMockSetup,
+        securityTokenId
+      )();
+
+      expect(refreshStub.getCall(0).calledWithExactly(securityTokenId)).toEqual(true);
+      expect(resolverValue).toEqual(undefined);
+      expect(refreshStub.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {

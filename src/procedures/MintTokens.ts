@@ -11,8 +11,16 @@ import {
 import { PolymathError } from '../PolymathError';
 import { Shareholder, SecurityToken } from '../entities';
 import { ModifyShareholderData } from './ModifyShareholderData';
+import { Factories } from '../Context';
 
-export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]> {
+export const refreshSecurityTokenFactoryResolver = (
+  factories: Factories,
+  securityTokenId: string
+) => async () => {
+  return factories.securityTokenFactory.refresh(securityTokenId);
+};
+
+export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[] | void> {
   public type = ProcedureType.MintTokens;
 
   public async prepareTransactions() {
@@ -118,8 +126,6 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
       tag: PolyTransactionTag.IssueMulti,
       resolvers: [
         async () => {
-          await factories.securityTokenFactory.refresh(securityTokenId);
-
           const fetchingShareholders = investors.map(address => {
             return factories.shareholderFactory.fetch(
               Shareholder.generateId({
@@ -130,6 +136,7 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
           });
           return Promise.all(fetchingShareholders);
         },
+        refreshSecurityTokenFactoryResolver(factories, securityTokenId),
       ],
     })({ investors, values });
 
