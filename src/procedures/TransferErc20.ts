@@ -30,7 +30,7 @@ export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
         throw new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message:
-            "This address belongs to a Security Token. To transfer Security Tokens, use the functions in the Security Token's transfers namespace",
+            "This address belongs to a Security Token. To transfer Security Tokens, use the functions in the Security Token's transfers or controller namespace",
         });
       }
 
