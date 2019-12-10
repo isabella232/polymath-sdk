@@ -15,7 +15,7 @@ import { SecurityToken, TieredSto } from '../entities';
 import { ApproveErc20 } from './ApproveErc20';
 import { Factories } from '../Context';
 
-export const refreshSecurityTokenFactoryResolver = (
+export const createRefreshSecurityTokenFactoryResolver = (
   factories: Factories,
   securityTokenId: string
 ) => async () => {
@@ -124,7 +124,7 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
       async () => {
         return factories.tieredStoFactory.refresh(tieredStoId);
       },
-      refreshSecurityTokenFactoryResolver(factories, securityTokenId),
+      createRefreshSecurityTokenFactoryResolver(factories, securityTokenId),
     ];
 
     const unsupportedCurrencyError = new PolymathError({

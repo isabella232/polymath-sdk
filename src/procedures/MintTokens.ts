@@ -13,7 +13,7 @@ import { Shareholder, SecurityToken } from '../entities';
 import { ModifyShareholderData } from './ModifyShareholderData';
 import { Factories } from '../Context';
 
-export const refreshSecurityTokenFactoryResolver = (
+export const createRefreshSecurityTokenFactoryResolver = (
   factories: Factories,
   securityTokenId: string
 ) => async () => {
@@ -136,7 +136,7 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
           });
           return Promise.all(fetchingShareholders);
         },
-        refreshSecurityTokenFactoryResolver(factories, securityTokenId),
+        createRefreshSecurityTokenFactoryResolver(factories, securityTokenId),
       ],
     })({ investors, values });
 

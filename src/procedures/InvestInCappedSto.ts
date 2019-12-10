@@ -14,7 +14,7 @@ import { SecurityToken, SimpleSto } from '../entities';
 import { ApproveErc20 } from './ApproveErc20';
 import { Factories } from '../Context';
 
-export const refreshSecurityTokenFactoryResolver = (
+export const createRefreshSecurityTokenFactoryResolver = (
   factories: Factories,
   securityTokenId: string
 ) => async () => {
@@ -114,7 +114,7 @@ export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs>
       async () => {
         return factories.simpleStoFactory.refresh(simpleStoId);
       },
-      refreshSecurityTokenFactoryResolver(factories, securityTokenId),
+      createRefreshSecurityTokenFactoryResolver(factories, securityTokenId),
     ];
 
     if (currency === Currency.ETH) {

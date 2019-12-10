@@ -211,7 +211,7 @@ describe('MintTokens', () => {
     test('should refresh the security token factory with resolver', async () => {
       const refreshStub = securityTokenFactoryMock.mock('refresh', Promise.resolve(undefined));
 
-      const resolverValue = await mintTokensModule.refreshSecurityTokenFactoryResolver(
+      const resolverValue = await mintTokensModule.createRefreshSecurityTokenFactoryResolver(
         factoryMockSetup,
         securityTokenId
       )();
