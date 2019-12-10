@@ -176,7 +176,6 @@ describe('MintTokens', () => {
         address: testAddress,
       };
       const fetchStub = shareholderFactoryMock.mock('fetch', Promise.resolve(shareholderObject));
-      const refreshStub = securityTokenEntityStaticMock.mock('refresh', Promise.resolve());
 
       // Real call
       const resolver = await target.prepareTransactions();
@@ -201,11 +200,6 @@ describe('MintTokens', () => {
         )
       ).toEqual(true);
       expect(fetchStub.callCount).toBe(2);
-
-      // Verification for fetch
-      expect(refreshStub.getCall(0).calledWithExactly(securityTokenId)).toEqual(true);
-      expect(refreshStub.getCall(1).calledWithExactly(securityTokenId)).toEqual(true);
-      expect(refreshStub.callCount).toBe(2);
     });
 
     test('should refresh the security token factory with resolver', async () => {
