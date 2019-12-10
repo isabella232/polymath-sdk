@@ -118,7 +118,7 @@ describe('WithdrawTaxes', () => {
       );
     });
 
-    test('should add a transaction to the queue to withdraw tax withholdings from attached erc20 dividends distribution', async () => {
+    test('should add a transaction to the queue to withdraw tax withholdings from erc20 dividends distribution', async () => {
       wrappersMock.mock(
         'getAttachedModules',
         Promise.resolve([erc20DividendMock.getMockInstance()])
@@ -142,7 +142,7 @@ describe('WithdrawTaxes', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to withdraw tax withholdings from attached ether dividends distribution', async () => {
+    test('should add a transaction to the queue to withdraw tax withholdings from ether dividends distribution', async () => {
       target = new WithdrawTaxes(
         { ...params, dividendType: DividendType.Eth },
         contextMock.getMockInstance()
