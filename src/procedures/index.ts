@@ -38,5 +38,6 @@ export { ModifyMaxHolderCount } from './ModifyMaxHolderCount';
 export { EnablePercentageTransferManager } from './EnablePercentageTransferManager';
 export { ModifyMaxHolderPercentage } from './ModifyMaxHolderPercentage';
 export { ModifyPercentageExemptions } from './ModifyPercentageExemptions';
+export { TransferSecurityTokens } from './TransferSecurityTokens';
 export { ToggleFreezeTransfers } from './ToggleFreezeTransfers';
 export { ModifyDividendsDefaultExclusionList } from './ModifyDividendsDefaultExclusionList';
