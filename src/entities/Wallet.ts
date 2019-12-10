@@ -4,22 +4,21 @@ import { serialize, unserialize } from '../utils';
 import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 import { Context } from '../Context';
-import { PolymathBase } from '../PolymathBase';
 
-export interface UniqueIdentifier {
+export interface UniqueIdentifiers {
   address: string;
 }
 
-function isUniqueIdentifiers(identifier: any): identifier is UniqueIdentifier {
+function isUniqueIdentifiers(identifier: any): identifier is UniqueIdentifiers {
   const { address } = identifier;
 
   return typeof address === 'string';
 }
 
-export interface Params extends UniqueIdentifier {}
+export interface Params extends UniqueIdentifiers {}
 
 export class Wallet extends Entity<Params> {
-  public static generateId({ address }: UniqueIdentifier) {
+  public static generateId({ address }: UniqueIdentifiers) {
     return serialize('wallet', {
       address,
     });
