@@ -147,7 +147,7 @@ describe('ControllerRedeem', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.InvalidAddress,
-          message: `Provided from address is invalid: \"Inappropriate\"`,
+          message: `Provided \"from\" address is invalid: Inappropriate`,
         })
       );
     });
@@ -156,7 +156,7 @@ describe('ControllerRedeem', () => {
   test('should successfully resolve controller redeem', async () => {
     const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve());
     const securityTokenId = SecurityToken.generateId({ symbol: params.symbol });
-    const resolverValue = await controllerRedeemModule.createControllerRedeemResolver(
+    const resolverValue = await controllerRedeemModule.createRefreshShareholdersResolver(
       factoriesMockedSetup,
       params.symbol,
       params.from
@@ -177,7 +177,7 @@ describe('ControllerRedeem', () => {
   test('should refresh the security token factory with resolver', async () => {
     const refreshStub = securityTokenFactoryMock.mock('refresh', Promise.resolve(undefined));
 
-    const resolverValue = await controllerRedeemModule.refreshSecurityTokenFactoryResolver(
+    const resolverValue = await controllerRedeemModule.createRefreshSecurityTokenResolver(
       factoriesMockedSetup,
       params.symbol
     )();

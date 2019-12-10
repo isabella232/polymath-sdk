@@ -24,7 +24,7 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
     if (!isValidAddress(from)) {
       throw new PolymathError({
         code: ErrorCode.InvalidAddress,
-        message: `Provided from address is invalid: "${from}"`,
+        message: `Provided \"from\" address is invalid: ${from}`,
       });
     }
 
@@ -68,21 +68,21 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
     await this.addTransaction(securityToken.controllerRedeem, {
       tag: PolyTransactionTag.ControllerRedeem,
       resolvers: [
-        createControllerRedeemResolver(factories, symbol, from),
-        refreshSecurityTokenFactoryResolver(factories, symbol),
+        createRefreshShareholdersResolver(factories, symbol, from),
+        createRefreshSecurityTokenResolver(factories, symbol),
       ],
     })({ from, value: amount, data, operatorData: reason });
   }
 }
 
-export const refreshSecurityTokenFactoryResolver = (
+export const createRefreshSecurityTokenResolver = (
   factories: Factories,
   symbol: string
 ) => async () => {
   return factories.securityTokenFactory.refresh(SecurityToken.generateId({ symbol }));
 };
 
-export const createControllerRedeemResolver = (
+export const createRefreshShareholdersResolver = (
   factories: Factories,
   symbol: string,
   from: string

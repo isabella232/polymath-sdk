@@ -61,7 +61,7 @@ export class Controller extends SubModule {
     const { amount, from, reason = '', data = '' } = args;
     const { symbol } = this.securityToken;
 
-    const procedure = new ControllerRedeem({ symbol, amount, from, reason, data }, this.context);
+    const procedure = new ControllerRedeem({ symbol, ...args }, this.context);
 
     return procedure.prepare();
   };
