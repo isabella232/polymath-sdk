@@ -23,7 +23,7 @@ export class Offerings extends SubModule {
    * @param currency currency in which the funds will be raised (ETH or POLY)
    * @param raisedFundsWallet wallet address that will receive the funds that are being raised
    * @param unsoldTokensWallet wallet address that will receive unsold tokens
-   * @param allowPreMinting whether to have all tokens minted on STO start. Default behavior is to mint on purchase
+   * @param allowPreIssuance whether to have all tokens issued on STO start. Default behavior is to issue on purchase
    */
   public launchSimpleSto = async (args: {
     startDate: Date;
@@ -33,7 +33,7 @@ export class Offerings extends SubModule {
     currency: Currency.ETH | Currency.POLY;
     raisedFundsWallet: string;
     unsoldTokensWallet: string;
-    allowPreMinting?: boolean;
+    allowPreIssuance?: boolean;
   }) => {
     const { context, securityToken } = this;
     const { symbol } = securityToken;
@@ -63,7 +63,7 @@ export class Offerings extends SubModule {
    * @param raisedFundsWallet wallet address that will receive the funds that are being raised
    * @param unsoldTokensWallet wallet address that will receive unsold tokens when the end date is reached
    * @param stableCoinAddresses array of stable coins that the offering supports
-   * @param allowPreMinting whether to have all tokens minted on STO start. Default behavior is to mint on purchase
+   * @param allowPreIssuance whether to have all tokens issued on STO start. Default behavior is to issue on purchase
    */
   public launchTieredSto = async (args: {
     startDate: Date;
@@ -75,7 +75,7 @@ export class Offerings extends SubModule {
     raisedFundsWallet: string;
     unsoldTokensWallet: string;
     stableCoinAddresses: string[];
-    allowPreMinting?: boolean;
+    allowPreIssuance?: boolean;
   }) => {
     const { context, securityToken } = this;
     const { symbol } = securityToken;

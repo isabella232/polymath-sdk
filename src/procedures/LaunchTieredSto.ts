@@ -34,7 +34,7 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
       raisedFundsWallet,
       unsoldTokensWallet,
       stableCoinAddresses,
-      allowPreMinting = false,
+      allowPreIssuing = false,
     } = args;
     const {
       contractWrappers,
@@ -178,7 +178,7 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
       archived: false,
     });
 
-    if (allowPreMinting) {
+    if (allowPreIssuing) {
       await this.addTransaction(
         {
           futureValue: newStoAddress,
@@ -192,7 +192,7 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
               throw new PolymathError({
                 code: ErrorCode.IncorrectVersion,
                 message:
-                  'STO version is 3.0.0. Version 3.1.0 or greater is required for pre-minting',
+                  'STO version is 3.0.0. Version 3.1.0 or greater is required for pre-issuing',
               });
             }
 

@@ -40,12 +40,12 @@ export class Restrictions extends SubModule {
    * Modify the conditions for exemption from percentage ownership restrictions. There are two (independent) methods of exemption:
    *
    * - Whitelisting: an address can be whitelisted and thus percentage ownership restrictions will not apply to it
-   * - Primary issuance: if enabled, minting tokens to an address will bypass percentage ownership restrictions (for example, if minting tokens to a particular address would leave that address with a higher percentage than the limit, having this option set to `true` will allow that minting operation)
+   * - Primary issuance: if enabled, issuing tokens to an address will bypass percentage ownership restrictions (for example, if issuing tokens to a particular address would leave that address with a higher percentage than the limit, having this option set to `true` will allow that issuance operation)
    *
    * @param whitelistEntries list of addresses to add/remove from the whitelist
    * @param whitelistEntries.address address to modify
    * @param whitelistEntries.whitelisted whether the address should be exempt or not
-   * @param allowPrimaryIssuance if set to true, minting tokens to an address is allowed even if it would leave said address over the percentage ownership limit
+   * @param allowPrimaryIssuance if set to true, issuing tokens to an address is allowed even if it would leave said address over the percentage ownership limit
    */
   public modifyPercentageExemptions: ModifyPercentageExemptionsMethod = async (args: {
     whitelistEntries?: PercentageWhitelistEntry[];

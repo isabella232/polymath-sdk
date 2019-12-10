@@ -56,7 +56,7 @@ export interface TaxWithholdingEntry {
   percentage: number;
 }
 
-export interface MintingDataEntry {
+export interface IssuanceDataEntry {
   address: string;
   amount: BigNumber;
   shareholderData?: Omit<ShareholderDataEntry, 'address'>;
@@ -155,8 +155,8 @@ export enum ProcedureType {
   SetController = 'SetController',
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
-  MintTokens = 'MintTokens',
-  ModifyPreMinting = 'ModifyPreMinting',
+  IssueTokens = 'IssueTokens',
+  ModifyPreIssuing = 'ModifyPreIssuing',
   ModifyBeneficialInvestments = 'ModifyBeneificialInvestments',
   ModifyTieredStoData = 'ModifyTieredStoData',
   InvestInTieredSto = 'InvestInTieredSto',
@@ -351,19 +351,19 @@ export interface LaunchSimpleStoProcedureArgs {
   currency: Currency.ETH | Currency.POLY;
   raisedFundsWallet: string;
   unsoldTokensWallet: string;
-  allowPreMinting?: boolean;
+  allowPreIssuing?: boolean;
 }
 
-export interface MintTokensProcedureArgs {
+export interface IssueTokensProcedureArgs {
   symbol: string;
-  mintingData: MintingDataEntry[];
+  issuanceData: IssuanceDataEntry[];
 }
 
-export interface ModifyPreMintingProcedureArgs {
+export interface ModifyPreIssuingProcedureArgs {
   symbol: string;
   stoAddress: string;
   stoType: StoType;
-  allowPreMinting: boolean;
+  allowPreIssuing: boolean;
 }
 
 export interface ModifyBeneficialInvestmentsProcedureArgs {
@@ -374,7 +374,7 @@ export interface ModifyBeneficialInvestmentsProcedureArgs {
 }
 
 export interface ModifyTieredStoDataProcedureArgs
-  extends Omit<LaunchTieredStoProcedureArgs, 'allowPreMinting'> {
+  extends Omit<LaunchTieredStoProcedureArgs, 'allowPreIssuing'> {
   stoAddress: string;
 }
 
@@ -443,7 +443,7 @@ export interface LaunchTieredStoProcedureArgs {
   raisedFundsWallet: string;
   unsoldTokensWallet: string;
   stableCoinAddresses: string[];
-  allowPreMinting?: boolean;
+  allowPreIssuing?: boolean;
 }
 
 export interface ReclaimFundsProcedureArgs {
@@ -626,8 +626,8 @@ export interface ProcedureArguments {
   [ProcedureType.AssignStoRole]: AssignStoRoleProcedureArgs;
   [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
-  [ProcedureType.MintTokens]: MintTokensProcedureArgs;
-  [ProcedureType.ModifyPreMinting]: ModifyPreMintingProcedureArgs;
+  [ProcedureType.IssueTokens]: IssueTokensProcedureArgs;
+  [ProcedureType.ModifyPreIssuing]: ModifyPreIssuingProcedureArgs;
   [ProcedureType.DisableFeature]: DisableFeatureProcedureArgs;
   [ProcedureType.FinalizeSto]: FinalizeStoProcedureArgs;
   [ProcedureType.ModifyBeneficialInvestments]: ModifyBeneficialInvestmentsProcedureArgs;
