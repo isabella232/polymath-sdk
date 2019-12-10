@@ -63,6 +63,8 @@ export class Offerings extends SubModule {
    * @param raisedFundsWallet wallet address that will receive the funds that are being raised
    * @param unsoldTokensWallet wallet address that will receive unsold tokens when the end date is reached
    * @param stableCoinAddresses array of stable coins that the offering supports
+   * @param customOracleAddresses array of stable coin price oracles
+   * @param denominatedCurrency denominated currency type of the tiered sto
    * @param allowPreMinting whether to have all tokens minted on STO start. Default behavior is to mint on purchase
    */
   public launchTieredSto = async (args: {
@@ -75,6 +77,8 @@ export class Offerings extends SubModule {
     raisedFundsWallet: string;
     unsoldTokensWallet: string;
     stableCoinAddresses: string[];
+    customOracleAddresses: string[];
+    denominatedCurrency: string;
     allowPreMinting?: boolean;
   }) => {
     const { context, securityToken } = this;
