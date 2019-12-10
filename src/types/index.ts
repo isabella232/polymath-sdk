@@ -165,6 +165,7 @@ export enum ProcedureType {
   ModifyMaxHolderPercentage = 'ModifyMaxHolderPercentage',
   ModifyPercentageExemptions = 'ModifyPercentageExemptions',
   TransferSecurityTokens = 'TransferSecurityTokens',
+  ToggleFreezeTransfers = 'ToggleFreezeTransfers',
 }
 
 export enum PolyTransactionTag {
@@ -221,6 +222,8 @@ export enum PolyTransactionTag {
   ModifyWhitelistMulti = 'ModifyWhitelistMulti',
   SetAllowPrimaryIssuance = 'SetAllowPrimaryIssuance',
   TransferSecurityTokens = 'TransferSecurityTokens',
+  UnfreezeTransfers = 'UnfreezeTransfers',
+  FreezeTransfers = 'FreezeTransfers',
   Signature = 'Signature',
 }
 
@@ -589,6 +592,11 @@ export interface TransferSecurityTokensProcedureArgs {
   from?: string;
 }
 
+export interface ToggleFreezeTransfersProcedureArgs {
+  symbol: string;
+  freeze: boolean;
+}
+
 export interface ProcedureArguments {
   [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
   [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
@@ -632,6 +640,7 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyMaxHolderPercentage]: ModifyMaxHolderPercentageProcedureArgs;
   [ProcedureType.ModifyPercentageExemptions]: ModifyPercentageExemptionsProcedureArgs;
   [ProcedureType.TransferSecurityTokens]: TransferSecurityTokensProcedureArgs;
+  [ProcedureType.ToggleFreezeTransfers]: ToggleFreezeTransfersProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 
