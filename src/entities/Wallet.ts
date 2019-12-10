@@ -10,7 +10,7 @@ export interface UniqueIdentifier {
   address: string;
 }
 
-function isUniqueIdentifier(identifier: any): identifier is UniqueIdentifier {
+function isUniqueIdentifiers(identifier: any): identifier is UniqueIdentifier {
   const { address } = identifier;
 
   return typeof address === 'string';
@@ -28,7 +28,7 @@ export class Wallet extends Entity<Params> {
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
-    if (!isUniqueIdentifier(unserialized)) {
+    if (!isUniqueIdentifiers(unserialized)) {
       throw new PolymathError({
         code: ErrorCode.InvalidUuid,
         message: 'Wrong Wallet ID format.',
@@ -42,16 +42,15 @@ export class Wallet extends Entity<Params> {
 
   public address: string;
 
-  private contractWrappers: PolymathBase;
+  protected context: Context;
 
   constructor(params: Params, context: Context) {
     super();
 
     const { address } = params;
-    const { contractWrappers } = context;
 
     this.address = address;
-    this.contractWrappers = contractWrappers;
+    this.context = context;
     this.uid = Wallet.generateId({
       address,
     });
@@ -74,21 +73,33 @@ export class Wallet extends Entity<Params> {
     }
   }
 
+  /**
+   * Retrieve the POLY balance of this particular wallet address
+   */
   public getPolyBalance = async (): Promise<BigNumber> => {
-    const { address } = this;
-    return await this.contractWrappers.getBalance({ address });
+    const { address, context } = this;
+    return await context.contractWrappers.polyToken.balanceOf({ owner: address });
   };
 
+  /**
+   * Retrieve the ETH balance of this particular wallet address
+   */
   public getEthBalance = async (): Promise<BigNumber> => {
-    return await this.contractWrappers.polyToken.balanceOf();
+    const { address, context } = this;
+    return await context.contractWrappers.getBalance({ address });
   };
 
-  public getErc20Balance = async (tokenAddress: string): Promise<BigNumber> => {
-    const erc20Wrapper = await this.contractWrappers.getERC20TokenWrapper({
+  /**
+   * Retrieve the ERC20 balance of this particular wallet address
+   *
+   * @param tokenAddress address of the ERC20 token contract
+   */
+  public getErc20Balance = async (args: { tokenAddress: string }): Promise<BigNumber> => {
+    const { context, address } = this;
+    const { tokenAddress } = args;
+    const erc20Wrapper = await context.contractWrappers.getERC20TokenWrapper({
       address: tokenAddress,
     });
-
-    const { address } = this;
     return await erc20Wrapper.balanceOf({ owner: address });
   };
 }
