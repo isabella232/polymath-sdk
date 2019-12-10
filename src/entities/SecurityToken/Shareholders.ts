@@ -98,11 +98,10 @@ export class Shareholders extends SubModule {
 
       const checkpointDividends = allDividends.filter(dividend => dividend.checkpointId === index);
 
-      const dividendDistributions = checkpointDividends.map(({ dividendType, ...distribution }) =>
+      const dividendDistributions = checkpointDividends.map(distribution =>
         factories.dividendDistributionFactory.create(
           DividendDistribution.generateId({
             securityTokenId: uid,
-            dividendType,
             index,
           }),
           {

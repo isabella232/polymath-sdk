@@ -1,10 +1,8 @@
 import { BigNumber, ModuleName } from '@polymathnetwork/contract-wrappers';
 import { SubModule } from './SubModule';
-import { DividendType, TaxWithholdingEntry, ErrorCode } from '../../types';
+import { TaxWithholdingEntry, ErrorCode } from '../../types';
 import {
-  EnableDividendManagers,
-  CreateErc20DividendDistribution,
-  CreateEtherDividendDistribution,
+  CreateDividendDistribution,
   UpdateDividendsTaxWithholdingList,
   SetDividendsWallet,
   ModifyDividendsDefaultExclusionList,
@@ -12,16 +10,7 @@ import {
 import { Checkpoint } from '../Checkpoint';
 import { PolymathError } from '../../PolymathError';
 import { DividendDistribution } from '../DividendDistribution';
-import { DividendsManager } from '../DividendsManager';
-import { Erc20DividendsManager } from '../Erc20DividendsManager';
-import { EthDividendsManager } from '../EthDividendsManager';
 import { TaxWithholding } from '../TaxWithholding';
-
-interface GetManager {
-  (args: { dividendType: DividendType.Erc20 }): Promise<Erc20DividendsManager | null>;
-  (args: { dividendType: DividendType.Eth }): Promise<EthDividendsManager | null>;
-  (args: string): Promise<Erc20DividendsManager | EthDividendsManager | null>;
-}
 
 export class Dividends extends SubModule {
   /**
@@ -51,7 +40,7 @@ export class Dividends extends SubModule {
     const { checkpointId, ...rest } = args;
     const { symbol } = securityToken;
     const { index: checkpointIndex } = Checkpoint.unserialize(checkpointId);
-    const procedure = new CreateErc20DividendDistribution(
+    const procedure = new CreateDividendDistribution(
       {
         erc20Address: polyAddress,
         symbol,
@@ -92,44 +81,7 @@ export class Dividends extends SubModule {
     const { checkpointId, ...rest } = args;
     const { symbol } = securityToken;
     const { index: checkpointIndex } = Checkpoint.unserialize(checkpointId);
-    const procedure = new CreateErc20DividendDistribution(
-      {
-        symbol,
-        checkpointIndex,
-        ...rest,
-      },
-      context
-    );
-    return procedure.prepare();
-  };
-
-  /**
-   * Distribute dividends in ETH
-   *
-   * @param checkpointId uuid of the checkpoint to use as reference for the distribution
-   * @param maturityDate date from which dividends can be paid/collected
-   * @param expiryDate date up to which dividends can be paid/collected
-   * @param amount amount to be distributed
-   * @param name human readable name of the distribution
-   * @param excludedAddresses shareholder addresses that will be excluded from the distribution (optional)
-   * @param taxWithholdings array that specifies how much to withhold from each shareholder for tax purposes
-   * @param taxWithholdings[].address shareholder address
-   * @param taxWithholdings[].percentage tax percentage to be withheld
-   */
-  public createEthDistribution = async (args: {
-    checkpointId: string;
-    maturityDate: Date;
-    expiryDate: Date;
-    amount: BigNumber;
-    name: string;
-    excludedAddresses?: string[];
-    taxWithholdings?: TaxWithholdingEntry[];
-  }) => {
-    const { context, securityToken } = this;
-    const { checkpointId, ...rest } = args;
-    const { symbol } = securityToken;
-    const { index: checkpointIndex } = Checkpoint.unserialize(checkpointId);
-    const procedure = new CreateEtherDividendDistribution(
+    const procedure = new CreateDividendDistribution(
       {
         symbol,
         checkpointIndex,
@@ -148,10 +100,7 @@ export class Dividends extends SubModule {
    * @param taxWithholdings[].address shareholder address
    * @param taxWithholdings[].percentage tax percentage to be withheld
    */
-  public modifyTaxWithholdingList = async (args: {
-    dividendType: DividendType;
-    taxWithholdings: TaxWithholdingEntry[];
-  }) => {
+  public modifyTaxWithholdingList = async (args: { taxWithholdings: TaxWithholdingEntry[] }) => {
     const { taxWithholdings, ...rest } = args;
     const { symbol } = this.securityToken;
     const shareholderAddresses: string[] = [];
@@ -173,12 +122,11 @@ export class Dividends extends SubModule {
   };
 
   /**
-   * Change dividends manager storage wallet address
+   * Change dividends storage wallet address
    *
-   * @param dividendType type of dividends for which to modify the storage wallet
    * @param address new storage wallet address
    */
-  public modifyStorageWallet = async (args: { dividendType: DividendType; address: string }) => {
+  public modifyStorageWallet = async (args: { address: string }) => {
     const { symbol } = this.securityToken;
     const procedure = new SetDividendsWallet(
       {
@@ -193,13 +141,9 @@ export class Dividends extends SubModule {
   /**
    * Set default exclusion list for a type of dividends. Addresses on this list won't be considered for dividend distribution. This operation overrides the previous default exclusion list
    *
-   * @param dividendType type of dividends for which to modify the exclusion list
    * @param shareholderAddresses array of shareholder addresses to be excluded from dividends
    */
-  public modifyDefaultExclusionList = async (args: {
-    dividendType: DividendType;
-    shareholderAddresses: string[];
-  }) => {
+  public modifyDefaultExclusionList = async (args: { shareholderAddresses: string[] }) => {
     const { shareholderAddresses, ...rest } = args;
     const { symbol } = this.securityToken;
     const procedure = new ModifyDividendsDefaultExclusionList(
@@ -217,13 +161,11 @@ export class Dividends extends SubModule {
    * Retrieve a list of investor addresses and their corresponding tax withholding
    * percentages
    */
-  public getTaxWithholdingList = async (args: { dividendType: DividendType }) => {
+  public getTaxWithholdingList = async () => {
     const {
       contractWrappers: { tokenFactory, getAttachedModules },
       factories,
     } = this.context;
-
-    const { dividendType } = args;
     const { symbol, uid: securityTokenId } = this.securityToken;
 
     let securityToken;
@@ -237,23 +179,15 @@ export class Dividends extends SubModule {
       });
     }
 
-    let dividendsModule;
-    if (dividendType === DividendType.Erc20) {
-      [dividendsModule] = await getAttachedModules(
-        { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
-        { unarchived: true }
-      );
-    } else if (dividendType === DividendType.Eth) {
-      [dividendsModule] = await getAttachedModules(
-        { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
-        { unarchived: true }
-      );
-    }
+    const [dividendsModule] = await getAttachedModules(
+      { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
+      { unarchived: true }
+    );
 
     if (!dividendsModule) {
       throw new PolymathError({
         code: ErrorCode.FetcherValidationError,
-        message: "Dividends of the specified type haven't been enabled",
+        message: "The Dividends Feature hasn't been enabled",
       });
     }
 
@@ -268,7 +202,6 @@ export class Dividends extends SubModule {
         TaxWithholding.generateId({
           shareholderAddress: investor,
           securityTokenId,
-          dividendType,
         }),
         {
           percentage: withheld.toNumber(),
@@ -283,12 +216,7 @@ export class Dividends extends SubModule {
    *
    * @param checkpointId UUID of the checkpoint
    */
-  public getDistributions = async (
-    args: {
-      checkpointId: string;
-    },
-    opts?: { dividendTypes?: DividendType[] }
-  ) => {
+  public getDistributions = async (args: { checkpointId: string }) => {
     const { contractWrappers, factories } = this.context;
     const { checkpointId } = args;
 
@@ -296,21 +224,14 @@ export class Dividends extends SubModule {
 
     const { index: checkpointIndex } = Checkpoint.unserialize(checkpointId);
 
-    let dividendTypes: DividendType[] | undefined;
-
-    if (opts) {
-      ({ dividendTypes } = opts);
-    }
-
     const checkpointDividends = await contractWrappers.getAllDividends({
       securityTokenSymbol: symbol,
       checkpointId: checkpointIndex,
-      dividendTypes,
     });
 
-    const dividends = checkpointDividends.map(({ index, dividendType, ...dividend }) =>
+    const dividends = checkpointDividends.map(({ index, ...dividend }) =>
       factories.dividendDistributionFactory.create(
-        DividendDistribution.generateId({ securityTokenId, dividendType, index }),
+        DividendDistribution.generateId({ securityTokenId, index }),
         {
           ...dividend,
           checkpointId,
@@ -325,18 +246,15 @@ export class Dividends extends SubModule {
   /**
    * Retrieve a particular dividend distribution by type and index or UUID
    *
-   * @param dividendType type of the dividend distribution
    * @param dividendIndex index of the dividend distribution
    */
   public getDistribution = async (
     args:
       | {
-          dividendType: DividendType;
           dividendIndex: number;
         }
       | string
   ) => {
-    let dividendType: DividendType;
     let dividendIndex: number;
     let uid: string;
 
@@ -344,13 +262,12 @@ export class Dividends extends SubModule {
     if (typeof args === 'string') {
       uid = args;
     } else {
-      ({ dividendType, dividendIndex } = args);
+      ({ dividendIndex } = args);
       const {
         securityToken: { uid: securityTokenId },
       } = this;
       uid = DividendDistribution.generateId({
         securityTokenId,
-        dividendType,
         index: dividendIndex,
       });
     }
@@ -359,60 +276,13 @@ export class Dividends extends SubModule {
   };
 
   /**
-   * Retrieve a Dividends Manager related to the Security Token by UUID or type.
-   *
-   * @throws if dividends of that type haven't been enabled
-   *
-   * @param dividendType type of manager
-   */
-  public getManager: GetManager = async (
-    args:
-      | {
-          dividendType: DividendType;
-        }
-      | string
-  ) => {
-    const { factories } = this.context;
-
-    let dividendType: DividendType;
-    let uid: string;
-
-    // fetch by UUID
-    if (typeof args === 'string') {
-      ({ dividendType } = DividendsManager.unserialize(args));
-    } else {
-      ({ dividendType } = args);
-    }
-
-    const { uid: securityTokenId } = this.securityToken;
-
-    switch (dividendType) {
-      case DividendType.Erc20: {
-        uid = Erc20DividendsManager.generateId({ securityTokenId, dividendType });
-        return factories.erc20DividendsManagerFactory.fetch(uid);
-      }
-      case DividendType.Eth: {
-        uid = EthDividendsManager.generateId({ securityTokenId, dividendType });
-        return factories.ethDividendsManagerFactory.fetch(uid);
-      }
-      default: {
-        throw new PolymathError({
-          code: ErrorCode.FetcherValidationError,
-          message: 'Invalid dividend type. Must be "Erc20" or "Eth"',
-        });
-      }
-    }
-  };
-
-  /**
    * Retrieve the list of addresses which are excluded from receiving dividend payments by default
    */
-  public getDefaultExclusionList = async (args: { dividendType: DividendType }) => {
+  public getDefaultExclusionList = async () => {
     const {
       contractWrappers: { tokenFactory, getAttachedModules },
     } = this.context;
 
-    const { dividendType } = args;
     const { symbol } = this.securityToken;
 
     try {
@@ -424,23 +294,15 @@ export class Dividends extends SubModule {
       });
     }
 
-    let dividendsModule;
-    if (dividendType === DividendType.Erc20) {
-      [dividendsModule] = await getAttachedModules(
-        { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
-        { unarchived: true }
-      );
-    } else if (dividendType === DividendType.Eth) {
-      [dividendsModule] = await getAttachedModules(
-        { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
-        { unarchived: true }
-      );
-    }
+    const [dividendsModule] = await getAttachedModules(
+      { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
+      { unarchived: true }
+    );
 
     if (!dividendsModule) {
       throw new PolymathError({
         code: ErrorCode.FetcherValidationError,
-        message: "Dividends of the specified type haven't been enabled",
+        message: "The Dividends Feature hasn't been enabled",
       });
     }
 

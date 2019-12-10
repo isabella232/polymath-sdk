@@ -6,7 +6,5 @@ export { SimpleStoFactory } from './SimpleStoFactory';
 export { TieredStoFactory } from './TieredStoFactory';
 export { DividendDistributionFactory } from './DividendDistributionFactory';
 export { CheckpointFactory } from './CheckpointFactory';
-export { Erc20DividendsManagerFactory } from './Erc20DividendsManagerFactory';
-export { EthDividendsManagerFactory } from './EthDividendsManagerFactory';
 export { ShareholderFactory } from './ShareholderFactory';
 export { TaxWithholdingFactory } from './TaxWithholdingFactory';
