@@ -84,8 +84,7 @@ describe('FreezeIssuance', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message:
-            'The security token isIssuable method is not currently valid, freeze issuance method can only be called on issuable security tokens',
+          message: 'The issuance has already been frozen permanently',
         })
       );
     });

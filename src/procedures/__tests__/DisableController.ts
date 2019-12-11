@@ -84,8 +84,7 @@ describe('DisableController', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message:
-            'The security token isControllable method is not currently valid, disable controller method can only be called on controllable security tokens',
+          message: 'The controller has already been disabled permanently',
         })
       );
     });
