@@ -14,7 +14,7 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
   public type = ProcedureType.ControllerRedeem;
 
   public async prepareTransactions() {
-    const { symbol, amount, from, log = '', data = '' } = this.args;
+    const { symbol, amount, from, reason = '', data = '' } = this.args;
     const { contractWrappers, currentWallet, factories } = this.context;
 
     /**
@@ -24,7 +24,7 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
     if (!isValidAddress(from)) {
       throw new PolymathError({
         code: ErrorCode.InvalidAddress,
-        message: `Provided from address is invalid: ${from}`,
+        message: `Provided \"from\" address is invalid: ${from}`,
       });
     }
 
@@ -41,9 +41,13 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
       });
     }
 
-    const senderBalance = await securityToken.balanceOf({
-      owner: from,
-    });
+    const [senderBalance, controller, account] = await Promise.all([
+      securityToken.balanceOf({
+        owner: from,
+      }),
+      securityToken.controller(),
+      currentWallet.address(),
+    ]);
     if (senderBalance.lt(amount)) {
       throw new PolymathError({
         code: ErrorCode.InsufficientBalance,
@@ -51,14 +55,10 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
       });
     }
 
-    const controller = await securityToken.controller();
-
-    const account = await currentWallet.address();
-
     if (account !== controller) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `You must be the controller of this Security Token to perform forced transfers. Did you remember to call "setController"?`,
+        message: `You must be the controller of this Security Token to redeem tokens. Did you remember to call "setController"?`,
       });
     }
 
@@ -67,11 +67,22 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
      */
     await this.addTransaction(securityToken.controllerRedeem, {
       tag: PolyTransactionTag.ControllerRedeem,
-      resolvers: [createControllerRedeemResolver(factories, symbol, from)],
-    })({ from, value: amount, data, operatorData: log });
+      resolvers: [
+        createRefreshShareholdersResolver(factories, symbol, from),
+        createRefreshSecurityTokenResolver(factories, symbol),
+      ],
+    })({ from, value: amount, data, operatorData: reason });
   }
 }
-export const createControllerRedeemResolver = (
+
+export const createRefreshSecurityTokenResolver = (
+  factories: Factories,
+  symbol: string
+) => async () => {
+  return factories.securityTokenFactory.refresh(SecurityToken.generateId({ symbol }));
+};
+
+export const createRefreshShareholdersResolver = (
   factories: Factories,
   symbol: string,
   from: string
