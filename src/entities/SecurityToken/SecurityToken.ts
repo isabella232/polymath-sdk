@@ -8,6 +8,7 @@ import { Issuance } from './Issuance';
 import { Permissions } from './Permissions';
 import { Transfers } from './Transfers';
 import { Documents } from './Documents';
+import { Controller } from './Controller';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 
@@ -69,7 +70,7 @@ export class SecurityToken extends Entity<Params> {
 
   public permissions: Permissions;
 
-  public transfers: Transfers;
+  public controller: Controller;
 
   public documents: Documents;
 
@@ -90,6 +91,7 @@ export class SecurityToken extends Entity<Params> {
     this.permissions = new Permissions(this, context);
     this.transfers = new Transfers(this, context);
     this.documents = new Documents(this, context);
+    this.controller = new Controller(this, context);
   }
 
   public toPojo() {
