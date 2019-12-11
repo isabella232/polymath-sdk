@@ -223,14 +223,4 @@ export class Shareholders extends SubModule {
 
     return shareholders;
   };
-
-  /**
-   * Permanently freeze issuance of the security token
-   * @param signature optional signed data. If not passed, signing will be requested on the spot
-   */
-  public freezeIssuance = async (args?: { signature?: string }) => {
-    const { symbol } = this.securityToken;
-    const procedure = new FreezeIssuance({ ...args, symbol }, this.context);
-    return procedure.prepare();
-  };
 }
