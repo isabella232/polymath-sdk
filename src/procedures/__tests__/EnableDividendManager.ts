@@ -1,11 +1,10 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
-import { EnableDividendManagers } from '../../procedures/EnableDividendManagers';
+import { EnableDividendManager } from '../EnableDividendManager';
 import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
@@ -19,11 +18,10 @@ const securityTokenAddress = '0x2222222222222222222222222222222222222222';
 const moduleFactoryAddress = '0x3333333333333333333333333333333333333333';
 
 describe('EnableDividendManagers', () => {
-  let target: EnableDividendManagers;
+  let target: EnableDividendManager;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
-  let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
 
   beforeAll(() => {
@@ -37,32 +35,28 @@ describe('EnableDividendManagers', () => {
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
     securityTokenMock.mock('address', Promise.resolve(securityTokenAddress));
 
-    etherDividendsMock = ImportMock.mockClass(
-      contractWrappersModule,
-      'EtherDividendCheckpoint_3_0_0'
-    );
     wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(moduleFactoryAddress));
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
 
-    // Instantiate EnableDividendManagers
-    target = new EnableDividendManagers(params, contextMock.getMockInstance());
+    // Instantiate EnableDividendManager
+    target = new EnableDividendManager(params, contextMock.getMockInstance());
   });
   afterEach(() => {
     restore();
   });
 
   describe('Types', () => {
-    test('should extend procedure and have EnableDividendManagers type', async () => {
+    test('should extend procedure and have EnableDividendManager type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe(ProcedureType.EnableDividendManagers);
+      expect(target.type).toBe(ProcedureType.EnableDividendManager);
     });
   });
 
-  describe('EnableDividendManagers', () => {
-    test('should add a transaction to the queue to enable dividend managers', async () => {
+  describe('EnableDividendManager', () => {
+    test('should add a transaction to the queue to enable the dividend manager', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
       securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
 
@@ -77,14 +71,7 @@ describe('EnableDividendManagers', () => {
             tag: PolyTransactionTag.EnableDividends,
           })
       ).toEqual(true);
-      expect(
-        addTransactionSpy
-          .getCall(1)
-          .calledWithExactly(securityTokenMock.getMockInstance().addModuleWithLabel, {
-            tag: PolyTransactionTag.EnableDividends,
-          })
-      ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(2);
+      expect(addTransactionSpy.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {

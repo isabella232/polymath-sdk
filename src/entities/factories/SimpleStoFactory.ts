@@ -43,11 +43,11 @@ export class SimpleStoFactory extends Factory<SimpleSto, Params, UniqueIdentifie
       module.getSTODetails(),
     ]);
 
-    let preMintAllowed = false;
+    let preIssueAllowed = false;
     let isFinalized = capReached || endTime <= new Date();
 
     if (isCappedSTO_3_1_0(module)) {
-      [preMintAllowed, isFinalized] = await Promise.all([
+      [preIssueAllowed, isFinalized] = await Promise.all([
         module.preMintAllowed(),
         module.isFinalized(),
       ]);
@@ -70,7 +70,7 @@ export class SimpleStoFactory extends Factory<SimpleSto, Params, UniqueIdentifie
       isPaused,
       capReached,
       isFinalized,
-      preMintAllowed,
+      preIssueAllowed,
       beneficialInvestmentsAllowed,
     };
   };

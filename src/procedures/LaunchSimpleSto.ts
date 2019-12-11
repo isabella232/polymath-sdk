@@ -34,7 +34,7 @@ export class LaunchSimpleSto extends Procedure<LaunchSimpleStoProcedureArgs, Sim
       currency,
       raisedFundsWallet,
       unsoldTokensWallet,
-      allowPreMinting = false,
+      allowPreIssuing = false,
     } = args;
     const {
       contractWrappers,
@@ -157,7 +157,7 @@ export class LaunchSimpleSto extends Procedure<LaunchSimpleStoProcedureArgs, Sim
       archived: false,
     });
 
-    if (allowPreMinting) {
+    if (allowPreIssuing) {
       await this.addTransaction(
         {
           futureValue: newStoAddress,
@@ -171,7 +171,7 @@ export class LaunchSimpleSto extends Procedure<LaunchSimpleStoProcedureArgs, Sim
               throw new PolymathError({
                 code: ErrorCode.IncorrectVersion,
                 message:
-                  'STO version is 3.0.0. Version 3.1.0 or greater is required for pre-minting',
+                  'STO version is 3.0.0. Version 3.1.0 or greater is required for pre-issuing',
               });
             }
 
@@ -188,7 +188,7 @@ export class LaunchSimpleSto extends Procedure<LaunchSimpleStoProcedureArgs, Sim
                   stoType: StoType.Simple,
                   address: newStoAddress.result!,
                 }),
-                { preMintAllowed: true }
+                { preIssueAllowed: true }
               );
             },
           ],

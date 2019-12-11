@@ -1,20 +1,28 @@
 import { ModuleName, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
-import {
-  WithdrawTaxesProcedureArgs,
-  ProcedureType,
-  PolyTransactionTag,
-  ErrorCode,
-  DividendType,
-} from '../types';
+import { WithdrawTaxesProcedureArgs, ProcedureType, PolyTransactionTag, ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
 import { DividendDistribution, SecurityToken } from '../entities';
+import { Factories } from '../Context';
+
+export const createWithdrawTaxesResolver = (
+  dividendIndex: number,
+  factories: Factories,
+  symbol: string
+) => async () => {
+  return factories.dividendDistributionFactory.refresh(
+    DividendDistribution.generateId({
+      securityTokenId: SecurityToken.generateId({ symbol }),
+      index: dividendIndex,
+    })
+  );
+};
 
 export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
   public type = ProcedureType.WithdrawTaxes;
 
   public async prepareTransactions() {
-    const { symbol, dividendIndex, dividendType } = this.args;
+    const { symbol, dividendIndex } = this.args;
     const { contractWrappers, factories } = this.context;
 
     try {
@@ -26,29 +34,15 @@ export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
       });
     }
 
-    let dividendModule;
-
-    switch (dividendType) {
-      case DividendType.Erc20: {
-        [dividendModule] = await contractWrappers.getAttachedModules(
-          { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
-          { unarchived: true }
-        );
-        break;
-      }
-      case DividendType.Eth: {
-        [dividendModule] = await contractWrappers.getAttachedModules({
-          moduleName: ModuleName.EtherDividendCheckpoint,
-          symbol,
-        });
-        break;
-      }
-    }
+    const [dividendModule] = await contractWrappers.getAttachedModules(
+      { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
+      { unarchived: true }
+    );
 
     if (!dividendModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: "Dividends of the specified type haven't been enabled",
+        message: "The Dividends Feature hasn't been enabled",
       });
     }
 
@@ -56,17 +50,7 @@ export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
       dividendModule.withdrawWithholding,
       {
         tag: PolyTransactionTag.WithdrawTaxWithholdings,
-        resolvers: [
-          async () => {
-            return factories.dividendDistributionFactory.refresh(
-              DividendDistribution.generateId({
-                securityTokenId: SecurityToken.generateId({ symbol }),
-                dividendType,
-                index: dividendIndex,
-              })
-            );
-          },
-        ],
+        resolvers: [createWithdrawTaxesResolver(dividendIndex, factories, symbol)],
       }
     )({ dividendIndex });
   }

@@ -1,9 +1,5 @@
 import { chunk } from 'lodash';
-import {
-  ModuleName,
-  ERC20DividendCheckpoint,
-  EtherDividendCheckpoint,
-} from '@polymathnetwork/contract-wrappers';
+import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import P from 'bluebird';
 import { Procedure } from './Procedure';
 import {
@@ -11,7 +7,6 @@ import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
-  DividendType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
@@ -23,7 +18,7 @@ export class ModifyDividendsDefaultExclusionList extends Procedure<
   public type = ProcedureType.ModifyDividendsDefaultExclusionList;
 
   public async prepareTransactions() {
-    const { symbol, dividendType, shareholderAddresses: investors } = this.args;
+    const { symbol, shareholderAddresses: investors } = this.args;
     const { contractWrappers } = this.context;
 
     try {
@@ -35,29 +30,15 @@ export class ModifyDividendsDefaultExclusionList extends Procedure<
       });
     }
 
-    let dividendsModule: ERC20DividendCheckpoint | EtherDividendCheckpoint | undefined;
-
-    switch (dividendType) {
-      case DividendType.Erc20: {
-        [dividendsModule] = await contractWrappers.getAttachedModules(
-          { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
-          { unarchived: true }
-        );
-        break;
-      }
-      case DividendType.Eth: {
-        [dividendsModule] = await contractWrappers.getAttachedModules(
-          { moduleName: ModuleName.EtherDividendCheckpoint, symbol },
-          { unarchived: true }
-        );
-        break;
-      }
-    }
+    const [dividendsModule] = await contractWrappers.getAttachedModules(
+      { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
+      { unarchived: true }
+    );
 
     if (!dividendsModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: "Dividends of the specified type haven't been enabled",
+        message: "The Dividends Feature hasn't been enabled",
       });
     }
 
