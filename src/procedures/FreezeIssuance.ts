@@ -27,24 +27,28 @@ export class FreezeIssuance extends Procedure<FreezeIssuanceProcedureArgs> {
       });
     }
 
-    const owner = await securityToken.owner();
-    const account = await currentWallet.address();
+    const [owner, account, isIssuable] = await Promise.all([
+      securityToken.owner(),
+      currentWallet.address(),
+      securityToken.isIssuable(),
+    ]);
 
     if (account !== owner) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `You must be the owner of this Security Token to disable the controller`,
+        message: `You must be the owner of this Security Token to freeze issuance`,
       });
     }
 
-    if (!(await securityToken.isIssuable())) {
+    if (!isIssuable) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `The security token isIssuable method is not currently valid, freeze issuance method can only be called on issuable security tokens`,
+        message: `The issuance has already been frozen permanently`,
       });
     }
     // If there is no hex signature passed in, create a signature request to sign the freeze issuance acknowledgement
-    const requestedSignature = signature || await this.addSignatureRequest(securityToken.signFreezeIssuanceAck)({});
+    const requestedSignature =
+      signature || (await this.addSignatureRequest(securityToken.signFreezeIssuanceAck)({}));
 
     /**
      * Transactions

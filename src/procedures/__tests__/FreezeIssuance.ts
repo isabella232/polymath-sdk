@@ -20,7 +20,7 @@ const params: FreezeIssuanceProcedureArgs = {
 };
 
 const ownerAddress = '0x01';
-const randomSignature = 'Random disable controller signature ack';
+const randomSignature = 'Random freeze issuance signature ack';
 
 describe('FreezeIssuance', () => {
   let target: FreezeIssuance;
@@ -97,7 +97,7 @@ describe('FreezeIssuance', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `You must be the owner of this Security Token to disable the controller`,
+          message: `You must be the owner of this Security Token to freeze issuance`,
         })
       );
     });

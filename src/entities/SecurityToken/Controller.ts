@@ -20,8 +20,8 @@ export class Controller extends SubModule {
   };
 
   /**
-   * Used by the issuer to permanently disable controller functionality
-   * Signature is optional, and will be generated if it is not passed in
+   * Permanently disable controller functionality
+   * @param signature optional signed data. If not passed, signing will be requested on the spot
    */
   public disableController = async (args?: { signature?: string }) => {
     const { symbol } = this.securityToken;

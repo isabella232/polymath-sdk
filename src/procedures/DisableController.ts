@@ -27,7 +27,11 @@ export class DisableController extends Procedure<DisableControllerProcedureArgs>
       });
     }
 
-    const [owner, account] = await Promise.all([securityToken.owner(), currentWallet.address()]);
+    const [owner, account, isControllable] = await Promise.all([
+      securityToken.owner(),
+      currentWallet.address(),
+      securityToken.isControllable(),
+    ]);
 
     if (account !== owner) {
       throw new PolymathError({
@@ -36,15 +40,16 @@ export class DisableController extends Procedure<DisableControllerProcedureArgs>
       });
     }
 
-    if (!(await securityToken.isControllable())) {
+    if (!isControllable) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `The security token isControllable method is not currently valid, disable controller method can only be called on controllable security tokens`,
+        message: `The controller has already been disabled permanently`,
       });
     }
 
     // If there is no hex signature passed in, create a signature request to sign the disable controller acknowledgement
-    const requestedSignature = signature || await this.addSignatureRequest(securityToken.signDisableControllerAck)({});
+    const requestedSignature =
+      signature || (await this.addSignatureRequest(securityToken.signDisableControllerAck)({}));
 
     /**
      * Transactions

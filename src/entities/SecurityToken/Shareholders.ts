@@ -225,8 +225,8 @@ export class Shareholders extends SubModule {
   };
 
   /**
-   * Used by the issuer to permanently freeze issuance of the security token
-   * Signature is optional, and will be generated if it is not passed in
+   * Permanently freeze issuance of the security token
+   * @param signature optional signed data. If not passed, signing will be requested on the spot
    */
   public freezeIssuance = async (args?: { signature?: string }) => {
     const { symbol } = this.securityToken;

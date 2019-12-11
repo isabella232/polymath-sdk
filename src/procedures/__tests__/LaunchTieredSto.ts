@@ -45,7 +45,7 @@ const params: LaunchTieredStoProcedureArgs = {
   currencies: [Currency.StableCoin],
   stableCoinAddresses: ['0x7777777777777777777777777777777777777777'],
   customOracleAddresses: ['0x8888888888888888888888888888888888888888'],
-  denominatedCurrency: 'USDT',
+  denominatedCurrency: 'USD',
 };
 
 const currentWallet = '0x8888888888888888888888888888888888888888';
