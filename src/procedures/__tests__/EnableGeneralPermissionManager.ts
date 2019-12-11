@@ -22,7 +22,6 @@ describe('EnableGeneralPermissionManager', () => {
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
-  let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
 
   beforeAll(() => {
@@ -36,10 +35,6 @@ describe('EnableGeneralPermissionManager', () => {
     securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
     securityTokenMock.mock('address', Promise.resolve(securityTokenAddress));
 
-    etherDividendsMock = ImportMock.mockClass(
-      contractWrappersModule,
-      'EtherDividendCheckpoint_3_0_0'
-    );
     wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(moduleFactoryAddress));
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',

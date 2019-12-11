@@ -1,14 +1,8 @@
 import { chunk } from 'lodash';
-import {
-  BigNumber,
-  ERC20DividendCheckpoint,
-  EtherDividendCheckpoint,
-  ModuleName,
-} from '@polymathnetwork/contract-wrappers';
+import { BigNumber, ModuleName } from '@polymathnetwork/contract-wrappers';
 import P from 'bluebird';
 import { Procedure } from './Procedure';
 import {
-  DividendType,
   ErrorCode,
   PolyTransactionTag,
   ProcedureType,
@@ -22,7 +16,6 @@ const CHUNK_SIZE = 200;
 export const updateDividendsTaxWithholdingListResolver = (
   factories: Factories,
   symbol: string,
-  dividendType: DividendType,
   percentageChunk: number[],
   addresses: string[]
 ) => async () => {
@@ -31,7 +24,6 @@ export const updateDividendsTaxWithholdingListResolver = (
       factories.taxWithholdingFactory.update(
         TaxWithholding.generateId({
           securityTokenId: SecurityToken.generateId({ symbol }),
-          dividendType,
           shareholderAddress: address,
         }),
         { percentage: percentageChunk[addressIndex] }
@@ -46,7 +38,7 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
   public type = ProcedureType.UpdateDividendsTaxWithholdingList;
 
   public async prepareTransactions() {
-    const { symbol, dividendType, shareholderAddresses: investors, percentages } = this.args;
+    const { symbol, shareholderAddresses: investors, percentages } = this.args;
     const { contractWrappers, factories } = this.context;
 
     try {
@@ -57,33 +49,15 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
-
-    let dividendsModule: ERC20DividendCheckpoint | EtherDividendCheckpoint | undefined;
-    let transactionTag: PolyTransactionTag | undefined;
-
-    switch (dividendType) {
-      case DividendType.Erc20: {
-        [dividendsModule] = await contractWrappers.getAttachedModules(
-          { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
-          { unarchived: true }
-        );
-        transactionTag = PolyTransactionTag.SetErc20TaxWithholding;
-        break;
-      }
-      case DividendType.Eth: {
-        [dividendsModule] = await contractWrappers.getAttachedModules(
-          { moduleName: ModuleName.EtherDividendCheckpoint, symbol },
-          { unarchived: true }
-        );
-        transactionTag = PolyTransactionTag.SetEtherTaxWithholding;
-        break;
-      }
-    }
+    const [dividendsModule] = await contractWrappers.getAttachedModules(
+      { moduleName: ModuleName.ERC20DividendCheckpoint, symbol },
+      { unarchived: true }
+    );
 
     if (!dividendsModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: "Dividends of the specified type haven't been enabled",
+        message: "The Dividends Feature hasn't been enabled",
       });
     }
 
@@ -93,18 +67,12 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
     await P.each(shareholderAddressChunks, async (addresses, chunkIndex) => {
       const percentageChunk = percentageChunks[chunkIndex];
       await this.addTransaction(dividendsModule!.setWithholding, {
-        tag: transactionTag!,
+        tag: PolyTransactionTag.SetErc20TaxWithholding,
         // Update all affected tax withholding entities.
         // We do this without fetching the data from the contracts
         // because it would take too many requests and it's only one value that changes
         resolvers: [
-          updateDividendsTaxWithholdingListResolver(
-            factories,
-            symbol,
-            dividendType,
-            percentageChunk,
-            addresses
-          ),
+          updateDividendsTaxWithholdingListResolver(factories, symbol, percentageChunk, addresses),
         ],
       })({
         investors: addresses,

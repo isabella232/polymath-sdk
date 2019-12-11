@@ -1,12 +1,7 @@
-import {
-  ModuleName,
-  ERC20DividendCheckpoint,
-  EtherDividendCheckpoint,
-} from '@polymathnetwork/contract-wrappers';
+import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   PullDividendPaymentProcedureArgs,
-  DividendType,
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
@@ -18,13 +13,11 @@ import { DividendDistribution, SecurityToken } from '../entities';
 export const createPullDividendPaymentResolver = (
   factories: Factories,
   symbol: string,
-  dividendType: DividendType,
   index: number
 ) => async () => {
   return factories.dividendDistributionFactory.refresh(
     DividendDistribution.generateId({
       securityTokenId: SecurityToken.generateId({ symbol }),
-      dividendType,
       index,
     })
   );
@@ -34,7 +27,7 @@ export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureA
   public type = ProcedureType.PullDividendPayment;
 
   public async prepareTransactions() {
-    const { symbol, dividendIndex, dividendType } = this.args;
+    const { symbol, dividendIndex } = this.args;
     const { contractWrappers, factories, currentWallet } = this.context;
 
     try {
@@ -46,30 +39,18 @@ export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureA
       });
     }
 
-    let dividendsModule: ERC20DividendCheckpoint | EtherDividendCheckpoint | undefined;
-
-    if (dividendType === DividendType.Erc20) {
-      [dividendsModule] = await contractWrappers.getAttachedModules(
-        {
-          moduleName: ModuleName.ERC20DividendCheckpoint,
-          symbol,
-        },
-        { unarchived: true }
-      );
-    } else if (dividendType === DividendType.Eth) {
-      [dividendsModule] = await contractWrappers.getAttachedModules(
-        {
-          moduleName: ModuleName.EtherDividendCheckpoint,
-          symbol,
-        },
-        { unarchived: true }
-      );
-    }
+    const [dividendsModule] = await contractWrappers.getAttachedModules(
+      {
+        moduleName: ModuleName.ERC20DividendCheckpoint,
+        symbol,
+      },
+      { unarchived: true }
+    );
 
     if (!dividendsModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: "Dividends of the specified type haven't been enabled",
+        message: "The Dividends Feature hasn't been enabled",
       });
     }
 
@@ -103,9 +84,7 @@ export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureA
 
     await this.addTransaction(dividendsModule!.pullDividendPayment, {
       tag: PolyTransactionTag.PullDividendPayment,
-      resolvers: [
-        createPullDividendPaymentResolver(factories, symbol, dividendType, dividendIndex),
-      ],
+      resolvers: [createPullDividendPaymentResolver(factories, symbol, dividendIndex)],
     })({
       dividendIndex,
     });

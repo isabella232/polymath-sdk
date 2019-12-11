@@ -11,7 +11,7 @@ import { union, compact } from 'lodash';
 import { Context } from './Context';
 import { getInjectedProvider } from './browserUtils';
 import { ErrorCode, TransactionSpeed } from './types';
-import { Erc20TokenBalance, SecurityToken } from './entities';
+import { Erc20TokenBalance, SecurityToken, Wallet } from './entities';
 import { ReserveSecurityToken } from './procedures';
 import { PolymathError } from './PolymathError';
 import { PolymathBase } from './PolymathBase';
@@ -278,40 +278,14 @@ export class Polymath {
   };
 
   /**
-   * Get the balance of ETH in a wallet
+   * Retrieve a Wallet by address
    *
-   * @param walletAddress wallet to check for balance
+   * @param address wallet address
    */
-  public getEthBalance = async (args: { walletAddress: string }) => {
-    const { walletAddress } = args;
+  public getWallet = (args: { address: string }): Wallet => {
+    const { address } = args;
 
-    return this.context.contractWrappers.getBalance({ address: walletAddress });
-  };
-
-  /**
-   * Get the balance of a specific ERC20 token in a wallet
-   *
-   * @param tokenAddress address of the ERC20 token
-   * @param walletAddress wallet to check for balance
-   */
-  public getErc20TokenBalance = async (
-    args:
-      | {
-          tokenAddress: string;
-          walletAddress: string;
-        }
-      | string
-  ) => {
-    let uid: string;
-
-    // fetch by UUID
-    if (typeof args === 'string') {
-      uid = args;
-    } else {
-      uid = Erc20TokenBalance.generateId(args);
-    }
-
-    return this.context.factories.erc20TokenBalanceFactory.fetch(uid);
+    return new Wallet({ address }, this.context);
   };
 
   /**

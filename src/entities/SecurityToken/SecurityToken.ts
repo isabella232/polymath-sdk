@@ -4,12 +4,13 @@ import { serialize, unserialize as unserializeUtil } from '../../utils';
 import { Features } from './Features';
 import { Shareholders } from './Shareholders';
 import { Dividends } from './Dividends';
-import { Offerings } from './Offerings';
+import { Issuance } from './Issuance';
 import { Permissions } from './Permissions';
+import { Transfers } from './Transfers';
+import { Documents } from './Documents';
 import { Controller } from './Controller';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
-import { Restrictions } from './Restrictions';
 
 export interface UniqueIdentifiers {
   symbol: string;
@@ -65,13 +66,15 @@ export class SecurityToken extends Entity<Params> {
 
   public dividends: Dividends;
 
-  public offerings: Offerings;
+  public issuance: Issuance;
 
   public permissions: Permissions;
 
   public controller: Controller;
 
-  public restrictions: Restrictions;
+  public transfers: Transfers;
+
+  public documents: Documents;
 
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
@@ -86,10 +89,11 @@ export class SecurityToken extends Entity<Params> {
     this.features = new Features(this, context);
     this.shareholders = new Shareholders(this, context);
     this.dividends = new Dividends(this, context);
-    this.offerings = new Offerings(this, context);
+    this.issuance = new Issuance(this, context);
     this.permissions = new Permissions(this, context);
+    this.transfers = new Transfers(this, context);
+    this.documents = new Documents(this, context);
     this.controller = new Controller(this, context);
-    this.restrictions = new Restrictions(this, context);
   }
 
   public toPojo() {

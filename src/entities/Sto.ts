@@ -9,8 +9,8 @@ import {
   AssignStoRole,
   FinalizeSto,
   ModifyBeneficialInvestments,
+  ModifyPreIssuing,
 } from '../procedures';
-import { ModifyPreMinting } from '../procedures/ModifyPreMinting';
 
 export interface UniqueIdentifiers {
   securityTokenId: string;
@@ -37,7 +37,7 @@ export interface Params {
   isPaused: boolean;
   capReached: boolean;
   isFinalized: boolean;
-  preMintAllowed: boolean;
+  preIssueAllowed: boolean;
   beneficialInvestmentsAllowed: boolean;
 }
 
@@ -74,7 +74,7 @@ export abstract class Sto<P> extends Entity<P> {
 
   public isFinalized: boolean;
 
-  public preMintAllowed: boolean;
+  public preIssueAllowed: boolean;
 
   public beneficialInvestmentsAllowed: boolean;
 
@@ -112,7 +112,7 @@ export abstract class Sto<P> extends Entity<P> {
       isPaused,
       capReached,
       isFinalized,
-      preMintAllowed,
+      preIssueAllowed,
       beneficialInvestmentsAllowed,
     } = params;
 
@@ -131,7 +131,7 @@ export abstract class Sto<P> extends Entity<P> {
     this.isPaused = isPaused;
     this.capReached = capReached;
     this.isFinalized = isFinalized;
-    this.preMintAllowed = preMintAllowed;
+    this.preIssueAllowed = preIssueAllowed;
     this.beneficialInvestmentsAllowed = beneficialInvestmentsAllowed;
     this.context = context;
   }
@@ -177,14 +177,14 @@ export abstract class Sto<P> extends Entity<P> {
   };
 
   /**
-   * Enables all offered tokens to be minted instantly at STO start (default behavior is to mint on purchase)
-   * Can be disabled *BEFORE* the STO starts by calling disallowPreMinting
+   * Enables all offered tokens to be issued instantly at STO start (default behavior is to issue on purchase)
+   * Can be disabled *BEFORE* the STO starts by calling disallowPreIssuing
    */
-  public allowPreMinting = async () => {
+  public allowPreIssuing = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
-    const procedure = new ModifyPreMinting(
-      { stoAddress, stoType, symbol, allowPreMinting: true },
+    const procedure = new ModifyPreIssuing(
+      { stoAddress, stoType, symbol, allowPreIssuing: true },
       this.context
     );
 
@@ -192,14 +192,14 @@ export abstract class Sto<P> extends Entity<P> {
   };
 
   /**
-   * Disables pre-minting of offered tokens at STO start (goes back to default behavior, which is to mint on purchase)
-   * Can be re-enabled *BEFORE* the STO starts by calling allowPreMinting
+   * Disables pre-issuing of offered tokens at STO start (goes back to default behavior, which is to issue on purchase)
+   * Can be re-enabled *BEFORE* the STO starts by calling allowPreIssuing
    */
-  public disallowPreMinting = async () => {
+  public disallowPreIssuing = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
-    const procedure = new ModifyPreMinting(
-      { stoAddress, stoType, symbol, allowPreMinting: false },
+    const procedure = new ModifyPreIssuing(
+      { stoAddress, stoType, symbol, allowPreIssuing: false },
       this.context
     );
 
@@ -300,7 +300,7 @@ export abstract class Sto<P> extends Entity<P> {
       capReached,
       isFinalized,
       isPaused,
-      preMintAllowed,
+      preIssueAllowed,
       beneficialInvestmentsAllowed,
     } = this;
 
@@ -320,7 +320,7 @@ export abstract class Sto<P> extends Entity<P> {
       capReached,
       isFinalized,
       isPaused,
-      preMintAllowed,
+      preIssueAllowed,
       beneficialInvestmentsAllowed,
     };
   }
@@ -339,7 +339,7 @@ export abstract class Sto<P> extends Entity<P> {
       isPaused,
       capReached,
       isFinalized,
-      preMintAllowed,
+      preIssueAllowed,
       beneficialInvestmentsAllowed,
     } = params;
 
@@ -391,8 +391,8 @@ export abstract class Sto<P> extends Entity<P> {
       this.isFinalized = isFinalized;
     }
 
-    if (preMintAllowed !== undefined) {
-      this.preMintAllowed = preMintAllowed;
+    if (preIssueAllowed !== undefined) {
+      this.preIssueAllowed = preIssueAllowed;
     }
 
     if (beneficialInvestmentsAllowed !== undefined) {

@@ -33,15 +33,6 @@ export interface DividendShareholderStatus {
   balance: BigNumber;
 }
 
-export enum DividendType {
-  Erc20 = 'Erc20',
-  Eth = 'Eth',
-}
-
-export function isDividendType(type: any): type is DividendType {
-  return typeof type === 'string' && (type === DividendType.Erc20 || type === DividendType.Eth);
-}
-
 export enum StoType {
   Simple = 'Simple',
   Tiered = 'Tiered',
@@ -56,7 +47,7 @@ export interface TaxWithholdingEntry {
   percentage: number;
 }
 
-export interface MintingDataEntry {
+export interface IssuanceDataEntry {
   address: string;
   amount: BigNumber;
   shareholderData?: Omit<ShareholderDataEntry, 'address'>;
@@ -128,15 +119,14 @@ export enum ProcedureType {
   ApproveErc20 = 'ApproveErc20',
   TransferErc20 = 'TransferErc20',
   CreateCheckpoint = 'CreateCheckpoint',
-  EnableDividendManagers = 'EnableDividendManagers',
+  EnableDividendManager = 'EnableDividendManager',
   EnableGeneralPermissionManager = 'EnableGeneralPermissionManager',
   EnableGeneralTransferManager = 'EnableGeneralTransferManager',
   EnableCountTransferManager = 'EnableCountTransferManager',
   EnablePercentageTransferManager = 'EnablePercentageTransferManager',
   LaunchSimpleSto = 'LaunchSimpleSto',
   LaunchTieredSto = 'LaunchTieredSto',
-  CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
-  CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
+  CreateDividendDistribution = 'CreateDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
   DisableFeature = 'DisableFeature',
   FreezeIssuance = 'FreezeIssuance',
@@ -158,8 +148,8 @@ export enum ProcedureType {
   DisableController = 'DisableController',
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
-  MintTokens = 'MintTokens',
-  ModifyPreMinting = 'ModifyPreMinting',
+  IssueTokens = 'IssueTokens',
+  ModifyPreIssuing = 'ModifyPreIssuing',
   ModifyBeneficialInvestments = 'ModifyBeneificialInvestments',
   ModifyTieredStoData = 'ModifyTieredStoData',
   InvestInTieredSto = 'InvestInTieredSto',
@@ -180,7 +170,6 @@ export enum PolyTransactionTag {
   CreateSecurityToken = 'CreateSecurityToken',
   CreateCheckpoint = 'CreateCheckpoint',
   CreateErc20DividendDistribution = 'CreateErc20DividendDistribution',
-  CreateEtherDividendDistribution = 'CreateEtherDividendDistribution',
   SetErc20TaxWithholding = 'SetErc20TaxWithholding',
   SetEtherTaxWithholding = 'SetEtherTaxWithholding',
   SetDefaultExcluded = 'SetDefaultExcluded',
@@ -244,7 +233,6 @@ export type MapMaybeResolver<T> = { [K in keyof T]: MaybeResolver<T[K]> };
 //   [PolyTransactionTag.ReclaimDividendFunds]: Partial<ReclaimDividendArgs>;
 //   [PolyTransactionTag.WithdrawTaxWithholdings]: Partial<WithdrawWithholdingArgs>;
 //   [PolyTransactionTag.CreateErc20DividendDistribution]: Partial<CreateErc20DividendArgs>;
-//   [PolyTransactionTag.CreateEtherDividendDistribution]: Partial<CreateEtherDividendArgs>;
 //   [PolyTransactionTag.GetTokens]: Partial<GetTokensArgs>;
 //   [PolyTransactionTag.ApprovePoly]: Partial<ApproveArgs>;
 //   [PolyTransactionTag.EnableDividends]: Partial<AddDividendsModuleArgs>;
@@ -273,7 +261,7 @@ export interface CreateCheckpointProcedureArgs {
   symbol: string;
 }
 
-export interface CreateErc20DividendDistributionProcedureArgs {
+export interface CreateDividendDistributionProcedureArgs {
   symbol: string;
   maturityDate: Date;
   expiryDate: Date;
@@ -285,28 +273,15 @@ export interface CreateErc20DividendDistributionProcedureArgs {
   taxWithholdings?: TaxWithholdingEntry[];
 }
 
-export interface CreateEtherDividendDistributionProcedureArgs {
-  symbol: string;
-  maturityDate: Date;
-  expiryDate: Date;
-  amount: BigNumber;
-  checkpointIndex: number;
-  name: string;
-  excludedAddresses?: string[];
-  taxWithholdings?: TaxWithholdingEntry[];
-}
-
 export interface PushDividendPaymentProcedureArgs {
   symbol: string;
   dividendIndex: number;
-  dividendType: DividendType;
   shareholderAddresses?: string[];
 }
 
 export interface PullDividendPaymentProcedureArgs {
   symbol: string;
   dividendIndex: number;
-  dividendType: DividendType;
 }
 
 export interface CreateSecurityTokenProcedureArgs {
@@ -317,10 +292,9 @@ export interface CreateSecurityTokenProcedureArgs {
   treasuryWallet?: string;
 }
 
-export interface EnableDividendManagersProcedureArgs {
+export interface EnableDividendManagerProcedureArgs {
   symbol: string;
   storageWalletAddress: string;
-  types?: DividendType[];
 }
 
 export interface EnableGeneralPermissionManagerProcedureArgs {
@@ -356,19 +330,19 @@ export interface LaunchSimpleStoProcedureArgs {
   currency: Currency.ETH | Currency.POLY;
   raisedFundsWallet: string;
   unsoldTokensWallet: string;
-  allowPreMinting?: boolean;
+  allowPreIssuing?: boolean;
 }
 
-export interface MintTokensProcedureArgs {
+export interface IssueTokensProcedureArgs {
   symbol: string;
-  mintingData: MintingDataEntry[];
+  issuanceData: IssuanceDataEntry[];
 }
 
-export interface ModifyPreMintingProcedureArgs {
+export interface ModifyPreIssuingProcedureArgs {
   symbol: string;
   stoAddress: string;
   stoType: StoType;
-  allowPreMinting: boolean;
+  allowPreIssuing: boolean;
 }
 
 export interface ModifyBeneficialInvestmentsProcedureArgs {
@@ -379,7 +353,7 @@ export interface ModifyBeneficialInvestmentsProcedureArgs {
 }
 
 export interface ModifyTieredStoDataProcedureArgs
-  extends Omit<LaunchTieredStoProcedureArgs, 'allowPreMinting'> {
+  extends Omit<LaunchTieredStoProcedureArgs, 'allowPreIssuing'> {
   stoAddress: string;
 }
 
@@ -450,13 +424,12 @@ export interface LaunchTieredStoProcedureArgs {
   stableCoinAddresses: string[];
   customOracleAddresses: string[];
   denominatedCurrency: string;
-  allowPreMinting?: boolean;
+  allowPreIssuing?: boolean;
 }
 
 export interface ReclaimFundsProcedureArgs {
   symbol: string;
   dividendIndex: number;
-  dividendType: DividendType;
 }
 
 export interface ReserveSecurityTokenProcedureArgs {
@@ -467,25 +440,21 @@ export interface ReserveSecurityTokenProcedureArgs {
 export interface WithdrawTaxesProcedureArgs {
   symbol: string;
   dividendIndex: number;
-  dividendType: DividendType;
 }
 
 export interface UpdateDividendsTaxWithholdingListProcedureArgs {
   symbol: string;
-  dividendType: DividendType;
   shareholderAddresses: string[];
   percentages: number[];
 }
 
 export interface SetDividendsWalletProcedureArgs {
   symbol: string;
-  dividendType: DividendType;
   address: string;
 }
 
 export interface ModifyDividendsDefaultExclusionListProcedureArgs {
   symbol: string;
-  dividendType: DividendType;
   shareholderAddresses: string[];
 }
 
@@ -626,10 +595,9 @@ export interface ProcedureArguments {
   [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
   [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
   [ProcedureType.CreateCheckpoint]: CreateCheckpointProcedureArgs;
-  [ProcedureType.CreateErc20DividendDistribution]: CreateErc20DividendDistributionProcedureArgs;
-  [ProcedureType.CreateEtherDividendDistribution]: CreateEtherDividendDistributionProcedureArgs;
+  [ProcedureType.CreateDividendDistribution]: CreateDividendDistributionProcedureArgs;
   [ProcedureType.CreateSecurityToken]: CreateSecurityTokenProcedureArgs;
-  [ProcedureType.EnableDividendManagers]: EnableDividendManagersProcedureArgs;
+  [ProcedureType.EnableDividendManager]: EnableDividendManagerProcedureArgs;
   [ProcedureType.EnableGeneralPermissionManager]: EnableGeneralPermissionManagerProcedureArgs;
   [ProcedureType.EnableGeneralTransferManager]: EnableGeneralTransferManagerProcedureArgs;
   [ProcedureType.EnableCountTransferManager]: EnableCountTransferManagerProcedureArgs;
@@ -651,8 +619,8 @@ export interface ProcedureArguments {
   [ProcedureType.AssignStoRole]: AssignStoRoleProcedureArgs;
   [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
-  [ProcedureType.MintTokens]: MintTokensProcedureArgs;
-  [ProcedureType.ModifyPreMinting]: ModifyPreMintingProcedureArgs;
+  [ProcedureType.IssueTokens]: IssueTokensProcedureArgs;
+  [ProcedureType.ModifyPreIssuing]: ModifyPreIssuingProcedureArgs;
   [ProcedureType.DisableFeature]: DisableFeatureProcedureArgs;
   [ProcedureType.FinalizeSto]: FinalizeStoProcedureArgs;
   [ProcedureType.ModifyBeneficialInvestments]: ModifyBeneficialInvestmentsProcedureArgs;
@@ -728,18 +696,15 @@ export enum TransactionSpeed {
 export enum Feature {
   Permissions = 'Permissions',
   Shareholders = 'Shareholders',
-  Erc20Dividends = 'Erc20Dividends',
-  EtherDividends = 'EtherDividends',
+  Dividends = 'Dividends',
   ShareholderCountRestrictions = 'ShareholderCountRestrictions',
   PercentageOwnershipRestrictions = 'PercentageOwnershipRestrictions',
 }
 
 export enum SecurityTokenRole {
   PermissionsAdministrator = 'PermissionsAdministrator',
-  Erc20DividendsOperator = 'Erc20DividendsOperator',
-  Erc20DividendsAdministrator = 'Erc20DividendsAdministrator',
-  EtherDividendsOperator = 'EtherDividendsOperator',
-  EtherDividendsAdministrator = 'EtherDividendsAdministrator',
+  DividendsOperator = 'DividendsOperator',
+  DividendsAdministrator = 'DividendsAdministrator',
   ShareholdersAdministrator = 'ShareholdersAdministrator',
   ShareholderCountRestrictionsAdministrator = 'ShareholderCountRestrictionsAdministrator',
   PercentageOwnershipRestrictionsAdministrator = 'PercentageOwnershipRestrictionsAdministrator',

@@ -43,9 +43,9 @@ export class CheckpointFactory extends Factory<Checkpoint, Params, UniqueIdentif
       index: checkpoint.index,
     });
 
-    const dividendDistributions = checkpointDividends.map(({ dividendType, ...distribution }) =>
+    const dividendDistributions = checkpointDividends.map(distribution =>
       factories.dividendDistributionFactory.create(
-        DividendDistribution.generateId({ securityTokenId, dividendType, index }),
+        DividendDistribution.generateId({ securityTokenId, index }),
         {
           ...distribution,
           checkpointId,
