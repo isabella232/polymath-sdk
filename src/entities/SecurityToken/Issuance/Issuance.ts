@@ -29,7 +29,7 @@ export class Issuance extends SubModule {
    * @param issuanceData[].shareholderData.isAccredited whether the shareholder is accredited (defaults to false)
    * @param issuanceData[].shareholderData.canBuyFromSto whether the shareholder is allowed to purchase tokens in an STO (defaults to true)
    */
-  public issueTokens = async (args: { issuanceData: IssuanceDataEntry[] }) => {
+  public issue = async (args: { issuanceData: IssuanceDataEntry[] }) => {
     const procedure = new IssueTokens(
       {
         symbol: this.securityToken.symbol,
