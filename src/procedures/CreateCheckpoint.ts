@@ -1,4 +1,4 @@
-import { SecurityTokenEvents, TransactionParams } from '@polymathnetwork/contract-wrappers';
+import { SecurityTokenEvents } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   CreateCheckpointProcedureArgs,
@@ -9,8 +9,16 @@ import {
 import { PolymathError } from '../PolymathError';
 import { findEvents } from '../utils';
 import { SecurityToken, Checkpoint } from '../entities';
+import { Factories } from '../Context';
 
-export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint> {
+export const createRefreshSecurityTokenFactoryResolver = (
+  factories: Factories,
+  securityTokenId: string
+) => async () => {
+  return factories.securityTokenFactory.refresh(securityTokenId);
+};
+
+export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint | void> {
   public type = ProcedureType.CreateCheckpoint;
 
   public async prepareTransactions() {
@@ -32,7 +40,7 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
     }
 
     const securityTokenId = SecurityToken.generateId({ symbol });
-    const [checkpoint] = await this.addTransaction<{}, [Checkpoint]>(
+    const [checkpoint] = await this.addTransaction<{}, [Checkpoint, void]>(
       securityToken.createCheckpoint,
       {
         tag: PolyTransactionTag.CreateCheckpoint,
@@ -48,7 +56,6 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
               const { args: eventArgs } = event;
 
               const { _checkpointId } = eventArgs;
-              await factories.securityTokenFactory.refresh(securityTokenId); // Issue leaving this in separate resolver
               return factories.checkpointFactory.fetch(
                 Checkpoint.generateId({
                   securityTokenId: SecurityToken.generateId({ symbol }),
@@ -62,6 +69,7 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
                 "The Checkpoint was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
             });
           },
+          createRefreshSecurityTokenFactoryResolver(factories, securityTokenId),
         ],
       }
     )({});
