@@ -1,9 +1,20 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import { SubModule } from './SubModule';
-import { IssueTokens } from '../../procedures';
-import { IssuanceDataEntry } from '../../types';
+import { SubModule } from '../SubModule';
+import { IssueTokens } from '../../../procedures';
+import { IssuanceDataEntry } from '../../../types';
+import { Offerings } from './Offerings';
+import { SecurityToken } from '../SecurityToken';
+import { Context } from '../../../Context';
 
 export class Issuance extends SubModule {
+  public offerings: Offerings;
+
+  constructor(securityToken: SecurityToken, context: Context) {
+    super(securityToken, context);
+
+    this.offerings = new Offerings(securityToken, context);
+  }
+
   /**
    * Issue a certain amount of tokens to an address. The address must already have been added via `modifyData`. Otherwise,
    * the corresponding shareholder data for that address must be supplied to this method
