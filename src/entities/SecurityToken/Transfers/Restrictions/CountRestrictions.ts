@@ -1,8 +1,8 @@
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
-import { ErrorCode } from '../../../types';
-import { ModifyMaxHolderCount } from '../../../procedures';
-import { SubModule } from '../SubModule';
-import { PolymathError } from '../../../PolymathError';
+import { ErrorCode } from '../../../../types';
+import { ModifyMaxHolderCount } from '../../../../procedures';
+import { SubModule } from '../../SubModule';
+import { PolymathError } from '../../../../PolymathError';
 
 export class CountRestrictions extends SubModule {
   /**

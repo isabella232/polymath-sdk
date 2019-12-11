@@ -1,8 +1,19 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import { SubModule } from './SubModule';
-import { ControllerTransfer, SetController } from '../../procedures';
+import { SubModule } from '../SubModule';
+import { ControllerTransfer, SetController } from '../../../procedures';
+import { Restrictions } from './Restrictions';
+import { SecurityToken } from '../SecurityToken';
+import { Context } from '../../../Context';
 
 export class Transfers extends SubModule {
+  public restrictions: Restrictions;
+
+  constructor(securityToken: SecurityToken, context: Context) {
+    super(securityToken, context);
+
+    this.restrictions = new Restrictions(securityToken, context);
+  }
+
   /**
    * Set the address of the Security Token's Controller. The controller may perform forced transfers
    */

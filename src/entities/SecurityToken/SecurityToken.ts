@@ -9,7 +9,6 @@ import { Permissions } from './Permissions';
 import { Transfers } from './Transfers';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
-import { Restrictions } from './Restrictions';
 import { Documents } from './Documents';
 
 export interface UniqueIdentifiers {
@@ -72,8 +71,6 @@ export class SecurityToken extends Entity<Params> {
 
   public transfers: Transfers;
 
-  public restrictions: Restrictions;
-
   public documents: Documents;
 
   constructor(params: Params & UniqueIdentifiers, context: Context) {
@@ -92,7 +89,6 @@ export class SecurityToken extends Entity<Params> {
     this.offerings = new Offerings(this, context);
     this.permissions = new Permissions(this, context);
     this.transfers = new Transfers(this, context);
-    this.restrictions = new Restrictions(this, context);
     this.documents = new Documents(this, context);
   }
 

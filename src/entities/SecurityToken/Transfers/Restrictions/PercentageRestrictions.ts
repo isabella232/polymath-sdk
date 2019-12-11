@@ -8,11 +8,11 @@ import {
   ErrorCode,
   PercentageWhitelistEntry,
   ModifyPercentageExemptionsProcedureArgs,
-} from '../../../types';
-import { ModifyMaxHolderPercentage, ModifyPercentageExemptions } from '../../../procedures';
-import { SubModule } from '../SubModule';
-import { PolymathError } from '../../../PolymathError';
-import { TransactionQueue } from '../../TransactionQueue';
+} from '../../../../types';
+import { ModifyMaxHolderPercentage, ModifyPercentageExemptions } from '../../../../procedures';
+import { SubModule } from '../../SubModule';
+import { PolymathError } from '../../../../PolymathError';
+import { TransactionQueue } from '../../../TransactionQueue';
 
 interface PercentageWhitelistParams {
   whitelistEntries: PercentageWhitelistEntry[];

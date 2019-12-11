@@ -1,8 +1,8 @@
-import { SubModule } from '../SubModule';
+import { SubModule } from '../../SubModule';
 import { CountRestrictions } from './CountRestrictions';
 import { PercentageRestrictions } from './PercentageRestrictions';
-import { SecurityToken } from '../SecurityToken';
-import { Context } from '../../../Context';
+import { SecurityToken } from '../../SecurityToken';
+import { Context } from '../../../../Context';
 
 export class Restrictions extends SubModule {
   public count: CountRestrictions;
