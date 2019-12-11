@@ -1,10 +1,10 @@
 import { BigNumber, ModuleName } from '@polymathnetwork/contract-wrappers';
 import { includes } from 'lodash';
-import { SubModule } from './SubModule';
-import { StoTier, Currency, StoType, ErrorCode } from '../../types';
-import { LaunchSimpleSto, LaunchTieredSto } from '../../procedures';
-import { SimpleSto, TieredSto, Sto } from '..';
-import { PolymathError } from '../../PolymathError';
+import { SubModule } from '../SubModule';
+import { StoTier, Currency, StoType, ErrorCode } from '../../../types';
+import { LaunchSimpleSto, LaunchTieredSto } from '../../../procedures';
+import { SimpleSto, TieredSto, Sto } from '../..';
+import { PolymathError } from '../../../PolymathError';
 
 interface GetSto {
   (args: { stoType: StoType.Simple; address: string }): Promise<SimpleSto>;

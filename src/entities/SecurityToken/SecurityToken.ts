@@ -72,6 +72,8 @@ export class SecurityToken extends Entity<Params> {
 
   public controller: Controller;
 
+  public transfers: Transfers;
+
   public documents: Documents;
 
   constructor(params: Params & UniqueIdentifiers, context: Context) {

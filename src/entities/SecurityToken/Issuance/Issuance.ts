@@ -1,4 +1,3 @@
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SubModule } from '../SubModule';
 import { IssueTokens } from '../../../procedures';
 import { IssuanceDataEntry } from '../../../types';
