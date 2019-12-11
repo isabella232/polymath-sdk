@@ -10,7 +10,6 @@ import {
   CappedSTO,
   USDTieredSTO,
   ERC20DividendCheckpoint,
-  EtherDividendCheckpoint,
   SecurityToken,
   ModuleType,
   BigNumber,
@@ -25,7 +24,6 @@ import {
   isUSDTieredSTO,
   isUSDTieredSTO_3_0_0,
   isGeneralPermissionManager,
-  isGeneralPermissionManager_3_0_0,
   isGeneralTransferManager,
   isBlacklistTransferManager,
   isLockUpTransferManager,
@@ -39,7 +37,7 @@ import { range, flatten, includes } from 'lodash';
 import P from 'bluebird';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';
-import { ErrorCode, DividendType, Module, SecurityTokenRole } from './types';
+import { ErrorCode, Module, SecurityTokenRole } from './types';
 
 interface GetModuleAddressesByNameParams {
   symbol: string;
@@ -150,9 +148,6 @@ interface GetAttachedModules {
   (params: GetAttachedErc20DividendCheckpointsParams, opts?: GetAttachedModulesOpts): Promise<
     ERC20DividendCheckpoint[]
   >;
-  (params: GetAttachedEtherDividendCheckpointsParams, opts?: GetAttachedModulesOpts): Promise<
-    EtherDividendCheckpoint[]
-  >;
   (params: GetAttachedVestingEscrowWalletsParams, opts?: GetAttachedModulesOpts): Promise<
     VestingEscrowWallet[]
   >;
@@ -188,7 +183,6 @@ export interface DividendShareholderStatus {
 export interface BaseDividend {
   index: number;
   checkpointId: number;
-  dividendType: DividendType;
   created: Date;
   maturity: Date;
   expiry: Date;
@@ -572,22 +566,15 @@ export class PolymathBase extends PolymathAPI {
     dividendsModule,
   }: {
     dividendIndex: number;
-    dividendsModule: ERC20DividendCheckpoint | EtherDividendCheckpoint;
+    dividendsModule: ERC20DividendCheckpoint;
   }): Promise<BaseDividend> => {
     let symbol: string;
-    let dividendType: DividendType;
 
-    if (isERC20DividendCheckpoint(dividendsModule)) {
-      const tokenAddress = await dividendsModule.dividendTokens({ dividendIndex });
+    const tokenAddress = await dividendsModule.dividendTokens({ dividendIndex });
 
-      const token = await this.tokenFactory.getERC20TokenInstanceFromAddress(tokenAddress);
+    const token = await this.tokenFactory.getERC20TokenInstanceFromAddress(tokenAddress);
 
-      symbol = await token.symbol();
-      dividendType = DividendType.Erc20;
-    } else {
-      symbol = 'ETH';
-      dividendType = DividendType.Eth;
-    }
+    symbol = await token.symbol();
 
     const dividend = await dividendsModule.dividends({ dividendIndex });
 
@@ -621,7 +608,6 @@ export class PolymathBase extends PolymathAPI {
     return {
       index: dividendIndex,
       checkpointId,
-      dividendType,
       created,
       maturity,
       expiry,
@@ -642,7 +628,7 @@ export class PolymathBase extends PolymathAPI {
     dividendsModule,
   }: {
     checkpointId: number;
-    dividendsModule: ERC20DividendCheckpoint | EtherDividendCheckpoint;
+    dividendsModule: ERC20DividendCheckpoint;
   }) => {
     const dividendIndexes = await dividendsModule.getDividendIndex({ checkpointId });
 
@@ -656,7 +642,7 @@ export class PolymathBase extends PolymathAPI {
   public getDividends = async ({
     dividendsModule,
   }: {
-    dividendsModule: ERC20DividendCheckpoint | EtherDividendCheckpoint;
+    dividendsModule: ERC20DividendCheckpoint;
   }) => {
     const stAddress = await dividendsModule.securityToken();
     const securityToken = await this.tokenFactory.getSecurityTokenInstanceFromAddress(stAddress);
@@ -676,53 +662,28 @@ export class PolymathBase extends PolymathAPI {
   public getAllDividends = async ({
     securityTokenSymbol,
     checkpointId,
-    dividendTypes = [DividendType.Erc20, DividendType.Eth],
   }: {
     securityTokenSymbol: string;
     checkpointId?: number;
-    dividendTypes?: DividendType[];
   }) => {
-    const dividends = [];
+    const erc20Module = (await this.getAttachedModules(
+      {
+        moduleName: ModuleName.ERC20DividendCheckpoint,
+        symbol: securityTokenSymbol,
+      },
+      { unarchived: true }
+    ))[0];
 
-    if (includes(dividendTypes, DividendType.Erc20)) {
-      const erc20Module = (await this.getAttachedModules(
-        {
-          moduleName: ModuleName.ERC20DividendCheckpoint,
-          symbol: securityTokenSymbol,
-        },
-        { unarchived: true }
-      ))[0];
-
-      if (erc20Module) {
-        const erc20Dividends = await (checkpointId !== undefined
-          ? this.getDividendsByCheckpoint({
-              checkpointId,
-              dividendsModule: erc20Module,
-            })
-          : this.getDividends({ dividendsModule: erc20Module }));
-        dividends.push(...erc20Dividends);
-      }
+    if (!erc20Module) {
+      return [];
     }
 
-    if (includes(dividendTypes, DividendType.Eth)) {
-      const etherModule = (await this.getAttachedModules(
-        {
-          moduleName: ModuleName.EtherDividendCheckpoint,
-          symbol: securityTokenSymbol,
-        },
-        { unarchived: true }
-      ))[0];
-
-      if (etherModule) {
-        const etherDividends = await (checkpointId !== undefined
-          ? this.getDividendsByCheckpoint({
-              checkpointId,
-              dividendsModule: etherModule,
-            })
-          : this.getDividends({ dividendsModule: etherModule }));
-        dividends.push(...etherDividends);
-      }
-    }
+    const dividends = await (checkpointId !== undefined
+      ? this.getDividendsByCheckpoint({
+          checkpointId,
+          dividendsModule: erc20Module,
+        })
+      : this.getDividends({ dividendsModule: erc20Module }));
 
     return dividends;
   };
@@ -744,23 +705,10 @@ export class PolymathBase extends PolymathAPI {
       moduleName = ModuleName.PercentageTransferManager;
       permission = Perm.Admin;
     } else if (
-      [
-        SecurityTokenRole.Erc20DividendsAdministrator,
-        SecurityTokenRole.Erc20DividendsOperator,
-      ].includes(role)
+      [SecurityTokenRole.DividendsAdministrator, SecurityTokenRole.DividendsOperator].includes(role)
     ) {
       moduleName = ModuleName.ERC20DividendCheckpoint;
-      permission =
-        role === SecurityTokenRole.Erc20DividendsAdministrator ? Perm.Admin : Perm.Operator;
-    } else if (
-      [
-        SecurityTokenRole.EtherDividendsAdministrator,
-        SecurityTokenRole.EtherDividendsOperator,
-      ].includes(role)
-    ) {
-      moduleName = ModuleName.EtherDividendCheckpoint;
-      permission =
-        role === SecurityTokenRole.EtherDividendsAdministrator ? Perm.Admin : Perm.Operator;
+      permission = role === SecurityTokenRole.DividendsAdministrator ? Perm.Admin : Perm.Operator;
     } else {
       throw new PolymathError({
         code: ErrorCode.FatalError,

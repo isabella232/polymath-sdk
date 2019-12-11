@@ -24,7 +24,7 @@ export class Controller extends SubModule {
    * @param reason optional message to describe why the transfer occurred
    * @param data optional data used to validate the transfer
    */
-  public controllerTransfer = async (args: {
+  public transfer = async (args: {
     amount: BigNumber;
     from: string;
     to: string;
@@ -52,13 +52,12 @@ export class Controller extends SubModule {
    * @param reason optional message to describe why the redemption occurred
    * @param data optional data used to validate the transfer
    */
-  public controllerRedeem = async (args: {
+  public redeem = async (args: {
     amount: BigNumber;
     from: string;
     reason?: string;
     data?: string;
   }) => {
-    const { amount, from, reason = '', data = '' } = args;
     const { symbol } = this.securityToken;
 
     const procedure = new ControllerRedeem({ symbol, ...args }, this.context);

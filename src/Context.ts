@@ -9,8 +9,6 @@ import {
   TieredStoFactory,
   DividendDistributionFactory,
   CheckpointFactory,
-  Erc20DividendsManagerFactory,
-  EthDividendsManagerFactory,
   ShareholderFactory,
   TaxWithholdingFactory,
 } from './entities/factories';
@@ -28,8 +26,6 @@ export interface Factories {
   tieredStoFactory: TieredStoFactory;
   dividendDistributionFactory: DividendDistributionFactory;
   checkpointFactory: CheckpointFactory;
-  erc20DividendsManagerFactory: Erc20DividendsManagerFactory;
-  ethDividendsManagerFactory: EthDividendsManagerFactory;
   shareholderFactory: ShareholderFactory;
   taxWithholdingFactory: TaxWithholdingFactory;
 }
@@ -64,8 +60,6 @@ export class Context {
       tieredStoFactory: new TieredStoFactory(this),
       dividendDistributionFactory: new DividendDistributionFactory(this),
       checkpointFactory: new CheckpointFactory(this),
-      erc20DividendsManagerFactory: new Erc20DividendsManagerFactory(this),
-      ethDividendsManagerFactory: new EthDividendsManagerFactory(this),
       shareholderFactory: new ShareholderFactory(this),
       taxWithholdingFactory: new TaxWithholdingFactory(this),
     };

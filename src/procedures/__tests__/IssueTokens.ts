@@ -3,30 +3,34 @@ import { spy, restore } from 'sinon';
 import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { cloneDeep } from 'lodash';
-import { MintTokens } from '../../procedures/MintTokens';
-import { Procedure } from '../../procedures/Procedure';
+import { IssueTokens } from '../IssueTokens';
+import { Procedure } from '../Procedure';
 import * as shareholdersEntityModule from '../../entities/SecurityToken/Shareholders';
 import * as securityTokenEntityModule from '../../entities/SecurityToken/SecurityToken';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, MintTokensProcedureArgs, PolyTransactionTag, ProcedureType } from '../../types';
+import {
+  ErrorCode,
+  IssueTokensProcedureArgs,
+  PolyTransactionTag,
+  ProcedureType,
+} from '../../types';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { ModifyShareholderData } from '../../procedures';
+import { ModifyShareholderData } from '..';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { Shareholder } from '../../entities';
-import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
 
 const securityTokenId = 'ST ID';
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
 const testAddress3 = '0x8888888888888888888888888888888888888888';
-const params: MintTokensProcedureArgs = {
+const params: IssueTokensProcedureArgs = {
   symbol: 'TEST1',
-  mintingData: [
+  issuanceData: [
     {
       address: testAddress3,
       amount: new BigNumber(1),
@@ -45,8 +49,8 @@ const params: MintTokensProcedureArgs = {
   ],
 };
 
-describe('MintTokens', () => {
-  let target: MintTokens;
+describe('IssueTokens', () => {
+  let target: IssueTokens;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
@@ -128,22 +132,22 @@ describe('MintTokens', () => {
     factoryMockSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
 
-    // Instantiate MintTokens
-    target = new MintTokens(params, contextMock.getMockInstance());
+    // Instantiate IssueTokens
+    target = new IssueTokens(params, contextMock.getMockInstance());
   });
   afterEach(() => {
     restore();
   });
 
   describe('Types', () => {
-    test('should extend procedure and have MintTokens type', async () => {
+    test('should extend procedure and have IssueTokens type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe(ProcedureType.MintTokens);
+      expect(target.type).toBe(ProcedureType.IssueTokens);
     });
   });
 
   describe('MintTokens', () => {
-    test('should add the transaction to the queue to mint tokens and add a procedure to modify shareholder data', async () => {
+    test('should add the transaction to the queue to issue tokens and add a procedure to modify shareholder data', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
       securityTokenMock.mock('issueMulti', Promise.resolve('IssueMulti'));
@@ -161,7 +165,7 @@ describe('MintTokens', () => {
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
-    test('should return an array of the shareholders for whom tokens were minted', async () => {
+    test('should return an array of the shareholders for whom tokens were issued', async () => {
       const shareholderObject = {
         securityTokenId: params.symbol,
         address: testAddress,
@@ -207,11 +211,11 @@ describe('MintTokens', () => {
       );
     });
 
-    test('should throw if minting addresses are not shareholders', async () => {
-      target = new MintTokens(
+    test('should throw if issuance addresses are not shareholders', async () => {
+      target = new IssueTokens(
         {
           ...params,
-          mintingData: [{ address: testAddress3, amount: new BigNumber(1) }],
+          issuanceData: [{ address: testAddress3, amount: new BigNumber(1) }],
         },
         contextMock.getMockInstance()
       );
@@ -219,14 +223,14 @@ describe('MintTokens', () => {
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `Cannot mint tokens to the following addresses: [${testAddress3}]. Reason: Those addresses are not Shareholders`,
+          message: `Cannot issue tokens to the following addresses: [${testAddress3}]. Reason: Those addresses are not Shareholders`,
         })
       );
     });
 
     test('should throw an error for an expired Kyc', async () => {
       const expiredParams = cloneDeep(params);
-      expiredParams.mintingData[0].shareholderData = {
+      expiredParams.issuanceData[0].shareholderData = {
         canSendAfter: new Date(Date.now()),
         canReceiveAfter: new Date(2035, 1),
         kycExpiry: new Date(2000, 1),
@@ -234,11 +238,11 @@ describe('MintTokens', () => {
         isAccredited: true,
       };
 
-      target = new MintTokens(expiredParams, contextMock.getMockInstance());
+      target = new IssueTokens(expiredParams, contextMock.getMockInstance());
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `Cannot mint tokens to the following addresses: [${testAddress3}]. Reason: Expired KYC`,
+          message: `Cannot issue tokens to the following addresses: [${testAddress3}]. Reason: Expired KYC`,
         })
       );
     });

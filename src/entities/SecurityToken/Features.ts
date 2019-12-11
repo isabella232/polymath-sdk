@@ -2,7 +2,7 @@ import { ModuleName, BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SubModule } from './SubModule';
 import {
   EnableGeneralPermissionManager,
-  EnableDividendManagers,
+  EnableDividendManager,
   EnableGeneralTransferManager,
   DisableFeature,
   EnablePercentageTransferManager,
@@ -11,11 +11,11 @@ import {
   Feature,
   ErrorCode,
   EnableGeneralPermissionManagerProcedureArgs,
-  EnableDividendManagersProcedureArgs,
-  DividendType,
+  EnableDividendManagerProcedureArgs,
   DisableFeatureProcedureArgs,
   EnableCountTransferManagerProcedureArgs,
   EnableGeneralTransferManagerProcedureArgs,
+  EnablePercentageTransferManagerProcedureArgs,
 } from '../../types';
 import { PolymathError } from '../../PolymathError';
 import { TransactionQueue } from '../TransactionQueue';
@@ -24,23 +24,17 @@ import { EnableCountTransferManager } from '../../procedures/EnableCountTransfer
 export interface FeatureStatuses {
   [Feature.Permissions]: boolean;
   [Feature.Shareholders]: boolean;
-  [Feature.Erc20Dividends]: boolean;
-  [Feature.EtherDividends]: boolean;
+  [Feature.Dividends]: boolean;
   [Feature.ShareholderCountRestrictions]: boolean;
   [Feature.PercentageOwnershipRestrictions]: boolean;
 }
 
 type EnableOpts =
   | EnableErc20DividendsOpts
-  | EnableEtherDividendsOpts
   | EnableShareholderCountRestrictionsOpts
   | EnablePercentageOwnershipRestrictionsOpts;
 
 export interface EnableErc20DividendsOpts {
-  storageWalletAddress: string;
-}
-
-export interface EnableEtherDividendsOpts {
   storageWalletAddress: string;
 }
 
@@ -60,11 +54,8 @@ export interface Enable {
   (args: { feature: Feature.Shareholders }): Promise<
     TransactionQueue<EnableGeneralTransferManagerProcedureArgs>
   >;
-  (args: { feature: Feature.Erc20Dividends }, opts: EnableErc20DividendsOpts): Promise<
-    TransactionQueue<EnableDividendManagersProcedureArgs>
-  >;
-  (args: { feature: Feature.EtherDividends }, opts: EnableEtherDividendsOpts): Promise<
-    TransactionQueue<EnableDividendManagersProcedureArgs>
+  (args: { feature: Feature.Dividends }, opts: EnableErc20DividendsOpts): Promise<
+    TransactionQueue<EnableDividendManagerProcedureArgs>
   >;
   (
     args: { feature: Feature.ShareholderCountRestrictions },
@@ -73,7 +64,7 @@ export interface Enable {
   (
     args: { feature: Feature.PercentageOwnershipRestrictions },
     opts: EnablePercentageOwnershipRestrictionsOpts
-  ): Promise<TransactionQueue<EnableDividendManagersProcedureArgs>>;
+  ): Promise<TransactionQueue<EnablePercentageTransferManagerProcedureArgs>>;
 }
 
 export class Features extends SubModule {
@@ -83,8 +74,7 @@ export class Features extends SubModule {
   public list: Feature[] = [
     Feature.Permissions,
     Feature.Shareholders,
-    Feature.Erc20Dividends,
-    Feature.EtherDividends,
+    Feature.Dividends,
     Feature.ShareholderCountRestrictions,
     Feature.PercentageOwnershipRestrictions,
   ];
@@ -118,8 +108,7 @@ export class Features extends SubModule {
     const [
       permissionsEnabled,
       shareholdersEnabled,
-      erc20DividendsEnabled,
-      etherDividendsEnabled,
+      dividendsEnabled,
       countTransferManagerEnabled,
       percentageTransferManagerEnabled,
     ] = await Promise.all(list.map(feature => this.isEnabled({ feature })));
@@ -127,8 +116,7 @@ export class Features extends SubModule {
     const result: FeatureStatuses = {
       [Feature.Permissions]: permissionsEnabled,
       [Feature.Shareholders]: shareholdersEnabled,
-      [Feature.Erc20Dividends]: erc20DividendsEnabled,
-      [Feature.EtherDividends]: etherDividendsEnabled,
+      [Feature.Dividends]: dividendsEnabled,
       [Feature.ShareholderCountRestrictions]: countTransferManagerEnabled,
       [Feature.PercentageOwnershipRestrictions]: percentageTransferManagerEnabled,
     };
@@ -180,16 +168,9 @@ export class Features extends SubModule {
         );
         break;
       }
-      case Feature.Erc20Dividends: {
-        procedure = new EnableDividendManagers(
-          { symbol, ...(opts as EnableErc20DividendsOpts), types: [DividendType.Erc20] },
-          this.context
-        );
-        break;
-      }
-      case Feature.EtherDividends: {
-        procedure = new EnableDividendManagers(
-          { symbol, ...(opts as EnableEtherDividendsOpts), types: [DividendType.Eth] },
+      case Feature.Dividends: {
+        procedure = new EnableDividendManager(
+          { symbol, ...(opts as EnableErc20DividendsOpts) },
           this.context
         );
         break;
@@ -260,11 +241,8 @@ export class Features extends SubModule {
       case Feature.Shareholders:
         moduleName = ModuleName.GeneralTransferManager;
         break;
-      case Feature.Erc20Dividends:
+      case Feature.Dividends:
         moduleName = ModuleName.ERC20DividendCheckpoint;
-        break;
-      case Feature.EtherDividends:
-        moduleName = ModuleName.EtherDividendCheckpoint;
         break;
       case Feature.ShareholderCountRestrictions:
         moduleName = ModuleName.CountTransferManager;

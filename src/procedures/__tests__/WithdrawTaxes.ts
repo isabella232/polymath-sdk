@@ -9,7 +9,6 @@ import { WithdrawTaxes } from '../../procedures/WithdrawTaxes';
 import * as withdrawTaxesModule from '../../procedures/WithdrawTaxes';
 import { Procedure } from '../../procedures/Procedure';
 import {
-  DividendType,
   ErrorCode,
   PolyTransactionTag,
   ProcedureType,
@@ -23,7 +22,6 @@ import { DividendDistribution, SecurityToken } from '../../entities';
 const params: WithdrawTaxesProcedureArgs = {
   symbol: 'TEST1',
   dividendIndex: 1,
-  dividendType: DividendType.Erc20,
 };
 
 describe('WithdrawTaxes', () => {
@@ -33,7 +31,6 @@ describe('WithdrawTaxes', () => {
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let erc20DividendMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
-  let ethDividendMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
   let dividendFactoryMock: MockManager<
     dividendDistributionFactoryModule.DividendDistributionFactory
   >;
@@ -51,7 +48,6 @@ describe('WithdrawTaxes', () => {
       contractWrappersModule,
       'ERC20DividendCheckpoint_3_0_0'
     );
-    ethDividendMock = ImportMock.mockClass(contractWrappersModule, 'EtherDividendCheckpoint_3_0_0');
 
     dividendFactoryMock = ImportMock.mockClass(
       dividendDistributionFactoryModule,
@@ -103,21 +99,6 @@ describe('WithdrawTaxes', () => {
       );
     });
 
-    test('should throw if there is no valid dividend type being provided', async () => {
-      // Instantiate WithdrawTaxes with incorrect dividend type
-      target = new WithdrawTaxes(
-        { ...params, dividendType: 'wrong' as DividendType },
-        contextMock.getMockInstance()
-      );
-
-      await expect(target.prepareTransactions()).rejects.toThrow(
-        new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: "Dividends of the specified type haven't been enabled",
-        })
-      );
-    });
-
     test('should add a transaction to the queue to withdraw tax withholdings from erc20 dividends distribution', async () => {
       wrappersMock.mock(
         'getAttachedModules',
@@ -142,36 +123,10 @@ describe('WithdrawTaxes', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to withdraw tax withholdings from ether dividends distribution', async () => {
-      target = new WithdrawTaxes(
-        { ...params, dividendType: DividendType.Eth },
-        contextMock.getMockInstance()
-      );
-      wrappersMock.mock('getAttachedModules', Promise.resolve([ethDividendMock.getMockInstance()]));
-
-      const addTransactionSpy = spy(target, 'addTransaction');
-      ethDividendMock.mock('withdrawWithholding', Promise.resolve('WithdrawTaxWithholdings'));
-
-      // Real call
-      await target.prepareTransactions();
-
-      // Verifications
-      expect(
-        addTransactionSpy
-          .getCall(0)
-          .calledWith(ethDividendMock.getMockInstance().withdrawWithholding)
-      ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
-        PolyTransactionTag.WithdrawTaxWithholdings
-      );
-      expect(addTransactionSpy.callCount).toEqual(1);
-    });
-
-    test('should successfully refresh ERC20 dividends factory', async () => {
+    test('should successfully refresh the dividend distribution', async () => {
       const refreshStub = dividendFactoryMock.mock('refresh', Promise.resolve());
 
       const resolverValue = await withdrawTaxesModule.createWithdrawTaxesResolver(
-        DividendType.Erc20,
         params.dividendIndex,
         factoriesMockedSetup,
         params.symbol
@@ -181,30 +136,6 @@ describe('WithdrawTaxes', () => {
         refreshStub.getCall(0).calledWithExactly(
           DividendDistribution.generateId({
             securityTokenId: securityTokenGeneratedId,
-            dividendType: DividendType.Erc20,
-            index: params.dividendIndex,
-          })
-        )
-      ).toEqual(true);
-      expect(resolverValue).toEqual(undefined);
-      expect(refreshStub.callCount).toEqual(1);
-    });
-
-    test('should successfully refresh ETH dividends factory', async () => {
-      const refreshStub = dividendFactoryMock.mock('refresh', Promise.resolve());
-
-      const resolverValue = await withdrawTaxesModule.createWithdrawTaxesResolver(
-        DividendType.Eth,
-        params.dividendIndex,
-        factoriesMockedSetup,
-        params.symbol
-      )();
-
-      expect(
-        refreshStub.getCall(0).calledWithExactly(
-          DividendDistribution.generateId({
-            securityTokenId: securityTokenGeneratedId,
-            dividendType: DividendType.Eth,
             index: params.dividendIndex,
           })
         )

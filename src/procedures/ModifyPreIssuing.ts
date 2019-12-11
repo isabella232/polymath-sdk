@@ -7,7 +7,7 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  ModifyPreMintingProcedureArgs,
+  ModifyPreIssuingProcedureArgs,
   ErrorCode,
   StoType,
 } from '../types';
@@ -15,11 +15,11 @@ import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 
-export class ModifyPreMinting extends Procedure<ModifyPreMintingProcedureArgs> {
-  public type = ProcedureType.ModifyPreMinting;
+export class ModifyPreIssuing extends Procedure<ModifyPreIssuingProcedureArgs> {
+  public type = ProcedureType.ModifyPreIssuing;
 
   public async prepareTransactions() {
-    const { stoAddress, stoType, symbol, allowPreMinting } = this.args;
+    const { stoAddress, stoType, symbol, allowPreIssuing } = this.args;
     const { contractWrappers, factories } = this.context;
 
     /**
@@ -81,7 +81,7 @@ export class ModifyPreMinting extends Procedure<ModifyPreMintingProcedureArgs> {
 
     const preMintingAllowed = await stoModule.preMintAllowed();
 
-    if (preMintingAllowed === allowPreMinting) {
+    if (preMintingAllowed === allowPreIssuing) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message: `Pre-minting is already ${preMintingAllowed ? '' : 'dis'}allowed`,
@@ -93,9 +93,9 @@ export class ModifyPreMinting extends Procedure<ModifyPreMintingProcedureArgs> {
      */
 
     await this.addTransaction(
-      allowPreMinting ? stoModule.allowPreMinting : stoModule.revokePreMintFlag,
+      allowPreIssuing ? stoModule.allowPreMinting : stoModule.revokePreMintFlag,
       {
-        tag: allowPreMinting
+        tag: allowPreIssuing
           ? PolyTransactionTag.AllowPreMinting
           : PolyTransactionTag.RevokePreMinting,
         resolvers: [
