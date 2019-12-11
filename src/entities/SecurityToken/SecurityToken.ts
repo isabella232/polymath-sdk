@@ -6,7 +6,7 @@ import { Shareholders } from './Shareholders';
 import { Dividends } from './Dividends';
 import { Offerings } from './Offerings';
 import { Permissions } from './Permissions';
-import { Transfers } from './Transfers';
+import { Controller } from './Controller';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 import { Restrictions } from './Restrictions';
@@ -69,7 +69,7 @@ export class SecurityToken extends Entity<Params> {
 
   public permissions: Permissions;
 
-  public transfers: Transfers;
+  public controller: Controller;
 
   public restrictions: Restrictions;
 
@@ -88,7 +88,7 @@ export class SecurityToken extends Entity<Params> {
     this.dividends = new Dividends(this, context);
     this.offerings = new Offerings(this, context);
     this.permissions = new Permissions(this, context);
-    this.transfers = new Transfers(this, context);
+    this.controller = new Controller(this, context);
     this.restrictions = new Restrictions(this, context);
   }
 
