@@ -6,42 +6,43 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import { Wallet } from '../../Wallet';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
-import { ControllerTransfer } from '../../procedures/ControllerTransfer';
-import * as controllerTransferModule from '../../procedures/ControllerTransfer';
+import { ControllerRedeem } from '../../procedures/ControllerRedeem';
+import * as controllerRedeemModule from '../../procedures/ControllerRedeem';
 import { Procedure } from '../../procedures/Procedure';
 import { PolymathError } from '../../PolymathError';
 import {
-  ControllerTransferProcedureArgs,
+  ControllerRedeemProcedureArgs,
   ErrorCode,
   PolyTransactionTag,
   ProcedureType,
 } from '../../types';
 import { mockFactories } from '../../testUtils/mockFactories';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
+import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import { Factories } from '../../Context';
 import { SecurityToken, Shareholder } from '../../entities';
 
-const params: ControllerTransferProcedureArgs = {
+const params: ControllerRedeemProcedureArgs = {
   symbol: 'TEST1',
   from: '0x2222222222222222222222222222222222222222',
-  to: '0x4444444444444444444444444444444444444444',
   amount: new BigNumber(1),
 };
 
 const ownerAddress = '0x5555555555555555555555555555555555555555';
 
-describe('ControllerTransfer', () => {
-  let target: ControllerTransfer;
+describe('ControllerRedeem', () => {
+  let target: ControllerRedeem;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
 
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
+  let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
   let factoriesMockedSetup: Factories;
 
   beforeEach(() => {
-    // Mock the context, wrappers, and tokenFactory to test ControllerTransfer
+    // Mock the context, wrappers, and tokenFactory to test ControllerRedeem
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
@@ -59,25 +60,30 @@ describe('ControllerTransfer', () => {
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
     shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
+    securityTokenFactoryMock = ImportMock.mockClass(
+      securityTokenFactoryModule,
+      'SecurityTokenFactory'
+    );
     factoriesMockedSetup = mockFactories();
     factoriesMockedSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
+    factoriesMockedSetup.securityTokenFactory = securityTokenFactoryMock.getMockInstance();
     contextMock.set('factories', factoriesMockedSetup);
 
-    // Instantiate ControllerTransfer
-    target = new ControllerTransfer(params, contextMock.getMockInstance());
+    // Instantiate ControllerRedeem
+    target = new ControllerRedeem(params, contextMock.getMockInstance());
   });
 
   describe('Types', () => {
-    test('should extend procedure and have ControllerTransfer type', async () => {
+    test('should extend procedure and have ControllerRedeem type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe(ProcedureType.ControllerTransfer);
+      expect(target.type).toBe(ProcedureType.ControllerRedeem);
     });
   });
 
-  describe('ControllerTransfer', () => {
-    test('should add a transaction to the queue to execute a controller transfer', async () => {
+  describe('ControllerRedeem', () => {
+    test('should add a transaction to the queue to execute a controller redeem', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
-      securityTokenMock.mock('controllerTransfer', Promise.resolve('ControllerTransfer'));
+      securityTokenMock.mock('controllerRedeem', Promise.resolve('ControllerRedeem'));
 
       // Real call
       await target.prepareTransactions();
@@ -86,11 +92,9 @@ describe('ControllerTransfer', () => {
       expect(
         addTransactionSpy
           .getCall(0)
-          .calledWith(securityTokenMock.getMockInstance().controllerTransfer)
+          .calledWith(securityTokenMock.getMockInstance().controllerRedeem)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
-        PolyTransactionTag.ControllerTransfer
-      );
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ControllerRedeem);
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
@@ -108,13 +112,13 @@ describe('ControllerTransfer', () => {
       );
     });
 
-    test('should throw error if balanceOf is less than amount being transferred', async () => {
+    test('should throw error if balanceOf is less than amount being redeemed', async () => {
       securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(0)));
       // Real call
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.InsufficientBalance,
-          message: `Sender's balance of 0 is less than the requested amount of ${params.amount.toNumber()}`,
+          message: `Balance of 0 is less than the requested amount of ${params.amount.toNumber()} being redeemed`,
         })
       );
     });
@@ -125,32 +129,14 @@ describe('ControllerTransfer', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `You must be the controller of this Security Token to perform forced transfers. Did you remember to call "setController"?`,
-        })
-      );
-    });
-
-    test('should call error on inappropriate params "to" address', async () => {
-      // Instantiate ControllerTransfer with incorrect args instead
-      target = new ControllerTransfer(
-        {
-          ...params,
-          to: 'Inappropriate',
-        },
-        contextMock.getMockInstance()
-      );
-      // Real call rejects
-      await expect(target.prepareTransactions()).rejects.toThrowError(
-        new PolymathError({
-          code: ErrorCode.InvalidAddress,
-          message: `Provided "to" address is invalid: Inappropriate`,
+          message: `You must be the controller of this Security Token to redeem tokens. Did you remember to call "setController"?`,
         })
       );
     });
 
     test('should call error on inappropriate params "from" address', async () => {
-      // Instantiate ControllerTransfer with incorrect args instead
-      target = new ControllerTransfer(
+      // Instantiate ControllerRedeem with incorrect args instead
+      target = new ControllerRedeem(
         {
           ...params,
           from: 'Inappropriate',
@@ -161,20 +147,19 @@ describe('ControllerTransfer', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.InvalidAddress,
-          message: `Provided "from" address is invalid: Inappropriate`,
+          message: `Provided \"from\" address is invalid: Inappropriate`,
         })
       );
     });
   });
 
-  test('should successfully resolve controller transfer', async () => {
+  test('should successfully resolve controller redeem', async () => {
     const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve());
     const securityTokenId = SecurityToken.generateId({ symbol: params.symbol });
-    const resolverValue = await controllerTransferModule.createControllerTransferResolver(
+    const resolverValue = await controllerRedeemModule.createRefreshShareholdersResolver(
       factoriesMockedSetup,
       params.symbol,
-      params.from,
-      params.to
+      params.from
     )();
     expect(
       refreshStub.getCall(0).calledWithExactly(
@@ -184,15 +169,23 @@ describe('ControllerTransfer', () => {
         })
       )
     ).toEqual(true);
+
+    expect(resolverValue).toEqual(undefined);
+    expect(refreshStub.callCount).toEqual(1);
+  });
+
+  test('should refresh the security token factory with resolver', async () => {
+    const refreshStub = securityTokenFactoryMock.mock('refresh', Promise.resolve(undefined));
+
+    const resolverValue = await controllerRedeemModule.createRefreshSecurityTokenResolver(
+      factoriesMockedSetup,
+      params.symbol
+    )();
+
     expect(
-      refreshStub.getCall(1).calledWithExactly(
-        Shareholder.generateId({
-          securityTokenId,
-          address: params.to,
-        })
-      )
+      refreshStub.getCall(0).calledWithExactly(SecurityToken.generateId({ symbol: params.symbol }))
     ).toEqual(true);
-    expect(resolverValue).toEqual([undefined, undefined]);
-    expect(refreshStub.callCount).toEqual(2);
+    expect(resolverValue).toEqual(undefined);
+    expect(refreshStub.callCount).toEqual(1);
   });
 });
