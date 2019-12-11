@@ -90,7 +90,7 @@ describe('FreezeIssuance', () => {
       );
     });
 
-    test('should throw if account address is different than owner address', async () => {
+    test('should throw if wallet address is different than owner address', async () => {
       contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve('0x02') }));
 
       // Real call rejects
