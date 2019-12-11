@@ -17,7 +17,7 @@ import { PolymathError } from './PolymathError';
 import { PolymathBase } from './PolymathBase';
 
 interface PolymathNetworkParams {
-  polymathRegistryAddress: string;
+  polymathRegistryAddress?: string;
   speed?: TransactionSpeed;
 }
 
@@ -60,8 +60,6 @@ export class Polymath {
   public isUnsupported: boolean = false;
 
   public isConnected: boolean = false;
-
-  public polymathRegistryAddress: string = '';
 
   private context: Context = {} as Context;
 
