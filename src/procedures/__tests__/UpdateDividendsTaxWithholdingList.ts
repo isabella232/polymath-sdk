@@ -10,7 +10,6 @@ import * as updateDividendsTaxWithholdingListModule from '../../procedures/Updat
 import { UpdateDividendsTaxWithholdingList } from '../../procedures';
 import { Procedure } from '../../procedures/Procedure';
 import {
-  DividendType,
   ErrorCode,
   PolyTransactionTag,
   ProcedureType,
@@ -25,7 +24,6 @@ const testAddress2 = '0x9999999999999999999999999999999999999999';
 
 const params: UpdateDividendsTaxWithholdingListProcedureArgs = {
   symbol: 'Test1',
-  dividendType: DividendType.Eth,
   shareholderAddresses: [testAddress, testAddress2],
   percentages: [10, 15],
 };
@@ -37,7 +35,6 @@ describe('UpdateDividendsTaxWithholdingList', () => {
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let erc20DividendsMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
-  let ethDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
   let taxWithholdingFactoryMock: MockManager<taxWithholdingFactoryModule.TaxWithholdingFactory>;
   let factoriesMockedSetup: Factories;
   let securityTokenId: string;
@@ -51,10 +48,6 @@ describe('UpdateDividendsTaxWithholdingList', () => {
     erc20DividendsMock = ImportMock.mockClass(
       contractWrappersModule,
       'ERC20DividendCheckpoint_3_0_0'
-    );
-    ethDividendsMock = ImportMock.mockClass(
-      contractWrappersModule,
-      'EtherDividendCheckpoint_3_0_0'
     );
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
@@ -103,58 +96,19 @@ describe('UpdateDividendsTaxWithholdingList', () => {
       );
     });
 
-    test('should throw if there is no valid dividend type being provided', async () => {
-      // Instantiate UpdateDividendsTaxWithholdingList with incorrect dividend type
-      target = new UpdateDividendsTaxWithholdingList(
-        { ...params, dividendType: 'wrong' as DividendType },
-        contextMock.getMockInstance()
-      );
-
-      await expect(target.prepareTransactions()).rejects.toThrow(
-        new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: "Dividends of the specified type haven't been enabled",
-        })
-      );
-    });
-
     test('should throw if an Erc20 dividend module is not attached', async () => {
-      // Instantiate UpdateDividendsTaxWithholdingList with ERC20 dividend type
-      target = new UpdateDividendsTaxWithholdingList(
-        { ...params, dividendType: DividendType.Erc20 },
-        contextMock.getMockInstance()
-      );
-
       wrappersMock.mock('getAttachedModules', Promise.resolve([]));
 
       // Real call
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: "Dividends of the specified type haven't been enabled",
-        })
-      );
-    });
-
-    test('should throw if an Eth dividend module is not attached', async () => {
-      wrappersMock.mock('getAttachedModules', Promise.resolve([]));
-
-      // Real call
-      await expect(target.prepareTransactions()).rejects.toThrowError(
-        new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: "Dividends of the specified type haven't been enabled",
+          message: "The Dividends Feature hasn't been enabled",
         })
       );
     });
 
     test('should add a transaction to the queue update the dividends tax withholding list for an attached ERC20 dividends module', async () => {
-      // Instantiate UpdateDividendsTaxWithholdingList with ERC20 dividend type
-      target = new UpdateDividendsTaxWithholdingList(
-        { ...params, dividendType: DividendType.Erc20 },
-        contextMock.getMockInstance()
-      );
-
       wrappersMock.mock(
         'getAttachedModules',
         Promise.resolve([erc20DividendsMock.getMockInstance()])
@@ -177,36 +131,12 @@ describe('UpdateDividendsTaxWithholdingList', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to update the dividends tax withholding list for an attached ETH dividends module', async () => {
-      wrappersMock.mock(
-        'getAttachedModules',
-        Promise.resolve([ethDividendsMock.getMockInstance()])
-      );
-
-      ethDividendsMock.mock('setWithholding', Promise.resolve('SetWithholding'));
-
-      const addTransactionSpy = spy(target, 'addTransaction');
-
-      // Real call
-      await target.prepareTransactions();
-
-      // Verifications
-      expect(
-        addTransactionSpy.getCall(0).calledWith(ethDividendsMock.getMockInstance().setWithholding)
-      ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
-        PolyTransactionTag.SetEtherTaxWithholding
-      );
-      expect(addTransactionSpy.callCount).toEqual(1);
-    });
-
     test('should update the dividends tax withholding list for erc20 dividend type', async () => {
       const updateStub = taxWithholdingFactoryMock.mock('update', Promise.resolve(undefined));
 
       const resolverValue = await updateDividendsTaxWithholdingListModule.updateDividendsTaxWithholdingListResolver(
         factoriesMockedSetup,
         params.symbol,
-        params.dividendType,
         params.percentages,
         params.shareholderAddresses
       )();
@@ -215,7 +145,6 @@ describe('UpdateDividendsTaxWithholdingList', () => {
         updateStub.getCall(0).calledWithExactly(
           TaxWithholding.generateId({
             securityTokenId,
-            dividendType: params.dividendType,
             shareholderAddress: params.shareholderAddresses[0],
           }),
           { percentage: params.percentages[0] }
@@ -226,45 +155,6 @@ describe('UpdateDividendsTaxWithholdingList', () => {
         updateStub.getCall(1).calledWithExactly(
           TaxWithholding.generateId({
             securityTokenId,
-            dividendType: params.dividendType,
-            shareholderAddress: params.shareholderAddresses[1],
-          }),
-          { percentage: params.percentages[1] }
-        )
-      ).toEqual(true);
-
-      expect(resolverValue).toEqual([undefined, undefined]);
-      expect(updateStub.callCount).toEqual(2);
-    });
-
-    test('should update the dividends tax withholding list for ether dividend type', async () => {
-      const updateStub = taxWithholdingFactoryMock.mock('update', Promise.resolve(undefined));
-      const dividendType = DividendType.Erc20;
-
-      const resolverValue = await updateDividendsTaxWithholdingListModule.updateDividendsTaxWithholdingListResolver(
-        factoriesMockedSetup,
-        params.symbol,
-        dividendType,
-        params.percentages,
-        params.shareholderAddresses
-      )();
-
-      expect(
-        updateStub.getCall(0).calledWithExactly(
-          TaxWithholding.generateId({
-            securityTokenId,
-            dividendType,
-            shareholderAddress: params.shareholderAddresses[0],
-          }),
-          { percentage: params.percentages[0] }
-        )
-      ).toEqual(true);
-
-      expect(
-        updateStub.getCall(1).calledWithExactly(
-          TaxWithholding.generateId({
-            securityTokenId,
-            dividendType,
             shareholderAddress: params.shareholderAddresses[1],
           }),
           { percentage: params.percentages[1] }

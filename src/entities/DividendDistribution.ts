@@ -1,25 +1,23 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
-import { DividendType, DividendShareholderStatus, isDividendType, ErrorCode } from '../types';
+import { DividendShareholderStatus, ErrorCode } from '../types';
 import { PushDividendPayment, WithdrawTaxes, PullDividendPayment } from '../procedures';
 import { Context } from '../Context';
 import { PolymathError } from '../PolymathError';
 
 export interface UniqueIdentifiers {
   securityTokenId: string;
-  dividendType: DividendType;
   index: number;
 }
 
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
-  const { securityTokenId, checkpointId, dividendType, index } = identifiers;
+  const { securityTokenId, checkpointId, index } = identifiers;
 
   return (
     typeof securityTokenId === 'string' &&
     typeof checkpointId === 'string' &&
-    typeof index === 'number' &&
-    isDividendType(dividendType)
+    typeof index === 'number'
   );
 }
 
@@ -41,10 +39,9 @@ export interface Params {
 }
 
 export class DividendDistribution extends Entity<Params> {
-  public static generateId({ securityTokenId, dividendType, index }: UniqueIdentifiers) {
+  public static generateId({ securityTokenId, index }: UniqueIdentifiers) {
     return serialize('dividend', {
       securityTokenId,
-      dividendType,
       index,
     });
   }
@@ -67,8 +64,6 @@ export class DividendDistribution extends Entity<Params> {
   public index: number;
 
   public checkpointId: string;
-
-  public dividendType: DividendType;
 
   public securityTokenSymbol: string;
 
@@ -106,7 +101,6 @@ export class DividendDistribution extends Entity<Params> {
     const {
       index,
       checkpointId,
-      dividendType,
       securityTokenSymbol,
       securityTokenId,
       created,
@@ -125,7 +119,6 @@ export class DividendDistribution extends Entity<Params> {
 
     this.index = index;
     this.checkpointId = checkpointId;
-    this.dividendType = dividendType;
     this.securityTokenSymbol = securityTokenSymbol;
     this.securityTokenId = securityTokenId;
     this.created = created;
@@ -144,7 +137,6 @@ export class DividendDistribution extends Entity<Params> {
 
     this.uid = DividendDistribution.generateId({
       securityTokenId,
-      dividendType,
       index,
     });
   }
@@ -153,11 +145,10 @@ export class DividendDistribution extends Entity<Params> {
    * Push payment for this dividend distribution
    */
   public pushPayment = async () => {
-    const { securityTokenSymbol: symbol, dividendType, index: dividendIndex } = this;
+    const { securityTokenSymbol: symbol, index: dividendIndex } = this;
     const procedure = new PushDividendPayment(
       {
         symbol,
-        dividendType,
         dividendIndex,
       },
       this.context
@@ -169,11 +160,10 @@ export class DividendDistribution extends Entity<Params> {
    * Pull payment from this dividend distribution to the current address
    */
   public pullPayment = async () => {
-    const { securityTokenSymbol: symbol, dividendType, index: dividendIndex } = this;
+    const { securityTokenSymbol: symbol, index: dividendIndex } = this;
     const procedure = new PullDividendPayment(
       {
         symbol,
-        dividendType,
         dividendIndex,
       },
       this.context
@@ -185,11 +175,10 @@ export class DividendDistribution extends Entity<Params> {
    * Withdraw collected taxes from this dividend distribution
    */
   public withdrawTaxes = async () => {
-    const { securityTokenSymbol: symbol, dividendType, index: dividendIndex } = this;
+    const { securityTokenSymbol: symbol, index: dividendIndex } = this;
     const procedure = new WithdrawTaxes(
       {
         symbol,
-        dividendType,
         dividendIndex,
       },
       this.context
@@ -202,7 +191,6 @@ export class DividendDistribution extends Entity<Params> {
       uid,
       index,
       checkpointId,
-      dividendType,
       securityTokenSymbol,
       securityTokenId,
       created,
@@ -223,7 +211,6 @@ export class DividendDistribution extends Entity<Params> {
       uid,
       index,
       checkpointId,
-      dividendType,
       securityTokenSymbol,
       securityTokenId,
       created,

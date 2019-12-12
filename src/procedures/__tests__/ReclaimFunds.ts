@@ -9,7 +9,6 @@ import { ReclaimFunds } from '../../procedures/ReclaimFunds';
 import * as reclaimFundsModule from '../../procedures/ReclaimFunds';
 import { Procedure } from '../../procedures/Procedure';
 import {
-  DividendType,
   ErrorCode,
   PolyTransactionTag,
   ProcedureType,
@@ -23,7 +22,6 @@ import { DividendDistribution, SecurityToken } from '~/entities';
 const params: ReclaimFundsProcedureArgs = {
   symbol: 'TEST1',
   dividendIndex: 1,
-  dividendType: DividendType.Erc20,
 };
 
 describe('ReclaimFunds', () => {
@@ -33,7 +31,6 @@ describe('ReclaimFunds', () => {
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
   let erc20DividendMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
-  let ethDividendMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
   let dividendFactoryMock: MockManager<
     dividendDistributionFactoryModule.DividendDistributionFactory
   >;
@@ -51,7 +48,6 @@ describe('ReclaimFunds', () => {
       contractWrappersModule,
       'ERC20DividendCheckpoint_3_0_0'
     );
-    ethDividendMock = ImportMock.mockClass(contractWrappersModule, 'EtherDividendCheckpoint_3_0_0');
 
     dividendFactoryMock = ImportMock.mockClass(
       dividendDistributionFactoryModule,
@@ -103,21 +99,6 @@ describe('ReclaimFunds', () => {
       );
     });
 
-    test('should throw if there is no valid dividend type being provided', async () => {
-      // Instantiate ReclaimFunds with incorrect dividend type
-      target = new ReclaimFunds(
-        { ...params, dividendType: 'wrong' as DividendType },
-        contextMock.getMockInstance()
-      );
-
-      await expect(target.prepareTransactions()).rejects.toThrow(
-        new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: "Dividends of the specified type haven't been enabled",
-        })
-      );
-    });
-
     test('should add a transaction to the queue to reclaim funds from attached ERC20 dividends distribution', async () => {
       wrappersMock.mock(
         'getAttachedModules',
@@ -140,34 +121,10 @@ describe('ReclaimFunds', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to reclaim funds from attached Ether dividends distribution', async () => {
-      target = new ReclaimFunds(
-        { ...params, dividendType: DividendType.Eth },
-        contextMock.getMockInstance()
-      );
-      wrappersMock.mock('getAttachedModules', Promise.resolve([ethDividendMock.getMockInstance()]));
-
-      const addTransactionSpy = spy(target, 'addTransaction');
-      ethDividendMock.mock('reclaimDividend', Promise.resolve('ReclaimDividend'));
-
-      // Real call
-      await target.prepareTransactions();
-
-      // Verifications
-      expect(
-        addTransactionSpy.getCall(0).calledWith(ethDividendMock.getMockInstance().reclaimDividend)
-      ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
-        PolyTransactionTag.ReclaimDividendFunds
-      );
-      expect(addTransactionSpy.callCount).toEqual(1);
-    });
-
-    test('should successfully refresh ERC20 dividends factory', async () => {
+    test('should successfully refresh the dividends factory', async () => {
       const refreshStub = dividendFactoryMock.mock('refresh', Promise.resolve());
 
       const resolverValue = await reclaimFundsModule.createReclaimFundsResolver(
-        DividendType.Erc20,
         params.dividendIndex,
         factoriesMockedSetup,
         params.symbol
@@ -177,30 +134,6 @@ describe('ReclaimFunds', () => {
         refreshStub.getCall(0).calledWithExactly(
           DividendDistribution.generateId({
             securityTokenId: securityTokenGeneratedId,
-            dividendType: DividendType.Erc20,
-            index: params.dividendIndex,
-          })
-        )
-      ).toEqual(true);
-      expect(resolverValue).toEqual(undefined);
-      expect(refreshStub.callCount).toEqual(1);
-    });
-
-    test('should successfully refresh ETH dividends factory', async () => {
-      const refreshStub = dividendFactoryMock.mock('refresh', Promise.resolve());
-
-      const resolverValue = await reclaimFundsModule.createReclaimFundsResolver(
-        DividendType.Eth,
-        params.dividendIndex,
-        factoriesMockedSetup,
-        params.symbol
-      )();
-
-      expect(
-        refreshStub.getCall(0).calledWithExactly(
-          DividendDistribution.generateId({
-            securityTokenId: securityTokenGeneratedId,
-            dividendType: DividendType.Eth,
             index: params.dividendIndex,
           })
         )

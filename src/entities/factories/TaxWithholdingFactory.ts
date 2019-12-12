@@ -3,7 +3,7 @@ import { Factory } from './Factory';
 import { Context } from '../../Context';
 import { SecurityToken } from '../SecurityToken';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, DividendType } from '../../types';
+import { ErrorCode } from '../../types';
 import { TaxWithholding, Params, UniqueIdentifiers } from '../TaxWithholding';
 
 export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, UniqueIdentifiers> {
@@ -13,7 +13,7 @@ export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, Uniqu
         contractWrappers: { tokenFactory, getAttachedModules },
       },
     } = this;
-    const { securityTokenId, dividendType, shareholderAddress } = TaxWithholding.unserialize(uid);
+    const { securityTokenId, shareholderAddress } = TaxWithholding.unserialize(uid);
     const { symbol } = SecurityToken.unserialize(securityTokenId);
 
     let securityToken;
@@ -27,23 +27,15 @@ export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, Uniqu
       });
     }
 
-    let dividendsModule;
-    if (dividendType === DividendType.Erc20) {
-      [dividendsModule] = await getAttachedModules(
-        { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
-        { unarchived: true }
-      );
-    } else if (dividendType === DividendType.Eth) {
-      [dividendsModule] = await getAttachedModules(
-        { symbol, moduleName: ModuleName.EtherDividendCheckpoint },
-        { unarchived: true }
-      );
-    }
+    const [dividendsModule] = await getAttachedModules(
+      { symbol, moduleName: ModuleName.ERC20DividendCheckpoint },
+      { unarchived: true }
+    );
 
     if (!dividendsModule) {
       throw new PolymathError({
         code: ErrorCode.FetcherValidationError,
-        message: "Dividends of the specified type haven't been enabled",
+        message: "The Dividends Feature hasn't been enabled",
       });
     }
 
@@ -69,7 +61,6 @@ export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, Uniqu
       percentage: withheld.toNumber(),
       securityTokenSymbol: symbol,
       securityTokenId,
-      dividendType,
     };
   };
 

@@ -8,15 +8,11 @@ import {
   ErrorCode,
   PercentageWhitelistEntry,
   ModifyPercentageExemptionsProcedureArgs,
-} from '../../types';
-import {
-  ModifyMaxHolderCount,
-  ModifyMaxHolderPercentage,
-  ModifyPercentageExemptions,
-} from '../../procedures';
-import { SubModule } from './SubModule';
-import { PolymathError } from '../../PolymathError';
-import { TransactionQueue } from '../TransactionQueue';
+} from '../../../../types';
+import { ModifyMaxHolderPercentage, ModifyPercentageExemptions } from '../../../../procedures';
+import { SubModule } from '../../SubModule';
+import { PolymathError } from '../../../../PolymathError';
+import { TransactionQueue } from '../../../TransactionQueue';
 
 interface PercentageWhitelistParams {
   whitelistEntries: PercentageWhitelistEntry[];
@@ -26,7 +22,7 @@ interface PercentageIssuanceParams {
   allowPrimaryIssuance: boolean;
 }
 
-interface ModifyPercentageExemptionsMethod {
+interface ModifyExemptionsMethod {
   (params: PercentageWhitelistParams): Promise<
     TransactionQueue<ModifyPercentageExemptionsProcedureArgs>
   >;
@@ -35,19 +31,19 @@ interface ModifyPercentageExemptionsMethod {
   >;
 }
 
-export class Restrictions extends SubModule {
+export class PercentageRestrictions extends SubModule {
   /**
    * Modify the conditions for exemption from percentage ownership restrictions. There are two (independent) methods of exemption:
    *
    * - Whitelisting: an address can be whitelisted and thus percentage ownership restrictions will not apply to it
-   * - Primary issuance: if enabled, minting tokens to an address will bypass percentage ownership restrictions (for example, if minting tokens to a particular address would leave that address with a higher percentage than the limit, having this option set to `true` will allow that minting operation)
+   * - Primary issuance: if enabled, issuing tokens to an address will bypass percentage ownership restrictions (for example, if issuing tokens to a particular address would leave that address with a higher percentage than the limit, having this option set to `true` will allow that issuance operation)
    *
    * @param whitelistEntries list of addresses to add/remove from the whitelist
    * @param whitelistEntries.address address to modify
    * @param whitelistEntries.whitelisted whether the address should be exempt or not
-   * @param allowPrimaryIssuance if set to true, minting tokens to an address is allowed even if it would leave said address over the percentage ownership limit
+   * @param allowPrimaryIssuance if set to true, issuing tokens to an address is allowed even if it would leave said address over the percentage ownership limit
    */
-  public modifyPercentageExemptions: ModifyPercentageExemptionsMethod = async (args: {
+  public modifyExemptions: ModifyExemptionsMethod = async (args: {
     whitelistEntries?: PercentageWhitelistEntry[];
     allowPrimaryIssuance?: boolean;
   }) => {
@@ -66,7 +62,7 @@ export class Restrictions extends SubModule {
    *
    * Can be modified with `modifyPercentageExemptions`
    */
-  public getPercentageExemptions = async () => {
+  public getExemptions = async () => {
     const {
       context: { contractWrappers },
       securityToken,
@@ -160,48 +156,5 @@ export class Restrictions extends SubModule {
     }
 
     return percentageTransferManagerModule.maxHolderPercentage();
-  };
-
-  /**
-   * Modify the maximum amount of shareholders allowed to hold the token at once
-   *
-   * @param maxHolderCount limit to the amount of concurrent shareholders
-   */
-  public modifyMaxHolderCount = async (args: { maxHolderCount: number }) => {
-    const procedure = new ModifyMaxHolderCount(
-      {
-        symbol: this.securityToken.symbol,
-        ...args,
-      },
-      this.context
-    );
-    return procedure.prepare();
-  };
-
-  /**
-   * Retrieve the maximum amonut of shareholders allowed to hold the token at once.
-   * Can be modified with `modifyMaxHolderCount`
-   */
-  public getMaxHolderCount = async () => {
-    const {
-      context: { contractWrappers },
-      securityToken,
-    } = this;
-
-    const { symbol } = securityToken;
-
-    const countTransferManagerModule = (await contractWrappers.getAttachedModules(
-      { moduleName: ModuleName.CountTransferManager, symbol },
-      { unarchived: true }
-    ))[0];
-
-    if (!countTransferManagerModule) {
-      throw new PolymathError({
-        code: ErrorCode.FeatureNotEnabled,
-        message: 'You must enable the ShareholderCountRestrictions Feature',
-      });
-    }
-
-    return countTransferManagerModule.maxHolderCount();
   };
 }

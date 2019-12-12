@@ -1,26 +1,26 @@
 import {
   ModuleName,
-  EtherDividendCheckpointEvents,
+  ERC20DividendCheckpointEvents,
   BigNumber,
   TransactionParams,
 } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
-  CreateEtherDividendDistributionProcedureArgs,
+  CreateDividendDistributionProcedureArgs,
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
-  DividendType,
 } from '../types';
+import { ApproveErc20 } from './ApproveErc20';
 import { PolymathError } from '../PolymathError';
 import { findEvents } from '../utils';
 import { SecurityToken, DividendDistribution } from '../entities';
 
-export class CreateEtherDividendDistribution extends Procedure<
-  CreateEtherDividendDistributionProcedureArgs,
+export class CreateDividendDistribution extends Procedure<
+  CreateDividendDistributionProcedureArgs,
   DividendDistribution
 > {
-  public type = ProcedureType.CreateEtherDividendDistribution;
+  public type = ProcedureType.CreateDividendDistribution;
 
   public async prepareTransactions() {
     const { args, context } = this;
@@ -28,6 +28,7 @@ export class CreateEtherDividendDistribution extends Procedure<
       symbol,
       maturityDate,
       expiryDate,
+      erc20Address,
       amount,
       checkpointIndex,
       name,
@@ -45,32 +46,38 @@ export class CreateEtherDividendDistribution extends Procedure<
       });
     }
 
-    const etherModule = (await contractWrappers.getAttachedModules(
+    const erc20Module = (await contractWrappers.getAttachedModules(
       {
-        moduleName: ModuleName.EtherDividendCheckpoint,
+        moduleName: ModuleName.ERC20DividendCheckpoint,
         symbol,
       },
       { unarchived: true }
     ))[0];
 
-    if (!etherModule) {
+    if (!erc20Module) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: "The ETH Dividends Manager hasn't been enabled",
+        message: "The ERC20 Dividends Manager hasn't been enabled",
       });
     }
 
+    await this.addProcedure(ApproveErc20)({
+      amount,
+      spender: await erc20Module.address(),
+      tokenAddress: erc20Address,
+    });
+
     const [distribution] = await this.addTransaction<
-      TransactionParams.EtherDividendCheckpoint.CreateDividendWithCheckpointAndExclusions,
+      TransactionParams.ERC20DividendCheckpoint.CreateDividendWithCheckpointAndExclusions,
       [DividendDistribution]
-    >(etherModule.createDividendWithCheckpointAndExclusions, {
-      tag: PolyTransactionTag.CreateEtherDividendDistribution,
+    >(erc20Module.createDividendWithCheckpointAndExclusions, {
+      tag: PolyTransactionTag.CreateErc20DividendDistribution,
       resolvers: [
         async receipt => {
           const { logs } = receipt;
 
           const [event] = findEvents({
-            eventName: EtherDividendCheckpointEvents.EtherDividendDeposited,
+            eventName: ERC20DividendCheckpointEvents.ERC20DividendDeposited,
             logs,
           });
 
@@ -82,7 +89,6 @@ export class CreateEtherDividendDistribution extends Procedure<
             return factories.dividendDistributionFactory.fetch(
               DividendDistribution.generateId({
                 securityTokenId: SecurityToken.generateId({ symbol }),
-                dividendType: DividendType.Eth,
                 index: _dividendIndex.toNumber(),
               })
             );
@@ -90,14 +96,15 @@ export class CreateEtherDividendDistribution extends Procedure<
           throw new PolymathError({
             code: ErrorCode.UnexpectedEventLogs,
             message:
-              "The ETH Dividend Distribution was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
+              "The ERC20 Dividend Distribution was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
           });
         },
       ],
     })({
       maturity: maturityDate,
       expiry: expiryDate,
-      value: amount,
+      token: erc20Address,
+      amount,
       checkpointId: checkpointIndex,
       name,
       excluded: excludedAddresses,
@@ -112,8 +119,8 @@ export class CreateEtherDividendDistribution extends Procedure<
         percentages.push(new BigNumber(percentage));
       });
 
-      await this.addTransaction(etherModule.setWithholding, {
-        tag: PolyTransactionTag.SetEtherTaxWithholding,
+      await this.addTransaction(erc20Module.setWithholding, {
+        tag: PolyTransactionTag.SetErc20TaxWithholding,
       })({ investors, withholding: percentages });
     }
 

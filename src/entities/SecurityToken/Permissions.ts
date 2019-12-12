@@ -15,8 +15,7 @@ export class Permissions extends SubModule {
    * -------------------------
    * Permissions       Permissions Administrator
    * Shareholders      Shareholders Administrator
-   * Erc20 Dividends   Erc20 Dividends Administrator, Erc20 Dividends Operator
-   * Ether Dividends   Ether Dividends Administrator, Ether Dividends Operator
+   * Dividends         Dividends Administrator, Dividends Operator
    */
   public getAvailableRoles = async () => {
     const {
@@ -288,13 +287,9 @@ export class Permissions extends SubModule {
   public rolesPerFeature = {
     [Feature.Permissions]: [SecurityTokenRole.PermissionsAdministrator],
     [Feature.Shareholders]: [SecurityTokenRole.ShareholdersAdministrator],
-    [Feature.Erc20Dividends]: [
-      SecurityTokenRole.Erc20DividendsAdministrator,
-      SecurityTokenRole.Erc20DividendsOperator,
-    ],
-    [Feature.EtherDividends]: [
-      SecurityTokenRole.EtherDividendsAdministrator,
-      SecurityTokenRole.EtherDividendsOperator,
+    [Feature.Dividends]: [
+      SecurityTokenRole.DividendsAdministrator,
+      SecurityTokenRole.DividendsOperator,
     ],
     [Feature.ShareholderCountRestrictions]: [
       SecurityTokenRole.ShareholderCountRestrictionsAdministrator,

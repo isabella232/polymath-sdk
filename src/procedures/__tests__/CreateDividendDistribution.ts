@@ -1,17 +1,19 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
-import { BigNumber, EtherDividendCheckpointEvents } from '@polymathnetwork/contract-wrappers';
-import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
+import { BigNumber, ERC20DividendCheckpointEvents } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import { CreateEtherDividendDistribution } from '../../procedures/CreateEtherDividendDistribution';
-import { Procedure } from '../Procedure';
-import { PolymathError } from '../../PolymathError';
-import { DividendType, ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
-import * as dividendDistributionSecurityTokenFactoryModule from '../../entities/factories/DividendDistributionFactory';
-import * as utilsModule from '../../utils';
+import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
+import * as approveModule from '../ApproveErc20';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
+import { CreateDividendDistribution } from '../CreateDividendDistribution';
+import { Procedure } from '../Procedure';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
+import { ApproveErc20 } from '../ApproveErc20';
+import * as dividendDistributionSecurityTokenFactoryModule from '../../entities/factories/DividendDistributionFactory';
+import * as utilsModule from '../../utils';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { DividendDistribution, SecurityToken } from '../../entities';
 
@@ -20,69 +22,81 @@ const params = {
   name: 'Test Token 1',
   amount: new BigNumber(1),
   checkpointIndex: 1,
+  erc20Address: '0x1',
   maturityDate: new Date(2030, 1),
   expiryDate: new Date(2031, 1),
 };
 
-describe('CreateEtherDividendDistribution', () => {
-  let target: CreateEtherDividendDistribution;
+describe('CreateDividendDistribution', () => {
+  let target: CreateDividendDistribution;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-
+  let approvalMock: MockManager<approveModule.ApproveErc20>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
 
-  let etherDividendsMock: MockManager<contractWrappersModule.EtherDividendCheckpoint_3_0_0>;
+  let erc20DividendsMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
 
   let dividendDistributionFactoryMock: MockManager<
     dividendDistributionSecurityTokenFactoryModule.DividendDistributionFactory
   >;
 
-  beforeAll(() => {
-    // Mock the context, wrappers, and tokenFactory to test CreateEtherDividendDistribution
+  beforeEach(() => {
+    // Mock the context, wrappers, and tokenFactory to test CreateDividendDistribution
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
+
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
+
+    // Import mock out of ApproveErc20
+    approvalMock = ImportMock.mockClass(approveModule, 'ApproveErc20');
+    approvalMock.mock('prepareTransactions', Promise.resolve());
+    approvalMock.set('transactions' as any, []);
+    approvalMock.set('fees' as any, []);
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
     ImportMock.mockClass(contractWrappersModule, 'GeneralPermissionManager_3_0_0');
-    etherDividendsMock = ImportMock.mockClass(
+    erc20DividendsMock = ImportMock.mockClass(
       contractWrappersModule,
-      'EtherDividendCheckpoint_3_0_0'
-    );
-    wrappersMock.mock(
-      'getAttachedModules',
-      Promise.resolve([etherDividendsMock.getMockInstance()])
+      'ERC20DividendCheckpoint_3_0_0'
     );
     tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
+    erc20DividendsMock.mock('address', Promise.resolve(params.erc20Address));
+    wrappersMock.mock(
+      'getAttachedModules',
+      Promise.resolve([erc20DividendsMock.getMockInstance()])
+    );
 
     dividendDistributionFactoryMock = ImportMock.mockClass(
       dividendDistributionSecurityTokenFactoryModule,
       'DividendDistributionFactory'
     );
+
     const factoryMockSetup = mockFactories();
     factoryMockSetup.dividendDistributionFactory = dividendDistributionFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
 
-    // Instantiate CreateEtherDividendDistribution
-    target = new CreateEtherDividendDistribution(params, contextMock.getMockInstance());
+    // Instantiate CreateDividendDistribution
+    target = new CreateDividendDistribution(params, contextMock.getMockInstance());
   });
+
   afterEach(() => {
     restore();
   });
 
   describe('Types', () => {
-    test('should extend procedure and have CreateEtherDividendDistribution type', async () => {
+    test('should extend procedure and have CreateDividendDistribution type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe(ProcedureType.CreateEtherDividendDistribution);
+      expect(target.type).toBe(ProcedureType.CreateDividendDistribution);
     });
   });
 
-  describe('CreateEtherDividendDistribution', () => {
-    test('should add the transaction to the queue to create an ether dividend distribution', async () => {
+  describe('CreateDividendDistribution', () => {
+    test('should add a transaction to the queue to create an erc20 dividend distribution and to approve erc20 token', async () => {
+      const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
-      etherDividendsMock.mock(
+      erc20DividendsMock.mock(
         'createDividendWithCheckpointAndExclusions',
         Promise.resolve('CreateDividendWithCheckpointAndExclusions')
       );
@@ -91,21 +105,23 @@ describe('CreateEtherDividendDistribution', () => {
       await target.prepareTransactions();
 
       // Verifications
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
       expect(
         addTransactionSpy
           .getCall(0)
           .calledWith(
-            etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
+            erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
       expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
-        PolyTransactionTag.CreateEtherDividendDistribution
+        PolyTransactionTag.CreateErc20DividendDistribution
       );
       expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addProcedureSpy.callCount).toEqual(1);
     });
 
-    test('should add the transaction to the queue to create an ether dividend distribution with taxwithholdings', async () => {
-      target = new CreateEtherDividendDistribution(
+    test('should send add a transaction to the queue to create arc20 dividend distribution with taxWitholding data', async () => {
+      target = new CreateDividendDistribution(
         {
           ...params,
           taxWithholdings: [
@@ -117,38 +133,54 @@ describe('CreateEtherDividendDistribution', () => {
         },
         contextMock.getMockInstance()
       );
-
+      const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
-      etherDividendsMock.mock(
+      erc20DividendsMock.mock(
         'createDividendWithCheckpointAndExclusions',
         Promise.resolve('CreateDividendWithCheckpointAndExclusions')
       );
-      etherDividendsMock.mock('setWithholding', Promise.resolve('SetWithholding'));
+      erc20DividendsMock.mock('setWithholding', Promise.resolve('SetWithholding'));
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
       expect(
         addTransactionSpy
           .getCall(0)
           .calledWith(
-            etherDividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
+            erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
       expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
-        PolyTransactionTag.CreateEtherDividendDistribution
+        PolyTransactionTag.CreateErc20DividendDistribution
       );
       expect(
-        addTransactionSpy.getCall(1).calledWith(etherDividendsMock.getMockInstance().setWithholding)
+        addTransactionSpy.getCall(1).calledWith(erc20DividendsMock.getMockInstance().setWithholding)
       ).toEqual(true);
       expect(addTransactionSpy.getCall(1).lastArg.tag).toEqual(
-        PolyTransactionTag.SetEtherTaxWithholding
+        PolyTransactionTag.SetErc20TaxWithholding
       );
       expect(addTransactionSpy.callCount).toEqual(2);
+      expect(addProcedureSpy.callCount).toEqual(1);
     });
 
-    test('should throw if corresponding eth dividend distribution event is not fired', async () => {
+    test('should throw if there is no valid security token supplied', async () => {
+      tokenFactoryMock
+        .mock('getSecurityTokenInstanceFromTicker')
+        .withArgs(params.symbol)
+        .throws();
+
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `There is no Security Token with symbol ${params.symbol}`,
+        })
+      );
+    });
+
+    test('should throw if corresponding dividend distribution event is not fired', async () => {
       ImportMock.mockFunction(utilsModule, 'findEvents', []);
 
       // Real call
@@ -158,16 +190,16 @@ describe('CreateEtherDividendDistribution', () => {
         new PolymathError({
           code: ErrorCode.UnexpectedEventLogs,
           message:
-            "The ETH Dividend Distribution was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
+            "The ERC20 Dividend Distribution was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
         })
       );
     });
 
-    test('should return the newly created eth dividend distribution', async () => {
+    test('should return the created erc20 dividend distribution', async () => {
       const dividendIndex = 1;
       const dividendObject = {
-        securityTokenId: () => 'Id',
-        index: () => dividendIndex,
+        securityTokenId: () => Promise.resolve(params.symbol),
+        index: () => Promise.resolve(dividendIndex),
       };
 
       const fetchStub = dividendDistributionFactoryMock.mock(
@@ -195,7 +227,6 @@ describe('CreateEtherDividendDistribution', () => {
             securityTokenId: SecurityToken.generateId({
               symbol: params.symbol,
             }),
-            dividendType: DividendType.Eth,
             index: dividendIndex,
           })
         )
@@ -204,33 +235,19 @@ describe('CreateEtherDividendDistribution', () => {
       // Verifications for findEvents
       expect(
         findEventsStub.getCall(0).calledWithMatch({
-          eventName: EtherDividendCheckpointEvents.EtherDividendDeposited,
+          eventName: ERC20DividendCheckpointEvents.ERC20DividendDeposited,
         })
       ).toEqual(true);
       expect(findEventsStub.callCount).toBe(1);
     });
 
-    test('should throw if eth dividends manager has not been enabled', async () => {
+    test('should throw error if the erc20 dividends manager has not been enabled', async () => {
       wrappersMock.mock('getAttachedModules', Promise.resolve([]));
       // Real call
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: "The ETH Dividends Manager hasn't been enabled",
-        })
-      );
-    });
-
-    test('should throw if there is no valid security token supplied', async () => {
-      tokenFactoryMock
-        .mock('getSecurityTokenInstanceFromTicker')
-        .withArgs(params.symbol)
-        .throws();
-
-      await expect(target.prepareTransactions()).rejects.toThrow(
-        new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: `There is no Security Token with symbol ${params.symbol}`,
+          message: "The ERC20 Dividends Manager hasn't been enabled",
         })
       );
     });

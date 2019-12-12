@@ -52,12 +52,12 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       module.getSTODetails(),
     ]);
 
-    let preMintAllowed = false;
+    let preIssueAllowed = false;
     let tiers: Tier[];
     let rawTiers;
 
     if (isUSDTieredSTO_3_1_0(module)) {
-      [preMintAllowed, rawTiers] = await Promise.all([
+      [preIssueAllowed, rawTiers] = await Promise.all([
         module.preMintAllowed(),
         Promise.all(range(numberOfTiers).map(tier => module.tiers({ tier }))),
       ]);
@@ -99,12 +99,6 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       );
     }
 
-    const stoId = TieredSto.generateId({
-      securityTokenId,
-      stoType,
-      address,
-    });
-
     const currencies = [];
 
     if (isRaisedInETH) {
@@ -137,7 +131,7 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       isPaused,
       capReached,
       isFinalized,
-      preMintAllowed,
+      preIssueAllowed,
       beneficialInvestmentsAllowed,
     };
   };

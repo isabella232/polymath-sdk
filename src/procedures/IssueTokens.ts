@@ -5,7 +5,7 @@ import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
-  MintTokensProcedureArgs,
+  IssueTokensProcedureArgs,
   ShareholderDataEntry,
 } from '../types';
 import { PolymathError } from '../PolymathError';
@@ -20,11 +20,11 @@ export const createRefreshSecurityTokenFactoryResolver = (
   return factories.securityTokenFactory.refresh(securityTokenId);
 };
 
-export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[] | void> {
-  public type = ProcedureType.MintTokens;
+export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder[] | void> {
+  public type = ProcedureType.IssueTokens;
 
   public async prepareTransactions() {
-    const { symbol, mintingData } = this.args;
+    const { symbol, issuanceData } = this.args;
     const { contractWrappers, factories } = this.context;
 
     let securityToken;
@@ -45,7 +45,7 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
     const updatedShareholderData: ShareholderDataEntry[] = [];
     const updatedShareholderAddresses: string[] = [];
 
-    mintingData.forEach(({ address, amount, shareholderData }) => {
+    issuanceData.forEach(({ address, amount, shareholderData }) => {
       investors.push(address);
       values.push(amount);
 
@@ -100,7 +100,7 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
     if (missingShareholders.length) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `Cannot mint tokens to the following addresses: [${missingShareholders.join(
+        message: `Cannot issue tokens to the following addresses: [${missingShareholders.join(
           ', '
         )}]. Reason: Those addresses are not Shareholders`,
       });
@@ -115,7 +115,7 @@ export class MintTokens extends Procedure<MintTokensProcedureArgs, Shareholder[]
     if (expiredKyc.length > 0) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `Cannot mint tokens to the following addresses: [${expiredKyc
+        message: `Cannot issue tokens to the following addresses: [${expiredKyc
           .map(({ address }) => address)
           .join(', ')}]. Reason: Expired KYC`,
       });
