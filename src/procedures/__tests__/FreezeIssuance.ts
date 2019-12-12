@@ -84,7 +84,7 @@ describe('FreezeIssuance', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: 'The issuance has already been frozen permanently',
+          message: 'Issuance has already been frozen permanently',
         })
       );
     });
