@@ -136,6 +136,8 @@ export class TieredSto extends Sto<Params> {
    * @param raisedFundsWallet wallet address that will receive the funds that are being raised
    * @param unsoldTokensWallet wallet address that will receive unsold tokens when the end date is reached
    * @param stableCoinAddresses array of stable coins that the offering supports
+   * @param customOracleAddresses array of stable coin price oracles
+   * @param denominatedCurrency denominated currency type of the tiered sto
    */
   public async modifyData(args: {
     startDate: Date;
@@ -147,6 +149,8 @@ export class TieredSto extends Sto<Params> {
     raisedFundsWallet: string;
     unsoldTokensWallet: string;
     stableCoinAddresses: string[];
+    customOracleAddresses: string[];
+    denominatedCurrency: string;
   }) {
     const { address: stoAddress, securityTokenSymbol: symbol } = this;
 

@@ -1,6 +1,11 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SubModule } from './SubModule';
-import { ControllerTransfer, SetController, ControllerRedeem } from '../../procedures';
+import {
+  ControllerTransfer,
+  SetController,
+  ControllerRedeem,
+  DisableController,
+} from '../../procedures';
 
 export class Controller extends SubModule {
   /**
@@ -11,6 +16,16 @@ export class Controller extends SubModule {
     const { symbol } = this.securityToken;
     const procedure = new SetController({ symbol, controller }, this.context);
 
+    return procedure.prepare();
+  };
+
+  /**
+   * Permanently disable controller functionality
+   * @param signature optional signed data. If not passed, signing will be requested on the spot
+   */
+  public disableController = async (args?: { signature?: string }) => {
+    const { symbol } = this.securityToken;
+    const procedure = new DisableController({ ...args, symbol }, this.context);
     return procedure.prepare();
   };
 

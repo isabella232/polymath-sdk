@@ -1322,10 +1322,10 @@
     universal-user-agent "^2.0.0"
     url-template "^2.0.8"
 
-"@polymathnetwork/abi-wrappers@4.0.0-beta.8":
-  version "4.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/@polymathnetwork/abi-wrappers/-/abi-wrappers-4.0.0-beta.8.tgz#b540f159cadc719f89592f200a3ed0c914a4b221"
-  integrity sha512-vAiqTJ7UiA/rZN7mgZTdrLn0KcmRDMyjGGhP6ka5f1x663gDKhuc90pXUQtdOoD2j+vNhhaGZkBFDxSl6nXdOA==
+"@polymathnetwork/abi-wrappers@4.0.0-beta.9":
+  version "4.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/@polymathnetwork/abi-wrappers/-/abi-wrappers-4.0.0-beta.9.tgz#ec1fba336879ee5164b78fffbe61fcac24d63ca5"
+  integrity sha512-ssV4bMbVo3fgAeXIlPu73vT7T5ZKO92OfS1CwmI/6pDmpTEHcQSajTUclIHJi/H2GXmfXlRuX+9afyoqmdFVRw==
   dependencies:
     "@0x/base-contract" "5.4.0"
     "@0x/utils" "4.5.2"
@@ -1335,20 +1335,22 @@
     lodash "^4.17.15"
     typescript "3.5.3"
 
-"@polymathnetwork/contract-wrappers@3.0.0-beta.56":
-  version "3.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-wrappers/-/contract-wrappers-3.0.0-beta.56.tgz#bc76dbb9939f90beb75da4969c3046af9c0d922f"
-  integrity sha512-LX/o2Gp7ZR77XOZtfeR8t5QFZ6syXeXNQgKWzuwAxC0tJCLlb7c93xU3sxq0UWgHgMfnChI29ZIq1mGVkf8Q2Q==
+"@polymathnetwork/contract-wrappers@3.0.0-beta.59":
+  version "3.0.0-beta.59"
+  resolved "https://registry.yarnpkg.com/@polymathnetwork/contract-wrappers/-/contract-wrappers-3.0.0-beta.59.tgz#044879d2d94cd95e7c447218e9fc9b07334a4fc4"
+  integrity sha512-PM7QSulRuX0bW8MbvbsQ7UGiTxdfaunESmVcnt0nOXameesolU/izG+vYfF2tldCnMRdr1OLehV2GqhtFhVJKg==
   dependencies:
     "@0x/assert" "2.1.6"
     "@0x/json-schemas" "4.0.2"
     "@0x/subproviders" "5.0.4"
     "@0x/types" "2.4.3"
     "@0x/typescript-typings" "4.3.0"
-    "@polymathnetwork/abi-wrappers" "4.0.0-beta.8"
+    "@polymathnetwork/abi-wrappers" "4.0.0-beta.9"
     "@types/bluebird" "^3.5.27"
+    "@types/eth-sig-util" "^2.1.0"
     "@types/semver" "^6.0.1"
     bluebird "^3.5.5"
+    eth-sig-util "^2.5.2"
     ethereumjs-blockstream "^6.0.0"
     ethereumjs-util "^6.1.0"
     js-sha3 "^0.8.0"
@@ -1551,6 +1553,13 @@
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/eth-lightwallet/-/eth-lightwallet-3.0.0.tgz#9be5b59dc6fb3fcdb01e65c2c2a79cd601f72dd4"
   integrity sha512-AgE1V0Z9VqZ3bwZgUeIwJkKuyCP/vFaIFtZd7OZxhwD0Vsqjy9HqfT6IolrxXCTLWy9YkqcN7gL1jtIiH+Ml7Q==
+  dependencies:
+    "@types/node" "*"
+
+"@types/eth-sig-util@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@types/eth-sig-util/-/eth-sig-util-2.1.0.tgz#54497e9c01b5ee3a60475686cce1a20ddccc358b"
+  integrity sha512-GWX0s/FFGWl6lO2nbd9nq3fh1x47vmLL/p4yDG1+VgCqrip1ErQrbHlTZThtEc6JrcmwCKB2H1de32Hdo3JdJg==
   dependencies:
     "@types/node" "*"
 
@@ -5859,6 +5868,18 @@ eth-sig-util@^1.4.2:
   dependencies:
     ethereumjs-abi "git+https://github.com/ethereumjs/ethereumjs-abi.git"
     ethereumjs-util "^5.1.1"
+
+eth-sig-util@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/eth-sig-util/-/eth-sig-util-2.5.2.tgz#f30b94509786fa4fbf71adb3164b1701e15724a8"
+  integrity sha512-xvDojS/4reXsw8Pz/+p/qcM5rVB61FOdPbEtMZ8FQ0YHnPEzPy5F8zAAaZ+zj5ud0SwRLWPfor2Cacjm7EzMIw==
+  dependencies:
+    buffer "^5.2.1"
+    elliptic "^6.4.0"
+    ethereumjs-abi "0.6.5"
+    ethereumjs-util "^5.1.1"
+    tweetnacl "^1.0.0"
+    tweetnacl-util "^0.15.0"
 
 eth-tx-summary@^3.1.2:
   version "3.2.4"

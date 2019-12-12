@@ -50,7 +50,7 @@
     "@0x/subproviders": "^3.0.2",
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.2.0",
-    "@polymathnetwork/contract-wrappers": "3.0.0-beta.56",
+    "@polymathnetwork/contract-wrappers": "3.0.0-beta.59",
     "@types/sinon": "^7.5.0",
     "bluebird": "^3.5.5",
     "ethereum-address": "^0.0.4",

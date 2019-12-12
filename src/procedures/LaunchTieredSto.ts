@@ -34,6 +34,8 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
       raisedFundsWallet,
       unsoldTokensWallet,
       stableCoinAddresses,
+      customOracleAddresses,
+      denominatedCurrency,
       allowPreIssuing = false,
     } = args;
     const {
@@ -172,7 +174,9 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
         fundRaiseTypes: currencies,
         wallet: raisedFundsWallet,
         treasuryWallet: unsoldTokensWallet,
-        usdTokens: stableCoinAddresses,
+        stableTokens: stableCoinAddresses,
+        customOracleAddresses,
+        denominatedCurrency,
       },
       maxCost: polyCost,
       archived: false,
