@@ -1,4 +1,3 @@
-import { TransferStatusCode } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   TransferSecurityTokensProcedureArgs,
@@ -9,27 +8,13 @@ import {
 import { PolymathError } from '../PolymathError';
 import { SecurityToken, Shareholder } from '../entities';
 import { Factories } from '../Context';
+import { checkTransferStatus } from '../utils';
 
 /**
  * Procedure to transfer security tokens.
  */
 export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProcedureArgs> {
   public type = ProcedureType.TransferSecurityTokens;
-
-  private checkTransferStatus(
-    statusCode: TransferStatusCode,
-    fromAddress: string,
-    symbol: string,
-    to: string,
-    reasonCode: string
-  ) {
-    if (statusCode !== TransferStatusCode.TransferSuccess) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `[${statusCode}] ${fromAddress} is not allowed to transfer ${symbol} to ${to}. Possible reason: ${reasonCode}`,
-      });
-    }
-  }
 
   public async prepareTransactions() {
     const { symbol, to, amount, data = '', from } = this.args;
@@ -56,10 +41,10 @@ export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProc
         value: amount,
         from,
       });
-      this.checkTransferStatus(statusCode, from, symbol, to, reasonCode);
+      checkTransferStatus(statusCode, from, symbol, to, reasonCode);
     } else {
       const { statusCode, reasonCode } = await securityToken.canTransfer({ to, value: amount });
-      this.checkTransferStatus(statusCode, fromAddress, symbol, to, reasonCode);
+      checkTransferStatus(statusCode, fromAddress, symbol, to, reasonCode);
     }
 
     await this.addTransaction(securityToken.transferFromWithData, {

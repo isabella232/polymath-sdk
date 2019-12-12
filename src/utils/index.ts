@@ -32,49 +32,11 @@ import {
   EtherDividendCheckpointSetWithholdingEventArgs,
   USDTieredSTOAllowPreMintFlagEventArgs,
   CappedSTOAllowPreMintFlagEventArgs,
+  TransferStatusCode,
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
-import { Pojo } from '../types';
-
-export const delay = async (amount: number) => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve();
-    }, amount);
-  });
-};
-
-export function areSameAddress(a: string, b: string) {
-  return a.toUpperCase() === b.toUpperCase();
-}
-
-export function serialize(entityType: string, pojo: Pojo) {
-  return Buffer.from(`${entityType}:${stringify(pojo)}`).toString('base64');
-}
-
-export function unserialize(id: string) {
-  const unserialized = Buffer.from(id, 'base64').toString('utf8');
-
-  const matched = unserialized.match(/^.*?:(.*)/);
-
-  const errorMsg = 'Wrong ID format';
-
-  if (!matched) {
-    throw new Error(errorMsg);
-  }
-
-  const [, jsonString] = matched;
-
-  try {
-    return JSON.parse(jsonString);
-  } catch (err) {
-    throw new Error(errorMsg);
-  }
-}
-
-export function isValidAddress(address: string) {
-  return isAddress(address);
-}
+import { Pojo, ErrorCode } from '../types';
+import { PolymathError } from '../PolymathError';
 
 interface FindEventParams {
   logs: (LogEntry | LogWithDecodedArgs<DecodedLogArgs>)[];
@@ -223,6 +185,14 @@ interface FindEvents {
   >[];
 }
 
+export const delay = async (amount: number) => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve();
+    }, amount);
+  });
+};
+
 export const findEvents: FindEvents = ({
   logs,
   eventName,
@@ -238,3 +208,50 @@ export const findEvents: FindEvents = ({
 
   return foundLogs;
 };
+
+export function areSameAddress(a: string, b: string) {
+  return a.toUpperCase() === b.toUpperCase();
+}
+
+export function serialize(entityType: string, pojo: Pojo) {
+  return Buffer.from(`${entityType}:${stringify(pojo)}`).toString('base64');
+}
+
+export function unserialize(id: string) {
+  const unserialized = Buffer.from(id, 'base64').toString('utf8');
+
+  const matched = unserialized.match(/^.*?:(.*)/);
+
+  const errorMsg = 'Wrong ID format';
+
+  if (!matched) {
+    throw new Error(errorMsg);
+  }
+
+  const [, jsonString] = matched;
+
+  try {
+    return JSON.parse(jsonString);
+  } catch (err) {
+    throw new Error(errorMsg);
+  }
+}
+
+export function isValidAddress(address: string) {
+  return isAddress(address);
+}
+
+export function checkTransferStatus(
+  statusCode: TransferStatusCode,
+  fromAddress: string,
+  symbol: string,
+  to: string,
+  reasonCode: string
+) {
+  if (statusCode !== TransferStatusCode.TransferSuccess) {
+    throw new PolymathError({
+      code: ErrorCode.ProcedureValidationError,
+      message: `[${statusCode}] ${fromAddress} is not allowed to transfer ${symbol} to ${to}. Possible reason: ${reasonCode}`,
+    });
+  }
+}
