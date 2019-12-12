@@ -3,7 +3,12 @@ import {
   SecurityToken as SecurityTokenWrapper,
 } from '@polymathnetwork/contract-wrappers';
 import { ShareholderDataEntry, ErrorCode } from '../../types';
-import { ModifyShareholderData, CreateCheckpoint, RevokeKyc } from '../../procedures';
+import {
+  ModifyShareholderData,
+  CreateCheckpoint,
+  RevokeKyc,
+  FreezeIssuance,
+} from '../../procedures';
 import { SubModule } from './SubModule';
 import { Checkpoint } from '../Checkpoint';
 import { PolymathError } from '../../PolymathError';
@@ -94,7 +99,10 @@ export class Shareholders extends SubModule {
     const checkpoints: BaseCheckpoint[] = await contractWrappers.getCheckpoints({ securityToken });
 
     return checkpoints.map(({ index, ...checkpoint }) => {
-      const checkpointId = Checkpoint.generateId({ securityTokenId: uid, index });
+      const checkpointId = Checkpoint.generateId({
+        securityTokenId: uid,
+        index,
+      });
 
       const checkpointDividends = allDividends.filter(dividend => dividend.checkpointId === index);
 
@@ -141,7 +149,10 @@ export class Shareholders extends SubModule {
     if (typeof args === 'string') {
       uid = args;
     } else {
-      uid = Checkpoint.generateId({ index: args.checkpointIndex, securityTokenId });
+      uid = Checkpoint.generateId({
+        index: args.checkpointIndex,
+        securityTokenId,
+      });
     }
 
     return factories.checkpointFactory.fetch(uid);
@@ -169,7 +180,10 @@ export class Shareholders extends SubModule {
     }
 
     const generalTransferManager = (await contractWrappers.getAttachedModules(
-      { moduleName: ModuleName.GeneralTransferManager, symbol: securityTokenSymbol },
+      {
+        moduleName: ModuleName.GeneralTransferManager,
+        symbol: securityTokenSymbol,
+      },
       { unarchived: true }
     ))[0];
 
