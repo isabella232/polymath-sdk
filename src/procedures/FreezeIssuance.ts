@@ -43,7 +43,7 @@ export class FreezeIssuance extends Procedure<FreezeIssuanceProcedureArgs> {
     if (!isIssuable) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `The issuance has already been frozen permanently`,
+        message: `Issuance has already been frozen permanently`,
       });
     }
     // If there is no hex signature passed in, create a signature request to sign the freeze issuance acknowledgement
