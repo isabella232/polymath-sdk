@@ -29,7 +29,7 @@ export class Transfers extends SubModule {
   };
 
   /**
-   * Validates if wallet can transfer a security token
+   * Validates if wallet token can transfer a security token
    */
   public canTransfer = async (args: {
     to: string;
@@ -63,35 +63,39 @@ export class Transfers extends SubModule {
       });
     }
 
+    return {
+      status: this.getStatusCode(result.statusCode),
+      reason: result.reasonCode,
+    };
+  };
+
+  private getStatusCode = (statusCode: string) => {
     let status;
-    if (result.statusCode === '0x50') {
+    if (statusCode === '0x50') {
       status = TransferStatusCode.TransferFailure;
-    } else if (result.statusCode === '0x51') {
+    } else if (statusCode === '0x51') {
       status = TransferStatusCode.TransferSuccess;
-    } else if (result.statusCode === '0x52') {
+    } else if (statusCode === '0x52') {
       status = TransferStatusCode.InsufficientBalance;
-    } else if (result.statusCode === '0x53') {
+    } else if (statusCode === '0x53') {
       status = TransferStatusCode.InsufficientAllowance;
-    } else if (result.statusCode === '0x54') {
+    } else if (statusCode === '0x54') {
       status = TransferStatusCode.TransfersHalted;
-    } else if (result.statusCode === '0x55') {
+    } else if (statusCode === '0x55') {
       status = TransferStatusCode.FundsLocked;
-    } else if (result.statusCode === '0x56') {
+    } else if (statusCode === '0x56') {
       status = TransferStatusCode.InvalidSender;
-    } else if (result.statusCode === '0x57') {
+    } else if (statusCode === '0x57') {
       status = TransferStatusCode.InvalidReceiver;
-    } else if (result.statusCode === '0x58') {
+    } else if (statusCode === '0x58') {
       status = TransferStatusCode.InvalidOperator;
     } else {
       throw new PolymathError({
         code: ErrorCode.FatalError,
-        message: `Status code ${result.statusCode} not supported`,
+        message: `Status code ${statusCode} not supported`,
       });
     }
 
-    return {
-      status,
-      reason: result.reasonCode,
-    };
+    return status;
   };
 }
