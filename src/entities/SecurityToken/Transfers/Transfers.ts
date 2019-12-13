@@ -29,7 +29,7 @@ export class Transfers extends SubModule {
   };
 
   /**
-   * Validates if wallet token can transfer a security token
+   * Validates if address can transfer a security token
    */
   public canTransfer = async (args: {
     to: string;
