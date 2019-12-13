@@ -1,5 +1,5 @@
 import { SubModule } from '../SubModule';
-import { IssueTokens } from '../../../procedures';
+import { FreezeIssuance, IssueTokens } from '../../../procedures';
 import { IssuanceDataEntry } from '../../../types';
 import { Offerings } from './Offerings';
 import { SecurityToken } from '../SecurityToken';
@@ -36,6 +36,16 @@ export class Issuance extends SubModule {
       },
       this.context
     );
+    return procedure.prepare();
+  };
+
+  /**
+   * Permanently freeze issuance of the security token
+   * @param signature optional signed data. If not passed, signing will be requested on the spot
+   */
+  public freeze = async (args?: { signature?: string }) => {
+    const { symbol } = this.securityToken;
+    const procedure = new FreezeIssuance({ ...args, symbol }, this.context);
     return procedure.prepare();
   };
 }

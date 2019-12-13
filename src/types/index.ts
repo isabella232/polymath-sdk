@@ -129,6 +129,7 @@ export enum ProcedureType {
   CreateDividendDistribution = 'CreateDividendDistribution',
   CreateSecurityToken = 'CreateSecurityToken',
   DisableFeature = 'DisableFeature',
+  FreezeIssuance = 'FreezeIssuance',
   ReclaimFunds = 'ReclaimFunds',
   ReserveSecurityToken = 'ReserveSecurityToken',
   WithdrawTaxes = 'WithdrawTaxes',
@@ -144,6 +145,7 @@ export enum ProcedureType {
   TogglePauseSto = 'PauseSto',
   FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
+  DisableController = 'DisableController',
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
   IssueTokens = 'IssueTokens',
@@ -178,6 +180,8 @@ export enum PolyTransactionTag {
   EnableGeneralTransferManager = 'EnableGeneralTransferManager',
   EnableCountTransferManager = 'EnableCountTransferManager',
   EnablePercentageTransferManager = 'EnablePercentageTransferManager',
+  DisableController = 'DisableController',
+  FreezeIssuance = 'FreezeIssuance',
   DisableFeature = 'DisableFeature',
   ReclaimDividendFunds = 'ReclaimDividendFunds',
   WithdrawTaxWithholdings = 'WithdrawTaxWithholdings',
@@ -218,8 +222,7 @@ export enum PolyTransactionTag {
   Signature = 'Signature',
 }
 
-export type MaybeResolver<T> = PostTransactionResolver<T> | T;
-
+export type MaybeResolver<T> = PostTransactionResolver<T, any> | T;
 export type MapMaybeResolver<T> = { [K in keyof T]: MaybeResolver<T[K]> };
 
 // TODO @monitz87: remake this interface when contract-wrappers exports the tx arguments
@@ -419,6 +422,8 @@ export interface LaunchTieredStoProcedureArgs {
   raisedFundsWallet: string;
   unsoldTokensWallet: string;
   stableCoinAddresses: string[];
+  customOracleAddresses: string[];
+  denominatedCurrency: string;
   allowPreIssuing?: boolean;
 }
 
@@ -503,6 +508,16 @@ export interface FinalizeStoProcedureArgs {
 export interface SetControllerProcedureArgs {
   symbol: string;
   controller: string;
+}
+
+export interface FreezeIssuanceProcedureArgs {
+  symbol: string;
+  signature?: string;
+}
+
+export interface DisableControllerProcedureArgs {
+  symbol: string;
+  signature?: string;
 }
 
 export interface ShareholderDataEntry {

@@ -15,6 +15,8 @@ export { AssignSecurityTokenRole } from './AssignSecurityTokenRole';
 export { AssignStoRole } from './AssignStoRole';
 export { EnableGeneralPermissionManager } from './EnableGeneralPermissionManager';
 export { EnableGeneralTransferManager } from './EnableGeneralTransferManager';
+export { DisableController } from './DisableController';
+export { FreezeIssuance } from './FreezeIssuance';
 export { DisableFeature } from './DisableFeature';
 export { ControllerTransfer } from './ControllerTransfer';
 export { ControllerRedeem } from './ControllerRedeem';
