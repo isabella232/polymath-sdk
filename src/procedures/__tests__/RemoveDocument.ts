@@ -5,9 +5,14 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { RemoveDocument } from '../../procedures/RemoveDocument';
-import { Procedure } from '~/procedures/Procedure';
-import { ProcedureType, PolyTransactionTag, ErrorCode, RemoveDocumentProcedureArgs } from '~/types';
-import { PolymathError } from '~/PolymathError';
+import { Procedure } from '../../procedures/Procedure';
+import {
+  ProcedureType,
+  PolyTransactionTag,
+  ErrorCode,
+  RemoveDocumentProcedureArgs,
+} from '../../types';
+import { PolymathError } from '../../PolymathError';
 import { Wallet } from '../../Wallet';
 
 const params: RemoveDocumentProcedureArgs = {
@@ -109,7 +114,7 @@ describe('RemoveDocument', () => {
       );
     });
 
-    test('should throw if account address is different than owner address', async () => {
+    test('should throw if the document you are trying to remove does not exist in the security token document list', async () => {
       securityTokenMock.set('getAllDocuments', () => Promise.resolve(['RandomDoc']));
 
       // Instantiate RemoveDocument

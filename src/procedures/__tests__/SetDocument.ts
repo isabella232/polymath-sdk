@@ -5,9 +5,14 @@ import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { SetDocument } from '../../procedures/SetDocument';
-import { Procedure } from '~/procedures/Procedure';
-import { ProcedureType, PolyTransactionTag, ErrorCode, SetDocumentProcedureArgs } from '~/types';
-import { PolymathError } from '~/PolymathError';
+import { Procedure } from '../../procedures/Procedure';
+import {
+  ProcedureType,
+  PolyTransactionTag,
+  ErrorCode,
+  SetDocumentProcedureArgs,
+} from '../../types';
+import { PolymathError } from '../../PolymathError';
 import { Wallet } from '../../Wallet';
 
 const params: SetDocumentProcedureArgs = {
