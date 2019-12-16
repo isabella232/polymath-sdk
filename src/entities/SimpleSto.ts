@@ -9,7 +9,7 @@ import {
 import { serialize } from '../utils';
 import { Sto, UniqueIdentifiers, Params as StoParams } from './Sto';
 import { Context } from '../Context';
-import { InvestInCappedSto } from '../procedures';
+import { InvestInSimpleSto } from '../procedures';
 import { Investment } from './Investment';
 
 const { weiToValue } = conversionUtils;
@@ -99,7 +99,7 @@ export class SimpleSto extends Sto<Params> {
   public async invest(args: { amount: BigNumber; beneficiary?: string }) {
     const { address: stoAddress, securityTokenSymbol: symbol } = this;
 
-    const procedure = new InvestInCappedSto({ stoAddress, symbol, ...args }, this.context);
+    const procedure = new InvestInSimpleSto({ stoAddress, symbol, ...args }, this.context);
 
     return procedure.prepare();
   }
