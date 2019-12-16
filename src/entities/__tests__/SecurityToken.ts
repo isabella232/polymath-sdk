@@ -1,3 +1,4 @@
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SecurityToken } from '../SecurityToken';
 import { Context } from '../../Context';
 
@@ -6,6 +7,12 @@ const params1 = {
   name: 'Test Token 1',
   address: '0x1',
   owner: '0x3',
+  tokenDetails: 'details',
+  version: [new BigNumber(1)],
+  granularity: 3,
+  totalSupply: new BigNumber(1000),
+  currentCheckpoint: 2,
+  treasuryWallet: '0x3',
 };
 
 const params2 = {
@@ -13,6 +20,12 @@ const params2 = {
   name: 'Test Token 2',
   address: '0x2',
   owner: '0x4',
+  tokenDetails: 'details2',
+  version: [new BigNumber(1)],
+  granularity: 3,
+  totalSupply: new BigNumber(1000),
+  currentCheckpoint: 2,
+  treasuryWallet: '0x3',
 };
 
 const context = {} as Context;
