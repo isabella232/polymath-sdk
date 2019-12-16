@@ -17,9 +17,9 @@ export class Transfers extends SubModule {
 
   /**
    * Retrieve whether the transfer of tokens is frozen or not
-   * Can be modified with `freeze`
+   * Can be modified with `freeze` and `unfreeze`
    */
-  public frozen = async (): Promise<Boolean> => {
+  public frozen = async (): Promise<boolean> => {
     const {
       context: { contractWrappers },
       securityToken,

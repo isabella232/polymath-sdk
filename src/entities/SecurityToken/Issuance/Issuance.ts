@@ -52,7 +52,7 @@ export class Issuance extends SubModule {
 
   /**
    * Retrieve whether the issuance of tokens is allowed or not
-   * Can be modified with `freeze`
+   * Can be permanently frozen with `freeze`
    */
   public allowed = async (): Promise<Boolean> => {
     const {

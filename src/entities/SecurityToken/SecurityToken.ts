@@ -27,12 +27,12 @@ export interface Params {
   name: string;
   address: string;
   owner: string;
-  tokenDetails?: string;
-  version?: BigNumber[];
-  granularity?: number;
-  totalSupply?: BigNumber;
-  currentCheckpoint?: number;
-  treasuryWallet?: string;
+  tokenDetails: string;
+  version: BigNumber[];
+  granularity: number;
+  totalSupply: BigNumber;
+  currentCheckpoint: number;
+  treasuryWallet: string;
 }
 
 export const unserialize = (serialized: string) => {

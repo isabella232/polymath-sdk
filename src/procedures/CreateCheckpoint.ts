@@ -18,7 +18,7 @@ export const createRefreshSecurityTokenFactoryResolver = (
   return factories.securityTokenFactory.refresh(securityTokenId);
 };
 
-export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint | void> {
+export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint> {
   public type = ProcedureType.CreateCheckpoint;
 
   public async prepareTransactions() {

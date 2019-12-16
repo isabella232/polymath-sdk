@@ -10,7 +10,7 @@ import { CreateSecurityToken } from '../../procedures/CreateSecurityToken';
 import { Procedure } from '../../procedures/Procedure';
 import { Wallet } from '../../Wallet';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
+import { ErrorCode, PolyTransactionTag, ProcedureType, StoType } from '../../types';
 import { ApproveErc20 } from '../ApproveErc20';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import * as utilsModule from '../../utils';
@@ -104,39 +104,14 @@ describe('CreateSecurityToken', () => {
       );
     });
 
-    test('should throw if corresponding create security token event is not fired', async () => {
-      ImportMock.mockFunction(utilsModule, 'findEvents', []);
-
-      // Real call
-      const resolver = await target.prepareTransactions();
-
-      await expect(resolver.run({} as TransactionReceiptWithDecodedLogs)).rejects.toThrow(
-        new PolymathError({
-          code: ErrorCode.UnexpectedEventLogs,
-          message:
-            "The Security Token was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
-        })
-      );
-    });
-
     test('should return the newly created security token', async () => {
-      const creationObject = {
+      const fakeSecurityToken = {
         name: () => params.name,
         owner: () => params.owner,
         address: () => params.address,
       };
 
-      const createStub = securityTokenFactoryMock.mock('create', creationObject);
-      const findEventsStub = ImportMock.mockFunction(utilsModule, 'findEvents', [
-        {
-          args: {
-            _ticker: params.symbol,
-            _name: params.name,
-            _owner: params.owner,
-            _securityTokenAddress: params.address,
-          },
-        },
-      ]);
+      const fetchStub = securityTokenFactoryMock.mock('fetch', Promise.resolve(fakeSecurityToken));
 
       // Real call
       const resolver = await target.prepareTransactions();
@@ -144,24 +119,11 @@ describe('CreateSecurityToken', () => {
       await resolver.run(receipt);
 
       // Verifications
-      expect(resolver.result).toEqual(creationObject);
+      expect(resolver.result).toEqual(fakeSecurityToken);
       expect(
-        createStub
-          .getCall(0)
-          .calledWithExactly(SecurityToken.generateId({ symbol: params.symbol }), {
-            name: params.name,
-            owner: params.owner,
-            address: params.address,
-          })
+        fetchStub.getCall(0).calledWithExactly(SecurityToken.generateId({ symbol: params.symbol }))
       ).toEqual(true);
-      expect(createStub.callCount).toBe(1);
-      // Verifications for findEvents
-      expect(
-        findEventsStub.getCall(0).calledWithMatch({
-          eventName: SecurityTokenRegistryEvents.NewSecurityToken,
-        })
-      ).toEqual(true);
-      expect(findEventsStub.callCount).toBe(1);
+      expect(fetchStub.callCount).toBe(1);
     });
 
     test('should throw error if token has been reserved by other user', async () => {
