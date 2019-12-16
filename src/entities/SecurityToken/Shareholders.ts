@@ -223,4 +223,52 @@ export class Shareholders extends SubModule {
 
     return shareholders;
   };
+
+  /**
+   * Retrieve the count of security token investors
+   */
+  public investorCount = async (): Promise<number> => {
+    const {
+      context: { contractWrappers },
+      securityToken: { symbol },
+    } = this;
+
+    let securityTokenInstance;
+
+    try {
+      securityTokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+    return securityTokenInstance.getInvestorCount();
+  };
+
+  /**
+   * Retrieve the count of security token holders
+   */
+  public holderCount = async (): Promise<number> => {
+    const {
+      context: { contractWrappers },
+      securityToken: { symbol },
+    } = this;
+
+    let securityTokenInstance;
+
+    try {
+      securityTokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+    return securityTokenInstance.holderCount();
+  };
 }
