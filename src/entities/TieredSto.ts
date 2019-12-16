@@ -128,11 +128,13 @@ export class TieredSto extends Sto<Params> {
    */
   public async getCurrency(): Promise<CustomCurrency> {
     const {
-      context: { contractWrappers },
+      context: {
+        contractWrappers: { moduleFactory, polymathRegistry },
+      },
       address,
     } = this;
 
-    const module = await contractWrappers.moduleFactory.getModuleInstance({
+    const module = await moduleFactory.getModuleInstance({
       name: ModuleName.UsdTieredSTO,
       address,
     });
@@ -148,8 +150,10 @@ export class TieredSto extends Sto<Params> {
       ]);
     } else {
       // this has to be done this way because the 3.0.0 USDTieredSTO does not expose a getter for the oracles
-      ethOracleAddress = ZERO_ADDRESS;
-      polyOracleAddress = ZERO_ADDRESS;
+      [ethOracleAddress, polyOracleAddress] = await Promise.all([
+        polymathRegistry.getEthUsdOracleAddress(),
+        polymathRegistry.getPolyUsdOracleAddress(),
+      ]);
       currencySymbol = 'USD';
     }
 
