@@ -54,7 +54,7 @@ export class SimpleStoFactory extends Factory<SimpleSto, Params, UniqueIdentifie
     }
 
     return {
-      currencies: isRaisedInPoly ? [Currency.POLY] : [Currency.ETH],
+      fundraiseCurrencies: isRaisedInPoly ? [Currency.POLY] : [Currency.ETH],
       raisedFundsWallet,
       unsoldTokensWallet,
       raisedAmount: fundsRaised,

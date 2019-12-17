@@ -1,12 +1,98 @@
 import { BigNumber, ModuleName } from '@polymathnetwork/contract-wrappers';
 import { includes } from 'lodash';
 import { SubModule } from '../SubModule';
-import { StoTier, Currency, StoType, ErrorCode } from '../../../types';
+import {
+  StoTier,
+  Currency,
+  StoType,
+  ErrorCode,
+  CustomCurrency,
+  LaunchTieredStoProcedureArgs,
+  Omit,
+} from '../../../types';
 import { LaunchSimpleSto, LaunchTieredSto } from '../../../procedures';
 import { SimpleSto, TieredSto, Sto } from '../..';
 import { PolymathError } from '../../../PolymathError';
+import { TransactionQueue } from '../../TransactionQueue';
 
-interface GetSto {
+interface LaunchTieredStoParams {
+  startDate: Date;
+  endDate: Date;
+  tiers: StoTier[];
+  nonAccreditedInvestmentLimit: BigNumber;
+  minimumInvestment: BigNumber;
+  currencies: Currency[];
+  raisedFundsWallet: string;
+  unsoldTokensWallet: string;
+  stableCoinAddresses: string[];
+  customCurrency?: Partial<CustomCurrency>;
+  allowPreIssuance?: boolean;
+}
+
+type OnlyEth =
+  | [Currency.ETH]
+  | [Currency.StableCoin, Currency.ETH]
+  | [Currency.ETH, Currency.StableCoin];
+type OnlyPoly =
+  | [Currency.POLY]
+  | [Currency.StableCoin, Currency.POLY]
+  | [Currency.POLY, Currency.StableCoin];
+type EthAndPoly =
+  | [Currency.ETH, Currency.POLY]
+  | [Currency.POLY, Currency.ETH]
+  | [Currency.StableCoin, Currency.ETH, Currency.POLY]
+  | [Currency.ETH, Currency.StableCoin, Currency.POLY]
+  | [Currency.ETH, Currency.POLY, Currency.StableCoin]
+  | [Currency.StableCoin, Currency.POLY, Currency.ETH]
+  | [Currency.POLY, Currency.StableCoin, Currency.ETH]
+  | [Currency.POLY, Currency.ETH, Currency.StableCoin];
+
+interface LaunchTieredStoNoCustomCurrencyParams
+  extends Omit<LaunchTieredStoParams, 'customCurrency'> {
+  currencies: OnlyEth | OnlyPoly | EthAndPoly;
+}
+
+interface LaunchTieredStoCustomCurrencyEthParams extends LaunchTieredStoParams {
+  currencies: OnlyEth;
+  customCurrency: {
+    currencySymbol?: string;
+    ethOracleAddress: string;
+  };
+}
+
+interface LaunchTieredStoCustomCurrencyPolyParams extends LaunchTieredStoParams {
+  currencies: OnlyPoly;
+  customCurrency: {
+    currencySymbol?: string;
+    polyOracleAddress: string;
+  };
+}
+
+interface LaunchTieredStoCustomCurrencyBothParams extends LaunchTieredStoParams {
+  currencies: EthAndPoly;
+  customCurrency: {
+    currencySymbol?: string;
+    ethOracleAddress: string;
+    polyOracleAddress: string;
+  };
+}
+
+interface LaunchTieredStoMethod {
+  (args: LaunchTieredStoNoCustomCurrencyParams): Promise<
+    TransactionQueue<LaunchTieredStoProcedureArgs>
+  >;
+  (args: LaunchTieredStoCustomCurrencyEthParams): Promise<
+    TransactionQueue<LaunchTieredStoProcedureArgs>
+  >;
+  (args: LaunchTieredStoCustomCurrencyPolyParams): Promise<
+    TransactionQueue<LaunchTieredStoProcedureArgs>
+  >;
+  (args: LaunchTieredStoCustomCurrencyBothParams): Promise<
+    TransactionQueue<LaunchTieredStoProcedureArgs>
+  >;
+}
+
+interface GetStoMethod {
   (args: { stoType: StoType.Simple; address: string }): Promise<SimpleSto>;
   (args: { stoType: StoType.Tiered; address: string }): Promise<TieredSto>;
   (args: string): Promise<SimpleSto | TieredSto>;
@@ -63,24 +149,15 @@ export class Offerings extends SubModule {
    * @param raisedFundsWallet wallet address that will receive the funds that are being raised
    * @param unsoldTokensWallet wallet address that will receive unsold tokens when the end date is reached
    * @param stableCoinAddresses array of stable coins that the offering supports
-   * @param customOracleAddresses array of stable coin price oracles
-   * @param denominatedCurrency denominated currency type of the tiered sto
+   * @param customCurrency custom currency data. Allows the STO to raise funds pegged to a different currency. Optional, defaults to USD
+   * @param customCurrency.currencySymbol symbol of the custom currency (USD, CAD, EUR, etc. Default is USD)
+   * @param customCurrency.ethOracleAddress address of the oracle that states the price of ETH in the custom currency. Only required if raising funds in ETH
+   * @param customCurrency.polyOracleAddress address of the oracle that states the price of POLY in the custom currency. Only required if raising funds in POLY
    * @param allowPreIssuance whether to have all tokens issued on STO start. Default behavior is to issue on purchase
    */
-  public launchTieredSto = async (args: {
-    startDate: Date;
-    endDate: Date;
-    tiers: StoTier[];
-    nonAccreditedInvestmentLimit: BigNumber;
-    minimumInvestment: BigNumber;
-    currencies: Currency[];
-    raisedFundsWallet: string;
-    unsoldTokensWallet: string;
-    stableCoinAddresses: string[];
-    customOracleAddresses: string[];
-    denominatedCurrency: string;
-    allowPreIssuance?: boolean;
-  }) => {
+  public launchTieredSto: LaunchTieredStoMethod = async (
+    args: LaunchTieredStoParams
+  ): Promise<any> => {
     const { context, securityToken } = this;
     const { symbol } = securityToken;
     const procedure = new LaunchTieredSto(
@@ -99,7 +176,7 @@ export class Offerings extends SubModule {
    * @param stoType type of the STO (Capped or Tiered)
    * @param address address of the STO contract
    */
-  public getSto: GetSto = async (
+  public getSto: GetStoMethod = async (
     args:
       | {
           stoType: StoType;
