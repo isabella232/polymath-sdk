@@ -6,7 +6,7 @@ import { Context } from '../../../Context';
 import { TransferSecurityTokens } from '../../../procedures/TransferSecurityTokens';
 import { TransferStatusCode, ErrorCode } from '../../../types';
 import { ToggleFreezeTransfers } from '../../../procedures/ToggleFreezeTransfers';
-
+import { PolymathError } from '../../../PolymathError';
 
 export class Transfers extends SubModule {
   public restrictions: Restrictions;
@@ -59,9 +59,9 @@ export class Transfers extends SubModule {
    */
   public freeze = async () => {
     const { symbol } = this.securityToken;
-    
+
     const procedure = new ToggleFreezeTransfers({ symbol, freeze: true }, this.context);
-    
+
     return procedure.prepare();
   };
 
@@ -135,8 +135,8 @@ export class Transfers extends SubModule {
 
     return status;
   };
-  
- /**
+
+  /**
    * Unfreeze transfers of the security token
    */
   public unfreeze = async () => {
