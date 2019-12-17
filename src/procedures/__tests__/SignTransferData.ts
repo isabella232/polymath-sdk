@@ -13,7 +13,7 @@ import { mockFactories } from '../../testUtils/mockFactories';
 
 const params = {
   symbol: 'TEST1',
-  whitelistData: [
+  kycData: [
     {
       address: '0x01',
       canSendAfter: new Date(),

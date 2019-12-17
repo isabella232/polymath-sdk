@@ -160,6 +160,7 @@ export enum ProcedureType {
   TransferSecurityTokens = 'TransferSecurityTokens',
   ToggleFreezeTransfers = 'ToggleFreezeTransfers',
   SignTransferData = 'SignTransferData',
+  SignDisableControllerData = 'SignDisableControllerData',
 }
 
 export enum PolyTransactionTag {
@@ -606,6 +607,10 @@ export interface SignTransferDataProcedureArgs {
   validTo: Date;
 }
 
+export interface SignDisableControllerDataProcedureArgs {
+  symbol: string;
+}
+
 export interface ProcedureArguments {
   [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
   [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
@@ -650,6 +655,7 @@ export interface ProcedureArguments {
   [ProcedureType.TransferSecurityTokens]: TransferSecurityTokensProcedureArgs;
   [ProcedureType.ToggleFreezeTransfers]: ToggleFreezeTransfersProcedureArgs;
   [ProcedureType.SignTransferData]: SignTransferDataProcedureArgs;
+  [ProcedureType.SignDisableControllerData]: SignDisableControllerDataProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 

@@ -16,6 +16,7 @@ export class Transfers extends SubModule {
 
   /**
    * Generate a signature string based on dynamic KYC data. This data can be used to:
+   *
    * - Check if a transfer can be made (using `canTransfer`) with different KYC data than is currently present
    * - Actually make a transfer (using `transfer`) with different KYC data than is currently present (in this case, the existing KYC data will be overwritten)
    *

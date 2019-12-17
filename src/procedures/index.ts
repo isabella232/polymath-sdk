@@ -42,3 +42,4 @@ export { ToggleFreezeTransfers } from './ToggleFreezeTransfers';
 export { ModifyDividendsDefaultExclusionList } from './ModifyDividendsDefaultExclusionList';
 export { ModifyPreIssuing } from './ModifyPreIssuing';
 export { SignTransferData } from './SignTransferData';
+export { SignDisableControllerData } from './SignDisableControllerData';
