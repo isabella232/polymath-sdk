@@ -11,7 +11,7 @@ import { Transfers } from './Transfers';
 import { Documents } from './Documents';
 import { Controller } from './Controller';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode } from '../../types';
+import { ErrorCode, Version } from '../../types';
 
 export interface UniqueIdentifiers {
   symbol: string;
@@ -28,7 +28,7 @@ export interface Params {
   address: string;
   owner: string;
   tokenDetails: string;
-  version: BigNumber[];
+  version: Version;
   granularity: number;
   totalSupply: BigNumber;
   currentCheckpoint: number;
@@ -69,7 +69,7 @@ export class SecurityToken extends Entity<Params> {
 
   public tokenDetails: string;
 
-  public version: BigNumber[];
+  public version: Version;
 
   public granularity: number;
 
@@ -115,12 +115,12 @@ export class SecurityToken extends Entity<Params> {
     this.name = name;
     this.owner = owner;
     this.address = address;
-    this.tokenDetails = tokenDetails!;
-    this.version = version!;
-    this.granularity = granularity!;
-    this.totalSupply = totalSupply!;
-    this.currentCheckpoint = currentCheckpoint!;
-    this.treasuryWallet = treasuryWallet!;
+    this.tokenDetails = tokenDetails;
+    this.version = version;
+    this.granularity = granularity;
+    this.totalSupply = totalSupply;
+    this.currentCheckpoint = currentCheckpoint;
+    this.treasuryWallet = treasuryWallet;
     this.uid = SecurityToken.generateId({ symbol });
     this.features = new Features(this, context);
     this.shareholders = new Shareholders(this, context);

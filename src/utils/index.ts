@@ -32,9 +32,10 @@ import {
   EtherDividendCheckpointSetWithholdingEventArgs,
   USDTieredSTOAllowPreMintFlagEventArgs,
   CappedSTOAllowPreMintFlagEventArgs,
+  BigNumber,
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
-import { Pojo } from '../types';
+import { Pojo, Version } from '../types';
 
 export const delay = async (amount: number) => {
   return new Promise(resolve => {
@@ -238,3 +239,23 @@ export const findEvents: FindEvents = ({
 
   return foundLogs;
 };
+
+export function convertVersionToEnum(versionBigNumber: BigNumber[]) {
+  switch (
+    versionBigNumber
+      .map(num => {
+        return (num as BigNumber).toString();
+      })
+      .join('.')
+  ) {
+    case Version.V3_0_0: {
+      return Version.V3_0_0;
+    }
+    case Version.V3_1_0: {
+      return Version.V3_1_0;
+    }
+    default: {
+      throw new Error('Incorrect contract version');
+    }
+  }
+}
