@@ -6,6 +6,7 @@ import * as createCheckpointProcedure from '../../procedures/CreateCheckpoint';
 import { Shareholders } from '../../entities/SecurityToken/Shareholders';
 import { SubModule } from '../../entities/SecurityToken/SubModule';
 import { SecurityToken } from '../SecurityToken';
+import { Version } from '../../types';
 
 const params1 = {
   symbol: 'TEST1',
@@ -13,7 +14,7 @@ const params1 = {
   address: '0x1',
   owner: '0x3',
   tokenDetails: 'details',
-  version: [new BigNumber(1)],
+  version: Version.V3_1_0,
   granularity: 3,
   totalSupply: new BigNumber(1000),
   currentCheckpoint: 2,
