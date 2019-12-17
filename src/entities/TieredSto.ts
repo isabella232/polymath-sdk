@@ -5,14 +5,17 @@ import {
   BlockParamLiteral,
   FULL_DECIMALS,
   conversionUtils,
+  FundRaiseType,
+  isUSDTieredSTO_3_1_0,
 } from '@polymathnetwork/contract-wrappers';
 import { serialize } from '../utils';
 import { Sto, UniqueIdentifiers, Params as StoParams } from './Sto';
 import { Context } from '../Context';
-import { StoTier, Currency, InvestInTieredStoProcedureArgs } from '../types';
+import { StoTier, Currency, InvestInTieredStoProcedureArgs, CustomCurrency } from '../types';
 import { ModifyTieredStoData, InvestInTieredSto } from '../procedures';
 import { TransactionQueue } from './TransactionQueue';
 import { Investment } from './Investment';
+import { ZERO_ADDRESS } from '../utils/constants';
 
 const { weiToValue } = conversionUtils;
 
@@ -121,7 +124,48 @@ export class TieredSto extends Sto<Params> {
   }
 
   /**
-   * Modifies STO parameters. Must be done before the STO starts
+   * Retrieve the denomination in which the tokens are priced in this STO
+   */
+  public async getCurrency(): Promise<CustomCurrency> {
+    const {
+      context: {
+        contractWrappers: { moduleFactory, polymathRegistry },
+      },
+      address,
+    } = this;
+
+    const module = await moduleFactory.getModuleInstance({
+      name: ModuleName.UsdTieredSTO,
+      address,
+    });
+
+    let ethOracleAddress: string;
+    let polyOracleAddress: string;
+    let currencySymbol: string;
+    if (isUSDTieredSTO_3_1_0(module)) {
+      [ethOracleAddress, polyOracleAddress, currencySymbol] = await Promise.all([
+        module.getCustomOracleAddress({ fundRaiseType: FundRaiseType.ETH }),
+        module.getCustomOracleAddress({ fundRaiseType: FundRaiseType.POLY }),
+        module.denominatedCurrency(),
+      ]);
+    } else {
+      // this has to be done this way because the 3.0.0 USDTieredSTO does not expose a getter for the oracles
+      [ethOracleAddress, polyOracleAddress] = await Promise.all([
+        polymathRegistry.getEthUsdOracleAddress(),
+        polymathRegistry.getPolyUsdOracleAddress(),
+      ]);
+      currencySymbol = 'USD';
+    }
+
+    return {
+      ethOracleAddress,
+      polyOracleAddress,
+      currencySymbol,
+    };
+  }
+
+  /**
+   * Modify STO parameters. Must be done before the STO starts
    *
    * @param startDate date when the STO should start
    * @param endDate date when the STO should end
@@ -132,25 +176,26 @@ export class TieredSto extends Sto<Params> {
    * @param tiers[].discountedPrice price of discounted tokens on that tier (defaults to 0)
    * @param nonAccreditedInvestmentLimit maximum investment for non-accredited investors
    * @param minimumInvestment minimum investment amount
-   * @param currencies array of currencies in which the funds will be raised (ETH, POLY, StableCoin)
+   * @param fundraiseCurrencies array of currencies in which the funds will be raised (ETH, POLY, StableCoin)
    * @param raisedFundsWallet wallet address that will receive the funds that are being raised
    * @param unsoldTokensWallet wallet address that will receive unsold tokens when the end date is reached
-   * @param stableCoinAddresses array of stable coins that the offering supports
-   * @param customOracleAddresses array of stable coin price oracles
-   * @param denominatedCurrency denominated currency type of the tiered sto
+   * @param stableCoinAddresses addresses of supported stablecoins
+   * @param customCurrency custom currency data. Allows the STO to raise funds pegged to a different currency. Optional, defaults to USD
+   * @param customCurrency.currencySymbol symbol of the custom currency (USD, CAD, EUR, etc. Default is USD)
+   * @param customCurrency.ethOracleAddress address of the oracle that states the price of ETH in the custom currency. Only required if raising funds in ETH
+   * @param customCurrency.polyOracleAddress address of the oracle that states the price of POLY in the custom currency. Only required if raising funds in POLY
    */
   public async modifyData(args: {
-    startDate: Date;
-    endDate: Date;
-    tiers: StoTier[];
-    nonAccreditedInvestmentLimit: BigNumber;
-    minimumInvestment: BigNumber;
-    currencies: Currency[];
-    raisedFundsWallet: string;
-    unsoldTokensWallet: string;
-    stableCoinAddresses: string[];
-    customOracleAddresses: string[];
-    denominatedCurrency: string;
+    startDate?: Date;
+    endDate?: Date;
+    tiers?: StoTier[];
+    nonAccreditedInvestmentLimit?: BigNumber;
+    minimumInvestment?: BigNumber;
+    fundariseCurrencies?: Currency[];
+    raisedFundsWallet?: string;
+    unsoldTokensWallet?: string;
+    stableCoinAddresses?: string[];
+    customCurrency?: Partial<CustomCurrency>;
   }) {
     const { address: stoAddress, securityTokenSymbol: symbol } = this;
 
@@ -168,7 +213,7 @@ export class TieredSto extends Sto<Params> {
   ): Promise<TransactionQueue<InvestInTieredStoProcedureArgs>>;
 
   /**
-   * Invests in the STO
+   * Invest in the STO
    *
    * @param minTokens sets a minimum amount of tokens to buy. If the amount sent yields less tokens at the current price, the transaction will revert
    * @param amount amount to spend

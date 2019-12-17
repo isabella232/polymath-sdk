@@ -13,7 +13,6 @@ import {
   SecurityToken,
   ModuleType,
   BigNumber,
-  isERC20DividendCheckpoint,
   BlacklistTransferManager,
   LockUpTransferManager,
   VestingEscrowWallet,
@@ -33,11 +32,12 @@ import {
   isVolumeRestrictionTransferManager,
   isRestrictedPartialSaleTransferManager,
 } from '@polymathnetwork/contract-wrappers';
-import { range, flatten, includes } from 'lodash';
+import { range, flatten } from 'lodash';
 import P from 'bluebird';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';
 import { ErrorCode, Module, SecurityTokenRole } from './types';
+import { ZERO_ADDRESS } from './utils/constants';
 
 interface GetModuleAddressesByNameParams {
   symbol: string;
@@ -266,7 +266,7 @@ export class PolymathBase extends PolymathAPI {
     if (isUSDTieredSTO(module)) {
       if (isUSDTieredSTO_3_0_0(module)) {
         const wallet = await module.treasuryWallet();
-        return wallet === '0x0000000000000000000000000000000000000000' ? defaultWallet : wallet;
+        return wallet === ZERO_ADDRESS ? defaultWallet : wallet;
       }
     }
 

@@ -4,6 +4,7 @@ import { SecurityToken } from '../SecurityToken';
 import { Context } from '../../../Context';
 import { PolymathError } from '../../../PolymathError';
 import { ErrorCode } from '../../../types';
+import { ToggleFreezeTransfers } from '../../../procedures/ToggleFreezeTransfers';
 
 export class Transfers extends SubModule {
   public restrictions: Restrictions;
@@ -16,9 +17,9 @@ export class Transfers extends SubModule {
 
   /**
    * Retrieve whether the transfer of tokens is frozen or not
-   * Can be modified with `freeze`
+   * Can be modified with `freeze` and `unfreeze`
    */
-  public frozen = async (): Promise<Boolean> => {
+  public frozen = async (): Promise<boolean> => {
     const {
       context: { contractWrappers },
       securityToken,
@@ -38,5 +39,27 @@ export class Transfers extends SubModule {
       });
     }
     return securityTokenInstance.transfersFrozen();
+  };
+
+  /**
+   * Freeze transfers of the security token
+   */
+  public freeze = async () => {
+    const { symbol } = this.securityToken;
+
+    const procedure = new ToggleFreezeTransfers({ symbol, freeze: true }, this.context);
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Unfreeze transfers of the security token
+   */
+  public unfreeze = async () => {
+    const { symbol } = this.securityToken;
+
+    const procedure = new ToggleFreezeTransfers({ symbol, freeze: false }, this.context);
+
+    return procedure.prepare();
   };
 }

@@ -4,6 +4,7 @@ import { Factory } from './Factory';
 import { Context } from '../../Context';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
+import { convertVersionToEnum } from '../../utils';
 
 export class SecurityTokenFactory extends Factory<SecurityToken, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
@@ -27,7 +28,7 @@ export class SecurityTokenFactory extends Factory<SecurityToken, Params, UniqueI
       owner,
       address,
       tokenDetails,
-      version,
+      versionArray,
       granularity,
       totalSupply,
       treasuryWallet,
@@ -49,7 +50,7 @@ export class SecurityTokenFactory extends Factory<SecurityToken, Params, UniqueI
       owner,
       address,
       tokenDetails,
-      version,
+      version: convertVersionToEnum(versionArray),
       granularity,
       totalSupply,
       currentCheckpoint: currentCheckpoint.toNumber(),

@@ -1,4 +1,4 @@
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { difference } from 'lodash';
 import { Procedure } from './Procedure';
 import {
@@ -20,7 +20,7 @@ export const createRefreshSecurityTokenFactoryResolver = (
   return factories.securityTokenFactory.refresh(securityTokenId);
 };
 
-export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder[] | void> {
+export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder[]> {
   public type = ProcedureType.IssueTokens;
 
   public async prepareTransactions() {
@@ -122,7 +122,10 @@ export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder
     }
     const { uid: securityTokenId } = securityTokenEntity;
 
-    const [newShareholders] = await this.addTransaction(securityToken.issueMulti, {
+    const [newShareholders] = await this.addTransaction<
+      TransactionParams.SecurityToken.IssueMulti,
+      [Shareholder[], void]
+    >(securityToken.issueMulti, {
       tag: PolyTransactionTag.IssueMulti,
       resolvers: [
         async () => {
