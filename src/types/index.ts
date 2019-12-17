@@ -2,6 +2,7 @@ import {
   PolyResponse,
   BigNumber,
   FundRaiseType as Currency,
+  ContractVersion as Version,
   GeneralTransferManager,
   GeneralPermissionManager,
   CountTransferManager,
@@ -23,6 +24,7 @@ import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
 
 export { Currency };
+export { Version };
 
 export interface DividendShareholderStatus {
   address: string;

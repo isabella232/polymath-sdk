@@ -13,6 +13,14 @@ import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, TieredSto } from '../entities';
 import { ApproveErc20 } from './ApproveErc20';
+import { Factories } from '../Context';
+
+export const createRefreshSecurityTokenFactoryResolver = (
+  factories: Factories,
+  securityTokenId: string
+) => async () => {
+  return factories.securityTokenFactory.refresh(securityTokenId);
+};
 
 export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs> {
   public type = ProcedureType.InvestInTieredSto;
@@ -22,10 +30,7 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
     const { stoAddress, symbol, amount, currency, minTokens = new BigNumber(0) } = args;
     let { beneficiary } = args;
 
-    const {
-      contractWrappers,
-      factories: { tieredStoFactory },
-    } = context;
+    const { contractWrappers, factories } = context;
 
     /**
      * Validation
@@ -117,8 +122,9 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
     });
     const resolvers = [
       async () => {
-        return tieredStoFactory.refresh(tieredStoId);
+        return factories.tieredStoFactory.refresh(tieredStoId);
       },
+      createRefreshSecurityTokenFactoryResolver(factories, securityTokenId),
     ];
 
     const unsupportedCurrencyError = new PolymathError({
