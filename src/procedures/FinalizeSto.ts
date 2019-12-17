@@ -10,6 +10,37 @@ import {
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
+import { Factories } from '../Context';
+
+export const createRefreshSimpleStoFactoryResolver = (
+  factories: Factories,
+  symbol: string,
+  stoType: StoType,
+  stoAddress: string
+) => async () => {
+  const securityTokenId = SecurityToken.generateId({ symbol });
+
+  switch (stoType) {
+    case StoType.Simple: {
+      return factories.simpleStoFactory.refresh(
+        SimpleSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+    case StoType.Tiered: {
+      return factories.tieredStoFactory.refresh(
+        TieredSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+  }
+};
 
 export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
   public type = ProcedureType.FinalizeSto;
@@ -118,35 +149,9 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
     /**
      * Transactions
      */
-
     await this.addTransaction(stoModule.finalize, {
       tag: PolyTransactionTag.FinalizeSto,
-      resolvers: [
-        async () => {
-          const securityTokenId = SecurityToken.generateId({ symbol });
-
-          switch (stoType) {
-            case StoType.Simple: {
-              return factories.simpleStoFactory.refresh(
-                SimpleSto.generateId({
-                  securityTokenId,
-                  stoType,
-                  address: stoAddress,
-                })
-              );
-            }
-            case StoType.Tiered: {
-              return factories.tieredStoFactory.refresh(
-                TieredSto.generateId({
-                  securityTokenId,
-                  stoType,
-                  address: stoAddress,
-                })
-              );
-            }
-          }
-        },
-      ],
+      resolvers: [createRefreshSimpleStoFactoryResolver(factories, symbol, stoType, stoAddress)],
     })({});
   }
 }
