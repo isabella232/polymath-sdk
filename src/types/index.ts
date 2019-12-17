@@ -153,7 +153,7 @@ export enum ProcedureType {
   ModifyBeneficialInvestments = 'ModifyBeneificialInvestments',
   ModifyTieredStoData = 'ModifyTieredStoData',
   InvestInTieredSto = 'InvestInTieredSto',
-  InvestInSimpleSto = 'InvestInCappedSto',
+  InvestInSimpleSto = 'InvestInSimpleSto',
   ModifyMaxHolderCount = 'ModifyMaxHolderCount',
   ModifyMaxHolderPercentage = 'ModifyMaxHolderPercentage',
   ModifyPercentageExemptions = 'ModifyPercentageExemptions',
