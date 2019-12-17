@@ -41,3 +41,4 @@ export { TransferSecurityTokens } from './TransferSecurityTokens';
 export { ToggleFreezeTransfers } from './ToggleFreezeTransfers';
 export { ModifyDividendsDefaultExclusionList } from './ModifyDividendsDefaultExclusionList';
 export { ModifyPreIssuing } from './ModifyPreIssuing';
+export { TransferReservationOwnership } from './TransferReservationOwnership';
