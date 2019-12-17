@@ -155,7 +155,7 @@ export enum ProcedureType {
   ModifyBeneficialInvestments = 'ModifyBeneificialInvestments',
   ModifyTieredStoData = 'ModifyTieredStoData',
   InvestInTieredSto = 'InvestInTieredSto',
-  InvestInCappedSto = 'InvestInCappedSto',
+  InvestInSimpleSto = 'InvestInSimpleSto',
   ModifyMaxHolderCount = 'ModifyMaxHolderCount',
   ModifyMaxHolderPercentage = 'ModifyMaxHolderPercentage',
   ModifyPercentageExemptions = 'ModifyPercentageExemptions',
@@ -209,6 +209,7 @@ export enum PolyTransactionTag {
   ModifyAddresses = 'ModifyAddresses',
   ModifyTiers = 'ModifiyTiers',
   ModifyLimits = 'ModifyLimits',
+  ModifyOracles = 'ModifyOracles',
   BuyWithScRateLimited = 'BuyWithScRateLimited',
   BuyWithPolyRateLimited = 'BuyWithPolyRateLimited',
   BuyWithEthRateLimited = 'BuyWithEthRateLimited',
@@ -355,8 +356,9 @@ export interface ModifyBeneficialInvestmentsProcedureArgs {
 }
 
 export interface ModifyTieredStoDataProcedureArgs
-  extends Omit<LaunchTieredStoProcedureArgs, 'allowPreIssuing'> {
+  extends Partial<Omit<LaunchTieredStoProcedureArgs, 'allowPreIssuing'>> {
   stoAddress: string;
+  symbol: string;
 }
 
 interface InvestInTieredStoBaseProcedureArgs {
@@ -380,7 +382,7 @@ export type InvestInTieredStoProcedureArgs =
     }
   | InvestWithStableCoinArgs;
 
-export interface InvestInCappedStoProcedureArgs {
+export interface InvestInSimpleStoProcedureArgs {
   symbol: string;
   stoAddress: string;
   amount: BigNumber;
@@ -413,6 +415,12 @@ export interface StoTier {
   discountedPrice?: BigNumber;
 }
 
+export interface CustomCurrency {
+  currencySymbol: string;
+  ethOracleAddress: string;
+  polyOracleAddress: string;
+}
+
 export interface LaunchTieredStoProcedureArgs {
   symbol: string;
   startDate: Date;
@@ -424,8 +432,7 @@ export interface LaunchTieredStoProcedureArgs {
   raisedFundsWallet: string;
   unsoldTokensWallet: string;
   stableCoinAddresses: string[];
-  customOracleAddresses: string[];
-  denominatedCurrency: string;
+  customCurrency?: Partial<CustomCurrency>;
   allowPreIssuing?: boolean;
 }
 
@@ -628,7 +635,7 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyBeneficialInvestments]: ModifyBeneficialInvestmentsProcedureArgs;
   [ProcedureType.ModifyTieredStoData]: ModifyTieredStoDataProcedureArgs;
   [ProcedureType.InvestInTieredSto]: InvestInTieredStoProcedureArgs;
-  [ProcedureType.InvestInCappedSto]: InvestInCappedStoProcedureArgs;
+  [ProcedureType.InvestInSimpleSto]: InvestInSimpleStoProcedureArgs;
   [ProcedureType.EnableGeneralPermissionManager]: EnableGeneralPermissionManagerProcedureArgs;
   [ProcedureType.EnableGeneralTransferManager]: EnableGeneralTransferManagerProcedureArgs;
   [ProcedureType.ModifyMaxHolderCount]: ModifyMaxHolderCountProcedureArgs;

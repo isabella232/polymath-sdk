@@ -4,6 +4,7 @@ import {
   SecurityTokenEvents,
   isUSDTieredSTO_3_0_0,
   TransactionParams,
+  FundRaiseType,
 } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
@@ -15,8 +16,9 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { TransferErc20 } from './TransferErc20';
-import { findEvents } from '../utils';
+import { findEvents, isValidAddress } from '../utils';
 import { SecurityToken, TieredSto } from '../entities';
+import { ZERO_ADDRESS } from '../utils/constants';
 
 export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, TieredSto> {
   public type = ProcedureType.LaunchTieredSto;
@@ -34,8 +36,7 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
       raisedFundsWallet,
       unsoldTokensWallet,
       stableCoinAddresses,
-      customOracleAddresses,
-      denominatedCurrency,
+      customCurrency,
       allowPreIssuing = false,
     } = args;
     const {
@@ -54,6 +55,45 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
         code: ErrorCode.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
+    }
+
+    const customOracleAddresses: string[] = [];
+    let denominatedCurrency = '';
+
+    if (customCurrency) {
+      const {
+        currencySymbol = 'USD',
+        ethOracleAddress = '',
+        polyOracleAddress = '',
+      } = customCurrency;
+
+      if (currencies.includes(FundRaiseType.ETH)) {
+        if (!isValidAddress(ethOracleAddress)) {
+          throw new PolymathError({
+            code: ErrorCode.ProcedureValidationError,
+            message: `Must provide ETH oracle for '${currencySymbol}'`,
+          });
+        } else {
+          customOracleAddresses.push(ethOracleAddress);
+        }
+      } else {
+        customOracleAddresses.push(ZERO_ADDRESS);
+      }
+
+      if (currencies.includes(FundRaiseType.POLY)) {
+        if (!isValidAddress(polyOracleAddress)) {
+          throw new PolymathError({
+            code: ErrorCode.ProcedureValidationError,
+            message: `Must provide POLY oracle for '${currencySymbol}'`,
+          });
+        } else {
+          customOracleAddresses.push(polyOracleAddress);
+        }
+      } else {
+        customOracleAddresses.push(ZERO_ADDRESS);
+      }
+
+      denominatedCurrency = currencySymbol;
     }
 
     const securityTokenAddress = await securityToken.address();

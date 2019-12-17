@@ -99,22 +99,22 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       );
     }
 
-    const currencies = [];
+    const fundraiseCurrencies = [];
 
     if (isRaisedInETH) {
-      currencies.push(Currency.ETH);
+      fundraiseCurrencies.push(Currency.ETH);
     }
 
     if (isRaisedInPOLY) {
-      currencies.push(Currency.POLY);
+      fundraiseCurrencies.push(Currency.POLY);
     }
 
     if (isRaisedInSC) {
-      currencies.push(Currency.StableCoin);
+      fundraiseCurrencies.push(Currency.StableCoin);
     }
 
     return {
-      currencies,
+      fundraiseCurrencies,
       raisedFundsWallet,
       unsoldTokensWallet,
       raisedAmount: fundsRaised,

@@ -3,7 +3,7 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  InvestInCappedStoProcedureArgs,
+  InvestInSimpleStoProcedureArgs,
   ErrorCode,
   StoType,
   Currency,
@@ -21,8 +21,8 @@ export const createRefreshSecurityTokenFactoryResolver = (
   return factories.securityTokenFactory.refresh(securityTokenId);
 };
 
-export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs> {
-  public type = ProcedureType.InvestInCappedSto;
+export class InvestInSimpleSto extends Procedure<InvestInSimpleStoProcedureArgs> {
+  public type = ProcedureType.InvestInSimpleSto;
 
   public async prepareTransactions() {
     const { args, context } = this;
@@ -77,7 +77,7 @@ export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs>
       isPaused,
       startDate,
       beneficialInvestmentsAllowed,
-      currencies: [currency],
+      fundraiseCurrencies: [currency],
     } = sto;
 
     const currentAddress = await context.currentWallet.address();

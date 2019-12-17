@@ -28,7 +28,7 @@ export interface Params {
   securityTokenSymbol: string;
   startDate: Date;
   endDate: Date;
-  currencies: Currency[];
+  fundraiseCurrencies: Currency[];
   raisedFundsWallet: string;
   unsoldTokensWallet: string;
   raisedAmount: BigNumber;
@@ -66,7 +66,7 @@ export abstract class Sto<P> extends Entity<P> {
 
   public investorCount: number;
 
-  public currencies: Currency[];
+  public fundraiseCurrencies: Currency[];
 
   public isPaused: boolean;
 
@@ -101,7 +101,7 @@ export abstract class Sto<P> extends Entity<P> {
       securityTokenSymbol,
       securityTokenId,
       stoType,
-      currencies,
+      fundraiseCurrencies,
       startDate,
       endDate,
       raisedFundsWallet,
@@ -127,7 +127,7 @@ export abstract class Sto<P> extends Entity<P> {
     this.raisedAmount = raisedAmount;
     this.soldTokensAmount = soldTokensAmount;
     this.investorCount = investorCount;
-    this.currencies = currencies;
+    this.fundraiseCurrencies = fundraiseCurrencies;
     this.isPaused = isPaused;
     this.capReached = capReached;
     this.isFinalized = isFinalized;
@@ -289,7 +289,7 @@ export abstract class Sto<P> extends Entity<P> {
       securityTokenId,
       address,
       securityTokenSymbol,
-      currencies,
+      fundraiseCurrencies,
       raisedFundsWallet,
       unsoldTokensWallet,
       raisedAmount,
@@ -309,7 +309,7 @@ export abstract class Sto<P> extends Entity<P> {
       securityTokenId,
       address,
       securityTokenSymbol,
-      currencies,
+      fundraiseCurrencies,
       raisedFundsWallet,
       unsoldTokensWallet,
       raisedAmount,
@@ -330,7 +330,7 @@ export abstract class Sto<P> extends Entity<P> {
       securityTokenSymbol,
       startDate,
       endDate,
-      currencies,
+      fundraiseCurrencies,
       raisedFundsWallet,
       unsoldTokensWallet,
       raisedAmount,
@@ -355,8 +355,8 @@ export abstract class Sto<P> extends Entity<P> {
       this.endDate = endDate;
     }
 
-    if (currencies) {
-      this.currencies = currencies;
+    if (fundraiseCurrencies) {
+      this.fundraiseCurrencies = fundraiseCurrencies;
     }
 
     if (raisedFundsWallet) {

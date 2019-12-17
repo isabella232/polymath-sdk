@@ -1,4 +1,9 @@
-import { ModuleName, BigNumber, isUSDTieredSTO_3_1_0 } from '@polymathnetwork/contract-wrappers';
+import {
+  ModuleName,
+  BigNumber,
+  isUSDTieredSTO_3_1_0,
+  FundRaiseType,
+} from '@polymathnetwork/contract-wrappers';
 import { sortBy, toUpper, isEqual, range } from 'lodash';
 import { Procedure } from './Procedure';
 import {
@@ -35,7 +40,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
 
   public async prepareTransactions() {
     const { args, context } = this;
-    const {
+    let {
       symbol,
       stoAddress,
       startDate,
@@ -47,6 +52,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       raisedFundsWallet,
       unsoldTokensWallet,
       stableCoinAddresses,
+      customCurrency,
     } = args;
     const {
       contractWrappers,
@@ -104,6 +110,14 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
     const addedTransactions: PolyTransactionTag[] = [];
     const securityTokenId = SecurityToken.generateId({ symbol });
 
+    if (!startDate) {
+      startDate = startTime;
+    }
+
+    if (!endDate) {
+      endDate = endTime;
+    }
+
     if (startDate !== startTime || endDate !== endTime) {
       const tag = PolyTransactionTag.ModifyTimes;
       addedTransactions.push(tag);
@@ -121,12 +135,32 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       })({ startTime: startDate, endTime: endDate });
     }
 
-    const areSameCurrencies =
-      (!isRaisedInETH || !!currencies.find(cur => cur === Currency.ETH)) &&
-      (!isRaisedInPOLY || !!currencies.find(cur => cur === Currency.POLY)) &&
-      (!isRaisedInSC || !!currencies.find(cur => cur === Currency.StableCoin));
+    if (!currencies) {
+      currencies = [];
 
-    if (areSameCurrencies) {
+      if (isRaisedInETH) {
+        currencies.push(Currency.ETH);
+      }
+
+      if (isRaisedInPOLY) {
+        currencies.push(Currency.POLY);
+      }
+
+      if (isRaisedInSC) {
+        currencies.push(Currency.StableCoin);
+      }
+    }
+
+    const willRaiseinEth = currencies.find(cur => cur === Currency.ETH);
+    const willRaiseinPoly = currencies.find(cur => cur === Currency.POLY);
+    const willRaiseinSc = currencies.find(cur => cur === Currency.StableCoin);
+
+    const areSameCurrencies =
+      ((!isRaisedInETH && !willRaiseinEth) || (isRaisedInETH && willRaiseinEth)) &&
+      ((!isRaisedInPOLY && !willRaiseinPoly) || (isRaisedInPOLY && willRaiseinPoly)) &&
+      ((!isRaisedInSC && !willRaiseinSc) || (isRaisedInSC && willRaiseinSc));
+
+    if (!areSameCurrencies) {
       const tag = PolyTransactionTag.ModifyFunding;
       addedTransactions.push(tag);
       await this.addTransaction(stoModule.modifyFunding, {
@@ -147,7 +181,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
     let rawTiers;
 
     // this is needed because the return types of `tier` are different in the two versions
-    // even if the properties used here are the same for both
+    // even if the properties used here are the same for both. Also custom currencies are only supported in 3.1
     if (isUSDTieredSTO_3_1_0(stoModule)) {
       rawTiers = await Promise.all(range(numberOfTiers).map(tier => stoModule.tiers({ tier })));
       assembledTiers = rawTiers.map(
@@ -158,7 +192,71 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
           discountedPrice: rateDiscountPoly,
         })
       );
+
+      const [
+        currentEthOracleAddress,
+        currentPolyOracleAddress,
+        denominatedCurrency,
+      ] = await Promise.all([
+        stoModule.getCustomOracleAddress({ fundRaiseType: FundRaiseType.ETH }),
+        stoModule.getCustomOracleAddress({ fundRaiseType: FundRaiseType.POLY }),
+        stoModule.denominatedCurrency(),
+      ]);
+
+      const currentCustomCurrency = {
+        currencySymbol: denominatedCurrency,
+        ethOracleAddress: currentEthOracleAddress,
+        polyOracleAddress: currentPolyOracleAddress,
+      };
+
+      if (!customCurrency) {
+        customCurrency = currentCustomCurrency;
+      }
+
+      let { currencySymbol, ethOracleAddress, polyOracleAddress } = customCurrency;
+
+      if (!currencySymbol) {
+        currencySymbol = denominatedCurrency;
+      }
+
+      if (!ethOracleAddress) {
+        ethOracleAddress = currentEthOracleAddress;
+      }
+
+      if (!polyOracleAddress) {
+        polyOracleAddress = currentPolyOracleAddress;
+      }
+
+      if (
+        currencySymbol !== denominatedCurrency &&
+        ethOracleAddress !== currentEthOracleAddress &&
+        polyOracleAddress !== currentPolyOracleAddress
+      ) {
+        const tag = PolyTransactionTag.ModifyOracles;
+        await this.addTransaction(stoModule.modifyOracles, {
+          tag,
+          resolvers: [
+            createRefreshResolver(
+              tieredStoFactory,
+              addedTransactions,
+              tag,
+              securityTokenId,
+              stoAddress
+            ),
+          ],
+        })({
+          denominatedCurrencySymbol: currencySymbol,
+          customOracleAddresses: [ethOracleAddress, polyOracleAddress],
+        });
+      }
     } else {
+      if (customCurrency) {
+        throw new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: 'Custom currency not supported in Tiered STO v3.0',
+        });
+      }
+
       rawTiers = await Promise.all(range(numberOfTiers).map(tier => stoModule.tiers({ tier })));
       assembledTiers = rawTiers.map(
         ({ tokenTotal, rate, tokensDiscountPoly, rateDiscountPoly }) => ({
@@ -168,6 +266,10 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
           discountedPrice: rateDiscountPoly,
         })
       );
+    }
+
+    if (!tiers) {
+      tiers = assembledTiers;
     }
 
     const areSameTiers = isEqual(tiers, assembledTiers);
@@ -201,6 +303,14 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       })({ ratePerTier, tokensPerTierTotal, tokensPerTierDiscountPoly, ratePerTierDiscountPoly });
     }
 
+    if (!minimumInvestment) {
+      minimumInvestment = minInvestment;
+    }
+
+    if (!nonAccreditedInvestmentLimit) {
+      nonAccreditedInvestmentLimit = investmentLimit;
+    }
+
     if (
       !minimumInvestment.isEqualTo(minInvestment) ||
       !nonAccreditedInvestmentLimit.isEqualTo(investmentLimit)
@@ -224,10 +334,22 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       });
     }
 
+    if (!stableCoinAddresses) {
+      stableCoinAddresses = usdTokens;
+    }
+
     const areSameStablecoins = isEqual(
       sortBy(stableCoinAddresses.map(toUpper)),
       sortBy(usdTokens.map(toUpper))
     );
+
+    if (!raisedFundsWallet) {
+      raisedFundsWallet = storageWallet;
+    }
+
+    if (!unsoldTokensWallet) {
+      unsoldTokensWallet = treasuryWallet;
+    }
 
     if (
       !areSameAddress(storageWallet, raisedFundsWallet) ||
