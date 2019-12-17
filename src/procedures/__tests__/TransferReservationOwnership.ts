@@ -8,7 +8,6 @@ import { TransferReservationOwnership } from '../../procedures/TransferReservati
 import { Procedure } from '../../procedures/Procedure';
 import { ProcedureType, PolyTransactionTag, ErrorCode } from '../../types';
 import { PolymathError } from '../../PolymathError';
-import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import * as TransferReservationOwnershipModule from '../../procedures/TransferReservationOwnership';
 import * as securityTokenReservationFactoryModule from '../../entities/factories/SecurityTokenReservationFactory';
 import { mockFactories } from '../../testUtils/mockFactories';
