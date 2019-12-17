@@ -1,4 +1,9 @@
-import { ModuleName, isCappedSTO_3_0_0, BigNumber } from '@polymathnetwork/contract-wrappers';
+import {
+  ModuleName,
+  isCappedSTO_3_0_0,
+  BigNumber,
+  TransferStatusCode,
+} from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,
@@ -13,6 +18,25 @@ import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 
 export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
   public type = ProcedureType.FinalizeSto;
+
+  private checkTransferStatus(
+    statusCode: TransferStatusCode,
+    fromAddress: string,
+    symbol: string,
+    to: string,
+    reasonCode: string,
+    amount: BigNumber
+  ) {
+    if (statusCode !== TransferStatusCode.TransferSuccess) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `[${statusCode}]\`Treasury wallet "${to}" is not cleared to 
+        receive the remaining ${amount} "${symbol}" tokens from "${fromAddress}". 
+        Please review transfer restrictions regarding this wallet address before 
+        attempting to finalize the STO. Possible reason code: "${reasonCode}"`,
+      });
+    }
+  }
 
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol } = this.args;
@@ -103,22 +127,22 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
       });
     }
 
-    const canTransfer = await securityToken.canTransfer({
+    const { statusCode, reasonCode } = await securityToken.canTransfer({
       to: treasuryWallet,
       value: remainingTokens,
     });
-
-    if (!canTransfer) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `Treasury wallet "${treasuryWallet}" is not cleared to receive the remaining ${remainingTokens} "${symbol}" tokens. Please review transfer restrictions regarding this wallet address before attempting to finalize the STO`,
-      });
-    }
+    this.checkTransferStatus(
+      statusCode,
+      await this.context.currentWallet.address(),
+      symbol,
+      treasuryWallet,
+      reasonCode,
+      remainingTokens
+    );
 
     /**
      * Transactions
      */
-
     await this.addTransaction(stoModule.finalize, {
       tag: PolyTransactionTag.FinalizeSto,
       resolvers: [
