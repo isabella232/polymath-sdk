@@ -44,8 +44,11 @@ const params: LaunchTieredStoProcedureArgs = {
   minimumInvestment: new BigNumber(1),
   currencies: [Currency.StableCoin],
   stableCoinAddresses: ['0x7777777777777777777777777777777777777777'],
-  customOracleAddresses: ['0x8888888888888888888888888888888888888888'],
-  denominatedCurrency: 'USD',
+  customCurrency: {
+    currencySymbol: 'USD',
+    ethOracleAddress: '0x8888888888888888888888888888888888888888',
+    polyOracleAddress: '0x8888888888888888888888888888888888888888',
+  },
 };
 
 const currentWallet = '0x8888888888888888888888888888888888888888';
@@ -64,8 +67,6 @@ describe('LaunchTieredSto', () => {
     moduleWrapperFactoryModule.MockedModuleWrapperFactoryModule
   >;
   let polyTokenMock: MockManager<contractWrappersModule.PolyToken>;
-  let tokenFactoryStub: SinonStub<any, any>;
-  let moduleWrapperFactoryStub: SinonStub<any, any>;
 
   // Mock factories
   let tieredStoFactoryMock: MockManager<tieredStoFactoryModule.TieredStoFactory>;
@@ -74,7 +75,6 @@ describe('LaunchTieredSto', () => {
   let moduleFactoryMock: MockManager<contractWrappersModule.ModuleFactory_3_0_0>;
 
   let findEventsStub: SinonStub<any, any>;
-  let getAttachedModulesFactoryAddressStub: SinonStub<any, any>;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test LaunchTieredSto
@@ -99,14 +99,11 @@ describe('LaunchTieredSto', () => {
     moduleFactoryMock.mock('isCostInPoly', Promise.resolve(false));
     moduleFactoryMock.mock('setupCost', Promise.resolve(costIn));
 
-    tokenFactoryStub = tokenFactoryMock.mock(
+    tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
       securityTokenMock.getMockInstance()
     );
-    moduleWrapperFactoryStub = moduleWrapperFactoryMock.mock(
-      'getModuleFactory',
-      moduleFactoryMock.getMockInstance()
-    );
+    moduleWrapperFactoryMock.mock('getModuleFactory', moduleFactoryMock.getMockInstance());
     tieredStoFactoryMock = ImportMock.mockClass(tieredStoFactoryModule, 'TieredStoFactory');
 
     const factoryMockSetup = mockFactories();
@@ -121,10 +118,7 @@ describe('LaunchTieredSto', () => {
     wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
     wrappersMock.mock('isTestnet', Promise.resolve(false));
 
-    getAttachedModulesFactoryAddressStub = wrappersMock.mock(
-      'getModuleFactoryAddress',
-      Promise.resolve(moduleFactoryAddress)
-    );
+    wrappersMock.mock('getModuleFactoryAddress', Promise.resolve(moduleFactoryAddress));
 
     // Instantiate LaunchTieredSto
     target = new LaunchTieredSto(params, contextMock.getMockInstance());
@@ -259,6 +253,46 @@ describe('LaunchTieredSto', () => {
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `There is no Security Token with symbol ${params.symbol}`,
+        })
+      );
+    });
+
+    test('should throw if using a custom currency, raising in ETH and not providing a valid ETH oracle address', async () => {
+      target = new LaunchTieredSto(
+        {
+          ...params,
+          currencies: [Currency.ETH],
+          customCurrency: {
+            currencySymbol: 'CAD',
+          },
+        },
+        contextMock.getMockInstance()
+      );
+
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: "Must provide ETH oracle for 'CAD'",
+        })
+      );
+    });
+
+    test('should throw if using a custom currency, raising in POLY and not providing a valid POLY oracle address', async () => {
+      target = new LaunchTieredSto(
+        {
+          ...params,
+          currencies: [Currency.POLY],
+          customCurrency: {
+            currencySymbol: 'CAD',
+          },
+        },
+        contextMock.getMockInstance()
+      );
+
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: "Must provide POLY oracle for 'CAD'",
         })
       );
     });

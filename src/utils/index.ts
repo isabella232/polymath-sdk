@@ -32,11 +32,52 @@ import {
   EtherDividendCheckpointSetWithholdingEventArgs,
   USDTieredSTOAllowPreMintFlagEventArgs,
   CappedSTOAllowPreMintFlagEventArgs,
-  TransferStatusCode,
+  BigNumber,
+  TransferStatusCode
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
 import { Pojo, ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
+
+export const delay = async (amount: number) => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve();
+    }, amount);
+  });
+};
+
+export function areSameAddress(a: string, b: string) {
+  return a.toUpperCase() === b.toUpperCase();
+}
+
+export function serialize(entityType: string, pojo: Pojo) {
+  return Buffer.from(`${entityType}:${stringify(pojo)}`).toString('base64');
+}
+
+export function unserialize(id: string) {
+  const unserialized = Buffer.from(id, 'base64').toString('utf8');
+
+  const matched = unserialized.match(/^.*?:(.*)/);
+
+  const errorMsg = 'Wrong ID format';
+
+  if (!matched) {
+    throw new Error(errorMsg);
+  }
+
+  const [, jsonString] = matched;
+
+  try {
+    return JSON.parse(jsonString);
+  } catch (err) {
+    throw new Error(errorMsg);
+  }
+}
+
+export function isValidAddress(address: string) {
+  return isAddress(address);
+}
 
 interface FindEventParams {
   logs: (LogEntry | LogWithDecodedArgs<DecodedLogArgs>)[];
@@ -253,5 +294,27 @@ export function checkTransferStatus(
       code: ErrorCode.ProcedureValidationError,
       message: `[${statusCode}] ${fromAddress} is not allowed to transfer ${symbol} to ${to}. Possible reason: ${reasonCode}`,
     });
+  }
+};
+
+export function convertVersionToEnum(versionBigNumber: BigNumber[]) {
+  const version = versionBigNumber
+    .map(num => {
+      return (num as BigNumber).toString();
+    })
+    .join('.');
+  switch (version) {
+    case Version.V3_0_0: {
+      return Version.V3_0_0;
+    }
+    case Version.V3_1_0: {
+      return Version.V3_1_0;
+    }
+    default: {
+      throw new PolymathError({
+        code: ErrorCode.FatalError,
+        message: `Unsupported Security Token version. Expected 3.0.0 or 3.1.0, got ${version}`,
+      });
+    }
   }
 }

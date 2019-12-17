@@ -5,7 +5,8 @@ import { SecurityToken } from '../SecurityToken';
 import { Context } from '../../../Context';
 import { TransferSecurityTokens } from '../../../procedures/TransferSecurityTokens';
 import { TransferStatusCode, ErrorCode } from '../../../types';
-import { PolymathError } from '../../../PolymathError';
+import { ToggleFreezeTransfers } from '../../../procedures/ToggleFreezeTransfers';
+
 
 export class Transfers extends SubModule {
   public restrictions: Restrictions;
@@ -24,7 +25,43 @@ export class Transfers extends SubModule {
     const { to, amount, data, from } = args;
 
     const procedure = new TransferSecurityTokens({ symbol, to, amount, data, from }, this.context);
+    return procedure.prepare();
+  };
 
+  /**
+   * Retrieve whether the transfer of tokens is frozen or not
+   * Can be modified with `freeze` and `unfreeze`
+   */
+  public frozen = async (): Promise<boolean> => {
+    const {
+      context: { contractWrappers },
+      securityToken,
+    } = this;
+
+    const { symbol } = securityToken;
+    let securityTokenInstance;
+
+    try {
+      securityTokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+    return securityTokenInstance.transfersFrozen();
+  };
+
+  /**
+   * Freeze transfers of the security token
+   */
+  public freeze = async () => {
+    const { symbol } = this.securityToken;
+    
+    const procedure = new ToggleFreezeTransfers({ symbol, freeze: true }, this.context);
+    
     return procedure.prepare();
   };
 
@@ -97,5 +134,16 @@ export class Transfers extends SubModule {
     }
 
     return status;
+  };
+  
+ /**
+   * Unfreeze transfers of the security token
+   */
+  public unfreeze = async () => {
+    const { symbol } = this.securityToken;
+
+    const procedure = new ToggleFreezeTransfers({ symbol, freeze: false }, this.context);
+
+    return procedure.prepare();
   };
 }

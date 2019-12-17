@@ -1,4 +1,4 @@
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { difference } from 'lodash';
 import { Procedure } from './Procedure';
 import {
@@ -11,6 +11,14 @@ import {
 import { PolymathError } from '../PolymathError';
 import { Shareholder, SecurityToken } from '../entities';
 import { ModifyShareholderData } from './ModifyShareholderData';
+import { Factories } from '../Context';
+
+export const createRefreshSecurityTokenFactoryResolver = (
+  factories: Factories,
+  securityTokenId: string
+) => async () => {
+  return factories.securityTokenFactory.refresh(securityTokenId);
+};
 
 export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder[]> {
   public type = ProcedureType.IssueTokens;
@@ -114,7 +122,10 @@ export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder
     }
     const { uid: securityTokenId } = securityTokenEntity;
 
-    const [newShareholders] = await this.addTransaction(securityToken.issueMulti, {
+    const [newShareholders] = await this.addTransaction<
+      TransactionParams.SecurityToken.IssueMulti,
+      [Shareholder[], void]
+    >(securityToken.issueMulti, {
       tag: PolyTransactionTag.IssueMulti,
       resolvers: [
         async () => {
@@ -126,9 +137,9 @@ export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder
               })
             );
           });
-
           return Promise.all(fetchingShareholders);
         },
+        createRefreshSecurityTokenFactoryResolver(factories, securityTokenId),
       ],
     })({ investors, values });
 
