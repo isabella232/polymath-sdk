@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { BigNumber, SecurityTokenRegistryEvents } from '@polymathnetwork/contract-wrappers';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { spy, restore } from 'sinon';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
@@ -10,10 +10,9 @@ import { CreateSecurityToken } from '../../procedures/CreateSecurityToken';
 import { Procedure } from '../../procedures/Procedure';
 import { Wallet } from '../../Wallet';
 import { PolymathError } from '../../PolymathError';
-import { ErrorCode, PolyTransactionTag, ProcedureType, StoType } from '../../types';
+import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import { ApproveErc20 } from '../ApproveErc20';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
-import * as utilsModule from '../../utils';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { SecurityToken } from '../../entities';
 

@@ -1,8 +1,4 @@
-import {
-  SecurityTokenRegistryEvents,
-  FeeType,
-  TransactionParams,
-} from '@polymathnetwork/contract-wrappers';
+import { FeeType, TransactionParams } from '@polymathnetwork/contract-wrappers';
 
 import { Procedure } from './Procedure';
 import { ApproveErc20 } from './ApproveErc20';
@@ -14,7 +10,6 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { SecurityToken } from '../entities';
-import { findEvents } from '../utils';
 
 export class CreateSecurityToken extends Procedure<
   CreateSecurityTokenProcedureArgs,
