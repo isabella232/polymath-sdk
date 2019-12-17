@@ -159,6 +159,7 @@ export enum ProcedureType {
   ModifyPercentageExemptions = 'ModifyPercentageExemptions',
   TransferSecurityTokens = 'TransferSecurityTokens',
   ToggleFreezeTransfers = 'ToggleFreezeTransfers',
+  SignTransferData = 'SignTransferData',
 }
 
 export enum PolyTransactionTag {
@@ -598,6 +599,13 @@ export interface ToggleFreezeTransfersProcedureArgs {
   freeze: boolean;
 }
 
+export interface SignTransferDataProcedureArgs {
+  symbol: string;
+  kycData: Omit<Omit<ShareholderDataEntry, 'isAccredited'>, 'canBuyFromSto'>[];
+  validFrom: Date;
+  validTo: Date;
+}
+
 export interface ProcedureArguments {
   [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
   [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
@@ -641,6 +649,7 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyPercentageExemptions]: ModifyPercentageExemptionsProcedureArgs;
   [ProcedureType.TransferSecurityTokens]: TransferSecurityTokensProcedureArgs;
   [ProcedureType.ToggleFreezeTransfers]: ToggleFreezeTransfersProcedureArgs;
+  [ProcedureType.SignTransferData]: SignTransferDataProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 
