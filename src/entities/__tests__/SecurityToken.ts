@@ -22,7 +22,7 @@ const params2 = {
   address: '0x2',
   owner: '0x4',
   tokenDetails: 'details2',
-  version: [new BigNumber(1)],
+  version: Version.V3_1_0,
   granularity: 3,
   totalSupply: new BigNumber(1000),
   currentCheckpoint: 2,
