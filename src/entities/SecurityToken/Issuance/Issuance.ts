@@ -4,6 +4,7 @@ import { IssuanceDataEntry } from '../../../types';
 import { Offerings } from './Offerings';
 import { SecurityToken } from '../SecurityToken';
 import { Context } from '../../../Context';
+import { SignFreezeIssuanceAck } from '../../../procedures/SignFreezeIssuanceAck';
 
 export class Issuance extends SubModule {
   public offerings: Offerings;
@@ -41,11 +42,27 @@ export class Issuance extends SubModule {
 
   /**
    * Permanently freeze issuance of the security token
-   * @param signature optional signed data. If not passed, signing will be requested on the spot
+   *
+   * @param signature optional signed data. If not passed, signing will be requested when the transaction queue is run. The data can be generated beforehand by the token owner calling `signFreezeIssuanceData`
    */
   public freeze = async (args?: { signature?: string }) => {
     const { symbol } = this.securityToken;
+
     const procedure = new FreezeIssuance({ ...args, symbol }, this.context);
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Generate a signature string that can be used to permanently freeze issuance of the Security Token
+   *
+   * Note that only the owner's signature is valid for this operation
+   */
+  public signFreezeIssuanceAck = async () => {
+    const { symbol } = this.securityToken;
+
+    const procedure = new SignFreezeIssuanceAck({ symbol }, this.context);
+
     return procedure.prepare();
   };
 }

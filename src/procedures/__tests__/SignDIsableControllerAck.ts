@@ -5,34 +5,18 @@ import * as contextModule from '../../Context';
 import { Factories } from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
-import { SignTransferData } from '../../procedures/SignTransferData';
-import { Procedure } from '../../procedures/Procedure';
+import { SignDisableControllerAck } from '../SignDisableControllerAck';
+import { Procedure } from '../Procedure';
 import { ProcedureType, ErrorCode } from '../../types';
 import { PolymathError } from '../../PolymathError';
 import { mockFactories } from '../../testUtils/mockFactories';
 
 const params = {
   symbol: 'TEST1',
-  kycData: [
-    {
-      address: '0x01',
-      canSendAfter: new Date(),
-      canReceiveAfter: new Date(),
-      kycExpiry: new Date(),
-    },
-    {
-      address: '0x02',
-      canSendAfter: new Date(),
-      canReceiveAfter: new Date(),
-      kycExpiry: new Date(),
-    },
-  ],
-  validFrom: new Date(0),
-  validTo: new Date(new Date().getTime() + 10000),
 };
 
-describe('SignTransferData', () => {
-  let target: SignTransferData;
+describe('SignDisableControllerAck', () => {
+  let target: SignDisableControllerAck;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
@@ -40,7 +24,7 @@ describe('SignTransferData', () => {
   let factoriesMockedSetup: Factories;
 
   beforeEach(() => {
-    // Mock the context, wrappers, tokenFactory and securityToken to test SignTransferData
+    // Mock the context, wrappers, tokenFactory and securityToken to test SignDisableControllerAck
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
 
@@ -58,7 +42,7 @@ describe('SignTransferData', () => {
     factoriesMockedSetup = mockFactories();
     contextMock.set('factories', factoriesMockedSetup);
 
-    target = new SignTransferData(params, contextMock.getMockInstance());
+    target = new SignDisableControllerAck(params, contextMock.getMockInstance());
   });
 
   afterEach(() => {
@@ -66,13 +50,13 @@ describe('SignTransferData', () => {
   });
 
   describe('Types', () => {
-    test('should extend procedure and have SignTransferData type', async () => {
+    test('should extend procedure and have SignDisableControllerAck type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe(ProcedureType.SignTransferData);
+      expect(target.type).toBe(ProcedureType.SignDisableControllerAck);
     });
   });
 
-  describe('SignTransferData', () => {
+  describe('SignDisableControllerAck', () => {
     test('should throw if there is no valid security token being provided', async () => {
       tokenFactoryMock
         .mock('getSecurityTokenInstanceFromTicker')
@@ -87,48 +71,12 @@ describe('SignTransferData', () => {
       );
     });
 
-    test('should throw if the signature validity lower bound is not an earlier date than the upper bound', async () => {
-      const now = new Date();
-      target = new SignTransferData(
-        {
-          ...params,
-          validTo: now,
-          validFrom: now,
-        },
-        contextMock.getMockInstance()
-      );
-
-      // Real call
-      await expect(target.prepareTransactions()).rejects.toThrowError(
-        new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: 'Signature validity lower bound must be at an earlier date than the upper bound',
-        })
-      );
-    });
-
-    test('should throw if the signature validity upper bound is in the past', async () => {
-      const now = new Date();
-      target = new SignTransferData(
-        {
-          ...params,
-          validTo: new Date(now.getTime() - 10000),
-        },
-        contextMock.getMockInstance()
-      );
-
-      // Real call
-      await expect(target.prepareTransactions()).rejects.toThrowError(
-        new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: "Signature validity upper bound can't be in the past",
-        })
-      );
-    });
-
-    test('should add a signature request to the queue to sign whitelist data', async () => {
+    test('should add a signature request to the queue to sign confirmation for disabling the controller functionality', async () => {
       const addSignatureRequestSpy = spy(target, 'addSignatureRequest');
-      securityTokenMock.mock('signTransferData', Promise.resolve('SignTransferData'));
+      securityTokenMock.mock(
+        'signDisableControllerAck',
+        Promise.resolve('SignDisableControllerAck')
+      );
 
       // Real call
       await target.prepareTransactions();
@@ -137,7 +85,7 @@ describe('SignTransferData', () => {
       expect(
         addSignatureRequestSpy
           .getCall(0)
-          .calledWith(securityTokenMock.getMockInstance().signTransferData)
+          .calledWith(securityTokenMock.getMockInstance().signDisableControllerAck)
       ).toEqual(true);
       expect(addSignatureRequestSpy.callCount).toEqual(1);
     });

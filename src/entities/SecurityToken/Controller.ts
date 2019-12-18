@@ -5,7 +5,7 @@ import {
   SetController,
   ControllerRedeem,
   DisableController,
-  SignDisableControllerData,
+  SignDisableControllerAck,
 } from '../../procedures';
 
 export class Controller extends SubModule {
@@ -87,10 +87,10 @@ export class Controller extends SubModule {
    *
    * Note that only the owner's signature is valid for this operation
    */
-  public signDisableControllerData = async () => {
+  public signDisableControllerAck = async () => {
     const { symbol } = this.securityToken;
 
-    const procedure = new SignDisableControllerData({ symbol }, this.context);
+    const procedure = new SignDisableControllerAck({ symbol }, this.context);
 
     return procedure.prepare();
   };

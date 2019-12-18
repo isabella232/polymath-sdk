@@ -1,9 +1,9 @@
 import { Procedure } from './Procedure';
-import { ProcedureType, ErrorCode, SignDisableControllerDataProcedureArgs } from '../types';
+import { ProcedureType, ErrorCode, SignDisableControllerAckProcedureArgs } from '../types';
 import { PolymathError } from '../PolymathError';
 
-export class SignDisableControllerData extends Procedure<SignDisableControllerDataProcedureArgs> {
-  public type = ProcedureType.SignDisableControllerData;
+export class SignDisableControllerAck extends Procedure<SignDisableControllerAckProcedureArgs> {
+  public type = ProcedureType.SignDisableControllerAck;
 
   public async prepareTransactions() {
     const { symbol } = this.args;
