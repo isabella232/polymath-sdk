@@ -84,7 +84,7 @@ export class Transfers extends SubModule {
    * @param to address that will receive the tokens
    * @param value amount of tokens to be transferred
    * @param data optional data to be submitted alongside the transfer
-   * @param from option address from which to transfer tokens
+   * @param from optional address from which to transfer tokens. Defaults to the current wallet
    */
   public canTransfer = async (args: {
     to: string;
