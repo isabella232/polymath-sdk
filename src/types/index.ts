@@ -740,6 +740,18 @@ export enum StoRole {
   StoAdministrator = 'StoAdministrator',
 }
 
+export enum TransferStatusCode {
+  TransferFailure = 'Transfer Failure',
+  TransferSuccess = 'Transfer Success',
+  InsufficientBalance = 'Insufficient Balance',
+  InsufficientAllowance = 'Insufficient Allowance',
+  TransfersHalted = 'Transfers Halted',
+  FundsLocked = 'Funds Locked',
+  InvalidSender = 'Invalid Sender',
+  InvalidReceiver = 'Invalid Receiver',
+  InvalidOperator = 'Invalid Operator',
+}
+
 export type Module =
   | GeneralPermissionManager
   | GeneralTransferManager
