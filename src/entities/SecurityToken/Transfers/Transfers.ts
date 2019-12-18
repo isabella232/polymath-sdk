@@ -26,7 +26,7 @@ export class Transfers extends SubModule {
    * @param to address that will receive the tokens
    * @param amount amount of tokens to be transferred
    * @param data optional data to be submitted alongside the transfer
-   * @param from option address from which to transfer tokens
+   * @param from optional address from which to transfer tokens
    */
   public transfer = async (args: {
     to: string;
