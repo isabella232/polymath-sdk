@@ -32,9 +32,12 @@ import {
   EtherDividendCheckpointSetWithholdingEventArgs,
   USDTieredSTOAllowPreMintFlagEventArgs,
   CappedSTOAllowPreMintFlagEventArgs,
+  BigNumber,
+  TransferStatusCode,
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
-import { Pojo } from '../types';
+import { ErrorCode, Pojo, Version } from '../types';
+import { PolymathError } from '../PolymathError';
 
 export const delay = async (amount: number) => {
   return new Promise(resolve => {
@@ -238,3 +241,40 @@ export const findEvents: FindEvents = ({
 
   return foundLogs;
 };
+
+export function checkTransferStatus(
+  statusCode: TransferStatusCode,
+  fromAddress: string,
+  symbol: string,
+  to: string,
+  reasonCode: string
+) {
+  if (statusCode !== TransferStatusCode.TransferSuccess) {
+    throw new PolymathError({
+      code: ErrorCode.ProcedureValidationError,
+      message: `[${statusCode}] ${fromAddress} is not allowed to transfer ${symbol} to ${to}. Possible reason: ${reasonCode}`,
+    });
+  }
+}
+
+export function convertVersionToEnum(versionBigNumber: BigNumber[]) {
+  const version = versionBigNumber
+    .map(num => {
+      return (num as BigNumber).toString();
+    })
+    .join('.');
+  switch (version) {
+    case Version.V3_0_0: {
+      return Version.V3_0_0;
+    }
+    case Version.V3_1_0: {
+      return Version.V3_1_0;
+    }
+    default: {
+      throw new PolymathError({
+        code: ErrorCode.FatalError,
+        message: `Unsupported Security Token version. Expected 3.0.0 or 3.1.0, got ${version}`,
+      });
+    }
+  }
+}

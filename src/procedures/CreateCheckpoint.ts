@@ -1,4 +1,4 @@
-import { SecurityTokenEvents, TransactionParams } from '@polymathnetwork/contract-wrappers';
+import { SecurityTokenEvents } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   CreateCheckpointProcedureArgs,
@@ -9,6 +9,14 @@ import {
 import { PolymathError } from '../PolymathError';
 import { findEvents } from '../utils';
 import { SecurityToken, Checkpoint } from '../entities';
+import { Factories } from '../Context';
+
+export const createRefreshSecurityTokenFactoryResolver = (
+  factories: Factories,
+  securityTokenId: string
+) => async () => {
+  return factories.securityTokenFactory.refresh(securityTokenId);
+};
 
 export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint> {
   public type = ProcedureType.CreateCheckpoint;
@@ -31,7 +39,8 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
       });
     }
 
-    const [checkpoint] = await this.addTransaction<{}, [Checkpoint]>(
+    const securityTokenId = SecurityToken.generateId({ symbol });
+    const [checkpoint] = await this.addTransaction<{}, [Checkpoint, void]>(
       securityToken.createCheckpoint,
       {
         tag: PolyTransactionTag.CreateCheckpoint,
@@ -47,7 +56,6 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
               const { args: eventArgs } = event;
 
               const { _checkpointId } = eventArgs;
-
               return factories.checkpointFactory.fetch(
                 Checkpoint.generateId({
                   securityTokenId: SecurityToken.generateId({ symbol }),
@@ -61,6 +69,7 @@ export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, C
                 "The Checkpoint was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
             });
           },
+          createRefreshSecurityTokenFactoryResolver(factories, securityTokenId),
         ],
       }
     )({});

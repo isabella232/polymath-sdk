@@ -1,8 +1,10 @@
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SecurityToken, Params, UniqueIdentifiers } from '../SecurityToken';
 import { Factory } from './Factory';
 import { Context } from '../../Context';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
+import { convertVersionToEnum } from '../../utils';
 
 export class SecurityTokenFactory extends Factory<SecurityToken, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
@@ -21,13 +23,39 @@ export class SecurityTokenFactory extends Factory<SecurityToken, Params, UniqueI
       });
     }
 
-    const [name, owner, address] = await Promise.all([
+    const [
+      name,
+      owner,
+      address,
+      tokenDetails,
+      versionArray,
+      granularity,
+      totalSupply,
+      treasuryWallet,
+      currentCheckpoint,
+    ] = await Promise.all([
       securityToken.name(),
       securityToken.owner(),
       securityToken.address(),
+      securityToken.tokenDetails(),
+      securityToken.getVersion(),
+      securityToken.granularity(),
+      securityToken.totalSupply(),
+      securityToken.getTreasuryWallet(),
+      securityToken.currentCheckpointId(),
     ]);
 
-    return { name, owner, address };
+    return {
+      name,
+      owner,
+      address,
+      tokenDetails,
+      version: convertVersionToEnum(versionArray),
+      granularity,
+      totalSupply,
+      currentCheckpoint: currentCheckpoint.toNumber(),
+      treasuryWallet,
+    };
   };
 
   constructor(context: Context) {
