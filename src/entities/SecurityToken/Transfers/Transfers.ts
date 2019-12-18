@@ -21,7 +21,7 @@ export class Transfers extends SubModule {
   }
 
   /**
-   * Perform a transfer security token
+   * Transfer an amount of Security Tokens to a specified address
    *
    * @param to address that will receive the tokens
    * @param amount amount of tokens to be transferred
