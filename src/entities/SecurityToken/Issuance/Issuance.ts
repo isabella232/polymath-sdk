@@ -44,7 +44,7 @@ export class Issuance extends SubModule {
   /**
    * Permanently freeze issuance of the security token
    *
-   * @param signature optional signed data. If not passed, signing will be requested when the transaction queue is run. The data can be generated beforehand by the token owner calling `signFreezeIssuanceData`
+   * @param signature optional signed data. If not passed, signing will be requested when the transaction queue is run. The data can be generated beforehand by the token owner calling `signFreezeAck`
    */
   public freeze = async (args?: { signature?: string }) => {
     const { symbol } = this.securityToken;
@@ -59,7 +59,7 @@ export class Issuance extends SubModule {
    *
    * Note that only the owner's signature is valid for this operation
    */
-  public signFreezeIssuanceAck = async () => {
+  public signFreezeAck = async () => {
     const { symbol } = this.securityToken;
 
     const procedure = new SignFreezeIssuanceAck({ symbol }, this.context);

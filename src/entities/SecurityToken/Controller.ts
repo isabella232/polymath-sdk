@@ -23,9 +23,9 @@ export class Controller extends SubModule {
   /**
    * Permanently disable controller functionality
    *
-   * @param signature optional signed data. If not passed, signing will be requested when the transaction queue is run. The data can be generated beforehand by the token owner calling `signDisableControllerData`
+   * @param signature optional signed data. If not passed, signing will be requested when the transaction queue is run. The data can be generated beforehand by the token owner calling `signDisableAck`
    */
-  public disableController = async (args?: { signature?: string }) => {
+  public disable = async (args?: { signature?: string }) => {
     const { symbol } = this.securityToken;
     const procedure = new DisableController({ ...args, symbol }, this.context);
     return procedure.prepare();
@@ -87,7 +87,7 @@ export class Controller extends SubModule {
    *
    * Note that only the owner's signature is valid for this operation
    */
-  public signDisableControllerAck = async () => {
+  public signDisableAck = async () => {
     const { symbol } = this.securityToken;
 
     const procedure = new SignDisableControllerAck({ symbol }, this.context);

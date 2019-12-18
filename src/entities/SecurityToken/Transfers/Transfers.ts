@@ -39,7 +39,7 @@ export class Transfers extends SubModule {
    * @param validFrom date from which this signature is valid
    * @param validTo date until which this signature is valid
    */
-  public signTransferData = async (args: {
+  public signKycData = async (args: {
     kycData: Omit<Omit<ShareholderDataEntry, 'canBuyFromSto'>, 'isAccredited'>[];
     validFrom: Date;
     validTo: Date;
