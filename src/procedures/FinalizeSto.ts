@@ -12,7 +12,7 @@ import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 import { Factories } from '../Context';
 
-export const createRefreshSimpleStoFactoryResolver = (
+export const createRefreshStoFactoryResolver = (
   factories: Factories,
   symbol: string,
   stoType: StoType,
@@ -73,6 +73,13 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
       });
     }
 
+    function throwStoModuleError() {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `STO ${stoAddress} is either archived or hasn't been launched`,
+      });
+    }
+
     let stoModule;
     let remainingTokens: BigNumber;
 
@@ -83,6 +90,10 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
           address: stoAddress,
         });
 
+        if (!stoModule) {
+          throwStoModuleError();
+        }
+
         if (isCappedSTO_3_0_0(stoModule)) {
           throw new PolymathError({
             code: ErrorCode.IncorrectVersion,
@@ -90,6 +101,7 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
               'Capped STO version is 3.0.0. Version 3.1.0 or greater is required for forced finalization',
           });
         }
+
         const { totalTokensSold, cap } = await stoModule.getSTODetails();
         remainingTokens = cap.minus(totalTokensSold);
 
@@ -100,6 +112,10 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
           name: ModuleName.UsdTieredSTO,
           address: stoAddress,
         });
+
+        if (!stoModule) {
+          throwStoModuleError();
+        }
 
         const { tokensSold, capPerTier } = await stoModule.getSTODetails();
         const totalCap = capPerTier.reduce((prev, next) => prev.plus(next), new BigNumber(0));
@@ -113,13 +129,6 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
           message: `Invalid STO type ${stoType}`,
         });
       }
-    }
-
-    if (!stoModule) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `STO ${stoAddress} is either archived or hasn't been launched`,
-      });
     }
 
     const [isFinalized, treasuryWallet] = await Promise.all([
@@ -151,7 +160,7 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
      */
     await this.addTransaction(stoModule.finalize, {
       tag: PolyTransactionTag.FinalizeSto,
-      resolvers: [createRefreshSimpleStoFactoryResolver(factories, symbol, stoType, stoAddress)],
+      resolvers: [createRefreshStoFactoryResolver(factories, symbol, stoType, stoAddress)],
     })({});
   }
 }

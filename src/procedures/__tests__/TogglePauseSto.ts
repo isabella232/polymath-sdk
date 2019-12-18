@@ -37,7 +37,7 @@ const simpleParams: TogglePauseStoProcedureArgs = {
 
 const invalidSto = 'InvalidSto';
 
-describe('PauseSto', () => {
+describe('TogglePauseSto', () => {
   let target: TogglePauseSto;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
