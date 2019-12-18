@@ -725,15 +725,15 @@ export enum StoRole {
 }
 
 export enum TransferStatusCode {
-  TransferFailure = 'Transfer Failure',
-  TransferSuccess = 'Transfer Success',
-  InsufficientBalance = 'Insufficient Balance',
-  InsufficientAllowance = 'Insufficient Allowance',
-  TransfersHalted = 'Transfers Halted',
-  FundsLocked = 'Funds Locked',
-  InvalidSender = 'Invalid Sender',
-  InvalidReceiver = 'Invalid Receiver',
-  InvalidOperator = 'Invalid Operator',
+  TransferFailure = 'TransferFailure',
+  TransferSuccess = 'TransferSuccess',
+  InsufficientBalance = 'InsufficientBalance',
+  InsufficientAllowance = 'InsufficientAllowance',
+  TransfersHalted = 'TransfersHalted',
+  FundsLocked = 'FundsLocked',
+  InvalidSender = 'InvalidSender',
+  InvalidReceiver = 'InvalidReceiver',
+  InvalidOperator = 'InvalidOperator',
 }
 
 export type Module =
