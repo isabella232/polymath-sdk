@@ -124,7 +124,7 @@ export class Transfers extends SubModule {
     };
   };
 
-  private getStatusCode = (statusCode: string) => {
+  private getStatusCode = (statusCode: RawTransferStatusCode) => {
     let status;
     if (statusCode === RawTransferStatusCode.TransferFailure) {
       status = TransferStatusCode.TransferFailure;
