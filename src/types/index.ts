@@ -2,6 +2,7 @@ import {
   PolyResponse,
   BigNumber,
   FundRaiseType as Currency,
+  ContractVersion as Version,
   GeneralTransferManager,
   GeneralPermissionManager,
   CountTransferManager,
@@ -23,6 +24,7 @@ import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
 
 export { Currency };
+export { Version };
 
 export interface DividendShareholderStatus {
   address: string;
@@ -741,6 +743,18 @@ export enum SecurityTokenRole {
 export enum StoRole {
   StoOperator = 'StoOperator',
   StoAdministrator = 'StoAdministrator',
+}
+
+export enum TransferStatusCode {
+  TransferFailure = 'Transfer Failure',
+  TransferSuccess = 'Transfer Success',
+  InsufficientBalance = 'Insufficient Balance',
+  InsufficientAllowance = 'Insufficient Allowance',
+  TransfersHalted = 'Transfers Halted',
+  FundsLocked = 'Funds Locked',
+  InvalidSender = 'Invalid Sender',
+  InvalidReceiver = 'Invalid Receiver',
+  InvalidOperator = 'Invalid Operator',
 }
 
 export type Module =

@@ -43,3 +43,4 @@ export { ModifyDividendsDefaultExclusionList } from './ModifyDividendsDefaultExc
 export { ModifyPreIssuing } from './ModifyPreIssuing';
 export { SignTransferData } from './SignTransferData';
 export { SignDisableControllerAck } from './SignDisableControllerAck';
+export { SignFreezeIssuanceAck } from './SignFreezeIssuanceAck';

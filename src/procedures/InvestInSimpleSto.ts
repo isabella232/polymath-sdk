@@ -12,6 +12,14 @@ import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto } from '../entities';
 import { ApproveErc20 } from './ApproveErc20';
+import { Factories } from '../Context';
+
+export const createRefreshSecurityTokenFactoryResolver = (
+  factories: Factories,
+  securityTokenId: string
+) => async () => {
+  return factories.securityTokenFactory.refresh(securityTokenId);
+};
 
 export class InvestInSimpleSto extends Procedure<InvestInSimpleStoProcedureArgs> {
   public type = ProcedureType.InvestInSimpleSto;
@@ -21,10 +29,7 @@ export class InvestInSimpleSto extends Procedure<InvestInSimpleStoProcedureArgs>
     const { stoAddress, symbol, amount } = args;
     let { beneficiary } = args;
 
-    const {
-      contractWrappers,
-      factories: { simpleStoFactory },
-    } = context;
+    const { contractWrappers, factories } = context;
 
     /**
      * Validation
@@ -65,7 +70,7 @@ export class InvestInSimpleSto extends Procedure<InvestInSimpleStoProcedureArgs>
       address: stoAddress,
     });
 
-    const sto = await simpleStoFactory.fetch(simpleStoId);
+    const sto = await factories.simpleStoFactory.fetch(simpleStoId);
 
     const {
       isFinalized,
@@ -107,8 +112,9 @@ export class InvestInSimpleSto extends Procedure<InvestInSimpleStoProcedureArgs>
 
     const resolvers = [
       async () => {
-        return simpleStoFactory.refresh(simpleStoId);
+        return factories.simpleStoFactory.refresh(simpleStoId);
       },
+      createRefreshSecurityTokenFactoryResolver(factories, securityTokenId),
     ];
 
     if (currency === Currency.ETH) {

@@ -1,8 +1,4 @@
-import {
-  SecurityTokenRegistryEvents,
-  FeeType,
-  TransactionParams,
-} from '@polymathnetwork/contract-wrappers';
+import { FeeType, TransactionParams } from '@polymathnetwork/contract-wrappers';
 
 import { Procedure } from './Procedure';
 import { ApproveErc20 } from './ApproveErc20';
@@ -14,7 +10,6 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { SecurityToken } from '../entities';
-import { findEvents } from '../utils';
 
 export class CreateSecurityToken extends Procedure<
   CreateSecurityTokenProcedureArgs,
@@ -68,7 +63,9 @@ export class CreateSecurityToken extends Procedure<
       });
     }
 
-    const [usdFee, polyFee] = await securityTokenRegistry.getFees({ feeType: FeeType.StLaunchFee });
+    const [usdFee, polyFee] = await securityTokenRegistry.getFees({
+      feeType: FeeType.StLaunchFee,
+    });
 
     await this.addProcedure(ApproveErc20)({
       amount: polyFee,
@@ -86,32 +83,7 @@ export class CreateSecurityToken extends Procedure<
       },
       resolvers: [
         async receipt => {
-          const { logs } = receipt;
-
-          const [event] = findEvents({
-            eventName: SecurityTokenRegistryEvents.NewSecurityToken,
-            logs,
-          });
-
-          if (event) {
-            const { args: eventArgs } = event;
-
-            const { _ticker, _name, _owner, _securityTokenAddress } = eventArgs;
-
-            return factories.securityTokenFactory.create(
-              SecurityToken.generateId({ symbol: _ticker }),
-              {
-                name: _name,
-                owner: _owner,
-                address: _securityTokenAddress,
-              }
-            );
-          }
-          throw new PolymathError({
-            code: ErrorCode.UnexpectedEventLogs,
-            message:
-              "The Security Token was successfully created but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
-          });
+          return factories.securityTokenFactory.fetch(SecurityToken.generateId({ symbol }));
         },
       ],
     })({

@@ -3,6 +3,7 @@ import { spy, restore } from 'sinon';
 import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { cloneDeep } from 'lodash';
+import * as issueTokensModule from '../IssueTokens';
 import { IssueTokens } from '../IssueTokens';
 import { Procedure } from '../Procedure';
 import * as shareholdersEntityModule from '../../entities/SecurityToken/Shareholders';
@@ -23,6 +24,8 @@ import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapper
 import { ModifyShareholderData } from '..';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { Shareholder } from '../../entities';
+import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
+import { Factories } from '../../Context';
 
 const securityTokenId = 'ST ID';
 const testAddress = '0x6666666666666666666666666666666666666666';
@@ -57,6 +60,7 @@ describe('IssueTokens', () => {
   let moduleWrapperFactoryMock: MockManager<
     moduleWrapperFactoryModule.MockedModuleWrapperFactoryModule
   >;
+  let factoryMockSetup: Factories;
 
   // Mock factories
   let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
@@ -101,7 +105,7 @@ describe('IssueTokens', () => {
       securityTokenMock.getMockInstance()
     );
 
-    const factoryMockSetup = mockFactories();
+    factoryMockSetup = mockFactories();
 
     wrappersMock.mock('getAttachedModules', Promise.resolve([]));
 
@@ -195,6 +199,19 @@ describe('IssueTokens', () => {
         )
       ).toEqual(true);
       expect(fetchStub.callCount).toBe(2);
+    });
+
+    test('should refresh the security token factory with resolver', async () => {
+      const refreshStub = securityTokenFactoryMock.mock('refresh', Promise.resolve(undefined));
+
+      const resolverValue = await issueTokensModule.createRefreshSecurityTokenFactoryResolver(
+        factoryMockSetup,
+        securityTokenId
+      )();
+
+      expect(refreshStub.getCall(0).calledWithExactly(securityTokenId)).toEqual(true);
+      expect(resolverValue).toEqual(undefined);
+      expect(refreshStub.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {

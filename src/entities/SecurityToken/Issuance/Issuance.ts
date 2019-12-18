@@ -1,10 +1,11 @@
 import { SubModule } from '../SubModule';
-import { FreezeIssuance, IssueTokens } from '../../../procedures';
-import { IssuanceDataEntry } from '../../../types';
+import { FreezeIssuance, IssueTokens, SignFreezeIssuanceAck } from '../../../procedures';
+import { ErrorCode, IssuanceDataEntry } from '../../../types';
 import { Offerings } from './Offerings';
 import { SecurityToken } from '../SecurityToken';
 import { Context } from '../../../Context';
-import { SignFreezeIssuanceAck } from '../../../procedures/SignFreezeIssuanceAck';
+
+import { PolymathError } from '../../../PolymathError';
 
 export class Issuance extends SubModule {
   public offerings: Offerings;
@@ -64,5 +65,30 @@ export class Issuance extends SubModule {
     const procedure = new SignFreezeIssuanceAck({ symbol }, this.context);
 
     return procedure.prepare();
+  };
+
+  /**
+   * Retrieve whether the issuance of tokens is allowed or not
+   * Can be permanently frozen with `freeze`
+   */
+  public allowed = async (): Promise<Boolean> => {
+    const {
+      context: { contractWrappers },
+      securityToken: { symbol },
+    } = this;
+
+    let securityTokenInstance;
+
+    try {
+      securityTokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+    return securityTokenInstance.isIssuable();
   };
 }

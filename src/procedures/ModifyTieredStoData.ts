@@ -379,7 +379,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
     if (addedTransactions.length === 0) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: 'Modify STO data failed: nodthing to modify',
+        message: 'Modify STO data failed: nothing to modify',
       });
     }
   }
