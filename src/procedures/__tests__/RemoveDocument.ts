@@ -144,7 +144,7 @@ describe('RemoveDocument', () => {
       );
     });
 
-    test('should add a transaction to the queue to remove a document on the security token', async () => {
+    test('should add a transaction to the queue to remove a document from the security token', async () => {
       target = new RemoveDocument(params, contextMock.getMockInstance());
 
       const addTransactionSpy = spy(target, 'addTransaction');

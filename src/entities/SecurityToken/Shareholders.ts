@@ -225,9 +225,9 @@ export class Shareholders extends SubModule {
   };
 
   /**
-   * Retrieve the count of security token investors
+   * Retrieve the amount of wallets that ever held tokens or have any KYC data
    */
-  public investorCount = async (): Promise<number> => {
+  public allTimeInvestorCount = async (): Promise<number> => {
     const {
       context: { contractWrappers },
       securityToken: { symbol },
@@ -241,7 +241,7 @@ export class Shareholders extends SubModule {
       );
     } catch (err) {
       throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
+        code: ErrorCode.FetcherValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
@@ -249,7 +249,7 @@ export class Shareholders extends SubModule {
   };
 
   /**
-   * Retrieve the count of security token holders
+   * Retrieve the amount of addresses that currently hold tokens
    */
   public holderCount = async (): Promise<number> => {
     const {
@@ -265,7 +265,7 @@ export class Shareholders extends SubModule {
       );
     } catch (err) {
       throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
+        code: ErrorCode.FetcherValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }

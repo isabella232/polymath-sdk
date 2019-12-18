@@ -4,18 +4,19 @@ import { ErrorCode } from '../../types';
 import { SetDocument } from '../../procedures/SetDocument';
 import { RemoveDocument } from '../../procedures/RemoveDocument';
 
-interface DocumentData {
+interface Document {
+  name: string;
   documentUri: string;
   documentHash: string;
-  documentTime: Date;
+  updatedAt: Date;
 }
 
 export class Documents extends SubModule {
   /**
-   * Set a document on the security token
-   * @param name the name of the document
-   * @param uri the uri of the document
-   * @param documentHash the document hash for the document
+   * Attach a new document to the contract, or update the URI or hash of an existing attached document
+   * @param name Name of the document. It should be unique always
+   * @param uri Off-chain uri of the document from where it is accessible to investors/advisors to read.
+   * @param documentHash hash (of the contents) of the document.
    */
   public async set(args: { name: string; uri: string; documentHash: string }) {
     const { symbol } = this.securityToken;
@@ -26,8 +27,8 @@ export class Documents extends SubModule {
   }
 
   /**
-   * Remove a document on the security token
-   * @param name the name of the document
+   * Remove an existing document from the contract giving the name of the document.
+   * @param name Name of the document. It should be unique always
    */
   public async remove(args: { name: string }) {
     const { symbol } = this.securityToken;
@@ -39,8 +40,9 @@ export class Documents extends SubModule {
 
   /**
    * Retrieve a specific document's data by name
+   * @param name Unique name of the document
    */
-  public getDocument = async (documentName: { name: string }): Promise<DocumentData> => {
+  public getDocument = async (args: { name: string }): Promise<Document> => {
     const {
       context: { contractWrappers },
       securityToken,
@@ -55,17 +57,19 @@ export class Documents extends SubModule {
       );
     } catch (err) {
       throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
+        code: ErrorCode.FetcherValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
-    return securityTokenInstance.getDocument(documentName);
+    const documentInfo = await securityTokenInstance.getDocument(args);
+
+    return { name: args.name, updatedAt: documentInfo.documentTime, ...documentInfo };
   };
 
   /**
    * Retrieve a list of all document names
    */
-  public getAllDocuments = async (): Promise<string[]> => {
+  public getAllDocuments = async (): Promise<Document[]> => {
     const {
       context: { contractWrappers },
       securityToken,
@@ -80,10 +84,11 @@ export class Documents extends SubModule {
       );
     } catch (err) {
       throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
+        code: ErrorCode.FetcherValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
-    return securityTokenInstance.getAllDocuments();
+    const documentList = await securityTokenInstance.getAllDocuments();
+    return Promise.all(documentList.map(docname => this.getDocument({ name: docname })));
   };
 }

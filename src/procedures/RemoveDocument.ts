@@ -27,7 +27,11 @@ export class RemoveDocument extends Procedure<RemoveDocumentProcedureArgs> {
       });
     }
 
-    const [owner, account] = await Promise.all([securityToken.owner(), currentWallet.address()]);
+    const [owner, account, allDocumentsList] = await Promise.all([
+      securityToken.owner(),
+      currentWallet.address(),
+      securityToken.getAllDocuments(),
+    ]);
 
     if (account !== owner) {
       throw new PolymathError({
@@ -43,7 +47,7 @@ export class RemoveDocument extends Procedure<RemoveDocumentProcedureArgs> {
       });
     }
 
-    if (!(await securityToken.getAllDocuments()).includes(name)) {
+    if (!allDocumentsList.includes(name)) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message: `The document you are trying to remove does not exist on this security token`,
