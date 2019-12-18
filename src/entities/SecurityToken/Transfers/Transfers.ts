@@ -79,7 +79,7 @@ export class Transfers extends SubModule {
   };
 
   /**
-   * Validate if address can transfer a security token
+   * Validate if a transfer of Security Tokens can be performed. This takes all present transfer restrictions into account
    *
    * @param to address that will receive the tokens
    * @param value amount of tokens to be transferred
