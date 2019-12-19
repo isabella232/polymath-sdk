@@ -35,12 +35,13 @@ const simpleStoObject = {
   isFinalized: false,
   isPaused: false,
   startDate: new Date(2010, 1),
-  beneficialInvestmentsAllowed: false,
+  beneficialInvestmentsAllowed: true,
   fundraiseCurrencies: [Currency.ETH],
 };
 
 const treasuryWallet = '0x1111111111111111111111111111111111111111';
 const currentWalletAddress = '0x2222222222222222222222222222222222222222';
+const beneficiaryAddress = '0x3333333333333333333333333333333333333333';
 
 describe('InvestInSimpleSto', () => {
   let target: InvestInSimpleSto;
@@ -215,6 +216,24 @@ describe('InvestInSimpleSto', () => {
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `Cannot invest in STO ${simpleParams.stoAddress} because it hasn't started yet`,
+        })
+      );
+    });
+
+    test('should throw an error if beneficial investments not allowed, and the parameters include a beneficiary address', async () => {
+      target = new InvestInSimpleSto(
+        { ...simpleParams, beneficiary: beneficiaryAddress },
+        contextMock.getMockInstance()
+      );
+      simpleStoFactoryMock.mock('fetch', {
+        ...simpleStoObject,
+        beneficialInvestmentsAllowed: false,
+      });
+
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Cannot invest on behalf of ${beneficiaryAddress} because this STO doesn't allow beneficial investments`,
         })
       );
     });
