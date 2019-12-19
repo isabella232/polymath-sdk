@@ -76,7 +76,6 @@ describe('TransferReservationOwnership', () => {
 
   describe('Types', () => {
     test('should extend procedure and have TransferReservationOwnership type', async () => {
-      target = new TransferReservationOwnership(params, contextMock.getMockInstance());
       expect(target instanceof Procedure).toBe(true);
       expect(target.type).toBe(ProcedureType.TransferReservationOwnership);
     });
@@ -92,13 +91,29 @@ describe('TransferReservationOwnership', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `You can not transfer a Security Token already launched`,
+          message: `The ${
+            params.symbol
+          } Security Token has already been launched, ownership cannot be transferred`,
+        })
+      );
+    });
+
+    test('should throw error if current wallet is not the reservation ticker owner', async () => {
+      await expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Only the reservation owner can transfer ownership to another wallet`,
         })
       );
     });
 
     test('should throw error if new owner is equals to the current one', async () => {
       contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve('0x01') }));
+
+      target = new TransferReservationOwnership(
+        { ...params, newOwner: '0x01' },
+        contextMock.getMockInstance()
+      );
 
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
@@ -109,6 +124,8 @@ describe('TransferReservationOwnership', () => {
     });
 
     test('should add a transaction to the queue to change the transfer reservation ownership', async () => {
+      contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve('0x01') }));
+
       const addTransactionSpy = spy(target, 'addTransaction');
       securityTokenRegistryMock.mock(
         'transferTickerOwnership',

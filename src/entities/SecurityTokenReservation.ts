@@ -116,7 +116,7 @@ export class SecurityTokenReservation extends Entity<Params> {
   };
 
   /**
-   * Transfers the ownership of the ticker
+   * Transfer the ownership of the ticker
    */
   public transferOwnership = async (args: { newOwner: string }) => {
     const { context, symbol } = this;

@@ -31,11 +31,18 @@ export class TransferReservationOwnership extends Procedure<
     if (status) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `You can not transfer a Security Token already launched`,
+        message: `The ${symbol} Security Token has already been launched, ownership cannot be transferred`,
       });
     }
 
-    if (account === owner) {
+    if (account !== owner) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `Only the reservation owner can transfer ownership to another wallet`,
+      });
+    }
+
+    if (newOwner === owner) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message: `New owner must be different from the current one to transfer ownership`,
