@@ -260,6 +260,19 @@ describe('FinalizeSto', () => {
       );
     });
 
+    test('should throw error if the simple sto version is 3_0_0', async () => {
+      moduleWrapperFactoryMock.mock('getModuleInstance', simpleSto_3_0_0_Mock.getMockInstance());
+      simpleSto_3_0_0_Mock.set('contractVersion', ContractVersion.V3_0_0);
+
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.IncorrectVersion,
+          message:
+            'Capped STO version is 3.0.0. Version 3.1.0 or greater is required for forced finalization',
+        })
+      );
+    });
+
     // This test will change once canTransfer is refactored in project
     test('should throw an error if can transfer returns null', async () => {
       securityTokenMock.mock('canTransfer', Promise.resolve(undefined));
