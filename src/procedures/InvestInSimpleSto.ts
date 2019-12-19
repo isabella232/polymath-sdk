@@ -21,6 +21,13 @@ export const createRefreshSecurityTokenFactoryResolver = (
   return factories.securityTokenFactory.refresh(securityTokenId);
 };
 
+export const createRefreshSimpleStoFactoryResolver = (
+  factories: Factories,
+  simpleStoId: string
+) => async () => {
+  return factories.simpleStoFactory.refresh(simpleStoId);
+};
+
 export class InvestInSimpleSto extends Procedure<InvestInSimpleStoProcedureArgs> {
   public type = ProcedureType.InvestInSimpleSto;
 
@@ -111,9 +118,7 @@ export class InvestInSimpleSto extends Procedure<InvestInSimpleStoProcedureArgs>
     }
 
     const resolvers = [
-      async () => {
-        return factories.simpleStoFactory.refresh(simpleStoId);
-      },
+      createRefreshSimpleStoFactoryResolver(factories, simpleStoId),
       createRefreshSecurityTokenFactoryResolver(factories, securityTokenId),
     ];
 
