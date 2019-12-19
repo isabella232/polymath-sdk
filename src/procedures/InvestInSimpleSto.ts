@@ -3,7 +3,7 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  InvestInCappedStoProcedureArgs,
+  InvestInSimpleStoProcedureArgs,
   ErrorCode,
   StoType,
   Currency,
@@ -12,19 +12,24 @@ import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto } from '../entities';
 import { ApproveErc20 } from './ApproveErc20';
+import { Factories } from '../Context';
 
-export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs> {
-  public type = ProcedureType.InvestInCappedSto;
+export const createRefreshSecurityTokenFactoryResolver = (
+  factories: Factories,
+  securityTokenId: string
+) => async () => {
+  return factories.securityTokenFactory.refresh(securityTokenId);
+};
+
+export class InvestInSimpleSto extends Procedure<InvestInSimpleStoProcedureArgs> {
+  public type = ProcedureType.InvestInSimpleSto;
 
   public async prepareTransactions() {
     const { args, context } = this;
     const { stoAddress, symbol, amount } = args;
     let { beneficiary } = args;
 
-    const {
-      contractWrappers,
-      factories: { simpleStoFactory },
-    } = context;
+    const { contractWrappers, factories } = context;
 
     /**
      * Validation
@@ -65,14 +70,14 @@ export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs>
       address: stoAddress,
     });
 
-    const sto = await simpleStoFactory.fetch(simpleStoId);
+    const sto = await factories.simpleStoFactory.fetch(simpleStoId);
 
     const {
       isFinalized,
       isPaused,
       startDate,
       beneficialInvestmentsAllowed,
-      currencies: [currency],
+      fundraiseCurrencies: [currency],
     } = sto;
 
     const currentAddress = await context.currentWallet.address();
@@ -107,8 +112,9 @@ export class InvestInCappedSto extends Procedure<InvestInCappedStoProcedureArgs>
 
     const resolvers = [
       async () => {
-        return simpleStoFactory.refresh(simpleStoId);
+        return factories.simpleStoFactory.refresh(simpleStoId);
       },
+      createRefreshSecurityTokenFactoryResolver(factories, securityTokenId),
     ];
 
     if (currency === Currency.ETH) {

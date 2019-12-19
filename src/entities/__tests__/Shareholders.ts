@@ -1,17 +1,24 @@
 import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as createCheckpointProcedure from '../../procedures/CreateCheckpoint';
-
-import { Shareholders } from '~/entities/SecurityToken/Shareholders';
-import { SubModule } from '~/entities/SecurityToken/SubModule';
+import { Shareholders } from '../../entities/SecurityToken/Shareholders';
+import { SubModule } from '../../entities/SecurityToken/SubModule';
 import { SecurityToken } from '../SecurityToken';
+import { Version } from '../../types';
 
 const params1 = {
   symbol: 'TEST1',
   name: 'Test Token 1',
   address: '0x1',
   owner: '0x3',
+  tokenDetails: 'details',
+  version: Version.V3_1_0,
+  granularity: 3,
+  totalSupply: new BigNumber(1000),
+  currentCheckpoint: 2,
+  treasuryWallet: '0x3',
 };
 
 describe('Shareholders', () => {
