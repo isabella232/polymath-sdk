@@ -24,6 +24,7 @@ import { Factories } from '../../Context';
 import { SimpleSto, SecurityToken } from '../../entities';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import { Wallet } from '../../Wallet';
+import { ApproveErc20 } from '~/procedures';
 
 const simpleParams: InvestInSimpleStoProcedureArgs = {
   symbol: 'TEST1',
@@ -42,6 +43,7 @@ const simpleStoObject = {
 const treasuryWallet = '0x1111111111111111111111111111111111111111';
 const currentWalletAddress = '0x2222222222222222222222222222222222222222';
 const beneficiaryAddress = '0x3333333333333333333333333333333333333333';
+const polyTokenAddress = '0x8888888888888888888888888888888888888888';
 
 describe('InvestInSimpleSto', () => {
   let target: InvestInSimpleSto;
@@ -52,7 +54,7 @@ describe('InvestInSimpleSto', () => {
   let moduleWrapperFactoryMock: MockManager<
     moduleWrapperFactoryModule.MockedModuleWrapperFactoryModule
   >;
-
+  let polyTokenMock: MockManager<contractWrappersModule.PolyToken>;
   let simpleStoMock: MockManager<contractWrappersModule.CappedSTO_3_1_0>;
 
   // Mock factories
@@ -98,6 +100,13 @@ describe('InvestInSimpleSto', () => {
       })
     );
 
+    polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
+    polyTokenMock.mock('balanceOf', new BigNumber(10));
+    polyTokenMock.mock('address', polyTokenAddress);
+    polyTokenMock.mock('allowance', new BigNumber(10));
+    wrappersMock.mock('isTestnet', false);
+    wrappersMock.set('polyToken', polyTokenMock.getMockInstance());
+
     simpleStoFactoryMock = ImportMock.mockClass(simpleStoFactoryModule, 'SimpleStoFactory');
 
     factoryMockSetup = mockFactories();
@@ -142,6 +151,33 @@ describe('InvestInSimpleSto', () => {
   });
 
   describe('InvestInSimpleSto', () => {
+    test('should add a transaction to the queue to invest in a simple sto with poly', async () => {
+      simpleStoFactoryMock.mock('fetch', {
+        ...simpleStoObject,
+        beneficialInvestmentsAllowed: false,
+        fundraiseCurrencies: [Currency.POLY],
+      });
+      const addTransactionSpy = spy(target, 'addTransaction');
+      const addProcedureSpy = spy(target, 'addProcedure');
+      simpleStoMock.mock('buyTokensWithPoly', Promise.resolve('BuyTokensWithPoly'));
+
+      securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(10)));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy.getCall(0).calledWith(simpleStoMock.getMockInstance().buyTokensWithPoly)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.BuyTokensWithPoly
+      );
+      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(addProcedureSpy.callCount).toEqual(1);
+    });
+
     test('should add a transaction to the queue to invest in a simple sto', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
       simpleStoMock.mock('buyTokens', Promise.resolve('BuyTokens'));
@@ -155,6 +191,44 @@ describe('InvestInSimpleSto', () => {
       ).toEqual(true);
       expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.BuyTokens);
       expect(addTransactionSpy.callCount).toEqual(1);
+    });
+
+    test('should add a transaction to the queue to invest in a simple sto on the behalf of a beneficiary', async () => {
+      target = new InvestInSimpleSto(
+        { ...simpleParams, beneficiary: beneficiaryAddress },
+        contextMock.getMockInstance()
+      );
+      const addTransactionSpy = spy(target, 'addTransaction');
+      simpleStoMock.mock('buyTokens', Promise.resolve('BuyTokens'));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy.getCall(0).calledWith(simpleStoMock.getMockInstance().buyTokens)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.BuyTokens);
+      expect(addTransactionSpy.callCount).toEqual(1);
+    });
+
+    test('should throw an error as a non eth currency sto does not support investing on behalf of another party', async () => {
+      target = new InvestInSimpleSto(
+        { ...simpleParams, beneficiary: beneficiaryAddress },
+        contextMock.getMockInstance()
+      );
+      simpleStoFactoryMock.mock('fetch', {
+        ...simpleStoObject,
+        beneficialInvestmentsAllowed: true,
+        fundraiseCurrencies: [Currency.POLY],
+      });
+
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `This STO does not support investing in POLY on behalf of someone else`,
+        })
+      );
     });
 
     test('should throw an error if the simple sto has not been launched or is archived', async () => {
@@ -199,7 +273,10 @@ describe('InvestInSimpleSto', () => {
     });
 
     test('should throw an error if the sto is already finalized', async () => {
-      simpleStoFactoryMock.mock('fetch', { ...simpleStoObject, isFinalized: true });
+      simpleStoFactoryMock.mock('fetch', {
+        ...simpleStoObject,
+        isFinalized: true,
+      });
 
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
@@ -210,7 +287,10 @@ describe('InvestInSimpleSto', () => {
     });
 
     test('should throw an error if the start date is in the future', async () => {
-      simpleStoFactoryMock.mock('fetch', { ...simpleStoObject, startDate: new Date(2040, 0) });
+      simpleStoFactoryMock.mock('fetch', {
+        ...simpleStoObject,
+        startDate: new Date(2040, 0),
+      });
 
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
@@ -239,7 +319,10 @@ describe('InvestInSimpleSto', () => {
     });
 
     test('should throw an error if the sto is paused', async () => {
-      simpleStoFactoryMock.mock('fetch', { ...simpleStoObject, isPaused: true });
+      simpleStoFactoryMock.mock('fetch', {
+        ...simpleStoObject,
+        isPaused: true,
+      });
 
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
