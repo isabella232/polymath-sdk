@@ -1,13 +1,13 @@
-import { ModuleName, BigNumber } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, FundRaiseType, ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
-  ProcedureType,
-  PolyTransactionTag,
-  InvestInTieredStoProcedureArgs,
-  ErrorCode,
-  StoType,
   Currency,
+  ErrorCode,
+  InvestInTieredStoProcedureArgs,
   isInvestWithStableCoinArgs,
+  PolyTransactionTag,
+  ProcedureType,
+  StoType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
@@ -20,6 +20,13 @@ export const createRefreshSecurityTokenFactoryResolver = (
   securityTokenId: string
 ) => async () => {
   return factories.securityTokenFactory.refresh(securityTokenId);
+};
+
+export const createRefreshTieredStoFactoryResolver = (
+  factories: Factories,
+  simpleStoId: string
+) => async () => {
+  return factories.simpleStoFactory.refresh(simpleStoId);
 };
 
 export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs> {
@@ -52,6 +59,13 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
       });
     }
 
+    const securityTokenId = SecurityToken.generateId({ symbol });
+    const tieredStoId = TieredSto.generateId({
+      securityTokenId,
+      stoType: StoType.Tiered,
+      address: stoAddress,
+    });
+
     const stoModule = await contractWrappers.moduleFactory.getModuleInstance({
       name: ModuleName.UsdTieredSTO,
       address: stoAddress,
@@ -64,25 +78,17 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
       });
     }
 
-    const [
+    const [sto, currentAddress] = await Promise.all([
+      factories.simpleStoFactory.fetch(tieredStoId),
+      context.currentWallet.address(),
+    ]);
+    const {
       isFinalized,
       isPaused,
-      currentAddress,
-      beneficialInvestmentsAllowed,
       startDate,
-      canRaiseInEth,
-      canRaiseInPoly,
-      canRaiseInStableCoin,
-    ] = await Promise.all([
-      stoModule.isFinalized(),
-      stoModule.paused(),
-      context.currentWallet.address(),
-      stoModule.allowBeneficialInvestments(),
-      stoModule.startTime(),
-      stoModule.fundRaiseTypes({ type: Currency.ETH }),
-      stoModule.fundRaiseTypes({ type: Currency.POLY }),
-      stoModule.fundRaiseTypes({ type: Currency.StableCoin }),
-    ]);
+      beneficialInvestmentsAllowed,
+      fundraiseCurrencies,
+    } = sto;
 
     if (startDate > new Date()) {
       throw new PolymathError({
@@ -114,16 +120,8 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
 
     beneficiary = beneficiary || currentAddress;
 
-    const securityTokenId = SecurityToken.generateId({ symbol });
-    const tieredStoId = TieredSto.generateId({
-      securityTokenId,
-      stoType: StoType.Tiered,
-      address: stoAddress,
-    });
     const resolvers = [
-      async () => {
-        return factories.tieredStoFactory.refresh(tieredStoId);
-      },
+      createRefreshTieredStoFactoryResolver(factories, tieredStoId),
       createRefreshSecurityTokenFactoryResolver(factories, securityTokenId),
     ];
 
@@ -135,7 +133,7 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
     if (isInvestWithStableCoinArgs(args)) {
       const { stableCoinAddress } = args;
 
-      if (!canRaiseInStableCoin) {
+      if (!fundraiseCurrencies.includes(FundRaiseType.StableCoin)) {
         throw unsupportedCurrencyError;
       }
 
@@ -155,7 +153,7 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
         investedSC: amount,
       });
     } else if (currency === Currency.POLY) {
-      if (!canRaiseInPoly) {
+      if (!fundraiseCurrencies.includes(FundRaiseType.POLY)) {
         throw unsupportedCurrencyError;
       }
 
@@ -173,7 +171,7 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
         investedPOLY: amount,
       });
     } else {
-      if (!canRaiseInEth) {
+      if (!fundraiseCurrencies.includes(FundRaiseType.ETH)) {
         throw unsupportedCurrencyError;
       }
 
