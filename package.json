@@ -22,7 +22,8 @@
     "build:ci": "yarn build:prod",
     "commit": "npx git-cz",
     "semantic-release": "semantic-release",
-    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "lint": "eslint src --ext .ts"
   },
   "jest": {
     "moduleFileExtensions": [
