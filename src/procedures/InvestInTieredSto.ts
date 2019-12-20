@@ -79,7 +79,7 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
     }
 
     const [sto, currentAddress] = await Promise.all([
-      factories.simpleStoFactory.fetch(tieredStoId),
+      factories.tieredStoFactory.fetch(tieredStoId),
       context.currentWallet.address(),
     ]);
     const {
