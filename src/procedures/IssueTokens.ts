@@ -70,15 +70,15 @@ export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder
     } else {
       const invalidAddresses: string[] = [];
       const invalidCodes: RawTransferStatusCode[] = [];
-      await P.each(investors, async (address, index) => {
+      await P.each(investors, async (to, i) => {
         const { statusCode } = await securityToken.canTransferFrom({
           from: ZERO_ADDRESS,
-          to: address,
-          value: values[index],
+          to,
+          value: values[i],
         });
 
         if (statusCode !== RawTransferStatusCode.TransferSuccess) {
-          invalidAddresses.push(address);
+          invalidAddresses.push(to);
           invalidCodes.push(statusCode);
         }
       });
