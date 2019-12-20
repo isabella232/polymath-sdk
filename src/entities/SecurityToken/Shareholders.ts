@@ -3,12 +3,7 @@ import {
   SecurityToken as SecurityTokenWrapper,
 } from '@polymathnetwork/contract-wrappers';
 import { ShareholderDataEntry, ErrorCode } from '../../types';
-import {
-  ModifyShareholderData,
-  CreateCheckpoint,
-  RevokeKyc,
-  FreezeIssuance,
-} from '../../procedures';
+import { ModifyShareholderData, CreateCheckpoint, RevokeKyc } from '../../procedures';
 import { SubModule } from './SubModule';
 import { Checkpoint } from '../Checkpoint';
 import { PolymathError } from '../../PolymathError';

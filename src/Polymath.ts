@@ -11,7 +11,7 @@ import { union, compact } from 'lodash';
 import { Context } from './Context';
 import { getInjectedProvider } from './browserUtils';
 import { ErrorCode, TransactionSpeed } from './types';
-import { Erc20TokenBalance, SecurityToken, Wallet } from './entities';
+import { SecurityToken, Wallet } from './entities';
 import { ReserveSecurityToken } from './procedures';
 import { PolymathError } from './PolymathError';
 import { PolymathBase } from './PolymathBase';
@@ -55,6 +55,35 @@ interface GetSecurityToken {
   (params: AddressParams): Promise<SecurityToken>;
   (params: string): Promise<SecurityToken>;
 }
+
+const calculateGasPrice = (speed: TransactionSpeed, basePrice: BigNumber) => {
+  let result = basePrice;
+  switch (speed) {
+    case TransactionSpeed.Slow: {
+      break;
+    }
+    case TransactionSpeed.Medium: {
+      result = basePrice.multipliedBy(2);
+      break;
+    }
+    case TransactionSpeed.Fast: {
+      result = basePrice.multipliedBy(3);
+      break;
+    }
+    case TransactionSpeed.Fastest: {
+      result = basePrice.multipliedBy(5);
+      break;
+    }
+    default: {
+      throw new PolymathError({
+        code: ErrorCode.FatalError,
+        message: 'Invalid transaction speed parameter',
+      });
+    }
+  }
+
+  return result;
+};
 
 export class Polymath {
   public isUnsupported: boolean = false;
@@ -228,15 +257,20 @@ export class Polymath {
       return typeof a.address === 'string';
     };
 
+    const {
+      context: {
+        contractWrappers: { tokenFactory },
+        factories,
+      },
+    } = this;
+
     // fetch by UUID
     if (typeof args === 'string') {
       uid = args;
     } else if (isAddressArgs(args)) {
       const { address } = args;
       try {
-        const securityToken = await this.context.contractWrappers.tokenFactory.getSecurityTokenInstanceFromAddress(
-          address
-        );
+        const securityToken = await tokenFactory.getSecurityTokenInstanceFromAddress(address);
 
         const symbol = await securityToken.symbol();
         uid = SecurityToken.generateId({ symbol });
@@ -250,7 +284,7 @@ export class Polymath {
       uid = SecurityToken.generateId(args);
     }
 
-    return this.context.factories.securityTokenFactory.fetch(uid);
+    return factories.securityTokenFactory.fetch(uid);
   };
 
   /**
@@ -271,7 +305,8 @@ export class Polymath {
    */
   public isValidErc20 = async (args: { address: string }) => {
     const { address } = args;
-    const erc20Token = await this.context.contractWrappers.tokenFactory.getERC20TokenInstanceFromAddress(
+    const { context } = this;
+    const erc20Token = await context.contractWrappers.tokenFactory.getERC20TokenInstanceFromAddress(
       address
     );
     await erc20Token.isValidContract();
@@ -294,7 +329,10 @@ export class Polymath {
    * @returns version string (i.e. 3.0.0)
    */
   public getLatestProtocolVersion = async () => {
-    const version = await this.context.contractWrappers.securityTokenRegistry.getLatestProtocolVersion();
+    const {
+      context: { contractWrappers },
+    } = this;
+    const version = await contractWrappers.securityTokenRegistry.getLatestProtocolVersion();
 
     return version.map(vNum => vNum.toNumber()).join('.');
   };
@@ -415,32 +453,3 @@ export class Polymath {
     return calculateGasPrice(speed, networkGasPrice);
   };
 }
-
-const calculateGasPrice = (speed: TransactionSpeed, basePrice: BigNumber) => {
-  let result = basePrice;
-  switch (speed) {
-    case TransactionSpeed.Slow: {
-      break;
-    }
-    case TransactionSpeed.Medium: {
-      result = basePrice.multipliedBy(2);
-      break;
-    }
-    case TransactionSpeed.Fast: {
-      result = basePrice.multipliedBy(3);
-      break;
-    }
-    case TransactionSpeed.Fastest: {
-      result = basePrice.multipliedBy(5);
-      break;
-    }
-    default: {
-      throw new PolymathError({
-        code: ErrorCode.FatalError,
-        message: 'Invalid transaction speed parameter',
-      });
-    }
-  }
-
-  return result;
-};

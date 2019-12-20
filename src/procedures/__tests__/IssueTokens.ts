@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager, StaticMockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
@@ -63,14 +64,15 @@ describe('IssueTokens', () => {
   let factoryMockSetup: Factories;
 
   // Mock factories
-  let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
-  let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
-  securityTokenFactoryMock = ImportMock.mockClass(
+  const securityTokenFactoryMock = ImportMock.mockClass(
     securityTokenFactoryModule,
     'SecurityTokenFactory'
   );
-  shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
+  const shareholderFactoryMock = ImportMock.mockClass(
+    shareholderFactoryModule,
+    'ShareholderFactory'
+  );
   let shareholdersEntityMock: MockManager<shareholdersEntityModule.Shareholders>;
 
   let securityTokenEntityMock: MockManager<securityTokenEntityModule.SecurityToken>;

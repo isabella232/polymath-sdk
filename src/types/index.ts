@@ -618,7 +618,9 @@ export interface ProcedureArguments {
   [ProcedureType.PushDividendPayment]: PushDividendPaymentProcedureArgs;
   [ProcedureType.PullDividendPayment]: PullDividendPaymentProcedureArgs;
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
-  [ProcedureType.ModifyDividendsDefaultExclusionList]: ModifyDividendsDefaultExclusionListProcedureArgs;
+  // prettier-ignore
+  [ProcedureType.ModifyDividendsDefaultExclusionList]: 
+    ModifyDividendsDefaultExclusionListProcedureArgs;
   [ProcedureType.LaunchSimpleSto]: LaunchSimpleStoProcedureArgs;
   [ProcedureType.LaunchTieredSto]: LaunchTieredStoProcedureArgs;
   [ProcedureType.TogglePauseSto]: TogglePauseStoProcedureArgs;

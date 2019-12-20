@@ -144,6 +144,9 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
                 })
               );
             }
+            default: {
+              return undefined;
+            }
           }
         },
       ],

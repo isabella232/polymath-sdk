@@ -1,10 +1,7 @@
 import { mapValues, isPlainObject, pickBy } from 'lodash';
 import { EventEmitter } from 'events';
 import v4 from 'uuid/v4';
-import {
-  TransactionReceiptWithDecodedLogs,
-  PolyResponse,
-} from '@polymathnetwork/contract-wrappers';
+import { TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import { PostTransactionResolver, isPostTransactionResolver } from '../PostTransactionResolver';
 import {
   TransactionSpec,
@@ -109,7 +106,7 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
       txHash,
       receipt,
       error,
-      /**
+      /*
        * NOTE @monitz87: we intentionally expose the args as any for the end user
        * until we figure out how to type this properly
        */
@@ -251,5 +248,5 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     }) as T;
   }
 
-  public _refresh(_params: Partial<void>) {}
+  public _refresh() {}
 }

@@ -60,10 +60,10 @@ export class Issuance extends SubModule {
       securityToken: { symbol },
     } = this;
 
-    let securityTokenInstance;
+    let tokenInstance;
 
     try {
-      securityTokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+      tokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
         symbol
       );
     } catch (err) {
@@ -72,6 +72,6 @@ export class Issuance extends SubModule {
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
-    return securityTokenInstance.isIssuable();
+    return tokenInstance.isIssuable();
   };
 }

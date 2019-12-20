@@ -8,7 +8,6 @@ import {
   StoRole,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-import { SecurityToken } from '../entities';
 
 export class AssignStoRole extends Procedure<AssignStoRoleProcedureArgs> {
   public type = ProcedureType.AssignStoRole;

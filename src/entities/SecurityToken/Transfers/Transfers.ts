@@ -52,10 +52,10 @@ export class Transfers extends SubModule {
     } = this;
 
     const { symbol } = securityToken;
-    let securityTokenInstance;
+    let tokenInstance;
 
     try {
-      securityTokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+      tokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
         symbol
       );
     } catch (err) {
@@ -64,7 +64,7 @@ export class Transfers extends SubModule {
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
-    return securityTokenInstance.transfersFrozen();
+    return tokenInstance.transfersFrozen();
   };
 
   /**

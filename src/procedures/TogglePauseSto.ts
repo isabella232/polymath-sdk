@@ -12,6 +12,39 @@ import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 import { Factories } from '~/Context';
 
+export const createTogglePauseStoResolver = (
+  factories: Factories,
+  symbol: string,
+  stoType: StoType,
+  stoAddress: string
+) => async () => {
+  const securityTokenId = SecurityToken.generateId({ symbol });
+
+  switch (stoType) {
+    case StoType.Simple: {
+      return factories.simpleStoFactory.refresh(
+        SimpleSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+    case StoType.Tiered: {
+      return factories.tieredStoFactory.refresh(
+        TieredSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+    default: {
+      return undefined;
+    }
+  }
+};
+
 export class TogglePauseSto extends Procedure<TogglePauseStoProcedureArgs> {
   public type = ProcedureType.TogglePauseSto;
 
@@ -71,33 +104,3 @@ export class TogglePauseSto extends Procedure<TogglePauseStoProcedureArgs> {
     })({});
   }
 }
-
-export const createTogglePauseStoResolver = (
-  factories: Factories,
-  symbol: string,
-  stoType: StoType,
-  stoAddress: string
-) => async () => {
-  const securityTokenId = SecurityToken.generateId({ symbol });
-
-  switch (stoType) {
-    case StoType.Simple: {
-      return factories.simpleStoFactory.refresh(
-        SimpleSto.generateId({
-          securityTokenId,
-          stoType,
-          address: stoAddress,
-        })
-      );
-    }
-    case StoType.Tiered: {
-      return factories.tieredStoFactory.refresh(
-        TieredSto.generateId({
-          securityTokenId,
-          stoType,
-          address: stoAddress,
-        })
-      );
-    }
-  }
-};
