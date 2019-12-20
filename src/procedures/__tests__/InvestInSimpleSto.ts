@@ -92,14 +92,6 @@ describe('InvestInSimpleSto', () => {
       securityTokenMock.getMockInstance()
     );
 
-    securityTokenMock.mock(
-      'canTransfer',
-      Promise.resolve({
-        statusCode: TransferStatusCode.TransferSuccess,
-        reasonCode: '0x1',
-      })
-    );
-
     polyTokenMock = ImportMock.mockClass(contractWrappersModule, 'PolyToken');
     polyTokenMock.mock('balanceOf', new BigNumber(10));
     polyTokenMock.mock('address', polyTokenAddress);

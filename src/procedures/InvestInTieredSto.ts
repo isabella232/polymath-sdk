@@ -24,9 +24,9 @@ export const createRefreshSecurityTokenFactoryResolver = (
 
 export const createRefreshTieredStoFactoryResolver = (
   factories: Factories,
-  simpleStoId: string
+  tieredStoId: string
 ) => async () => {
-  return factories.simpleStoFactory.refresh(simpleStoId);
+  return factories.tieredStoFactory.refresh(tieredStoId);
 };
 
 export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs> {
