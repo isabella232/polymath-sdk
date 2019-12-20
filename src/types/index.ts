@@ -147,6 +147,8 @@ export enum ProcedureType {
   TogglePauseSto = 'PauseSto',
   FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
+  SetDocument = 'SetDocument',
+  RemoveDocument = 'RemoveDocument',
   DisableController = 'DisableController',
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
@@ -198,6 +200,8 @@ export enum PolyTransactionTag {
   UnpauseSto = 'UnpauseSto',
   FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
+  SetDocument = 'SetDocument',
+  RemoveDocument = 'RemoveDocument',
   ModifyKycDataMulti = 'ModifyKycDataMulti',
   ModifyInvestorFlagMulti = 'ModifyInvestorFlagMulti',
   IssueMulti = 'IssueMulti',
@@ -517,6 +521,18 @@ export interface FinalizeStoProcedureArgs {
 export interface SetControllerProcedureArgs {
   symbol: string;
   controller: string;
+}
+
+export interface SetDocumentProcedureArgs {
+  symbol: string;
+  name: string;
+  uri: string;
+  documentHash: string;
+}
+
+export interface RemoveDocumentProcedureArgs {
+  symbol: string;
+  name: string;
 }
 
 export interface FreezeIssuanceProcedureArgs {
