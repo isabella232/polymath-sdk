@@ -61,13 +61,13 @@ export class Documents extends SubModule {
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
-    const documentInfo = await securityTokenInstance.getDocument(args);
 
-    return { name: args.name, updatedAt: documentInfo.documentTime, ...documentInfo };
+    const { documentTime: updatedAt, ...info } = await securityTokenInstance.getDocument(args);
+    return { updatedAt, ...args, ...info };
   };
 
   /**
-   * Retrieve a list of all document names
+   * Retrieve an array of all the documents attached to the security token
    */
   public getAllDocuments = async (): Promise<Document[]> => {
     const {

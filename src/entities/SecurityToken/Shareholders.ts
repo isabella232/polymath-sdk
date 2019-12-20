@@ -3,12 +3,7 @@ import {
   SecurityToken as SecurityTokenWrapper,
 } from '@polymathnetwork/contract-wrappers';
 import { ShareholderDataEntry, ErrorCode } from '../../types';
-import {
-  ModifyShareholderData,
-  CreateCheckpoint,
-  RevokeKyc,
-  FreezeIssuance,
-} from '../../procedures';
+import { ModifyShareholderData, CreateCheckpoint, RevokeKyc } from '../../procedures';
 import { SubModule } from './SubModule';
 import { Checkpoint } from '../Checkpoint';
 import { PolymathError } from '../../PolymathError';
@@ -249,7 +244,7 @@ export class Shareholders extends SubModule {
   };
 
   /**
-   * Retrieve the amount of addresses that currently hold tokens
+   * Retrieve the amount of wallets that currently hold tokens
    */
   public holderCount = async (): Promise<number> => {
     const {
