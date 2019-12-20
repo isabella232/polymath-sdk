@@ -3,7 +3,6 @@ import { restore, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import {
   BigNumber,
-  CappedSTOFundRaiseType as CappedStoCurrency,
   SecurityTokenEvents,
   TransactionReceiptWithDecodedLogs,
 } from '@polymathnetwork/contract-wrappers';
@@ -28,7 +27,6 @@ import { Wallet } from '../../Wallet';
 import { TransferErc20 } from '..';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { SimpleSto, SecurityToken } from '../../entities';
-import { PostTransactionResolver } from '../../PostTransactionResolver';
 
 const params: LaunchSimpleStoProcedureArgs = {
   symbol: 'TEST1',

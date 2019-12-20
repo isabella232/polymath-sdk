@@ -24,7 +24,7 @@ import { Factories } from '../../Context';
 import { SimpleSto, SecurityToken } from '../../entities';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import { Wallet } from '../../Wallet';
-import { ApproveErc20 } from '~/procedures';
+import { ApproveErc20 } from '../../procedures';
 
 const simpleParams: InvestInSimpleStoProcedureArgs = {
   symbol: 'TEST1',
@@ -231,7 +231,7 @@ describe('InvestInSimpleSto', () => {
       );
     });
 
-    test('should throw an error if the simple sto has not been launched or is archived', async () => {
+    test('should throw an error if the simple sto has not yet been launched or is archived', async () => {
       moduleWrapperFactoryMock.mock('getModuleInstance', Promise.resolve(undefined));
 
       await expect(target.prepareTransactions()).rejects.toThrow(
@@ -272,7 +272,7 @@ describe('InvestInSimpleSto', () => {
       );
     });
 
-    test('should throw an error if the sto is already finalized', async () => {
+    test('should throw an error if the sto has already been finalized', async () => {
       simpleStoFactoryMock.mock('fetch', {
         ...simpleStoObject,
         isFinalized: true,
@@ -286,7 +286,7 @@ describe('InvestInSimpleSto', () => {
       );
     });
 
-    test('should throw an error if the start date is in the future', async () => {
+    test('should throw an error if the sto start date is in the future', async () => {
       simpleStoFactoryMock.mock('fetch', {
         ...simpleStoObject,
         startDate: new Date(2040, 0),
@@ -300,7 +300,7 @@ describe('InvestInSimpleSto', () => {
       );
     });
 
-    test('should throw an error if beneficial investments not allowed, and the parameters include a beneficiary address', async () => {
+    test('should throw an error if beneficial investments are not allowed and the parameters include a beneficiary address', async () => {
       target = new InvestInSimpleSto(
         { ...simpleParams, beneficiary: beneficiaryAddress },
         contextMock.getMockInstance()
