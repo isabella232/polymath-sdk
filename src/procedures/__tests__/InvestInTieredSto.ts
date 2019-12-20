@@ -1,7 +1,7 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { restore, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import { BigNumber, FundRaiseType, TransferStatusCode } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, FundRaiseType } from '@polymathnetwork/contract-wrappers';
 import * as investInTieredStoModule from '../InvestInTieredSto';
 import { InvestInTieredSto } from '../InvestInTieredSto';
 import { Procedure } from '../Procedure';
