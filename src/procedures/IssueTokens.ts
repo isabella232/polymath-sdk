@@ -1,5 +1,10 @@
-import { BigNumber, TransactionParams } from '@polymathnetwork/contract-wrappers';
-import { difference } from 'lodash';
+import {
+  BigNumber,
+  TransactionParams,
+  TransferStatusCode as RawTransferStatusCode,
+  SecurityToken_3_0_0,
+} from '@polymathnetwork/contract-wrappers';
+import P from 'bluebird';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,
@@ -12,6 +17,7 @@ import { PolymathError } from '../PolymathError';
 import { Shareholder, SecurityToken } from '../entities';
 import { ModifyShareholderData } from './ModifyShareholderData';
 import { Factories } from '../Context';
+import { ZERO_ADDRESS } from '../utils/constants';
 
 export const createRefreshSecurityTokenFactoryResolver = (
   factories: Factories,
@@ -27,7 +33,7 @@ export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder
     const { symbol, issuanceData } = this.args;
     const { contractWrappers, factories } = this.context;
 
-    let securityToken;
+    let securityToken: SecurityToken_3_0_0;
 
     try {
       securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
@@ -43,14 +49,12 @@ export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder
     const investors: string[] = [];
     const values: BigNumber[] = [];
     const updatedShareholderData: ShareholderDataEntry[] = [];
-    const updatedShareholderAddresses: string[] = [];
 
     issuanceData.forEach(({ address, amount, shareholderData }) => {
       investors.push(address);
       values.push(amount);
 
       if (shareholderData) {
-        updatedShareholderAddresses.push(address);
         updatedShareholderData.push({
           address,
           ...shareholderData,
@@ -63,63 +67,36 @@ export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder
         symbol,
         shareholderData: updatedShareholderData,
       });
+    } else {
+      const invalidAddresses: string[] = [];
+      const invalidCodes: RawTransferStatusCode[] = [];
+      await P.each(investors, async (address, index) => {
+        const { statusCode } = await securityToken.canTransferFrom({
+          from: ZERO_ADDRESS,
+          to: address,
+          value: values[index],
+        });
+
+        if (statusCode !== RawTransferStatusCode.TransferSuccess) {
+          invalidAddresses.push(address);
+          invalidCodes.push(statusCode);
+        }
+      });
+
+      if (invalidAddresses.length) {
+        throw new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Cannot issue tokens to the following addresses: [${invalidAddresses.join(
+            ', '
+          )}]. Reasons: [${invalidCodes.join(', ')}]`,
+        });
+      }
     }
 
     const securityTokenEntity = await factories.securityTokenFactory.fetch(
       SecurityToken.generateId({ symbol })
     );
 
-    const shareholders = await securityTokenEntity.shareholders.getShareholders();
-
-    // complete gaps in latest kyc data with current shareholders
-    shareholders.forEach(
-      ({ address, canSendAfter, canReceiveAfter, kycExpiry, canBuyFromSto, isAccredited }) => {
-        if (
-          !updatedShareholderData.find(
-            data => data.address.toUpperCase() === address.toUpperCase()
-          ) &&
-          !!investors.find(investor => investor.toUpperCase() === address.toUpperCase())
-        ) {
-          updatedShareholderData.push({
-            address,
-            canSendAfter,
-            canReceiveAfter,
-            kycExpiry,
-            canBuyFromSto,
-            isAccredited,
-          });
-        }
-      }
-    );
-
-    const missingShareholders = difference(investors, updatedShareholderAddresses).filter(
-      investor =>
-        !shareholders.find(({ address }) => address.toUpperCase() === investor.toUpperCase())
-    );
-
-    if (missingShareholders.length) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `Cannot issue tokens to the following addresses: [${missingShareholders.join(
-          ', '
-        )}]. Reason: Those addresses are not Shareholders`,
-      });
-    }
-
-    const now = new Date();
-
-    const expiredKyc = updatedShareholderData.filter(
-      ({ canReceiveAfter, kycExpiry }) => canReceiveAfter > now || now > kycExpiry
-    );
-
-    if (expiredKyc.length > 0) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `Cannot issue tokens to the following addresses: [${expiredKyc
-          .map(({ address }) => address)
-          .join(', ')}]. Reason: Expired KYC`,
-      });
-    }
     const { uid: securityTokenId } = securityTokenEntity;
 
     const [newShareholders] = await this.addTransaction<

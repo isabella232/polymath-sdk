@@ -18,6 +18,7 @@ export class Issuance extends SubModule {
   /**
    * Issue a certain amount of tokens to an address. The address must already have been added via `modifyData`. Otherwise,
    * the corresponding shareholder data for that address must be supplied to this method
+   * NOTE: If shareholder data is supplied, client-side validations to verify if the transfer is possible won't be performed
    *
    * @param issuanceData array of issuance data
    * @param issuanceData[].address address of the shareholder to issue tokens for
