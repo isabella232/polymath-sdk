@@ -3,7 +3,7 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  ModifyBeneficialInvestmentsProcedureArgs,
+  ToggleAllowBeneficialInvestmentsProcedureArgs,
   ErrorCode,
   StoType,
 } from '../types';
@@ -12,7 +12,7 @@ import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 import { Factories } from '../Context';
 
-export const createModifyBeneficialInvestmentsResolver = (
+export const createToggleAllowBeneficialInvestmentsResolver = (
   factories: Factories,
   symbol: string,
   stoType: StoType,
@@ -42,10 +42,10 @@ export const createModifyBeneficialInvestmentsResolver = (
   }
 };
 
-export class ModifyBeneficialInvestments extends Procedure<
-  ModifyBeneficialInvestmentsProcedureArgs
+export class ToggleAllowBeneficialInvestments extends Procedure<
+  ToggleAllowBeneficialInvestmentsProcedureArgs
 > {
-  public type = ProcedureType.ModifyBeneficialInvestments;
+  public type = ProcedureType.ToggleAllowBeneficialInvestments;
 
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol, allowBeneficialInvestments } = this.args;
@@ -114,7 +114,7 @@ export class ModifyBeneficialInvestments extends Procedure<
     await this.addTransaction(stoModule.changeAllowBeneficialInvestments, {
       tag: PolyTransactionTag.ChangeAllowBeneficialInvestments,
       resolvers: [
-        createModifyBeneficialInvestmentsResolver(factories, symbol, stoType, stoAddress),
+        createToggleAllowBeneficialInvestmentsResolver(factories, symbol, stoType, stoAddress),
       ],
     })({ allowBeneficialInvestments });
   }

@@ -153,8 +153,8 @@ export enum ProcedureType {
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
   IssueTokens = 'IssueTokens',
-  ModifyPreIssuing = 'ModifyPreIssuing',
-  ModifyBeneficialInvestments = 'ModifyBeneificialInvestments',
+  ToggleAllowPreIssuing = 'ToggleAllowPreIssuing',
+  ToggleAllowBeneficialInvestments = 'ToggleAllowBeneficialInvestments',
   ModifyTieredStoData = 'ModifyTieredStoData',
   InvestInTieredSto = 'InvestInTieredSto',
   InvestInSimpleSto = 'InvestInSimpleSto',
@@ -347,14 +347,14 @@ export interface IssueTokensProcedureArgs {
   issuanceData: IssuanceDataEntry[];
 }
 
-export interface ModifyPreIssuingProcedureArgs {
+export interface ToggleAllowPreIssuingProcedureArgs {
   symbol: string;
   stoAddress: string;
   stoType: StoType;
   allowPreIssuing: boolean;
 }
 
-export interface ModifyBeneficialInvestmentsProcedureArgs {
+export interface ToggleAllowBeneficialInvestmentsProcedureArgs {
   symbol: string;
   stoAddress: string;
   stoType: StoType;
@@ -652,10 +652,10 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
   [ProcedureType.IssueTokens]: IssueTokensProcedureArgs;
-  [ProcedureType.ModifyPreIssuing]: ModifyPreIssuingProcedureArgs;
+  [ProcedureType.ToggleAllowPreIssuing]: ToggleAllowPreIssuingProcedureArgs;
   [ProcedureType.DisableFeature]: DisableFeatureProcedureArgs;
   [ProcedureType.FinalizeSto]: FinalizeStoProcedureArgs;
-  [ProcedureType.ModifyBeneficialInvestments]: ModifyBeneficialInvestmentsProcedureArgs;
+  [ProcedureType.ToggleAllowBeneficialInvestments]: ToggleAllowBeneficialInvestmentsProcedureArgs;
   [ProcedureType.ModifyTieredStoData]: ModifyTieredStoDataProcedureArgs;
   [ProcedureType.InvestInTieredSto]: InvestInTieredStoProcedureArgs;
   [ProcedureType.InvestInSimpleSto]: InvestInSimpleStoProcedureArgs;

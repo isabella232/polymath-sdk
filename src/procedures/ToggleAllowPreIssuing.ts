@@ -7,7 +7,7 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  ModifyPreIssuingProcedureArgs,
+  ToggleAllowPreIssuingProcedureArgs,
   ErrorCode,
   StoType,
 } from '../types';
@@ -15,8 +15,8 @@ import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 
-export class ModifyPreIssuing extends Procedure<ModifyPreIssuingProcedureArgs> {
-  public type = ProcedureType.ModifyPreIssuing;
+export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProcedureArgs> {
+  public type = ProcedureType.ToggleAllowPreIssuing;
 
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol, allowPreIssuing } = this.args;
