@@ -22,6 +22,8 @@ export { ControllerTransfer } from './ControllerTransfer';
 export { ControllerRedeem } from './ControllerRedeem';
 export { TogglePauseSto } from './TogglePauseSto';
 export { SetController } from './SetController';
+export { SetDocument } from './SetDocument';
+export { RemoveDocument } from './RemoveDocument';
 export { LaunchSimpleSto } from './LaunchSimpleSto';
 export { LaunchTieredSto } from './LaunchTieredSto';
 export { ModifyShareholderData } from './ModifyShareholderData';
