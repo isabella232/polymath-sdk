@@ -171,7 +171,7 @@ describe('FinalizeSto', () => {
       // Real call
       await target.prepareTransactions();
 
-      // Verifications\
+      // Verifications
       expect(
         addTransactionSpy.getCall(0).calledWith(tieredStoMock.getMockInstance().finalize)
       ).toEqual(true);

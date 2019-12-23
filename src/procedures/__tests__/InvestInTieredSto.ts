@@ -105,7 +105,7 @@ describe('InvestInTieredSto', () => {
     erc20TokenMock = ImportMock.mockClass(contractWrappersModule, 'ERC20');
     erc20TokenMock.mock('balanceOf', Promise.resolve(new BigNumber(10)));
     erc20TokenMock.mock('address', Promise.resolve(erc20TokenAddress));
-    erc20TokenMock.mock('allowance', Promise.resolve(new BigNumber(0)));
+    erc20TokenMock.mock('allowance', Promise.resolve(new BigNumber(10)));
 
     wrappersMock.mock('getERC20TokenWrapper', erc20TokenMock.getMockInstance());
 
