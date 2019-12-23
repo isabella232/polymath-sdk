@@ -10,6 +10,37 @@ import {
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
+import { Factories } from '../Context';
+
+export const createModifyBeneficialInvestmentsResolver = (
+  factories: Factories,
+  symbol: string,
+  stoType: StoType,
+  stoAddress: string
+) => async () => {
+  const securityTokenId = SecurityToken.generateId({ symbol });
+
+  switch (stoType) {
+    case StoType.Simple: {
+      return factories.simpleStoFactory.refresh(
+        SimpleSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+    case StoType.Tiered: {
+      return factories.tieredStoFactory.refresh(
+        TieredSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+  }
+};
 
 export class ModifyBeneficialInvestments extends Procedure<
   ModifyBeneficialInvestmentsProcedureArgs
@@ -83,30 +114,7 @@ export class ModifyBeneficialInvestments extends Procedure<
     await this.addTransaction(stoModule.changeAllowBeneficialInvestments, {
       tag: PolyTransactionTag.ChangeAllowBeneficialInvestments,
       resolvers: [
-        async () => {
-          const securityTokenId = SecurityToken.generateId({ symbol });
-
-          switch (stoType) {
-            case StoType.Simple: {
-              return factories.simpleStoFactory.refresh(
-                SimpleSto.generateId({
-                  securityTokenId,
-                  stoType,
-                  address: stoAddress,
-                })
-              );
-            }
-            case StoType.Tiered: {
-              return factories.tieredStoFactory.refresh(
-                TieredSto.generateId({
-                  securityTokenId,
-                  stoType,
-                  address: stoAddress,
-                })
-              );
-            }
-          }
-        },
+        createModifyBeneficialInvestmentsResolver(factories, symbol, stoType, stoAddress),
       ],
     })({ allowBeneficialInvestments });
   }
