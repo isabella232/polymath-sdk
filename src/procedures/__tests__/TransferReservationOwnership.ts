@@ -98,7 +98,7 @@ describe('TransferReservationOwnership', () => {
       );
     });
 
-    test('should throw error if current wallet is not the reservation ticker owner', async () => {
+    test('should throw error if current wallet is not the reservation owner', async () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
@@ -107,7 +107,7 @@ describe('TransferReservationOwnership', () => {
       );
     });
 
-    test('should throw error if new owner is equals to the current one', async () => {
+    test('should throw error if new owner is equal to the current one', async () => {
       contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve('0x01') }));
 
       target = new TransferReservationOwnership(
@@ -123,7 +123,7 @@ describe('TransferReservationOwnership', () => {
       );
     });
 
-    test('should add a transaction to the queue to change the transfer reservation ownership', async () => {
+    test('should add a transaction to the queue to transfer ownership of the reservation', async () => {
       contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve('0x01') }));
 
       const addTransactionSpy = spy(target, 'addTransaction');
