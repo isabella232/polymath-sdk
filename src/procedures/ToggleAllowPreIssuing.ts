@@ -13,7 +13,38 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
-import { SecurityToken, SimpleSto, TieredSto } from '../entities';
+import { Factories } from '~/Context';
+import { SecurityToken, SimpleSto, TieredSto } from '~/entities';
+
+export const createToggleAllowPreIssuingResolver = (
+  factories: Factories,
+  symbol: string,
+  stoType: StoType,
+  stoAddress: string
+) => async () => {
+  const securityTokenId = SecurityToken.generateId({ symbol });
+
+  switch (stoType) {
+    case StoType.Simple: {
+      return factories.simpleStoFactory.refresh(
+        SimpleSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+    case StoType.Tiered: {
+      return factories.tieredStoFactory.refresh(
+        TieredSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+  }
+};
 
 export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProcedureArgs> {
   public type = ProcedureType.ToggleAllowPreIssuing;
@@ -39,12 +70,23 @@ export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProced
       message: 'STO version is 3.0.0. Version 3.1.0 or greater is required for pre-minting',
     });
 
+    function throwStoModuleError() {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `STO ${stoAddress} is either archived or hasn't been launched`,
+      });
+    }
+
     switch (stoType) {
       case StoType.Simple: {
         stoModule = await contractWrappers.moduleFactory.getModuleInstance({
           name: ModuleName.CappedSTO,
           address: stoAddress,
         });
+
+        if (!stoModule) {
+          throwStoModuleError();
+        }
 
         if (isCappedSTO_3_0_0(stoModule)) {
           throw wrongVersionError;
@@ -57,6 +99,10 @@ export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProced
           name: ModuleName.UsdTieredSTO,
           address: stoAddress,
         });
+
+        if (!stoModule) {
+          throwStoModuleError();
+        }
 
         if (isUSDTieredSTO_3_0_0(stoModule)) {
           throw wrongVersionError;
@@ -72,15 +118,7 @@ export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProced
       }
     }
 
-    if (!stoModule) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `STO ${stoAddress} is either archived or hasn't been launched`,
-      });
-    }
-
     const preMintingAllowed = await stoModule.preMintAllowed();
-
     if (preMintingAllowed === allowPreIssuing) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
@@ -98,32 +136,7 @@ export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProced
         tag: allowPreIssuing
           ? PolyTransactionTag.AllowPreMinting
           : PolyTransactionTag.RevokePreMinting,
-        resolvers: [
-          async () => {
-            const securityTokenId = SecurityToken.generateId({ symbol });
-
-            switch (stoType) {
-              case StoType.Simple: {
-                return factories.simpleStoFactory.refresh(
-                  SimpleSto.generateId({
-                    securityTokenId,
-                    stoType,
-                    address: stoAddress,
-                  })
-                );
-              }
-              case StoType.Tiered: {
-                return factories.tieredStoFactory.refresh(
-                  TieredSto.generateId({
-                    securityTokenId,
-                    stoType,
-                    address: stoAddress,
-                  })
-                );
-              }
-            }
-          },
-        ],
+        resolvers: [createToggleAllowPreIssuingResolver(factories, symbol, stoType, stoAddress)],
       }
     )({});
   }
