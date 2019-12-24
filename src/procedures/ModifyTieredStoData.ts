@@ -24,14 +24,11 @@ const createRefreshResolver = (
   tieredStoFactory: TieredStoFactory,
   addedTransactions: PolyTransactionTag[],
   tag: PolyTransactionTag,
-  securityTokenId: string,
-  stoAddress: string
+  tieredStoId: string
 ) => async () => {
   // refresh will only be called once at the last transaction
   if (addedTransactions[addedTransactions.length - 1] === tag) {
-    return tieredStoFactory.refresh(
-      TieredSto.generateId({ securityTokenId, stoType: StoType.Tiered, address: stoAddress })
-    );
+    return tieredStoFactory.refresh(tieredStoId);
   }
 };
 
@@ -54,10 +51,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       stableCoinAddresses,
       customCurrency,
     } = args;
-    const {
-      contractWrappers,
-      factories: { tieredStoFactory },
-    } = context;
+    const { contractWrappers, factories } = context;
 
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
@@ -80,23 +74,35 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       });
     }
 
-    const [
-      storageWallet,
-      treasuryWallet,
-      numberOfTiers,
-      usdTokens,
-      minInvestment,
-      investmentLimit,
-      { isRaisedInETH, isRaisedInPOLY, isRaisedInSC, startTime, endTime },
-    ] = await Promise.all([
-      stoModule.wallet(),
+    const securityTokenId = SecurityToken.generateId({ symbol });
+    const tieredStoId = TieredSto.generateId({
+      securityTokenId,
+      stoType: StoType.Tiered,
+      address: stoAddress,
+    });
+
+    const [sto, treasuryWallet] = await Promise.all([
+      factories.tieredStoFactory.fetch(tieredStoId),
       contractWrappers.getTreasuryWallet({ module: stoModule }),
-      stoModule.getNumberOfTiers(),
-      stoModule.getUsdTokens(),
-      stoModule.minimumInvestmentUSD(),
-      stoModule.nonAccreditedLimitUSD(),
-      stoModule.getSTODetails(),
     ]);
+
+    const {
+      investmentLimit,
+      minInvestment,
+      startDate: startTime,
+      endDate: endTime,
+      raisedFundsWallet: storageWallet,
+      tiers: allTiers,
+      fundraiseCurrencies,
+      usdTokens,
+    } = sto;
+
+    const [isRaisedInETH, isRaisedInPOLY, isRaisedInSC, numberOfTiers] = [
+      fundraiseCurrencies.includes(FundRaiseType.ETH),
+      fundraiseCurrencies.includes(FundRaiseType.POLY),
+      fundraiseCurrencies.includes(FundRaiseType.StableCoin),
+      allTiers.length,
+    ];
 
     // STO can't have started
     if (startTime <= new Date()) {
@@ -108,7 +114,6 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
 
     // list of added transactions to keep track of the last added tx in order to refresh the entity only once
     const addedTransactions: PolyTransactionTag[] = [];
-    const securityTokenId = SecurityToken.generateId({ symbol });
 
     if (!startDate) {
       startDate = startTime;
@@ -124,13 +129,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyTimes, {
         tag,
         resolvers: [
-          createRefreshResolver(
-            tieredStoFactory,
-            addedTransactions,
-            tag,
-            securityTokenId,
-            stoAddress
-          ),
+          createRefreshResolver(factories.tieredStoFactory, addedTransactions, tag, tieredStoId),
         ],
       })({ startTime: startDate, endTime: endDate });
     }
@@ -166,13 +165,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyFunding, {
         tag,
         resolvers: [
-          createRefreshResolver(
-            tieredStoFactory,
-            addedTransactions,
-            tag,
-            securityTokenId,
-            stoAddress
-          ),
+          createRefreshResolver(factories.tieredStoFactory, addedTransactions, tag, tieredStoId),
         ],
       })({ fundRaiseTypes: currencies });
     }
@@ -236,13 +229,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
         await this.addTransaction(stoModule.modifyOracles, {
           tag,
           resolvers: [
-            createRefreshResolver(
-              tieredStoFactory,
-              addedTransactions,
-              tag,
-              securityTokenId,
-              stoAddress
-            ),
+            createRefreshResolver(factories.tieredStoFactory, addedTransactions, tag, tieredStoId),
           ],
         })({
           denominatedCurrencySymbol: currencySymbol,
@@ -292,15 +279,14 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyTiers, {
         tag,
         resolvers: [
-          createRefreshResolver(
-            tieredStoFactory,
-            addedTransactions,
-            tag,
-            securityTokenId,
-            stoAddress
-          ),
+          createRefreshResolver(factories.tieredStoFactory, addedTransactions, tag, tieredStoId),
         ],
-      })({ ratePerTier, tokensPerTierTotal, tokensPerTierDiscountPoly, ratePerTierDiscountPoly });
+      })({
+        ratePerTier,
+        tokensPerTierTotal,
+        tokensPerTierDiscountPoly,
+        ratePerTierDiscountPoly,
+      });
     }
 
     if (!minimumInvestment) {
@@ -320,13 +306,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyLimits, {
         tag,
         resolvers: [
-          createRefreshResolver(
-            tieredStoFactory,
-            addedTransactions,
-            tag,
-            securityTokenId,
-            stoAddress
-          ),
+          createRefreshResolver(factories.tieredStoFactory, addedTransactions, tag, tieredStoId),
         ],
       })({
         minimumInvestmentUSD: minimumInvestment,
@@ -361,13 +341,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyAddresses, {
         tag,
         resolvers: [
-          createRefreshResolver(
-            tieredStoFactory,
-            addedTransactions,
-            tag,
-            securityTokenId,
-            stoAddress
-          ),
+          createRefreshResolver(factories.tieredStoFactory, addedTransactions, tag, tieredStoId),
         ],
       })({
         treasuryWallet: unsoldTokensWallet,

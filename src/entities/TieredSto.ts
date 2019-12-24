@@ -33,6 +33,9 @@ export interface Tier {
 export interface Params extends StoParams {
   currentTier: number;
   tiers: Tier[];
+  investmentLimit: BigNumber;
+  minInvestment: BigNumber;
+  usdTokens: string[];
 }
 
 interface BaseParams {
@@ -65,15 +68,24 @@ export class TieredSto extends Sto<Params> {
 
   public currentTier: number;
 
+  public investmentLimit: BigNumber;
+
+  public minInvestment: BigNumber;
+
+  public usdTokens: string[];
+
   public tiers: Tier[];
 
   constructor(params: Params & UniqueIdentifiers, context: Context) {
-    const { currentTier, tiers, ...rest } = params;
+    const { currentTier, tiers, investmentLimit, minInvestment, usdTokens, ...rest } = params;
 
     super(rest, context);
 
     const { securityTokenId, address, stoType } = rest;
 
+    this.investmentLimit = investmentLimit;
+    this.minInvestment = minInvestment;
+    this.usdTokens = usdTokens;
     this.currentTier = currentTier;
     this.tiers = tiers;
     this.uid = TieredSto.generateId({ address, stoType, securityTokenId });
