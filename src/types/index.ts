@@ -163,6 +163,7 @@ export enum ProcedureType {
   ModifyPercentageExemptions = 'ModifyPercentageExemptions',
   TransferSecurityTokens = 'TransferSecurityTokens',
   ToggleFreezeTransfers = 'ToggleFreezeTransfers',
+  TransferReservationOwnership = 'TransferReservationOwnershipProcedureArgs',
 }
 
 export enum PolyTransactionTag {
@@ -227,6 +228,7 @@ export enum PolyTransactionTag {
   UnfreezeTransfers = 'UnfreezeTransfers',
   FreezeTransfers = 'FreezeTransfers',
   Signature = 'Signature',
+  TransferReservationOwnership = 'TransferReservationOwnership',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T, any> | T;
@@ -545,6 +547,11 @@ export interface DisableControllerProcedureArgs {
   signature?: string;
 }
 
+export interface TransferReservationOwnershipProcedureArgs {
+  symbol: string;
+  newOwner: string;
+}
+
 export interface ShareholderDataEntry {
   /**
    * shareholder wallet address to whitelist
@@ -659,6 +666,7 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyPercentageExemptions]: ModifyPercentageExemptionsProcedureArgs;
   [ProcedureType.TransferSecurityTokens]: TransferSecurityTokensProcedureArgs;
   [ProcedureType.ToggleFreezeTransfers]: ToggleFreezeTransfersProcedureArgs;
+  [ProcedureType.TransferReservationOwnership]: TransferReservationOwnershipProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 
