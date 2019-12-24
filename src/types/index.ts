@@ -147,6 +147,8 @@ export enum ProcedureType {
   TogglePauseSto = 'PauseSto',
   FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
+  SetDocument = 'SetDocument',
+  RemoveDocument = 'RemoveDocument',
   DisableController = 'DisableController',
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
@@ -161,6 +163,7 @@ export enum ProcedureType {
   ModifyPercentageExemptions = 'ModifyPercentageExemptions',
   TransferSecurityTokens = 'TransferSecurityTokens',
   ToggleFreezeTransfers = 'ToggleFreezeTransfers',
+  TransferReservationOwnership = 'TransferReservationOwnershipProcedureArgs',
 }
 
 export enum PolyTransactionTag {
@@ -198,6 +201,8 @@ export enum PolyTransactionTag {
   UnpauseSto = 'UnpauseSto',
   FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
+  SetDocument = 'SetDocument',
+  RemoveDocument = 'RemoveDocument',
   ModifyKycDataMulti = 'ModifyKycDataMulti',
   ModifyInvestorFlagMulti = 'ModifyInvestorFlagMulti',
   IssueMulti = 'IssueMulti',
@@ -223,6 +228,7 @@ export enum PolyTransactionTag {
   UnfreezeTransfers = 'UnfreezeTransfers',
   FreezeTransfers = 'FreezeTransfers',
   Signature = 'Signature',
+  TransferReservationOwnership = 'TransferReservationOwnership',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T, any> | T;
@@ -519,6 +525,18 @@ export interface SetControllerProcedureArgs {
   controller: string;
 }
 
+export interface SetDocumentProcedureArgs {
+  symbol: string;
+  name: string;
+  uri: string;
+  documentHash: string;
+}
+
+export interface RemoveDocumentProcedureArgs {
+  symbol: string;
+  name: string;
+}
+
 export interface FreezeIssuanceProcedureArgs {
   symbol: string;
   signature?: string;
@@ -527,6 +545,11 @@ export interface FreezeIssuanceProcedureArgs {
 export interface DisableControllerProcedureArgs {
   symbol: string;
   signature?: string;
+}
+
+export interface TransferReservationOwnershipProcedureArgs {
+  symbol: string;
+  newOwner: string;
 }
 
 export interface ShareholderDataEntry {
@@ -643,6 +666,7 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyPercentageExemptions]: ModifyPercentageExemptionsProcedureArgs;
   [ProcedureType.TransferSecurityTokens]: TransferSecurityTokensProcedureArgs;
   [ProcedureType.ToggleFreezeTransfers]: ToggleFreezeTransfersProcedureArgs;
+  [ProcedureType.TransferReservationOwnership]: TransferReservationOwnershipProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 

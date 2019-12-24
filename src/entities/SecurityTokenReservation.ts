@@ -1,7 +1,7 @@
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
 import { Context } from '../Context';
-import { CreateSecurityToken } from '../procedures';
+import { CreateSecurityToken, TransferReservationOwnership } from '../procedures';
 import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
@@ -113,6 +113,17 @@ export class SecurityTokenReservation extends Entity<Params> {
     const { context, symbol } = this;
 
     return context.contractWrappers.securityTokenRegistry.isTokenLaunched({ ticker: symbol });
+  };
+
+  /**
+   * Transfer the ownership of the ticker
+   */
+  public transferOwnership = async (args: { newOwner: string }) => {
+    const { context, symbol } = this;
+    const { newOwner } = args;
+    const procedure = new TransferReservationOwnership({ symbol, newOwner }, context);
+
+    return procedure.prepare();
   };
 
   public toPojo() {
