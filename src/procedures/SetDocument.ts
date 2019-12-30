@@ -45,7 +45,7 @@ export class SetDocument extends Procedure<SetDocumentProcedureArgs> {
       });
     }
 
-    /**
+    /*
      * Transactions
      */
     await this.addTransaction(securityToken.setDocument, {

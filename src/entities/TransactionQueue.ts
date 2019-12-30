@@ -6,11 +6,13 @@ import {
   ProcedureType,
   TransactionQueueStatus,
   Fees,
+  ErrorCode,
 } from '../types';
 import { Entity } from './Entity';
 import { PolyTransaction } from './PolyTransaction';
 import { isPostTransactionResolver } from '../PostTransactionResolver';
 import { serialize } from '../utils';
+import { PolymathError } from '../PolymathError';
 
 enum Events {
   StatusChange = 'StatusChange',
@@ -157,6 +159,13 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
       }
       case TransactionQueueStatus.Failed: {
         this.emitter.emit(Events.StatusChange, this, this.error);
+        return;
+      }
+      default: {
+        throw new PolymathError({
+          code: ErrorCode.FatalError,
+          message: `Unknown Transaction Queue status: ${status}`,
+        });
       }
     }
   };
@@ -173,5 +182,5 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     await this.executeTransactionQueue();
   }
 
-  public _refresh(_params: Partial<void>) {}
+  public _refresh() {}
 }

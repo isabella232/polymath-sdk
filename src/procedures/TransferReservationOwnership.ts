@@ -9,6 +9,15 @@ import { PolymathError } from '../PolymathError';
 import { SecurityTokenReservation } from '../entities';
 import { Factories } from '../Context';
 
+export const createTransferReservationOwnershipResolver = (
+  factories: Factories,
+  symbol: string
+) => async () => {
+  return factories.securityTokenReservationFactory.refresh(
+    SecurityTokenReservation.generateId({ symbol })
+  );
+};
+
 export class TransferReservationOwnership extends Procedure<
   TransferReservationOwnershipProcedureArgs
 > {
@@ -55,12 +64,3 @@ export class TransferReservationOwnership extends Procedure<
     })({ newOwner, ticker: symbol });
   }
 }
-
-export const createTransferReservationOwnershipResolver = (
-  factories: Factories,
-  symbol: string
-) => async () => {
-  return factories.securityTokenReservationFactory.refresh(
-    SecurityTokenReservation.generateId({ symbol })
-  );
-};

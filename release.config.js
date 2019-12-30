@@ -9,7 +9,7 @@ module.exports = {
       prerelease: true,
     },
   ],
-  /**
+  /*
    * In this order the **prepare** step of @semantic-release/npm will run first
    * followed by @semantic-release/git:
    *  - Update the package.json version and create the npm package tarball
