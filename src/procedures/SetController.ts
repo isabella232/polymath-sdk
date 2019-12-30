@@ -40,10 +40,9 @@ export class SetController extends Procedure<SetControllerProcedureArgs> {
       });
     }
 
-    /**
+    /*
      * Transactions
      */
-
     await this.addTransaction(securityToken.setController, {
       tag: PolyTransactionTag.SetController,
     })({ controller });

@@ -50,7 +50,7 @@ export class FreezeIssuance extends Procedure<FreezeIssuanceProcedureArgs> {
     const requestedSignature =
       signature || (await this.addSignatureRequest(securityToken.signFreezeIssuanceAck)({}));
 
-    /**
+    /*
      * Transactions
      */
     await this.addTransaction(securityToken.freezeIssuance, {
