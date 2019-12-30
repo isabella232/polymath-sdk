@@ -1,4 +1,7 @@
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import {
+  BigNumber,
+  TransferStatusCode as RawTransferStatusCode,
+} from '@polymathnetwork/contract-wrappers';
 import { SubModule } from '../SubModule';
 import { Restrictions } from './Restrictions';
 import { SecurityToken } from '../SecurityToken';
@@ -58,8 +61,19 @@ export class Transfers extends SubModule {
 
   /**
    * Transfer security token
+   * Transfer an amount of Security Tokens to a specified address
+   *
+   * @param to address that will receive the tokens
+   * @param amount amount of tokens to be transferred
+   * @param data optional data to be submitted alongside the transfer
+   * @param from optional address from which to transfer tokens. Defaults to the current wallet
    */
-  public transfer = async (args: { to: string; amount: BigNumber; data: string; from: string }) => {
+  public transfer = async (args: {
+    to: string;
+    amount: BigNumber;
+    data?: string;
+    from?: string;
+  }) => {
     const { symbol } = this.securityToken;
     const { to, amount, data, from } = args;
 
@@ -105,7 +119,12 @@ export class Transfers extends SubModule {
   };
 
   /**
-   * Validates if address can transfer a security token
+   * Validate if a transfer of Security Tokens can be performed. This takes all present transfer restrictions into account
+   *
+   * @param to address that will receive the tokens
+   * @param value amount of tokens to be transferred
+   * @param data optional data to be submitted alongside the transfer
+   * @param from optional address from which to transfer tokens. Defaults to the current wallet
    */
   public canTransfer = async (args: {
     to: string;
@@ -126,7 +145,7 @@ export class Transfers extends SubModule {
 
     if (from) {
       result = await securityToken.canTransferFrom({
-        from: from!,
+        from,
         to,
         value,
         data,
@@ -145,25 +164,25 @@ export class Transfers extends SubModule {
     };
   };
 
-  private getStatusCode = (statusCode: string) => {
+  private getStatusCode = (statusCode: RawTransferStatusCode) => {
     let status;
-    if (statusCode === '0x50') {
+    if (statusCode === RawTransferStatusCode.TransferFailure) {
       status = TransferStatusCode.TransferFailure;
-    } else if (statusCode === '0x51') {
+    } else if (statusCode === RawTransferStatusCode.TransferSuccess) {
       status = TransferStatusCode.TransferSuccess;
-    } else if (statusCode === '0x52') {
+    } else if (statusCode === RawTransferStatusCode.InsufficientBalance) {
       status = TransferStatusCode.InsufficientBalance;
-    } else if (statusCode === '0x53') {
+    } else if (statusCode === RawTransferStatusCode.InsufficientAllowance) {
       status = TransferStatusCode.InsufficientAllowance;
-    } else if (statusCode === '0x54') {
+    } else if (statusCode === RawTransferStatusCode.TransfersHalted) {
       status = TransferStatusCode.TransfersHalted;
-    } else if (statusCode === '0x55') {
+    } else if (statusCode === RawTransferStatusCode.FundsLocked) {
       status = TransferStatusCode.FundsLocked;
-    } else if (statusCode === '0x56') {
+    } else if (statusCode === RawTransferStatusCode.InvalidSender) {
       status = TransferStatusCode.InvalidSender;
-    } else if (statusCode === '0x57') {
+    } else if (statusCode === RawTransferStatusCode.InvalidReceiver) {
       status = TransferStatusCode.InvalidReceiver;
-    } else if (statusCode === '0x58') {
+    } else if (statusCode === RawTransferStatusCode.InvalidOperator) {
       status = TransferStatusCode.InvalidOperator;
     } else {
       throw new PolymathError({

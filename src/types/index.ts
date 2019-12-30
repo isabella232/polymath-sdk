@@ -147,6 +147,8 @@ export enum ProcedureType {
   TogglePauseSto = 'PauseSto',
   FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
+  SetDocument = 'SetDocument',
+  RemoveDocument = 'RemoveDocument',
   DisableController = 'DisableController',
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
@@ -164,6 +166,7 @@ export enum ProcedureType {
   SignTransferData = 'SignTransferData',
   SignDisableControllerAck = 'SignDisableControllerAck',
   SignFreezeIssuanceAck = 'SignFreezeIssuanceAck',
+  TransferReservationOwnership = 'TransferReservationOwnership',
 }
 
 export enum PolyTransactionTag {
@@ -201,6 +204,8 @@ export enum PolyTransactionTag {
   UnpauseSto = 'UnpauseSto',
   FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
+  SetDocument = 'SetDocument',
+  RemoveDocument = 'RemoveDocument',
   ModifyKycDataMulti = 'ModifyKycDataMulti',
   ModifyInvestorFlagMulti = 'ModifyInvestorFlagMulti',
   IssueMulti = 'IssueMulti',
@@ -226,6 +231,7 @@ export enum PolyTransactionTag {
   UnfreezeTransfers = 'UnfreezeTransfers',
   FreezeTransfers = 'FreezeTransfers',
   Signature = 'Signature',
+  TransferReservationOwnership = 'TransferReservationOwnership',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T, any> | T;
@@ -522,6 +528,18 @@ export interface SetControllerProcedureArgs {
   controller: string;
 }
 
+export interface SetDocumentProcedureArgs {
+  symbol: string;
+  name: string;
+  uri: string;
+  documentHash: string;
+}
+
+export interface RemoveDocumentProcedureArgs {
+  symbol: string;
+  name: string;
+}
+
 export interface FreezeIssuanceProcedureArgs {
   symbol: string;
   signature?: string;
@@ -530,6 +548,11 @@ export interface FreezeIssuanceProcedureArgs {
 export interface DisableControllerProcedureArgs {
   symbol: string;
   signature?: string;
+}
+
+export interface TransferReservationOwnershipProcedureArgs {
+  symbol: string;
+  newOwner: string;
 }
 
 export interface ShareholderDataEntry {
@@ -664,6 +687,7 @@ export interface ProcedureArguments {
   [ProcedureType.SignTransferData]: SignTransferDataProcedureArgs;
   [ProcedureType.SignDisableControllerAck]: SignDisableControllerAckProcedureArgs;
   [ProcedureType.SignFreezeIssuanceAck]: SignFreezeIssuanceAckProcedureArgs;
+  [ProcedureType.TransferReservationOwnership]: TransferReservationOwnershipProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 
@@ -746,15 +770,15 @@ export enum StoRole {
 }
 
 export enum TransferStatusCode {
-  TransferFailure = 'Transfer Failure',
-  TransferSuccess = 'Transfer Success',
-  InsufficientBalance = 'Insufficient Balance',
-  InsufficientAllowance = 'Insufficient Allowance',
-  TransfersHalted = 'Transfers Halted',
-  FundsLocked = 'Funds Locked',
-  InvalidSender = 'Invalid Sender',
-  InvalidReceiver = 'Invalid Receiver',
-  InvalidOperator = 'Invalid Operator',
+  TransferFailure = 'TransferFailure',
+  TransferSuccess = 'TransferSuccess',
+  InsufficientBalance = 'InsufficientBalance',
+  InsufficientAllowance = 'InsufficientAllowance',
+  TransfersHalted = 'TransfersHalted',
+  FundsLocked = 'FundsLocked',
+  InvalidSender = 'InvalidSender',
+  InvalidReceiver = 'InvalidReceiver',
+  InvalidOperator = 'InvalidOperator',
 }
 
 export type Module =
