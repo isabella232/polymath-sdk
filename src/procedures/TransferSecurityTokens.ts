@@ -1,4 +1,3 @@
-import { TransferStatusCode } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   TransferSecurityTokensProcedureArgs,
@@ -9,27 +8,36 @@ import {
 import { PolymathError } from '../PolymathError';
 import { SecurityToken, Shareholder } from '../entities';
 import { Factories } from '../Context';
+import { checkTransferStatus } from '../utils';
+
+export const createTransferSecurityTokensResolver = (
+  factories: Factories,
+  symbol: string,
+  from: string,
+  to: string
+) => async () => {
+  const refreshingFrom = factories.shareholderFactory.refresh(
+    Shareholder.generateId({
+      securityTokenId: SecurityToken.generateId({ symbol }),
+      address: from,
+    })
+  );
+
+  const refreshingTo = factories.shareholderFactory.refresh(
+    Shareholder.generateId({
+      securityTokenId: SecurityToken.generateId({ symbol }),
+      address: to,
+    })
+  );
+
+  return Promise.all([refreshingFrom, refreshingTo]);
+};
 
 /**
  * Procedure to transfer security tokens.
  */
 export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProcedureArgs> {
   public type = ProcedureType.TransferSecurityTokens;
-
-  private checkTransferStatus(
-    statusCode: TransferStatusCode,
-    fromAddress: string,
-    symbol: string,
-    to: string,
-    reasonCode: string
-  ) {
-    if (statusCode !== TransferStatusCode.TransferSuccess) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `[${statusCode}] ${fromAddress} is not allowed to transfer ${symbol} to ${to}. Possible reason: ${reasonCode}`,
-      });
-    }
-  }
 
   public async prepareTransactions() {
     const { symbol, to, amount, data = '', from } = this.args;
@@ -56,10 +64,10 @@ export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProc
         value: amount,
         from,
       });
-      this.checkTransferStatus(statusCode, from, symbol, to, reasonCode);
+      checkTransferStatus(statusCode, from, symbol, to, reasonCode);
     } else {
       const { statusCode, reasonCode } = await securityToken.canTransfer({ to, value: amount });
-      this.checkTransferStatus(statusCode, fromAddress, symbol, to, reasonCode);
+      checkTransferStatus(statusCode, fromAddress, symbol, to, reasonCode);
     }
 
     await this.addTransaction(securityToken.transferFromWithData, {
@@ -68,26 +76,3 @@ export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProc
     })({ from: from || fromAddress, to, value: amount, data });
   }
 }
-
-export const createTransferSecurityTokensResolver = (
-  factories: Factories,
-  symbol: string,
-  from: string,
-  to: string
-) => async () => {
-  const refreshingFrom = factories.shareholderFactory.refresh(
-    Shareholder.generateId({
-      securityTokenId: SecurityToken.generateId({ symbol }),
-      address: from,
-    })
-  );
-
-  const refreshingTo = factories.shareholderFactory.refresh(
-    Shareholder.generateId({
-      securityTokenId: SecurityToken.generateId({ symbol }),
-      address: to,
-    })
-  );
-
-  return Promise.all([refreshingFrom, refreshingTo]);
-};

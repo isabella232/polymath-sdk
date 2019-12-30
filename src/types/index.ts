@@ -147,6 +147,8 @@ export enum ProcedureType {
   TogglePauseSto = 'PauseSto',
   FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
+  SetDocument = 'SetDocument',
+  RemoveDocument = 'RemoveDocument',
   DisableController = 'DisableController',
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
@@ -161,6 +163,10 @@ export enum ProcedureType {
   ModifyPercentageExemptions = 'ModifyPercentageExemptions',
   TransferSecurityTokens = 'TransferSecurityTokens',
   ToggleFreezeTransfers = 'ToggleFreezeTransfers',
+  SignTransferData = 'SignTransferData',
+  SignDisableControllerAck = 'SignDisableControllerAck',
+  SignFreezeIssuanceAck = 'SignFreezeIssuanceAck',
+  TransferReservationOwnership = 'TransferReservationOwnership',
 }
 
 export enum PolyTransactionTag {
@@ -198,6 +204,8 @@ export enum PolyTransactionTag {
   UnpauseSto = 'UnpauseSto',
   FinalizeSto = 'FinalizeSto',
   SetController = 'SetController',
+  SetDocument = 'SetDocument',
+  RemoveDocument = 'RemoveDocument',
   ModifyKycDataMulti = 'ModifyKycDataMulti',
   ModifyInvestorFlagMulti = 'ModifyInvestorFlagMulti',
   IssueMulti = 'IssueMulti',
@@ -223,6 +231,7 @@ export enum PolyTransactionTag {
   UnfreezeTransfers = 'UnfreezeTransfers',
   FreezeTransfers = 'FreezeTransfers',
   Signature = 'Signature',
+  TransferReservationOwnership = 'TransferReservationOwnership',
 }
 
 export type MaybeResolver<T> = PostTransactionResolver<T, any> | T;
@@ -519,6 +528,18 @@ export interface SetControllerProcedureArgs {
   controller: string;
 }
 
+export interface SetDocumentProcedureArgs {
+  symbol: string;
+  name: string;
+  uri: string;
+  documentHash: string;
+}
+
+export interface RemoveDocumentProcedureArgs {
+  symbol: string;
+  name: string;
+}
+
 export interface FreezeIssuanceProcedureArgs {
   symbol: string;
   signature?: string;
@@ -527,6 +548,11 @@ export interface FreezeIssuanceProcedureArgs {
 export interface DisableControllerProcedureArgs {
   symbol: string;
   signature?: string;
+}
+
+export interface TransferReservationOwnershipProcedureArgs {
+  symbol: string;
+  newOwner: string;
 }
 
 export interface ShareholderDataEntry {
@@ -600,6 +626,21 @@ export interface ToggleFreezeTransfersProcedureArgs {
   freeze: boolean;
 }
 
+export interface SignTransferDataProcedureArgs {
+  symbol: string;
+  kycData: Omit<Omit<ShareholderDataEntry, 'isAccredited'>, 'canBuyFromSto'>[];
+  validFrom: Date;
+  validTo: Date;
+}
+
+export interface SignDisableControllerAckProcedureArgs {
+  symbol: string;
+}
+
+export interface SignFreezeIssuanceAckProcedureArgs {
+  symbol: string;
+}
+
 export interface ProcedureArguments {
   [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
   [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
@@ -618,7 +659,9 @@ export interface ProcedureArguments {
   [ProcedureType.PushDividendPayment]: PushDividendPaymentProcedureArgs;
   [ProcedureType.PullDividendPayment]: PullDividendPaymentProcedureArgs;
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
-  [ProcedureType.ModifyDividendsDefaultExclusionList]: ModifyDividendsDefaultExclusionListProcedureArgs;
+  // prettier-ignore
+  [ProcedureType.ModifyDividendsDefaultExclusionList]: 
+    ModifyDividendsDefaultExclusionListProcedureArgs;
   [ProcedureType.LaunchSimpleSto]: LaunchSimpleStoProcedureArgs;
   [ProcedureType.LaunchTieredSto]: LaunchTieredStoProcedureArgs;
   [ProcedureType.TogglePauseSto]: TogglePauseStoProcedureArgs;
@@ -643,6 +686,10 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyPercentageExemptions]: ModifyPercentageExemptionsProcedureArgs;
   [ProcedureType.TransferSecurityTokens]: TransferSecurityTokensProcedureArgs;
   [ProcedureType.ToggleFreezeTransfers]: ToggleFreezeTransfersProcedureArgs;
+  [ProcedureType.SignTransferData]: SignTransferDataProcedureArgs;
+  [ProcedureType.SignDisableControllerAck]: SignDisableControllerAckProcedureArgs;
+  [ProcedureType.SignFreezeIssuanceAck]: SignFreezeIssuanceAckProcedureArgs;
+  [ProcedureType.TransferReservationOwnership]: TransferReservationOwnershipProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }
 
@@ -722,6 +769,18 @@ export enum SecurityTokenRole {
 export enum StoRole {
   StoOperator = 'StoOperator',
   StoAdministrator = 'StoAdministrator',
+}
+
+export enum TransferStatusCode {
+  TransferFailure = 'TransferFailure',
+  TransferSuccess = 'TransferSuccess',
+  InsufficientBalance = 'InsufficientBalance',
+  InsufficientAllowance = 'InsufficientAllowance',
+  TransfersHalted = 'TransfersHalted',
+  FundsLocked = 'FundsLocked',
+  InvalidSender = 'InvalidSender',
+  InvalidReceiver = 'InvalidReceiver',
+  InvalidOperator = 'InvalidOperator',
 }
 
 export type Module =

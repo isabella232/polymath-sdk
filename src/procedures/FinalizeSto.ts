@@ -42,10 +42,9 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
     const { stoAddress, stoType, symbol } = this.args;
     const { contractWrappers, factories } = this.context;
 
-    /**
+    /*
      * Validation
      */
-
     let securityToken;
 
     try {
@@ -140,7 +139,7 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
       remainingTokens
     );
 
-    /**
+    /*
      * Transactions
      */
     await this.addTransaction(stoModule.finalize, {
@@ -167,6 +166,9 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
                   address: stoAddress,
                 })
               );
+            }
+            default: {
+              return undefined;
             }
           }
         },

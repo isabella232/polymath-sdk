@@ -33,6 +33,7 @@ interface MockEthereumBrowserArgs {
   };
 }
 
+/* eslint-disable no-global-assign */
 export function mockEthereumBrowser({
   support = 'modern',
   options = {
@@ -71,6 +72,7 @@ export function mockEthereumBrowser({
     },
   };
 }
+/* eslint-enable no-global-assign */
 
 class MockPolyResponse extends PolyResponse {
   public resolve: () => void;
@@ -122,6 +124,7 @@ export class MockedContract {
 
   public failureTxPolyResponse: MockPolyResponse;
 
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   public fakeTxOneSpy = jest.fn(async (_args: any) => {
     if (this.autoResolve) {
       this.fakeTxOnePolyResponse.resolve();
@@ -137,6 +140,7 @@ export class MockedContract {
 
     return this.fakeTxTwoPolyResponse;
   });
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 
   public fakeTxOne = (args: any) => this.fakeTxOneSpy(args);
 
@@ -208,7 +212,7 @@ export async function getMockedPolyResponse(): Promise<PolyResponse> {
 }
 
 export class MockedCallMethod {
-  public callAsync(...args: any): Promise<any> {
+  public callAsync(): Promise<any> {
     // eslint-disable-line
     return Promise.resolve();
   }
@@ -219,12 +223,12 @@ export class MockedCallMethod {
 }
 
 export class MockedSendMethod extends MockedCallMethod {
-  public sendTransactionAsync(...args: any): Promise<any> {
+  public sendTransactionAsync(): Promise<any> {
     // eslint-disable-line
     return Promise.resolve();
   }
 
-  public estimateGasAsync(...args: any): Promise<any> {
+  public estimateGasAsync(): Promise<any> {
     // eslint-disable-line
     return Promise.resolve();
   }

@@ -6,28 +6,42 @@ import * as contextModule from '../../Context';
 import { Factories } from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
-import { SetDividendsWallet } from '../../procedures/SetDividendsWallet';
+import { SignTransferData } from '../../procedures/SignTransferData';
 import { Procedure } from '../../procedures/Procedure';
-import { ProcedureType, ErrorCode, PolyTransactionTag } from '../../types';
+import { ProcedureType, ErrorCode } from '../../types';
 import { PolymathError } from '../../PolymathError';
 import { mockFactories } from '../../testUtils/mockFactories';
 
 const params = {
   symbol: 'TEST1',
-  address: '0x3333333333333333333333333333333333333333',
+  kycData: [
+    {
+      address: '0x01',
+      canSendAfter: new Date(),
+      canReceiveAfter: new Date(),
+      kycExpiry: new Date(),
+    },
+    {
+      address: '0x02',
+      canSendAfter: new Date(),
+      canReceiveAfter: new Date(),
+      kycExpiry: new Date(),
+    },
+  ],
+  validFrom: new Date(0),
+  validTo: new Date(new Date().getTime() + 10000),
 };
 
-describe('SetDividendsWallet', () => {
-  let target: SetDividendsWallet;
+describe('SignTransferData', () => {
+  let target: SignTransferData;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
-  let erc20DividendMock: MockManager<contractWrappersModule.ERC20DividendCheckpointContract_3_0_0>;
   let factoriesMockedSetup: Factories;
 
   beforeEach(() => {
-    // Mock the context, wrappers, tokenFactory and securityToken to test SetDividendsWallet
+    // Mock the context, wrappers, tokenFactory and securityToken to test SignTransferData
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
 
@@ -45,7 +59,7 @@ describe('SetDividendsWallet', () => {
     factoriesMockedSetup = mockFactories();
     contextMock.set('factories', factoriesMockedSetup);
 
-    target = new SetDividendsWallet(params, contextMock.getMockInstance());
+    target = new SignTransferData(params, contextMock.getMockInstance());
   });
 
   afterEach(() => {
@@ -53,13 +67,13 @@ describe('SetDividendsWallet', () => {
   });
 
   describe('Types', () => {
-    test('should extend procedure and have SetDividendsWallet type', async () => {
+    test('should extend procedure and have SignTransferData type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe(ProcedureType.SetDividendsWallet);
+      expect(target.type).toBe(ProcedureType.SignTransferData);
     });
   });
 
-  describe('SetDividendsWallet', () => {
+  describe('SignTransferData', () => {
     test('should throw if there is no valid security token being provided', async () => {
       tokenFactoryMock
         .mock('getSecurityTokenInstanceFromTicker')
@@ -74,43 +88,59 @@ describe('SetDividendsWallet', () => {
       );
     });
 
-    test('should throw if an Erc20 dividend module is not attached', async () => {
-      wrappersMock.mock('getAttachedModules', Promise.resolve([]));
+    test('should throw if the signature validity lower bound is not an earlier date than the upper bound', async () => {
+      const now = new Date();
+      target = new SignTransferData(
+        {
+          ...params,
+          validTo: now,
+          validFrom: now,
+        },
+        contextMock.getMockInstance()
+      );
 
       // Real call
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: "The Dividends Feature hasn't been enabled",
+          message: 'Signature validity lower bound must be at an earlier date than the upper bound',
         })
       );
     });
 
-    test('should add a transaction to the queue to change the dividends wallet of the attached ERC20 dividends module', async () => {
-      erc20DividendMock = ImportMock.mockClass(
-        contractWrappersModule,
-        'ERC20DividendCheckpointContract_3_0_0'
+    test('should throw if the signature validity upper bound is in the past', async () => {
+      const now = new Date();
+      target = new SignTransferData(
+        {
+          ...params,
+          validTo: new Date(now.getTime() - 10000),
+        },
+        contextMock.getMockInstance()
       );
 
-      wrappersMock.mock(
-        'getAttachedModules',
-        Promise.resolve([erc20DividendMock.getMockInstance()])
+      // Real call
+      await expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: "Signature validity upper bound can't be in the past",
+        })
       );
+    });
 
-      const addTransactionSpy = spy(target, 'addTransaction');
-      erc20DividendMock.mock('changeWallet', Promise.resolve('ChangeWallet'));
+    test('should add a signature request to the queue to sign whitelist data', async () => {
+      const addSignatureRequestSpy = spy(target, 'addSignatureRequest');
+      securityTokenMock.mock('signTransferData', Promise.resolve('SignTransferData'));
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        addTransactionSpy.getCall(0).calledWith(erc20DividendMock.getMockInstance().changeWallet)
+        addSignatureRequestSpy
+          .getCall(0)
+          .calledWith(securityTokenMock.getMockInstance().signTransferData)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
-        PolyTransactionTag.SetDividendsWallet
-      );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addSignatureRequestSpy.callCount).toEqual(1);
     });
   });
 });

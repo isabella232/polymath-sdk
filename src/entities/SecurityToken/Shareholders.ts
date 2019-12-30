@@ -3,12 +3,7 @@ import {
   SecurityToken as SecurityTokenWrapper,
 } from '@polymathnetwork/contract-wrappers';
 import { ShareholderDataEntry, ErrorCode } from '../../types';
-import {
-  ModifyShareholderData,
-  CreateCheckpoint,
-  RevokeKyc,
-  FreezeIssuance,
-} from '../../procedures';
+import { ModifyShareholderData, CreateCheckpoint, RevokeKyc } from '../../procedures';
 import { SubModule } from './SubModule';
 import { Checkpoint } from '../Checkpoint';
 import { PolymathError } from '../../PolymathError';
@@ -222,5 +217,57 @@ export class Shareholders extends SubModule {
     }
 
     return shareholders;
+  };
+
+  /**
+   * Retrieve the amount of wallets that ever held tokens or have any KYC data
+   */
+  public allTimeInvestorCount = async (): Promise<number> => {
+    const {
+      context: { contractWrappers },
+      securityToken: { symbol },
+    } = this;
+
+    let securityTokenInstance;
+
+    try {
+      // prettier-ignore
+      securityTokenInstance =
+        await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+          symbol
+        );
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+    return securityTokenInstance.getInvestorCount();
+  };
+
+  /**
+   * Retrieve the amount of wallets that currently hold tokens
+   */
+  public holderCount = async (): Promise<number> => {
+    const {
+      context: { contractWrappers },
+      securityToken: { symbol },
+    } = this;
+
+    let securityTokenInstance;
+
+    try {
+      // prettier-ignore
+      securityTokenInstance =
+        await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+          symbol
+        );
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+    return securityTokenInstance.holderCount();
   };
 }

@@ -2,16 +2,16 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  DisableControllerProcedureArgs,
+  RemoveDocumentProcedureArgs,
   ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
-export class DisableController extends Procedure<DisableControllerProcedureArgs> {
-  public type = ProcedureType.DisableController;
+export class RemoveDocument extends Procedure<RemoveDocumentProcedureArgs> {
+  public type = ProcedureType.RemoveDocument;
 
   public async prepareTransactions() {
-    const { signature, symbol } = this.args;
+    const { symbol, name } = this.args;
     const { contractWrappers, currentWallet } = this.context;
 
     let securityToken;
@@ -27,35 +27,38 @@ export class DisableController extends Procedure<DisableControllerProcedureArgs>
       });
     }
 
-    const [owner, account, isControllable] = await Promise.all([
+    const [owner, account, allDocumentsList] = await Promise.all([
       securityToken.owner(),
       currentWallet.address(),
-      securityToken.isControllable(),
+      securityToken.getAllDocuments(),
     ]);
 
     if (account !== owner) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `You must be the owner of this Security Token to disable the controller`,
+        message: `You must be the owner of this Security Token to remove a document`,
       });
     }
 
-    if (!isControllable) {
+    if (name.length < 1 || name.length > 32) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `The controller has already been disabled permanently`,
+        message: `You must provide a valid name between 1 and 32 characters long`,
       });
     }
 
-    // If there is no hex signature passed in, create a signature request to sign the disable controller acknowledgement
-    const requestedSignature =
-      signature || (await this.addSignatureRequest(securityToken.signDisableControllerAck)({}));
+    if (!allDocumentsList.includes(name)) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `The document you are trying to remove does not exist on this security token`,
+      });
+    }
 
     /*
      * Transactions
      */
-    await this.addTransaction(securityToken.disableController, {
-      tag: PolyTransactionTag.DisableController,
-    })({ signature: requestedSignature });
+    await this.addTransaction(securityToken.removeDocument, {
+      tag: PolyTransactionTag.RemoveDocument,
+    })({ name });
   }
 }
