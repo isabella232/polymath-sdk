@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import { BigNumber, ERC20DividendCheckpointEvents } from '@polymathnetwork/contract-wrappers';
@@ -74,7 +75,9 @@ describe('CreateDividendDistribution', () => {
     );
 
     const factoryMockSetup = mockFactories();
-    factoryMockSetup.dividendDistributionFactory = dividendDistributionFactoryMock.getMockInstance();
+    // prettier-ignore
+    factoryMockSetup.dividendDistributionFactory =
+      dividendDistributionFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
 
     // Instantiate CreateDividendDistribution

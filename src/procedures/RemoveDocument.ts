@@ -54,7 +54,7 @@ export class RemoveDocument extends Procedure<RemoveDocumentProcedureArgs> {
       });
     }
 
-    /**
+    /*
      * Transactions
      */
     await this.addTransaction(securityToken.removeDocument, {

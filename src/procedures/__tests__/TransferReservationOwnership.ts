@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
@@ -58,7 +59,9 @@ describe('TransferReservationOwnership', () => {
     );
 
     factoryMockSetup = mockFactories();
-    factoryMockSetup.securityTokenReservationFactory = securityTokenReservationFactoryMock.getMockInstance();
+    // prettier-ignore
+    factoryMockSetup.securityTokenReservationFactory = 
+      securityTokenReservationFactoryMock.getMockInstance();
 
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
     wrappersMock.set('securityTokenRegistry', securityTokenRegistryMock.getMockInstance());
@@ -153,10 +156,12 @@ describe('TransferReservationOwnership', () => {
         Promise.resolve(undefined)
       );
 
-      const resolverValue = await TransferReservationOwnershipModule.createTransferReservationOwnershipResolver(
-        factoryMockSetup,
-        params.symbol
-      )();
+      // prettier-ignore
+      const resolverValue = 
+        await TransferReservationOwnershipModule.createTransferReservationOwnershipResolver(
+          factoryMockSetup,
+          params.symbol
+        )();
 
       expect(
         refreshStub.getCall(0).calledWithExactly(

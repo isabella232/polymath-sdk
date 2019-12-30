@@ -1,16 +1,13 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": [
-    "airbnb-base",
-    "prettier",
-    "prettier/@typescript-eslint"
-  ],
+  "extends": ["airbnb-base", "prettier", "prettier/@typescript-eslint"],
   "env": {
     "browser": true,
     "jest": true
   },
   "rules": {
     "no-unused-vars": "off",
+    "camelcase": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -57,16 +54,24 @@
     "import/no-extraneous-dependencies": [
       "off",
       {
-        "packageDir": [
-          "../../",
-          "./"
-        ]
+        "packageDir": ["../../", "./"]
       }
-    ]
+    ],
+    "require-jsdoc": [
+      "warn",
+      {
+        "require": {
+          "FunctionDeclaration": true,
+          "MethodDefinition": true,
+          "ClassDeclaration": true,
+          "ArrowFunctionExpression": true,
+          "FunctionExpression": true
+        }
+      }
+    ],
+    "tsdoc/syntax": "warn"
   },
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "plugins": ["@typescript-eslint", "eslint-plugin-tsdoc"],
   "parserOptions": {
     "sourceType": "module"
   }

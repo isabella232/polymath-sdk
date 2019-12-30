@@ -82,7 +82,7 @@ export class CreateSecurityToken extends Procedure<
         poly: polyFee,
       },
       resolvers: [
-        async receipt => {
+        async () => {
           return factories.securityTokenFactory.fetch(SecurityToken.generateId({ symbol }));
         },
       ],

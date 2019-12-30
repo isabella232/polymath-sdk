@@ -38,10 +38,9 @@ export class InvestInSimpleSto extends Procedure<InvestInSimpleStoProcedureArgs>
 
     const { contractWrappers, factories } = context;
 
-    /**
+    /*
      * Validation
      */
-
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
     } catch (err) {

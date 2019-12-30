@@ -39,6 +39,9 @@ export const createRefreshStoFactoryResolver = (
         })
       );
     }
+    default: {
+      return undefined;
+    }
   }
 };
 
@@ -49,10 +52,9 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
     const { stoAddress, stoType, symbol } = this.args;
     const { contractWrappers, factories } = this.context;
 
-    /**
+    /*
      * Validation
      */
-
     let securityToken;
 
     try {
@@ -155,7 +157,7 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
       });
     }
 
-    /**
+    /*
      * Transactions
      */
     await this.addTransaction(stoModule.finalize, {

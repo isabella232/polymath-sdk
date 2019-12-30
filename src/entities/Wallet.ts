@@ -1,4 +1,4 @@
-import { BigNumber, ContractWrapper } from '@polymathnetwork/contract-wrappers';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
 import { PolymathError } from '../PolymathError';
@@ -77,7 +77,7 @@ export class Wallet extends Entity<Params> {
    */
   public getPolyBalance = async (): Promise<BigNumber> => {
     const { address, context } = this;
-    return await context.contractWrappers.polyToken.balanceOf({ owner: address });
+    return context.contractWrappers.polyToken.balanceOf({ owner: address });
   };
 
   /**
@@ -85,7 +85,7 @@ export class Wallet extends Entity<Params> {
    */
   public getEthBalance = async (): Promise<BigNumber> => {
     const { address, context } = this;
-    return await context.contractWrappers.getBalance({ address });
+    return context.contractWrappers.getBalance({ address });
   };
 
   /**
@@ -99,6 +99,6 @@ export class Wallet extends Entity<Params> {
     const erc20Wrapper = await context.contractWrappers.getERC20TokenWrapper({
       address: tokenAddress,
     });
-    return await erc20Wrapper.balanceOf({ owner: address });
+    return erc20Wrapper.balanceOf({ owner: address });
   };
 }

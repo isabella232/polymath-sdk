@@ -65,7 +65,7 @@ export class RevokeKyc extends Procedure<RevokeKycProcedureArgs, Shareholder[]> 
     const canReceiveAfter: Date[] = [];
     const expiryTime: Date[] = [];
 
-    shareholderAddresses.forEach(_address => {
+    shareholderAddresses.forEach(() => {
       canSendAfter.push(new Date(0));
       canReceiveAfter.push(new Date(0));
       expiryTime.push(new Date(0));
@@ -73,9 +73,7 @@ export class RevokeKyc extends Procedure<RevokeKycProcedureArgs, Shareholder[]> 
 
     const securityTokenId = SecurityToken.generateId({ symbol });
 
-    let revokedShareholders;
-
-    [revokedShareholders] = await this.addTransaction<
+    const [revokedShareholders] = await this.addTransaction<
       TransactionParams.GeneralTransferManager.ModifyKYCDataMulti,
       [Shareholder[]]
     >(gtmModule.modifyKYCDataMulti, {

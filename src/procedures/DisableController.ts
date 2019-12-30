@@ -51,7 +51,7 @@ export class DisableController extends Procedure<DisableControllerProcedureArgs>
     const requestedSignature =
       signature || (await this.addSignatureRequest(securityToken.signDisableControllerAck)({}));
 
-    /**
+    /*
      * Transactions
      */
     await this.addTransaction(securityToken.disableController, {
