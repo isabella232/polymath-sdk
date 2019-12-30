@@ -39,6 +39,9 @@ export const createToggleAllowBeneficialInvestmentsResolver = (
         })
       );
     }
+    default: {
+      return undefined;
+    }
   }
 };
 
@@ -51,10 +54,9 @@ export class ToggleAllowBeneficialInvestments extends Procedure<
     const { stoAddress, stoType, symbol, allowBeneficialInvestments } = this.args;
     const { contractWrappers, factories } = this.context;
 
-    /**
+    /*
      * Validation
      */
-
     if (!isValidAddress(stoAddress)) {
       throw new PolymathError({
         code: ErrorCode.InvalidAddress,
@@ -107,10 +109,9 @@ export class ToggleAllowBeneficialInvestments extends Procedure<
       });
     }
 
-    /**
+    /*
      * Transactions
      */
-
     await this.addTransaction(stoModule.changeAllowBeneficialInvestments, {
       tag: PolyTransactionTag.ChangeAllowBeneficialInvestments,
       resolvers: [

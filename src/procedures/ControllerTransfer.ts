@@ -8,7 +8,30 @@ import {
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, Shareholder } from '../entities';
-import { Factories } from '~/Context';
+import { Factories } from '../Context';
+
+export const createControllerTransferResolver = (
+  factories: Factories,
+  symbol: string,
+  from: string,
+  to: string
+) => async () => {
+  const refreshingFrom = factories.shareholderFactory.refresh(
+    Shareholder.generateId({
+      securityTokenId: SecurityToken.generateId({ symbol }),
+      address: from,
+    })
+  );
+
+  const refreshingTo = factories.shareholderFactory.refresh(
+    Shareholder.generateId({
+      securityTokenId: SecurityToken.generateId({ symbol }),
+      address: to,
+    })
+  );
+
+  return Promise.all([refreshingFrom, refreshingTo]);
+};
 
 export class ControllerTransfer extends Procedure<ControllerTransferProcedureArgs> {
   public type = ProcedureType.ControllerTransfer;
@@ -18,10 +41,9 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
     const { contractWrappers, currentWallet, factories } = this.context;
     const addresses: { [key: string]: string } = { from, to };
 
-    /**
+    /*
      * Validation
      */
-
     Object.keys(addresses).forEach(key => {
       if (!isValidAddress(addresses[key])) {
         throw new PolymathError({
@@ -65,35 +87,12 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
       });
     }
 
-    /**
+    /*
      * Transactions
      */
-
     await this.addTransaction(securityToken.controllerTransfer, {
       tag: PolyTransactionTag.ControllerTransfer,
       resolvers: [createControllerTransferResolver(factories, symbol, from, to)],
     })({ from, to, value: amount, data, operatorData: log });
   }
 }
-export const createControllerTransferResolver = (
-  factories: Factories,
-  symbol: string,
-  from: string,
-  to: string
-) => async () => {
-  const refreshingFrom = factories.shareholderFactory.refresh(
-    Shareholder.generateId({
-      securityTokenId: SecurityToken.generateId({ symbol }),
-      address: from,
-    })
-  );
-
-  const refreshingTo = factories.shareholderFactory.refresh(
-    Shareholder.generateId({
-      securityTokenId: SecurityToken.generateId({ symbol }),
-      address: to,
-    })
-  );
-
-  return Promise.all([refreshingFrom, refreshingTo]);
-};

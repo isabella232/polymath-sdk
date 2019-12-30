@@ -1,4 +1,4 @@
-import { ModuleName, TransactionParams, BigNumber } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,

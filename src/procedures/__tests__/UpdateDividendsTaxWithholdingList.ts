@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { restore, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
@@ -134,12 +135,14 @@ describe('UpdateDividendsTaxWithholdingList', () => {
     test('should update the dividends tax withholding list for erc20 dividend type', async () => {
       const updateStub = taxWithholdingFactoryMock.mock('update', Promise.resolve(undefined));
 
-      const resolverValue = await updateDividendsTaxWithholdingListModule.updateDividendsTaxWithholdingListResolver(
-        factoriesMockedSetup,
-        params.symbol,
-        params.percentages,
-        params.shareholderAddresses
-      )();
+      // prettier-ignore
+      const resolverValue =
+        await updateDividendsTaxWithholdingListModule.updateDividendsTaxWithholdingListResolver(
+          factoriesMockedSetup,
+          params.symbol,
+          params.percentages,
+          params.shareholderAddresses
+        )();
 
       expect(
         updateStub.getCall(0).calledWithExactly(

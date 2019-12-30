@@ -163,7 +163,10 @@ export enum ProcedureType {
   ModifyPercentageExemptions = 'ModifyPercentageExemptions',
   TransferSecurityTokens = 'TransferSecurityTokens',
   ToggleFreezeTransfers = 'ToggleFreezeTransfers',
-  TransferReservationOwnership = 'TransferReservationOwnershipProcedureArgs',
+  SignTransferData = 'SignTransferData',
+  SignDisableControllerAck = 'SignDisableControllerAck',
+  SignFreezeIssuanceAck = 'SignFreezeIssuanceAck',
+  TransferReservationOwnership = 'TransferReservationOwnership',
 }
 
 export enum PolyTransactionTag {
@@ -623,6 +626,21 @@ export interface ToggleFreezeTransfersProcedureArgs {
   freeze: boolean;
 }
 
+export interface SignTransferDataProcedureArgs {
+  symbol: string;
+  kycData: Omit<Omit<ShareholderDataEntry, 'isAccredited'>, 'canBuyFromSto'>[];
+  validFrom: Date;
+  validTo: Date;
+}
+
+export interface SignDisableControllerAckProcedureArgs {
+  symbol: string;
+}
+
+export interface SignFreezeIssuanceAckProcedureArgs {
+  symbol: string;
+}
+
 export interface ProcedureArguments {
   [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
   [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
@@ -641,7 +659,9 @@ export interface ProcedureArguments {
   [ProcedureType.PushDividendPayment]: PushDividendPaymentProcedureArgs;
   [ProcedureType.PullDividendPayment]: PullDividendPaymentProcedureArgs;
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
-  [ProcedureType.ModifyDividendsDefaultExclusionList]: ModifyDividendsDefaultExclusionListProcedureArgs;
+  // prettier-ignore
+  [ProcedureType.ModifyDividendsDefaultExclusionList]: 
+    ModifyDividendsDefaultExclusionListProcedureArgs;
   [ProcedureType.LaunchSimpleSto]: LaunchSimpleStoProcedureArgs;
   [ProcedureType.LaunchTieredSto]: LaunchTieredStoProcedureArgs;
   [ProcedureType.TogglePauseSto]: TogglePauseStoProcedureArgs;
@@ -666,6 +686,9 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyPercentageExemptions]: ModifyPercentageExemptionsProcedureArgs;
   [ProcedureType.TransferSecurityTokens]: TransferSecurityTokensProcedureArgs;
   [ProcedureType.ToggleFreezeTransfers]: ToggleFreezeTransfersProcedureArgs;
+  [ProcedureType.SignTransferData]: SignTransferDataProcedureArgs;
+  [ProcedureType.SignDisableControllerAck]: SignDisableControllerAckProcedureArgs;
+  [ProcedureType.SignFreezeIssuanceAck]: SignFreezeIssuanceAckProcedureArgs;
   [ProcedureType.TransferReservationOwnership]: TransferReservationOwnershipProcedureArgs;
   [ProcedureType.UnnamedProcedure]: {};
 }

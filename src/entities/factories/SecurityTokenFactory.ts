@@ -1,4 +1,3 @@
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SecurityToken, Params, UniqueIdentifiers } from '../SecurityToken';
 import { Factory } from './Factory';
 import { Context } from '../../Context';
@@ -9,11 +8,14 @@ import { convertVersionToEnum } from '../../utils';
 export class SecurityTokenFactory extends Factory<SecurityToken, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
     const { symbol } = SecurityToken.unserialize(uid);
+    const {
+      context: { contractWrappers },
+    } = this;
 
     let securityToken;
 
     try {
-      securityToken = await this.context.contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+      securityToken = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
         symbol
       );
     } catch (err) {

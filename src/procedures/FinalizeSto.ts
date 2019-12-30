@@ -18,10 +18,9 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
     const { stoAddress, stoType, symbol } = this.args;
     const { contractWrappers, factories } = this.context;
 
-    /**
+    /*
      * Validation
      */
-
     let securityToken;
 
     try {
@@ -115,10 +114,9 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
       });
     }
 
-    /**
+    /*
      * Transactions
      */
-
     await this.addTransaction(stoModule.finalize, {
       tag: PolyTransactionTag.FinalizeSto,
       resolvers: [
@@ -143,6 +141,9 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
                   address: stoAddress,
                 })
               );
+            }
+            default: {
+              return undefined;
             }
           }
         },

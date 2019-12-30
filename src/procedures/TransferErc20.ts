@@ -5,6 +5,19 @@ import { PolymathError } from '../PolymathError';
 import { Erc20TokenBalance } from '../entities';
 import { Factories } from '~/Context';
 
+export const createTransferErc20Resolver = (
+  factories: Factories,
+  tokenAddress: string,
+  receiver: string
+) => async () => {
+  return factories.erc20TokenBalanceFactory.refresh(
+    Erc20TokenBalance.generateId({
+      tokenAddress,
+      walletAddress: receiver,
+    })
+  );
+};
+
 /**
  * Procedure to transfer funds of an ERC20 token. If no token address is specified, it defaults to POLY
  */
@@ -76,16 +89,3 @@ export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
     })({ to: receiver, value: amount });
   }
 }
-
-export const createTransferErc20Resolver = (
-  factories: Factories,
-  tokenAddress: string,
-  receiver: string
-) => async () => {
-  return factories.erc20TokenBalanceFactory.refresh(
-    Erc20TokenBalance.generateId({
-      tokenAddress,
-      walletAddress: receiver,
-    })
-  );
-};

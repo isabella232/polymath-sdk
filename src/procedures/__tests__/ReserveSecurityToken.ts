@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import {
   BigNumber,
@@ -86,7 +87,9 @@ describe('ReserveSecurityToken', () => {
       'SecurityTokenReservationFactory'
     );
     const factoryMockSetup = mockFactories();
-    factoryMockSetup.securityTokenReservationFactory = securityTokenReservationFactoryMock.getMockInstance();
+    // prettier-ignore
+    factoryMockSetup.securityTokenReservationFactory =
+      securityTokenReservationFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
 
     // Instantiate ReserveSecurityToken

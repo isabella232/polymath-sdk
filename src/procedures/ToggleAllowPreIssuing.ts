@@ -43,6 +43,9 @@ export const createToggleAllowPreIssuingResolver = (
         })
       );
     }
+    default: {
+      return undefined;
+    }
   }
 };
 
@@ -53,10 +56,9 @@ export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProced
     const { stoAddress, stoType, symbol, allowPreIssuing } = this.args;
     const { contractWrappers, factories } = this.context;
 
-    /**
+    /*
      * Validation
      */
-
     if (!isValidAddress(stoAddress)) {
       throw new PolymathError({
         code: ErrorCode.InvalidAddress,
@@ -126,10 +128,9 @@ export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProced
       });
     }
 
-    /**
+    /*
      * Transactions
      */
-
     await this.addTransaction(
       allowPreIssuing ? stoModule.allowPreMinting : stoModule.revokePreMintFlag,
       {
