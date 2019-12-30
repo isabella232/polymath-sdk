@@ -180,22 +180,9 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       })({ fundRaiseTypes: currencies });
     }
 
-    let assembledTiers: StoTier[];
-    let rawTiers;
-
     // this is needed because the return types of `tier` are different in the two versions
     // even if the properties used here are the same for both. Also custom currencies are only supported in 3.1
     if (isUSDTieredSTO_3_1_0(stoModule)) {
-      rawTiers = await Promise.all(range(numberOfTiers).map(tier => stoModule.tiers({ tier })));
-      assembledTiers = rawTiers.map(
-        ({ tokenTotal, rate, tokensDiscountPoly, rateDiscountPoly }) => ({
-          tokensOnSale: tokenTotal,
-          price: rate,
-          tokensWithDiscount: tokensDiscountPoly,
-          discountedPrice: rateDiscountPoly,
-        })
-      );
-
       const [
         currentEthOracleAddress,
         currentPolyOracleAddress,
@@ -251,30 +238,18 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
           customOracleAddresses: [ethOracleAddress, polyOracleAddress],
         });
       }
-    } else {
-      if (customCurrency) {
+    } else if (customCurrency) {
         throw new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: 'Custom currency not supported in Tiered STO v3.0',
         });
       }
 
-      rawTiers = await Promise.all(range(numberOfTiers).map(tier => stoModule.tiers({ tier })));
-      assembledTiers = rawTiers.map(
-        ({ tokenTotal, rate, tokensDiscountPoly, rateDiscountPoly }) => ({
-          tokensOnSale: tokenTotal,
-          price: rate,
-          tokensWithDiscount: tokensDiscountPoly,
-          discountedPrice: rateDiscountPoly,
-        })
-      );
-    }
-
     if (!tiers) {
-      tiers = assembledTiers;
+      tiers = allTiers;
     }
 
-    const areSameTiers = isEqual(tiers, assembledTiers);
+    const areSameTiers = isEqual(tiers, allTiers);
 
     if (!areSameTiers) {
       const tokensPerTierTotal: BigNumber[] = [];
