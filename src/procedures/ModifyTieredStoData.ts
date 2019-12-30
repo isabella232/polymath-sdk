@@ -87,14 +87,14 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
     ]);
 
     const {
-      investmentLimit,
-      minInvestment,
+      nonAccreditedInvestmentLimit: investmentLimit,
+      minimumInvestment: minInvestment,
       startDate: startTime,
       endDate: endTime,
       raisedFundsWallet: storageWallet,
       tiers: allTiers,
       fundraiseCurrencies,
-      usdTokens,
+      stableCoinAddresses: usdTokens,
     } = sto;
 
     const [isRaisedInETH, isRaisedInPOLY, isRaisedInSC, numberOfTiers] = [

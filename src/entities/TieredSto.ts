@@ -15,7 +15,6 @@ import { StoTier, Currency, InvestInTieredStoProcedureArgs, CustomCurrency } fro
 import { ModifyTieredStoData, InvestInTieredSto } from '../procedures';
 import { TransactionQueue } from './TransactionQueue';
 import { Investment } from './Investment';
-import { ZERO_ADDRESS } from '../utils/constants';
 
 const { weiToValue } = conversionUtils;
 
@@ -33,9 +32,9 @@ export interface Tier {
 export interface Params extends StoParams {
   currentTier: number;
   tiers: Tier[];
-  investmentLimit: BigNumber;
-  minInvestment: BigNumber;
-  usdTokens: string[];
+  nonAccreditedInvestmentLimit: BigNumber;
+  minimumInvestment: BigNumber;
+  stableCoinAddresses: string[];
 }
 
 interface BaseParams {
@@ -68,24 +67,31 @@ export class TieredSto extends Sto<Params> {
 
   public currentTier: number;
 
-  public investmentLimit: BigNumber;
+  public nonAccreditedInvestmentLimit: BigNumber;
 
-  public minInvestment: BigNumber;
+  public minimumInvestment: BigNumber;
 
-  public usdTokens: string[];
+  public stableCoinAddresses: string[];
 
   public tiers: Tier[];
 
   constructor(params: Params & UniqueIdentifiers, context: Context) {
-    const { currentTier, tiers, investmentLimit, minInvestment, usdTokens, ...rest } = params;
+    const {
+      currentTier,
+      tiers,
+      nonAccreditedInvestmentLimit,
+      minimumInvestment,
+      stableCoinAddresses,
+      ...rest
+    } = params;
 
     super(rest, context);
 
     const { securityTokenId, address, stoType } = rest;
 
-    this.investmentLimit = investmentLimit;
-    this.minInvestment = minInvestment;
-    this.usdTokens = usdTokens;
+    this.nonAccreditedInvestmentLimit = nonAccreditedInvestmentLimit;
+    this.minimumInvestment = minimumInvestment;
+    this.stableCoinAddresses = stableCoinAddresses;
     this.currentTier = currentTier;
     this.tiers = tiers;
     this.uid = TieredSto.generateId({ address, stoType, securityTokenId });
