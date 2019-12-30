@@ -218,4 +218,52 @@ export class Shareholders extends SubModule {
 
     return shareholders;
   };
+
+  /**
+   * Retrieve the amount of wallets that ever held tokens or have any KYC data
+   */
+  public allTimeInvestorCount = async (): Promise<number> => {
+    const {
+      context: { contractWrappers },
+      securityToken: { symbol },
+    } = this;
+
+    let securityTokenInstance;
+
+    try {
+      securityTokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+    return securityTokenInstance.getInvestorCount();
+  };
+
+  /**
+   * Retrieve the amount of wallets that currently hold tokens
+   */
+  public holderCount = async (): Promise<number> => {
+    const {
+      context: { contractWrappers },
+      securityToken: { symbol },
+    } = this;
+
+    let securityTokenInstance;
+
+    try {
+      securityTokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+        symbol
+      );
+    } catch (err) {
+      throw new PolymathError({
+        code: ErrorCode.FetcherValidationError,
+        message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+    return securityTokenInstance.holderCount();
+  };
 }
