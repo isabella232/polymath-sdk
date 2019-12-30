@@ -26,7 +26,7 @@ export abstract class MockedTokenFactoryModule {
     address: string
   ): Promise<SecurityToken_3_0_0>;
 
-  public async getSecurityTokenInstanceFromTicker(ticker: string): Promise<SecurityToken_3_0_0> {
+  public async getSecurityTokenInstanceFromTicker(): Promise<SecurityToken_3_0_0> {
     return {} as Promise<SecurityToken_3_0_0>;
   }
 }

@@ -1,4 +1,3 @@
-import { TransferStatusCode } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ToggleFreezeTransfersProcedureArgs,
@@ -9,6 +8,13 @@ import {
 import { PolymathError } from '../PolymathError';
 import { SecurityToken } from '../entities';
 import { Factories } from '../Context';
+
+export const createToggleFreezeTransfersResolver = (
+  factories: Factories,
+  symbol: string
+) => async () => {
+  await factories.securityTokenFactory.refresh(SecurityToken.generateId({ symbol }));
+};
 
 /**
  * Procedure to transfer security tokens.
@@ -64,10 +70,3 @@ export class ToggleFreezeTransfers extends Procedure<ToggleFreezeTransfersProced
     )({});
   }
 }
-
-export const createToggleFreezeTransfersResolver = (
-  factories: Factories,
-  symbol: string
-) => async () => {
-  await factories.securityTokenFactory.refresh(SecurityToken.generateId({ symbol }));
-};
