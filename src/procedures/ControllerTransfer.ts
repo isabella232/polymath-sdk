@@ -41,10 +41,9 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
     const { contractWrappers, currentWallet, factories } = this.context;
     const addresses: { [key: string]: string } = { from, to };
 
-    /**
+    /*
      * Validation
      */
-
     Object.keys(addresses).forEach(key => {
       if (!isValidAddress(addresses[key])) {
         throw new PolymathError({
@@ -88,10 +87,9 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
       });
     }
 
-    /**
+    /*
      * Transactions
      */
-
     await this.addTransaction(securityToken.controllerTransfer, {
       tag: PolyTransactionTag.ControllerTransfer,
       resolvers: [createControllerTransferResolver(factories, symbol, from, to)],
