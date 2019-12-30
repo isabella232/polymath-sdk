@@ -229,7 +229,7 @@ export class PolymathBase extends PolymathAPI {
     let latestVersion = '0.0.0';
 
     // Get latest version of the module factory
-    for (const moduleAddress of availableModules) {
+    await P.each(availableModules, async moduleAddress => {
       const moduleFactory = await this.moduleFactory.getModuleFactory(moduleAddress);
       const name = await moduleFactory.name();
 
@@ -240,10 +240,10 @@ export class PolymathBase extends PolymathAPI {
           address = moduleAddress;
         }
       }
-    }
+    });
 
     if (address !== null) {
-      return address;
+      return address as string;
     }
 
     throw new PolymathError({
@@ -568,13 +568,11 @@ export class PolymathBase extends PolymathAPI {
     dividendIndex: number;
     dividendsModule: ERC20DividendCheckpoint;
   }): Promise<BaseDividend> => {
-    let symbol: string;
-
     const tokenAddress = await dividendsModule.dividendTokens({ dividendIndex });
 
     const token = await this.tokenFactory.getERC20TokenInstanceFromAddress(tokenAddress);
 
-    symbol = await token.symbol();
+    const symbol = await token.symbol();
 
     const dividend = await dividendsModule.dividends({ dividendIndex });
 

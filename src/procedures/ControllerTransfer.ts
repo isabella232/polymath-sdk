@@ -8,7 +8,30 @@ import {
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, Shareholder } from '../entities';
-import { Factories } from '~/Context';
+import { Factories } from '../Context';
+
+export const createControllerTransferResolver = (
+  factories: Factories,
+  symbol: string,
+  from: string,
+  to: string
+) => async () => {
+  const refreshingFrom = factories.shareholderFactory.refresh(
+    Shareholder.generateId({
+      securityTokenId: SecurityToken.generateId({ symbol }),
+      address: from,
+    })
+  );
+
+  const refreshingTo = factories.shareholderFactory.refresh(
+    Shareholder.generateId({
+      securityTokenId: SecurityToken.generateId({ symbol }),
+      address: to,
+    })
+  );
+
+  return Promise.all([refreshingFrom, refreshingTo]);
+};
 
 export class ControllerTransfer extends Procedure<ControllerTransferProcedureArgs> {
   public type = ProcedureType.ControllerTransfer;
@@ -75,25 +98,3 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
     })({ from, to, value: amount, data, operatorData: log });
   }
 }
-export const createControllerTransferResolver = (
-  factories: Factories,
-  symbol: string,
-  from: string,
-  to: string
-) => async () => {
-  const refreshingFrom = factories.shareholderFactory.refresh(
-    Shareholder.generateId({
-      securityTokenId: SecurityToken.generateId({ symbol }),
-      address: from,
-    })
-  );
-
-  const refreshingTo = factories.shareholderFactory.refresh(
-    Shareholder.generateId({
-      securityTokenId: SecurityToken.generateId({ symbol }),
-      address: to,
-    })
-  );
-
-  return Promise.all([refreshingFrom, refreshingTo]);
-};

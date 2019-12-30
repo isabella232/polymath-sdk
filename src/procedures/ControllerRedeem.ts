@@ -10,6 +10,26 @@ import { isValidAddress } from '../utils';
 import { SecurityToken, Shareholder } from '../entities';
 import { Factories } from '../Context';
 
+export const createRefreshSecurityTokenResolver = (
+  factories: Factories,
+  symbol: string
+) => async () => {
+  return factories.securityTokenFactory.refresh(SecurityToken.generateId({ symbol }));
+};
+
+export const createRefreshShareholdersResolver = (
+  factories: Factories,
+  symbol: string,
+  from: string
+) => async () => {
+  return factories.shareholderFactory.refresh(
+    Shareholder.generateId({
+      securityTokenId: SecurityToken.generateId({ symbol }),
+      address: from,
+    })
+  );
+};
+
 export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
   public type = ProcedureType.ControllerRedeem;
 
@@ -24,7 +44,7 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
     if (!isValidAddress(from)) {
       throw new PolymathError({
         code: ErrorCode.InvalidAddress,
-        message: `Provided \"from\" address is invalid: ${from}`,
+        message: `Provided "from" address is invalid: ${from}`,
       });
     }
 
@@ -74,23 +94,3 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
     })({ from, value: amount, data, operatorData: reason });
   }
 }
-
-export const createRefreshSecurityTokenResolver = (
-  factories: Factories,
-  symbol: string
-) => async () => {
-  return factories.securityTokenFactory.refresh(SecurityToken.generateId({ symbol }));
-};
-
-export const createRefreshShareholdersResolver = (
-  factories: Factories,
-  symbol: string,
-  from: string
-) => async () => {
-  return factories.shareholderFactory.refresh(
-    Shareholder.generateId({
-      securityTokenId: SecurityToken.generateId({ symbol }),
-      address: from,
-    })
-  );
-};
