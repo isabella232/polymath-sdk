@@ -1,8 +1,11 @@
 import { ImportMock, MockManager, StaticMockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
-import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
+import {
+  BigNumber,
+  TransactionReceiptWithDecodedLogs,
+  TransferStatusCode,
+} from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import { cloneDeep } from 'lodash';
 import * as issueTokensModule from '../IssueTokens';
 import { IssueTokens } from '../IssueTokens';
 import { Procedure } from '../Procedure';
@@ -24,7 +27,6 @@ import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapper
 import { ModifyShareholderData } from '..';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { Shareholder } from '../../entities';
-import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
 import { Factories } from '../../Context';
 
 const securityTokenId = 'ST ID';
@@ -228,38 +230,28 @@ describe('IssueTokens', () => {
       );
     });
 
-    test('should throw if issuance addresses are not shareholders', async () => {
+    test('should throw if any issuance addresses can not receive tokens', async () => {
       target = new IssueTokens(
         {
           ...params,
-          issuanceData: [{ address: testAddress3, amount: new BigNumber(1) }],
+          issuanceData: [{ address: testAddress, amount: new BigNumber(1) }],
         },
         contextMock.getMockInstance()
       );
 
-      await expect(target.prepareTransactions()).rejects.toThrow(
-        new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: `Cannot issue tokens to the following addresses: [${testAddress3}]. Reason: Those addresses are not Shareholders`,
+      securityTokenMock.mock(
+        'canTransferFrom',
+        Promise.resolve({
+          statusCode: TransferStatusCode.TransferFailure,
         })
       );
-    });
 
-    test('should throw an error for an expired Kyc', async () => {
-      const expiredParams = cloneDeep(params);
-      expiredParams.issuanceData[0].shareholderData = {
-        canSendAfter: new Date(Date.now()),
-        canReceiveAfter: new Date(2035, 1),
-        kycExpiry: new Date(2000, 1),
-        canBuyFromSto: true,
-        isAccredited: true,
-      };
-
-      target = new IssueTokens(expiredParams, contextMock.getMockInstance());
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `Cannot issue tokens to the following addresses: [${testAddress3}]. Reason: Expired KYC`,
+          message: `Cannot issue tokens to the following addresses: [${testAddress}]. Reasons: [${
+            TransferStatusCode.TransferFailure
+          }]`,
         })
       );
     });
