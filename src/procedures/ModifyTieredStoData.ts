@@ -20,7 +20,7 @@ import { areSameAddress } from '../utils';
 import { SecurityToken, TieredSto } from '../entities';
 import { TieredStoFactory } from '../entities/factories';
 
-const createRefreshResolver = (
+export const createTieredStoFactoryRefreshResolver = (
   tieredStoFactory: TieredStoFactory,
   addedTransactions: PolyTransactionTag[],
   tag: PolyTransactionTag,
@@ -129,7 +129,12 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyTimes, {
         tag,
         resolvers: [
-          createRefreshResolver(factories.tieredStoFactory, addedTransactions, tag, tieredStoId),
+          createTieredStoFactoryRefreshResolver(
+            factories.tieredStoFactory,
+            addedTransactions,
+            tag,
+            tieredStoId
+          ),
         ],
       })({ startTime: startDate, endTime: endDate });
     }
@@ -165,7 +170,12 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyFunding, {
         tag,
         resolvers: [
-          createRefreshResolver(factories.tieredStoFactory, addedTransactions, tag, tieredStoId),
+          createTieredStoFactoryRefreshResolver(
+            factories.tieredStoFactory,
+            addedTransactions,
+            tag,
+            tieredStoId
+          ),
         ],
       })({ fundRaiseTypes: currencies });
     }
@@ -229,7 +239,12 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
         await this.addTransaction(stoModule.modifyOracles, {
           tag,
           resolvers: [
-            createRefreshResolver(factories.tieredStoFactory, addedTransactions, tag, tieredStoId),
+            createTieredStoFactoryRefreshResolver(
+              factories.tieredStoFactory,
+              addedTransactions,
+              tag,
+              tieredStoId
+            ),
           ],
         })({
           denominatedCurrencySymbol: currencySymbol,
@@ -279,7 +294,12 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyTiers, {
         tag,
         resolvers: [
-          createRefreshResolver(factories.tieredStoFactory, addedTransactions, tag, tieredStoId),
+          createTieredStoFactoryRefreshResolver(
+            factories.tieredStoFactory,
+            addedTransactions,
+            tag,
+            tieredStoId
+          ),
         ],
       })({
         ratePerTier,
@@ -306,7 +326,12 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyLimits, {
         tag,
         resolvers: [
-          createRefreshResolver(factories.tieredStoFactory, addedTransactions, tag, tieredStoId),
+          createTieredStoFactoryRefreshResolver(
+            factories.tieredStoFactory,
+            addedTransactions,
+            tag,
+            tieredStoId
+          ),
         ],
       })({
         minimumInvestmentUSD: minimumInvestment,
@@ -341,7 +366,12 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyAddresses, {
         tag,
         resolvers: [
-          createRefreshResolver(factories.tieredStoFactory, addedTransactions, tag, tieredStoId),
+          createTieredStoFactoryRefreshResolver(
+            factories.tieredStoFactory,
+            addedTransactions,
+            tag,
+            tieredStoId
+          ),
         ],
       })({
         treasuryWallet: unsoldTokensWallet,
