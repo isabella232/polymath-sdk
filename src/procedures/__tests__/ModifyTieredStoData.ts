@@ -218,6 +218,85 @@ describe('ModifyTieredStoData', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
+    test('should add a transaction to the queue to modify fund raise currency to ETH', async () => {
+      target = new ModifyTieredStoData(
+        {
+          ...tieredParams,
+          currencies: [Currency.ETH],
+        },
+        contextMock.getMockInstance()
+      );
+      const addTransactionSpy = spy(target, 'addTransaction');
+      tieredSto_3_1_0_Mock.mock('modifyFunding', Promise.resolve('ModifyFunding'));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyFunding)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyFunding);
+      expect(addTransactionSpy.callCount).toEqual(1);
+    });
+
+    test('should add a transaction to the queue to modify fund raise currency to POLY', async () => {
+      target = new ModifyTieredStoData(
+        {
+          ...tieredParams,
+          currencies: [Currency.POLY],
+        },
+        contextMock.getMockInstance()
+      );
+      const addTransactionSpy = spy(target, 'addTransaction');
+      tieredSto_3_1_0_Mock.mock('modifyFunding', Promise.resolve('ModifyFunding'));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyFunding)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyFunding);
+      expect(addTransactionSpy.callCount).toEqual(1);
+    });
+
+    /*
+    // TODO, seems that this logic doesn't work for stablecoin
+    test('should add a transaction to the queue to modify fund raise currency to stable coin', async () => {
+      // target = new ModifyTieredStoData(
+      //   {
+      //     ...tieredParams,
+      //     currencies: [Currency.StableCoin],
+      //   },
+      //   contextMock.getMockInstance()
+      // );
+      tieredStoFactoryMock.mock('fetch', {
+        ...tieredStoObject,
+        currencies: [Currency.POLY, Currency.ETH]
+      });
+      const addTransactionSpy = spy(target, 'addTransaction');
+      tieredSto_3_1_0_Mock.mock('modifyFunding', Promise.resolve('ModifyFunding'));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyFunding)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyFunding);
+      expect(addTransactionSpy.callCount).toEqual(1);
+    });
+    */
+
     test('should add a transaction to the queue to modify times with a V3.0.0 wrapper', async () => {
       target = new ModifyTieredStoData(
         {
