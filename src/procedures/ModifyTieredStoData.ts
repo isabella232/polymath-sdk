@@ -222,6 +222,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
         polyOracleAddress !== currentPolyOracleAddress
       ) {
         const tag = PolyTransactionTag.ModifyOracles;
+        addedTransactions.push(tag);
         await this.addTransaction(stoModule.modifyOracles, {
           tag,
           resolvers: [
