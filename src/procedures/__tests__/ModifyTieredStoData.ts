@@ -167,8 +167,6 @@ describe('ModifyTieredStoData', () => {
       new Wallet({ address: () => Promise.resolve(currentWalletAddress) })
     );
 
-    tieredSto_3_1_0_Mock.mock('isFinalized', Promise.resolve(false));
-
     tieredStoFactoryMock.mock('fetch', tieredStoObject);
 
     wrappersMock.mock('getTreasuryWallet', Promise.resolve(treasuryWallet));
