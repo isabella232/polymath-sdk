@@ -2,8 +2,7 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { restore, SinonStub, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import { BigNumber, ContractVersion } from '@polymathnetwork/contract-wrappers';
-import { FundRaiseType } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, ContractVersion, FundRaiseType } from '@polymathnetwork/contract-wrappers';
 import * as modifyTieredStoDataModule from '../ModifyTieredStoData';
 import { ModifyTieredStoData } from '../ModifyTieredStoData';
 import { Procedure } from '../Procedure';
@@ -33,11 +32,8 @@ const erc20TokenAddress = '0x9999999999999999999999999999999999999999';
 const tieredParams: ModifyTieredStoDataProcedureArgs = {
   symbol: 'TEST1',
   stoAddress: '0x5555555555555555555555555555555555555555',
-  startDate: new Date(2030, 1),
-  endDate: new Date(2040, 1),
   nonAccreditedInvestmentLimit: new BigNumber(1),
   minimumInvestment: new BigNumber(1),
-  currencies: [Currency.StableCoin],
   stableCoinAddresses: ['0x7777777777777777777777777777777777777777'],
 };
 
@@ -55,7 +51,7 @@ const tieredStoObject = {
   minimumInvestment: tieredParams.minimumInvestment,
   startDate: tieredParams.startDate,
   endDate: tieredParams.endDate,
-  fundraiseCurrencies: tieredParams.currencies,
+  fundraiseCurrencies: [FundRaiseType.ETH, FundRaiseType.StableCoin, FundRaiseType.POLY],
   raisedFundsWallet,
   stableCoinAddresses: tieredParams.stableCoinAddresses,
   tiers: [
@@ -264,10 +260,17 @@ describe('ModifyTieredStoData', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to modify fund raise currency to stable coin', async () => {
+    test('should add a transaction to the queue to modify fund raise currency in stable coin', async () => {
+      target = new ModifyTieredStoData(
+        {
+          ...tieredParams,
+          currencies: [Currency.StableCoin],
+        },
+        contextMock.getMockInstance()
+      );
       tieredStoFactoryMock.mock('fetch', {
         ...tieredStoObject,
-        fundraiseCurrencies: [Currency.POLY, Currency.ETH],
+        fundraiseCurrencies: [FundRaiseType.POLY, FundRaiseType.ETH],
       });
       const addTransactionSpy = spy(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyFunding', Promise.resolve('ModifyFunding'));
@@ -698,7 +701,20 @@ describe('ModifyTieredStoData', () => {
       );
     });
 
-    test('should throw if the tiered sto data has not been modified, there are no transactions to add to queue', async () => {
+    test('should throw if the tiered sto data params do not present valid modifications, there are no transactions to add to queue', async () => {
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.InvalidAddress,
+          message: `Modify STO data failed: nothing to modify`,
+        })
+      );
+    });
+
+    test('should throw if the tiered sto data params do not present valid modifications, there are no transactions to add to queue and no fundraise currencies fetched from the entity', async () => {
+      tieredStoFactoryMock.mock('fetch', {
+        ...tieredStoObject,
+        fundraiseCurrencies: [],
+      });
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.InvalidAddress,
