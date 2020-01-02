@@ -310,13 +310,100 @@ describe('ModifyTieredStoData', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to modify oracles', async () => {
+    test('should add a transaction to the queue to modify all oracle information', async () => {
       target = new ModifyTieredStoData(
         {
           ...tieredParams,
           customCurrency: {
             currencySymbol: 'CAD',
             ethOracleAddress: '0x0123456789012345678901234567890123456789',
+            polyOracleAddress: '0x1123456789012345678901234567890123456789',
+          },
+        },
+        contextMock.getMockInstance()
+      );
+
+      const addTransactionSpy = spy(target, 'addTransaction');
+      tieredSto_3_1_0_Mock.mock('modifyOracles', Promise.resolve('ModifyOracles'));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyOracles)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
+      expect(addTransactionSpy.callCount).toEqual(1);
+    });
+
+    test('should add a transaction to the queue to modify currency symbol oracle', async () => {
+      target = new ModifyTieredStoData(
+        {
+          ...tieredParams,
+          customCurrency: {
+            currencySymbol: 'THISONE',
+            ethOracleAddress: undefined,
+            polyOracleAddress: undefined,
+          },
+        },
+        contextMock.getMockInstance()
+      );
+
+      const addTransactionSpy = spy(target, 'addTransaction');
+      tieredSto_3_1_0_Mock.mock('modifyOracles', Promise.resolve('ModifyOracles'));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyOracles)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
+      expect(addTransactionSpy.callCount).toEqual(1);
+    });
+
+    test('should add a transaction to the queue to modify eth oracle address', async () => {
+      target = new ModifyTieredStoData(
+        {
+          ...tieredParams,
+          customCurrency: {
+            currencySymbol: undefined,
+            ethOracleAddress: '0x0123456789012345678901234567890123456789',
+            polyOracleAddress: undefined,
+          },
+        },
+        contextMock.getMockInstance()
+      );
+
+      const addTransactionSpy = spy(target, 'addTransaction');
+      tieredSto_3_1_0_Mock.mock('modifyOracles', Promise.resolve('ModifyOracles'));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyOracles)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
+      expect(addTransactionSpy.callCount).toEqual(1);
+    });
+
+    test('should add a transaction to the queue to modify poly oracle address', async () => {
+      target = new ModifyTieredStoData(
+        {
+          ...tieredParams,
+          customCurrency: {
+            currencySymbol: undefined,
+            ethOracleAddress: undefined,
             polyOracleAddress: '0x1123456789012345678901234567890123456789',
           },
         },
