@@ -13,7 +13,13 @@ import { Controller } from './Controller';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode, Version } from '../../types';
 
+/**
+ * Represents a unique security token representation
+ */
 export interface UniqueIdentifiers {
+  /**
+   * symbol of the security token
+   */
   symbol: string;
 }
 
@@ -23,15 +29,45 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof symbol === 'string';
 }
 
+/**
+ * Represents a single Security Token
+ */
 export interface Params {
+  /**
+   * name of the Security token
+   */
   name: string;
+  /**
+   * address of the Security token
+   */
   address: string;
+  /**
+   * the owner of the Security Token
+   */
   owner: string;
+  /**
+   * the off-chain data associated with the Security Token
+   */
   tokenDetails: string;
+  /**
+   * module version of the security token
+   */
   version: Version;
+  /**
+   * granularity level of the token
+   */
   granularity: number;
+  /**
+   * total number of market cap to be created
+   */
   totalSupply: BigNumber;
+  /**
+   * checkpoint id used to query historical balances
+   */
   currentCheckpoint: number;
+  /**
+   * ethereum address which will holds the STs
+   */
   treasuryWallet: string;
 }
 
@@ -48,6 +84,9 @@ export const unserialize = (serialized: string) => {
   return unserialized;
 };
 
+/**
+ * Class used to manage all the Security Token functionality
+ */
 export class SecurityToken extends Entity<Params> {
   public static generateId({ symbol }: UniqueIdentifiers) {
     return serialize('securityToken', {

@@ -6,16 +6,19 @@ import { AssignSecurityTokenRole } from '../../procedures';
 import { SecurityTokenRole, Feature, ErrorCode } from '../../types';
 import { PolymathError } from '../../PolymathError';
 
+/**
+ * Permissions implementation used to manage the permissions flags that are associated with STO
+ */
 export class Permissions extends SubModule {
   /**
    * Get a list of all available roles.
    * The returned roles depend on which features are enabled, as per:
    *
-   * Feature           Roles
-   * -------------------------
-   * Permissions       Permissions Administrator
-   * Shareholders      Shareholders Administrator
-   * Dividends         Dividends Administrator, Dividends Operator
+   * | Feature      | Roles                                       |
+   * |--------------|---------------------------------------------|
+   * | Permissions  | Permissions Administrator                   |
+   * | Shareholders | Shareholders Administrator                  |
+   * | Dividends    | Dividends Administrator, Dividends Operator |
    */
   public getAvailableRoles = async () => {
     const {
@@ -46,8 +49,6 @@ export class Permissions extends SubModule {
 
   /**
    * Returns whether a certain role is available to be assigned to delegates
-   *
-   * @param role role for which to check availability
    */
   public isRoleAvailable = async (args: { role: SecurityTokenRole }) => {
     const { role } = args;
@@ -58,8 +59,6 @@ export class Permissions extends SubModule {
 
   /**
    * Returns which feature is associated with the supplied role
-   *
-   * @param role
    */
   public getFeatureFromRole = async (args: { role: SecurityTokenRole }) => {
     const {
@@ -89,9 +88,7 @@ export class Permissions extends SubModule {
   /**
    * Assigns a role on the Security Token to a delegate
    *
-   * @param delegateAddress wallet address of the delegate
-   * @param role role to assign
-   * @param description description of the delegate (is ignored if the delegate already exists)
+   * @param args.description - is ignored if the delegate already exists
    */
   public assignRole = async (args: {
     delegateAddress: string;
@@ -114,9 +111,6 @@ export class Permissions extends SubModule {
 
   /**
    * Removes a role from a delegate
-   *
-   * @param delegateAddress wallet address of the delegate
-   * @param role role to revoke
    */
   public revokeRole = async (args: { delegateAddress: string; role: SecurityTokenRole }) => {
     const { symbol } = this.securityToken;
@@ -136,8 +130,6 @@ export class Permissions extends SubModule {
 
   /**
    * Returns the list of roles assigned to a delegate address
-   *
-   * @param delegateAddress address for which to return assigned roles
    */
   public getAssignedRoles = async (args: { delegateAddress: string }) => {
     const { delegateAddress: delegate } = args;
@@ -186,8 +178,6 @@ export class Permissions extends SubModule {
 
   /**
    * Returns the list of delegate addresses and details that hold a specific role
-   *
-   * @param role role for which delegates must be fetched
    */
   public getDelegatesForRole = async (args: { role: SecurityTokenRole }) => {
     const { role } = args;

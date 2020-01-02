@@ -11,18 +11,22 @@ import { BaseCheckpoint } from '../../PolymathBase';
 import { DividendDistribution } from '../DividendDistribution';
 import { Shareholder } from '../Shareholder';
 
+/**
+ * Represents a single checkpoint identifier
+ */
+export interface GetCheckpointParams {
+  checkpointIndex: number;
+}
+
+/**
+ * Shareholders implementation used to manage shareholder and checkpoint data associated with STO
+ */
 export class Shareholders extends SubModule {
   /**
    * Add/modify investor data. For an investor to be able to hold, sell or purchase tokens, his address (and other KYC data)
    * must be added/modified via this method
    *
-   * @param shareholderData array of shareholder data to add/modify
-   * @param shareholderData[].address address of the shareholder whose data will be added/modified
-   * @param shareholderData[].canSendAfter date after which the shareholder can transfer tokens
-   * @param shareholderData[].canReceiveAfter date after which the shareholder can receive tokens
-   * @param shareholderData[].kycExpiry date at which the shareholder's KYC expires
-   * @param shareholderData[].isAccredited whether the shareholder is accredited (defaults to false)
-   * @param shareholderData[].canBuyFromSto whether the shareholder is allowed to purchase tokens in an STO (defaults to true)
+   * @param args.shareholderData - array of shareholder data to add/modify
    */
   public modifyData = async (args: { shareholderData: ShareholderDataEntry[] }) => {
     const procedure = new ModifyShareholderData(
@@ -37,8 +41,6 @@ export class Shareholders extends SubModule {
 
   /**
    * Revokes KYC for a group of shareholder addresses. Supplied addresses must have valid KYC
-   *
-   * @param shareholderAddresses array of shareholder addresses
    */
   public revokeKyc = async (args: { shareholderAddresses: string[] }) => {
     const procedure = new RevokeKyc(
@@ -126,15 +128,9 @@ export class Shareholders extends SubModule {
   /**
    * Retrieve a checkpoint from the security token by index or UUID
    *
-   * @param checkpointIndex index of the checkpoint within the Security Token
+   * @param args - checkpoint UID or object containing its index
    */
-  public getCheckpoint = async (
-    args:
-      | {
-          checkpointIndex: number;
-        }
-      | string
-  ) => {
+  public getCheckpoint = async (args: GetCheckpointParams | string) => {
     const { factories } = this.context;
     const { uid: securityTokenId } = this.securityToken;
 
