@@ -22,10 +22,9 @@ export class ModifyPreIssuing extends Procedure<ModifyPreIssuingProcedureArgs> {
     const { stoAddress, stoType, symbol, allowPreIssuing } = this.args;
     const { contractWrappers, factories } = this.context;
 
-    /**
+    /*
      * Validation
      */
-
     if (!isValidAddress(stoAddress)) {
       throw new PolymathError({
         code: ErrorCode.InvalidAddress,
@@ -88,10 +87,9 @@ export class ModifyPreIssuing extends Procedure<ModifyPreIssuingProcedureArgs> {
       });
     }
 
-    /**
+    /*
      * Transactions
      */
-
     await this.addTransaction(
       allowPreIssuing ? stoModule.allowPreMinting : stoModule.revokePreMintFlag,
       {

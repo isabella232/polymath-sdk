@@ -43,7 +43,7 @@ export class AssignStoRole extends Procedure<AssignStoRoleProcedureArgs> {
     const delegates = await permissionModule.getAllDelegates();
     const exists = delegates.filter(element => element === delegate).length > 0;
 
-    /**
+    /*
      * In the following block we attempt to:
      * - Find whether the delegate address is already present. Otherwise add them
      * - Find whether the current delegate permission is equal to the provided one. Otherwise change permissions

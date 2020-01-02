@@ -31,12 +31,13 @@ import {
   isPercentageTransferManager,
   isVolumeRestrictionTransferManager,
   isRestrictedPartialSaleTransferManager,
+  EtherDividendCheckpoint,
 } from '@polymathnetwork/contract-wrappers';
 import { range, flatten } from 'lodash';
 import P from 'bluebird';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';
-import { ErrorCode, Module, SecurityTokenRole, ShareholderBalance } from './types';
+import { ErrorCode, SecurityTokenRole, ShareholderBalance } from './types';
 import { ZERO_ADDRESS } from './utils/constants';
 
 interface GetModuleAddressesByNameParams {
@@ -191,6 +192,22 @@ export interface BaseDividend {
   currency: string | null;
   shareholders: DividendShareholderStatus[];
 }
+
+export type Module =
+  | GeneralPermissionManager
+  | GeneralTransferManager
+  | BlacklistTransferManager
+  | LockUpTransferManager
+  | CountTransferManager
+  | ManualApprovalTransferManager
+  | PercentageTransferManager
+  | VolumeRestrictionTransferManager
+  | RestrictedPartialSaleTransferManager
+  | CappedSTO
+  | USDTieredSTO
+  | ERC20DividendCheckpoint
+  | EtherDividendCheckpoint
+  | VestingEscrowWallet;
 
 export class PolymathBase extends PolymathAPI {
   public getModuleFactoryAddress = async ({

@@ -52,7 +52,7 @@ export class TogglePauseSto extends Procedure<TogglePauseStoProcedureArgs> {
     const { stoAddress, stoType, symbol, pause } = this.args;
     const { contractWrappers, factories } = this.context;
 
-    /**
+    /*
      * Validation
      */
 
@@ -95,7 +95,7 @@ export class TogglePauseSto extends Procedure<TogglePauseStoProcedureArgs> {
       });
     }
 
-    /**
+    /*
      * Transactions
      */
     await this.addTransaction(pause ? stoModule.pause : stoModule.unpause, {

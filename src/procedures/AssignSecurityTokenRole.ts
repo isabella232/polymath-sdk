@@ -66,7 +66,7 @@ export class AssignSecurityTokenRole extends Procedure<AssignSecurityTokenRolePr
     const exists =
       delegates.filter(element => element.toUpperCase() === delegate.toUpperCase()).length > 0;
 
-    /**
+    /*
      * In the following block we attempt to:
      * - Find whether the delegate address is already present. Otherwise add them
      * - Find whether the current delegate permission is equal to the provided one. Otherwise change permissions

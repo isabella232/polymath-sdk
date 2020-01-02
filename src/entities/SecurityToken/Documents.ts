@@ -70,9 +70,11 @@ export class Documents extends SubModule {
     let securityTokenInstance;
 
     try {
-      securityTokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
-        symbol
-      );
+      // prettier-ignore
+      securityTokenInstance =
+        await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+          symbol
+        );
     } catch (err) {
       throw new PolymathError({
         code: ErrorCode.FetcherValidationError,
@@ -97,9 +99,11 @@ export class Documents extends SubModule {
     let securityTokenInstance;
 
     try {
-      securityTokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
-        symbol
-      );
+      // prettier-ignore
+      securityTokenInstance =
+        await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+          symbol
+        );
     } catch (err) {
       throw new PolymathError({
         code: ErrorCode.FetcherValidationError,
