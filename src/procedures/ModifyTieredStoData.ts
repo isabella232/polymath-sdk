@@ -217,8 +217,8 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       }
 
       if (
-        currencySymbol !== denominatedCurrency &&
-        ethOracleAddress !== currentEthOracleAddress &&
+        currencySymbol !== denominatedCurrency ||
+        ethOracleAddress !== currentEthOracleAddress ||
         polyOracleAddress !== currentPolyOracleAddress
       ) {
         const tag = PolyTransactionTag.ModifyOracles;
