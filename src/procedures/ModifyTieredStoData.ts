@@ -154,9 +154,9 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       }
     }
 
-    const willRaiseinEth = currencies.find(cur => cur === Currency.ETH);
-    const willRaiseinPoly = currencies.find(cur => cur === Currency.POLY);
-    const willRaiseinSc = currencies.find(cur => cur === Currency.StableCoin);
+    const willRaiseinEth = currencies.includes(Currency.ETH);
+    const willRaiseinPoly = currencies.includes(Currency.POLY);
+    const willRaiseinSc = currencies.includes(Currency.StableCoin);
 
     const areSameCurrencies =
       ((!isRaisedInETH && !willRaiseinEth) || (isRaisedInETH && willRaiseinEth)) &&
