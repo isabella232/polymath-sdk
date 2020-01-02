@@ -8,6 +8,7 @@ import {
   StoRole,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { isValidBytes32CompliantString } from '~/utils';
 
 export class AssignStoRole extends Procedure<AssignStoRoleProcedureArgs> {
   public type = ProcedureType.AssignStoRole;
@@ -66,6 +67,7 @@ export class AssignStoRole extends Procedure<AssignStoRoleProcedureArgs> {
         });
       }
     } else {
+      isValidBytes32CompliantString(description, 'description');
       // Delegate not found. Add them here
       await this.addTransaction(permissionModule.addDelegate, {
         tag: PolyTransactionTag.ChangePermission,

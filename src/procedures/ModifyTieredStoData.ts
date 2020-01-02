@@ -16,7 +16,7 @@ import {
   StoTier,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-import { areSameAddress } from '../utils';
+import { areSameAddress, isValidBytes32CompliantString } from '../utils';
 import { SecurityToken, TieredSto } from '../entities';
 import { TieredStoFactory } from '../entities/factories';
 
@@ -227,6 +227,8 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       if (!polyOracleAddress) {
         polyOracleAddress = currentPolyOracleAddress;
       }
+
+      isValidBytes32CompliantString(currencySymbol, 'denominated currency symbol');
 
       if (
         currencySymbol !== denominatedCurrency &&

@@ -1,6 +1,7 @@
 import { Procedure } from './Procedure';
 import { ProcedureType, PolyTransactionTag, SetDocumentProcedureArgs, ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
+import { isNotEmptyValidBytes32CompliantString } from '~/utils';
 
 export class SetDocument extends Procedure<SetDocumentProcedureArgs> {
   public type = ProcedureType.SetDocument;
@@ -31,19 +32,8 @@ export class SetDocument extends Procedure<SetDocumentProcedureArgs> {
       });
     }
 
-    if (name.length < 1 || name.length > 32) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `You must provide a valid name between 1 and 32 characters long`,
-      });
-    }
-
-    if (documentHash.length < 1 || documentHash.length > 32) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `You must provide a valid document hash between between 1 and 32 characters long`,
-      });
-    }
+    isNotEmptyValidBytes32CompliantString(name, 'name');
+    isNotEmptyValidBytes32CompliantString(documentHash, 'document hash');
 
     /*
      * Transactions

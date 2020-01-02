@@ -51,6 +51,24 @@ export function areSameAddress(a: string, b: string) {
   return a.toUpperCase() === b.toUpperCase();
 }
 
+export function isValidBytes32CompliantString(value: string, variableName: string) {
+  if (value.length > 32) {
+    throw new PolymathError({
+      code: ErrorCode.ProcedureValidationError,
+      message: `You must provide a valid ${variableName} up to 32 characters long`,
+    });
+  }
+}
+
+export function isNotEmptyValidBytes32CompliantString(value: string, variableName: string) {
+  if (value.length < 1 || value.length > 32) {
+    throw new PolymathError({
+      code: ErrorCode.ProcedureValidationError,
+      message: `You must provide a valid ${variableName} between 1 and 32 characters long`,
+    });
+  }
+}
+
 export function serialize(entityType: string, pojo: Pojo) {
   return Buffer.from(`${entityType}:${stringify(pojo)}`).toString('base64');
 }
