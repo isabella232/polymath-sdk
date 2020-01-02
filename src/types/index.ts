@@ -1,27 +1,17 @@
 import {
-  PolyResponse,
   BigNumber,
   FundRaiseType as Currency,
   ContractVersion as Version,
-  GeneralTransferManager,
-  GeneralPermissionManager,
-  CountTransferManager,
-  ManualApprovalTransferManager,
-  PercentageTransferManager,
-  VolumeRestrictionTransferManager,
-  CappedSTO,
-  USDTieredSTO,
-  ERC20DividendCheckpoint,
-  EtherDividendCheckpoint,
-  VestingEscrowWallet,
-  BlacklistTransferManager,
-  LockUpTransferManager,
-  RestrictedPartialSaleTransferManager,
   ModuleName,
+  PolyResponse,
   TransactionReceiptWithDecodedLogs,
 } from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
 import { PostTransactionResolver } from '../PostTransactionResolver';
+
+/*
+ * External Types
+ */
 
 export { Currency };
 export { Version };
@@ -79,41 +69,6 @@ export enum ErrorCode {
 export interface ShareholderBalance {
   address: string;
   balance: BigNumber;
-}
-
-export type LowLevelMethod<A> = (args: A) => Promise<PolyResponse>;
-export type SignatureRequest<A> = (args: A) => Promise<string>;
-
-/**
- * Represents a contract method that doesn't exist yet but will exist
- * once a certain post transaction resolver is resolved
- *
- * @param futureMethod function that returns a low level method
- * @param futureValue post transaction resolver that resolves into the value that is passed to the future method
- */
-export interface FutureLowLevelMethod<T, U> {
-  futureMethod: (resolvedValue: T) => Promise<LowLevelMethod<U>>;
-  futureValue: PostTransactionResolver<T>;
-}
-
-export type ResolverArray<R extends any[]> = {
-  [P in keyof R]: (receipt: TransactionReceiptWithDecodedLogs) => Promise<R[P]>
-};
-
-export type PostTransactionResolverArray<Value extends any[], Receipt extends any> = {
-  [P in keyof Value]: PostTransactionResolver<Value[P], Receipt>
-};
-
-export interface TransactionSpec<
-  Args = any,
-  Value extends any[] = any[],
-  Receipt extends any = any,
-  FutureValue extends any = any
-> {
-  method: LowLevelMethod<Args> | SignatureRequest<Args> | FutureLowLevelMethod<FutureValue, Args>;
-  args: MapMaybeResolver<Args>;
-  postTransactionResolvers?: PostTransactionResolverArray<Value, Receipt>;
-  tag?: PolyTransactionTag;
 }
 
 export enum ProcedureType {
@@ -233,9 +188,6 @@ export enum PolyTransactionTag {
   Signature = 'Signature',
   TransferReservationOwnership = 'TransferReservationOwnership',
 }
-
-export type MaybeResolver<T> = PostTransactionResolver<T, any> | T;
-export type MapMaybeResolver<T> = { [K in keyof T]: MaybeResolver<T[K]> };
 
 // TODO @monitz87: remake this interface when contract-wrappers exports the tx arguments
 // export interface TransactionArguments {
@@ -740,8 +692,6 @@ export function isPojo(pojo: any): pojo is Pojo {
   );
 }
 
-export type Omit<T, K> = { [key in Exclude<keyof T, K>]: T[key] };
-
 export enum TransactionSpeed {
   Slow = 'Slow',
   Medium = 'Medium',
@@ -783,18 +733,87 @@ export enum TransferStatusCode {
   InvalidOperator = 'InvalidOperator',
 }
 
-export type Module =
-  | GeneralPermissionManager
-  | GeneralTransferManager
-  | BlacklistTransferManager
-  | LockUpTransferManager
-  | CountTransferManager
-  | ManualApprovalTransferManager
-  | PercentageTransferManager
-  | VolumeRestrictionTransferManager
-  | RestrictedPartialSaleTransferManager
-  | CappedSTO
-  | USDTieredSTO
-  | ERC20DividendCheckpoint
-  | EtherDividendCheckpoint
-  | VestingEscrowWallet;
+/*
+ * Internal Types
+ */
+
+/**
+ * Return the type that results from excluding a property from another type
+ *
+ * @param T - type to exclude from
+ * @param K - name of the property that will be excluded
+ */
+export type Omit<T, K> = { [key in Exclude<keyof T, K>]: T[key] };
+
+/**
+ * Transaction method from the contract-wrappers package
+ *
+ * @param A - type of the arguments object that the method receives when being called
+ */
+export type LowLevelMethod<A> = (args: A) => Promise<PolyResponse>;
+
+/**
+ * Signature request method from the contract-wrappers package
+ *
+ * @param A - type of the arguments object that the method receives when being called
+ */
+export type SignatureRequest<A> = (args: A) => Promise<string>;
+
+/**
+ * Represents a contract method that doesn't exist yet but will exist
+ * once a certain post transaction resolver is resolved
+ *
+ * @param T - type of the value that will be resolved by the post transaction resolver
+ * @param U - type of the arguments object that the future method will accept
+ */
+export interface FutureLowLevelMethod<T, U> {
+  /**
+   * function that returns a low level method
+   */
+  futureMethod: (resolvedValue: T) => Promise<LowLevelMethod<U>>;
+  /**
+   * post transaction resolver that resolves into the value that is passed to the future method
+   */
+  futureValue: PostTransactionResolver<T>;
+}
+
+/**
+ * Transforms a tuple of types into an array of resolver functions. For each type in the tuple, the corresponding resolver function returns that type wrapped in a promise
+ */
+export type ResolverArray<R extends any[]> = {
+  [P in keyof R]: (receipt: TransactionReceiptWithDecodedLogs) => Promise<R[P]>
+};
+
+/**
+ * Transforms a tuple of types into an array of Post Transaction Resolvers. For each type in the tuple, the corresponding Post Transaction Resolver resolves to that type
+ *
+ * @param Receipt - type of the receipt that the Post Transaction Resolver's resolver function will receive
+ */
+export type PostTransactionResolverArray<Value extends any[], Receipt extends any> = {
+  [P in keyof Value]: PostTransactionResolver<Value[P], Receipt>
+};
+
+/**
+ * Either a specific type or a Post Transaction Resolver that resolves to that type
+ */
+export type MaybeResolver<T> = PostTransactionResolver<T, any> | T;
+
+/**
+ * Apply the MaybeResolver type to a tuple of types
+ */
+export type MapMaybeResolver<T> = { [K in keyof T]: MaybeResolver<T[K]> };
+
+/**
+ * Schema of a specific transaction
+ */
+export interface TransactionSpec<
+  Args = any,
+  Value extends any[] = any[],
+  Receipt extends any = any,
+  FutureValue extends any = any
+> {
+  method: LowLevelMethod<Args> | SignatureRequest<Args> | FutureLowLevelMethod<FutureValue, Args>;
+  args: MapMaybeResolver<Args>;
+  postTransactionResolvers?: PostTransactionResolverArray<Value, Receipt>;
+  tag?: PolyTransactionTag;
+}
