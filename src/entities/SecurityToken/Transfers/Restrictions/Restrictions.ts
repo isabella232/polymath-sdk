@@ -15,6 +15,9 @@ export class Restrictions extends SubModule {
 
   public percentage: PercentageRestrictions;
 
+  /**
+   * Create a new Restrictions instance
+   */
   constructor(securityToken: SecurityToken, context: Context) {
     super(securityToken, context);
 

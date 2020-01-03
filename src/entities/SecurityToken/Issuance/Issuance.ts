@@ -13,6 +13,9 @@ import { PolymathError } from '../../../PolymathError';
 export class Issuance extends SubModule {
   public offerings: Offerings;
 
+  /**
+   * Create a new Issuance instance
+   */
   constructor(securityToken: SecurityToken, context: Context) {
     super(securityToken, context);
 

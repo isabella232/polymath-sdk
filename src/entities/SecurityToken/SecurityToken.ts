@@ -14,7 +14,7 @@ import { PolymathError } from '../../PolymathError';
 import { ErrorCode, Version } from '../../types';
 
 /**
- * Represents a unique security token representation
+ * Represents a unique security token
  */
 export interface UniqueIdentifiers {
   /**
@@ -23,6 +23,11 @@ export interface UniqueIdentifiers {
   symbol: string;
 }
 
+/**
+ * Check if the provided value is of type [[UniqueIdentifiers]]
+ *
+ * @param identifiers - internal security token representation
+ */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { symbol } = identifiers;
 
@@ -71,6 +76,11 @@ export interface Params {
   treasuryWallet: string;
 }
 
+/**
+ * Unserialize string to a Security Token object representation
+ *
+ * @param serialize - security token's serialized representation
+ */
 export const unserialize = (serialized: string) => {
   const unserialized = unserializeUtil(serialized);
 
@@ -88,6 +98,9 @@ export const unserialize = (serialized: string) => {
  * Class used to manage all the Security Token functionality
  */
 export class SecurityToken extends Entity<Params> {
+  /**
+   * Transform object to string
+   */
   public static generateId({ symbol }: UniqueIdentifiers) {
     return serialize('securityToken', {
       symbol,
@@ -134,6 +147,9 @@ export class SecurityToken extends Entity<Params> {
 
   public documents: Documents;
 
+  /**
+   * Create a new SecurityToken instance
+   */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
@@ -171,6 +187,9 @@ export class SecurityToken extends Entity<Params> {
     this.controller = new Controller(this, context);
   }
 
+  /**
+   * Convert entity as a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const {
       uid,
@@ -201,6 +220,9 @@ export class SecurityToken extends Entity<Params> {
     };
   }
 
+  /**
+   * Hydrating the entity
+   */
   public _refresh(params: Partial<Params>) {
     const {
       name,

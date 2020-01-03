@@ -20,6 +20,9 @@ import { PolymathError } from '../../../PolymathError';
 export class Transfers extends SubModule {
   public restrictions: Restrictions;
 
+  /**
+   * Create a new Transfers instance
+   */
   constructor(securityToken: SecurityToken, context: Context) {
     super(securityToken, context);
 

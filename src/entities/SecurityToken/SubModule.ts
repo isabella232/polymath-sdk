@@ -12,6 +12,9 @@ export class SubModule {
 
   protected context: Context;
 
+  /**
+   * Create a new SubModule instance
+   */
   constructor(securityToken: SecurityToken, context: Context) {
     this.securityToken = securityToken;
     this.context = context;
