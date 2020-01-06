@@ -5,6 +5,9 @@ import { Currency } from '../../types';
 import { SimpleSto, Params, UniqueIdentifiers } from '../SimpleSto';
 import { SecurityToken } from '../SecurityToken';
 
+/**
+ * Factory generates information for a simple sto entity
+ */
 export class SimpleStoFactory extends Factory<SimpleSto, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
     const { securityTokenId, stoType, address } = SimpleSto.unserialize(uid);
@@ -75,6 +78,11 @@ export class SimpleStoFactory extends Factory<SimpleSto, Params, UniqueIdentifie
     };
   };
 
+  /**
+   * Creates an instance of the simple sto factory
+   *
+   * @param context the context in which sdk will be used
+   */
   constructor(context: Context) {
     super(SimpleSto, context);
   }
