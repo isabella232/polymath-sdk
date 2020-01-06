@@ -154,8 +154,6 @@ describe('InvestInSimpleSto', () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       simpleStoMock.mock('buyTokensWithPoly', Promise.resolve('BuyTokensWithPoly'));
 
-      securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(10)));
-
       // Real call
       await target.prepareTransactions();
 

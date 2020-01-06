@@ -75,12 +75,7 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
       });
     }
 
-    function throwStoModuleError() {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `STO ${stoAddress} is either archived or hasn't been launched`,
-      });
-    }
+    const stoModuleErrorMessage = `STO ${stoAddress} is either archived or hasn't been launched`;
 
     let stoModule;
     let remainingTokens: BigNumber;
@@ -93,7 +88,10 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
         });
 
         if (!stoModule) {
-          throwStoModuleError();
+          throw new PolymathError({
+            code: ErrorCode.ProcedureValidationError,
+            message: stoModuleErrorMessage,
+          });
         }
 
         if (isCappedSTO_3_0_0(stoModule)) {
@@ -116,7 +114,10 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
         });
 
         if (!stoModule) {
-          throwStoModuleError();
+          throw new PolymathError({
+            code: ErrorCode.ProcedureValidationError,
+            message: stoModuleErrorMessage,
+          });
         }
 
         const { tokensSold, capPerTier } = await stoModule.getSTODetails();

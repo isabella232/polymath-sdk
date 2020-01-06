@@ -162,8 +162,6 @@ describe('InvestInTieredSto', () => {
       const addProcedureSpy = spy(target, 'addProcedure');
       tieredStoMock.mock('buyWithUSDRateLimited', Promise.resolve('BuyWithUSDRateLimited'));
 
-      securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(10)));
-
       // Real call
       await target.prepareTransactions();
 
@@ -193,8 +191,6 @@ describe('InvestInTieredSto', () => {
       const addTransactionSpy = spy(target, 'addTransaction');
       const addProcedureSpy = spy(target, 'addProcedure');
       tieredStoMock.mock('buyWithUSDRateLimited', Promise.resolve('BuyWithUSDRateLimited'));
-
-      securityTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(10)));
 
       // Real call
       await target.prepareTransactions();
