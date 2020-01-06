@@ -84,7 +84,13 @@ export interface Params {
    * whether or not the sto has been finalized
    */
   isFinalized: boolean;
+  /**
+   * whether or not pre issuance is allowed for the sto
+   */
   preIssueAllowed: boolean;
+  /**
+   * whether or not investments can be made on behalf of a beneficiary in the sto
+   */
   beneficialInvestmentsAllowed: boolean;
 }
 
@@ -131,7 +137,7 @@ export abstract class Sto<P> extends Entity<P> {
   protected context: Context;
 
   /**
-   * Unserialize string to a Security Token object representation
+   * Unserialize string to a Security Token Offering object representation
    *
    * @param serialize - security token's serialized representation
    */
