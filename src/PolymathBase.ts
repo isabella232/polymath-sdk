@@ -31,12 +31,13 @@ import {
   isPercentageTransferManager,
   isVolumeRestrictionTransferManager,
   isRestrictedPartialSaleTransferManager,
+  EtherDividendCheckpoint,
 } from '@polymathnetwork/contract-wrappers';
 import { range, flatten } from 'lodash';
 import P from 'bluebird';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';
-import { ErrorCode, Module, SecurityTokenRole } from './types';
+import { ErrorCode, SecurityTokenRole } from './types';
 import { ZERO_ADDRESS } from './utils/constants';
 
 interface GetModuleAddressesByNameParams {
@@ -197,6 +198,22 @@ export interface BaseDividend {
   shareholders: DividendShareholderStatus[];
 }
 
+export type Module =
+  | GeneralPermissionManager
+  | GeneralTransferManager
+  | BlacklistTransferManager
+  | LockUpTransferManager
+  | CountTransferManager
+  | ManualApprovalTransferManager
+  | PercentageTransferManager
+  | VolumeRestrictionTransferManager
+  | RestrictedPartialSaleTransferManager
+  | CappedSTO
+  | USDTieredSTO
+  | ERC20DividendCheckpoint
+  | EtherDividendCheckpoint
+  | VestingEscrowWallet;
+
 export class PolymathBase extends PolymathAPI {
   public getModuleFactoryAddress = async ({
     moduleName,
@@ -229,7 +246,7 @@ export class PolymathBase extends PolymathAPI {
     let latestVersion = '0.0.0';
 
     // Get latest version of the module factory
-    for (const moduleAddress of availableModules) {
+    await P.each(availableModules, async moduleAddress => {
       const moduleFactory = await this.moduleFactory.getModuleFactory(moduleAddress);
       const name = await moduleFactory.name();
 
@@ -240,10 +257,10 @@ export class PolymathBase extends PolymathAPI {
           address = moduleAddress;
         }
       }
-    }
+    });
 
     if (address !== null) {
-      return address;
+      return address as string;
     }
 
     throw new PolymathError({
@@ -568,13 +585,11 @@ export class PolymathBase extends PolymathAPI {
     dividendIndex: number;
     dividendsModule: ERC20DividendCheckpoint;
   }): Promise<BaseDividend> => {
-    let symbol: string;
-
     const tokenAddress = await dividendsModule.dividendTokens({ dividendIndex });
 
     const token = await this.tokenFactory.getERC20TokenInstanceFromAddress(tokenAddress);
 
-    symbol = await token.symbol();
+    const symbol = await token.symbol();
 
     const dividend = await dividendsModule.dividends({ dividendIndex });
 

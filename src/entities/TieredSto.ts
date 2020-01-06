@@ -15,7 +15,6 @@ import { StoTier, Currency, InvestInTieredStoProcedureArgs, CustomCurrency } fro
 import { ModifyTieredStoData, InvestInTieredSto } from '../procedures';
 import { TransactionQueue } from './TransactionQueue';
 import { Investment } from './Investment';
-import { ZERO_ADDRESS } from '../utils/constants';
 
 const { weiToValue } = conversionUtils;
 
@@ -208,6 +207,7 @@ export class TieredSto extends Sto<Params> {
     params: InvestInStableCoinParams
   ): Promise<TransactionQueue<InvestInTieredStoProcedureArgs>>;
 
+  /* eslint-disable no-dupe-class-members */
   public invest(
     params: InvestInOtherParams
   ): Promise<TransactionQueue<InvestInTieredStoProcedureArgs>>;
@@ -237,6 +237,7 @@ export class TieredSto extends Sto<Params> {
 
     return procedure.prepare();
   }
+  /* eslint-enable no-dupe-class-members */
 
   public toPojo() {
     const stoPojo = super.toPojo();

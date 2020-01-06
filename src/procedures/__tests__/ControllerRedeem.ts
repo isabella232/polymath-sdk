@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy } from 'sinon';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
@@ -147,7 +148,7 @@ describe('ControllerRedeem', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.InvalidAddress,
-          message: `Provided \"from\" address is invalid: Inappropriate`,
+          message: `Provided "from" address is invalid: Inappropriate`,
         })
       );
     });

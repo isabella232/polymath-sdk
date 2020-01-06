@@ -33,6 +33,8 @@ const createRefreshResolver = (
       TieredSto.generateId({ securityTokenId, stoType: StoType.Tiered, address: stoAddress })
     );
   }
+
+  return undefined;
 };
 
 export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureArgs> {
@@ -40,9 +42,8 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
 
   public async prepareTransactions() {
     const { args, context } = this;
+    const { symbol, stoAddress } = args;
     let {
-      symbol,
-      stoAddress,
       startDate,
       endDate,
       tiers,
@@ -282,9 +283,13 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
 
       tiers.forEach(({ tokensOnSale, tokensWithDiscount, price, discountedPrice }) => {
         tokensPerTierTotal.push(tokensOnSale);
-        tokensWithDiscount && tokensPerTierDiscountPoly.push(tokensWithDiscount);
+        if (tokensWithDiscount) {
+          tokensPerTierDiscountPoly.push(tokensWithDiscount);
+        }
+        if (discountedPrice) {
+          ratePerTierDiscountPoly.push(discountedPrice);
+        }
         ratePerTier.push(price);
-        discountedPrice && ratePerTierDiscountPoly.push(discountedPrice);
       });
 
       const tag = PolyTransactionTag.ModifyTiers;

@@ -1,8 +1,9 @@
+/* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager, StaticMockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
-import { BigNumber, GeneralTransferManager_3_0_0 } from '@polymathnetwork/contract-wrappers';
+import { GeneralTransferManager_3_0_0 } from '@polymathnetwork/contract-wrappers';
 import { cloneDeep } from 'lodash';
 import { ModifyShareholderData } from '../../procedures/ModifyShareholderData';
 import { Procedure } from '../../procedures/Procedure';
