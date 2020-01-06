@@ -9,7 +9,7 @@ import { RemoveDocument } from '../../procedures/RemoveDocument';
  */
 interface Document {
   /**
-   * name of the document. It should be unique always
+   * name of the document. It should always be unique
    */
   name: string;
   /**
@@ -17,7 +17,7 @@ interface Document {
    */
   documentUri: string;
   /**
-   * content's hash of the document
+   * hash of the document's content
    */
   documentHash: string;
   /**
@@ -33,7 +33,7 @@ export class Documents extends SubModule {
   /**
    * Attach a new document to the contract, or update the URI or hash of an existing attached document
    *
-   * @param args.name - it should be unique always
+   * @param args.name - should always be unique
    * @param args.uri - off-chain uri of the document from where it is accessible to investors/advisors to read
    */
   public async set(args: { name: string; uri: string; documentHash: string }) {
@@ -47,7 +47,7 @@ export class Documents extends SubModule {
   /**
    * Remove an existing document from the contract giving the name of the document
    *
-   * @param args.name - it should be unique always
+   * @param args.name - should always be unique
    */
   public async remove(args: { name: string }) {
     const { symbol } = this.securityToken;

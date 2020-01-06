@@ -69,8 +69,8 @@ export class Controller extends SubModule {
    * This operation is subject to transfer restrictions and the amount is limited by the token holder's balance.
    * `balanceOf(tokenHolder)` tokens) and potentially also need to respect other transfer restrictions.
    *
-   * @param args.amount - of tokens to be redeemed
-   * @param args.address - of the token holder
+   * @param args.amount - amount of tokens to be redeemed
+   * @param args.address - address of the token holder
    * @param args.reason - optional message to describe why the redemption occurred
    * @param args.data - optional data used to validate the transfer
    */
