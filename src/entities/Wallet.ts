@@ -5,6 +5,9 @@ import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 import { Context } from '../Context';
 
+/**
+ * Represents a unique wallet
+ */
 export interface UniqueIdentifiers {
   address: string;
 }
@@ -15,8 +18,14 @@ function isUniqueIdentifiers(identifier: any): identifier is UniqueIdentifiers {
   return typeof address === 'string';
 }
 
+/**
+ * Represents a wallet
+ */
 export interface Params extends UniqueIdentifiers {}
 
+/**
+ * Used to manage a wallet
+ */
 export class Wallet extends Entity<Params> {
   public static generateId({ address }: UniqueIdentifiers) {
     return serialize('wallet', {
@@ -24,6 +33,11 @@ export class Wallet extends Entity<Params> {
     });
   }
 
+  /**
+   * Unserialize a serialized entity
+   *
+   * @param serialized string with entity information
+   */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
@@ -43,6 +57,11 @@ export class Wallet extends Entity<Params> {
 
   protected context: Context;
 
+  /**
+   * Create a wallet entity
+   * @param params unique params for wallet
+   * @param context the context in which the sdk will be used
+   */
   constructor(params: Params, context: Context) {
     super();
 
@@ -55,6 +74,9 @@ export class Wallet extends Entity<Params> {
     });
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const { uid, address } = this;
 
@@ -64,6 +86,9 @@ export class Wallet extends Entity<Params> {
     };
   }
 
+  /**
+   * Hydrating the entity
+   */
   public _refresh(params: Partial<Params>) {
     const { address } = params;
 
@@ -91,7 +116,7 @@ export class Wallet extends Entity<Params> {
   /**
    * Retrieve the ERC20 balance of this particular wallet address
    *
-   * @param tokenAddress address of the ERC20 token contract
+   * @param args.tokenAddress - address of the ERC20 token contract
    */
   public getErc20Balance = async (args: { tokenAddress: string }): Promise<BigNumber> => {
     const { context, address } = this;

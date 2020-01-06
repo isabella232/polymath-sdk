@@ -19,9 +19,15 @@ enum Events {
   TransactionStatusChange = 'TransactionStatusChange',
 }
 
+/**
+ * Class to manage procedural transaction queues
+ */
 export class TransactionQueue<Args extends any = any, ReturnType extends any = void> extends Entity<
   void
 > {
+  /**
+   * Generate an ID for a transaction
+   */
   public static generateId() {
     return serialize('transaction', {
       random: v4(),
@@ -52,6 +58,14 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
 
   private emitter: EventEmitter;
 
+  /**
+   * Create a transaction queue
+   * @param transactions transaction specifications
+   * @param fees required fees to make a transaction
+   * @param returnValue value returned by a resolver attached to the transaction
+   * @param args arguments that will be passed to the transaction
+   * @param procedureType
+   */
   constructor(
     transactions: TransactionSpec[],
     fees: Fees,
@@ -84,6 +98,9 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     this.uid = TransactionQueue.generateId();
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const { uid, transactions, status, procedureType, args, fees } = this;
 
@@ -97,6 +114,9 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     };
   }
 
+  /**
+   * Run the transactions in the queue
+   */
   public run = async () => {
     this.queue = [...this.transactions];
     this.updateStatus(TransactionQueueStatus.Running);
@@ -123,6 +143,10 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     return this.promise;
   };
 
+  /**
+   * Take action based on a status change of an event
+   * @param listener including the transaction queue
+   */
   public onStatusChange(listener: (transactionQueue: this) => void) {
     this.emitter.on(Events.StatusChange, listener);
 
@@ -131,6 +155,10 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     };
   }
 
+  /**
+   * Take action based on transaction status change of an event
+   * @param listener including the transaction and its queue
+   */
   public onTransactionStatusChange(
     listener: (transaction: PolyTransaction, transactionQueue: this) => void
   ) {
@@ -182,5 +210,8 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     await this.executeTransactionQueue();
   }
 
+  /**
+   * Hydrating the entity
+   */
   public _refresh() {}
 }

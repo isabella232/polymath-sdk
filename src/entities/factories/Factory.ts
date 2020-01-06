@@ -2,12 +2,18 @@ import { merge } from 'lodash';
 import { Entity } from '../Entity';
 import { Context } from '../../Context';
 
+/**
+ * Represents an entity
+ */
 export interface EntityClass<T, U> {
   new (params: T & U, context: Context): Entity<T>;
   unserialize(uid: string): U;
   generateId(identifiers: U): string;
 }
 
+/**
+ * Abstract representing a factory that will build up properties of an entity
+ */
 export abstract class Factory<EntityType extends Entity<T>, T extends any, U extends any> {
   public cache: {
     [key: string]: EntityType | undefined;
@@ -19,6 +25,12 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
 
   protected abstract generateProperties(uid: string): Promise<T>;
 
+  /**
+   * Create a factory that can generate an entity
+   *
+   * @param eClass class defining the entity that will be created
+   * @param context the context in which the sdk will be used
+   */
   constructor(eClass: EntityClass<T, U>, context: Context) {
     this.Entity = eClass;
     this.context = context;
@@ -40,11 +52,13 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
 
       cache[uid] = instance;
     } else {
-      // TODO @monitz87: remove this as soon as we implement event-based refreshing of entities
-      // This line basically fetches the data again and again every time an entity is fetched,
-      // making the cache only good for having one central copy of each entity, but not for reducing
-      // the amount of requests. Once we start subscribing to relevant events in each factory and refreshing
-      // entities when they fire, this won't be necessary
+      /*
+      TODO @monitz87: remove this as soon as we implement event-based refreshing of entities
+      This line basically fetches the data again and again every time an entity is fetched,
+      making the cache only good for having one central copy of each entity, but not for reducing
+      the amount of requests. Once we start subscribing to relevant events in each factory and refreshing
+      entities when they fire, this won't be necessary
+      */
       await this.refresh(uid);
     }
 

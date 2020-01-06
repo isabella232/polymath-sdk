@@ -1,3 +1,6 @@
+/**
+ * Abstract class to create an entity with unique properties
+ */
 export abstract class Entity<Params> {
   public abstract uid: string;
 
