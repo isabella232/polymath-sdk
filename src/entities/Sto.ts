@@ -156,6 +156,8 @@ export abstract class Sto<P> extends Entity<P> {
 
   /**
    * Create a new sto instance
+   * @param params parameters for an sto and unique identifiers
+   * @param context the sdk is being used in
    */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();

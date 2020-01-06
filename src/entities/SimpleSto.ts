@@ -14,13 +14,28 @@ import { Investment } from './Investment';
 
 const { weiToValue } = conversionUtils;
 
+/**
+ * Represents a simple sto
+ */
 export interface Params extends StoParams {
+  /**
+   * cap for how many tokens can be sold
+   */
   cap: BigNumber;
+  /**
+   * rate at which tokens will be sold
+   */
   rate: BigNumber;
 }
 
+/**
+ * Represents a unique sto
+ */
 export { UniqueIdentifiers };
 
+/**
+ * Class used to manage a simple sto
+ */
 export class SimpleSto extends Sto<Params> {
   public static generateId({ securityTokenId, stoType, address }: UniqueIdentifiers) {
     return serialize('simpleSto', {
@@ -36,6 +51,11 @@ export class SimpleSto extends Sto<Params> {
 
   public rate: BigNumber;
 
+  /**
+   * Create a new simple sto instance
+   * @param params parameters for an sto and unique identifiers
+   * @param context the sdk is being used in
+   */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     const { cap, rate, ...rest } = params;
 
@@ -91,10 +111,10 @@ export class SimpleSto extends Sto<Params> {
   }
 
   /**
-   * Invests in the STO
+   * Invest in the STO
    *
-   * @param amount amount to spend
-   * @param beneficiary address that will receive the purchased tokens (defaults to current wallet, will fail if beneficial investments are not allowed for the STO, only applicable if the STO currency is ETH)
+   * @param args.amount - amount to spend
+   * @param args.beneficiary - address that will receive the purchased tokens (defaults to current wallet, will fail if beneficial investments are not allowed for the STO, only applicable if the STO currency is ETH)
    */
   public async invest(args: { amount: BigNumber; beneficiary?: string }) {
     const { address: stoAddress, securityTokenSymbol: symbol } = this;
@@ -104,6 +124,9 @@ export class SimpleSto extends Sto<Params> {
     return procedure.prepare();
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const stoPojo = super.toPojo();
     const { cap, rate } = this;
@@ -115,6 +138,9 @@ export class SimpleSto extends Sto<Params> {
     };
   }
 
+  /**
+   * Hydrating the entity
+   */
   public _refresh(params: Partial<Params>) {
     const { cap, rate, ...rest } = params;
 
