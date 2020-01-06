@@ -205,7 +205,7 @@ describe('ToggleAllowPreIssuing', () => {
       );
     });
 
-    test('should throw if trying to disallow beneficial investments', async () => {
+    test('should throw if trying to disallow pre issuing when pre issuing is already disallowed', async () => {
       target = new ToggleAllowPreIssuing(
         {
           ...simpleParams,
@@ -222,7 +222,7 @@ describe('ToggleAllowPreIssuing', () => {
       );
     });
 
-    test('should throw if beneficial investments are already allowed', async () => {
+    test('should throw if trying to allow pre issuing when pre issuing is already allowed', async () => {
       simpleSto_3_1_0_Mock.mock('preMintAllowed', Promise.resolve(true));
 
       await expect(target.prepareTransactions()).rejects.toThrow(
@@ -249,7 +249,7 @@ describe('ToggleAllowPreIssuing', () => {
       );
     });
 
-    test("should throw if the STO doesn't exist, with simple sto params", async () => {
+    test("should throw if the simple STO doesn't exist", async () => {
       moduleWrapperFactoryMock.mock('getModuleInstance', undefined);
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
@@ -259,7 +259,7 @@ describe('ToggleAllowPreIssuing', () => {
       );
     });
 
-    test("should throw if the STO doesn't exist, with tiered sto params", async () => {
+    test("should throw if the tiered STO doesn't exist", async () => {
       target = new ToggleAllowPreIssuing(tieredParams, contextMock.getMockInstance());
       moduleWrapperFactoryMock.mock('getModuleInstance', undefined);
       await expect(target.prepareTransactions()).rejects.toThrow(
@@ -294,7 +294,7 @@ describe('ToggleAllowPreIssuing', () => {
       );
     });
 
-    test('should successfully create toggleAllowPreIssuing resolver with simple sto params', async () => {
+    test('should refresh the simple STO', async () => {
       const refreshStub = simpleStoFactoryMock.mock('refresh', Promise.resolve());
       await toggleAllowPreIssuingModule.createToggleAllowPreIssuingResolver(
         factoryMockSetup,
@@ -314,7 +314,7 @@ describe('ToggleAllowPreIssuing', () => {
       expect(refreshStub.callCount).toEqual(1);
     });
 
-    test('should successfully create toggleAllowPreIssuing resolver with tiered sto params', async () => {
+    test('should refresh the tiered STO', async () => {
       target = new ToggleAllowPreIssuing(tieredParams, contextMock.getMockInstance());
       const refreshStub = tieredStoFactoryMock.mock('refresh', Promise.resolve());
       await toggleAllowPreIssuingModule.createToggleAllowPreIssuingResolver(

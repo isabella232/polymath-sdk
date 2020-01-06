@@ -165,7 +165,7 @@ describe('ToggleAllowBeneficialInvestments', () => {
       );
     });
 
-    test('should throw if trying to disallow beneficial investments', async () => {
+    test('should throw if trying to disallow beneficial investments when they are already disallowed', async () => {
       target = new ToggleAllowBeneficialInvestments(
         {
           ...simpleParams,
@@ -182,7 +182,7 @@ describe('ToggleAllowBeneficialInvestments', () => {
       );
     });
 
-    test('should throw if beneficial investments are already allowed', async () => {
+    test('should throw if trying to allow beneficial investments when they are already allowed', async () => {
       simpleStoMock.mock('allowBeneficialInvestments', Promise.resolve(true));
 
       await expect(target.prepareTransactions()).rejects.toThrow(
@@ -219,7 +219,7 @@ describe('ToggleAllowBeneficialInvestments', () => {
       );
     });
 
-    test('should successfully create toggleAllowBeneficialInvestments resolver with simple sto params', async () => {
+    test('should refresh the simple STO', async () => {
       const refreshStub = simpleStoFactoryMock.mock('refresh', Promise.resolve());
       await toggleAllowBeneficalInvestmentsModule.createToggleAllowBeneficialInvestmentsResolver(
         factoryMockSetup,
@@ -239,7 +239,7 @@ describe('ToggleAllowBeneficialInvestments', () => {
       expect(refreshStub.callCount).toEqual(1);
     });
 
-    test('should successfully create toggleAllowBeneficialInvestments resolver with tiered sto params', async () => {
+    test('should refresh the tiered STO', async () => {
       target = new ToggleAllowBeneficialInvestments(tieredParams, contextMock.getMockInstance());
       const refreshStub = tieredStoFactoryMock.mock('refresh', Promise.resolve());
       await toggleAllowBeneficalInvestmentsModule.createToggleAllowBeneficialInvestmentsResolver(

@@ -72,12 +72,7 @@ export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProced
       message: 'STO version is 3.0.0. Version 3.1.0 or greater is required for pre-minting',
     });
 
-    function throwStoModuleError() {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `STO ${stoAddress} is either archived or hasn't been launched`,
-      });
-    }
+    const stoModuleErrorMsg = `STO ${stoAddress} is either archived or hasn't been launched`;
 
     switch (stoType) {
       case StoType.Simple: {
@@ -87,7 +82,10 @@ export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProced
         });
 
         if (!stoModule) {
-          throwStoModuleError();
+          throw new PolymathError({
+            code: ErrorCode.ProcedureValidationError,
+            message: stoModuleErrorMsg,
+          });
         }
 
         if (isCappedSTO_3_0_0(stoModule)) {
@@ -103,7 +101,10 @@ export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProced
         });
 
         if (!stoModule) {
-          throwStoModuleError();
+          throw new PolymathError({
+            code: ErrorCode.ProcedureValidationError,
+            message: stoModuleErrorMsg,
+          });
         }
 
         if (isUSDTieredSTO_3_0_0(stoModule)) {
