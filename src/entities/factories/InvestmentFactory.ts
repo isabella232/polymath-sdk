@@ -16,6 +16,9 @@ import { PolymathError } from '../../PolymathError';
 
 const { weiToValue } = conversionUtils;
 
+/**
+ * Factory generates information for an investment entity
+ */
 export class InvestmentFactory extends Factory<Investment, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
     const { stoId, securityTokenId, index } = Investment.unserialize(uid);
@@ -99,6 +102,11 @@ export class InvestmentFactory extends Factory<Investment, Params, UniqueIdentif
     }
   };
 
+  /**
+   * Creates an instance of the investment factory
+   *
+   * @param context the context in which sdk will be used
+   */
   constructor(context: Context) {
     super(Investment, context);
   }

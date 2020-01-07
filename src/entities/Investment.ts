@@ -4,6 +4,9 @@ import { serialize, unserialize } from '../utils';
 import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
+/**
+ * Represents a unique shareholder for a specific investment
+ */
 export interface UniqueIdentifiers {
   securityTokenId: string;
   stoId: string;
@@ -18,6 +21,9 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   );
 }
 
+/**
+ * Represents information for a specific security token investment
+ */
 export interface Params {
   securityTokenSymbol: string;
   address: string;
@@ -25,6 +31,9 @@ export interface Params {
   investedFunds: BigNumber;
 }
 
+/**
+ * Used to manage an investment in a security token
+ */
 export class Investment extends Entity<Params> {
   public static generateId({ securityTokenId, stoId, index }: UniqueIdentifiers) {
     return serialize('investment', {
@@ -34,6 +43,11 @@ export class Investment extends Entity<Params> {
     });
   }
 
+  /**
+   * Unserialize a serialized investment entity
+   *
+   * @param serialized string with investment entity information
+   */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
@@ -63,6 +77,11 @@ export class Investment extends Entity<Params> {
 
   public investedFunds: BigNumber;
 
+  /**
+   * Create an investment instance
+   * @param params parameters defining an investment and unique identifiers
+   * @param context the sdk is being used in
+   */
   constructor(params: Params & UniqueIdentifiers) {
     super();
 
@@ -90,6 +109,9 @@ export class Investment extends Entity<Params> {
     });
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const {
       uid,
@@ -114,6 +136,9 @@ export class Investment extends Entity<Params> {
     };
   }
 
+  /**
+   * Hydrating the entity
+   */
   public _refresh(params: Partial<Params>) {
     const { securityTokenSymbol, address, investedFunds, tokenAmount } = params;
 
