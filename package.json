@@ -1,6 +1,6 @@
 {
   "name": "@polymathnetwork/sdk",
-  "version": "2.0.1-beta.86",
+  "version": "2.0.1-beta.87",
   "description": "A Javascript SDK for interacting with the Polymath network for the browser and Node.js",
   "bugs": {
     "url": "https://github.com/PolymathNetwork/polymath-sdk/issues"
@@ -19,11 +19,13 @@
     "build:ts": "ttsc -b --watch",
     "build:dev": "webpack --mode development --display-error-details",
     "build:prod": "webpack --mode production && ttsc -b",
+    "build:docs": "typedoc --out docs src",
     "build:ci": "yarn build:prod",
     "commit": "npx git-cz",
     "semantic-release": "semantic-release",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src --ext .ts",
+    "postinstall": "rm -rf ./node_modules/typedoc/node_modules/typescript"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -112,6 +114,7 @@
     "tsconfig-paths": "^3.7.0",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "ttypescript": "^1.5.6",
+    "typedoc": "^0.15.6",
     "typescript": "3.2.4",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"
