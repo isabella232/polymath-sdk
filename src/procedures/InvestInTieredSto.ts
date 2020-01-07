@@ -32,10 +32,9 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
 
     const { contractWrappers, factories } = context;
 
-    /**
+    /*
      * Validation
      */
-
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
     } catch (err) {

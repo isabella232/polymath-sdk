@@ -109,7 +109,7 @@ export abstract class Procedure<Args, ReturnType = void> {
     };
   };
 
-  /**
+  /*
    * TODO @monitz87: add an array of PostTransactionResolvers whose resolved values get passed
    * as an optional parameter to the resolver functions (same concept as futureValue but for resolver functions)
    */

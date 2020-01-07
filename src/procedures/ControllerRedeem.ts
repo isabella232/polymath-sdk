@@ -37,10 +37,9 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
     const { symbol, amount, from, reason = '', data = '' } = this.args;
     const { contractWrappers, currentWallet, factories } = this.context;
 
-    /**
+    /*
      * Validation
      */
-
     if (!isValidAddress(from)) {
       throw new PolymathError({
         code: ErrorCode.InvalidAddress,
@@ -82,7 +81,7 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
       });
     }
 
-    /**
+    /*
      * Transactions
      */
     await this.addTransaction(securityToken.controllerRedeem, {
