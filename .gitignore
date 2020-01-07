@@ -6,3 +6,4 @@ npm-package/
 .idea/
 coverage/
 test.ts
+docs/
