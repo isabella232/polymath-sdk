@@ -5,30 +5,58 @@ import { CreateSecurityToken, TransferReservationOwnership } from '../procedures
 import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
+/**
+ * Represents a unique security token reservation
+ */
 export interface UniqueIdentifiers {
   symbol: string;
 }
 
+/**
+ * Check if the provided value is of type [[UniqueIdentifiers]]
+ *
+ * @param identifiers - internal security token reservation representation
+ */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { symbol } = identifiers;
 
   return typeof symbol === 'string';
 }
 
+/**
+ * Represents a single Security Token Reservation
+ */
 export interface Params {
+  /**
+   * expiry date for the ticker reservation
+   */
   expiry: Date;
+  /**
+   * date at which ticker is registered
+   */
   reservedAt: Date;
   ownerAddress: string;
   securityTokenAddress?: string;
 }
 
+/**
+ * Class used to manage all the Security Token Reservation functionality
+ */
 export class SecurityTokenReservation extends Entity<Params> {
+  /**
+   * Transform object to string
+   */
   public static generateId({ symbol }: UniqueIdentifiers) {
     return serialize('securityTokenReservation', {
       symbol,
     });
   }
 
+  /**
+   * Unserialize string to a Security Token Reservation object representation
+   *
+   * @param serialize - security token's serialized representation
+   */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
@@ -68,6 +96,9 @@ export class SecurityTokenReservation extends Entity<Params> {
 
   protected context: Context;
 
+  /**
+   * Create a new SecurityTokenReservation instance
+   */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
@@ -126,12 +157,18 @@ export class SecurityTokenReservation extends Entity<Params> {
     return procedure.prepare();
   };
 
+  /**
+   * Convert entity as a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const { uid, symbol, expiry, securityTokenAddress, reservedAt, ownerAddress } = this;
 
     return { uid, symbol, expiry, securityTokenAddress, reservedAt, ownerAddress };
   }
 
+  /**
+   * Hydrating the entity
+   */
   public _refresh(params: Partial<Params>) {
     const { expiry, securityTokenAddress, reservedAt, ownerAddress } = params;
 
