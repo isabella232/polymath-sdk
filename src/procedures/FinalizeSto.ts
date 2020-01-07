@@ -30,10 +30,10 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
     if (statusCode !== TransferStatusCode.TransferSuccess) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `[${statusCode}]\`Treasury wallet "${to}" is not cleared to 
+        message: `Treasury wallet "${to}" is not cleared to 
         receive the remaining ${amount} "${symbol}" tokens from "${fromAddress}". 
         Please review transfer restrictions regarding this wallet address before 
-        attempting to finalize the STO. Possible reason code: "${reasonCode}"`,
+        attempting to finalize the STO. Possible reason: "${reasonCode}"`,
       });
     }
   }
