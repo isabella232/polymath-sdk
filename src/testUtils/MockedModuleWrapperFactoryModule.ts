@@ -11,7 +11,7 @@ export abstract class MockedModuleWrapperFactoryModule {
     this.contractFactory = contractFactory;
   }
 
-  public async getModuleFactory(ticker: string): Promise<ModuleFactory_3_0_0> {
+  public async getModuleFactory(): Promise<ModuleFactory_3_0_0> {
     return {} as Promise<ModuleFactory_3_0_0>;
   }
 

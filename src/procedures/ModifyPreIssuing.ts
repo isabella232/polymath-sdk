@@ -121,6 +121,9 @@ export class ModifyPreIssuing extends Procedure<ModifyPreIssuingProcedureArgs> {
                   })
                 );
               }
+              default: {
+                return undefined;
+              }
             }
           },
         ],

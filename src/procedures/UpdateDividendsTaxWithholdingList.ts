@@ -21,7 +21,7 @@ export const updateDividendsTaxWithholdingListResolver = (
 ) => async () => {
   return Promise.all(
     addresses.map((address, addressIndex) => {
-      factories.taxWithholdingFactory.update(
+      return factories.taxWithholdingFactory.update(
         TaxWithholding.generateId({
           securityTokenId: SecurityToken.generateId({ symbol }),
           shareholderAddress: address,

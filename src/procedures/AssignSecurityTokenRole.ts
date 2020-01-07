@@ -1,4 +1,4 @@
-import { ModuleName, conversionUtils, Perm } from '@polymathnetwork/contract-wrappers';
+import { ModuleName, conversionUtils } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,

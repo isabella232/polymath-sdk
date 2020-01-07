@@ -105,6 +105,9 @@ export class ModifyBeneficialInvestments extends Procedure<
                 })
               );
             }
+            default: {
+              return undefined;
+            }
           }
         },
       ],

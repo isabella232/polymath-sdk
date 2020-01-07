@@ -1,9 +1,10 @@
 import { SubModule } from '../SubModule';
-import { FreezeIssuance, IssueTokens } from '../../../procedures';
+import { FreezeIssuance, IssueTokens, SignFreezeIssuanceAck } from '../../../procedures';
 import { ErrorCode, IssuanceDataEntry } from '../../../types';
 import { Offerings } from './Offerings';
 import { SecurityToken } from '../SecurityToken';
 import { Context } from '../../../Context';
+
 import { PolymathError } from '../../../PolymathError';
 
 export class Issuance extends SubModule {
@@ -18,6 +19,7 @@ export class Issuance extends SubModule {
   /**
    * Issue a certain amount of tokens to an address. The address must already have been added via `modifyData`. Otherwise,
    * the corresponding shareholder data for that address must be supplied to this method
+   * NOTE: If shareholder data is supplied, client-side validations to verify if the transfer is possible won't be performed
    *
    * @param issuanceData array of issuance data
    * @param issuanceData[].address address of the shareholder to issue tokens for
@@ -42,11 +44,27 @@ export class Issuance extends SubModule {
 
   /**
    * Permanently freeze issuance of the security token
-   * @param signature optional signed data. If not passed, signing will be requested on the spot
+   *
+   * @param signature optional signed data. If not passed, signing will be requested when the transaction queue is run. The data can be generated beforehand by the token owner calling `signFreezeAck`
    */
   public freeze = async (args?: { signature?: string }) => {
     const { symbol } = this.securityToken;
+
     const procedure = new FreezeIssuance({ ...args, symbol }, this.context);
+
+    return procedure.prepare();
+  };
+
+  /**
+   * Generate a signature string that can be used to permanently freeze issuance of the Security Token
+   *
+   * Note that only the owner's signature is valid for this operation
+   */
+  public signFreezeAck = async () => {
+    const { symbol } = this.securityToken;
+
+    const procedure = new SignFreezeIssuanceAck({ symbol }, this.context);
+
     return procedure.prepare();
   };
 
@@ -60,10 +78,10 @@ export class Issuance extends SubModule {
       securityToken: { symbol },
     } = this;
 
-    let securityTokenInstance;
+    let tokenInstance;
 
     try {
-      securityTokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
+      tokenInstance = await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(
         symbol
       );
     } catch (err) {
@@ -72,6 +90,6 @@ export class Issuance extends SubModule {
         message: `There is no Security Token with symbol ${symbol}`,
       });
     }
-    return securityTokenInstance.isIssuable();
+    return tokenInstance.isIssuable();
   };
 }
