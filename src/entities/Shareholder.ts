@@ -4,6 +4,9 @@ import { serialize, unserialize } from '../utils';
 import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
+/**
+ * Represents a unique shareholder for a specific security token
+ */
 export interface UniqueIdentifiers {
   securityTokenId: string;
   address: string;
@@ -15,6 +18,9 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof securityTokenId === 'string' && typeof address === 'string';
 }
 
+/**
+ * Represents information for a specific shareholder on a security token
+ */
 export interface Params {
   securityTokenSymbol: string;
   canSendAfter: Date;
@@ -25,6 +31,9 @@ export interface Params {
   balance: BigNumber;
 }
 
+/**
+ * Used to manage a shareholder
+ */
 export class Shareholder extends Entity<Params> {
   public static generateId({ securityTokenId, address }: UniqueIdentifiers) {
     return serialize('shareholder', {
@@ -33,6 +42,11 @@ export class Shareholder extends Entity<Params> {
     });
   }
 
+  /**
+   * Unserialize a serialized shareholder entity
+   *
+   * @param serialized string with shareholder entity information
+   */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
@@ -66,6 +80,11 @@ export class Shareholder extends Entity<Params> {
 
   public address: string;
 
+  /**
+   * Create a new shareholder instance
+   * @param params parameters for a shareholder and unique identifiers
+   * @param context the sdk is being used in
+   */
   constructor(params: Params & UniqueIdentifiers) {
     super();
 
@@ -110,6 +129,9 @@ export class Shareholder extends Entity<Params> {
     return datesAreZero;
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const {
       uid,
@@ -138,6 +160,9 @@ export class Shareholder extends Entity<Params> {
     };
   }
 
+  /**
+   * Hydrating the entity
+   */
   public _refresh(params: Partial<Params>) {
     const {
       securityTokenSymbol,

@@ -6,6 +6,9 @@ import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 import { Shareholder, Params, UniqueIdentifiers } from '../Shareholder';
 
+/**
+ * Factory generates information for a shareholder entity
+ */
 export class ShareholderFactory extends Factory<Shareholder, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
     const {
@@ -54,6 +57,11 @@ export class ShareholderFactory extends Factory<Shareholder, Params, UniqueIdent
     };
   };
 
+  /**
+   * Creates an instance of the shareholder factory
+   *
+   * @param context the context in which sdk will be used
+   */
   constructor(context: Context) {
     super(Shareholder, context);
   }
