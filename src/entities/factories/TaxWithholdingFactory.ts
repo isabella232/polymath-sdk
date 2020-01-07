@@ -5,7 +5,9 @@ import { SecurityToken } from '../SecurityToken';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 import { TaxWithholding, Params, UniqueIdentifiers } from '../TaxWithholding';
-
+/**
+ * Factory generates information for a tax withholding entity
+ */
 export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
     const {
@@ -64,6 +66,11 @@ export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, Uniqu
     };
   };
 
+  /**
+   * Creates an instance of the tax withholding factory
+   *
+   * @param context the context in which sdk will be used
+   */
   constructor(context: Context) {
     super(TaxWithholding, context);
   }

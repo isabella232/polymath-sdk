@@ -3,6 +3,9 @@ import { serialize, unserialize } from '../utils';
 import { ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Represents unique tax withholding properties for a specific security token holder
+ */
 export interface UniqueIdentifiers {
   securityTokenId: string;
   shareholderAddress: string;
@@ -18,11 +21,16 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   );
 }
 
+/**
+ * Represents information for tax withholding information for a security token
+ */
 export interface Params {
   securityTokenSymbol: string;
   percentage: number;
 }
-
+/**
+ * Used to manage tax withholding amounts
+ */
 export class TaxWithholding extends Entity<Params> {
   public static generateId({ securityTokenId, shareholderAddress }: UniqueIdentifiers) {
     return serialize('taxWithholding', {
@@ -31,6 +39,11 @@ export class TaxWithholding extends Entity<Params> {
     });
   }
 
+  /**
+   * Unserialize a serialized entity of tax withholding information
+   *
+   * @param serialized string with tax withholding information
+   */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
@@ -54,6 +67,11 @@ export class TaxWithholding extends Entity<Params> {
 
   public percentage: number;
 
+  /**
+   * Create a new tax withholding information instance
+   * @param params parameters for tax withholding and unique identifiers
+   * @param context the sdk is being used in
+   */
   constructor(params: Params & UniqueIdentifiers) {
     super();
 
@@ -69,6 +87,9 @@ export class TaxWithholding extends Entity<Params> {
     });
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const { uid, securityTokenId, securityTokenSymbol, shareholderAddress, percentage } = this;
 
@@ -81,6 +102,9 @@ export class TaxWithholding extends Entity<Params> {
     };
   }
 
+  /**
+   * Hydrating the entity
+   */
   public _refresh(params: Partial<Params>) {
     const { securityTokenSymbol, percentage } = params;
 
