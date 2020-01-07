@@ -20,6 +20,8 @@ const params = {
   dividendIndex: 0,
 };
 
+const addresses = ['0x01', '0x02', '0x03', '0x04'];
+
 describe('PullDividendPayment', () => {
   let target: PullDividendPayment;
   let contextMock: MockManager<contextModule.Context>;
@@ -53,7 +55,7 @@ describe('PullDividendPayment', () => {
     factoriesMockedSetup = mockFactories();
     factoriesMockedSetup.dividendDistributionFactory = dividendFactoryMock.getMockInstance();
     contextMock.set('factories', factoriesMockedSetup);
-    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve('0x01') }));
+    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve(addresses[0]) }));
     target = new PullDividendPayment(params, contextMock.getMockInstance());
   });
 
@@ -96,7 +98,10 @@ describe('PullDividendPayment', () => {
     });
 
     test('should throw if the owner address is not a shareholder', async () => {
-      contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve('0x04') }));
+      contextMock.set(
+        'currentWallet',
+        new Wallet({ address: () => Promise.resolve(addresses[3]) })
+      );
 
       wrappersMock.mock(
         'getAttachedModules',
@@ -106,7 +111,7 @@ describe('PullDividendPayment', () => {
       wrappersMock.mock(
         'getDividend',
         Promise.resolve({
-          shareholders: [{ address: '0x01', paymentReceived: false, excluded: false }],
+          shareholders: [{ address: addresses[3], paymentReceived: false, excluded: false }],
         })
       );
 
@@ -114,8 +119,9 @@ describe('PullDividendPayment', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message:
-            'Current wallet 0x04 cannot receive dividend payments. Reason: not a shareholder',
+          message: `Current wallet ${
+            addresses[3]
+          } cannot receive dividend payments. Reason: not a shareholder`,
         })
       );
     });
@@ -129,7 +135,7 @@ describe('PullDividendPayment', () => {
       wrappersMock.mock(
         'getDividend',
         Promise.resolve({
-          shareholders: [{ address: '0x01', paymentReceived: true, excluded: false }],
+          shareholders: [{ address: addresses[0], paymentReceived: true, excluded: false }],
         })
       );
 
@@ -137,8 +143,9 @@ describe('PullDividendPayment', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message:
-            'Current wallet 0x01 cannot receive dividend payments. Reason: already received payment',
+          message: `Current wallet ${
+            addresses[0]
+          } cannot receive dividend payments. Reason: already received payment`,
         })
       );
     });
@@ -152,7 +159,7 @@ describe('PullDividendPayment', () => {
       wrappersMock.mock(
         'getDividend',
         Promise.resolve({
-          shareholders: [{ address: '0x01', paymentReceived: false, excluded: true }],
+          shareholders: [{ address: addresses[0], paymentReceived: false, excluded: true }],
         })
       );
 
@@ -160,13 +167,14 @@ describe('PullDividendPayment', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message:
-            'Current wallet 0x01 cannot receive dividend payments. Reason: address belongs to exclusion list',
+          message: `Current wallet ${
+            addresses[0]
+          } cannot receive dividend payments. Reason: address belongs to exclusion list`,
         })
       );
     });
 
-    test('should add a transaction to pull a dividend payment', async () => {
+    test('should add a transaction to pull dividend payments', async () => {
       wrappersMock.mock(
         'getAttachedModules',
         Promise.resolve([erc20DividendsMock.getMockInstance()])
@@ -176,9 +184,9 @@ describe('PullDividendPayment', () => {
         'getDividend',
         Promise.resolve({
           shareholders: [
-            { address: '0x01', paymentReceived: false, excluded: false },
-            { address: '0x02', paymentReceived: false, excluded: false },
-            { address: '0x03', paymentReceived: true, excluded: false },
+            { address: addresses[0], paymentReceived: false, excluded: false },
+            { address: addresses[1], paymentReceived: false, excluded: false },
+            { address: addresses[2], paymentReceived: true, excluded: false },
           ],
         })
       );
