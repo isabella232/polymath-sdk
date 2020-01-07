@@ -111,7 +111,7 @@ describe('PullDividendPayment', () => {
       wrappersMock.mock(
         'getDividend',
         Promise.resolve({
-          shareholders: [{ address: addresses[3], paymentReceived: false, excluded: false }],
+          shareholders: [{ address: addresses[0], paymentReceived: false, excluded: false }],
         })
       );
 
