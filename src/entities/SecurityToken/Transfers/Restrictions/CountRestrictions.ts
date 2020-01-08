@@ -5,7 +5,7 @@ import { SubModule } from '../../SubModule';
 import { PolymathError } from '../../../../PolymathError';
 
 /**
- * CountRestrictions implementation used to manage restrictions amounts for Security Tokens holders
+ * Namespace that handles all Count Restriction related functionality
  */
 export class CountRestrictions extends SubModule {
   /**

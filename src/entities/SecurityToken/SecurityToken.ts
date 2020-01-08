@@ -14,7 +14,7 @@ import { PolymathError } from '../../PolymathError';
 import { ErrorCode, Version } from '../../types';
 
 /**
- * Represents a unique security token
+ * Properties that uniquely identify a Security Token
  */
 export interface UniqueIdentifiers {
   /**
@@ -25,8 +25,6 @@ export interface UniqueIdentifiers {
 
 /**
  * Check if the provided value is of type [[UniqueIdentifiers]]
- *
- * @param identifiers - internal security token representation
  */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { symbol } = identifiers;
@@ -38,40 +36,29 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
  * Represents a single Security Token
  */
 export interface Params {
-  /**
-   * name of the Security token
-   */
   name: string;
   /**
-   * address of the Security token
+   * address of the Security Token contract
    */
   address: string;
   /**
-   * the owner of the Security Token
+   * address that owns the Security Token
    */
   owner: string;
   /**
-   * the off-chain data associated with the Security Token
+   * URL pointing to off-chain data associated with the Security Token
    */
   tokenDetails: string;
-  /**
-   * module version of the security token
-   */
   version: Version;
-  /**
-   * granularity level of the token
-   */
   granularity: number;
-  /**
-   * total number of market cap to be created
-   */
   totalSupply: BigNumber;
   /**
-   * checkpoint id used to query historical balances
+   * index of the current checkpoint
    */
   currentCheckpoint: number;
   /**
-   * ethereum address which will holds the STs
+   * default treasury wallet used by some features.
+   * ***For example, if an STO reaches its end date (or is finalized before that), remaining unsold tokens get transferred to this wallet unless otherwise specified by the STO itself***
    */
   treasuryWallet: string;
 }
@@ -79,7 +66,7 @@ export interface Params {
 /**
  * Unserialize string to a Security Token object representation
  *
- * @param serialize - security token's serialized representation
+ * @param serialized - security token's serialized representation
  */
 export const unserialize = (serialized: string) => {
   const unserialized = unserializeUtil(serialized);
@@ -99,7 +86,7 @@ export const unserialize = (serialized: string) => {
  */
 export class SecurityToken extends Entity<Params> {
   /**
-   * Transform object to string
+   * Generate the Security Token's UUID from its identifying properties
    */
   public static generateId({ symbol }: UniqueIdentifiers) {
     return serialize('securityToken', {
@@ -188,7 +175,7 @@ export class SecurityToken extends Entity<Params> {
   }
 
   /**
-   * Convert entity as a POJO (Plain Old Javascript Object)
+   * Convert entity to a POJO (Plain Old Javascript Object)
    */
   public toPojo() {
     const {
@@ -221,7 +208,7 @@ export class SecurityToken extends Entity<Params> {
   }
 
   /**
-   * Hydrating the entity
+   * Hydrate the entity
    */
   public _refresh(params: Partial<Params>) {
     const {

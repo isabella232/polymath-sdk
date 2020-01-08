@@ -9,7 +9,7 @@ import {
 } from '../../procedures';
 
 /**
- * Controller implementation used to manage Security Token's Controller functionality
+ * Namespace that handles all Controller related functionality
  */
 export class Controller extends SubModule {
   /**

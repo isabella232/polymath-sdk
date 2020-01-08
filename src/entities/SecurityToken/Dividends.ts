@@ -13,7 +13,7 @@ import { DividendDistribution } from '../DividendDistribution';
 import { TaxWithholding } from '../TaxWithholding';
 
 /**
- * Represents a type distribution of ST
+ * Parameters of the [[getDistribution]] function
  */
 export interface GetDistributionParams {
   /**
@@ -23,7 +23,7 @@ export interface GetDistributionParams {
 }
 
 /**
- * Dividends implementation used to manage Security Token's dividends for token holders
+ * Namespace that handles all Dividend related functionality
  */
 export class Dividends extends SubModule {
   /**
@@ -35,6 +35,7 @@ export class Dividends extends SubModule {
    * @param args.amount - amount to be distributed
    * @param args.name - human readable name of the distribution
    * @param args.excludedAddresses - shareholder addresses that will be excluded from the distribution (optional)
+   * @param args.taxWithholdings - array that specifies how much to withhold from each shareholder for tax purposes
    */
   public createPolyDistribution = async (args: {
     checkpointId: string;
@@ -73,6 +74,7 @@ export class Dividends extends SubModule {
    * @param args.amount - amount to be distributed
    * @param args.name - human readable name of the distribution
    * @param args.excludedAddresses - shareholder addresses that will be excluded from the distribution (optional)
+   * @param args.taxWithholdings - array that specifies how much to withhold from each shareholder for tax purposes
    */
   public createErc20Distribution = async (args: {
     checkpointId: string;
@@ -101,6 +103,8 @@ export class Dividends extends SubModule {
 
   /**
    * Set default tax withtholding list for a type of dividends
+   *
+   * @param args.taxWithholdings - array that specifies how much to withhold from each shareholder for tax purposes
    */
   public modifyTaxWithholdingList = async (args: { taxWithholdings: TaxWithholdingEntry[] }) => {
     const { taxWithholdings, ...rest } = args;
@@ -245,7 +249,7 @@ export class Dividends extends SubModule {
   /**
    * Retrieve a particular dividend distribution by type and index or UUID
    *
-   * @param args - dividend index or object containing its index
+   * @param args - dividend uuid or object containing its index
    */
   public getDistribution = async (args: GetDistributionParams | string) => {
     let dividendIndex: number;

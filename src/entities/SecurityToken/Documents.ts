@@ -5,7 +5,7 @@ import { SetDocument } from '../../procedures/SetDocument';
 import { RemoveDocument } from '../../procedures/RemoveDocument';
 
 /**
- * Represents a single Document attached in a ST
+ * Represents a single Document attached to a Security Token
  */
 interface Document {
   /**
@@ -17,17 +17,14 @@ interface Document {
    */
   documentUri: string;
   /**
-   * hash of the document's content
+   * hash of the document's contents
    */
   documentHash: string;
-  /**
-   * date of the update moment
-   */
   updatedAt: Date;
 }
 
 /**
- * Documents implementation used to manage Security Token's attached documents
+ * Namespace that handles all document Related functionality
  */
 export class Documents extends SubModule {
   /**
@@ -35,6 +32,7 @@ export class Documents extends SubModule {
    *
    * @param args.name - should always be unique
    * @param args.uri - off-chain uri of the document from where it is accessible to investors/advisors to read
+   * @param args.documentHash - hash of the document's contents
    */
   public async set(args: { name: string; uri: string; documentHash: string }) {
     const { symbol } = this.securityToken;
@@ -45,7 +43,7 @@ export class Documents extends SubModule {
   }
 
   /**
-   * Remove an existing document from the contract giving the name of the document
+   * Remove an existing document from the Security Token
    *
    * @param args.name - should always be unique
    */

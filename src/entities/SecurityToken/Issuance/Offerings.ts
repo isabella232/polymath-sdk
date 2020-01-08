@@ -47,6 +47,9 @@ type EthAndPoly =
   | [Currency.POLY, Currency.StableCoin, Currency.ETH]
   | [Currency.POLY, Currency.ETH, Currency.StableCoin];
 
+/**
+ * Params for [[getSto]]
+ */
 export interface GetStoParams {
   stoType: StoType;
   address: string;
@@ -104,7 +107,7 @@ interface GetStoMethod {
 }
 
 /**
- * Offerings implementation used to manage Security Token Offering functionality
+ * Namespace that handles all Offering related functionality
  */
 export class Offerings extends SubModule {
   /**
@@ -141,6 +144,7 @@ export class Offerings extends SubModule {
   /**
    * Launch a Tiered STO
    *
+   * @param args.tiers - array that specifies how many tokens to sell at each tier (along with their price and potential discounts)
    * @param args.nonAccreditedInvestmentLimit - maximum investment for non-accredited investors
    * @param args.minimumInvestment - minimum investment amount
    * @param args.currencies - array of currencies in which the funds will be raised (ETH, POLY, StableCoin)
@@ -148,6 +152,9 @@ export class Offerings extends SubModule {
    * @param args.unsoldTokensWallet - wallet address that will receive unsold tokens when the end date is reached
    * @param args.stableCoinAddresses - array of stable coins that the offering supports
    * @param args.customCurrency - it can be optional
+   * @param customCurrency.currencySymbol symbol of the custom currency (USD, CAD, EUR, etc. Default is USD)
+   * @param customCurrency.ethOracleAddress address of the oracle that states the price of ETH in the custom currency. Only required if raising funds in ETH
+   * @param customCurrency.polyOracleAddress address of the oracle that states the price of POLY in the custom currency. Only required if raising funds in POLY
    * @param args.allowPreIssuance - whether to have all tokens issued on STO start. Default behavior is to issue on purchase
    */
   public launchTieredSto: LaunchTieredStoMethod = async (
@@ -168,7 +175,7 @@ export class Offerings extends SubModule {
   /**
    * Retrieve an STO by type and address or UUID
    *
-   * @param args - serialized string or object containing its type and address
+   * @param args - STO uuid or object containing its type and address
    */
   public getSto: GetStoMethod = async (args: GetStoParams | string): Promise<any> => {
     let stoType;

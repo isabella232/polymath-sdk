@@ -12,14 +12,14 @@ import { DividendDistribution } from '../DividendDistribution';
 import { Shareholder } from '../Shareholder';
 
 /**
- * Represents a single checkpoint identifier
+ * Parameters for [[getCheckpoint]]
  */
 export interface GetCheckpointParams {
   checkpointIndex: number;
 }
 
 /**
- * Shareholders implementation used to manage shareholder and checkpoint data associated with STO
+ * Namespace that handles all Shareholder related functionality
  */
 export class Shareholders extends SubModule {
   /**
@@ -40,7 +40,7 @@ export class Shareholders extends SubModule {
   };
 
   /**
-   * Revokes KYC for a group of shareholder addresses. Supplied addresses must have valid KYC
+   * Revoke KYC for a group of shareholder addresses. Supplied addresses must have valid KYC
    */
   public revokeKyc = async (args: { shareholderAddresses: string[] }) => {
     const procedure = new RevokeKyc(
@@ -128,7 +128,7 @@ export class Shareholders extends SubModule {
   /**
    * Retrieve a checkpoint from the security token by index or UUID
    *
-   * @param args - checkpoint UID or object containing its index
+   * @param args - checkpoint uuid or object containing its index
    */
   public getCheckpoint = async (args: GetCheckpointParams | string) => {
     const { factories } = this.context;

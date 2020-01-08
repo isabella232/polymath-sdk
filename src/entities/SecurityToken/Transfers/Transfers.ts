@@ -15,7 +15,7 @@ import { ShareholderDataEntry, Omit, TransferStatusCode, ErrorCode } from '../..
 import { PolymathError } from '../../../PolymathError';
 
 /**
- * Transfers implementation used to manage Security Token's transfer functionality
+ * Namespace that handles all Transfer related functionality
  */
 export class Transfers extends SubModule {
   public restrictions: Restrictions;
@@ -62,7 +62,6 @@ export class Transfers extends SubModule {
   };
 
   /**
-   * Transfer security token
    * Transfer an amount of Security Tokens to a specified address
    *
    * @param args.to - address that will receive the tokens

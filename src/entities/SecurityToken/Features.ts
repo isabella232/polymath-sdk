@@ -22,7 +22,7 @@ import { TransactionQueue } from '../TransactionQueue';
 import { EnableCountTransferManager } from '../../procedures/EnableCountTransferManager';
 
 /**
- * Represents polymath feature switches
+ * Current status (enabled/disabled) of all Security Token Features
  */
 export interface FeatureStatuses {
   [Feature.Permissions]: boolean;
@@ -71,7 +71,7 @@ export interface Enable {
 }
 
 /**
- * Features implementation used to manage all the Security Token's features
+ * Namespace that handles all Feature related functionality
  */
 export class Features extends SubModule {
   /**

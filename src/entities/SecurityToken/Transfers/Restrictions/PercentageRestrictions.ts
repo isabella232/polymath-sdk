@@ -32,7 +32,7 @@ interface ModifyExemptionsMethod {
 }
 
 /**
- * PercentageRestrictions implementation used to manage percentage restrictions amounts for Secutity Tokens holders
+ * Namespace that handles all Percentage Restriction related functionality
  */
 export class PercentageRestrictions extends SubModule {
   /**
@@ -41,6 +41,7 @@ export class PercentageRestrictions extends SubModule {
    * - Whitelisting: an address can be whitelisted and thus percentage ownership restrictions will not apply to it
    * - Primary issuance: if enabled, issuing tokens to an address will bypass percentage ownership restrictions (for example, if issuing tokens to a particular address would leave that address with a higher percentage than the limit, having this option set to `true` will allow that issuance operation)
    *
+   * @param args.whitelistEntries - it can be optional. List of addresses to add/remove from the whitelist
    * @param args.allowPrimaryIssuance - it can be optional. If set to true, issuing tokens to an address is allowed even if it would leave said address over the percentage ownership limit
    */
   public modifyExemptions: ModifyExemptionsMethod = async (args: {
