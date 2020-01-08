@@ -6,7 +6,7 @@ import { ErrorCode } from '../types';
 import { Context } from '../Context';
 
 /**
- * Represents a unique wallet
+ * Unique identifier for wallet address
  */
 export interface UniqueIdentifiers {
   address: string;
@@ -19,7 +19,7 @@ function isUniqueIdentifiers(identifier: any): identifier is UniqueIdentifiers {
 }
 
 /**
- * Represents a wallet
+ * Properties that uniquely identify wallet
  */
 export interface Params extends UniqueIdentifiers {}
 
@@ -51,16 +51,20 @@ export class Wallet extends Entity<Params> {
     return unserialized;
   }
 
+  /**
+   * Unique generated wallet id
+   */
   public uid: string;
 
+  /**
+   * Wallet address
+   */
   public address: string;
 
   protected context: Context;
 
   /**
    * Create a wallet entity
-   * @param params unique params for wallet
-   * @param context the context in which the sdk will be used
    */
   constructor(params: Params, context: Context) {
     super();
@@ -87,7 +91,7 @@ export class Wallet extends Entity<Params> {
   }
 
   /**
-   * Hydrating the entity
+   * Hydrate the entity
    */
   public _refresh(params: Partial<Params>) {
     const { address } = params;

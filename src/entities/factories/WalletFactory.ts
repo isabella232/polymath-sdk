@@ -16,7 +16,6 @@ export class WalletFactory extends Factory<Wallet, Params, UniqueIdentifiers> {
 
   /**
    * Create a wallet factory
-   * @param context the context in which the sdk will be used
    */
   constructor(context: Context) {
     super(Wallet, context);

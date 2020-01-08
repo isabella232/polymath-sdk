@@ -7,7 +7,15 @@ import { Context } from '../../Context';
  */
 export interface EntityClass<T, U> {
   new (params: T & U, context: Context): Entity<T>;
+
+  /**
+   * unserialize serialized entity information
+   */
   unserialize(uid: string): U;
+
+  /**
+   * generate a unique identifier for an entity
+   */
   generateId(identifiers: U): string;
 }
 
@@ -28,8 +36,6 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
   /**
    * Create a factory that can generate an entity
    *
-   * @param eClass class defining the entity that will be created
-   * @param context the context in which the sdk will be used
    */
   constructor(eClass: EntityClass<T, U>, context: Context) {
     this.Entity = eClass;
@@ -37,7 +43,7 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
   }
 
   /**
-   * Gets an entity from the cache. Fetches the necessary data to create it if it isn't cached, refreshes it if it is
+   * Get an entity from the cache. Fetches the necessary data to create it if it isn't cached, refreshes it if it is
    *
    * @param uid unique identifier for the entity
    */
@@ -66,7 +72,7 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
   }
 
   /**
-   * Gets an entity from the cache. Creates it if it isn't cached, updates it if it is
+   * Get an entity from the cache. Creates it if it isn't cached, updates it if it is
    *
    * @param uid unique identifier for the entity
    * @param params constructor data for the entity
@@ -88,7 +94,7 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
   }
 
   /**
-   * Fetches the data for an entity and updates its properties
+   * Fetch the data for an entity and updates its properties
    *
    * @param uid unique identifier for the entity
    */
@@ -105,7 +111,7 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
   }
 
   /**
-   * Updates an entity's properties in place
+   * Update an entity's properties in place
    *
    * @param uid unique identifier for the entity
    * @param params properties that should be updated
