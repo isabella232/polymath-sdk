@@ -33,7 +33,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Represents a single Security Token
+ * Security Token constructor parameters
  */
 export interface Params {
   name: string;
