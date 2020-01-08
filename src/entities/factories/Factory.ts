@@ -29,8 +29,14 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
 
   public context: Context;
 
+  /**
+   * Defined entity class
+   */
   public Entity: EntityClass<T, U>;
 
+  /**
+   * @hidden
+   */
   protected abstract generateProperties(uid: string): Promise<T>;
 
   /**
