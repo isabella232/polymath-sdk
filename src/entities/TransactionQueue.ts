@@ -34,28 +34,64 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     });
   }
 
+  /**
+   * Type of entity
+   */
   public readonly entityType: string = 'transactionQueue';
 
+  /**
+   * Type of procedure being run
+   */
   public procedureType: ProcedureType;
 
+  /**
+   * Generated transaction queue unique identifier
+   */
   public uid: string;
 
+  /**
+   * Array of poly transactions
+   */
   public transactions: PolyTransaction[];
 
+  /**
+   * Status of the transaction queue
+   */
   public status: TransactionQueueStatus = TransactionQueueStatus.Idle;
 
+  /**
+   * Arguments provided to the transaction queue
+   */
   public args: Args;
 
+  /**
+   * Optional error information
+   */
   public error?: Error;
 
+  /**
+   * Associated Fees for the transaction
+   */
   public fees: Fees;
 
+  /**
+   * @hidden
+   */
   private promise: Promise<ReturnType>;
 
+  /**
+   * @hidden
+   */
   private queue: PolyTransaction[] = [];
 
+  /**
+   * @hidden
+   */
   private returnValue: MaybeResolver<ReturnType>;
 
+  /**
+   * @hidden
+   */
   private emitter: EventEmitter;
 
   /**
@@ -144,8 +180,11 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
   };
 
   /**
-   * Take action based on a status change of an event
-   * @param listener including the transaction queue
+   * Subscribe to status changes
+   *
+   * @param listener - callback function that will be called whenever the status changes
+   *
+   * @returns unsubscribe function
    */
   public onStatusChange(listener: (transactionQueue: this) => void) {
     this.emitter.on(Events.StatusChange, listener);
@@ -156,8 +195,11 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
   }
 
   /**
-   * Take action based on transaction status change of an event
-   * @param listener including the transaction and its queue
+   * Subscribe to status changes on the Transaction Queue
+   *
+   * @param listener - callback function that will be called whenever the Transaction Queue's status changes
+   *
+   * @returns unsubscribe function
    */
   public onTransactionStatusChange(
     listener: (transaction: PolyTransaction, transactionQueue: this) => void
@@ -169,10 +211,19 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     };
   }
 
+  /**
+   * @hidden
+   */
   protected resolve: (val?: ReturnType) => void = () => {};
 
+  /**
+   * @hidden
+   */
   protected reject: (reason?: any) => void = () => {};
 
+  /**
+   * @hidden
+   */
   private updateStatus = (status: TransactionQueueStatus) => {
     this.status = status;
 
@@ -198,6 +249,9 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     }
   };
 
+  /**
+   * @hidden
+   */
   private async executeTransactionQueue() {
     const nextTransaction = this.queue.shift();
 
@@ -211,7 +265,7 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
   }
 
   /**
-   * Hydrating the entity
+   * Hydrate the entity
    */
   public _refresh() {}
 }

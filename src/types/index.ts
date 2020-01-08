@@ -661,8 +661,17 @@ export enum TransactionQueueStatus {
   Succeeded = 'Succeeded',
 }
 
+/**
+ * Represents fees in poly and optional usd
+ */
 export interface Fees {
+  /**
+   * Usd Fee
+   */
   usd: BigNumber | null;
+  /**
+   * Poly Fee
+   */
   poly: BigNumber;
 }
 
