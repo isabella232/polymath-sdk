@@ -6,16 +6,19 @@ import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SecurityTokenEvents } from '@polymathnetwork/contract-wrappers';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
+import * as createCheckpointModule from '../../procedures/CreateCheckpoint';
 import { Procedure } from '../../procedures/Procedure';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import * as utilsModule from '../../utils';
 import * as checkpointFactoryModule from '../../entities/factories/CheckpointFactory';
+import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { Checkpoint, SecurityToken } from '../../entities';
+import { Factories } from '../../Context';
 
 const params = {
   symbol: 'TEST1',
@@ -33,9 +36,12 @@ describe('CreateCheckpoint', () => {
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
 
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
+  let factoryMockSetup: Factories;
+  let securityTokenId: string;
 
   // Mock factories
   let checkpointFactoryMock: MockManager<checkpointFactoryModule.CheckpointFactory>;
+  let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
 
   beforeEach(() => {
     // Mock the context, wrappers, and tokenFactory to test CreateCheckpoint
@@ -53,9 +59,18 @@ describe('CreateCheckpoint', () => {
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
     checkpointFactoryMock = ImportMock.mockClass(checkpointFactoryModule, 'CheckpointFactory');
-    const factoryMockSetup = mockFactories();
+    securityTokenFactoryMock = ImportMock.mockClass(
+      securityTokenFactoryModule,
+      'SecurityTokenFactory'
+    );
+    factoryMockSetup = mockFactories();
     factoryMockSetup.checkpointFactory = checkpointFactoryMock.getMockInstance();
+    factoryMockSetup.securityTokenFactory = securityTokenFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
+
+    securityTokenId = SecurityToken.generateId({
+      symbol: params.symbol,
+    });
 
     // Instantiate CreateCheckpoint
     target = new CreateCheckpoint(params, contextMock.getMockInstance());
@@ -106,7 +121,7 @@ describe('CreateCheckpoint', () => {
     test('should return the newly created checkpoint', async () => {
       const indexValue = 1;
       const checkpointObject = {
-        securityTokenId: () => params.symbol,
+        securityTokenId: () => securityTokenId,
         index: () => indexValue,
       };
 
@@ -130,9 +145,7 @@ describe('CreateCheckpoint', () => {
       expect(
         fetchStub.getCall(0).calledWithExactly(
           Checkpoint.generateId({
-            securityTokenId: SecurityToken.generateId({
-              symbol: params.symbol,
-            }),
+            securityTokenId,
             index: indexValue,
           })
         )
@@ -159,6 +172,17 @@ describe('CreateCheckpoint', () => {
           message: `There is no Security Token with symbol ${params.symbol}`,
         })
       );
+    });
+
+    test('should successfully refresh the security token factory with its resolver method', async () => {
+      const refreshStub = securityTokenFactoryMock.mock('refresh', Promise.resolve());
+      await createCheckpointModule.createRefreshSecurityTokenFactoryResolver(
+        factoryMockSetup,
+        securityTokenId
+      )();
+
+      expect(refreshStub.getCall(0).calledWithExactly(securityTokenId)).toEqual(true);
+      expect(refreshStub.callCount).toEqual(1);
     });
   });
 });
