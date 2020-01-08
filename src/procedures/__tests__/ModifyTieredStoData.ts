@@ -51,7 +51,7 @@ const tieredStoObject = {
   minimumInvestment: tieredParams.minimumInvestment,
   startDate: tieredParams.startDate,
   endDate: tieredParams.endDate,
-  fundraiseCurrencies: [FundRaiseType.ETH, FundRaiseType.StableCoin, FundRaiseType.POLY],
+  fundraiseCurrencies: [FundRaiseType.StableCoin],
   raisedFundsWallet,
   stableCoinAddresses: tieredParams.stableCoinAddresses,
   tiers: [
@@ -616,7 +616,7 @@ describe('ModifyTieredStoData', () => {
           ],
           nonAccreditedInvestmentLimit: new BigNumber(123),
           minimumInvestment: new BigNumber(113),
-          currencies: [Currency.ETH, Currency.POLY],
+          currencies: [Currency.ETH, Currency.StableCoin],
           stableCoinAddresses: ['0x7777777777777777777777777777777777777777'],
           customCurrency: {
             currencySymbol: 'CAD',
@@ -699,7 +699,7 @@ describe('ModifyTieredStoData', () => {
       );
     });
 
-    test('should throw if the tiered sto data params do not present valid modifications, there are no transactions to add to queue', async () => {
+    test('should throw if the tiered sto data params do not present valid modifications, there are no transactions to add to queue and while fundraise currency is stable coin', async () => {
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.InvalidAddress,
@@ -708,10 +708,10 @@ describe('ModifyTieredStoData', () => {
       );
     });
 
-    test('should throw if the tiered sto data params do not present valid modifications, there are no transactions to add to queue and no fundraise currencies fetched from the entity', async () => {
+    test('should throw if the tiered sto data params do not present valid modifications, there are no transactions to add to queue and while fundraise currency is ETH and POLY', async () => {
       tieredStoFactoryMock.mock('fetch', {
         ...tieredStoObject,
-        fundraiseCurrencies: [],
+        fundraiseCurrencies: [FundRaiseType.ETH, FundRaiseType.POLY],
       });
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
