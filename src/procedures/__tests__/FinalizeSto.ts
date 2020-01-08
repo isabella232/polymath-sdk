@@ -39,6 +39,7 @@ const tieredParams: FinalizeStoProcedureArgs = {
 
 const invalidSto = 'InvalidSto';
 const treasuryWallet = '0x1111111111111111111111111111111111111111';
+const currentWallet = '0x2222222222222222222222222222222222222222';
 const amountOfTokens = new BigNumber(1);
 
 describe('FinalizeSto', () => {
@@ -74,6 +75,9 @@ describe('FinalizeSto', () => {
     );
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
+    contextMock.set('currentWallet', {
+      address: () => Promise.resolve(currentWallet),
+    });
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
     wrappersMock.set('moduleFactory', moduleWrapperFactoryMock.getMockInstance());
 
@@ -274,16 +278,19 @@ describe('FinalizeSto', () => {
       );
     });
 
-    // This test will change once canTransfer is refactored in project
-    test('should throw an error if can transfer returns null', async () => {
-      securityTokenMock.mock('canTransfer', Promise.resolve(undefined));
+    test('should throw an error if can transfer returns a status different from success', async () => {
+      const reasonCode = 'Failed';
+      securityTokenMock.mock(
+        'canTransfer',
+        Promise.resolve({ statusCode: TransferStatusCode.TransferFailure, reasonCode })
+      );
 
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.InvalidAddress,
           message: `Treasury wallet "${treasuryWallet}" is not cleared to receive the remaining ${amountOfTokens} "${
             simpleParams.symbol
-          }" tokens. Please review transfer restrictions regarding this wallet address before attempting to finalize the STO`,
+          }" tokens from "${currentWallet}". Please review transfer restrictions regarding this wallet address before attempting to finalize the STO. Possible reason: "${reasonCode}"`,
         })
       );
     });

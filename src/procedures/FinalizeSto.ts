@@ -64,17 +64,18 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
     if (statusCode !== TransferStatusCode.TransferSuccess) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `Treasury wallet "${to}" is not cleared to 
-        receive the remaining ${amount} "${symbol}" tokens from "${fromAddress}". 
-        Please review transfer restrictions regarding this wallet address before 
-        attempting to finalize the STO. Possible reason: "${reasonCode}"`,
+        message: `Treasury wallet "${to}" is not cleared to \
+receive the remaining ${amount} "${symbol}" tokens from "${fromAddress}". \
+Please review transfer restrictions regarding this wallet address before attempting \
+to finalize the STO. Possible reason: "${reasonCode}"`,
       });
     }
   }
 
   public async prepareTransactions() {
-    const { stoAddress, stoType, symbol } = this.args;
-    const { contractWrappers, factories } = this.context;
+    const { context, args } = this;
+    const { stoAddress, stoType, symbol } = args;
+    const { contractWrappers, factories, currentWallet } = context;
 
     /*
      * Validation
@@ -167,13 +168,15 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
       });
     }
 
+    const address = await currentWallet.address();
+
     const { statusCode, reasonCode } = await securityToken.canTransfer({
       to: treasuryWallet,
       value: remainingTokens,
     });
     this.checkTransferStatus(
       statusCode,
-      await this.context.currentWallet.address(),
+      address,
       symbol,
       treasuryWallet,
       reasonCode,
