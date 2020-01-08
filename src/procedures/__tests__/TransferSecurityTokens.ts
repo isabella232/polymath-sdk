@@ -140,9 +140,9 @@ describe('TransferSecurityTokens', () => {
     await expect(target.prepareTransactions()).rejects.toThrowError(
       new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `[${TransferStatusCode.TransferFailure}] ${from} is not allowed to transfer ${
+        message: `Wallet "${from}" is not allowed to transfer ${params.amount} "${
           params.symbol
-        } to ${params.to}. Possible reason: ${reasonCode}`,
+        }" tokens to "${params.to}". Possible reason: ${reasonCode}`,
       })
     );
   });
