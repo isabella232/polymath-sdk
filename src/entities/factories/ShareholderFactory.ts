@@ -58,9 +58,7 @@ export class ShareholderFactory extends Factory<Shareholder, Params, UniqueIdent
   };
 
   /**
-   * Creates an instance of the shareholder factory
-   *
-   * @param context the context in which sdk will be used
+   * Create an instance of the shareholder factory
    */
   constructor(context: Context) {
     super(Shareholder, context);

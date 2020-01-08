@@ -5,7 +5,7 @@ import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
 /**
- * Represents a unique shareholder for a specific security token
+ * Basic properties of a unique shareholder for a specific security token
  */
 export interface UniqueIdentifiers {
   securityTokenId: string;
@@ -19,7 +19,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Represents information for a specific shareholder on a security token
+ * Properties for a specific shareholder on a security token
  */
 export interface Params {
   securityTokenSymbol: string;
@@ -60,30 +60,52 @@ export class Shareholder extends Entity<Params> {
     return unserialized;
   }
 
+  /**
+   * Unique generated id for a shareholder
+   */
   public uid: string;
 
   public securityTokenSymbol: string;
 
   public securityTokenId: string;
 
+  /**
+   * Date after which a shareholder can transfer tokens from their address
+   */
   public canSendAfter: Date;
 
+  /**
+   * Date after which a shareholder can transfer tokens to their address
+   */
   public canReceiveAfter: Date;
 
+  /**
+   * Date when kyc approval will expire
+   */
   public kycExpiry: Date;
 
+  /**
+   * Whether shareholder is accredited or not
+   */
   public isAccredited: boolean;
 
+  /**
+   * Whether shareholder can purchase from an STO or not
+   */
   public canBuyFromSto: boolean;
 
+  /**
+   * Total security token balance of a shareholder
+   */
   public balance: BigNumber;
 
+  /**
+   * Shareholder address
+   */
   public address: string;
 
   /**
    * Create a new shareholder instance
-   * @param params parameters for a shareholder and unique identifiers
-   * @param context the sdk is being used in
    */
   constructor(params: Params & UniqueIdentifiers) {
     super();
@@ -161,7 +183,7 @@ export class Shareholder extends Entity<Params> {
   }
 
   /**
-   * Hydrating the entity
+   * Hydrate the entity
    */
   public _refresh(params: Partial<Params>) {
     const {

@@ -4,7 +4,7 @@ import { ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
 
 /**
- * Represents unique tax withholding properties for a specific security token holder
+ * Properties unique to tax withholding properties for a specific security token holder
  */
 export interface UniqueIdentifiers {
   securityTokenId: string;
@@ -22,7 +22,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Represents information for tax withholding information for a security token
+ * Unique properties for tax withholding of a security token
  */
 export interface Params {
   securityTokenSymbol: string;
@@ -57,20 +57,27 @@ export class TaxWithholding extends Entity<Params> {
     return unserialized;
   }
 
+  /**
+   * Unique generated identifer for tax withholding entity
+   */
   public uid: string;
 
   public securityTokenSymbol: string;
 
   public securityTokenId: string;
 
+  /**
+   * Shareholder address for tax withholding properties
+   */
   public shareholderAddress: string;
 
+  /**
+   * Percentage of tax to be withheld
+   */
   public percentage: number;
 
   /**
    * Create a new tax withholding information instance
-   * @param params parameters for tax withholding and unique identifiers
-   * @param context the sdk is being used in
    */
   constructor(params: Params & UniqueIdentifiers) {
     super();
@@ -103,7 +110,7 @@ export class TaxWithholding extends Entity<Params> {
   }
 
   /**
-   * Hydrating the entity
+   * Hydrate the entity
    */
   public _refresh(params: Partial<Params>) {
     const { securityTokenSymbol, percentage } = params;

@@ -103,9 +103,7 @@ export class InvestmentFactory extends Factory<Investment, Params, UniqueIdentif
   };
 
   /**
-   * Creates an instance of the investment factory
-   *
-   * @param context the context in which sdk will be used
+   * Create an instance of the investment factory
    */
   constructor(context: Context) {
     super(Investment, context);

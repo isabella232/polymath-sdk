@@ -5,7 +5,7 @@ import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
 /**
- * Represents a unique shareholder for a specific investment
+ * Properties unique to a shareholder for a specific STO investment
  */
 export interface UniqueIdentifiers {
   securityTokenId: string;
@@ -22,7 +22,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Represents information for a specific security token investment
+ * Represents information for a specific security token offering investment
  */
 export interface Params {
   securityTokenSymbol: string;
@@ -61,26 +61,42 @@ export class Investment extends Entity<Params> {
     return unserialized;
   }
 
+  /**
+   * Unique generated identifier for an investment
+   */
   public uid: string;
 
   public securityTokenId: string;
 
+  /**
+   * Unique ID for the investment STO
+   */
   public stoId: string;
 
   public securityTokenSymbol: string;
 
+  /**
+   * Wallet address of token holder
+   */
   public address: string;
 
+  /**
+   * Index of the investment
+   */
   public index: number;
 
+  /**
+   * Total amount of tokens involved in the investment
+   */
   public tokenAmount: BigNumber;
 
+  /**
+   * Amount of funds used to make investment
+   */
   public investedFunds: BigNumber;
 
   /**
    * Create an investment instance
-   * @param params parameters defining an investment and unique identifiers
-   * @param context the sdk is being used in
    */
   constructor(params: Params & UniqueIdentifiers) {
     super();
@@ -137,7 +153,7 @@ export class Investment extends Entity<Params> {
   }
 
   /**
-   * Hydrating the entity
+   * Hydrate the entity
    */
   public _refresh(params: Partial<Params>) {
     const { securityTokenSymbol, address, investedFunds, tokenAmount } = params;

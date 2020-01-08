@@ -37,30 +37,63 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     });
   }
 
+  /**
+   * Unique generated identifier of the poly transaction
+   */
   public uid: string;
 
+  /**
+   * Current status of the transaction
+   */
   public status: TransactionStatus = TransactionStatus.Idle;
 
+  /**
+   * Queue of pending transactions
+   */
   public transactionQueue: TransactionQueue;
 
+  /**
+   * Promise for the poly transaction
+   */
   public promise: Promise<any>;
 
+  /**
+   * Optional error for the poly transaction
+   */
   public error?: PolymathError;
 
+  /**
+   * Optional receipt for the poly transaction
+   */
   public receipt?: TransactionReceiptWithDecodedLogs | string;
 
+  /**
+   * Poly transaction tag
+   */
   public tag: PolyTransactionTag;
 
+  /**
+   * Optional transaction hash for a poly transaction
+   */
   public txHash?: string;
 
+  /**
+   * Transaction specification arguments
+   */
   public args: TransactionSpec<Args, Values, TransactionReceiptWithDecodedLogs | string>['args'];
 
+  /**
+   * @hidden
+   */
   protected method: TransactionSpec<
     Args,
     Values,
     TransactionReceiptWithDecodedLogs | string
   >['method'];
 
+  /**
+   * @hidden
+   */
   private postResolvers: PostTransactionResolverArray<
     Values,
     TransactionReceiptWithDecodedLogs | string
@@ -69,12 +102,13 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     TransactionReceiptWithDecodedLogs | string
   >;
 
+  /**
+   * @hidden
+   */
   private emitter: EventEmitter;
 
   /**
    * Creates a poly transaction
-   * @param transaction specifications about the traction being made
-   * @param transactionQueue queue of pending transactions
    */
   constructor(
     transaction: TransactionSpec<Args, Values, TransactionReceiptWithDecodedLogs | string>,
@@ -154,8 +188,11 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
   }
 
   /**
-   * Trigger change in status based on event
-   * @param listener transaction listener method
+   * Subscribe to status changes
+   *
+   * @param listener - callback function that will be called whenever the status changes
+   *
+   * @returns unsubscribe function
    */
   public onStatusChange = (listener: (transaction: this) => void) => {
     this.emitter.on(Event.StatusChange, listener);
@@ -165,10 +202,19 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     };
   };
 
+  /**
+   * @hidden
+   */
   protected resolve: (val?: any) => void = () => {};
 
+  /**
+   * @hidden
+   */
   protected reject: (reason?: any) => void = () => {};
 
+  /**
+   * @hidden
+   */
   private async internalRun() {
     this.updateStatus(TransactionStatus.Unapproved);
 
@@ -218,6 +264,9 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     return result;
   }
 
+  /**
+   * @hidden
+   */
   private updateStatus = (status: TransactionStatus) => {
     this.status = status;
 
@@ -246,6 +295,9 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     /* eslint-enable default-case */
   };
 
+  /**
+   * @hidden
+   */
   private unwrapArg<T>(arg: PostTransactionResolver<T> | T) {
     if (isPostTransactionResolver<T>(arg)) {
       return arg.result;
@@ -254,7 +306,7 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
   }
 
   /**
-   * Picks all post-transaction resolvers and unwraps their values
+   * @hidden
    */
   private unwrapArgs<T>(args: TransactionSpec<T>['args']) {
     return mapValues(args, (arg: any) => {
@@ -267,7 +319,7 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
   }
 
   /**
-   * Hydrating the entity
+   * Hydrate the entity
    */
   public _refresh() {}
 }

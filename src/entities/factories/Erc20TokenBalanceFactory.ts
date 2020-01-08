@@ -25,9 +25,7 @@ export class Erc20TokenBalanceFactory extends Factory<
   };
 
   /**
-   * Creates an instance of the erc20 token balance factory
-   *
-   * @param context the context in which sdk will be used
+   * Create an instance of the erc20 token balance factory
    */
   constructor(context: Context) {
     super(Erc20TokenBalance, context);

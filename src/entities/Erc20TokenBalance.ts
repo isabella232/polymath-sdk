@@ -5,7 +5,7 @@ import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
 /**
- * Represents the balance for an erc20 token holder
+ * Unique properties to identify an erc20 token holder
  */
 export interface UniqueIdentifiers {
   tokenAddress: string;
@@ -19,7 +19,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Represents information for an erc20 token holders balance
+ * Unique properties including information for an erc20 token holders balance
  */
 export interface Params {
   tokenSymbol: string | null;
@@ -55,20 +55,30 @@ export class Erc20TokenBalance extends Entity<Params> {
     return unserialized;
   }
 
+  /**
+   * Unique generated identifier for an ERC20 token balance
+   */
   public uid: string;
 
   public tokenSymbol: string | null;
 
+  /**
+   * Address of the security token
+   */
   public tokenAddress: string;
 
+  /**
+   * Wallet address of the token holder
+   */
   public walletAddress: string;
 
+  /**
+   * Total number of tokens belonging to token holder
+   */
   public balance: BigNumber;
 
   /**
    * Create an entity instance with erc20 token holder balance
-   * @param params parameters for an erc20 token balance and unique identifiers
-   * @param context the sdk is being used in
    */
   constructor(params: Params & UniqueIdentifiers) {
     super();
@@ -101,7 +111,7 @@ export class Erc20TokenBalance extends Entity<Params> {
   }
 
   /**
-   * Hydrating the entity
+   * Hydrate the entity
    */
   public _refresh(params: Partial<Params>) {
     const { tokenSymbol, balance } = params;
