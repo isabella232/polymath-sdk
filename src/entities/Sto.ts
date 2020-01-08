@@ -8,8 +8,8 @@ import {
   TogglePauseSto,
   AssignStoRole,
   FinalizeSto,
-  ModifyBeneficialInvestments,
-  ModifyPreIssuing,
+  ToggleAllowBeneficialInvestments,
+  ToggleAllowPreIssuing,
 } from '../procedures';
 
 export interface UniqueIdentifiers {
@@ -183,7 +183,7 @@ export abstract class Sto<P> extends Entity<P> {
   public allowPreIssuing = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
-    const procedure = new ModifyPreIssuing(
+    const procedure = new ToggleAllowPreIssuing(
       { stoAddress, stoType, symbol, allowPreIssuing: true },
       this.context
     );
@@ -198,7 +198,7 @@ export abstract class Sto<P> extends Entity<P> {
   public disallowPreIssuing = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
-    const procedure = new ModifyPreIssuing(
+    const procedure = new ToggleAllowPreIssuing(
       { stoAddress, stoType, symbol, allowPreIssuing: false },
       this.context
     );
@@ -212,7 +212,7 @@ export abstract class Sto<P> extends Entity<P> {
   public allowBeneficialInvestments = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
-    const procedure = new ModifyBeneficialInvestments(
+    const procedure = new ToggleAllowBeneficialInvestments(
       { stoAddress, stoType, symbol, allowBeneficialInvestments: true },
       this.context
     );
@@ -226,7 +226,7 @@ export abstract class Sto<P> extends Entity<P> {
   public disallowBeneficialInvestments = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
 
-    const procedure = new ModifyBeneficialInvestments(
+    const procedure = new ToggleAllowBeneficialInvestments(
       { stoAddress, stoType, symbol, allowBeneficialInvestments: false },
       this.context
     );
