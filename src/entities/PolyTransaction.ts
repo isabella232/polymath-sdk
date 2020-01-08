@@ -27,6 +27,9 @@ const mapValuesDeep = (
   mapValues(obj, (val, key) => (isPlainObject(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)));
 
 // TODO @monitz87: Make properties private where appliccable
+/**
+ * Class to manage poly transactions to interact with blockchain extrinsics
+ */
 export class PolyTransaction<Args = any, Values extends any[] = any[]> extends Entity<void> {
   public static generateId() {
     return serialize('transaction', {
@@ -68,6 +71,11 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
 
   private emitter: EventEmitter;
 
+  /**
+   * Creates a poly transaction
+   * @param transaction specifications about the traction being made
+   * @param transactionQueue queue of pending transactions
+   */
   constructor(
     transaction: TransactionSpec<Args, Values, TransactionReceiptWithDecodedLogs | string>,
     transactionQueue: TransactionQueue<any, any>
@@ -90,6 +98,9 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     this.uid = PolyTransaction.generateId();
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const { uid, status, tag, receipt, error, txHash, transactionQueue, args } = this;
     const transactionQueueUid = transactionQueue.uid;
@@ -114,6 +125,9 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     };
   }
 
+  /**
+   * Run the poly tranasaction and update a transaction status
+   */
   public async run() {
     try {
       const receipt = await this.internalRun();
@@ -139,6 +153,10 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     await this.promise;
   }
 
+  /**
+   * Trigger change in status based on event
+   * @param listener transaction listener method
+   */
   public onStatusChange = (listener: (transaction: this) => void) => {
     this.emitter.on(Event.StatusChange, listener);
 
@@ -248,5 +266,8 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     }) as T;
   }
 
+  /**
+   * Hydrating the entity
+   */
   public _refresh() {}
 }

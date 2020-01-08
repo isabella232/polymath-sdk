@@ -2,6 +2,9 @@ import { Factory } from './Factory';
 import { Context } from '../../Context';
 import { Erc20TokenBalance, Params, UniqueIdentifiers } from '../Erc20TokenBalance';
 
+/**
+ * Factory generates information for an erc20 token balance
+ */
 export class Erc20TokenBalanceFactory extends Factory<
   Erc20TokenBalance,
   Params,
@@ -21,6 +24,11 @@ export class Erc20TokenBalanceFactory extends Factory<
     return { tokenSymbol: symbol, balance };
   };
 
+  /**
+   * Creates an instance of the erc20 token balance factory
+   *
+   * @param context the context in which sdk will be used
+   */
   constructor(context: Context) {
     super(Erc20TokenBalance, context);
   }
