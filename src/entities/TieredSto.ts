@@ -18,13 +18,10 @@ import { Investment } from './Investment';
 
 const { weiToValue } = conversionUtils;
 
-/**
- * Represents a unique sto
- */
 export { UniqueIdentifiers };
 
 /**
- * Represents a tier in the tiered sto
+ * Unique properties of a tier in the tiered sto
  */
 export interface Tier {
   /**
@@ -40,25 +37,25 @@ export interface Tier {
    */
   price: BigNumber;
   /**
-   * total number of tokens that are available to be sold with a discount within the tier
+   * total number of tokens that are available to be sold at a discount when paid in POLY
    */
   tokensWithDiscount: BigNumber;
   /**
-   * total number of tokens that have been sold with a discount within the tier
+   * total number of tokens that have been sold at a discount
    */
   tokensSoldAtDiscount: BigNumber;
   /**
-   * discounted price at which tokens will be sold within the tier
+   * discounted price at which tokens will be sold
    */
   discountedPrice: BigNumber;
 }
 
 /**
- * Represents a tiered sto
+ * Represents a Tiered STO
  */
 export interface Params extends StoParams {
   /**
-   * numerical identifier for the current tier
+   * numerical identifier for the current tier index
    */
   currentTier: number;
   /**
@@ -68,9 +65,9 @@ export interface Params extends StoParams {
 }
 
 /**
- * Represents a tiered sto's base parameters
+ * @hidden
  */
-interface BaseParams {
+interface BaseInvestParams {
   /**
    * minimum amount of tokens that will be sold in the sto
    */
@@ -90,9 +87,9 @@ interface BaseParams {
 }
 
 /**
- * Represents a tiered sto raising in stable coin with a stable coin address
+ * @hidden
  */
-interface InvestInStableCoinParams extends BaseParams {
+interface InvestInStableCoinParams extends BaseInvestParams {
   /**
    * currency to raise in stable coin
    */
@@ -104,9 +101,9 @@ interface InvestInStableCoinParams extends BaseParams {
 }
 
 /**
- * Represents a tiered sto where funds are raised in other fund raise types
+ * @hidden
  */
-interface InvestInOtherParams extends BaseParams {
+interface InvestInOtherParams extends BaseInvestParams {
   currency: Currency.ETH | Currency.POLY;
   stableCoinAddress?: undefined;
 }
@@ -123,16 +120,23 @@ export class TieredSto extends Sto<Params> {
     });
   }
 
+  /**
+   * Unique generated Tiered STO id
+   */
   public uid: string;
 
+  /**
+   * Index of the current active tier
+   */
   public currentTier: number;
 
+  /**
+   * Array of tier information
+   */
   public tiers: Tier[];
 
   /**
    * Create a new tiered sto instance
-   * @param params parameters for an sto and unique identifiers
-   * @param context the sdk is being used in
    */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     const { currentTier, tiers, ...rest } = params;
@@ -237,10 +241,6 @@ export class TieredSto extends Sto<Params> {
    * @param args.startDate - date when the STO should start
    * @param args.endDate - date when the STO should end
    * @param args.tiers - tier information
-   * @param args.tiers[].tokensOnSale - amount of tokens to be sold on that tier
-   * @param args.tiers[].price - price of each token on that tier
-   * @param args.tiers[].tokensWithDiscount - amount of tokens to be sold on that tier at a discount if paid in POLY (must be less than tokensOnSale, defaults to 0)
-   * @param args.tiers[].discountedPrice - price of discounted tokens on that tier (defaults to 0)
    * @param args.nonAccreditedInvestmentLimit - maximum investment for non-accredited investors
    * @param args.minimumInvestment - minimum investment amount
    * @param args.fundraiseCurrencies - array of currencies in which the funds will be raised (ETH, POLY, StableCoin)
@@ -248,9 +248,6 @@ export class TieredSto extends Sto<Params> {
    * @param args.unsoldTokensWallet - wallet address that will receive unsold tokens when the end date is reached
    * @param args.stableCoinAddresses - addresses of supported stablecoins
    * @param args.customCurrency - custom currency data. Allows the STO to raise funds pegged to a different currency. Optional, defaults to USD
-   * @param args.customCurrency.currencySymbol - symbol of the custom currency (USD, CAD, EUR, etc. Default is USD)
-   * @param args.customCurrency.ethOracleAddress - address of the oracle that states the price of ETH in the custom currency. Only required if raising funds in ETH
-   * @param args.customCurrency.polyOracleAddress - address of the oracle that states the price of POLY in the custom currency. Only required if raising funds in POLY
    */
   public async modifyData(args: {
     startDate?: Date;
@@ -322,7 +319,7 @@ export class TieredSto extends Sto<Params> {
   }
 
   /**
-   * Hydrating the entity
+   * Hydrate the entity
    */
   public _refresh(params: Partial<Params>) {
     const { currentTier, tiers, ...rest } = params;

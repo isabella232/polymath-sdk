@@ -79,9 +79,7 @@ export class SimpleStoFactory extends Factory<SimpleSto, Params, UniqueIdentifie
   };
 
   /**
-   * Creates an instance of the simple sto factory
-   *
-   * @param context the context in which sdk will be used
+   * Create an instance of the simple sto factory
    */
   constructor(context: Context) {
     super(SimpleSto, context);

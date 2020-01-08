@@ -376,9 +376,21 @@ export interface StoTier {
   discountedPrice?: BigNumber;
 }
 
+/**
+ * Unique properties of a custom currency
+ */
 export interface CustomCurrency {
+  /**
+   * symbol of the custom currency (USD, CAD, EUR, etc. Default is USD)
+   */
   currencySymbol: string;
+  /**
+   * address of the oracle that states the price of ETH in the custom currency. Only required if raising funds in ETH
+   */
   ethOracleAddress: string;
+  /**
+   * address of the oracle that states the price of POLY in the custom currency. Only required if raising funds in POLY
+   */
   polyOracleAddress: string;
 }
 
@@ -612,7 +624,7 @@ export interface ProcedureArguments {
   [ProcedureType.PullDividendPayment]: PullDividendPaymentProcedureArgs;
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
   // prettier-ignore
-  [ProcedureType.ModifyDividendsDefaultExclusionList]: 
+  [ProcedureType.ModifyDividendsDefaultExclusionList]:
     ModifyDividendsDefaultExclusionListProcedureArgs;
   [ProcedureType.LaunchSimpleSto]: LaunchSimpleStoProcedureArgs;
   [ProcedureType.LaunchTieredSto]: LaunchTieredStoProcedureArgs;

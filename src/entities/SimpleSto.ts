@@ -15,7 +15,7 @@ import { Investment } from './Investment';
 const { weiToValue } = conversionUtils;
 
 /**
- * Represents a simple sto
+ * Properties that uniquely identify a simple sto
  */
 export interface Params extends StoParams {
   /**
@@ -28,9 +28,6 @@ export interface Params extends StoParams {
   rate: BigNumber;
 }
 
-/**
- * Represents a unique sto
- */
 export { UniqueIdentifiers };
 
 /**
@@ -45,16 +42,23 @@ export class SimpleSto extends Sto<Params> {
     });
   }
 
+  /**
+   * Unique generated Tiered STO id
+   */
   public uid: string;
 
+  /**
+   * Cap of total tokens that can be sold in sto
+   */
   public cap: BigNumber;
 
+  /**
+   * Rate at which the tokens will be sold in sto
+   */
   public rate: BigNumber;
 
   /**
    * Create a new simple sto instance
-   * @param params parameters for an sto and unique identifiers
-   * @param context the sdk is being used in
    */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     const { cap, rate, ...rest } = params;
@@ -139,7 +143,7 @@ export class SimpleSto extends Sto<Params> {
   }
 
   /**
-   * Hydrating the entity
+   * Hydrate the entity
    */
   public _refresh(params: Partial<Params>) {
     const { cap, rate, ...rest } = params;

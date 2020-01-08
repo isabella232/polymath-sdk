@@ -140,9 +140,7 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
   };
 
   /**
-   * Creates an instance of the tiered sto factory
-   *
-   * @param context the context in which sdk will be used
+   * Create an instance of the tiered sto factory
    */
   constructor(context: Context) {
     super(TieredSto, context);

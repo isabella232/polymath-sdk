@@ -13,7 +13,7 @@ import {
 } from '../procedures';
 
 /**
- * Represents a unique sto
+ * Properties that uniquely identify an STO
  */
 export interface UniqueIdentifiers {
   securityTokenId: string;
@@ -23,8 +23,6 @@ export interface UniqueIdentifiers {
 
 /**
  * Check if the provided value is of type [[UniqueIdentifiers]]
- *
- * @param identifiers - internal security token representation
  */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { securityTokenId, stoType, address } = identifiers;
@@ -33,7 +31,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Represents an sto
+ * STO constructor parameters
  */
 export interface Params {
   /**
@@ -61,7 +59,7 @@ export interface Params {
    */
   unsoldTokensWallet: string;
   /**
-   * amount of tokens to be raised
+   * funds that have been raised to this date
    */
   raisedAmount: BigNumber;
   /**
@@ -98,40 +96,82 @@ export interface Params {
  * Abstract class used as a base to manage sto functionalities
  */
 export abstract class Sto<P> extends Entity<P> {
+  /**
+   * Uniquely generated id for the STO
+   */
   public abstract uid: string;
 
+  /**
+   * Ethereum address for the STO
+   */
   public address: string;
 
   public securityTokenSymbol: string;
 
   public securityTokenId: string;
 
+  /**
+   * Type of STO setup
+   */
   public stoType: StoType;
 
   public startDate: Date;
 
   public endDate: Date;
 
+  /**
+   * Wallet where funds raised will be forwarded to
+   */
   public raisedFundsWallet: string;
 
+  /**
+   * Wallet where unsold tokens will be returned to
+   */
   public unsoldTokensWallet: string;
 
+  /**
+   * Amount of funds that have been raised so far
+   */
   public raisedAmount: BigNumber;
 
+  /**
+   * Total number of tokens that have been sold so far
+   */
   public soldTokensAmount: BigNumber;
 
+  /**
+   * Number of investors that have purchased tokens in the STO
+   */
   public investorCount: number;
 
+  /**
+   * Valid currencies that funds can be raised in
+   */
   public fundraiseCurrencies: Currency[];
 
+  /**
+   * Whether the STO is currently paused or not
+   */
   public isPaused: boolean;
 
+  /**
+   * Whether the STO cap has been reached or not
+   */
   public capReached: boolean;
 
+  /**
+   * Whether the STO has been finalized or not
+   */
   public isFinalized: boolean;
 
+  /**
+   * Whether the preissuing of tokens is allowed or not
+   */
   public preIssueAllowed: boolean;
 
+  /**
+   * Whether investments can be made on behalf of a beneficiary or not
+   */
   public beneficialInvestmentsAllowed: boolean;
 
   protected context: Context;
@@ -156,8 +196,6 @@ export abstract class Sto<P> extends Entity<P> {
 
   /**
    * Create a new sto instance
-   * @param params parameters for an sto and unique identifiers
-   * @param context the sdk is being used in
    */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
@@ -395,7 +433,7 @@ export abstract class Sto<P> extends Entity<P> {
   }
 
   /**
-   * Hydrating the entity
+   * Hydrate the entity
    */
   public _refresh(params: Partial<Params>) {
     const {
