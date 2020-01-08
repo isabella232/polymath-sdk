@@ -7,16 +7,50 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  ModifyPreIssuingProcedureArgs,
+  ToggleAllowPreIssuingProcedureArgs,
   ErrorCode,
   StoType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
-import { SecurityToken, SimpleSto, TieredSto } from '../entities';
+import { Factories } from '~/Context';
+import { SecurityToken, SimpleSto, TieredSto } from '~/entities';
 
-export class ModifyPreIssuing extends Procedure<ModifyPreIssuingProcedureArgs> {
-  public type = ProcedureType.ModifyPreIssuing;
+export const createToggleAllowPreIssuingResolver = (
+  factories: Factories,
+  symbol: string,
+  stoType: StoType,
+  stoAddress: string
+) => async () => {
+  const securityTokenId = SecurityToken.generateId({ symbol });
+
+  switch (stoType) {
+    case StoType.Simple: {
+      return factories.simpleStoFactory.refresh(
+        SimpleSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+    case StoType.Tiered: {
+      return factories.tieredStoFactory.refresh(
+        TieredSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+    default: {
+      return undefined;
+    }
+  }
+};
+
+export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProcedureArgs> {
+  public type = ProcedureType.ToggleAllowPreIssuing;
 
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol, allowPreIssuing } = this.args;
@@ -38,12 +72,21 @@ export class ModifyPreIssuing extends Procedure<ModifyPreIssuingProcedureArgs> {
       message: 'STO version is 3.0.0. Version 3.1.0 or greater is required for pre-minting',
     });
 
+    const stoModuleError = new PolymathError({
+      code: ErrorCode.ProcedureValidationError,
+      message: `STO ${stoAddress} is either archived or hasn't been launched`,
+    });
+
     switch (stoType) {
       case StoType.Simple: {
         stoModule = await contractWrappers.moduleFactory.getModuleInstance({
           name: ModuleName.CappedSTO,
           address: stoAddress,
         });
+
+        if (!stoModule) {
+          throw stoModuleError;
+        }
 
         if (isCappedSTO_3_0_0(stoModule)) {
           throw wrongVersionError;
@@ -56,6 +99,10 @@ export class ModifyPreIssuing extends Procedure<ModifyPreIssuingProcedureArgs> {
           name: ModuleName.UsdTieredSTO,
           address: stoAddress,
         });
+
+        if (!stoModule) {
+          throw stoModuleError;
+        }
 
         if (isUSDTieredSTO_3_0_0(stoModule)) {
           throw wrongVersionError;
@@ -71,15 +118,7 @@ export class ModifyPreIssuing extends Procedure<ModifyPreIssuingProcedureArgs> {
       }
     }
 
-    if (!stoModule) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `STO ${stoAddress} is either archived or hasn't been launched`,
-      });
-    }
-
     const preMintingAllowed = await stoModule.preMintAllowed();
-
     if (preMintingAllowed === allowPreIssuing) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
@@ -96,35 +135,7 @@ export class ModifyPreIssuing extends Procedure<ModifyPreIssuingProcedureArgs> {
         tag: allowPreIssuing
           ? PolyTransactionTag.AllowPreMinting
           : PolyTransactionTag.RevokePreMinting,
-        resolvers: [
-          async () => {
-            const securityTokenId = SecurityToken.generateId({ symbol });
-
-            switch (stoType) {
-              case StoType.Simple: {
-                return factories.simpleStoFactory.refresh(
-                  SimpleSto.generateId({
-                    securityTokenId,
-                    stoType,
-                    address: stoAddress,
-                  })
-                );
-              }
-              case StoType.Tiered: {
-                return factories.tieredStoFactory.refresh(
-                  TieredSto.generateId({
-                    securityTokenId,
-                    stoType,
-                    address: stoAddress,
-                  })
-                );
-              }
-              default: {
-                return undefined;
-              }
-            }
-          },
-        ],
+        resolvers: [createToggleAllowPreIssuingResolver(factories, symbol, stoType, stoAddress)],
       }
     )({});
   }

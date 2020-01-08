@@ -3,18 +3,52 @@ import { Procedure } from './Procedure';
 import {
   ProcedureType,
   PolyTransactionTag,
-  ModifyBeneficialInvestmentsProcedureArgs,
+  ToggleAllowBeneficialInvestmentsProcedureArgs,
   ErrorCode,
   StoType,
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
+import { Factories } from '../Context';
 
-export class ModifyBeneficialInvestments extends Procedure<
-  ModifyBeneficialInvestmentsProcedureArgs
+export const createToggleAllowBeneficialInvestmentsResolver = (
+  factories: Factories,
+  symbol: string,
+  stoType: StoType,
+  stoAddress: string
+) => async () => {
+  const securityTokenId = SecurityToken.generateId({ symbol });
+
+  switch (stoType) {
+    case StoType.Simple: {
+      return factories.simpleStoFactory.refresh(
+        SimpleSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+    case StoType.Tiered: {
+      return factories.tieredStoFactory.refresh(
+        TieredSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+    default: {
+      return undefined;
+    }
+  }
+};
+
+export class ToggleAllowBeneficialInvestments extends Procedure<
+  ToggleAllowBeneficialInvestmentsProcedureArgs
 > {
-  public type = ProcedureType.ModifyBeneficialInvestments;
+  public type = ProcedureType.ToggleAllowBeneficialInvestments;
 
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol, allowBeneficialInvestments } = this.args;
@@ -81,33 +115,7 @@ export class ModifyBeneficialInvestments extends Procedure<
     await this.addTransaction(stoModule.changeAllowBeneficialInvestments, {
       tag: PolyTransactionTag.ChangeAllowBeneficialInvestments,
       resolvers: [
-        async () => {
-          const securityTokenId = SecurityToken.generateId({ symbol });
-
-          switch (stoType) {
-            case StoType.Simple: {
-              return factories.simpleStoFactory.refresh(
-                SimpleSto.generateId({
-                  securityTokenId,
-                  stoType,
-                  address: stoAddress,
-                })
-              );
-            }
-            case StoType.Tiered: {
-              return factories.tieredStoFactory.refresh(
-                TieredSto.generateId({
-                  securityTokenId,
-                  stoType,
-                  address: stoAddress,
-                })
-              );
-            }
-            default: {
-              return undefined;
-            }
-          }
-        },
+        createToggleAllowBeneficialInvestmentsResolver(factories, symbol, stoType, stoAddress),
       ],
     })({ allowBeneficialInvestments });
   }
