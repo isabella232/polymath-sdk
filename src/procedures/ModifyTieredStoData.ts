@@ -51,7 +51,10 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       stableCoinAddresses,
       customCurrency,
     } = args;
-    const { contractWrappers, factories } = context;
+    const {
+      contractWrappers,
+      factories: { tieredStoFactory },
+    } = context;
 
     try {
       await contractWrappers.tokenFactory.getSecurityTokenInstanceFromTicker(symbol);
@@ -82,7 +85,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
     });
 
     const [sto, treasuryWallet] = await Promise.all([
-      factories.tieredStoFactory.fetch(tieredStoId),
+      tieredStoFactory.fetch(tieredStoId),
       contractWrappers.getTreasuryWallet({ module: stoModule }),
     ]);
 
@@ -129,7 +132,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
         tag,
         resolvers: [
           createTieredStoFactoryRefreshResolver(
-            factories.tieredStoFactory,
+            tieredStoFactory,
             addedTransactions,
             tag,
             tieredStoId
@@ -170,7 +173,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
         tag,
         resolvers: [
           createTieredStoFactoryRefreshResolver(
-            factories.tieredStoFactory,
+            tieredStoFactory,
             addedTransactions,
             tag,
             tieredStoId
@@ -227,7 +230,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
           tag,
           resolvers: [
             createTieredStoFactoryRefreshResolver(
-              factories.tieredStoFactory,
+              tieredStoFactory,
               addedTransactions,
               tag,
               tieredStoId
@@ -274,7 +277,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
         tag,
         resolvers: [
           createTieredStoFactoryRefreshResolver(
-            factories.tieredStoFactory,
+            tieredStoFactory,
             addedTransactions,
             tag,
             tieredStoId
@@ -306,7 +309,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
         tag,
         resolvers: [
           createTieredStoFactoryRefreshResolver(
-            factories.tieredStoFactory,
+            tieredStoFactory,
             addedTransactions,
             tag,
             tieredStoId
@@ -346,7 +349,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
         tag,
         resolvers: [
           createTieredStoFactoryRefreshResolver(
-            factories.tieredStoFactory,
+            tieredStoFactory,
             addedTransactions,
             tag,
             tieredStoId

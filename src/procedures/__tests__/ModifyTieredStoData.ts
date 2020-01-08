@@ -311,7 +311,7 @@ describe('ModifyTieredStoData', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to modify all oracle information', async () => {
+    test('should add a transaction to the queue to modify all custom currency information', async () => {
       target = new ModifyTieredStoData(
         {
           ...tieredParams,
@@ -340,7 +340,7 @@ describe('ModifyTieredStoData', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to modify currency symbol oracle', async () => {
+    test('should add a transaction to the queue to modify the custom currency symbol only', async () => {
       target = new ModifyTieredStoData(
         {
           ...tieredParams,
@@ -369,7 +369,7 @@ describe('ModifyTieredStoData', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to modify eth oracle address', async () => {
+    test('should add a transaction to the queue to modify eth oracle address only', async () => {
       target = new ModifyTieredStoData(
         {
           ...tieredParams,
@@ -398,7 +398,7 @@ describe('ModifyTieredStoData', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to modify poly oracle address', async () => {
+    test('should add a transaction to the queue to modify poly oracle address only', async () => {
       target = new ModifyTieredStoData(
         {
           ...tieredParams,
@@ -427,7 +427,7 @@ describe('ModifyTieredStoData', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to modify limits', async () => {
+    test('should add a transaction to the queue to modify investment limits', async () => {
       target = new ModifyTieredStoData(
         {
           ...tieredParams,
@@ -450,7 +450,7 @@ describe('ModifyTieredStoData', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to modify limits without a non accredited investment limit', async () => {
+    test('should add a transaction to the queue to modify the minimum investment amount only', async () => {
       target = new ModifyTieredStoData(
         {
           ...tieredParams,
@@ -473,7 +473,7 @@ describe('ModifyTieredStoData', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to modify limits without a minimum investment', async () => {
+    test('should add a transaction to the queue to modify the investment limit for non accredited investors only', async () => {
       target = new ModifyTieredStoData(
         {
           ...tieredParams,
@@ -599,7 +599,7 @@ describe('ModifyTieredStoData', () => {
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add a transaction to the queue to modify 6 different pieces of sto information', async () => {
+    test('should add 6 transactions to the queue to modify all sto data', async () => {
       target = new ModifyTieredStoData(
         {
           symbol: 'TEST1',
@@ -749,7 +749,7 @@ describe('ModifyTieredStoData', () => {
       );
     });
 
-    test('should successfully refresh the tiered sto factory with its resolver method using a poly transaction tag', async () => {
+    test('should refresh the tiered sto only after the last transaction', async () => {
       const refreshStub = tieredStoFactoryMock.mock('refresh', Promise.resolve());
       const tag = PolyTransactionTag.ModifyOracles;
       const addedTransactions = [PolyTransactionTag.ModifyTimes, tag];
@@ -764,7 +764,7 @@ describe('ModifyTieredStoData', () => {
       expect(refreshStub.callCount).toEqual(1);
     });
 
-    test('should not refresh tiered sto factory in the resolver if the tag does not match the final transaction', async () => {
+    test('should not refresh the tiered sto after any transaction other than the last', async () => {
       const refreshStub = tieredStoFactoryMock.mock('refresh', Promise.resolve());
       const tag = PolyTransactionTag.ModifyOracles;
       const addedTransactions = [tag, PolyTransactionTag.ModifyTimes];
