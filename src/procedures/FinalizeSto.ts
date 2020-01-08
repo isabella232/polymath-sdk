@@ -15,6 +15,40 @@ import {
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
+import { Factories } from '../Context';
+
+export const createRefreshStoFactoryResolver = (
+  factories: Factories,
+  symbol: string,
+  stoType: StoType,
+  stoAddress: string
+) => async () => {
+  const securityTokenId = SecurityToken.generateId({ symbol });
+
+  switch (stoType) {
+    case StoType.Simple: {
+      return factories.simpleStoFactory.refresh(
+        SimpleSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+    case StoType.Tiered: {
+      return factories.tieredStoFactory.refresh(
+        TieredSto.generateId({
+          securityTokenId,
+          stoType,
+          address: stoAddress,
+        })
+      );
+    }
+    default: {
+      return undefined;
+    }
+  }
+};
 
 export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
   public type = ProcedureType.FinalizeSto;
@@ -30,17 +64,18 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
     if (statusCode !== TransferStatusCode.TransferSuccess) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `Treasury wallet "${to}" is not cleared to 
-        receive the remaining ${amount} "${symbol}" tokens from "${fromAddress}". 
-        Please review transfer restrictions regarding this wallet address before 
-        attempting to finalize the STO. Possible reason: "${reasonCode}"`,
+        message: `Treasury wallet "${to}" is not cleared to \
+receive the remaining ${amount} "${symbol}" tokens from "${fromAddress}". \
+Please review transfer restrictions regarding this wallet address before attempting \
+to finalize the STO. Possible reason: "${reasonCode}"`,
       });
     }
   }
 
   public async prepareTransactions() {
-    const { stoAddress, stoType, symbol } = this.args;
-    const { contractWrappers, factories } = this.context;
+    const { context, args } = this;
+    const { stoAddress, stoType, symbol } = args;
+    const { contractWrappers, factories, currentWallet } = context;
 
     /*
      * Validation
@@ -65,6 +100,11 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
       });
     }
 
+    const stoModuleError = new PolymathError({
+      code: ErrorCode.ProcedureValidationError,
+      message: `STO ${stoAddress} is either archived or hasn't been launched`,
+    });
+
     let stoModule;
     let remainingTokens: BigNumber;
 
@@ -75,6 +115,10 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
           address: stoAddress,
         });
 
+        if (!stoModule) {
+          throw stoModuleError;
+        }
+
         if (isCappedSTO_3_0_0(stoModule)) {
           throw new PolymathError({
             code: ErrorCode.IncorrectVersion,
@@ -82,6 +126,7 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
               'Capped STO version is 3.0.0. Version 3.1.0 or greater is required for forced finalization',
           });
         }
+
         const { totalTokensSold, cap } = await stoModule.getSTODetails();
         remainingTokens = cap.minus(totalTokensSold);
 
@@ -92,6 +137,10 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
           name: ModuleName.UsdTieredSTO,
           address: stoAddress,
         });
+
+        if (!stoModule) {
+          throw stoModuleError;
+        }
 
         const { tokensSold, capPerTier } = await stoModule.getSTODetails();
         const totalCap = capPerTier.reduce((prev, next) => prev.plus(next), new BigNumber(0));
@@ -107,13 +156,6 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
       }
     }
 
-    if (!stoModule) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `STO ${stoAddress} is either archived or hasn't been launched`,
-      });
-    }
-
     const [isFinalized, treasuryWallet] = await Promise.all([
       stoModule.isFinalized(),
       contractWrappers.getTreasuryWallet({ module: stoModule }),
@@ -126,13 +168,15 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
       });
     }
 
+    const address = await currentWallet.address();
+
     const { statusCode, reasonCode } = await securityToken.canTransfer({
       to: treasuryWallet,
       value: remainingTokens,
     });
     this.checkTransferStatus(
       statusCode,
-      await this.context.currentWallet.address(),
+      address,
       symbol,
       treasuryWallet,
       reasonCode,
@@ -144,35 +188,7 @@ export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
      */
     await this.addTransaction(stoModule.finalize, {
       tag: PolyTransactionTag.FinalizeSto,
-      resolvers: [
-        async () => {
-          const securityTokenId = SecurityToken.generateId({ symbol });
-
-          switch (stoType) {
-            case StoType.Simple: {
-              return factories.simpleStoFactory.refresh(
-                SimpleSto.generateId({
-                  securityTokenId,
-                  stoType,
-                  address: stoAddress,
-                })
-              );
-            }
-            case StoType.Tiered: {
-              return factories.tieredStoFactory.refresh(
-                TieredSto.generateId({
-                  securityTokenId,
-                  stoType,
-                  address: stoAddress,
-                })
-              );
-            }
-            default: {
-              return undefined;
-            }
-          }
-        },
-      ],
+      resolvers: [createRefreshStoFactoryResolver(factories, symbol, stoType, stoAddress)],
     })({});
   }
 }
