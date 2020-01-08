@@ -1,3 +1,4 @@
+import { BigNumber, TransferStatusCode } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   TransferSecurityTokensProcedureArgs,
@@ -8,7 +9,6 @@ import {
 import { PolymathError } from '../PolymathError';
 import { SecurityToken, Shareholder } from '../entities';
 import { Factories } from '../Context';
-import { checkTransferStatus } from '../utils';
 
 export const createTransferSecurityTokensResolver = (
   factories: Factories,
@@ -39,6 +39,22 @@ export const createTransferSecurityTokensResolver = (
 export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProcedureArgs> {
   public type = ProcedureType.TransferSecurityTokens;
 
+  private checkTransferStatus(
+    statusCode: TransferStatusCode,
+    fromAddress: string,
+    symbol: string,
+    to: string,
+    reasonCode: string,
+    amount: BigNumber
+  ) {
+    if (statusCode !== TransferStatusCode.TransferSuccess) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `Wallet "${fromAddress}" is not allowed to transfer ${amount} "${symbol}" tokens to "${to}". Possible reason: ${reasonCode}`,
+      });
+    }
+  }
+
   public async prepareTransactions() {
     const { symbol, to, amount, data = '', from } = this.args;
     const { contractWrappers, currentWallet, factories } = this.context;
@@ -64,10 +80,10 @@ export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProc
         value: amount,
         from,
       });
-      checkTransferStatus(statusCode, from, symbol, to, reasonCode);
+      this.checkTransferStatus(statusCode, from, symbol, to, reasonCode, amount);
     } else {
       const { statusCode, reasonCode } = await securityToken.canTransfer({ to, value: amount });
-      checkTransferStatus(statusCode, fromAddress, symbol, to, reasonCode);
+      this.checkTransferStatus(statusCode, fromAddress, symbol, to, reasonCode, amount);
     }
 
     await this.addTransaction(securityToken.transferFromWithData, {
