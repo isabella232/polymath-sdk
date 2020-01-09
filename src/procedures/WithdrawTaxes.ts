@@ -5,6 +5,9 @@ import { PolymathError } from '../PolymathError';
 import { DividendDistribution, SecurityToken } from '../entities';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createWithdrawTaxesResolver = (
   dividendIndex: number,
   factories: Factories,
@@ -18,9 +21,18 @@ export const createWithdrawTaxesResolver = (
   );
 };
 
+/**
+ * Procedure that allows issuer to withdraw withheld tax
+ */
 export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
   public type = ProcedureType.WithdrawTaxes;
 
+  /**
+   * - Withdraw Tax Withholdings
+   *
+   * Note that this procedure will fail if the security token doesn't exist
+   * Note that this procedure will fail if the dividends feature hasn't been enabled
+   */
   public async prepareTransactions() {
     const { symbol, dividendIndex } = this.args;
     const { contractWrappers, factories } = this.context;
