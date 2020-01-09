@@ -102,10 +102,19 @@ export class SecurityToken extends Entity<Params> {
 
   public name: string;
 
+  /**
+   * address of the Security Token contract
+   */
   public owner: string;
 
+  /**
+   * address that owns the Security Token
+   */
   public address: string;
 
+  /**
+   * URL pointing to off-chain data associated with the Security Token
+   */
   public tokenDetails: string;
 
   public version: Version;
@@ -114,8 +123,14 @@ export class SecurityToken extends Entity<Params> {
 
   public totalSupply: BigNumber;
 
+  /**
+   * index of the current checkpoint
+   */
   public currentCheckpoint: number;
 
+  /**
+   * treasury wallet used by some features.
+   */
   public treasuryWallet: string;
 
   public features: Features;
