@@ -18,7 +18,7 @@ import {
   ProcedureType,
   StoType,
 } from '../../types';
-import * as tieredStoFactoryModule from '~/entities/factories/TieredStoFactory';
+import * as tieredStoFactoryModule from '../../entities/factories/TieredStoFactory';
 import * as utilsModule from '../../utils';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
