@@ -13,8 +13,8 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
-import { Factories } from '~/Context';
-import { SecurityToken, SimpleSto, TieredSto } from '~/entities';
+import { Factories } from '../Context';
+import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 
 export const createToggleAllowPreIssuingResolver = (
   factories: Factories,
