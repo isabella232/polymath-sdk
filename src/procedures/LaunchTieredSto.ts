@@ -20,9 +20,32 @@ import { findEvents, isValidAddress } from '../utils';
 import { SecurityToken, TieredSto } from '../entities';
 import { ZERO_ADDRESS } from '../utils/constants';
 
+/**
+ * Procedure to launch a tiered STO module with necessary initialization data, transferring poly setup cost to the security token before doing so.
+ * As part of the procedure, preissuing can be enabled in 3.1.0 version Security Token
+ */
 export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, TieredSto> {
   public type = ProcedureType.LaunchTieredSto;
 
+  /**
+   * - Fetch the POLY setup cost of the STO and transfer the setup cost in POLY to the Security Token
+   *
+   * - Launch the Tiered STO initializing the module with the provided arguments. Fees may be in POLY or USD.
+   *
+   * - Fetch the Tiered STO entity into the SDK cache
+   *
+   * - If the Security Token is 3.1.0 and allow pre issuing is toggled to true, the method will allow pre issuing in a separate transaction
+   *
+   * - The Tiered STO entity will update if the transaction to allow pre issuing is made
+   *
+   * Note this procedure will fail if currencies include ETH fundraise type and do not include a valid ETH address
+   *
+   * Note this procedure will fail if currencies include POLY fundraise type and do not include a valid POLY address
+   *
+   * Note preIssuing is disallowed (false) by default.
+   *
+   * Note this procedure will fail if preIssuing is allowed in the arguments, and the security token version is 3.0.0
+   */
   public async prepareTransactions() {
     const { args, context } = this;
     const {

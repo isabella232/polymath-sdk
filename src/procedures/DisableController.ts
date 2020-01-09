@@ -7,9 +7,21 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure to disable the controller of a security token, optionally appending a signature acknowledgement or generating a signature acknowledgement automatically
+ */
 export class DisableController extends Procedure<DisableControllerProcedureArgs> {
   public type = ProcedureType.DisableController;
 
+  /**
+   * - If no signature acknowledgement data (optional) is appended to the procedure arguments, the procedure will request and generate a signature acknowledgement itself
+   *
+   * - Disable the controller of the security token, including the signature acknowledgement to complete this action
+   *
+   * Note this procedure will fail if the user interacting with it is not the security token owner
+   *
+   * Note this procedure will fail if the controller has already been previously disabled
+   */
   public async prepareTransactions() {
     const { signature, symbol } = this.args;
     const { contractWrappers, currentWallet } = this.context;

@@ -8,11 +8,19 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure to enable a percentage transfer manager module on a security token
+ */
 export class EnablePercentageTransferManager extends Procedure<
   EnablePercentageTransferManagerProcedureArgs
 > {
   public type = ProcedureType.EnablePercentageTransferManager;
 
+  /**
+   * - Enable the general percentage manager on the security token instantiated with a max token holder percentage and whether primary issuance is allowed
+   *
+   * - The parameter to allow primary issuance is optional and defaults to false, therefore disallowing primary issuance
+   */
   public async prepareTransactions() {
     const { symbol, maxHolderPercentage, allowPrimaryIssuance = false } = this.args;
     const { contractWrappers } = this.context;

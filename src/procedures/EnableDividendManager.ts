@@ -8,9 +8,15 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure to enable a dividend manager module on a security token, including a storage wallet address
+ */
 export class EnableDividendManager extends Procedure<EnableDividendManagerProcedureArgs> {
   public type = ProcedureType.EnableDividendManager;
 
+  /**
+   * - Enable the dividend checkpoint manager module on the security token, providing a storage wallet address to the enabled module
+   */
   public async prepareTransactions() {
     const { symbol, storageWalletAddress } = this.args;
     const { contractWrappers } = this.context;

@@ -16,12 +16,27 @@ import { PolymathError } from '../PolymathError';
 import { findEvents } from '../utils';
 import { SecurityToken, DividendDistribution } from '../entities';
 
+/**
+ * Procedure to create a dividend distribution on a security token with an enabled ERC20 Dividends Checkpoint module
+ * Optionally setting tax with holdings for investors represented with percentage
+ */
 export class CreateDividendDistribution extends Procedure<
   CreateDividendDistributionProcedureArgs,
   DividendDistribution
 > {
   public type = ProcedureType.CreateDividendDistribution;
 
+  /**
+   * - Approve the ERC20 Dividends Checkpoint module to spend the amount equal to the dividend amount in the procedure arguments
+   *
+   * - Create a dividend with checkpoints and exclusions based on the information in the procedure arguments
+   *
+   * - After a dividend is created the Dividend Distribution entity will fetch dividend distribution information to store in the SDK cache
+   *
+   * - If there is a non empty array of tax withholding information, the procedure will set erc20 tax withholding list
+   *
+   * Note this procedure will fail if the ERC20 dividends checkpoint module has not been enabled
+   */
   public async prepareTransactions() {
     const { args, context } = this;
     const {

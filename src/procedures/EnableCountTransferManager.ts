@@ -8,9 +8,15 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure to enable a count transfer manager module on a security token, including the max token holder count
+ */
 export class EnableCountTransferManager extends Procedure<EnableCountTransferManagerProcedureArgs> {
   public type = ProcedureType.EnableCountTransferManager;
 
+  /**
+   * - Enable the count transfer manager on the security token, instantiating the module with a max token holder count
+   */
   public async prepareTransactions() {
     const { symbol, maxHolderCount } = this.args;
     const { contractWrappers } = this.context;
