@@ -1,5 +1,4 @@
 import { FeeType, TransactionParams } from '@polymathnetwork/contract-wrappers';
-
 import { Procedure } from './Procedure';
 import { ApproveErc20 } from './ApproveErc20';
 import {
@@ -11,12 +10,23 @@ import {
 import { PolymathError } from '../PolymathError';
 import { SecurityToken } from '../entities';
 
+/**
+ * Procedure that creates a new Security Token on the Polymath ecosystem
+ */
 export class CreateSecurityToken extends Procedure<
   CreateSecurityTokenProcedureArgs,
   SecurityToken
 > {
   public type = ProcedureType.CreateSecurityToken;
 
+  /**
+   * - Approve the ERC20 token transfer
+   * - Create the new Security Token
+   *
+   * Note that this procedure will fail if the security token symbol hasn't been reserved
+   * Note that this procedure will fail if the security token symbol has already been reserved by another issuer
+   * Note that this procedure will fail if the security token symbol has already been launched
+   */
   public async prepareTransactions() {
     const { args, context } = this;
     const { name, symbol, detailsUrl = '', divisible, treasuryWallet } = args;
