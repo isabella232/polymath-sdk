@@ -11,16 +11,25 @@ import { findEvents } from '../utils';
 import { SecurityToken, Checkpoint } from '../entities';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createRefreshSecurityTokenFactoryResolver = (
   factories: Factories,
   securityTokenId: string
 ) => async () => {
   return factories.securityTokenFactory.refresh(securityTokenId);
 };
-
+/**
+ * Procedure to create a checkpoint on a security token
+ */
 export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint> {
   public type = ProcedureType.CreateCheckpoint;
 
+  /**
+   * - Create a checkpoint on the security token
+   * - Refresh the security token entity
+   */
   public async prepareTransactions() {
     const { args, context } = this;
     const { symbol } = args;

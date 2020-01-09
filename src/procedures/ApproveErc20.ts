@@ -9,6 +9,14 @@ import { PolymathError } from '../PolymathError';
 export class ApproveErc20 extends Procedure<ApproveErc20ProcedureArgs> {
   public type = ProcedureType.ApproveErc20;
 
+  /**
+   * - If the balance is less than the amount being approved, and procedure used with poly on testnet, poly tokens will be transferred from faucet
+   * - Approve the ERC20 token transfer
+   *
+   * Note that this procedure will fail if the shareholder balance is lower than the amount being approved, off test net
+   * Note that this procedure will fail if the shareholder balance is lower than the amount being approved, on test net and with a custom erc20 token
+   * Note that the token approval transaction will not be added to the queue, if the amount has already been approved previously
+   */
   public async prepareTransactions() {
     const { amount, spender, tokenAddress } = this.args;
     const { contractWrappers, currentWallet } = this.context;
