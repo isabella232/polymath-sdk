@@ -245,6 +245,18 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
         },
         {
           tag: PolyTransactionTag.AllowPreMinting,
+          resolvers: [
+            () => {
+              return tieredStoFactory.update(
+                TieredSto.generateId({
+                  securityTokenId: SecurityToken.generateId({ symbol }),
+                  stoType: StoType.Tiered,
+                  address: newStoAddress.result!,
+                }),
+                { preIssueAllowed: true }
+              );
+            },
+          ],
         }
       )({});
     }
