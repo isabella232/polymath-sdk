@@ -9,9 +9,23 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure to assign an STO role to a delegate
+ */
 export class AssignStoRole extends Procedure<AssignStoRoleProcedureArgs> {
   public type = ProcedureType.AssignStoRole;
 
+  /**
+   * - If the delegate does not exist, the delegate address will be added
+   *
+   * - The sto module permission role will be assigned to a new delegate or changed for an existing delegate
+   *
+   * Note this procedure will fail if you attempt to set an STO role on a permission feature that has not been enabled
+   *
+   * Note this procedure will fail if the security token does not have a General Permission management module enabled
+   *
+   * Note this procedure will fail if the delegate exists, but STO permission role being changed has already been set as such
+   */
   public async prepareTransactions() {
     const { symbol, role, assign, description = '', delegateAddress, stoAddress } = this.args;
     const { contractWrappers } = this.context;

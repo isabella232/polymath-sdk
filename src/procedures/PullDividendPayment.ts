@@ -10,6 +10,9 @@ import { Factories } from '../Context';
 import { PolymathError } from '../PolymathError';
 import { DividendDistribution, SecurityToken } from '../entities';
 
+/**
+ * @hidden
+ */
 export const createPullDividendPaymentResolver = (
   factories: Factories,
   symbol: string,
@@ -23,9 +26,25 @@ export const createPullDividendPaymentResolver = (
   );
 };
 
+/**
+ * Procedure allowing a shareholder to pull a dividend payment on a security token with an active ERC20 Dividend Checkpoint module
+ */
 export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureArgs> {
   public type = ProcedureType.PullDividendPayment;
 
+  /**
+   * - Pull a dividend payment for a security token shareholder currently entitled to a dividend payment
+   *
+   * - Refresh the Dividend distribution entity in the SDK cache
+   *
+   * Note this procedure will fail if the security token does not have an ERC20 Dividend Checkpoint module enabled
+   *
+   * Note this procedure will fail if the current wallet address is not a shareholder
+   *
+   * Note this procedure will fail if the current shareholder has already received dividend payment
+   *
+   * Note this procedure will fail if the current wallet address is on the exclusion list
+   */
   public async prepareTransactions() {
     const { symbol, dividendIndex } = this.args;
     const { contractWrappers, factories, currentWallet } = this.context;

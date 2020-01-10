@@ -3,9 +3,19 @@ import { ProcedureType, PolyTransactionTag, SetControllerProcedureArgs, ErrorCod
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
 
+/**
+ * Procedure to set the controller of a security token by the owner
+ */
 export class SetController extends Procedure<SetControllerProcedureArgs> {
   public type = ProcedureType.SetController;
 
+  /**
+   * - Set the controller address of the security token
+   *
+   * Note this procedure will fail if the inputted controller address is invalid
+   *
+   * Note this procedure will fail if the current wallet address is not the security token owner
+   */
   public async prepareTransactions() {
     const { symbol, controller } = this.args;
     const { contractWrappers, currentWallet } = this.context;

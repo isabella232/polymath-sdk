@@ -12,11 +12,19 @@ import { PolymathError } from '../PolymathError';
 
 const CHUNK_SIZE = 200;
 
+/**
+ * Procedure to modify the list of dividends excluded shareholders
+ */
 export class ModifyDividendsDefaultExclusionList extends Procedure<
   ModifyDividendsDefaultExclusionListProcedureArgs
 > {
   public type = ProcedureType.ModifyDividendsDefaultExclusionList;
 
+  /**
+   * - Set the default dividends excluded list on the ERC20 Dividends Checkpoint module
+   *
+   * Note this procedure will fail if the security token does not have an ERC20 Dividend Checkpoint module enabled
+   */
   public async prepareTransactions() {
     const { symbol, shareholderAddresses: investors } = this.args;
     const { contractWrappers } = this.context;

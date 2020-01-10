@@ -10,6 +10,9 @@ import { isValidAddress } from '../utils';
 import { SecurityToken, Shareholder } from '../entities';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createControllerTransferResolver = (
   factories: Factories,
   symbol: string,
@@ -33,9 +36,23 @@ export const createControllerTransferResolver = (
   return Promise.all([refreshingFrom, refreshingTo]);
 };
 
+/**
+ * Procedure to perform a forced transfer by a controller wallet
+ */
 export class ControllerTransfer extends Procedure<ControllerTransferProcedureArgs> {
   public type = ProcedureType.ControllerTransfer;
 
+  /**
+   * - Force transfer tokens from one valid address to another
+   *
+   * - Refresh the Shareholder entity in the SDK cache
+   *
+   * Note this procedure will fail if any from or to addresses are invalid
+   *
+   * Note this procedure will fail if the senders (from) balance is less than the amount being transferred
+   *
+   * Note this procedure will fail if the current wallet address is not the security token controller address
+   */
   public async prepareTransactions() {
     const { symbol, amount, from, to, log = '', data = '' } = this.args;
     const { contractWrappers, currentWallet, factories } = this.context;

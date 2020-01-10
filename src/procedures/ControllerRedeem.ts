@@ -10,6 +10,9 @@ import { isValidAddress } from '../utils';
 import { SecurityToken, Shareholder } from '../entities';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createRefreshSecurityTokenResolver = (
   factories: Factories,
   symbol: string
@@ -17,6 +20,9 @@ export const createRefreshSecurityTokenResolver = (
   return factories.securityTokenFactory.refresh(SecurityToken.generateId({ symbol }));
 };
 
+/**
+ * @hidden
+ */
 export const createRefreshShareholdersResolver = (
   factories: Factories,
   symbol: string,
@@ -30,9 +36,23 @@ export const createRefreshShareholdersResolver = (
   );
 };
 
+/**
+ * Procedure to redeem tokens by a controller wallet
+ */
 export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
   public type = ProcedureType.ControllerRedeem;
 
+  /**
+   * - Redeem tokens from a specific address, optionally providing a reason or extra data for the action
+   *
+   * - Refresh the Shareholder entity in the SDK cache
+   *
+   * Note this procedure will fail if any (from) addresses are invalid
+   *
+   * Note this procedure will fail if the senders (from) balance is less than the amount being transferred
+   *
+   * Note this procedure will fail if the current wallet address is not the security token controller address
+   */
   public async prepareTransactions() {
     const { symbol, amount, from, reason = '', data = '' } = this.args;
     const { contractWrappers, currentWallet, factories } = this.context;

@@ -12,6 +12,9 @@ import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 import { Factories } from '~/Context';
 
+/**
+ * @hidden
+ */
 export const createTogglePauseStoResolver = (
   factories: Factories,
   symbol: string,
@@ -45,9 +48,23 @@ export const createTogglePauseStoResolver = (
   }
 };
 
+/**
+ * Procedure to pause or unpause an STO
+ */
 export class TogglePauseSto extends Procedure<TogglePauseStoProcedureArgs> {
   public type = ProcedureType.TogglePauseSto;
 
+  /**
+   * - Pause or unpause the STO
+   *
+   * - Refresh the Simple or Tiered STO entity in the SDK depending on the STO type
+   *
+   * Note this procedure will fail if the specified sto address is invalid
+   *
+   * Note this procedure will fail if the specified sto type is invalid
+   *
+   * Note this procedure will fail if the STO has not been launched, or the module has been archived
+   */
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol, pause } = this.args;
     const { contractWrappers, factories } = this.context;
