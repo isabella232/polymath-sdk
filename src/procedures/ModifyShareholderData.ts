@@ -17,12 +17,31 @@ import { Shareholder, SecurityToken } from '../entities';
 
 const { dateToBigNumber } = conversionUtils;
 
+/**
+ * @param investors list of the addresses to modify data about.
+ * @param flag list of flag indexes to change. Flags are used to know specifics about investor like isAccredited.
+ * @param value list of flag values to set. A flag can be true or false.
+ */
+
+// Used to modify investor data.
+
+/**
+ * Procedure that modifies data of a list of investors
+ */
 export class ModifyShareholderData extends Procedure<
   ModifyShareholderDataProcedureArgs,
   Shareholder[]
 > {
   public type = ProcedureType.ModifyShareholderData;
 
+  /**
+   * - Update a list of investors data
+   *
+   * Note that this procedure will fail if you're trying to revoke a shareholder's KYC
+   * Note that this procedure will fail if the security token symbol doesn't exist
+   * Note that this procedure will fail if General Transfer Manager isn't enabled
+   * Note that this procedure will fail if you're trying to modify nothing
+   */
   public async prepareTransactions() {
     const { symbol, shareholderData } = this.args;
     const { contractWrappers, factories } = this.context;
