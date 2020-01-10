@@ -13,6 +13,10 @@ import { SecurityToken, TaxWithholding } from '../entities';
 import { Factories } from '../Context';
 
 const CHUNK_SIZE = 200;
+
+/**
+ * @hidden
+ */
 export const updateDividendsTaxWithholdingListResolver = (
   factories: Factories,
   symbol: string,
@@ -32,11 +36,20 @@ export const updateDividendsTaxWithholdingListResolver = (
   );
 };
 
+/**
+ * Procedure that update withholding tax rates for all the investors of the security token
+ */
 export class UpdateDividendsTaxWithholdingList extends Procedure<
   UpdateDividendsTaxWithholdingListProcedureArgs
 > {
   public type = ProcedureType.UpdateDividendsTaxWithholdingList;
 
+  /**
+   * - Update withholding tax rates for investors
+   *
+   * Note that this procedure will fail if the security token symbol doesn't exist
+   * Note that this procedure will fail if the dividend feature hasn't been enabled
+   */
   public async prepareTransactions() {
     const { symbol, shareholderAddresses: investors, percentages } = this.args;
     const { contractWrappers, factories } = this.context;
