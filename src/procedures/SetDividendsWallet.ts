@@ -8,9 +8,18 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure that updates the wallet address witch receive reclaimed dividends and tax
+ */
 export class SetDividendsWallet extends Procedure<SetDividendsWalletProcedureArgs> {
   public type = ProcedureType.SetDividendsWallet;
 
+  /**
+   * - Change dividends wallet address
+   *
+   * Note that this procedure will fail if the security token symbol doesn't exist
+   * Note that this procedure will fail if the dividend feature hasn't been enabled
+   */
   public async prepareTransactions() {
     const { symbol, address } = this.args;
     const { contractWrappers } = this.context;
