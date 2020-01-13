@@ -15,6 +15,9 @@ import { SecurityToken, TieredSto } from '../entities';
 import { ApproveErc20 } from './ApproveErc20';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createRefreshSecurityTokenFactoryResolver = (
   factories: Factories,
   securityTokenId: string
@@ -22,6 +25,9 @@ export const createRefreshSecurityTokenFactoryResolver = (
   return factories.securityTokenFactory.refresh(securityTokenId);
 };
 
+/**
+ * @hidden
+ */
 export const createRefreshTieredStoFactoryResolver = (
   factories: Factories,
   tieredStoId: string
@@ -29,9 +35,23 @@ export const createRefreshTieredStoFactoryResolver = (
   return factories.tieredStoFactory.refresh(tieredStoId);
 };
 
+/**
+ * Procedure that allows invest in tokens with usd stablecoin
+ */
 export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs> {
   public type = ProcedureType.InvestInTieredSto;
 
+  /**
+   * - Buy tokens with usd stablecoin and with rate restriction (you should to buy a minimum amount of tokens as base)
+   *
+   * Note that this procedure will fail if the security token symbol doesn't exist
+   * Note that this procedure will fail if the STO address is invalid
+   * Note that this procedure will fail if the STO is either archived or hasn't been launched
+   * Note that this procedure will fail if the STO hasn't started yet
+   * Note that this procedure will fail if the STO is paused
+   * Note that this procedure will fail if the STO doesn't allow beneficial investments
+   * Note that this procedure will fail if the STO doesn't support investments in the selected currency
+   */
   public async prepareTransactions() {
     const { args, context } = this;
     const { stoAddress, symbol, amount, currency, minTokens = new BigNumber(0) } = args;
