@@ -31,6 +31,8 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       raisedFundsWallet,
       unsoldTokensWallet,
       numberOfTiers,
+      minimumInvestment,
+      nonAccreditedInvestmentLimit,
       {
         tokensSold,
         capPerTier,
@@ -52,8 +54,11 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       module.wallet(),
       contractWrappers.getTreasuryWallet({ module }),
       module.getNumberOfTiers(),
+      module.minimumInvestmentUSD(),
+      module.nonAccreditedLimitUSD(),
       module.getSTODetails(),
     ]);
+    const stableCoinAddresses = await module.getUsdTokens();
 
     let preIssueAllowed = false;
     let tiers: Tier[];
@@ -136,6 +141,9 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       isFinalized,
       preIssueAllowed,
       beneficialInvestmentsAllowed,
+      minimumInvestment,
+      nonAccreditedInvestmentLimit,
+      stableCoinAddresses,
     };
   };
 

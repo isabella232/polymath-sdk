@@ -62,6 +62,9 @@ export interface Params extends StoParams {
    * array of tier information
    */
   tiers: Tier[];
+  nonAccreditedInvestmentLimit: BigNumber;
+  minimumInvestment: BigNumber;
+  stableCoinAddresses: string[];
 }
 
 /**
@@ -121,17 +124,29 @@ export class TieredSto extends Sto<Params> {
   }
 
   /**
-   * Unique generated Tiered STO id
+   * unique generated Tiered STO id
    */
   public uid: string;
 
   /**
-   * Index of the current active tier
+   * index of the current active tier
    */
   public currentTier: number;
 
   /**
-   * Array of tier information
+   * maximum investment allowed for non-accredited investors
+   */
+  public nonAccreditedInvestmentLimit: BigNumber;
+
+  public minimumInvestment: BigNumber;
+
+  /**
+   * array of Stable Coin ERC20 tokens that can be used to purchase tokens in this Offering
+   */
+  public stableCoinAddresses: string[];
+
+  /**
+   * array of tier information
    */
   public tiers: Tier[];
 
@@ -139,12 +154,22 @@ export class TieredSto extends Sto<Params> {
    * Create a new tiered sto instance
    */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
-    const { currentTier, tiers, ...rest } = params;
+    const {
+      currentTier,
+      tiers,
+      nonAccreditedInvestmentLimit,
+      minimumInvestment,
+      stableCoinAddresses,
+      ...rest
+    } = params;
 
     super(rest, context);
 
     const { securityTokenId, address, stoType } = rest;
 
+    this.nonAccreditedInvestmentLimit = nonAccreditedInvestmentLimit;
+    this.minimumInvestment = minimumInvestment;
+    this.stableCoinAddresses = stableCoinAddresses;
     this.currentTier = currentTier;
     this.tiers = tiers;
     this.uid = TieredSto.generateId({ address, stoType, securityTokenId });
