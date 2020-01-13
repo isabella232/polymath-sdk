@@ -8,9 +8,18 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure that modifies the maximum percentage that an individual token holder can hold
+ */
 export class ModifyMaxHolderPercentage extends Procedure<ModifyMaxHolderPercentageProcedureArgs> {
   public type = ProcedureType.ModifyMaxHolderPercentage;
 
+  /**
+   * - Set a new maximum percentage of token holders there can be
+   *
+   * Note that this procedure will fail if the security token symbol doesn't exist
+   * Note that this procedure will fail if the security token has disabled the PercentageOwnershipRestrictions feature
+   */
   public async prepareTransactions() {
     const { symbol, maxHolderPercentage } = this.args;
     const { contractWrappers } = this.context;
