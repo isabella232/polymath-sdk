@@ -19,6 +19,9 @@ import { ModifyShareholderData } from './ModifyShareholderData';
 import { Factories } from '../Context';
 import { ZERO_ADDRESS } from '../utils/constants';
 
+/**
+ * @hidden
+ */
 export const createRefreshSecurityTokenFactoryResolver = (
   factories: Factories,
   securityTokenId: string
@@ -26,9 +29,18 @@ export const createRefreshSecurityTokenFactoryResolver = (
   return factories.securityTokenFactory.refresh(securityTokenId);
 };
 
+/**
+ * Procedure that issue new tokens and assigns them to the shareholders list
+ */
 export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder[]> {
   public type = ProcedureType.IssueTokens;
 
+  /**
+   * - Issue a number of tokens and transfer to addresses of the investors list
+   *
+   * Note that this procedure will fail if the security token symbol doesn't exist
+   * Note that this procedure will fail if at least one investor address is invalid
+   */
   public async prepareTransactions() {
     const { symbol, issuanceData } = this.args;
     const { contractWrappers, factories } = this.context;
