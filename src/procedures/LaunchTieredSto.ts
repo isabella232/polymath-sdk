@@ -123,10 +123,16 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
       usdCost = cost;
     }
 
-    await this.addProcedure(TransferErc20)({
-      receiver: securityTokenAddress,
-      amount: polyCost,
-    });
+    const balance = await contractWrappers.polyToken.balanceOf({ owner: securityTokenAddress });
+    const difference = polyCost.minus(balance);
+
+    // only transfer the required amount of POLY
+    if (difference.gt(new BigNumber(0))) {
+      await this.addProcedure(TransferErc20)({
+        receiver: securityTokenAddress,
+        amount: difference,
+      });
+    }
 
     const ratePerTier: BigNumber[] = [];
     const ratePerTierDiscountPoly: BigNumber[] = [];
@@ -146,29 +152,6 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
         tokensPerTierDiscountPoly.push(tokensWithDiscount);
       }
     );
-
-    console.log('DATA', {
-      moduleName,
-      address: factoryAddress,
-      data: {
-        startTime: startDate,
-        endTime: endDate,
-        ratePerTier,
-        ratePerTierDiscountPoly,
-        tokensPerTierTotal,
-        tokensPerTierDiscountPoly,
-        nonAccreditedLimitUSD: nonAccreditedInvestmentLimit,
-        minimumInvestmentUSD: minimumInvestment,
-        fundRaiseTypes: currencies,
-        wallet: raisedFundsWallet,
-        treasuryWallet: unsoldTokensWallet,
-        stableTokens: stableCoinAddresses,
-        customOracleAddresses,
-        denominatedCurrency,
-      },
-      maxCost: polyCost,
-      archived: false,
-    });
 
     const [newStoAddress, newSto] = await this.addTransaction<
       TransactionParams.SecurityToken.AddUSDTieredSTO,
