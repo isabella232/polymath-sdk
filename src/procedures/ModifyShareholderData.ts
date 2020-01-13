@@ -18,14 +18,6 @@ import { Shareholder, SecurityToken } from '../entities';
 const { dateToBigNumber } = conversionUtils;
 
 /**
- * @param investors list of the addresses to modify data about.
- * @param flag list of flag indexes to change. Flags are used to know specifics about investor like isAccredited.
- * @param value list of flag values to set. A flag can be true or false.
- */
-
-// Used to modify investor data.
-
-/**
  * Procedure that modifies data of a list of investors
  */
 export class ModifyShareholderData extends Procedure<
