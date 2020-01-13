@@ -2,9 +2,19 @@ import { Procedure } from './Procedure';
 import { ProcedureType, ErrorCode, SignTransferDataProcedureArgs } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure to sign valid transfer data
+ */
 export class SignTransferData extends Procedure<SignTransferDataProcedureArgs> {
   public type = ProcedureType.SignTransferData;
 
+  /**
+   * - Sign transfer data, passing the valid dates and extra kyc data
+   *
+   * Note this procedure will fail if the signature validity lower bound (valid from) is earlier than the upper bound (valid to)
+   *
+   * Note this procedure will fail if the upper bound (valid to) is in the past
+   */
   public async prepareTransactions() {
     const { kycData, validFrom, validTo, symbol } = this.args;
     const { contractWrappers } = this.context;
