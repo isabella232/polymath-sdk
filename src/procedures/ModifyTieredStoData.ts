@@ -60,6 +60,8 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
    *
    * - Modify STO addresses including the treasuryWallet, wallet, and stable coin adddresses
    *
+   * - After the last transaction takes place, refresh the tiered sto entity factory information on the SDK
+   *
    * Note that this procedure will fail if the STO has not been enabled or has been archived
    *
    * Note that this procedure will fail if STO has already started
