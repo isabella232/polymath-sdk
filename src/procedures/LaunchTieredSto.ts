@@ -35,7 +35,7 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
       currencies,
       raisedFundsWallet,
       unsoldTokensWallet,
-      stableCoinAddresses,
+      stableCoinAddresses = [],
       customCurrency,
       allowPreIssuing = false,
     } = args;
@@ -54,6 +54,13 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+
+    if (currencies.includes(FundRaiseType.StableCoin) && stableCoinAddresses.length === 0) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: 'Stable Coin address array cannot be empty if raising in Stable Coin',
       });
     }
 
@@ -139,6 +146,29 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
         tokensPerTierDiscountPoly.push(tokensWithDiscount);
       }
     );
+
+    console.log('DATA', {
+      moduleName,
+      address: factoryAddress,
+      data: {
+        startTime: startDate,
+        endTime: endDate,
+        ratePerTier,
+        ratePerTierDiscountPoly,
+        tokensPerTierTotal,
+        tokensPerTierDiscountPoly,
+        nonAccreditedLimitUSD: nonAccreditedInvestmentLimit,
+        minimumInvestmentUSD: minimumInvestment,
+        fundRaiseTypes: currencies,
+        wallet: raisedFundsWallet,
+        treasuryWallet: unsoldTokensWallet,
+        stableTokens: stableCoinAddresses,
+        customOracleAddresses,
+        denominatedCurrency,
+      },
+      maxCost: polyCost,
+      archived: false,
+    });
 
     const [newStoAddress, newSto] = await this.addTransaction<
       TransactionParams.SecurityToken.AddUSDTieredSTO,
