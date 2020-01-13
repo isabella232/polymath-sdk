@@ -10,6 +10,9 @@ import { PolymathError } from '../PolymathError';
 import { SecurityToken, Shareholder } from '../entities';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createTransferSecurityTokensResolver = (
   factories: Factories,
   symbol: string,
@@ -34,11 +37,14 @@ export const createTransferSecurityTokensResolver = (
 };
 
 /**
- * Procedure to transfer security tokens.
+ * Procedure that transfer security tokens
  */
 export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProcedureArgs> {
   public type = ProcedureType.TransferSecurityTokens;
 
+  /**
+   * @hidden
+   */
   private checkTransferStatus(
     statusCode: TransferStatusCode,
     fromAddress: string,
@@ -55,6 +61,11 @@ export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProc
     }
   }
 
+  /**
+   * - Send tokens to wallet address
+   *
+   * Note that this procedure will fail if the security token symbol doesn't exist
+   */
   public async prepareTransactions() {
     const { symbol, to, amount, data = '', from } = this.args;
     const { contractWrappers, currentWallet, factories } = this.context;
