@@ -97,7 +97,7 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
   /**
    * Create a transaction queue
    *
-   * @param transactions -  list of transactions to be run in this queue
+   * @param transactions - list of transactions to be run in this queue
    * @param returnValue - value that will be returned by the queue after it is run. It can be a Post Transaction Resolver
    * @param args - arguments with which the Procedure that generated this queue was instanced
    */
