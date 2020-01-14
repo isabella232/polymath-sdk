@@ -376,9 +376,21 @@ export interface StoTier {
   discountedPrice?: BigNumber;
 }
 
+/**
+ * Custom currency in which a Tiered STO can raise funds
+ */
 export interface CustomCurrency {
+  /**
+   * symbol of the custom currency (USD, CAD, EUR, etc. Default is USD)
+   */
   currencySymbol: string;
+  /**
+   * address of the oracle that states the price of ETH in the custom currency. Only required if raising funds in ETH
+   */
   ethOracleAddress: string;
+  /**
+   * address of the oracle that states the price of POLY in the custom currency. Only required if raising funds in POLY
+   */
   polyOracleAddress: string;
 }
 
