@@ -59,11 +59,10 @@ export class TogglePauseSto extends Procedure<TogglePauseStoProcedureArgs> {
    *
    * - Refresh the Simple or Tiered STO entity in the SDK depending on the STO type
    *
-   * Note this procedure will fail if the specified sto address is invalid
-   *
-   * Note this procedure will fail if the specified sto type is invalid
-   *
-   * Note this procedure will fail if the STO has not been launched, or the module has been archived
+   * Note this procedure will fail if:
+   * - The specified sto address is invalid
+   * - The specified sto type is invalid
+   * - The STO has not been launched, or the module has been archived
    */
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol, pause } = this.args;

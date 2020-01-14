@@ -11,9 +11,9 @@ export class SignTransferData extends Procedure<SignTransferDataProcedureArgs> {
   /**
    * - Sign transfer data, passing the valid dates and extra kyc data
    *
-   * Note this procedure will fail if the signature validity lower bound (valid from) is earlier than the upper bound (valid to)
-   *
-   * Note this procedure will fail if the upper bound (valid to) is in the past
+   * Note this procedure will fail if:
+   * - The signature validity lower bound (valid from) is earlier than the upper bound (valid to)
+   * - The upper bound (valid to) is in the past
    */
   public async prepareTransactions() {
     const { kycData, validFrom, validTo, symbol } = this.args;

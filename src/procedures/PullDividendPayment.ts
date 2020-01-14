@@ -37,13 +37,11 @@ export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureA
    *
    * - Refresh the Dividend distribution entity in the SDK cache
    *
-   * Note this procedure will fail if the security token does not have an ERC20 Dividend Checkpoint module enabled
-   *
-   * Note this procedure will fail if the current wallet address is not a shareholder
-   *
-   * Note this procedure will fail if the current shareholder has already received dividend payment
-   *
-   * Note this procedure will fail if the current wallet address is on the exclusion list
+   * Note this procedure will fail if:
+   * - The security token does not have an ERC20 Dividend Checkpoint module enabled
+   * - The current wallet address is not a shareholder
+   * - The current shareholder has already received dividend payment
+   * - The current wallet address is on the exclusion list
    */
   public async prepareTransactions() {
     const { symbol, dividendIndex } = this.args;

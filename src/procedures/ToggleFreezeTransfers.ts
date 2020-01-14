@@ -30,11 +30,10 @@ export class ToggleFreezeTransfers extends Procedure<ToggleFreezeTransfersProced
    *
    * - Refresh the SDK Security token factory
    *
-   * Note this procedure will fail if the current wallet address is not the owner
-   *
-   * Note this procedure will fail if trying to freeze a security token that is already frozen
-   *
-   * Note this procedure will fail if trying to unfreeze a security token that is already unfrozen
+   * Note this procedure will fail if:
+   * - The current wallet address is not the owner
+   * - Trying to freeze a security token that is already frozen
+   * - Trying to unfreeze a security token that is already unfrozen
    */
   public async prepareTransactions() {
     const { symbol, freeze } = this.args;

@@ -12,9 +12,9 @@ export class SetController extends Procedure<SetControllerProcedureArgs> {
   /**
    * - Set the controller address of the security token
    *
-   * Note this procedure will fail if the inputted controller address is invalid
-   *
-   * Note this procedure will fail if the current wallet address is not the security token owner
+   * Note this procedure will fail if:
+   * - The inputted controller address is invalid
+   * - The current wallet address is not the security token owner
    */
   public async prepareTransactions() {
     const { symbol, controller } = this.args;

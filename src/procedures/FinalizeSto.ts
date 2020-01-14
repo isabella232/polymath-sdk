@@ -86,17 +86,13 @@ to finalize the STO. Possible reason: "${reasonCode}"`,
    *
    * - Refresh the Simple or Tiered STO entity in the SDK depending on the STO type
    *
-   * Note this procedure will fail if the specified STO address is invalid
-   *
-   * Note this procedure will fail if the STO has not been launched, or the module has been archived
-   *
-   * Note this procedure will fail if the specified STO type is Simple STO, and the Security token version is 3.0.0 as is it does not support forced finalization
-   *
-   * Note this procedure will fail if the specified STO type is invalid
-   *
-   * Note this procedure will fail if the STO has already been finalized
-   *
-   * Note this procedure will fail if when checking the transfer status, the treasury wallet is not cleared to receive the remaining tokens
+   * Note this procedure will fail if:
+   * - The specified STO address is invalid
+   * - The STO has not been launched, or the module has been archived
+   * - The specified STO type is Simple STO, and the Security token version is 3.0.0 as is it does not support forced finalization
+   * - The specified STO type is invalid
+   * - The STO has already been finalized
+   * - When checking the transfer status, the treasury wallet is not cleared to receive the remaining tokens
    */
   public async prepareTransactions() {
     const { context, args } = this;

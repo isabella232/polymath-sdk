@@ -47,11 +47,10 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
    *
    * - Refresh the Shareholder entity in the SDK cache
    *
-   * Note this procedure will fail if any (from) addresses are invalid
-   *
-   * Note this procedure will fail if the senders (from) balance is less than the amount being transferred
-   *
-   * Note this procedure will fail if the current wallet address is not the security token controller address
+   * Note this procedure will fail if:
+   * - Any (from) addresses are invalid
+   * - The senders (from) balance is less than the amount being transferred
+   * - The current wallet address is not the security token controller address
    */
   public async prepareTransactions() {
     const { symbol, amount, from, reason = '', data = '' } = this.args;

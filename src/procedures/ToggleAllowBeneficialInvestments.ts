@@ -61,15 +61,12 @@ export class ToggleAllowBeneficialInvestments extends Procedure<
    *
    * - Refresh the Simple or Tiered STO entity in the SDK depending on the STO type
    *
-   * Note this procedure will fail if trying to allow beneficial investments where they are already allowed
-   *
-   * Note this procedure will fail if trying to disallow beneficial investments where they are already disallowed
-   *
-   * Note this procedure will fail if the specified sto address is invalid
-   *
-   * Note this procedure will fail if the specified sto type is invalid
-   *
-   * Note this procedure will fail if the STO has not been launched, or the module has been archived
+   * Note this procedure will fail if:
+   * - Trying to allow beneficial investments where they are already allowed
+   * - Trying to disallow beneficial investments where they are already disallowed
+   * - The specified sto address is invalid
+   * - The specified sto type is invalid
+   * - The STO has not been launched, or the module has been archived
    */
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol, allowBeneficialInvestments } = this.args;

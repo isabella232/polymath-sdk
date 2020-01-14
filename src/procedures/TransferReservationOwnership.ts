@@ -32,11 +32,10 @@ export class TransferReservationOwnership extends Procedure<
   /**
    * - Transfer the ownership for a ticker reservation
    *
-   * Note this procedure will fail if a security token has already been launched under this symbol
-   *
-   * Note this procedure will fail if the current wallet address is not the ticker reservation owner address
-   *
-   * Note this procedure will fail if the new ticker reservation owner is the same as the current owner (no modification)
+   * Note this procedure will fail if:
+   * - A security token has already been launched under this symbol
+   * - The current wallet address is not the ticker reservation owner address
+   * - The new ticker reservation owner is the same as the current owner (no modification)
    */
   public async prepareTransactions() {
     const { newOwner, symbol } = this.args;
