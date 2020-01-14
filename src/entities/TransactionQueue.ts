@@ -26,51 +26,51 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
   void
 > {
   /**
-   * Generate an ID for a transaction
+   * Generate UUID for this Transaction Queue
    */
   public static generateId() {
-    return serialize('transaction', {
+    return serialize('transactionQueue', {
       random: v4(),
     });
   }
 
   /**
-   * Type of entity
+   * type of entity
    */
   public readonly entityType: string = 'transactionQueue';
 
   /**
-   * Type of procedure being run
+   * type of procedure being run
    */
   public procedureType: ProcedureType;
 
   /**
-   * Generated transaction queue unique identifier
+   * generated transaction queue unique identifier
    */
   public uid: string;
 
   /**
-   * Array of poly transactions
+   * array of poly transactions
    */
   public transactions: PolyTransaction[];
 
   /**
-   * Status of the transaction queue
+   * status of the transaction queue
    */
   public status: TransactionQueueStatus = TransactionQueueStatus.Idle;
 
   /**
-   * Arguments provided to the transaction queue
+   * arguments provided to the transaction queue
    */
   public args: Args;
 
   /**
-   * Optional error information
+   * optional error information
    */
   public error?: Error;
 
   /**
-   * Associated Fees for the transaction
+   * total cost of running the transactions in the queue. This does not include gas
    */
   public fees: Fees;
 
@@ -96,11 +96,10 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
 
   /**
    * Create a transaction queue
-   * @param transactions transaction specifications
-   * @param fees required fees to make a transaction
-   * @param returnValue value returned by a resolver attached to the transaction
-   * @param args arguments that will be passed to the transaction
-   * @param procedureType
+   *
+   * @param transactions -  list of transactions to be run in this queue
+   * @param returnValue - value that will be returned by the queue after it is run. It can be a Post Transaction Resolver
+   * @param args - arguments with which the Procedure that generated this queue was instanced
    */
   constructor(
     transactions: TransactionSpec[],
@@ -180,9 +179,9 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
   };
 
   /**
-   * Subscribe to status changes
+   * Subscribe to status changes on the Transaction Queue
    *
-   * @param listener - callback function that will be called whenever the status changes
+   * @param listener - callback function that will be called whenever the Transaction Queue's status changes
    *
    * @returns unsubscribe function
    */
@@ -195,9 +194,9 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
   }
 
   /**
-   * Subscribe to status changes on the Transaction Queue
+   * Subscribe to status changes on individual transactions
    *
-   * @param listener - callback function that will be called whenever the Transaction Queue's status changes
+   * @param listener - callback function that will be called whenever the individual transaction's status changes
    *
    * @returns unsubscribe function
    */

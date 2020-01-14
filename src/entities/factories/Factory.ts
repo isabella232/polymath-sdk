@@ -20,7 +20,9 @@ export interface EntityClass<T, U> {
 }
 
 /**
- * Abstract representing a factory that will build up properties of an entity
+ * Factories are tasked with creating instances of their corresponding Entity and managing the internal cache for that Entity type.
+ * So for example, the Security Token Factory is tasked with fetching necessary data to instance a Security Token,
+ * as well as fetching/refreshing the internal Security Token cache
  */
 export abstract class Factory<EntityType extends Entity<T>, T extends any, U extends any> {
   public cache: {
@@ -30,7 +32,7 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
   public context: Context;
 
   /**
-   * Defined entity class
+   * entity class that this Factory is in charge of generating and caching
    */
   public Entity: EntityClass<T, U>;
 
@@ -41,7 +43,6 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
 
   /**
    * Create a factory that can generate an entity
-   *
    */
   constructor(eClass: EntityClass<T, U>, context: Context) {
     this.Entity = eClass;
@@ -80,8 +81,8 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
   /**
    * Get an entity from the cache. Creates it if it isn't cached, updates it if it is
    *
-   * @param uid unique identifier for the entity
-   * @param params constructor data for the entity
+   * @param uid - unique identifier for the entity
+   * @param params - constructor data for the entity
    */
   public create(uid: string, params: T) {
     const { cache, context } = this;
@@ -102,7 +103,7 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
   /**
    * Fetch the data for an entity and updates its properties
    *
-   * @param uid unique identifier for the entity
+   * @param uid - unique identifier for the entity
    */
   public async refresh(uid: string) {
     const instance = this.cache[uid];
@@ -119,8 +120,8 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
   /**
    * Update an entity's properties in place
    *
-   * @param uid unique identifier for the entity
-   * @param params properties that should be updated
+   * @param uid - unique identifier for the entity
+   * @param params - properties that should be updated
    */
   public async update(uid: string, params: Partial<T>) {
     const instance = this.cache[uid];

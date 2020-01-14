@@ -6,7 +6,7 @@ import { ErrorCode } from '../types';
 import { Context } from '../Context';
 
 /**
- * Unique identifier for wallet address
+ * Properties that uniquely identify a Wallet
  */
 export interface UniqueIdentifiers {
   address: string;
@@ -19,7 +19,7 @@ function isUniqueIdentifiers(identifier: any): identifier is UniqueIdentifiers {
 }
 
 /**
- * Properties that uniquely identify wallet
+ * Constructor parameters
  */
 export interface Params extends UniqueIdentifiers {}
 
@@ -52,12 +52,12 @@ export class Wallet extends Entity<Params> {
   }
 
   /**
-   * Unique generated wallet id
+   * unique generated wallet id
    */
   public uid: string;
 
   /**
-   * Wallet address
+   * wallet address
    */
   public address: string;
 

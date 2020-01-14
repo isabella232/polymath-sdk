@@ -612,7 +612,7 @@ export interface ProcedureArguments {
   [ProcedureType.PullDividendPayment]: PullDividendPaymentProcedureArgs;
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
   // prettier-ignore
-  [ProcedureType.ModifyDividendsDefaultExclusionList]: 
+  [ProcedureType.ModifyDividendsDefaultExclusionList]:
     ModifyDividendsDefaultExclusionListProcedureArgs;
   [ProcedureType.LaunchSimpleSto]: LaunchSimpleStoProcedureArgs;
   [ProcedureType.LaunchTieredSto]: LaunchTieredStoProcedureArgs;
@@ -662,15 +662,15 @@ export enum TransactionQueueStatus {
 }
 
 /**
- * Represents fees in poly and optional usd
+ * Fees associated with running a [[TransactionQueue]]
  */
 export interface Fees {
   /**
-   * Usd Fee
+   * fees expressed in USD. Can be null if the Smart Contract doesn't specify one
    */
   usd: BigNumber | null;
   /**
-   * Poly Fee
+   * fees expressed in POLY
    */
   poly: BigNumber;
 }
