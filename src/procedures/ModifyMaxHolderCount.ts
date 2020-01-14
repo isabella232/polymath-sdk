@@ -9,7 +9,7 @@ import {
 import { PolymathError } from '../PolymathError';
 
 /**
- * Procedure that modifies the maximum amount of token holders for an STO
+ * Procedure that modifies the maximum amount of holders for the security token
  */
 export class ModifyMaxHolderCount extends Procedure<ModifyMaxHolderCountProcedureArgs> {
   public type = ProcedureType.ModifyMaxHolderCount;
