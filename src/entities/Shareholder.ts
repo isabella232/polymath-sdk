@@ -19,7 +19,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Properties for a specific shareholder on a security token
+ * Constructor properties for a specific shareholder on a security token
  */
 export interface Params {
   securityTokenSymbol: string;
@@ -45,7 +45,7 @@ export class Shareholder extends Entity<Params> {
   /**
    * Unserialize a serialized shareholder entity
    *
-   * @param serialized string with shareholder entity information
+   * @param serialized - string with shareholder entity information
    */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
@@ -61,7 +61,7 @@ export class Shareholder extends Entity<Params> {
   }
 
   /**
-   * Unique generated id for a shareholder
+   * unique generated id for a shareholder
    */
   public uid: string;
 
@@ -70,37 +70,37 @@ export class Shareholder extends Entity<Params> {
   public securityTokenId: string;
 
   /**
-   * Date after which a shareholder can transfer tokens from their address
+   * date after which a shareholder can transfer tokens from their address
    */
   public canSendAfter: Date;
 
   /**
-   * Date after which a shareholder can transfer tokens to their address
+   * date after which a shareholder can transfer tokens to their address
    */
   public canReceiveAfter: Date;
 
   /**
-   * Date when kyc approval will expire
+   * date when kyc approval will expire
    */
   public kycExpiry: Date;
 
   /**
-   * Whether shareholder is accredited or not
+   * whether shareholder is accredited or not
    */
   public isAccredited: boolean;
 
   /**
-   * Whether shareholder can purchase from an STO or not
+   * whether shareholder can purchase from an STO or not
    */
   public canBuyFromSto: boolean;
 
   /**
-   * Total security token balance of a shareholder
+   * total security token balance of a shareholder
    */
   public balance: BigNumber;
 
   /**
-   * Shareholder address
+   * shareholder address
    */
   public address: string;
 

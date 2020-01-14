@@ -20,6 +20,9 @@ const { weiToValue } = conversionUtils;
  * Factory generates information for an investment entity
  */
 export class InvestmentFactory extends Factory<Investment, Params, UniqueIdentifiers> {
+  /**
+   * @hidden
+   */
   protected generateProperties = async (uid: string) => {
     const { stoId, securityTokenId, index } = Investment.unserialize(uid);
 

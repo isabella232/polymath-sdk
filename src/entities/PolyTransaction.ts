@@ -38,47 +38,47 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
   }
 
   /**
-   * Unique generated identifier of the poly transaction
+   * unique generated identifier of the poly transaction
    */
   public uid: string;
 
   /**
-   * Current status of the transaction
+   * current status of the transaction
    */
   public status: TransactionStatus = TransactionStatus.Idle;
 
   /**
-   * Queue of pending transactions
+   * queue of pending transactions
    */
   public transactionQueue: TransactionQueue;
 
   /**
-   * Promise for the poly transaction
+   * promise for the poly transaction
    */
   public promise: Promise<any>;
 
   /**
-   * Optional error for the poly transaction
+   * optional error for the poly transaction
    */
   public error?: PolymathError;
 
   /**
-   * Optional receipt for the poly transaction
+   * optional receipt for the poly transaction
    */
   public receipt?: TransactionReceiptWithDecodedLogs | string;
 
   /**
-   * Poly transaction tag
+   * poly transaction tag
    */
   public tag: PolyTransactionTag;
 
   /**
-   * Optional transaction hash for a poly transaction
+   * optional transaction hash for a poly transaction
    */
   public txHash?: string;
 
   /**
-   * Transaction specification arguments
+   * transaction specification arguments
    */
   public args: TransactionSpec<Args, Values, TransactionReceiptWithDecodedLogs | string>['args'];
 

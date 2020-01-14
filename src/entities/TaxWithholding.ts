@@ -28,6 +28,7 @@ export interface Params {
   securityTokenSymbol: string;
   percentage: number;
 }
+
 /**
  * Used to manage tax withholding amounts
  */
@@ -42,7 +43,7 @@ export class TaxWithholding extends Entity<Params> {
   /**
    * Unserialize a serialized entity of tax withholding information
    *
-   * @param serialized string with tax withholding information
+   * @param serialized - string with tax withholding information
    */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
@@ -58,7 +59,7 @@ export class TaxWithholding extends Entity<Params> {
   }
 
   /**
-   * Unique generated identifer for tax withholding entity
+   * unique generated identifer for tax withholding entity
    */
   public uid: string;
 
@@ -67,12 +68,12 @@ export class TaxWithholding extends Entity<Params> {
   public securityTokenId: string;
 
   /**
-   * Shareholder address for tax withholding properties
+   * shareholder address for tax withholding properties
    */
   public shareholderAddress: string;
 
   /**
-   * Percentage of tax to be withheld
+   * percentage of tax to be withheld
    */
   public percentage: number;
 

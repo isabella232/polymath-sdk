@@ -40,7 +40,7 @@ export class Erc20TokenBalance extends Entity<Params> {
   /**
    * Unserialize a serialized erc20 token balance
    *
-   * @param serialized string with erc20 token balance entity information
+   * @param serialized - string with erc20 token balance entity information
    */
   public static unserialize(serialized: any) {
     const unserialized = unserialize(serialized);
@@ -56,24 +56,24 @@ export class Erc20TokenBalance extends Entity<Params> {
   }
 
   /**
-   * Unique generated identifier for an ERC20 token balance
+   * unique generated identifier for an ERC20 token balance
    */
   public uid: string;
 
   public tokenSymbol: string | null;
 
   /**
-   * Address of the security token
+   * address of the security token
    */
   public tokenAddress: string;
 
   /**
-   * Wallet address of the token holder
+   * wallet address of the token holder
    */
   public walletAddress: string;
 
   /**
-   * Total number of tokens belonging to token holder
+   * total number of tokens belonging to token holder
    */
   public balance: BigNumber;
 

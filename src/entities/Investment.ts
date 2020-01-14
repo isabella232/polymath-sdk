@@ -22,7 +22,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Represents information for a specific security token offering investment
+ * Represents constructor parameters for specific security token offering investment
  */
 export interface Params {
   securityTokenSymbol: string;
@@ -46,7 +46,7 @@ export class Investment extends Entity<Params> {
   /**
    * Unserialize a serialized investment entity
    *
-   * @param serialized string with investment entity information
+   * @param serialized - string with investment entity information
    */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
@@ -62,36 +62,36 @@ export class Investment extends Entity<Params> {
   }
 
   /**
-   * Unique generated identifier for an investment
+   * unique generated identifier for an investment
    */
   public uid: string;
 
   public securityTokenId: string;
 
   /**
-   * Unique ID for the investment STO
+   * unique ID for the investment STO
    */
   public stoId: string;
 
   public securityTokenSymbol: string;
 
   /**
-   * Wallet address of token holder
+   * wallet address of token holder
    */
   public address: string;
 
   /**
-   * Index of the investment
+   * index of the investment
    */
   public index: number;
 
   /**
-   * Total amount of tokens involved in the investment
+   * total amount of tokens involved in the investment
    */
   public tokenAmount: BigNumber;
 
   /**
-   * Amount of funds used to make investment
+   * amount of funds used to make investment
    */
   public investedFunds: BigNumber;
 

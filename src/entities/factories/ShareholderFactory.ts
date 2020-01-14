@@ -10,6 +10,9 @@ import { Shareholder, Params, UniqueIdentifiers } from '../Shareholder';
  * Factory generates information for a shareholder entity
  */
 export class ShareholderFactory extends Factory<Shareholder, Params, UniqueIdentifiers> {
+  /**
+   * @hidden
+   */
   protected generateProperties = async (uid: string) => {
     const {
       context: { contractWrappers },

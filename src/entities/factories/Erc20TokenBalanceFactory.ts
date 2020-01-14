@@ -10,6 +10,9 @@ export class Erc20TokenBalanceFactory extends Factory<
   Params,
   UniqueIdentifiers
 > {
+  /**
+   * @hidden
+   */
   protected generateProperties = async (uid: string) => {
     const { tokenAddress, walletAddress } = Erc20TokenBalance.unserialize(uid);
 

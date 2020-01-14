@@ -10,6 +10,9 @@ import { TaxWithholding, Params, UniqueIdentifiers } from '../TaxWithholding';
  * Factory generates information for a tax withholding entity
  */
 export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, UniqueIdentifiers> {
+  /**
+   * @hidden
+   */
   protected generateProperties = async (uid: string) => {
     const {
       context: {
