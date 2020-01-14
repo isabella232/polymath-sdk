@@ -1,4 +1,6 @@
-import { serialize, unserialize } from '../index';
+import { checkStringLength, serialize, unserialize } from '../index';
+import { PolymathError } from '../../PolymathError';
+import { ErrorCode } from '../../types';
 
 describe('serialize and unserialize', () => {
   const entityType = 'someEntity';
@@ -29,5 +31,48 @@ describe('serialize and unserialize', () => {
   test('unserialize recovers the serialized object', () => {
     expect(unserialize(serialize(entityType, pojo1))).toEqual(pojo1);
     expect(unserialize(serialize(entityType, inversePojo1))).toEqual(pojo1);
+  });
+});
+
+describe('check string length', () => {
+  const testVariableType = 'myVar';
+
+  test('checkStringLength used on a non empty string, catches error above the default 32 characters', () => {
+    try {
+      checkStringLength('0123456789012345678901234567890123456789', testVariableType);
+    } catch (error) {
+      expect(error).toEqual(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `You must provide a valid ${testVariableType} up to 32 characters long`,
+        })
+      );
+    }
+  });
+
+  test('checkStringLength used on an empty string, catches error due to not meeting custom requirement of 1 - 32 characters', () => {
+    try {
+      checkStringLength('', testVariableType, { minLength: 1, maxLength: 32 });
+    } catch (error) {
+      expect(error).toEqual(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `You must provide a valid ${testVariableType} between 1 and 32 characters long`,
+        })
+      );
+    }
+  });
+
+  test('checkStringLength used on a 6 character string, catches error due to not meeting custom requirement of 1 - 5 characters', () => {
+    try {
+      checkStringLength('0123456', testVariableType, { minLength: 1, maxLength: 5 });
+    } catch (error) {
+      expect(error).toEqual(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `You must provide a valid ${testVariableType} between 1 and 5 characters long`,
+        })
+      );
+    }
   });
 });

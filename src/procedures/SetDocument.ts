@@ -1,7 +1,7 @@
 import { Procedure } from './Procedure';
 import { ProcedureType, PolyTransactionTag, SetDocumentProcedureArgs, ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
-import { isNotEmptyValidBytes32CompliantString } from '~/utils';
+import { checkStringLength } from '../utils';
 
 export class SetDocument extends Procedure<SetDocumentProcedureArgs> {
   public type = ProcedureType.SetDocument;
@@ -32,8 +32,8 @@ export class SetDocument extends Procedure<SetDocumentProcedureArgs> {
       });
     }
 
-    isNotEmptyValidBytes32CompliantString(name, 'name');
-    isNotEmptyValidBytes32CompliantString(documentHash, 'document hash');
+    checkStringLength(name, 'name', { minLength: 1, maxLength: 32 });
+    checkStringLength(documentHash, 'document hash', { minLength: 1, maxLength: 32 });
 
     /*
      * Transactions

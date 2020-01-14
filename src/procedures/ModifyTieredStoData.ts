@@ -15,7 +15,7 @@ import {
   Currency,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-import { areSameAddress, isValidBytes32CompliantString } from '../utils';
+import { areSameAddress, checkStringLength } from '../utils';
 import { SecurityToken, TieredSto } from '../entities';
 import { TieredStoFactory } from '../entities/factories';
 
@@ -219,7 +219,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
         polyOracleAddress = currentPolyOracleAddress;
       }
 
-      isValidBytes32CompliantString(currencySymbol, 'denominated currency symbol');
+      checkStringLength(currencySymbol, 'denominated currency symbol');
 
       if (
         currencySymbol !== denominatedCurrency ||

@@ -50,20 +50,27 @@ export function areSameAddress(a: string, b: string) {
   return a.toUpperCase() === b.toUpperCase();
 }
 
-export function isValidBytes32CompliantString(value: string, variableName: string) {
-  if (value.length > 32) {
+/**
+ * Check the length of a given string to ensure it meets correct bounds
+ * @param value - the string itself
+ * @param variableName - the name of the variable associated to the string itself
+ * @param opts - optional min and max length of the string. Defaults to a minimum of 0 (empty string) and a maximum of 32 characters
+ */
+export function checkStringLength(
+  value: string,
+  variableName: string,
+  opts?: { minLength: number | undefined; maxLength: number }
+) {
+  const minLength = opts && opts.minLength != undefined ? opts.minLength : 0;
+  const maxLength = opts ? opts.maxLength : 32;
+  if (value.length < minLength || value.length > maxLength) {
     throw new PolymathError({
       code: ErrorCode.ProcedureValidationError,
-      message: `You must provide a valid ${variableName} up to 32 characters long`,
-    });
-  }
-}
-
-export function isNotEmptyValidBytes32CompliantString(value: string, variableName: string) {
-  if (value.length < 1 || value.length > 32) {
-    throw new PolymathError({
-      code: ErrorCode.ProcedureValidationError,
-      message: `You must provide a valid ${variableName} between 1 and 32 characters long`,
+      message: `You must provide a valid ${variableName} ${
+        opts && opts.minLength != undefined
+          ? `between ${minLength} and ${maxLength}`
+          : `up to ${maxLength}`
+      } characters long`,
     });
   }
 }
