@@ -392,7 +392,7 @@ export interface LaunchTieredStoProcedureArgs {
   currencies: Currency[];
   raisedFundsWallet: string;
   unsoldTokensWallet: string;
-  stableCoinAddresses: string[];
+  stableCoinAddresses?: string[];
   customCurrency?: Partial<CustomCurrency>;
   allowPreIssuing?: boolean;
 }
@@ -752,7 +752,7 @@ export enum TransferStatusCode {
  * @param T - type to exclude from
  * @param K - name of the property that will be excluded
  */
-export type Omit<T, K> = { [key in Exclude<keyof T, K>]: T[key] };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 /**
  * Transaction method from the contract-wrappers package

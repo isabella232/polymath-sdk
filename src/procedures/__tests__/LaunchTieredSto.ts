@@ -136,8 +136,7 @@ describe('LaunchTieredSto', () => {
   });
 
   describe('LaunchTieredSto', () => {
-    test('should add the transaction to the queue to launch usd tiered sto and add a procedure to transfer erc20 token', async () => {
-      const addProcedureSpy = spy(target, 'addProcedure');
+    test('should add the transaction to the queue to launch usd tiered sto', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
       securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
 
@@ -156,12 +155,37 @@ describe('LaunchTieredSto', () => {
       });
       expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableTieredSto);
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWithExactly(TransferErc20)).toEqual(true);
+    });
+
+    test("should transfer POLY to the security token if the token's balance doesn't cover the launch fee", async () => {
+      const addProcedureSpy = spy(target, 'addProcedure');
+      const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      polyTokenMock
+        .mock('balanceOf', Promise.resolve(new BigNumber(20)))
+        .withArgs({ owner: securityTokenAddress })
+        .returns(Promise.resolve(new BigNumber(1)));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+        usd: costIn,
+        poly: costInPoly,
+      });
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableTieredSto);
+      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20));
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
     test('should add the transaction to the queue to launch usd tiered sto with cost in poly', async () => {
-      const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
       securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
       moduleFactoryMock.mock('isCostInPoly', Promise.resolve(true));
@@ -181,8 +205,6 @@ describe('LaunchTieredSto', () => {
       });
       expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableTieredSto);
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWithExactly(TransferErc20)).toEqual(true);
-      expect(addProcedureSpy.callCount).toEqual(1);
     });
 
     test('should throw if corresponding usd tiered sto event is not fired', async () => {
