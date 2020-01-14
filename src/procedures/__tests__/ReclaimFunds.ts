@@ -18,7 +18,7 @@ import {
 import { PolymathError } from '../../PolymathError';
 import { mockFactories } from '../../testUtils/mockFactories';
 import * as dividendDistributionFactoryModule from '../../entities/factories/DividendDistributionFactory';
-import { DividendDistribution, SecurityToken } from '~/entities';
+import { DividendDistribution, SecurityToken } from '../../entities';
 
 const params: ReclaimFundsProcedureArgs = {
   symbol: 'TEST1',
