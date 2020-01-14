@@ -34,10 +34,10 @@ describe('serialize and unserialize', () => {
   });
 });
 
-describe('check string length', () => {
+describe('checkStringLength', () => {
   const testVariableType = 'myVar';
 
-  test('checkStringLength used on a non empty string, catches error above the default 32 characters', () => {
+  test('throws an error when the string length exceeds the 32 character default', () => {
     try {
       checkStringLength('0123456789012345678901234567890123456789', testVariableType);
     } catch (error) {
@@ -50,7 +50,7 @@ describe('check string length', () => {
     }
   });
 
-  test('checkStringLength used on an empty string, catches error due to not meeting custom requirement of 1 - 32 characters', () => {
+  test('throws an error when the string length is lower than the supplied minimum', () => {
     try {
       checkStringLength('', testVariableType, { minLength: 1, maxLength: 32 });
     } catch (error) {
@@ -63,7 +63,7 @@ describe('check string length', () => {
     }
   });
 
-  test('checkStringLength used on a 6 character string, catches error due to not meeting custom requirement of 1 - 5 characters', () => {
+  test('throws an error when the string length is higher than the supplied maximum', () => {
     try {
       checkStringLength('0123456', testVariableType, { minLength: 1, maxLength: 5 });
     } catch (error) {

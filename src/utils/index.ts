@@ -52,6 +52,7 @@ export function areSameAddress(a: string, b: string) {
 
 /**
  * Check the length of a given string to ensure it meets correct bounds
+ *
  * @param value - the string itself
  * @param variableName - the name of the variable associated to the string itself
  * @param opts - optional min and max length of the string. Defaults to a minimum of 0 (empty string) and a maximum of 32 characters
