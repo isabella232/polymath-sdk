@@ -151,10 +151,7 @@ export class Offerings extends SubModule {
    * @param args.raisedFundsWallet - wallet address that will receive the funds that are being raised
    * @param args.unsoldTokensWallet - wallet address that will receive unsold tokens when the end date is reached
    * @param args.stableCoinAddresses - array of stable coins that the offering supports
-   * @param args.customCurrency - it can be optional
-   * @param customCurrency.currencySymbol symbol of the custom currency (USD, CAD, EUR, etc. Default is USD)
-   * @param customCurrency.ethOracleAddress address of the oracle that states the price of ETH in the custom currency. Only required if raising funds in ETH
-   * @param customCurrency.polyOracleAddress address of the oracle that states the price of POLY in the custom currency. Only required if raising funds in POLY
+   * @param args.customCurrency - allows the STO to raise funds pegged to a different currency. Optional, defaults to USD
    * @param args.allowPreIssuance - whether to have all tokens issued on STO start. Default behavior is to issue on purchase
    */
   public launchTieredSto: LaunchTieredStoMethod = async (

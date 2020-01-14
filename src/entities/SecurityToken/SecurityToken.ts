@@ -66,7 +66,7 @@ export interface Params {
 /**
  * Unserialize string to a Security Token object representation
  *
- * @param serialized - security token's serialized representation
+ * @param serialized - Security Token's serialized representation
  */
 export const unserialize = (serialized: string) => {
   const unserialized = unserializeUtil(serialized);
@@ -129,7 +129,7 @@ export class SecurityToken extends Entity<Params> {
   public currentCheckpoint: number;
 
   /**
-   * treasury wallet used by some features.
+   * treasury wallet used by some features
    */
   public treasuryWallet: string;
 
