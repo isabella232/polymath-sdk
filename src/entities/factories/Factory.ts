@@ -21,7 +21,7 @@ export interface EntityClass<T, U> {
 
 /**
  * Factories are tasked with creating instances of their corresponding Entity and managing the internal cache for that Entity type.
- * So for example, the Security Token Factory is tasked with fetching necessary data to instance a Security Token,
+ * So, for example, the Security Token Factory is tasked with fetching necessary data to instance a Security Token,
  * as well as fetching/refreshing the internal Security Token cache
  */
 export abstract class Factory<EntityType extends Entity<T>, T extends any, U extends any> {
