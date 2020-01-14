@@ -60,17 +60,14 @@ export function areSameAddress(a: string, b: string) {
 export function checkStringLength(
   value: string,
   variableName: string,
-  opts?: { minLength: number | undefined; maxLength: number }
+  opts: { minLength?: number; maxLength: number } = { maxLength: 32 }
 ) {
-  const minLength = opts && opts.minLength != undefined ? opts.minLength : 0;
-  const maxLength = opts ? opts.maxLength : 32;
+  const { minLength = 0, maxLength } = opts;
   if (value.length < minLength || value.length > maxLength) {
     throw new PolymathError({
       code: ErrorCode.ProcedureValidationError,
       message: `You must provide a valid ${variableName} ${
-        opts && opts.minLength != undefined
-          ? `between ${minLength} and ${maxLength}`
-          : `up to ${maxLength}`
+        opts.minLength != undefined ? `between ${minLength} and ${maxLength}` : `up to ${maxLength}`
       } characters long`,
     });
   }
