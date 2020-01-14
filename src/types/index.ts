@@ -377,7 +377,7 @@ export interface StoTier {
 }
 
 /**
- * Unique properties of a custom currency
+ * Custom currency in which a Tiered STO can raise funds
  */
 export interface CustomCurrency {
   /**

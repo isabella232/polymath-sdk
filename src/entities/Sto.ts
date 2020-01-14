@@ -120,7 +120,7 @@ export abstract class Sto<P> extends Entity<P> {
   public endDate: Date;
 
   /**
-   * wallet where funds raised will be forwarded to
+   * wallet where raised funds will be forwarded to
    */
   public raisedFundsWallet: string;
 
@@ -145,7 +145,7 @@ export abstract class Sto<P> extends Entity<P> {
   public investorCount: number;
 
   /**
-   * valid currencies that funds can be raised in
+   * types of currency in which funds can be raised
    */
   public fundraiseCurrencies: Currency[];
 
@@ -165,7 +165,7 @@ export abstract class Sto<P> extends Entity<P> {
   public isFinalized: boolean;
 
   /**
-   * whether the preissuing of tokens is allowed or not
+   * whether all tokens due to be sold are issued when the STO starts. If false, the appropriate amount of tokens are issued to the buyer whenever a sale is made
    */
   public preIssueAllowed: boolean;
 

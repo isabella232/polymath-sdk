@@ -20,9 +20,6 @@ const { weiToValue } = conversionUtils;
 
 export { UniqueIdentifiers };
 
-/**
- * Unique properties of a tier in the tiered sto
- */
 export interface Tier {
   /**
    * total number of tokens that are available in the tier
