@@ -165,7 +165,7 @@ export abstract class Sto<P> extends Entity<P> {
   public isFinalized: boolean;
 
   /**
-   * whether all tokens due to be sold are issued when the STO starts. If false, the appropriate amount of tokens are issued to the buyer whenever a sale is made
+   * whether all tokens due to be sold are issued when the STO starts. If false, the appropriate amount of tokens is issued to the buyer whenever a sale is made
    */
   public preIssueAllowed: boolean;
 
