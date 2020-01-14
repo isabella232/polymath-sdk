@@ -7,23 +7,21 @@ import { Context } from '../Context';
 import { PolymathError } from '../PolymathError';
 
 /**
- * Represents a unique dividend distribution identifier
+ * Properties that uniquely identify a Dividend Distribution
  */
 export interface UniqueIdentifiers {
   /**
-   * symbol of the security token
+   * security token UUID
    */
   securityTokenId: string;
   /**
-   * dividend distribution id
+   * ordered index of the distribution
    */
   index: number;
 }
 
 /**
  * Check if the provided value is of type [[UniqueIdentifiers]]
- *
- * @param identifiers - internal dividend distribution representation
  */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { securityTokenId, checkpointId, index } = identifiers;
@@ -36,7 +34,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Represents a dividend distribution
+ * Dividend Distribution constructor parameters
  */
 export interface Params {
   securityTokenSymbol: string;
@@ -73,6 +71,9 @@ export interface Params {
   totalWithheldWithdrawn: BigNumber;
   shareholders: DividendShareholderStatus[];
   name: string;
+  /**
+   * symbol of the currency in which this dividend distribution is being paid
+   */
   currency: string | null;
 }
 
@@ -81,7 +82,7 @@ export interface Params {
  */
 export class DividendDistribution extends Entity<Params> {
   /**
-   * Transform object to string
+   * Generate the Dividend Distribution's UUID from its identifying properties
    */
   public static generateId({ securityTokenId, index }: UniqueIdentifiers) {
     return serialize('dividend', {
@@ -91,9 +92,9 @@ export class DividendDistribution extends Entity<Params> {
   }
 
   /**
-   * Unserialize string to a dividend distribution object representation
+   * Unserialize string to a Dividend Distribution object representation
    *
-   * @param serialize - dividend distribution's serialized representation
+   * @param serialize - Dividend Distribution's serialized representation
    */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
@@ -239,7 +240,7 @@ export class DividendDistribution extends Entity<Params> {
   };
 
   /**
-   * Convert entity as a POJO (Plain Old Javascript Object)
+   * Convert entity to POJO (Plain Old Javascript Object)
    */
   public toPojo() {
     const {
@@ -284,7 +285,7 @@ export class DividendDistribution extends Entity<Params> {
   }
 
   /**
-   * Hydrating the Dividend Distribution entity
+   * Hydrate the Dividend Distribution entity
    */
   public _refresh(params: Partial<Params>) {
     const {
