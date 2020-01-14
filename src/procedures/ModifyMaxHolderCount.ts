@@ -15,7 +15,7 @@ export class ModifyMaxHolderCount extends Procedure<ModifyMaxHolderCountProcedur
   public type = ProcedureType.ModifyMaxHolderCount;
 
   /**
-   * - Sets the cap for the amount of token holders there can be
+   * Sets the maximum amount of holders for the security token
    *
    * Note that this procedure will fail if the security token symbol doesn't exist
    * Note that this procedure will fail if the security token has disabled the ShareholderCountRestrictions feature
