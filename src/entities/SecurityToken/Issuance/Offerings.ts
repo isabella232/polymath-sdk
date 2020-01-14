@@ -44,7 +44,6 @@ type AllCurrencies =
   | [Currency.POLY, Currency.StableCoin, Currency.ETH]
   | [Currency.POLY, Currency.ETH, Currency.StableCoin];
 
-
 /**
  * Params for [[getSto]]
  */
@@ -53,8 +52,8 @@ export interface GetStoParams {
   address: string;
 }
 
-interface LaunchTieredStoNoCustomCurrencyParams
-  extends Omit<LaunchTieredStoParams, 'customCurrency'> {
+interface LaunchTieredStoNoCustomCurrencyNoStableCoinParams
+  extends Omit<Omit<LaunchTieredStoParams, 'customCurrency'>, 'stableCoinAddresses'> {
   currencies: OnlyEth | OnlyPoly | EthAndPoly;
 }
 
