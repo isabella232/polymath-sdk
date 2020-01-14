@@ -58,7 +58,7 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
       currencies,
       raisedFundsWallet,
       unsoldTokensWallet,
-      stableCoinAddresses,
+      stableCoinAddresses = [],
       customCurrency,
       allowPreIssuing = false,
     } = args;
@@ -77,6 +77,13 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message: `There is no Security Token with symbol ${symbol}`,
+      });
+    }
+
+    if (currencies.includes(FundRaiseType.StableCoin) && stableCoinAddresses.length === 0) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: 'Stable Coin address array cannot be empty if raising in Stable Coin',
       });
     }
 
@@ -139,10 +146,16 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
       usdCost = cost;
     }
 
-    await this.addProcedure(TransferErc20)({
-      receiver: securityTokenAddress,
-      amount: polyCost,
-    });
+    const balance = await contractWrappers.polyToken.balanceOf({ owner: securityTokenAddress });
+    const difference = polyCost.minus(balance);
+
+    // only transfer the required amount of POLY
+    if (difference.gt(new BigNumber(0))) {
+      await this.addProcedure(TransferErc20)({
+        receiver: securityTokenAddress,
+        amount: difference,
+      });
+    }
 
     const ratePerTier: BigNumber[] = [];
     const ratePerTierDiscountPoly: BigNumber[] = [];
