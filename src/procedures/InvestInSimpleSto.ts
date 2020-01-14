@@ -43,14 +43,15 @@ export class InvestInSimpleSto extends Procedure<InvestInSimpleStoProcedureArgs>
   /**
    * - Buy tokens with Ether
    *
-   * Note that this procedure will fail if the security token symbol doesn't exist
-   * Note that this procedure will fail if the STO address is invalid
-   * Note that this procedure will fail if the STO is either archived or hasn't been launched
-   * Note that this procedure will fail if the STO hasn't started yet
-   * Note that this procedure will fail if the STO is paused
-   * Note that this procedure will fail if the STO has already been finalized
-   * Note that this procedure will fail if the STO doesn't allow beneficial investments
-   * Note that this procedure will fail if the STO doesn't support investments in the selected currency
+   * Note that this procedure will fail if:
+   * - The security token symbol doesn't exist
+   * - The STO address is invalid
+   * - The STO is either archived or hasn't been launched
+   * - The STO hasn't started yet
+   * - The STO is paused
+   * - The STO has already been finalized
+   * - The STO doesn't allow beneficial investments
+   * - The STO doesn't support investments in the selected currency
    */
   public async prepareTransactions() {
     const { args, context } = this;
