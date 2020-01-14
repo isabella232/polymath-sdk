@@ -9,9 +9,20 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure responsible for modifying any exception related to the Porcentage Transfer Manager module
+ */
 export class ModifyPercentageExemptions extends Procedure<ModifyPercentageExemptionsProcedureArgs> {
   public type = ProcedureType.ModifyPercentageExemptions;
 
+  /**
+   * - Modify whitelist data or allow/disallow the PTM module to mint tokens
+   *
+   * Note that this procedure will fail if there is nothing to modify
+   * Note that this procedure will fail if the security token symbol doesn't exist
+   * Note that this procedure will fail if PercentageOwnershipRestrictions is disabled
+   * Note that this procedure will fail if whitelist data is the same data currently in the contract
+   */
   public async prepareTransactions() {
     const { symbol, whitelistEntries = [], allowPrimaryIssuance } = this.args;
     const { contractWrappers } = this.context;
