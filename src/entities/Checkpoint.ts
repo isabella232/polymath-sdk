@@ -97,7 +97,7 @@ export class Checkpoint extends Entity<Params> {
   public index: number;
 
   /**
-   * shareholder balances at specific checkpoint
+   * shareholder balances at this specific checkpoint
    */
   public shareholderBalances: ShareholderBalance[];
 
