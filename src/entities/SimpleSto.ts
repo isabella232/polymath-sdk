@@ -43,17 +43,17 @@ export class SimpleSto extends Sto<Params> {
   }
 
   /**
-   * Unique generated Tiered STO id
+   * unique generated Tiered STO id
    */
   public uid: string;
 
   /**
-   * Cap of total tokens that can be sold in sto
+   * cap of total tokens that can be sold in sto
    */
   public cap: BigNumber;
 
   /**
-   * Rate at which the tokens will be sold in sto
+   * rate at which the tokens will be sold in sto
    */
   public rate: BigNumber;
 

@@ -102,7 +102,7 @@ export abstract class Sto<P> extends Entity<P> {
   public abstract uid: string;
 
   /**
-   * Ethereum address for the STO
+   * ethereum address for the STO
    */
   public address: string;
 
@@ -111,7 +111,7 @@ export abstract class Sto<P> extends Entity<P> {
   public securityTokenId: string;
 
   /**
-   * Type of STO setup
+   * type of STO setup
    */
   public stoType: StoType;
 
@@ -120,57 +120,57 @@ export abstract class Sto<P> extends Entity<P> {
   public endDate: Date;
 
   /**
-   * Wallet where funds raised will be forwarded to
+   * wallet where funds raised will be forwarded to
    */
   public raisedFundsWallet: string;
 
   /**
-   * Wallet where unsold tokens will be returned to
+   * wallet where unsold tokens will be returned to
    */
   public unsoldTokensWallet: string;
 
   /**
-   * Amount of funds that have been raised so far
+   * amount of funds that have been raised so far
    */
   public raisedAmount: BigNumber;
 
   /**
-   * Total number of tokens that have been sold so far
+   * total number of tokens that have been sold so far
    */
   public soldTokensAmount: BigNumber;
 
   /**
-   * Number of investors that have purchased tokens in the STO
+   * number of investors that have purchased tokens in the STO
    */
   public investorCount: number;
 
   /**
-   * Valid currencies that funds can be raised in
+   * valid currencies that funds can be raised in
    */
   public fundraiseCurrencies: Currency[];
 
   /**
-   * Whether the STO is currently paused or not
+   * whether the STO is currently paused or not
    */
   public isPaused: boolean;
 
   /**
-   * Whether the STO cap has been reached or not
+   * whether the STO cap has been reached or not
    */
   public capReached: boolean;
 
   /**
-   * Whether the STO has been finalized or not
+   * whether the STO has been finalized or not
    */
   public isFinalized: boolean;
 
   /**
-   * Whether the preissuing of tokens is allowed or not
+   * whether the preissuing of tokens is allowed or not
    */
   public preIssueAllowed: boolean;
 
   /**
-   * Whether investments can be made on behalf of a beneficiary or not
+   * whether investments can be made on behalf of a beneficiary or not
    */
   public beneficialInvestmentsAllowed: boolean;
 
