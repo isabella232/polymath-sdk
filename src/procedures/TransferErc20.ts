@@ -29,12 +29,15 @@ export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
 
   /**
    * - If the balance is less than the amount being transferred, and procedure used with poly on testnet, poly tokens will be transferred from faucet
+   *
    * - Transfer the ERC20 tokens (Custom ERC20 token or POLY)
+   *
    * - Refresh the ERC20 token balance
    *
-   * Note that this procedure will fail if the address belongs to a security token, in which case the ST controller namespace should be used
-   * Note that this procedure will fail if the shareholder balance is lower than the amount being transferred, off test net
-   * Note that this procedure will fail if the shareholder balance is lower than the amount being transferred, on test net and with a custom erc20 token
+   * Note that this procedure will fail if:
+   * - The address belongs to a security token, in which case the ST controller namespace should be used
+   * - The shareholder balance is lower than the amount being transferred, off test net
+   * - The shareholder balance is lower than the amount being transferred, on test net and with a custom erc20 token
    */
   public async prepareTransactions() {
     const { amount, receiver, tokenAddress } = this.args;

@@ -39,6 +39,7 @@ export class LaunchSimpleSto extends Procedure<LaunchSimpleStoProcedureArgs, Sim
    * - The Simple STO entity will update if the transaction to allow pre issuing is made
    *
    * Note preissuing is disallowed (false) by default.
+   *
    * Note this procedure will fail if preIssuing is allowed in the arguments, and the security token version is 3.0.0
    */
   public async prepareTransactions() {

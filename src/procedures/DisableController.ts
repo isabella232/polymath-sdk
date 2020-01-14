@@ -18,9 +18,9 @@ export class DisableController extends Procedure<DisableControllerProcedureArgs>
    *
    * - Disable the controller of the security token, including the signature acknowledgement to complete this action
    *
-   * Note this procedure will fail if the user interacting with it is not the security token owner
-   *
-   * Note this procedure will fail if the controller has already been previously disabled
+   * Note that this procedure will fail if:
+   * - The user interacting with it is not the security token owner
+   * - The controller has already been previously disabled
    */
   public async prepareTransactions() {
     const { signature, symbol } = this.args;

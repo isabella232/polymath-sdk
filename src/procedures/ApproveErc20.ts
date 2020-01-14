@@ -11,11 +11,14 @@ export class ApproveErc20 extends Procedure<ApproveErc20ProcedureArgs> {
 
   /**
    * - If the balance is less than the amount being approved, and procedure used with poly on testnet, poly tokens will be transferred from faucet
+   *
    * - Approve the ERC20 token transfer
    *
-   * Note that this procedure will fail if the shareholder balance is lower than the amount being approved, off test net
-   * Note that this procedure will fail if the shareholder balance is lower than the amount being approved, on test net and with a custom erc20 token
-   * Note that the token approval transaction will not be added to the queue, if the amount has already been approved previously
+   * Note that if the amount has already been approved, the token approval transaction will not be added to the queue and the procedure will return
+   *
+   * Note that this procedure will fail if:
+   * - The shareholder balance is lower than the amount being approved, off test net
+   * - The shareholder balance is lower than the amount being approved, on test net and with a custom erc20 token
    */
   public async prepareTransactions() {
     const { amount, spender, tokenAddress } = this.args;

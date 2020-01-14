@@ -19,7 +19,7 @@ export class EnablePercentageTransferManager extends Procedure<
   /**
    * - Enable the general percentage manager on the security token instantiated with a max token holder percentage and whether primary issuance is allowed
    *
-   * - The parameter to allow primary issuance is optional and defaults to false, therefore disallowing primary issuance
+   * - The parameter to allow primary issuance is optional and defaults to false (therefore disallowing primary issuance)
    */
   public async prepareTransactions() {
     const { symbol, maxHolderPercentage, allowPrimaryIssuance = false } = this.args;

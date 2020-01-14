@@ -38,13 +38,12 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
    *
    * - The Tiered STO entity will update if the transaction to allow pre issuing is made
    *
-   * Note this procedure will fail if currencies include ETH fundraise type and do not include a valid ETH address
-   *
-   * Note this procedure will fail if currencies include POLY fundraise type and do not include a valid POLY address
-   *
    * Note preIssuing is disallowed (false) by default.
    *
-   * Note this procedure will fail if preIssuing is allowed in the arguments, and the security token version is 3.0.0
+   * Note this procedure will fail if :
+   * - Currencies include ETH fundraise type and do not include a valid ETH address
+   * - Currencies include POLY fundraise type and do not include a valid POLY address
+   * - PreIssuing is allowed in the arguments, and the security token version is 3.0.0
    */
   public async prepareTransactions() {
     const { args, context } = this;

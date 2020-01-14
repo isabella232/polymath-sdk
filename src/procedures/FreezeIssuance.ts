@@ -18,9 +18,9 @@ export class FreezeIssuance extends Procedure<FreezeIssuanceProcedureArgs> {
    *
    * - Freeze the issuance of the security token, including the signature acknowledgement to complete this action
    *
-   * Note this procedure will fail if the user interacting with it is not the security token owner
-   *
-   * Note this procedure will fail if issuance has already been frozen previously
+   * Note this procedure will fail if:
+   * - The user interacting with it is not the security token owner
+   * - Issuance has already been frozen previously
    */
   public async prepareTransactions() {
     const { signature, symbol } = this.args;
