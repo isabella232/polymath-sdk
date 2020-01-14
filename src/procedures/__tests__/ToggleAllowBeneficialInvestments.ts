@@ -2,17 +2,17 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { restore, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import { TogglePauseSto } from '../TogglePauseSto';
+import { ToggleAllowBeneficialInvestments } from '../ToggleAllowBeneficialInvestments';
 import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
 import {
   ErrorCode,
-  TogglePauseStoProcedureArgs,
+  ToggleAllowBeneficialInvestmentsProcedureArgs,
   PolyTransactionTag,
   ProcedureType,
   StoType,
 } from '../../types';
-import * as pauseStoModule from '../TogglePauseSto';
+import * as toggleAllowBeneficalInvestmentsModule from '../ToggleAllowBeneficialInvestments';
 import * as simpleStoFactoryModule from '../../entities/factories/SimpleStoFactory';
 import * as tieredStoFactoryModule from '../../entities/factories/TieredStoFactory';
 import * as contextModule from '../../Context';
@@ -22,24 +22,24 @@ import { mockFactories } from '../../testUtils/mockFactories';
 import { Factories } from '../../Context';
 import { SimpleSto, SecurityToken, TieredSto } from '../../entities';
 
-const tieredParams: TogglePauseStoProcedureArgs = {
+const tieredParams: ToggleAllowBeneficialInvestmentsProcedureArgs = {
   symbol: 'TEST1',
   stoAddress: '0x6666666666666666666666666666666666666666',
   stoType: StoType.Tiered,
-  pause: true,
+  allowBeneficialInvestments: true,
 };
 
-const simpleParams: TogglePauseStoProcedureArgs = {
+const simpleParams: ToggleAllowBeneficialInvestmentsProcedureArgs = {
   symbol: 'TEST1',
   stoAddress: '0x5555555555555555555555555555555555555555',
   stoType: StoType.Simple,
-  pause: true,
+  allowBeneficialInvestments: true,
 };
 
 const invalidSto = 'InvalidSto';
 
-describe('TogglePauseSto', () => {
-  let target: TogglePauseSto;
+describe('ToggleAllowBeneficialInvestments', () => {
+  let target: ToggleAllowBeneficialInvestments;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let moduleWrapperFactoryMock: MockManager<
@@ -50,14 +50,13 @@ describe('TogglePauseSto', () => {
 
   // Mock factories
   let simpleStoFactoryMock: MockManager<simpleStoFactoryModule.SimpleStoFactory>;
-
   let tieredStoFactoryMock: MockManager<tieredStoFactoryModule.TieredStoFactory>;
 
   let factoryMockSetup: Factories;
   let securityTokenId: string;
 
   beforeEach(() => {
-    // Mock the context, wrappers, and tokenFactory to test PauseSto
+    // Mock the context, wrappers, and tokenFactory to test toggle beneficial investments
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
     moduleWrapperFactoryMock = ImportMock.mockClass(
@@ -80,12 +79,15 @@ describe('TogglePauseSto', () => {
     tieredStoMock = ImportMock.mockClass(contractWrappersModule, 'USDTieredSTO_3_0_0');
     simpleStoMock = ImportMock.mockClass(contractWrappersModule, 'CappedSTO_3_0_0');
 
+    tieredStoMock.mock('allowBeneficialInvestments', Promise.resolve(false));
+    simpleStoMock.mock('allowBeneficialInvestments', Promise.resolve(false));
+
     securityTokenId = SecurityToken.generateId({ symbol: simpleParams.symbol });
 
     moduleWrapperFactoryMock.mock('getModuleInstance', simpleStoMock.getMockInstance());
 
-    // Instantiate TogglePauseSto
-    target = new TogglePauseSto(simpleParams, contextMock.getMockInstance());
+    // Instantiate ToggleAllowBeneficialInvestments
+    target = new ToggleAllowBeneficialInvestments(simpleParams, contextMock.getMockInstance());
   });
 
   afterEach(() => {
@@ -93,95 +95,62 @@ describe('TogglePauseSto', () => {
   });
 
   describe('Types', () => {
-    test('should extend procedure and have TogglePauseSto type', async () => {
+    test('should extend procedure and have ToggleAllowBeneficialInvestments type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe(ProcedureType.TogglePauseSto);
+      expect(target.type).toBe(ProcedureType.ToggleAllowBeneficialInvestments);
     });
   });
 
-  describe('TogglePauseSto', () => {
-    test('should add the transaction to the queue to pause a capped sto', async () => {
+  describe('ToggleAllowBeneficialInvestments', () => {
+    test('should add the transaction to the queue to toggle allowed beneficial investments in a simple sto', async () => {
       const addTransactionSpy = spy(target, 'addTransaction');
-      simpleStoMock.mock('pause', Promise.resolve('Pause'));
-
-      // Real call
-      await target.prepareTransactions();
-
-      // Verifications\
-      expect(
-        addTransactionSpy.getCall(0).calledWith(simpleStoMock.getMockInstance().pause)
-      ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.PauseSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
-    });
-
-    test('should add the transaction to the queue to unpause a capped sto', async () => {
-      target = new TogglePauseSto(
-        {
-          ...simpleParams,
-          pause: false,
-        },
-        contextMock.getMockInstance()
+      simpleStoMock.mock(
+        'changeAllowBeneficialInvestments',
+        Promise.resolve('ChangeAllowBeneficialInvestments')
       );
-
-      const addTransactionSpy = spy(target, 'addTransaction');
-      simpleStoMock.mock('unpause', Promise.resolve('Unpause'));
-
-      // Real call
-      await target.prepareTransactions();
-
-      // Verifications\
-      expect(
-        addTransactionSpy.getCall(0).calledWith(simpleStoMock.getMockInstance().unpause)
-      ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.UnpauseSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
-    });
-
-    test('should add the transaction to the queue to pause a tiered sto', async () => {
-      moduleWrapperFactoryMock.mock('getModuleInstance', tieredStoMock.getMockInstance());
-      target = new TogglePauseSto(tieredParams, contextMock.getMockInstance());
-
-      const addTransactionSpy = spy(target, 'addTransaction');
-      tieredStoMock.mock('pause', Promise.resolve('Pause'));
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        addTransactionSpy.getCall(0).calledWith(tieredStoMock.getMockInstance().pause)
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(simpleStoMock.getMockInstance().changeAllowBeneficialInvestments)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.PauseSto);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.ChangeAllowBeneficialInvestments
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
-    test('should add the transaction to the queue to unpause a tiered sto', async () => {
+    test('should add the transaction to the queue to toggle beneficial investments in a tiered sto', async () => {
       moduleWrapperFactoryMock.mock('getModuleInstance', tieredStoMock.getMockInstance());
-      target = new TogglePauseSto(
-        {
-          ...tieredParams,
-          pause: false,
-        },
-        contextMock.getMockInstance()
-      );
+      target = new ToggleAllowBeneficialInvestments(tieredParams, contextMock.getMockInstance());
 
       const addTransactionSpy = spy(target, 'addTransaction');
-      tieredStoMock.mock('pause', Promise.resolve('Unpause'));
+      tieredStoMock.mock(
+        'changeAllowBeneficialInvestments',
+        Promise.resolve('ChangeAllowBeneficialInvestments')
+      );
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(
-        addTransactionSpy.getCall(0).calledWith(tieredStoMock.getMockInstance().unpause)
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(tieredStoMock.getMockInstance().changeAllowBeneficialInvestments)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.UnpauseSto);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.ChangeAllowBeneficialInvestments
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
     test('should throw if there is an invalid sto address', async () => {
-      target = new TogglePauseSto(
+      target = new ToggleAllowBeneficialInvestments(
         {
           ...simpleParams,
           stoAddress: 'invalid',
@@ -196,8 +165,36 @@ describe('TogglePauseSto', () => {
       );
     });
 
+    test('should throw if trying to disallow beneficial investments when they are already disallowed', async () => {
+      target = new ToggleAllowBeneficialInvestments(
+        {
+          ...simpleParams,
+          allowBeneficialInvestments: false,
+        },
+        contextMock.getMockInstance()
+      );
+
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Beneficial investments are already disallowed`,
+        })
+      );
+    });
+
+    test('should throw if trying to allow beneficial investments when they are already allowed', async () => {
+      simpleStoMock.mock('allowBeneficialInvestments', Promise.resolve(true));
+
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Beneficial investments are already allowed`,
+        })
+      );
+    });
+
     test('should throw if there is an invalid sto type', async () => {
-      target = new TogglePauseSto(
+      target = new ToggleAllowBeneficialInvestments(
         {
           ...simpleParams,
           stoType: invalidSto as StoType,
@@ -222,9 +219,9 @@ describe('TogglePauseSto', () => {
       );
     });
 
-    test('should successfully resolve pause sto with capped sto params', async () => {
+    test('should refresh the simple STO', async () => {
       const refreshStub = simpleStoFactoryMock.mock('refresh', Promise.resolve());
-      await pauseStoModule.createTogglePauseStoResolver(
+      await toggleAllowBeneficalInvestmentsModule.createToggleAllowBeneficialInvestmentsResolver(
         factoryMockSetup,
         simpleParams.symbol,
         simpleParams.stoType,
@@ -242,10 +239,10 @@ describe('TogglePauseSto', () => {
       expect(refreshStub.callCount).toEqual(1);
     });
 
-    test('should successfully resolve pause sto with usd tiered sto params', async () => {
-      target = new TogglePauseSto(tieredParams, contextMock.getMockInstance());
+    test('should refresh the tiered STO', async () => {
+      target = new ToggleAllowBeneficialInvestments(tieredParams, contextMock.getMockInstance());
       const refreshStub = tieredStoFactoryMock.mock('refresh', Promise.resolve());
-      await pauseStoModule.createTogglePauseStoResolver(
+      await toggleAllowBeneficalInvestmentsModule.createToggleAllowBeneficialInvestmentsResolver(
         factoryMockSetup,
         tieredParams.symbol,
         tieredParams.stoType,

@@ -108,8 +108,8 @@ export enum ProcedureType {
   ModifyShareholderData = 'ModifyShareholderData',
   RevokeKyc = 'RevokeKyc',
   IssueTokens = 'IssueTokens',
-  ModifyPreIssuing = 'ModifyPreIssuing',
-  ModifyBeneficialInvestments = 'ModifyBeneificialInvestments',
+  ToggleAllowPreIssuing = 'ToggleAllowPreIssuing',
+  ToggleAllowBeneficialInvestments = 'ToggleAllowBeneficialInvestments',
   ModifyTieredStoData = 'ModifyTieredStoData',
   InvestInTieredSto = 'InvestInTieredSto',
   InvestInSimpleSto = 'InvestInSimpleSto',
@@ -302,14 +302,14 @@ export interface IssueTokensProcedureArgs {
   issuanceData: IssuanceDataEntry[];
 }
 
-export interface ModifyPreIssuingProcedureArgs {
+export interface ToggleAllowPreIssuingProcedureArgs {
   symbol: string;
   stoAddress: string;
   stoType: StoType;
   allowPreIssuing: boolean;
 }
 
-export interface ModifyBeneficialInvestmentsProcedureArgs {
+export interface ToggleAllowBeneficialInvestmentsProcedureArgs {
   symbol: string;
   stoAddress: string;
   stoType: StoType;
@@ -376,9 +376,21 @@ export interface StoTier {
   discountedPrice?: BigNumber;
 }
 
+/**
+ * Custom currency in which a Tiered STO can raise funds
+ */
 export interface CustomCurrency {
+  /**
+   * symbol of the custom currency (USD, CAD, EUR, etc. Default is USD)
+   */
   currencySymbol: string;
+  /**
+   * address of the oracle that states the price of ETH in the custom currency. Only required if raising funds in ETH
+   */
   ethOracleAddress: string;
+  /**
+   * address of the oracle that states the price of POLY in the custom currency. Only required if raising funds in POLY
+   */
   polyOracleAddress: string;
 }
 
@@ -392,7 +404,7 @@ export interface LaunchTieredStoProcedureArgs {
   currencies: Currency[];
   raisedFundsWallet: string;
   unsoldTokensWallet: string;
-  stableCoinAddresses: string[];
+  stableCoinAddresses?: string[];
   customCurrency?: Partial<CustomCurrency>;
   allowPreIssuing?: boolean;
 }
@@ -612,7 +624,7 @@ export interface ProcedureArguments {
   [ProcedureType.PullDividendPayment]: PullDividendPaymentProcedureArgs;
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
   // prettier-ignore
-  [ProcedureType.ModifyDividendsDefaultExclusionList]: 
+  [ProcedureType.ModifyDividendsDefaultExclusionList]:
     ModifyDividendsDefaultExclusionListProcedureArgs;
   [ProcedureType.LaunchSimpleSto]: LaunchSimpleStoProcedureArgs;
   [ProcedureType.LaunchTieredSto]: LaunchTieredStoProcedureArgs;
@@ -624,10 +636,10 @@ export interface ProcedureArguments {
   [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
   [ProcedureType.IssueTokens]: IssueTokensProcedureArgs;
-  [ProcedureType.ModifyPreIssuing]: ModifyPreIssuingProcedureArgs;
+  [ProcedureType.ToggleAllowPreIssuing]: ToggleAllowPreIssuingProcedureArgs;
   [ProcedureType.DisableFeature]: DisableFeatureProcedureArgs;
   [ProcedureType.FinalizeSto]: FinalizeStoProcedureArgs;
-  [ProcedureType.ModifyBeneficialInvestments]: ModifyBeneficialInvestmentsProcedureArgs;
+  [ProcedureType.ToggleAllowBeneficialInvestments]: ToggleAllowBeneficialInvestmentsProcedureArgs;
   [ProcedureType.ModifyTieredStoData]: ModifyTieredStoDataProcedureArgs;
   [ProcedureType.InvestInTieredSto]: InvestInTieredStoProcedureArgs;
   [ProcedureType.InvestInSimpleSto]: InvestInSimpleStoProcedureArgs;
@@ -743,7 +755,7 @@ export enum TransferStatusCode {
  * @param T - type to exclude from
  * @param K - name of the property that will be excluded
  */
-export type Omit<T, K> = { [key in Exclude<keyof T, K>]: T[key] };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 /**
  * Transaction method from the contract-wrappers package
