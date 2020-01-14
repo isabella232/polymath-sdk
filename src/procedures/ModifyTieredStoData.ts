@@ -58,13 +58,11 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
    *
    * - After the last transaction takes place, refresh the tiered sto entity factory information on the SDK
    *
-   * Note that this procedure will fail if the STO has not been enabled or has been archived
-   *
-   * Note that this procedure will fail if STO has already started
-   *
-   * Note that this procedure will fail if a custom currency is used with a Tiered STO on version 3.0.0
-   *
-   * Note that this procedure will fail if there is nothing to modify, based on the STO state and the parameters given
+   * Note that this procedure will fail if:
+   * - The STO has not been enabled or has been archived
+   * - The STO has already started
+   * - A custom currency is used with a Tiered STO on version 3.0.0
+   * - There is nothing to modify, based on the STO state and the parameters given
    */
 
   public async prepareTransactions() {
