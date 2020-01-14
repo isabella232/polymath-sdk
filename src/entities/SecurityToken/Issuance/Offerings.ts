@@ -24,22 +24,19 @@ interface LaunchTieredStoParams {
   currencies: Currency[];
   raisedFundsWallet: string;
   unsoldTokensWallet: string;
-  stableCoinAddresses: string[];
+  stableCoinAddresses?: string[];
   customCurrency?: Partial<CustomCurrency>;
   allowPreIssuance?: boolean;
 }
 
-type OnlyEth =
-  | [Currency.ETH]
-  | [Currency.StableCoin, Currency.ETH]
-  | [Currency.ETH, Currency.StableCoin];
-type OnlyPoly =
-  | [Currency.POLY]
+type OnlyEth = [Currency.ETH];
+type EthAndStableCoin = [Currency.StableCoin, Currency.ETH] | [Currency.ETH, Currency.StableCoin];
+type OnlyPoly = [Currency.POLY];
+type PolyAndStableCoin =
   | [Currency.StableCoin, Currency.POLY]
   | [Currency.POLY, Currency.StableCoin];
-type EthAndPoly =
-  | [Currency.ETH, Currency.POLY]
-  | [Currency.POLY, Currency.ETH]
+type EthAndPoly = [Currency.ETH, Currency.POLY] | [Currency.POLY, Currency.ETH];
+type AllCurrencies =
   | [Currency.StableCoin, Currency.ETH, Currency.POLY]
   | [Currency.ETH, Currency.StableCoin, Currency.POLY]
   | [Currency.ETH, Currency.POLY, Currency.StableCoin]
@@ -47,12 +44,28 @@ type EthAndPoly =
   | [Currency.POLY, Currency.StableCoin, Currency.ETH]
   | [Currency.POLY, Currency.ETH, Currency.StableCoin];
 
-interface LaunchTieredStoNoCustomCurrencyParams
-  extends Omit<LaunchTieredStoParams, 'customCurrency'> {
+interface LaunchTieredStoNoCustomCurrencyNoStableCoinParams
+  extends Omit<Omit<LaunchTieredStoParams, 'customCurrency'>, 'stableCoinAddresses'> {
   currencies: OnlyEth | OnlyPoly | EthAndPoly;
 }
 
+interface LaunchTieredStoNoCustomCurrencyParams
+  extends Omit<LaunchTieredStoParams, 'customCurrency'> {
+  currencies: EthAndStableCoin | PolyAndStableCoin | AllCurrencies;
+  stableCoinAddresses: string[];
+}
+
 interface LaunchTieredStoCustomCurrencyEthParams extends LaunchTieredStoParams {
+  currencies: OnlyEth | EthAndStableCoin;
+  customCurrency: {
+    currencySymbol?: string;
+    ethOracleAddress: string;
+  };
+  stableCoinAddresses: string[];
+}
+
+interface LaunchTieredStoCustomCurrencyEthNoStableCoinParams
+  extends Omit<LaunchTieredStoParams, 'stableCoinAddresses'> {
   currencies: OnlyEth;
   customCurrency: {
     currencySymbol?: string;
@@ -61,6 +74,16 @@ interface LaunchTieredStoCustomCurrencyEthParams extends LaunchTieredStoParams {
 }
 
 interface LaunchTieredStoCustomCurrencyPolyParams extends LaunchTieredStoParams {
+  currencies: OnlyPoly | PolyAndStableCoin;
+  customCurrency: {
+    currencySymbol?: string;
+    polyOracleAddress: string;
+  };
+  stableCoinAddresses: string[];
+}
+
+interface LaunchTieredStoCustomCurrencyPolyNoStableCoinParams
+  extends Omit<LaunchTieredStoParams, 'stableCoinAddresses'> {
   currencies: OnlyPoly;
   customCurrency: {
     currencySymbol?: string;
@@ -69,6 +92,17 @@ interface LaunchTieredStoCustomCurrencyPolyParams extends LaunchTieredStoParams 
 }
 
 interface LaunchTieredStoCustomCurrencyBothParams extends LaunchTieredStoParams {
+  currencies: AllCurrencies;
+  customCurrency: {
+    currencySymbol?: string;
+    ethOracleAddress: string;
+    polyOracleAddress: string;
+  };
+  stableCoinAddresses: string[];
+}
+
+interface LaunchTieredStoCustomCurrencyBothNoStableCoinParams
+  extends Omit<LaunchTieredStoParams, 'stableCoinAddresses'> {
   currencies: EthAndPoly;
   customCurrency: {
     currencySymbol?: string;
@@ -79,16 +113,28 @@ interface LaunchTieredStoCustomCurrencyBothParams extends LaunchTieredStoParams 
 
 interface LaunchTieredStoMethod {
   (args: LaunchTieredStoNoCustomCurrencyParams): Promise<
-    TransactionQueue<LaunchTieredStoProcedureArgs>
+    TransactionQueue<LaunchTieredStoProcedureArgs, TieredSto>
+  >;
+  (args: LaunchTieredStoNoCustomCurrencyNoStableCoinParams): Promise<
+    TransactionQueue<LaunchTieredStoProcedureArgs, TieredSto>
   >;
   (args: LaunchTieredStoCustomCurrencyEthParams): Promise<
-    TransactionQueue<LaunchTieredStoProcedureArgs>
+    TransactionQueue<LaunchTieredStoProcedureArgs, TieredSto>
+  >;
+  (args: LaunchTieredStoCustomCurrencyEthNoStableCoinParams): Promise<
+    TransactionQueue<LaunchTieredStoProcedureArgs, TieredSto>
   >;
   (args: LaunchTieredStoCustomCurrencyPolyParams): Promise<
-    TransactionQueue<LaunchTieredStoProcedureArgs>
+    TransactionQueue<LaunchTieredStoProcedureArgs, TieredSto>
+  >;
+  (args: LaunchTieredStoCustomCurrencyPolyNoStableCoinParams): Promise<
+    TransactionQueue<LaunchTieredStoProcedureArgs, TieredSto>
   >;
   (args: LaunchTieredStoCustomCurrencyBothParams): Promise<
-    TransactionQueue<LaunchTieredStoProcedureArgs>
+    TransactionQueue<LaunchTieredStoProcedureArgs, TieredSto>
+  >;
+  (args: LaunchTieredStoCustomCurrencyBothNoStableCoinParams): Promise<
+    TransactionQueue<LaunchTieredStoProcedureArgs, TieredSto>
   >;
 }
 
