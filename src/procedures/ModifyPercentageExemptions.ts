@@ -16,12 +16,12 @@ export class ModifyPercentageExemptions extends Procedure<ModifyPercentageExempt
   public type = ProcedureType.ModifyPercentageExemptions;
 
   /**
-   * - Modify whitelist data or allow/disallow the PTM module to mint tokens
+   * Update whitelist data and issuance operations related to percentage restriction
    *
-   * Note that this procedure will fail if there is nothing to modify
-   * Note that this procedure will fail if the security token symbol doesn't exist
-   * Note that this procedure will fail if PercentageOwnershipRestrictions is disabled
-   * Note that this procedure will fail if whitelist data is the same data currently in the contract
+   * Note that this procedure will fail if:
+   * - The data supplied to it is no different to the data in the contract
+   * - The Security Token doesn't exist
+   * - The Percentage Ownership Restrictions feature isn't enabled
    */
   public async prepareTransactions() {
     const { symbol, whitelistEntries = [], allowPrimaryIssuance } = this.args;
