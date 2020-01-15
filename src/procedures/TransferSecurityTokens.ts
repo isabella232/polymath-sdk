@@ -62,7 +62,8 @@ export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProc
   }
 
   /**
-   * Transfer security tokens from a wallet address to another
+   * Transfer security tokens from a wallet address to another.
+   * ***If from argument is not provided, the current SDK user address will be taken as it***
    *
    * Note that this procedure will fail if the security token symbol doesn't exist
    */
