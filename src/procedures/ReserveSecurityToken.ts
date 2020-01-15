@@ -19,10 +19,9 @@ import { findEvents } from '../utils';
 const { bigNumberToDate } = conversionUtils;
 
 /**
- * - Procedure that reserve the token ticker to an specific owner
+ * Procedure that reserves a token ticker (symbol) to be used later on to launch a Security Token
  *
- * ***Note once the token ticker is registered to its owner then no other issuer can claim its ownership***
- * ***Note if the ticker expires and its issuer hasn't used it, then someone else can take it***
+ * ***Note if the Reservation expires and the corresponding Security Token hasn't been launched yet, another issuer can reserve the same ticker***
  */
 export class ReserveSecurityToken extends Procedure<
   ReserveSecurityTokenProcedureArgs,
@@ -31,7 +30,7 @@ export class ReserveSecurityToken extends Procedure<
   public type = ProcedureType.ReserveSecurityToken;
 
   /**
-   * - Reserve a new ticker
+   * Reserve a new ticker
    *
    * Note that this procedure will fail if ticker has already been registered
    */
