@@ -8,9 +8,18 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure that modifies the maximum amount of holders for the security token
+ */
 export class ModifyMaxHolderCount extends Procedure<ModifyMaxHolderCountProcedureArgs> {
   public type = ProcedureType.ModifyMaxHolderCount;
 
+  /**
+   * Sets the maximum amount of holders for the security token
+   *
+   * Note that this procedure will fail if the security token symbol doesn't exist
+   * Note that this procedure will fail if the security token has disabled the ShareholderCountRestrictions feature
+   */
   public async prepareTransactions() {
     const { symbol, maxHolderCount } = this.args;
     const { contractWrappers } = this.context;
