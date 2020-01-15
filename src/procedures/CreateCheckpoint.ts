@@ -21,14 +21,13 @@ export const createRefreshSecurityTokenFactoryResolver = (
   return factories.securityTokenFactory.refresh(securityTokenId);
 };
 /**
- * Procedure to create a checkpoint on a security token
+ * Procedure to create a Checkpoint on a Security Token
  */
 export class CreateCheckpoint extends Procedure<CreateCheckpointProcedureArgs, Checkpoint> {
   public type = ProcedureType.CreateCheckpoint;
 
   /**
-   * - Create a checkpoint on the security token
-   * - Refresh the security token entity
+   * Create a Checkpoint on the Security Token and return it
    */
   public async prepareTransactions() {
     const { args, context } = this;

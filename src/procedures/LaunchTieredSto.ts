@@ -21,29 +21,24 @@ import { SecurityToken, TieredSto } from '../entities';
 import { ZERO_ADDRESS } from '../utils/constants';
 
 /**
- * Procedure to launch a tiered STO module with necessary initialization data, transferring poly setup cost to the security token before doing so.
- * As part of the procedure, preissuing can be enabled in 3.1.0 version Security Token
+ * Procedure that launches a Tiered STO
  */
 export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, TieredSto> {
   public type = ProcedureType.LaunchTieredSto;
 
   /**
-   * - Fetch the POLY setup cost of the STO and transfer the setup cost in POLY to the Security Token
+   * - Transfer the necessary amount of POLY to the Security Token to cover the STO's setup fee
    *
-   * - Launch the Tiered STO initializing the module with the provided arguments. Fees may be in POLY or USD.
+   * - Launch the Tiered STO
    *
-   * - Fetch the Tiered STO entity into the SDK cache
+   * - Allow pre-issuing (if applicable, defaults to false)
    *
-   * - If the Security Token is 3.1.0 and allow pre issuing is toggled to true, the method will allow pre issuing in a separate transaction
+   * - Return the newly created STO
    *
-   * - The Tiered STO entity will update if the transaction to allow pre issuing is made
-   *
-   * Note preIssuing is disallowed (false) by default.
-   *
-   * Note this procedure will fail if :
-   * - Currencies include ETH fundraise type and do not include a valid ETH address
-   * - Currencies include POLY fundraise type and do not include a valid POLY address
-   * - PreIssuing is allowed in the arguments, and the security token version is 3.0.0
+   * Note that this procedure will fail if:
+   * - The supplied custom currency oracle addresses corresponding to the selected fund raise currencies are invalid
+   * - Raising in Stable Coin and not providing stable coin addresses
+   * - Attempting to allow pre-issuing on a version 3.0 STO
    */
   public async prepareTransactions() {
     const { args, context } = this;

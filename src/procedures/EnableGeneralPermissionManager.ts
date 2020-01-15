@@ -9,7 +9,7 @@ import {
 import { PolymathError } from '../PolymathError';
 
 /**
- * Procedure to enable a general permission manager module on a security token
+ * Procedure that enables Permissions on a Security Token
  */
 export class EnableGeneralPermissionManager extends Procedure<
   EnableGeneralPermissionManagerProcedureArgs
@@ -17,7 +17,7 @@ export class EnableGeneralPermissionManager extends Procedure<
   public type = ProcedureType.EnableGeneralPermissionManager;
 
   /**
-   * - Enable the general permission manager on the security token
+   * Enable Permissions on the Security Token
    */
   public async prepareTransactions() {
     const { symbol } = this.args;

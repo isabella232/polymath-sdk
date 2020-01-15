@@ -21,26 +21,23 @@ import { SecurityToken, SimpleSto } from '../entities';
 import { findEvents } from '../utils';
 
 /**
- * Procedure to launch a simple STO module with necessary initialization data, transferring poly setup cost to the security token before doing so.
- * As part of the procedure, preissuing can be enabled in 3.1.0 version Security Token
+ * Procedure that launches a Simple STO
  */
 export class LaunchSimpleSto extends Procedure<LaunchSimpleStoProcedureArgs, SimpleSto> {
   public type = ProcedureType.LaunchSimpleSto;
 
   /**
-   * - Fetch the POLY setup cost of the STO and transfer the setup cost in POLY to the Security Token
+   * - Transfer the necessary amount of POLY to the Security Token to cover the STO's setup fee
    *
-   * - Launch the Simple STO initializing the module with the provided arguments. Fees may be in POLY or USD.
+   * - Launch the Simple STO
    *
-   * - Fetch the Simple STO entity into the SDK cache
+   * - Allow pre-issuing (if applicable)
    *
-   * - If the Security Token is 3.1.0 and allow pre issuing is toggled to true, the method will allow pre issuing in a separate transaction
-   *
-   * - The Simple STO entity will update if the transaction to allow pre issuing is made
-   *
-   * Note preissuing is disallowed (false) by default.
-   *
-   * Note this procedure will fail if preIssuing is allowed in the arguments, and the security token version is 3.0.0
+   * - Return the newly created STO
+
+   * Notes:
+   * - Pre-issuing defaults to false
+   * - Pre-issuing can only be enabled on a version 3.1 (or greater) Simple STO. Attempting to do so in versions 3.0 or lower will cause the procedure to fail
    */
   public async prepareTransactions() {
     const { args, context } = this;

@@ -3,13 +3,13 @@ import { ProcedureType, ErrorCode, SignFreezeIssuanceAckProcedureArgs } from '..
 import { PolymathError } from '../PolymathError';
 
 /**
- * Procedure to sign an acknowledgement for freezing the issuance of a security token
+ * Procedure that signs an acknowledgement to permanently freeze issuance of a Security Token
  */
 export class SignFreezeIssuanceAck extends Procedure<SignFreezeIssuanceAckProcedureArgs> {
   public type = ProcedureType.SignFreezeIssuanceAck;
 
   /**
-   * - Sign an acknowledgement to freeze the issuance of the security token
+   * Sign data to confirm the intent of permanently disabling issuance of the Security Token
    */
   public async prepareTransactions() {
     const { symbol } = this.args;

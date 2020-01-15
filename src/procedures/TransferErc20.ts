@@ -28,16 +28,12 @@ export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
   public type = ProcedureType.TransferErc20;
 
   /**
-   * - If the balance is less than the amount being transferred, and procedure used with poly on testnet, poly tokens will be transferred from faucet
-   *
-   * - Transfer the ERC20 tokens (Custom ERC20 token or POLY)
-   *
-   * - Refresh the ERC20 token balance
-   *
-   * Note that this procedure will fail if:
-   * - The address belongs to a security token, in which case the ST controller namespace should be used
-   * - The shareholder balance is lower than the amount being transferred, off test net
-   * - The shareholder balance is lower than the amount being transferred, on test net and with a custom erc20 token
+   * Transfer an ERC20 token to another wallet. The token in question defaults to POLY if no address is supplied
+
+   * Note that the procedure will fail if:
+   * - The owner's token balance is less than the amount being transferred. The only exception to this is when transferring POLY on a testnet.
+   * If that is the case, an extra transaction will be submitted to request the missing amount of tokens from the faucet
+   * - The token being transferred is a Security Token. In that case, the corresponding Security Token transfer procedures should be used
    */
   public async prepareTransactions() {
     const { amount, receiver, tokenAddress } = this.args;

@@ -8,19 +8,19 @@ import {
 import { PolymathError } from '../PolymathError';
 
 /**
- * Procedure to freeze issuance of a security token, optionally appending a signature acknowledgement or generating a signature acknowledgement automatically
+ * Procedure that permanently freezes issuance of a Security Token. This requires the Security Token's owner to send signed data in acknowledgement
  */
 export class FreezeIssuance extends Procedure<FreezeIssuanceProcedureArgs> {
   public type = ProcedureType.FreezeIssuance;
 
   /**
-   * - If no signature acknowledgement data (optional) is appended to the procedure arguments, the procedure will request and generate a signature acknowledgement itself
+   * - If no signature acknowledgement data (optional) is appended to the procedure arguments, the procedure itself will request the user's signature or sign the data in place if the client was instanced with a private key
    *
-   * - Freeze the issuance of the security token, including the signature acknowledgement to complete this action
+   * - Freeze the issuance of the Security Token
    *
    * Note this procedure will fail if:
-   * - The user interacting with it is not the security token owner
-   * - Issuance has already been frozen previously
+   * - The current user is not the owner of the Security Token
+   * - Issuance has already been frozen
    */
   public async prepareTransactions() {
     const { signature, symbol } = this.args;

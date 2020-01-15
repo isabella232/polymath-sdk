@@ -10,15 +10,15 @@ export class ApproveErc20 extends Procedure<ApproveErc20ProcedureArgs> {
   public type = ProcedureType.ApproveErc20;
 
   /**
-   * - If the balance is less than the amount being approved, and procedure used with poly on testnet, poly tokens will be transferred from faucet
+   * - Approve spend of an ERC20 token by another wallet. The token in question defaults to POLY if no address is supplied
    *
    * - Approve the ERC20 token transfer
    *
    * Note that if the amount has already been approved, the token approval transaction will not be added to the queue and the procedure will return
    *
-   * Note that this procedure will fail if:
-   * - The shareholder balance is lower than the amount being approved, off test net
-   * - The shareholder balance is lower than the amount being approved, on test net and with a custom erc20 token
+   * Note that the procedure will fail if the owner's token balance is less than the amount being approved.
+   * The only exception to this is when approving a POLY spend on a testnet.
+   * If that is the case, an extra transaction will be submitted to request the missing amount of tokens from the faucet
    */
   public async prepareTransactions() {
     const { amount, spender, tokenAddress } = this.args;

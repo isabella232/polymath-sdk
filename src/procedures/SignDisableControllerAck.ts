@@ -3,13 +3,13 @@ import { ProcedureType, ErrorCode, SignDisableControllerAckProcedureArgs } from 
 import { PolymathError } from '../PolymathError';
 
 /**
- * Procedure to sign an acknowledgement for disabling the controller of a security token
+ * Procedure that signs an acknowledgement to permanently disable a Security Token's Controller functionality
  */
 export class SignDisableControllerAck extends Procedure<SignDisableControllerAckProcedureArgs> {
   public type = ProcedureType.SignDisableControllerAck;
 
   /**
-   * - Sign an acknowledgement to disable the controller of the security token
+   * Sign data to confirm the intent of permanently disabling the Security Token's Controller functionality
    */
   public async prepareTransactions() {
     const { symbol } = this.args;

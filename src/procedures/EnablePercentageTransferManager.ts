@@ -9,7 +9,7 @@ import {
 import { PolymathError } from '../PolymathError';
 
 /**
- * Procedure to enable a percentage transfer manager module on a security token
+ * Procedure that enables Percentage Ownership Restictions on a Security Token. This allows setting a maximum percentage of the total supply that a single shareholder can own. Any token transfer that would result in a single shareholder owning more than the allowed percentage will fail
  */
 export class EnablePercentageTransferManager extends Procedure<
   EnablePercentageTransferManagerProcedureArgs
@@ -17,9 +17,9 @@ export class EnablePercentageTransferManager extends Procedure<
   public type = ProcedureType.EnablePercentageTransferManager;
 
   /**
-   * - Enable the general percentage manager on the security token instantiated with a max token holder percentage and whether primary issuance is allowed
+   * Enable Percentage Ownership restrictions and set the max ownership percentage and whether primary issuance is exempted from said restrictions
    *
-   * - The parameter to allow primary issuance is optional and defaults to false (therefore disallowing primary issuance)
+   * Note: Primary issuance exemption is disallowed by default unless otherwise specified
    */
   public async prepareTransactions() {
     const { symbol, maxHolderPercentage, allowPrimaryIssuance = false } = this.args;

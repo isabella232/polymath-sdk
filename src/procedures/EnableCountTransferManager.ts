@@ -9,13 +9,13 @@ import {
 import { PolymathError } from '../PolymathError';
 
 /**
- * Procedure to enable a count transfer manager module on a security token, including the max token holder count
+ * Procedure that enables Count Restrictions on a Security Token. This allows setting a number of maximum token holders. Any token transfer that would result in the amount of token holders to exceed this maximum will fail
  */
 export class EnableCountTransferManager extends Procedure<EnableCountTransferManagerProcedureArgs> {
   public type = ProcedureType.EnableCountTransferManager;
 
   /**
-   * - Enable the count transfer manager on the security token, instantiating the module with a max token holder count
+   * Enable Count Restrictions on the Security Token and set the supplied max holder count
    */
   public async prepareTransactions() {
     const { symbol, maxHolderCount } = this.args;
