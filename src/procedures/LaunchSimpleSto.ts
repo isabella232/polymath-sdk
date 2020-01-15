@@ -74,10 +74,16 @@ export class LaunchSimpleSto extends Procedure<LaunchSimpleStoProcedureArgs, Sim
       usdCost = cost;
     }
 
-    await this.addProcedure(TransferErc20)({
-      receiver: securityTokenAddress,
-      amount: polyCost,
-    });
+    const balance = await contractWrappers.polyToken.balanceOf({ owner: securityTokenAddress });
+    const difference = polyCost.minus(balance);
+
+    // only transfer the required amount of POLY
+    if (difference.gt(new BigNumber(0))) {
+      await this.addProcedure(TransferErc20)({
+        receiver: securityTokenAddress,
+        amount: difference,
+      });
+    }
 
     const fundRaiseType =
       currency === Currency.ETH ? CappedSTOFundRaiseType.ETH : CappedSTOFundRaiseType.POLY;
