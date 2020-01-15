@@ -15,10 +15,11 @@ export class ModifyMaxHolderPercentage extends Procedure<ModifyMaxHolderPercenta
   public type = ProcedureType.ModifyMaxHolderPercentage;
 
   /**
-   * - Set a new maximum percentage of token holders there can be
+   * - Modify the number of tokens (expressed in percentage) that an investor can hold as maximum
    *
-   * Note that this procedure will fail if the security token symbol doesn't exist
-   * Note that this procedure will fail if the security token has disabled the PercentageOwnershipRestrictions feature
+   * Note that this procedure will fail if:
+   * - The security token symbol doesn't exist
+   * - The security token has disabled the PercentageOwnershipRestrictions feature
    */
   public async prepareTransactions() {
     const { symbol, maxHolderPercentage } = this.args;
