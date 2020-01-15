@@ -4,6 +4,9 @@ import { serialize, unserialize } from '../utils';
 import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
+/**
+ * Properties that uniquely identify an Investment
+ */
 export interface UniqueIdentifiers {
   securityTokenId: string;
   stoId: string;
@@ -18,6 +21,9 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   );
 }
 
+/**
+ * Constructor parameters
+ */
 export interface Params {
   securityTokenSymbol: string;
   address: string;
@@ -25,6 +31,9 @@ export interface Params {
   investedFunds: BigNumber;
 }
 
+/**
+ * Used to manage an Investment in a Security Token Offering
+ */
 export class Investment extends Entity<Params> {
   public static generateId({ securityTokenId, stoId, index }: UniqueIdentifiers) {
     return serialize('investment', {
@@ -34,6 +43,11 @@ export class Investment extends Entity<Params> {
     });
   }
 
+  /**
+   * Unserialize a serialized Investment entity
+   *
+   * @param serialized - string with Investment entity information
+   */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
@@ -47,22 +61,43 @@ export class Investment extends Entity<Params> {
     return unserialized;
   }
 
+  /**
+   * unique generated identifier for an Investment
+   */
   public uid: string;
 
   public securityTokenId: string;
 
+  /**
+   * unique ID for the Investment
+   */
   public stoId: string;
 
   public securityTokenSymbol: string;
 
+  /**
+   * wallet address of token holder
+   */
   public address: string;
 
+  /**
+   * index of the Investment
+   */
   public index: number;
 
+  /**
+   * total amount of tokens involved in the Investment
+   */
   public tokenAmount: BigNumber;
 
+  /**
+   * amount of funds used to make Investment
+   */
   public investedFunds: BigNumber;
 
+  /**
+   * Create an Investment instance
+   */
   constructor(params: Params & UniqueIdentifiers) {
     super();
 
@@ -90,6 +125,9 @@ export class Investment extends Entity<Params> {
     });
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const {
       uid,
@@ -114,6 +152,9 @@ export class Investment extends Entity<Params> {
     };
   }
 
+  /**
+   * Hydrate the entity
+   */
   public _refresh(params: Partial<Params>) {
     const { securityTokenSymbol, address, investedFunds, tokenAmount } = params;
 
