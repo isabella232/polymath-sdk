@@ -15,7 +15,7 @@ export class ModifyMaxHolderPercentage extends Procedure<ModifyMaxHolderPercenta
   public type = ProcedureType.ModifyMaxHolderPercentage;
 
   /**
-   * - Modify the number of tokens (expressed in percentage) that an investor can hold as maximum
+   * - Modify the number of security tokens (expressed in percentage) that an investor can hold as maximum
    *
    * Note that this procedure will fail if:
    * - The security token symbol doesn't exist
