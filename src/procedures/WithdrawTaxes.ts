@@ -22,16 +22,17 @@ export const createWithdrawTaxesResolver = (
 };
 
 /**
- * Procedure that allows issuer to withdraw withheld tax
+ * Procedure that allows an issuer to withdraw withheld tax from a Dividend Distribution
  */
 export class WithdrawTaxes extends Procedure<WithdrawTaxesProcedureArgs> {
   public type = ProcedureType.WithdrawTaxes;
 
   /**
-   * - Withdraw Tax Withholdings
+   * Withdraw Tax Withholdings
    *
-   * Note that this procedure will fail if the security token doesn't exist
-   * Note that this procedure will fail if the dividends feature hasn't been enabled
+   * Note that this procedure will fail if:
+   * - The security token doesn't exist
+   * - The Dividends Feature hasn't been enabled
    */
   public async prepareTransactions() {
     const { symbol, dividendIndex } = this.args;
