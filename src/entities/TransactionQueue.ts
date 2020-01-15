@@ -19,39 +19,88 @@ enum Events {
   TransactionStatusChange = 'TransactionStatusChange',
 }
 
+/**
+ * Class to manage procedural transaction queues
+ */
 export class TransactionQueue<Args extends any = any, ReturnType extends any = void> extends Entity<
   void
 > {
+  /**
+   * Generate UUID for this Transaction Queue
+   */
   public static generateId() {
-    return serialize('transaction', {
+    return serialize('transactionQueue', {
       random: v4(),
     });
   }
 
+  /**
+   * type of entity
+   */
   public readonly entityType: string = 'transactionQueue';
 
+  /**
+   * type of procedure being run
+   */
   public procedureType: ProcedureType;
 
+  /**
+   * generated transaction queue unique identifier
+   */
   public uid: string;
 
+  /**
+   * array of poly transactions
+   */
   public transactions: PolyTransaction[];
 
+  /**
+   * status of the transaction queue
+   */
   public status: TransactionQueueStatus = TransactionQueueStatus.Idle;
 
+  /**
+   * arguments provided to the transaction queue
+   */
   public args: Args;
 
+  /**
+   * optional error information
+   */
   public error?: Error;
 
+  /**
+   * total cost of running the transactions in the queue. This does not include gas
+   */
   public fees: Fees;
 
+  /**
+   * @hidden
+   */
   private promise: Promise<ReturnType>;
 
+  /**
+   * @hidden
+   */
   private queue: PolyTransaction[] = [];
 
+  /**
+   * @hidden
+   */
   private returnValue: MaybeResolver<ReturnType>;
 
+  /**
+   * @hidden
+   */
   private emitter: EventEmitter;
 
+  /**
+   * Create a transaction queue
+   *
+   * @param transactions - list of transactions to be run in this queue
+   * @param returnValue - value that will be returned by the queue after it is run. It can be a Post Transaction Resolver
+   * @param args - arguments with which the Procedure that generated this queue was instanced
+   */
   constructor(
     transactions: TransactionSpec[],
     fees: Fees,
@@ -84,6 +133,9 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     this.uid = TransactionQueue.generateId();
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const { uid, transactions, status, procedureType, args, fees } = this;
 
@@ -97,6 +149,9 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     };
   }
 
+  /**
+   * Run the transactions in the queue
+   */
   public run = async () => {
     this.queue = [...this.transactions];
     this.updateStatus(TransactionQueueStatus.Running);
@@ -123,6 +178,13 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     return this.promise;
   };
 
+  /**
+   * Subscribe to status changes on the Transaction Queue
+   *
+   * @param listener - callback function that will be called whenever the Transaction Queue's status changes
+   *
+   * @returns unsubscribe function
+   */
   public onStatusChange(listener: (transactionQueue: this) => void) {
     this.emitter.on(Events.StatusChange, listener);
 
@@ -131,6 +193,13 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     };
   }
 
+  /**
+   * Subscribe to status changes on individual transactions
+   *
+   * @param listener - callback function that will be called whenever the individual transaction's status changes
+   *
+   * @returns unsubscribe function
+   */
   public onTransactionStatusChange(
     listener: (transaction: PolyTransaction, transactionQueue: this) => void
   ) {
@@ -141,10 +210,19 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     };
   }
 
+  /**
+   * @hidden
+   */
   protected resolve: (val?: ReturnType) => void = () => {};
 
+  /**
+   * @hidden
+   */
   protected reject: (reason?: any) => void = () => {};
 
+  /**
+   * @hidden
+   */
   private updateStatus = (status: TransactionQueueStatus) => {
     this.status = status;
 
@@ -170,6 +248,9 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     }
   };
 
+  /**
+   * @hidden
+   */
   private async executeTransactionQueue() {
     const nextTransaction = this.queue.shift();
 
@@ -182,5 +263,8 @@ export class TransactionQueue<Args extends any = any, ReturnType extends any = v
     await this.executeTransactionQueue();
   }
 
+  /**
+   * Hydrate the entity
+   */
   public _refresh() {}
 }
