@@ -12,6 +12,7 @@ import { Documents } from './Documents';
 import { Controller } from './Controller';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode, Version } from '../../types';
+import { TransferOwnership } from '../../procedures';
 
 export interface UniqueIdentifiers {
   symbol: string;
@@ -95,6 +96,8 @@ export class SecurityToken extends Entity<Params> {
 
   public documents: Documents;
 
+  public context: Context;
+
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
@@ -130,7 +133,25 @@ export class SecurityToken extends Entity<Params> {
     this.transfers = new Transfers(this, context);
     this.documents = new Documents(this, context);
     this.controller = new Controller(this, context);
+
+    this.context = context;
   }
+
+  /**
+   * Transfers ownership of the Security Token to a new owner
+   *
+   * @param args.newOwner - new owner address for the Security Token
+   */
+  public transferOwnership = async (args: { newOwner: string }) => {
+    const procedure = new TransferOwnership(
+      {
+        symbol: this.symbol,
+        ...args,
+      },
+      this.context
+    );
+    return procedure.prepare();
+  };
 
   public toPojo() {
     const {
