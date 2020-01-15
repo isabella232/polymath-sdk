@@ -10,7 +10,7 @@ import {
 import { PolymathError } from '../PolymathError';
 
 /**
- * Procedure responsible for modifying any exception related to the Porcentage Transfer Manager module
+ * Procedure responsible for modifying any exemption related to percentage restrictions
  */
 export class ModifyPercentageExemptions extends Procedure<ModifyPercentageExemptionsProcedureArgs> {
   public type = ProcedureType.ModifyPercentageExemptions;
