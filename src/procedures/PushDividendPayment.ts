@@ -31,16 +31,17 @@ export const createPushDividendPaymentResolver = (
 };
 
 /**
- * Procedure that allows push dividends payments to issuers
+ * Procedure that forwards a Dividend Distribution's payments to shareholders
  */
 export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureArgs> {
   public type = ProcedureType.PushDividendPayment;
 
   /**
-   * - Push dividends to provided shareholder addresses
+   * Push dividends to provided shareholder addresses
    *
-   * Note that this procedure will fail if the security token symbol doesn't exist
-   * Note that this procedure will fail if the dividend feature hasn't been enabled
+   * Note that this procedure will fail if:
+   * - The Security Token doesn't exist
+   * - The Dividends Feature hasn't been enabled
    */
   public async prepareTransactions() {
     const { symbol, dividendIndex, shareholderAddresses } = this.args;
