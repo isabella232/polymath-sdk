@@ -27,6 +27,9 @@ const mapValuesDeep = (
   mapValues(obj, (val, key) => (isPlainObject(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)));
 
 // TODO @monitz87: Make properties private where appliccable
+/**
+ * Wrapper class for a Polymath Transaction
+ */
 export class PolyTransaction<Args = any, Values extends any[] = any[]> extends Entity<void> {
   public static generateId() {
     return serialize('transaction', {
@@ -34,30 +37,63 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     });
   }
 
+  /**
+   * unique generated identifier of the poly transaction
+   */
   public uid: string;
 
+  /**
+   * current status of the transaction
+   */
   public status: TransactionStatus = TransactionStatus.Idle;
 
+  /**
+   * transaction queue to which this transaction belongs
+   */
   public transactionQueue: TransactionQueue;
 
+  /**
+   * internal promise that resolves when the transaction has finished running
+   */
   public promise: Promise<any>;
 
+  /**
+   * stores errors thrown while running the transaction (if any)
+   */
   public error?: PolymathError;
 
+  /**
+   * stores the transaction receipt (if successful)
+   */
   public receipt?: TransactionReceiptWithDecodedLogs | string;
 
+  /**
+   * type of transaction represented by this instance for display purposes
+   */
   public tag: PolyTransactionTag;
 
+  /**
+   * transaction hash (available after running)
+   */
   public txHash?: string;
 
+  /**
+   * arguments with which the transaction will be called
+   */
   public args: TransactionSpec<Args, Values, TransactionReceiptWithDecodedLogs | string>['args'];
 
+  /**
+   * @hidden
+   */
   protected method: TransactionSpec<
     Args,
     Values,
     TransactionReceiptWithDecodedLogs | string
   >['method'];
 
+  /**
+   * @hidden
+   */
   private postResolvers: PostTransactionResolverArray<
     Values,
     TransactionReceiptWithDecodedLogs | string
@@ -66,8 +102,14 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     TransactionReceiptWithDecodedLogs | string
   >;
 
+  /**
+   * @hidden
+   */
   private emitter: EventEmitter;
 
+  /**
+   * Creates a poly transaction
+   */
   constructor(
     transaction: TransactionSpec<Args, Values, TransactionReceiptWithDecodedLogs | string>,
     transactionQueue: TransactionQueue<any, any>
@@ -90,6 +132,9 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     this.uid = PolyTransaction.generateId();
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const { uid, status, tag, receipt, error, txHash, transactionQueue, args } = this;
     const transactionQueueUid = transactionQueue.uid;
@@ -114,6 +159,9 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     };
   }
 
+  /**
+   * Run the poly transaction and update the transaction status
+   */
   public async run() {
     try {
       const receipt = await this.internalRun();
@@ -139,6 +187,13 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     await this.promise;
   }
 
+  /**
+   * Subscribe to status changes
+   *
+   * @param listener - callback function that will be called whenever the status changes
+   *
+   * @returns unsubscribe function
+   */
   public onStatusChange = (listener: (transaction: this) => void) => {
     this.emitter.on(Event.StatusChange, listener);
 
@@ -147,10 +202,19 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     };
   };
 
+  /**
+   * @hidden
+   */
   protected resolve: (val?: any) => void = () => {};
 
+  /**
+   * @hidden
+   */
   protected reject: (reason?: any) => void = () => {};
 
+  /**
+   * @hidden
+   */
   private async internalRun() {
     this.updateStatus(TransactionStatus.Unapproved);
 
@@ -200,6 +264,9 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     return result;
   }
 
+  /**
+   * @hidden
+   */
   private updateStatus = (status: TransactionStatus) => {
     this.status = status;
 
@@ -228,6 +295,9 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     /* eslint-enable default-case */
   };
 
+  /**
+   * @hidden
+   */
   private unwrapArg<T>(arg: PostTransactionResolver<T> | T) {
     if (isPostTransactionResolver<T>(arg)) {
       return arg.result;
@@ -236,7 +306,7 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
   }
 
   /**
-   * Picks all post-transaction resolvers and unwraps their values
+   * @hidden
    */
   private unwrapArgs<T>(args: TransactionSpec<T>['args']) {
     return mapValues(args, (arg: any) => {
@@ -248,5 +318,8 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
     }) as T;
   }
 
+  /**
+   * Hydrate the entity
+   */
   public _refresh() {}
 }

@@ -6,7 +6,13 @@ import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 import { Shareholder, Params, UniqueIdentifiers } from '../Shareholder';
 
+/**
+ * Factory generates information for a Shareholder entity
+ */
 export class ShareholderFactory extends Factory<Shareholder, Params, UniqueIdentifiers> {
+  /**
+   * @hidden
+   */
   protected generateProperties = async (uid: string) => {
     const {
       context: { contractWrappers },
@@ -54,6 +60,9 @@ export class ShareholderFactory extends Factory<Shareholder, Params, UniqueIdent
     };
   };
 
+  /**
+   * Create an instance of the Shareholder Factory
+   */
   constructor(context: Context) {
     super(Shareholder, context);
   }
