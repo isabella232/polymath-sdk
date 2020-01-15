@@ -37,7 +37,7 @@ export const updateDividendsTaxWithholdingListResolver = (
 };
 
 /**
- * Procedure that update withholding tax rates for all the investors of the security token
+ * Procedure that modifies dividend tax withholding percentages for holders of the Security Token
  */
 export class UpdateDividendsTaxWithholdingList extends Procedure<
   UpdateDividendsTaxWithholdingListProcedureArgs
@@ -45,10 +45,11 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
   public type = ProcedureType.UpdateDividendsTaxWithholdingList;
 
   /**
-   * - Update withholding tax rates for investors
+   * Update withholding tax rates for investors
    *
-   * Note that this procedure will fail if the security token symbol doesn't exist
-   * Note that this procedure will fail if the dividend feature hasn't been enabled
+   * Note that this procedure will fail if:
+   * - The Security Token doesn't exist
+   * - The Dividends Feature hasn't been enabled
    */
   public async prepareTransactions() {
     const { symbol, shareholderAddresses: investors, percentages } = this.args;
