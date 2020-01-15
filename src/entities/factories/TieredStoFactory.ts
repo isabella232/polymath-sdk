@@ -6,6 +6,9 @@ import { Currency } from '../../types';
 import { SecurityToken } from '../SecurityToken';
 import { TieredSto, Params, UniqueIdentifiers, Tier } from '../TieredSto';
 
+/**
+ * Factory generates information for a tiered sto entity
+ */
 export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
     const { securityTokenId, stoType, address } = TieredSto.unserialize(uid);
@@ -28,6 +31,8 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       raisedFundsWallet,
       unsoldTokensWallet,
       numberOfTiers,
+      minimumInvestment,
+      nonAccreditedInvestmentLimit,
       {
         tokensSold,
         capPerTier,
@@ -49,8 +54,11 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       module.wallet(),
       contractWrappers.getTreasuryWallet({ module }),
       module.getNumberOfTiers(),
+      module.minimumInvestmentUSD(),
+      module.nonAccreditedLimitUSD(),
       module.getSTODetails(),
     ]);
+    const stableCoinAddresses = await module.getUsdTokens();
 
     let preIssueAllowed = false;
     let tiers: Tier[];
@@ -133,9 +141,15 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
       isFinalized,
       preIssueAllowed,
       beneficialInvestmentsAllowed,
+      minimumInvestment,
+      nonAccreditedInvestmentLimit,
+      stableCoinAddresses,
     };
   };
 
+  /**
+   * Create an instance of the tiered sto factory
+   */
   constructor(context: Context) {
     super(TieredSto, context);
   }

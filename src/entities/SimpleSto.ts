@@ -14,13 +14,25 @@ import { Investment } from './Investment';
 
 const { weiToValue } = conversionUtils;
 
+/**
+ * Properties that uniquely identify a simple sto
+ */
 export interface Params extends StoParams {
+  /**
+   * cap for how many tokens can be sold
+   */
   cap: BigNumber;
+  /**
+   * rate at which tokens will be sold
+   */
   rate: BigNumber;
 }
 
 export { UniqueIdentifiers };
 
+/**
+ * Class used to manage a simple sto
+ */
 export class SimpleSto extends Sto<Params> {
   public static generateId({ securityTokenId, stoType, address }: UniqueIdentifiers) {
     return serialize('simpleSto', {
@@ -30,12 +42,24 @@ export class SimpleSto extends Sto<Params> {
     });
   }
 
+  /**
+   * unique generated Tiered STO id
+   */
   public uid: string;
 
+  /**
+   * cap of total tokens that can be sold in sto
+   */
   public cap: BigNumber;
 
+  /**
+   * rate at which the tokens will be sold in sto
+   */
   public rate: BigNumber;
 
+  /**
+   * Create a new simple sto instance
+   */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     const { cap, rate, ...rest } = params;
 
@@ -91,10 +115,10 @@ export class SimpleSto extends Sto<Params> {
   }
 
   /**
-   * Invests in the STO
+   * Invest in the STO
    *
-   * @param amount amount to spend
-   * @param beneficiary address that will receive the purchased tokens (defaults to current wallet, will fail if beneficial investments are not allowed for the STO, only applicable if the STO currency is ETH)
+   * @param args.amount - amount to spend
+   * @param args.beneficiary - address that will receive the purchased tokens (defaults to current wallet, will fail if beneficial investments are not allowed for the STO, only applicable if the STO currency is ETH)
    */
   public async invest(args: { amount: BigNumber; beneficiary?: string }) {
     const { address: stoAddress, securityTokenSymbol: symbol } = this;
@@ -104,6 +128,9 @@ export class SimpleSto extends Sto<Params> {
     return procedure.prepare();
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const stoPojo = super.toPojo();
     const { cap, rate } = this;
@@ -115,6 +142,9 @@ export class SimpleSto extends Sto<Params> {
     };
   }
 
+  /**
+   * Hydrate the entity
+   */
   public _refresh(params: Partial<Params>) {
     const { cap, rate, ...rest } = params;
 
