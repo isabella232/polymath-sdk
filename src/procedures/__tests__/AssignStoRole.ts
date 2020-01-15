@@ -90,6 +90,22 @@ describe('AssignStoRole', () => {
       expect(addTransactionSpy.callCount).toEqual(2);
     });
 
+    test('should throw error if the description is over 32 characters long', async () => {
+      target = new AssignStoRole(
+        { ...params, description: '0123456789012345678901234567890123456789' },
+        contextMock.getMockInstance()
+      );
+      gpmMock.mock('getAllDelegates', Promise.resolve([]));
+
+      // Real call rejects
+      await expect(target.prepareTransactions()).rejects.toThrowError(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `You must provide a valid description up to 32 characters long`,
+        })
+      );
+    });
+
     test('should add change permission transaction to the queue and use an operator role as param', async () => {
       target = new AssignStoRole(
         { ...params, role: StoRole.StoOperator },
