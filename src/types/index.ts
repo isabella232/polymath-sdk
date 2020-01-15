@@ -673,8 +673,17 @@ export enum TransactionQueueStatus {
   Succeeded = 'Succeeded',
 }
 
+/**
+ * Fees associated with running a [[TransactionQueue]]
+ */
 export interface Fees {
+  /**
+   * fees expressed in USD. Can be null if the Smart Contract doesn't specify one
+   */
   usd: BigNumber | null;
+  /**
+   * fees expressed in POLY
+   */
   poly: BigNumber;
 }
 
