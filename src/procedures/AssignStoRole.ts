@@ -8,6 +8,7 @@ import {
   StoRole,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { checkStringLength } from '../utils';
 
 export class AssignStoRole extends Procedure<AssignStoRoleProcedureArgs> {
   public type = ProcedureType.AssignStoRole;
@@ -66,6 +67,7 @@ export class AssignStoRole extends Procedure<AssignStoRoleProcedureArgs> {
         });
       }
     } else {
+      checkStringLength(description, 'description');
       // Delegate not found. Add them here
       await this.addTransaction(permissionModule.addDelegate, {
         tag: PolyTransactionTag.ChangePermission,
