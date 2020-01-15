@@ -62,7 +62,7 @@ export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProc
   }
 
   /**
-   * - Send tokens to wallet address
+   * Transfer security tokens from a wallet address to another
    *
    * Note that this procedure will fail if the security token symbol doesn't exist
    */
