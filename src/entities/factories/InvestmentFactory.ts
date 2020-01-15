@@ -16,7 +16,13 @@ import { PolymathError } from '../../PolymathError';
 
 const { weiToValue } = conversionUtils;
 
+/**
+ * Factory generates information for an Investment entity
+ */
 export class InvestmentFactory extends Factory<Investment, Params, UniqueIdentifiers> {
+  /**
+   * @hidden
+   */
   protected generateProperties = async (uid: string) => {
     const { stoId, securityTokenId, index } = Investment.unserialize(uid);
 
@@ -99,6 +105,9 @@ export class InvestmentFactory extends Factory<Investment, Params, UniqueIdentif
     }
   };
 
+  /**
+   * Create an instance of the Investment Factory
+   */
   constructor(context: Context) {
     super(Investment, context);
   }
