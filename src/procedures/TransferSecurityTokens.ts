@@ -1,3 +1,4 @@
+import { BigNumber, TransferStatusCode } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
   TransferSecurityTokensProcedureArgs,
@@ -8,8 +9,10 @@ import {
 import { PolymathError } from '../PolymathError';
 import { SecurityToken, Shareholder } from '../entities';
 import { Factories } from '../Context';
-import { checkTransferStatus } from '../utils';
 
+/**
+ * @hidden
+ */
 export const createTransferSecurityTokensResolver = (
   factories: Factories,
   symbol: string,
@@ -34,11 +37,36 @@ export const createTransferSecurityTokensResolver = (
 };
 
 /**
- * Procedure to transfer security tokens.
+ * Procedure that transfer security tokens
  */
 export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProcedureArgs> {
   public type = ProcedureType.TransferSecurityTokens;
 
+  /**
+   * @hidden
+   */
+  private checkTransferStatus(
+    statusCode: TransferStatusCode,
+    fromAddress: string,
+    symbol: string,
+    to: string,
+    reasonCode: string,
+    amount: BigNumber
+  ) {
+    if (statusCode !== TransferStatusCode.TransferSuccess) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: `Wallet "${fromAddress}" is not allowed to transfer ${amount} "${symbol}" tokens to "${to}". Possible reason: ${reasonCode}`,
+      });
+    }
+  }
+
+  /**
+   * Transfer security tokens from a wallet address to another
+   * ***If from argument is not provided, the current SDK user address will be taken as it***
+   *
+   * Note that this procedure will fail if the security token symbol doesn't exist
+   */
   public async prepareTransactions() {
     const { symbol, to, amount, data = '', from } = this.args;
     const { contractWrappers, currentWallet, factories } = this.context;
@@ -64,10 +92,10 @@ export class TransferSecurityTokens extends Procedure<TransferSecurityTokensProc
         value: amount,
         from,
       });
-      checkTransferStatus(statusCode, from, symbol, to, reasonCode);
+      this.checkTransferStatus(statusCode, from, symbol, to, reasonCode, amount);
     } else {
       const { statusCode, reasonCode } = await securityToken.canTransfer({ to, value: amount });
-      checkTransferStatus(statusCode, fromAddress, symbol, to, reasonCode);
+      this.checkTransferStatus(statusCode, fromAddress, symbol, to, reasonCode, amount);
     }
 
     await this.addTransaction(securityToken.transferFromWithData, {

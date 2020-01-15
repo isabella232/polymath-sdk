@@ -1,15 +1,15 @@
 import { Factories } from '~/Context';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import * as securityTokenFactoryModule from '../entities/factories/SecurityTokenFactory';
-import * as simpleStoFactoryModule from '~/entities/factories/SimpleStoFactory';
-import * as checkpointFactoryModule from '~/entities/factories/CheckpointFactory';
-import * as dividendDistributionFactoryModule from '~/entities/factories/DividendDistributionFactory';
-import * as erc20TokenBalanceFactoryModule from '~/entities/factories/Erc20TokenBalanceFactory';
-import * as investmentFactoryModule from '~/entities/factories/InvestmentFactory';
-import * as securityTokenReservationModule from '~/entities/factories/SecurityTokenReservationFactory';
-import * as shareholderFactoryModule from '~/entities/factories/ShareholderFactory';
-import * as tieredStoFactoryModule from '~/entities/factories/TieredStoFactory';
-import * as taxWithholdingFactoryModule from '~/entities/factories/TaxWithholdingFactory';
+import * as simpleStoFactoryModule from '../entities/factories/SimpleStoFactory';
+import * as checkpointFactoryModule from '../entities/factories/CheckpointFactory';
+import * as dividendDistributionFactoryModule from '../entities/factories/DividendDistributionFactory';
+import * as erc20TokenBalanceFactoryModule from '../entities/factories/Erc20TokenBalanceFactory';
+import * as investmentFactoryModule from '../entities/factories/InvestmentFactory';
+import * as securityTokenReservationModule from '../entities/factories/SecurityTokenReservationFactory';
+import * as shareholderFactoryModule from '../entities/factories/ShareholderFactory';
+import * as tieredStoFactoryModule from '../entities/factories/TieredStoFactory';
+import * as taxWithholdingFactoryModule from '../entities/factories/TaxWithholdingFactory';
 
 let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
 let simpleStoFactoryMock: MockManager<simpleStoFactoryModule.SimpleStoFactory>;

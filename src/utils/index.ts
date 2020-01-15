@@ -33,7 +33,6 @@ import {
   USDTieredSTOAllowPreMintFlagEventArgs,
   CappedSTOAllowPreMintFlagEventArgs,
   BigNumber,
-  TransferStatusCode,
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
 import { ErrorCode, Pojo, Version } from '../types';
@@ -49,6 +48,29 @@ export const delay = async (amount: number) => {
 
 export function areSameAddress(a: string, b: string) {
   return a.toUpperCase() === b.toUpperCase();
+}
+
+/**
+ * Check the length of a given string to ensure it meets correct bounds
+ *
+ * @param value - the string itself
+ * @param variableName - the name of the variable associated to the string itself
+ * @param opts - optional min and max length of the string. Defaults to a minimum of 0 (empty string) and a maximum of 32 characters
+ */
+export function checkStringLength(
+  value: string,
+  variableName: string,
+  opts: { minLength?: number; maxLength: number } = { maxLength: 32 }
+) {
+  const { minLength = 0, maxLength } = opts;
+  if (value.length < minLength || value.length > maxLength) {
+    throw new PolymathError({
+      code: ErrorCode.ProcedureValidationError,
+      message: `You must provide a valid ${variableName} ${
+        opts.minLength != undefined ? `between ${minLength} and ${maxLength}` : `up to ${maxLength}`
+      } characters long`,
+    });
+  }
 }
 
 export function serialize(entityType: string, pojo: Pojo) {
@@ -241,21 +263,6 @@ export const findEvents: FindEvents = ({
 
   return foundLogs;
 };
-
-export function checkTransferStatus(
-  statusCode: TransferStatusCode,
-  fromAddress: string,
-  symbol: string,
-  to: string,
-  reasonCode: string
-) {
-  if (statusCode !== TransferStatusCode.TransferSuccess) {
-    throw new PolymathError({
-      code: ErrorCode.ProcedureValidationError,
-      message: `[${statusCode}] ${fromAddress} is not allowed to transfer ${symbol} to ${to}. Possible reason: ${reasonCode}`,
-    });
-  }
-}
 
 export function convertVersionToEnum(versionBigNumber: BigNumber[]) {
   const version = versionBigNumber
