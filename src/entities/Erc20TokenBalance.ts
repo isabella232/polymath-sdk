@@ -5,7 +5,7 @@ import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
 /**
- * Unique properties to identify an erc20 token holder
+ * Properties that uniquely identify an ERC20 token balance
  */
 export interface UniqueIdentifiers {
   tokenAddress: string;
@@ -19,7 +19,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Unique properties including information for an erc20 token holders balance
+ * Constructor parameters
  */
 export interface Params {
   tokenSymbol: string | null;
@@ -27,7 +27,7 @@ export interface Params {
 }
 
 /**
- * Used to manage erc20 token holder balances
+ * Used to manage a ERC20 token balance
  */
 export class Erc20TokenBalance extends Entity<Params> {
   public static generateId({ tokenAddress, walletAddress }: UniqueIdentifiers) {
@@ -63,7 +63,7 @@ export class Erc20TokenBalance extends Entity<Params> {
   public tokenSymbol: string | null;
 
   /**
-   * address of the security token
+   * address of the ERC20 token
    */
   public tokenAddress: string;
 
@@ -78,7 +78,7 @@ export class Erc20TokenBalance extends Entity<Params> {
   public balance: BigNumber;
 
   /**
-   * Create an entity instance with erc20 token holder balance
+   * Create an ERC20 Token balance instance
    */
   constructor(params: Params & UniqueIdentifiers) {
     super();

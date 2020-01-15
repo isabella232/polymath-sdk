@@ -17,7 +17,7 @@ import { PolymathError } from '../../PolymathError';
 const { weiToValue } = conversionUtils;
 
 /**
- * Factory generates information for an investment entity
+ * Factory generates information for an Investment entity
  */
 export class InvestmentFactory extends Factory<Investment, Params, UniqueIdentifiers> {
   /**
@@ -106,7 +106,7 @@ export class InvestmentFactory extends Factory<Investment, Params, UniqueIdentif
   };
 
   /**
-   * Create an instance of the investment factory
+   * Create an instance of the Investment Factory
    */
   constructor(context: Context) {
     super(Investment, context);

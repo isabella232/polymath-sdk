@@ -7,7 +7,7 @@ import { ErrorCode } from '../../types';
 import { Shareholder, Params, UniqueIdentifiers } from '../Shareholder';
 
 /**
- * Factory generates information for a shareholder entity
+ * Factory generates information for a Shareholder entity
  */
 export class ShareholderFactory extends Factory<Shareholder, Params, UniqueIdentifiers> {
   /**
@@ -61,7 +61,7 @@ export class ShareholderFactory extends Factory<Shareholder, Params, UniqueIdent
   };
 
   /**
-   * Create an instance of the shareholder factory
+   * Create an instance of the Shareholder Factory
    */
   constructor(context: Context) {
     super(Shareholder, context);

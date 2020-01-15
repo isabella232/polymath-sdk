@@ -28,7 +28,7 @@ const mapValuesDeep = (
 
 // TODO @monitz87: Make properties private where appliccable
 /**
- * Class to manage poly transactions to interact with blockchain extrinsics
+ * Wrapper class for a Polymath Transaction
  */
 export class PolyTransaction<Args = any, Values extends any[] = any[]> extends Entity<void> {
   public static generateId() {
@@ -48,37 +48,37 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
   public status: TransactionStatus = TransactionStatus.Idle;
 
   /**
-   * queue of pending transactions
+   * transaction queue to which this transaction belongs
    */
   public transactionQueue: TransactionQueue;
 
   /**
-   * promise for the poly transaction
+   * internal promise that resolves when the transaction has finished running
    */
   public promise: Promise<any>;
 
   /**
-   * optional error for the poly transaction
+   * stores errors thrown while running the transaction (if any)
    */
   public error?: PolymathError;
 
   /**
-   * optional receipt for the poly transaction
+   * stores the transaction receipt (if successful)
    */
   public receipt?: TransactionReceiptWithDecodedLogs | string;
 
   /**
-   * poly transaction tag
+   * type of transaction represented by this instance for display purposes
    */
   public tag: PolyTransactionTag;
 
   /**
-   * optional transaction hash for a poly transaction
+   * transaction hash (available after running)
    */
   public txHash?: string;
 
   /**
-   * transaction specification arguments
+   * arguments with which the transaction will be called
    */
   public args: TransactionSpec<Args, Values, TransactionReceiptWithDecodedLogs | string>['args'];
 
@@ -160,7 +160,7 @@ export class PolyTransaction<Args = any, Values extends any[] = any[]> extends E
   }
 
   /**
-   * Run the poly tranasaction and update a transaction status
+   * Run the poly transaction and update the transaction status
    */
   public async run() {
     try {

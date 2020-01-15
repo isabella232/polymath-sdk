@@ -5,7 +5,7 @@ import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
 /**
- * Properties unique to a shareholder for a specific STO investment
+ * Properties that uniquely identify an Investment
  */
 export interface UniqueIdentifiers {
   securityTokenId: string;
@@ -22,7 +22,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Represents constructor parameters for specific security token offering investment
+ * Constructor parameters
  */
 export interface Params {
   securityTokenSymbol: string;
@@ -32,7 +32,7 @@ export interface Params {
 }
 
 /**
- * Used to manage an investment in a security token
+ * Used to manage an Investment in a Security Token Offering
  */
 export class Investment extends Entity<Params> {
   public static generateId({ securityTokenId, stoId, index }: UniqueIdentifiers) {
@@ -44,9 +44,9 @@ export class Investment extends Entity<Params> {
   }
 
   /**
-   * Unserialize a serialized investment entity
+   * Unserialize a serialized Investment entity
    *
-   * @param serialized - string with investment entity information
+   * @param serialized - string with Investment entity information
    */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
@@ -62,14 +62,14 @@ export class Investment extends Entity<Params> {
   }
 
   /**
-   * unique generated identifier for an investment
+   * unique generated identifier for an Investment
    */
   public uid: string;
 
   public securityTokenId: string;
 
   /**
-   * unique ID for the investment STO
+   * unique ID for the Investment
    */
   public stoId: string;
 
@@ -81,22 +81,22 @@ export class Investment extends Entity<Params> {
   public address: string;
 
   /**
-   * index of the investment
+   * index of the Investment
    */
   public index: number;
 
   /**
-   * total amount of tokens involved in the investment
+   * total amount of tokens involved in the Investment
    */
   public tokenAmount: BigNumber;
 
   /**
-   * amount of funds used to make investment
+   * amount of funds used to make Investment
    */
   public investedFunds: BigNumber;
 
   /**
-   * Create an investment instance
+   * Create an Investment instance
    */
   constructor(params: Params & UniqueIdentifiers) {
     super();

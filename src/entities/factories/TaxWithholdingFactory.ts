@@ -7,7 +7,7 @@ import { ErrorCode } from '../../types';
 import { TaxWithholding, Params, UniqueIdentifiers } from '../TaxWithholding';
 
 /**
- * Factory generates information for a tax withholding entity
+ * Factory generates information for a Tax Withholding entity
  */
 export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, UniqueIdentifiers> {
   /**
@@ -71,7 +71,7 @@ export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, Uniqu
   };
 
   /**
-   * Create an instance of the tax withholding factory
+   * Create an instance of the Tax Withholding Factory
    */
   constructor(context: Context) {
     super(TaxWithholding, context);

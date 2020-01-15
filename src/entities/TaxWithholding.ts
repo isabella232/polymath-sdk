@@ -4,7 +4,7 @@ import { ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
 
 /**
- * Properties unique to tax withholding properties for a specific security token holder
+ * Properties that uniquely identify a Tax Withholding percentage
  */
 export interface UniqueIdentifiers {
   securityTokenId: string;
@@ -22,7 +22,7 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Unique properties for tax withholding of a security token
+ * Constructor parameters
  */
 export interface Params {
   securityTokenSymbol: string;
@@ -30,7 +30,7 @@ export interface Params {
 }
 
 /**
- * Used to manage tax withholding amounts
+ * Represents the percentage that should be withheld from a Shareholder's dividend payment for tax purposes
  */
 export class TaxWithholding extends Entity<Params> {
   public static generateId({ securityTokenId, shareholderAddress }: UniqueIdentifiers) {
@@ -67,18 +67,15 @@ export class TaxWithholding extends Entity<Params> {
 
   public securityTokenId: string;
 
-  /**
-   * shareholder address for tax withholding properties
-   */
   public shareholderAddress: string;
 
   /**
-   * percentage of tax to be withheld
+   * percentage of tax to be withheld (0 to 1)
    */
   public percentage: number;
 
   /**
-   * Create a new tax withholding information instance
+   * Create a new tax withholding instance
    */
   constructor(params: Params & UniqueIdentifiers) {
     super();
