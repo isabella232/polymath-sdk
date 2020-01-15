@@ -18,7 +18,11 @@ import { Shareholder, SecurityToken } from '../entities';
 const { dateToBigNumber } = conversionUtils;
 
 /**
- * Procedure that modifies data of a list of investors
+ * Procedure that modifies data for a list of (potential) shareholders. The data that can be modified is:
+ *
+ * - KYC data (sale/buy lockup dates and KYC expiry)
+ * - Whether the shareholder is accredited
+ * - Whether the shareholder can buy from an STO
  */
 export class ModifyShareholderData extends Procedure<
   ModifyShareholderDataProcedureArgs,
@@ -27,12 +31,12 @@ export class ModifyShareholderData extends Procedure<
   public type = ProcedureType.ModifyShareholderData;
 
   /**
-   * - Update a list of investors data
+   * Update shareholder data for a subset of addresses
    *
-   * Note that this procedure will fail if you're trying to revoke a shareholder's KYC
-   * Note that this procedure will fail if the security token symbol doesn't exist
-   * Note that this procedure will fail if General Transfer Manager isn't enabled
-   * Note that this procedure will fail if you're trying to modify nothing
+   * Note that this procedure will fail if:
+   * - You're trying to set the dates to 0 (there is a special "RevokeKyc" procedure for that)
+   * - The Security Token doesn't exist
+   * - There is no difference between the "new" data and the data already present in the contract
    */
   public async prepareTransactions() {
     const { symbol, shareholderData } = this.args;
