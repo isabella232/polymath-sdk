@@ -4,11 +4,17 @@ import { PercentageRestrictions } from './PercentageRestrictions';
 import { SecurityToken } from '../../SecurityToken';
 import { Context } from '../../../../Context';
 
+/**
+ * Namespace that handles all Transfer Restriction related functionality
+ */
 export class Restrictions extends SubModule {
   public count: CountRestrictions;
 
   public percentage: PercentageRestrictions;
 
+  /**
+   * Create a new Restrictions instance
+   */
   constructor(securityToken: SecurityToken, context: Context) {
     super(securityToken, context);
 
