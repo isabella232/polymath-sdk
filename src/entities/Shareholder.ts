@@ -4,6 +4,9 @@ import { serialize, unserialize } from '../utils';
 import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
+/**
+ * Properties that uniquely identify a Shareholder of a specific Security Token
+ */
 export interface UniqueIdentifiers {
   securityTokenId: string;
   address: string;
@@ -15,6 +18,9 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof securityTokenId === 'string' && typeof address === 'string';
 }
 
+/**
+ * Constructor parameters
+ */
 export interface Params {
   securityTokenSymbol: string;
   canSendAfter: Date;
@@ -25,6 +31,9 @@ export interface Params {
   balance: BigNumber;
 }
 
+/**
+ * Used to manage a Shareholder
+ */
 export class Shareholder extends Entity<Params> {
   public static generateId({ securityTokenId, address }: UniqueIdentifiers) {
     return serialize('shareholder', {
@@ -33,6 +42,11 @@ export class Shareholder extends Entity<Params> {
     });
   }
 
+  /**
+   * Unserialize a serialized Shareholder entity
+   *
+   * @param serialized - string with Shareholder entity information
+   */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
@@ -46,26 +60,53 @@ export class Shareholder extends Entity<Params> {
     return unserialized;
   }
 
+  /**
+   * unique generated id for a Shareholder
+   */
   public uid: string;
 
   public securityTokenSymbol: string;
 
   public securityTokenId: string;
 
+  /**
+   * date after which a Shareholder can transfer tokens from their address
+   */
   public canSendAfter: Date;
 
+  /**
+   * date after which a Shareholder can transfer tokens to their address
+   */
   public canReceiveAfter: Date;
 
+  /**
+   * date when the Shareholder's KYC will expire
+   */
   public kycExpiry: Date;
 
+  /**
+   * whether the Shareholder is accredited or not
+   */
   public isAccredited: boolean;
 
+  /**
+   * whether the Shareholder can purchase from an STO or not
+   */
   public canBuyFromSto: boolean;
 
+  /**
+   * total Security Token balance of the Shareholder
+   */
   public balance: BigNumber;
 
+  /**
+   * wallet address
+   */
   public address: string;
 
+  /**
+   * Create a new Shareholder instance
+   */
   constructor(params: Params & UniqueIdentifiers) {
     super();
 
@@ -97,7 +138,7 @@ export class Shareholder extends Entity<Params> {
   }
 
   /**
-   * Checks if this shareholder's KYC has been manually revoked
+   * Checks if this Shareholder's KYC has been manually revoked
    */
   public isRevoked() {
     const { canReceiveAfter, canSendAfter, kycExpiry } = this;
@@ -110,6 +151,9 @@ export class Shareholder extends Entity<Params> {
     return datesAreZero;
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const {
       uid,
@@ -138,6 +182,9 @@ export class Shareholder extends Entity<Params> {
     };
   }
 
+  /**
+   * Hydrate the entity
+   */
   public _refresh(params: Partial<Params>) {
     const {
       securityTokenSymbol,

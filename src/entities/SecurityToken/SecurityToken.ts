@@ -13,28 +13,61 @@ import { Controller } from './Controller';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode, Version } from '../../types';
 
+/**
+ * Properties that uniquely identify a Security Token
+ */
 export interface UniqueIdentifiers {
+  /**
+   * symbol of the security token
+   */
   symbol: string;
 }
 
+/**
+ * Check if the provided value is of type [[UniqueIdentifiers]]
+ */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { symbol } = identifiers;
 
   return typeof symbol === 'string';
 }
 
+/**
+ * Security Token constructor parameters
+ */
 export interface Params {
   name: string;
+  /**
+   * address of the Security Token contract
+   */
   address: string;
+  /**
+   * address that owns the Security Token
+   */
   owner: string;
+  /**
+   * URL pointing to off-chain data associated with the Security Token
+   */
   tokenDetails: string;
   version: Version;
   granularity: number;
   totalSupply: BigNumber;
+  /**
+   * index of the current checkpoint
+   */
   currentCheckpoint: number;
+  /**
+   * default treasury wallet used by some features.
+   * ***For example, if an STO reaches its end date (or is finalized before that), remaining unsold tokens get transferred to this wallet unless otherwise specified by the STO itself***
+   */
   treasuryWallet: string;
 }
 
+/**
+ * Unserialize string to a Security Token object representation
+ *
+ * @param serialized - Security Token's serialized representation
+ */
 export const unserialize = (serialized: string) => {
   const unserialized = unserializeUtil(serialized);
 
@@ -48,7 +81,13 @@ export const unserialize = (serialized: string) => {
   return unserialized;
 };
 
+/**
+ * Class used to manage all the Security Token functionality
+ */
 export class SecurityToken extends Entity<Params> {
+  /**
+   * Generate the Security Token's UUID from its identifying properties
+   */
   public static generateId({ symbol }: UniqueIdentifiers) {
     return serialize('securityToken', {
       symbol,
@@ -63,10 +102,19 @@ export class SecurityToken extends Entity<Params> {
 
   public name: string;
 
+  /**
+   * address of the Security Token contract
+   */
   public owner: string;
 
+  /**
+   * address that owns the Security Token
+   */
   public address: string;
 
+  /**
+   * URL pointing to off-chain data associated with the Security Token
+   */
   public tokenDetails: string;
 
   public version: Version;
@@ -75,8 +123,14 @@ export class SecurityToken extends Entity<Params> {
 
   public totalSupply: BigNumber;
 
+  /**
+   * index of the current checkpoint
+   */
   public currentCheckpoint: number;
 
+  /**
+   * treasury wallet used by some features
+   */
   public treasuryWallet: string;
 
   public features: Features;
@@ -95,6 +149,9 @@ export class SecurityToken extends Entity<Params> {
 
   public documents: Documents;
 
+  /**
+   * Create a new SecurityToken instance
+   */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
@@ -132,6 +189,9 @@ export class SecurityToken extends Entity<Params> {
     this.controller = new Controller(this, context);
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const {
       uid,
@@ -162,6 +222,9 @@ export class SecurityToken extends Entity<Params> {
     };
   }
 
+  /**
+   * Hydrate the entity
+   */
   public _refresh(params: Partial<Params>) {
     const {
       name,
