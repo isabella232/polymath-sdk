@@ -36,21 +36,22 @@ export const createRefreshTieredStoFactoryResolver = (
 };
 
 /**
- * Procedure that allows invest in tokens with usd stablecoin
+ * Procedure that invests in a Tiered STO
  */
 export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs> {
   public type = ProcedureType.InvestInTieredSto;
 
   /**
-   * - Buy tokens with usd stablecoin and with rate restriction (you should to buy a minimum amount of tokens as base)
+   * Invest the specified amount in the STO
    *
-   * Note that this procedure will fail if the security token symbol doesn't exist
-   * Note that this procedure will fail if the STO address is invalid
-   * Note that this procedure will fail if the STO is either archived or hasn't been launched
-   * Note that this procedure will fail if the STO hasn't started yet
-   * Note that this procedure will fail if the STO is paused
-   * Note that this procedure will fail if the STO doesn't allow beneficial investments
-   * Note that this procedure will fail if the STO doesn't support investments in the selected currency
+   * Note that this procedure will fail if:
+   * - The security token symbol doesn't exist
+   * - The STO address is invalid
+   * - The STO is either archived or hasn't been launched
+   * - The STO hasn't started yet
+   * - The STO is paused
+   * - The STO doesn't allow beneficial investments when trying to invest on behalf of someone else if the STO doesn't allow beneficial investments
+   * - The STO doesn't support investments in the selected currency
    */
   public async prepareTransactions() {
     const { args, context } = this;
