@@ -124,7 +124,6 @@ describe('LaunchSimpleSto', () => {
 
   describe('LaunchSimpleSto', () => {
     test('should add a transaction to the queue to launch a capped sto with cost in usd', async () => {
-      const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
       securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
 
@@ -143,12 +142,37 @@ describe('LaunchSimpleSto', () => {
       });
       expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWithExactly(TransferErc20)).toEqual(true);
+    });
+
+    test("should transfer POLY to the security token if the token's balance doesn't cover the launch fee", async () => {
+      const addProcedureSpy = spy(target, 'addProcedure');
+      const addTransactionSpy = spy(target, 'addTransaction');
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      polyTokenMock
+        .mock('balanceOf', Promise.resolve(new BigNumber(20)))
+        .withArgs({ owner: securityTokenAddress })
+        .returns(Promise.resolve(new BigNumber(1)));
+
+      // Real call
+      await target.prepareTransactions();
+
+      // Verifications
+      expect(
+        addTransactionSpy
+          .getCall(0)
+          .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
+      ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+        usd: costInUsd,
+        poly: costInPoly,
+      });
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
+      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20));
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to launch a capped sto with cost in poly', async () => {
-      const addProcedureSpy = spy(target, 'addProcedure');
       const addTransactionSpy = spy(target, 'addTransaction');
 
       moduleFactoryMock.mock('isCostInPoly', Promise.resolve(true));
@@ -169,8 +193,6 @@ describe('LaunchSimpleSto', () => {
       });
       expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
       expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWithExactly(TransferErc20)).toEqual(true);
-      expect(addProcedureSpy.callCount).toEqual(1);
     });
 
     test('should throw if corresponding capped sto event is not fired', async () => {
