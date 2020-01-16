@@ -20,12 +20,13 @@ export class CreateSecurityToken extends Procedure<
   public type = ProcedureType.CreateSecurityToken;
 
   /**
-   * - Approve the ERC20 token transfer
+   * - Approve spending the required POLY to pay the Security Token launch fee
    * - Create the new Security Token
    *
-   * Note that this procedure will fail if the security token symbol hasn't been reserved
-   * Note that this procedure will fail if the security token symbol has already been reserved by another issuer
-   * Note that this procedure will fail if the security token symbol has already been launched
+   * Note that this procedure will fail if:
+   * - The Security Token symbol hasn't been reserved
+   * - The Security Token symbol has already been reserved by another issuer
+   * - The Security Token symbol already been launched
    */
   public async prepareTransactions() {
     const { args, context } = this;
