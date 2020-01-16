@@ -5,26 +5,56 @@ import { DividendDistribution } from './DividendDistribution';
 import { ShareholderBalance, ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Properties that uniquely identify a Checkpoint
+ */
 export interface UniqueIdentifiers {
+  /**
+   * security token UUID
+   */
   securityTokenId: string;
+  /**
+   * numerical index of the checkpoint. The higher the index, the more recent the checkpoint
+   */
   index: number;
 }
 
+/**
+ * Check if the provided value is of type [[UniqueIdentifiers]]
+ */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { securityTokenSymbol, index } = identifiers;
 
   return typeof securityTokenSymbol === 'string' && typeof index === 'number';
 }
 
+/**
+ * Checkpoint constructor parameters
+ */
 export interface Params {
+  /**
+   * dividend distributions associated to this checkpoint
+   */
   dividendDistributions: DividendDistribution[];
+  /**
+   * symbol of the security token
+   */
   securityTokenSymbol: string;
+  /**
+   * shareholder balances at this specific Checkpoint
+   */
   shareholderBalances: ShareholderBalance[];
   totalSupply: BigNumber;
   createdAt: Date;
 }
 
+/**
+ * Represents a snapshot of the Security Token's supply and Shareholder balances at a certain point in time
+ */
 export class Checkpoint extends Entity<Params> {
+  /**
+   * Generate the Checkpoint's UUID from its identifying properties
+   */
   public static generateId({ securityTokenId, index }: UniqueIdentifiers) {
     return serialize('checkpoint', {
       securityTokenId,
@@ -32,6 +62,11 @@ export class Checkpoint extends Entity<Params> {
     });
   }
 
+  /**
+   * Unserialize string to Checkpoint object
+   *
+   * @param serialize - checkpoint serialized representation
+   */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
@@ -47,20 +82,32 @@ export class Checkpoint extends Entity<Params> {
 
   public uid: string;
 
+  /**
+   * dividend distributions associated to this snapshot
+   */
   public dividendDistributions: DividendDistribution[];
 
   public securityTokenSymbol: string;
 
   public securityTokenId: string;
 
+  /**
+   * numerical index of the checkpoint associated to this snapshot
+   */
   public index: number;
 
+  /**
+   * shareholder balances at this specific checkpoint
+   */
   public shareholderBalances: ShareholderBalance[];
 
   public totalSupply: BigNumber;
 
   public createdAt: Date;
 
+  /**
+   * Create a new Chekpoint instance
+   */
   constructor(params: Params & UniqueIdentifiers) {
     super();
 
@@ -84,6 +131,9 @@ export class Checkpoint extends Entity<Params> {
     this.uid = Checkpoint.generateId({ securityTokenId, index });
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const {
       uid,
@@ -108,6 +158,9 @@ export class Checkpoint extends Entity<Params> {
     };
   }
 
+  /**
+   * Hydrate the entity
+   */
   public _refresh(params: Partial<Params>) {
     const {
       dividendDistributions,
