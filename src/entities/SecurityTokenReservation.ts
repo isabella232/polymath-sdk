@@ -6,7 +6,7 @@ import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
 /**
- * Represents a unique security token reservation
+ * Properties that uniquely identify a Security Token Reservation
  */
 export interface UniqueIdentifiers {
   symbol: string;
@@ -14,8 +14,6 @@ export interface UniqueIdentifiers {
 
 /**
  * Check if the provided value is of type [[UniqueIdentifiers]]
- *
- * @param identifiers - internal security token reservation representation
  */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { symbol } = identifiers;
@@ -24,16 +22,13 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
 }
 
 /**
- * Represents a single Security Token Reservation
+ * Constructor parameters
  */
 export interface Params {
   /**
    * expiry date for the ticker reservation
    */
   expiry: Date;
-  /**
-   * date at which ticker is registered
-   */
   reservedAt: Date;
   ownerAddress: string;
   securityTokenAddress?: string;
@@ -44,7 +39,7 @@ export interface Params {
  */
 export class SecurityTokenReservation extends Entity<Params> {
   /**
-   * Transform object to string
+   * Generate the Security Token Reservation's UUID from its identifying properties
    */
   public static generateId({ symbol }: UniqueIdentifiers) {
     return serialize('securityTokenReservation', {
@@ -158,7 +153,7 @@ export class SecurityTokenReservation extends Entity<Params> {
   };
 
   /**
-   * Convert entity as a POJO (Plain Old Javascript Object)
+   * Convert entity to a POJO (Plain Old Javascript Object)
    */
   public toPojo() {
     const { uid, symbol, expiry, securityTokenAddress, reservedAt, ownerAddress } = this;
@@ -167,7 +162,7 @@ export class SecurityTokenReservation extends Entity<Params> {
   }
 
   /**
-   * Hydrating the entity
+   * Hydrate the entity
    */
   public _refresh(params: Partial<Params>) {
     const { expiry, securityTokenAddress, reservedAt, ownerAddress } = params;
