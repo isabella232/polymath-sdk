@@ -21,39 +21,96 @@ const { weiToValue } = conversionUtils;
 export { UniqueIdentifiers };
 
 export interface Tier {
+  /**
+   * total number of tokens that are available in the tier
+   */
   tokensOnSale: BigNumber;
+  /**
+   * total number of tokens that have been sold
+   */
   tokensSold: BigNumber;
+  /**
+   * price at which tokens will be sold within the tier
+   */
   price: BigNumber;
+  /**
+   * total number of tokens that are available to be sold at a discount when paid in POLY
+   */
   tokensWithDiscount: BigNumber;
+  /**
+   * total number of tokens that have been sold at a discount
+   */
   tokensSoldAtDiscount: BigNumber;
+  /**
+   * discounted price at which tokens will be sold
+   */
   discountedPrice: BigNumber;
 }
 
+/**
+ * Represents a Tiered STO
+ */
 export interface Params extends StoParams {
+  /**
+   * numerical identifier for the current tier index
+   */
   currentTier: number;
+  /**
+   * array of tier information
+   */
   tiers: Tier[];
   nonAccreditedInvestmentLimit: BigNumber;
   minimumInvestment: BigNumber;
   stableCoinAddresses: string[];
 }
 
-interface BaseParams {
+/**
+ * @hidden
+ */
+interface BaseInvestParams {
+  /**
+   * minimum amount of tokens that will be sold in the sto
+   */
   minTokens: BigNumber;
+  /**
+   * amount of tokens that will be sold in the sto
+   */
   amount: BigNumber;
+  /**
+   * currency type that will be used to raise funds in the sto
+   */
   currency: Currency;
+  /**
+   * optional beneficiary address to send beneficial investments to
+   */
   beneficiary?: string;
 }
 
-interface InvestInStableCoinParams extends BaseParams {
+/**
+ * @hidden
+ */
+interface InvestInStableCoinParams extends BaseInvestParams {
+  /**
+   * currency to raise in stable coin
+   */
   currency: Currency.StableCoin;
+  /**
+   * ethereum address for the stable coin in which funds will be raised
+   */
   stableCoinAddress: string;
 }
 
-interface InvestInOtherParams extends BaseParams {
+/**
+ * @hidden
+ */
+interface InvestInOtherParams extends BaseInvestParams {
   currency: Currency.ETH | Currency.POLY;
   stableCoinAddress?: undefined;
 }
 
+/**
+ * Used to manage a tiered sto
+ */
 export class TieredSto extends Sto<Params> {
   public static generateId({ securityTokenId, stoType, address }: UniqueIdentifiers) {
     return serialize('tieredSto', {
@@ -63,18 +120,36 @@ export class TieredSto extends Sto<Params> {
     });
   }
 
+  /**
+   * unique generated Tiered STO id
+   */
   public uid: string;
 
+  /**
+   * index of the current active tier
+   */
   public currentTier: number;
 
+  /**
+   * maximum investment allowed for non-accredited investors
+   */
   public nonAccreditedInvestmentLimit: BigNumber;
 
   public minimumInvestment: BigNumber;
 
+  /**
+   * array of Stable Coin ERC20 tokens that can be used to purchase tokens in this Offering
+   */
   public stableCoinAddresses: string[];
 
+  /**
+   * array of tier information
+   */
   public tiers: Tier[];
 
+  /**
+   * Create a new tiered sto instance
+   */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     const {
       currentTier,
@@ -185,23 +260,16 @@ export class TieredSto extends Sto<Params> {
   /**
    * Modify STO parameters. Must be done before the STO starts
    *
-   * @param startDate date when the STO should start
-   * @param endDate date when the STO should end
-   * @param tiers tier information
-   * @param tiers[].tokensOnSale amount of tokens to be sold on that tier
-   * @param tiers[].price price of each token on that tier
-   * @param tiers[].tokensWithDiscount amount of tokens to be sold on that tier at a discount if paid in POLY (must be less than tokensOnSale, defaults to 0)
-   * @param tiers[].discountedPrice price of discounted tokens on that tier (defaults to 0)
-   * @param nonAccreditedInvestmentLimit maximum investment for non-accredited investors
-   * @param minimumInvestment minimum investment amount
-   * @param fundraiseCurrencies array of currencies in which the funds will be raised (ETH, POLY, StableCoin)
-   * @param raisedFundsWallet wallet address that will receive the funds that are being raised
-   * @param unsoldTokensWallet wallet address that will receive unsold tokens when the end date is reached
-   * @param stableCoinAddresses addresses of supported stablecoins
-   * @param customCurrency custom currency data. Allows the STO to raise funds pegged to a different currency. Optional, defaults to USD
-   * @param customCurrency.currencySymbol symbol of the custom currency (USD, CAD, EUR, etc. Default is USD)
-   * @param customCurrency.ethOracleAddress address of the oracle that states the price of ETH in the custom currency. Only required if raising funds in ETH
-   * @param customCurrency.polyOracleAddress address of the oracle that states the price of POLY in the custom currency. Only required if raising funds in POLY
+   * @param args.startDate - date when the STO should start
+   * @param args.endDate - date when the STO should end
+   * @param args.tiers - tier information
+   * @param args.nonAccreditedInvestmentLimit - maximum investment for non-accredited investors
+   * @param args.minimumInvestment - minimum investment amount
+   * @param args.fundraiseCurrencies - array of currencies in which the funds will be raised (ETH, POLY, StableCoin)
+   * @param args.raisedFundsWallet - wallet address that will receive the funds that are being raised
+   * @param args.unsoldTokensWallet - wallet address that will receive unsold tokens when the end date is reached
+   * @param args.stableCoinAddresses - addresses of supported stablecoins
+   * @param args.customCurrency - custom currency data. Allows the STO to raise funds pegged to a different currency. Optional, defaults to USD
    */
   public async modifyData(args: {
     startDate?: Date;
@@ -234,11 +302,11 @@ export class TieredSto extends Sto<Params> {
   /**
    * Invest in the STO
    *
-   * @param minTokens sets a minimum amount of tokens to buy. If the amount sent yields less tokens at the current price, the transaction will revert
-   * @param amount amount to spend
-   * @param currency currency in which to buy the tokens
-   * @param stableCoinAddress address of the stable coin in which to pay (only applicable if currency is StableCoin)
-   * @param beneficiary address that will receive the purchased tokens (defaults to current wallet, will fail if beneficial investments are not allowed for the STO)
+   * @param args.minTokens - sets a minimum amount of tokens to buy. If the amount sent yields less tokens at the current price, the transaction will revert
+   * @param args.amount - amount to spend
+   * @param args.currency - currency in which to buy the tokens
+   * @param args.stableCoinAddress - address of the stable coin in which to pay (only applicable if currency is StableCoin)
+   * @param args.beneficiary - address that will receive the purchased tokens (defaults to current wallet, will fail if beneficial investments are not allowed for the STO)
    */
   public async invest(args: {
     minTokens: BigNumber;
@@ -258,6 +326,9 @@ export class TieredSto extends Sto<Params> {
   }
   /* eslint-enable no-dupe-class-members */
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const stoPojo = super.toPojo();
     const { currentTier, tiers } = this;
@@ -269,6 +340,9 @@ export class TieredSto extends Sto<Params> {
     };
   }
 
+  /**
+   * Hydrate the entity
+   */
   public _refresh(params: Partial<Params>) {
     const { currentTier, tiers, ...rest } = params;
 

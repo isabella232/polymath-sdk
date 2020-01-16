@@ -6,6 +6,9 @@ import { Currency } from '../../types';
 import { SecurityToken } from '../SecurityToken';
 import { TieredSto, Params, UniqueIdentifiers, Tier } from '../TieredSto';
 
+/**
+ * Factory generates information for a tiered sto entity
+ */
 export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
     const { securityTokenId, stoType, address } = TieredSto.unserialize(uid);
@@ -144,6 +147,9 @@ export class TieredStoFactory extends Factory<TieredSto, Params, UniqueIdentifie
     };
   };
 
+  /**
+   * Create an instance of the tiered sto factory
+   */
   constructor(context: Context) {
     super(TieredSto, context);
   }
