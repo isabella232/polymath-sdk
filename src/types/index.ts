@@ -376,9 +376,21 @@ export interface StoTier {
   discountedPrice?: BigNumber;
 }
 
+/**
+ * Custom currency in which a Tiered STO can raise funds
+ */
 export interface CustomCurrency {
+  /**
+   * symbol of the custom currency (USD, CAD, EUR, etc. Default is USD)
+   */
   currencySymbol: string;
+  /**
+   * address of the oracle that states the price of ETH in the custom currency. Only required if raising funds in ETH
+   */
   ethOracleAddress: string;
+  /**
+   * address of the oracle that states the price of POLY in the custom currency. Only required if raising funds in POLY
+   */
   polyOracleAddress: string;
 }
 
@@ -612,7 +624,7 @@ export interface ProcedureArguments {
   [ProcedureType.PullDividendPayment]: PullDividendPaymentProcedureArgs;
   [ProcedureType.SetDividendsWallet]: SetDividendsWalletProcedureArgs;
   // prettier-ignore
-  [ProcedureType.ModifyDividendsDefaultExclusionList]: 
+  [ProcedureType.ModifyDividendsDefaultExclusionList]:
     ModifyDividendsDefaultExclusionListProcedureArgs;
   [ProcedureType.LaunchSimpleSto]: LaunchSimpleStoProcedureArgs;
   [ProcedureType.LaunchTieredSto]: LaunchTieredStoProcedureArgs;
@@ -661,8 +673,17 @@ export enum TransactionQueueStatus {
   Succeeded = 'Succeeded',
 }
 
+/**
+ * Fees associated with running a [[TransactionQueue]]
+ */
 export interface Fees {
+  /**
+   * fees expressed in USD. Can be null if the Smart Contract doesn't specify one
+   */
   usd: BigNumber | null;
+  /**
+   * fees expressed in POLY
+   */
   poly: BigNumber;
 }
 
