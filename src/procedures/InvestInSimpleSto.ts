@@ -35,22 +35,22 @@ export const createRefreshSimpleStoFactoryResolver = (
 };
 
 /**
- * Procedure that allows invest in the STO with Ether
+ * Procedure that invests in a Simple STO
  */
 export class InvestInSimpleSto extends Procedure<InvestInSimpleStoProcedureArgs> {
   public type = ProcedureType.InvestInSimpleSto;
 
   /**
-   * - Buy tokens with Ether
+   * Buy Security Tokens from the STO
    *
    * Note that this procedure will fail if:
-   * - The security token symbol doesn't exist
+   * - The Security Token doesn't exist
    * - The STO address is invalid
    * - The STO is either archived or hasn't been launched
    * - The STO hasn't started yet
    * - The STO is paused
    * - The STO has already been finalized
-   * - The STO doesn't allow beneficial investments
+   * - Attempting to invest on behalf of another address when beneficial investments aren't allowed for the STO
    * - The STO doesn't support investments in the selected currency
    */
   public async prepareTransactions() {
