@@ -4,11 +4,14 @@ import { ModifyMaxHolderCount } from '../../../../procedures';
 import { SubModule } from '../../SubModule';
 import { PolymathError } from '../../../../PolymathError';
 
+/**
+ * Namespace that handles all Count Restriction related functionality
+ */
 export class CountRestrictions extends SubModule {
   /**
    * Modify the maximum amount of shareholders allowed to hold the token at once
    *
-   * @param maxHolderCount limit to the amount of concurrent shareholders
+   * @param args.maxHolderCount - limit to the amount of concurrent shareholders
    */
   public modifyMaxHolderCount = async (args: { maxHolderCount: number }) => {
     const procedure = new ModifyMaxHolderCount(
@@ -22,7 +25,7 @@ export class CountRestrictions extends SubModule {
   };
 
   /**
-   * Retrieve the maximum amonut of shareholders allowed to hold the token at once.
+   * Retrieve the maximum amonut of shareholders allowed to hold the token at once
    * Can be modified with `modifyMaxHolderCount`
    */
   public getMaxHolderCount = async () => {

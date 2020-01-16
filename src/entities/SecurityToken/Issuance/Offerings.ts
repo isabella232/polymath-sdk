@@ -44,6 +44,14 @@ type AllCurrencies =
   | [Currency.POLY, Currency.StableCoin, Currency.ETH]
   | [Currency.POLY, Currency.ETH, Currency.StableCoin];
 
+/**
+ * Params for [[getSto]]
+ */
+export interface GetStoParams {
+  stoType: StoType;
+  address: string;
+}
+
 interface LaunchTieredStoNoCustomCurrencyNoStableCoinParams
   extends Omit<Omit<LaunchTieredStoParams, 'customCurrency'>, 'stableCoinAddresses'> {
   currencies: OnlyEth | OnlyPoly | EthAndPoly;
@@ -144,18 +152,18 @@ interface GetStoMethod {
   (args: string): Promise<SimpleSto | TieredSto>;
 }
 
+/**
+ * Namespace that handles all Offering related functionality
+ */
 export class Offerings extends SubModule {
   /**
    * Launch a Simple STO
    *
-   * @param startDate date when the STO should start
-   * @param endDate date when the STO should end
-   * @param tokensOnSale amount of tokens to be sold
-   * @param rate amount of tokens an investor can purchase per unit of currency spent
-   * @param currency currency in which the funds will be raised (ETH or POLY)
-   * @param raisedFundsWallet wallet address that will receive the funds that are being raised
-   * @param unsoldTokensWallet wallet address that will receive unsold tokens
-   * @param allowPreIssuance whether to have all tokens issued on STO start. Default behavior is to issue on purchase
+   * @param args.tokensOnSale - amount of tokens to be sold
+   * @param args.rate - amount of tokens an investor can purchase per unit of currency spent
+   * @param args.raisedFundsWallet - wallet address that will receive the funds that are being raised
+   * @param args.unsoldTokensWallet - wallet address that will receive unsold tokens
+   * @param args.allowPreIssuance - whether to have all tokens issued on STO start. Default behavior is to issue on purchase
    */
   public launchSimpleSto = async (args: {
     startDate: Date;
@@ -182,24 +190,15 @@ export class Offerings extends SubModule {
   /**
    * Launch a Tiered STO
    *
-   * @param startDate date when the STO should start
-   * @param endDate date when the STO should end
-   * @param tiers tier information
-   * @param tiers[].tokensOnSale amount of tokens to be sold on that tier
-   * @param tiers[].price price of each token on that tier
-   * @param tiers[].tokensWithDiscount amount of tokens to be sold on that tier at a discount if paid in POLY (must be less than tokensOnSale, defaults to 0)
-   * @param tiers[].discountedPrice price of discounted tokens on that tier (defaults to 0)
-   * @param nonAccreditedInvestmentLimit maximum investment for non-accredited investors
-   * @param minimumInvestment minimum investment amount
-   * @param currencies array of currencies in which the funds will be raised (ETH, POLY, StableCoin)
-   * @param raisedFundsWallet wallet address that will receive the funds that are being raised
-   * @param unsoldTokensWallet wallet address that will receive unsold tokens when the end date is reached
-   * @param stableCoinAddresses array of stable coins that the offering supports
-   * @param customCurrency custom currency data. Allows the STO to raise funds pegged to a different currency. Optional, defaults to USD
-   * @param customCurrency.currencySymbol symbol of the custom currency (USD, CAD, EUR, etc. Default is USD)
-   * @param customCurrency.ethOracleAddress address of the oracle that states the price of ETH in the custom currency. Only required if raising funds in ETH
-   * @param customCurrency.polyOracleAddress address of the oracle that states the price of POLY in the custom currency. Only required if raising funds in POLY
-   * @param allowPreIssuance whether to have all tokens issued on STO start. Default behavior is to issue on purchase
+   * @param args.tiers - array that specifies how many tokens to sell at each tier (along with their price and potential discounts)
+   * @param args.nonAccreditedInvestmentLimit - maximum investment for non-accredited investors
+   * @param args.minimumInvestment - minimum investment amount
+   * @param args.currencies - array of currencies in which the funds will be raised (ETH, POLY, StableCoin)
+   * @param args.raisedFundsWallet - wallet address that will receive the funds that are being raised
+   * @param args.unsoldTokensWallet - wallet address that will receive unsold tokens when the end date is reached
+   * @param args.stableCoinAddresses - array of stable coins that the offering supports
+   * @param args.customCurrency - allows the STO to raise funds pegged to a different currency. Optional, defaults to USD
+   * @param args.allowPreIssuance - whether to have all tokens issued on STO start. Default behavior is to issue on purchase
    */
   public launchTieredSto: LaunchTieredStoMethod = async (
     args: LaunchTieredStoParams
@@ -219,17 +218,9 @@ export class Offerings extends SubModule {
   /**
    * Retrieve an STO by type and address or UUID
    *
-   * @param stoType type of the STO (Capped or Tiered)
-   * @param address address of the STO contract
+   * @param args - STO uuid or object containing its type and address
    */
-  public getSto: GetStoMethod = async (
-    args:
-      | {
-          stoType: StoType;
-          address: string;
-        }
-      | string
-  ): Promise<any> => {
+  public getSto: GetStoMethod = async (args: GetStoParams | string): Promise<any> => {
     let stoType;
     let address;
 
@@ -264,7 +255,7 @@ export class Offerings extends SubModule {
   /**
    * Retrieve all STOs attached to a security token
    *
-   * @param stoTypes array of types of STOs to fetch (optional, defaults to both)
+   * @param stoTypes - optional, defaults to both
    */
   public getStos = async (
     opts: {
