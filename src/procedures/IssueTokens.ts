@@ -30,16 +30,19 @@ export const createRefreshSecurityTokenFactoryResolver = (
 };
 
 /**
- * Procedure that issue new tokens and assigns them to the shareholders list
+ * Procedure that issues tokens to the specified addresses. KYC data for those addresses must already exist or otherwise be provided in this procedure
  */
 export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder[]> {
   public type = ProcedureType.IssueTokens;
 
   /**
-   * - Issue a number of tokens and transfer to addresses of the investors list
+   * Issue the specified amounts to the corresponding addresses
+   * If KYC data is provided, transfer restrictions will not be checked before submitting the issuing transaction
+   * This means that if one of the wallets on the list doesn't clear transfer restrictions, the transaction will revert
    *
-   * Note that this procedure will fail if the security token symbol doesn't exist
-   * Note that this procedure will fail if at least one investor address is invalid
+   * Note that this procedure will fail if:
+   * - The Security Token symbol doesn't exist
+   * - At least one wallet address doesn't clear transfer restrictions. This check is bypassed if new KYC data is provided
    */
   public async prepareTransactions() {
     const { symbol, issuanceData } = this.args;
