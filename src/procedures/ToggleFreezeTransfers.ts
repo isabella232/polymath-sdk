@@ -20,20 +20,17 @@ export const createToggleFreezeTransfersResolver = (
 };
 
 /**
- * Procedure to toggle whether to freeze or unfreeze transfers for a security token
+ * Procedure that toggles whether transfers of a Security Token are frozen or no
  */
 export class ToggleFreezeTransfers extends Procedure<ToggleFreezeTransfersProcedureArgs> {
   public type = ProcedureType.ToggleFreezeTransfers;
 
   /**
-   * - Freeze or unfreeze security token transfers
-   *
-   * - Refresh the SDK Security token factory
+   * Freeze or unfreeze Security Token transfers
    *
    * Note this procedure will fail if:
    * - The current wallet address is not the owner
-   * - Trying to freeze a security token that is already frozen
-   * - Trying to unfreeze a security token that is already unfrozen
+   * - Trying to freeze/unfreeze a security token that is already frozen/unfrozen
    */
   public async prepareTransactions() {
     const { symbol, freeze } = this.args;

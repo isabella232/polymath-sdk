@@ -54,7 +54,7 @@ export const createRefreshStoFactoryResolver = (
 };
 
 /**
- * Procedure to finalize an STO
+ * Procedure that finalizes an STO
  */
 export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
   public type = ProcedureType.FinalizeSto;
@@ -82,17 +82,15 @@ to finalize the STO. Possible reason: "${reasonCode}"`,
   }
 
   /**
-   * - Finalize the STO
-   *
-   * - Refresh the Simple or Tiered STO entity in the SDK depending on the STO type
+   * Finalize the STO
    *
    * Note this procedure will fail if:
    * - The specified STO address is invalid
-   * - The STO has not been launched, or the module has been archived
-   * - The specified STO type is Simple STO, and the Security token version is 3.0.0 as is it does not support forced finalization
+   * - The STO has not been launched or the module has been archived
+   * - Attempting to finalize a Simple STO with version 3.0.0 or less
    * - The specified STO type is invalid
    * - The STO has already been finalized
-   * - When checking the transfer status, the treasury wallet is not cleared to receive the remaining tokens
+   * - The STO's treasury wallet does not clear all transfer restrictions
    */
   public async prepareTransactions() {
     const { context, args } = this;

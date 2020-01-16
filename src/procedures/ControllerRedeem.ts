@@ -37,19 +37,18 @@ export const createRefreshShareholdersResolver = (
 };
 
 /**
- * Procedure to redeem tokens by a controller wallet
+ * Procedure that redeems (burns) Security Tokens from an account.
+ * Can only be executed by the Security Token's Controller
  */
 export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
   public type = ProcedureType.ControllerRedeem;
 
   /**
-   * - Redeem tokens from a specific address, optionally providing a reason or extra data for the action
-   *
-   * - Refresh the Shareholder entity in the SDK cache
+   * Redeem tokens from a specific address, optionally providing a reason or extra data for the action
    *
    * Note this procedure will fail if:
-   * - Any (from) addresses are invalid
-   * - The senders (from) balance is less than the amount being transferred
+   * - The "from" address is invalid
+   * - Attempting to redeem an amount of tokens greater than the account's balance
    * - The current wallet address is not the security token controller address
    */
   public async prepareTransactions() {

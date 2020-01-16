@@ -10,20 +10,20 @@ import { PolymathError } from '../PolymathError';
 import { SecurityToken } from '../entities';
 
 /**
- * Procedure to assign a security token module role to a delegate
+ * Procedure that assigns a Security Token Role to a delegate address.
+ * Roles grant said delegate permissions over certain Security Token Features
  */
 export class AssignSecurityTokenRole extends Procedure<AssignSecurityTokenRoleProcedureArgs> {
   public type = ProcedureType.AssignSecurityTokenRole;
 
   /**
    * - If the delegate does not exist, the delegate address will be added
-   *
-   * - The security token module permission role will be assigned to a new delegate or changed for an existing delegate
+   * - The specified Role will be assigned/revoked to/from the delegate
    *
    * Note this procedure will fail if:
-   * - You attempt to set a role on a permission feature that has not been enabled
-   * - The security token does not have a General Permission management module enabled
-   * - The delegate exists, but permission role being changed has already been set as such
+   * - You attempt to assign a Role related to a Feature that hasn't been enabled
+   * - The Permissions Feature hasn't been enabled on the Security Token
+   * - You attempt to assign/revoke a Role that has already been assigned/revoked
    */
   public async prepareTransactions() {
     const { symbol, role, assign, description, delegateAddress } = this.args;

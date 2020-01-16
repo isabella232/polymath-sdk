@@ -37,21 +37,19 @@ export const createControllerTransferResolver = (
 };
 
 /**
- * Procedure to perform a forced transfer by a controller wallet
+ * Procedure that forcefully transfers Security Tokens from one account to another.
+ * Can only be executed by the Security Token's Controller
  */
 export class ControllerTransfer extends Procedure<ControllerTransferProcedureArgs> {
   public type = ProcedureType.ControllerTransfer;
 
   /**
-   * - Force transfer tokens from one valid address to another
+   * Forcefully transfer tokens from one address to another
    *
-   * - Refresh the Shareholder entity in the SDK cache
-   *
-   * Note this procedure will fail if any from or to addresses are invalid
-   *
-   * Note this procedure will fail if the senders (from) balance is less than the amount being transferred
-   *
-   * Note this procedure will fail if the current wallet address is not the security token controller address
+   * Note this procedure will fail if:
+   * - Any of the addresses are invalid
+   * - The senders ("from" address) balance is less than the amount being transferred
+   * - The current wallet address is not the security token controller address
    */
   public async prepareTransactions() {
     const { symbol, amount, from, to, log = '', data = '' } = this.args;

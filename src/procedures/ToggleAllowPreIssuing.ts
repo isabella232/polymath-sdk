@@ -53,22 +53,20 @@ export const createToggleAllowPreIssuingResolver = (
 };
 
 /**
- * Procedure to toggle pre issuing allowed or unallowed
+ * Procedure that toggles whether pre-issuing of tokens is allowed or not in an STO
  */
 export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProcedureArgs> {
   public type = ProcedureType.ToggleAllowPreIssuing;
 
   /**
-   * - Toggle to allow or disallow pre issuing in the STO
-   *
-   * - Refresh the Simple or Tiered STO entity in the SDK depending on the STO type
+   * Allow or disallow pre-issuing in the STO
    *
    * Note this procedure will fail if:
-   * - Trying to allow pre issuing where it is already allowed
-   * - Trying to disallow pre issuing where it is already disallowed
-   * - Using a Simple or Tiered STO with version 3.0.0 as pre issuing is not allowed in this version
-   * - The specified sto address is invalid
-   * - The specified sto type is invalid
+   * - Trying to allow pre issuing when it is already allowed
+   * - Trying to disallow pre issuing when it is already disallowed
+   * - Trying to execute this procedure on an STO with version 3.0.0 or lower
+   * - The specified STO address is invalid
+   * - The specified STO type is invalid
    * - The STO has not been launched, or the module has been archived
    */
   public async prepareTransactions() {

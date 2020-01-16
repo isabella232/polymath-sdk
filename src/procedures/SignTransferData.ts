@@ -3,17 +3,19 @@ import { ProcedureType, ErrorCode, SignTransferDataProcedureArgs } from '../type
 import { PolymathError } from '../PolymathError';
 
 /**
- * Procedure to sign valid transfer data
+ * Procedure that signs KYC data for transfers.
+ * This signature can be used to simulate updates to KYC data when checking if a transfer can be made or to actually modify said data at the moment of performing a transfer without having to do it in a separate transaction.
+ * The signature has a period of validity which is specified by the parameters passed to the procedure
  */
 export class SignTransferData extends Procedure<SignTransferDataProcedureArgs> {
   public type = ProcedureType.SignTransferData;
 
   /**
-   * - Sign transfer data, passing the valid dates and extra kyc data
+   * Sign KYC data, passing the valid dates and extra kyc data
    *
    * Note this procedure will fail if:
-   * - The signature validity lower bound (valid from) is earlier than the upper bound (valid to)
-   * - The upper bound (valid to) is in the past
+   * - The signature validity period starting date (validFrom) is later than the end date (validTo)
+   * - The validity period end date (validTo) is in the past
    */
   public async prepareTransactions() {
     const { kycData, validFrom, validTo, symbol } = this.args;

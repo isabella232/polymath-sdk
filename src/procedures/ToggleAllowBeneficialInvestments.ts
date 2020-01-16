@@ -49,7 +49,7 @@ export const createToggleAllowBeneficialInvestmentsResolver = (
 };
 
 /**
- * Procedure to toggle beneficial investmentments allowed or unallowed
+ * Procedure that toggles whether beneficial investments are allowed or not in an STO
  */
 export class ToggleAllowBeneficialInvestments extends Procedure<
   ToggleAllowBeneficialInvestmentsProcedureArgs
@@ -57,15 +57,13 @@ export class ToggleAllowBeneficialInvestments extends Procedure<
   public type = ProcedureType.ToggleAllowBeneficialInvestments;
 
   /**
-   * - Toggle to allow or disallow beneficial investments in the STO
-   *
-   * - Refresh the Simple or Tiered STO entity in the SDK depending on the STO type
+   * Toggle to allow or disallow beneficial investments in the STO
    *
    * Note this procedure will fail if:
-   * - Trying to allow beneficial investments where they are already allowed
-   * - Trying to disallow beneficial investments where they are already disallowed
-   * - The specified sto address is invalid
-   * - The specified sto type is invalid
+   * - Trying to allow beneficial investments when they are already allowed
+   * - Trying to disallow beneficial investments when they are already disallowed
+   * - The specified STO address is invalid
+   * - The specified STO type is invalid
    * - The STO has not been launched, or the module has been archived
    */
   public async prepareTransactions() {

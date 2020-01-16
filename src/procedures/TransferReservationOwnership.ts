@@ -22,7 +22,7 @@ export const createTransferReservationOwnershipResolver = (
 };
 
 /**
- * Procedure to transfer the ownership of a ticker reservation
+ * Procedure that transfers ownership of a Security Token Reservation
  */
 export class TransferReservationOwnership extends Procedure<
   TransferReservationOwnershipProcedureArgs
@@ -30,12 +30,12 @@ export class TransferReservationOwnership extends Procedure<
   public type = ProcedureType.TransferReservationOwnership;
 
   /**
-   * - Transfer the ownership for a ticker reservation
+   * Transfer the ownership for a Security Token Reservation to the supplied address
    *
    * Note this procedure will fail if:
-   * - A security token has already been launched under this symbol
-   * - The current wallet address is not the ticker reservation owner address
-   * - The new ticker reservation owner is the same as the current owner (no modification)
+   * - A Security Token has already been launched with this symbol
+   * - The current wallet address is not the owner of the Reservation
+   * - Attempting to transfer ownership to the current owner
    */
   public async prepareTransactions() {
     const { newOwner, symbol } = this.args;

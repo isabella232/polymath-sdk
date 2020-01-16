@@ -55,13 +55,11 @@ export class TogglePauseSto extends Procedure<TogglePauseStoProcedureArgs> {
   public type = ProcedureType.TogglePauseSto;
 
   /**
-   * - Pause or unpause the STO
-   *
-   * - Refresh the Simple or Tiered STO entity in the SDK depending on the STO type
+   * Pause or unpause the STO
    *
    * Note this procedure will fail if:
-   * - The specified sto address is invalid
-   * - The specified sto type is invalid
+   * - The specified STO address is invalid
+   * - The specified STO type is invalid
    * - The STO has not been launched, or the module has been archived
    */
   public async prepareTransactions() {

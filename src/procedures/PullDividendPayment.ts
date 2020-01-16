@@ -27,20 +27,18 @@ export const createPullDividendPaymentResolver = (
 };
 
 /**
- * Procedure allowing a shareholder to pull a dividend payment on a security token with an active ERC20 Dividend Checkpoint module
+ * Procedure that allows a shareholder to pull their dividend payments from a Dividend Distribution
  */
 export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureArgs> {
   public type = ProcedureType.PullDividendPayment;
 
   /**
-   * - Pull a dividend payment for a security token shareholder currently entitled to a dividend payment
-   *
-   * - Refresh the Dividend distribution entity in the SDK cache
+   * Pull dividend payments from the Dividend Distribution
    *
    * Note this procedure will fail if:
-   * - The security token does not have an ERC20 Dividend Checkpoint module enabled
+   * - The Dividends feature is not enabled
    * - The current wallet address is not a shareholder
-   * - The current shareholder has already received dividend payment
+   * - The current wallet address has already received payment for this Dividend Distribution
    * - The current wallet address is on the exclusion list
    */
   public async prepareTransactions() {
