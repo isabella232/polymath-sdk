@@ -6,7 +6,13 @@ import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 import { TaxWithholding, Params, UniqueIdentifiers } from '../TaxWithholding';
 
+/**
+ * Factory generates information for a Tax Withholding entity
+ */
 export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, UniqueIdentifiers> {
+  /**
+   * @hidden
+   */
   protected generateProperties = async (uid: string) => {
     const {
       context: {
@@ -64,6 +70,9 @@ export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, Uniqu
     };
   };
 
+  /**
+   * Create an instance of the Tax Withholding Factory
+   */
   constructor(context: Context) {
     super(TaxWithholding, context);
   }
