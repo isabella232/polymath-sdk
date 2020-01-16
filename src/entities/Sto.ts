@@ -12,74 +12,175 @@ import {
   ToggleAllowPreIssuing,
 } from '../procedures';
 
+/**
+ * Properties that uniquely identify an STO
+ */
 export interface UniqueIdentifiers {
   securityTokenId: string;
   stoType: StoType;
   address: string;
 }
 
+/**
+ * Check if the provided value is of type [[UniqueIdentifiers]]
+ */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { securityTokenId, stoType, address } = identifiers;
 
   return typeof securityTokenId === 'string' && typeof address === 'string' && isStoType(stoType);
 }
 
+/**
+ * STO constructor parameters
+ */
 export interface Params {
+  /**
+   * symbol of security token
+   */
   securityTokenSymbol: string;
+  /**
+   * start date of the sto
+   */
   startDate: Date;
+  /**
+   * expiry date of the sto
+   */
   endDate: Date;
+  /**
+   * currencies that can be used to fundraise in this sto
+   */
   fundraiseCurrencies: Currency[];
+  /**
+   * wallet address where raised funds will be stored
+   */
   raisedFundsWallet: string;
+  /**
+   * wallet address where unsold tokens will be returned to
+   */
   unsoldTokensWallet: string;
+  /**
+   * funds that have been raised to this date
+   */
   raisedAmount: BigNumber;
+  /**
+   * amount of tokens that have been sold
+   */
   soldTokensAmount: BigNumber;
+  /**
+   * number of investors in the sto
+   */
   investorCount: number;
+  /**
+   * whether or not the sto is currently paused
+   */
   isPaused: boolean;
+  /**
+   * whether or not the cap has been reached for the sto
+   */
   capReached: boolean;
+  /**
+   * whether or not the sto has been finalized
+   */
   isFinalized: boolean;
+  /**
+   * whether or not pre issuance is allowed for the sto
+   */
   preIssueAllowed: boolean;
+  /**
+   * whether or not investments can be made on behalf of a beneficiary in the sto
+   */
   beneficialInvestmentsAllowed: boolean;
 }
 
+/**
+ * Abstract class used as a base to manage sto functionalities
+ */
 export abstract class Sto<P> extends Entity<P> {
+  /**
+   * Uniquely generated id for the STO
+   */
   public abstract uid: string;
 
+  /**
+   * ethereum address for the STO
+   */
   public address: string;
 
   public securityTokenSymbol: string;
 
   public securityTokenId: string;
 
+  /**
+   * type of STO setup
+   */
   public stoType: StoType;
 
   public startDate: Date;
 
   public endDate: Date;
 
+  /**
+   * wallet where raised funds will be forwarded to
+   */
   public raisedFundsWallet: string;
 
+  /**
+   * wallet where unsold tokens will be returned to
+   */
   public unsoldTokensWallet: string;
 
+  /**
+   * amount of funds that have been raised so far
+   */
   public raisedAmount: BigNumber;
 
+  /**
+   * total number of tokens that have been sold so far
+   */
   public soldTokensAmount: BigNumber;
 
+  /**
+   * number of investors that have purchased tokens in the STO
+   */
   public investorCount: number;
 
+  /**
+   * types of currency in which funds can be raised
+   */
   public fundraiseCurrencies: Currency[];
 
+  /**
+   * whether the STO is currently paused or not
+   */
   public isPaused: boolean;
 
+  /**
+   * whether the STO cap has been reached or not
+   */
   public capReached: boolean;
 
+  /**
+   * whether the STO has been finalized or not
+   */
   public isFinalized: boolean;
 
+  /**
+   * whether all tokens due to be sold are issued when the STO starts. If false, the appropriate amount of tokens is issued to the buyer whenever a sale is made
+   */
   public preIssueAllowed: boolean;
 
+  /**
+   * whether investments can be made on behalf of a beneficiary or not
+   */
   public beneficialInvestmentsAllowed: boolean;
 
   protected context: Context;
 
+  /**
+   * Unserialize string to a Security Token Offering object representation
+   *
+   * @param serialize - security token's serialized representation
+   */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
@@ -93,6 +194,9 @@ export abstract class Sto<P> extends Entity<P> {
     return unserialized;
   }
 
+  /**
+   * Create a new sto instance
+   */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
@@ -137,7 +241,7 @@ export abstract class Sto<P> extends Entity<P> {
   }
 
   /**
-   * Pauses the offering
+   * Pause the offering
    */
   public pause = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
@@ -151,7 +255,7 @@ export abstract class Sto<P> extends Entity<P> {
   };
 
   /**
-   * Unpauses the offering
+   * Unpause the offering
    */
   public unpause = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
@@ -165,7 +269,7 @@ export abstract class Sto<P> extends Entity<P> {
   };
 
   /**
-   * Finalizes the offering. The offering's treasury wallet (or the Security Token's treasury wallet if one was not specified for the offering)
+   * Finalize the offering. The offering's treasury wallet (or the Security Token's treasury wallet if one was not specified for the offering)
    * will receive the remaining unsold tokens. Throws an error if there are transfer restrictions which do not permit the wallet to receive that amount of tokens
    */
   public finalize = async () => {
@@ -177,7 +281,7 @@ export abstract class Sto<P> extends Entity<P> {
   };
 
   /**
-   * Enables all offered tokens to be issued instantly at STO start (default behavior is to issue on purchase)
+   * Enable all offered tokens to be issued instantly at STO start (default behavior is to issue on purchase)
    * Can be disabled *BEFORE* the STO starts by calling disallowPreIssuing
    */
   public allowPreIssuing = async () => {
@@ -192,7 +296,7 @@ export abstract class Sto<P> extends Entity<P> {
   };
 
   /**
-   * Disables pre-issuing of offered tokens at STO start (goes back to default behavior, which is to issue on purchase)
+   * Disable pre-issuing of offered tokens at STO start (goes back to default behavior, which is to issue on purchase)
    * Can be re-enabled *BEFORE* the STO starts by calling allowPreIssuing
    */
   public disallowPreIssuing = async () => {
@@ -207,7 +311,7 @@ export abstract class Sto<P> extends Entity<P> {
   };
 
   /**
-   * Enables a party to invest in the STO on behalf of another party
+   * Enable a party to invest in the STO on behalf of another party
    */
   public allowBeneficialInvestments = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
@@ -221,7 +325,7 @@ export abstract class Sto<P> extends Entity<P> {
   };
 
   /**
-   * Disables the possibility for a party to invest in the STO on behalf of another party
+   * Disable the possibility for a party to invest in the STO on behalf of another party
    */
   public disallowBeneficialInvestments = async () => {
     const { address: stoAddress, stoType, securityTokenSymbol: symbol } = this;
@@ -235,11 +339,11 @@ export abstract class Sto<P> extends Entity<P> {
   };
 
   /**
-   * Assigns a role on the STO to a delegate
+   * Assign a role on the STO to a delegate
    *
-   * @param delegateAddress wallet address of the delegate
-   * @param role role to assign
-   * @param description description of the delegate (defaults to empty string, is ignored if the delegate already exists)
+   * @param args.delegateAddress - wallet address of the delegate
+   * @param args.role - role to assign
+   * @param args.description - description of the delegate (defaults to empty string, is ignored if the delegate already exists)
    */
   public assignRole = async (args: {
     delegateAddress: string;
@@ -262,10 +366,10 @@ export abstract class Sto<P> extends Entity<P> {
   };
 
   /**
-   * Removes a role from a delegate
+   * Remove a role from a delegate
    *
-   * @param delegateAddress wallet address of the delegate
-   * @param role role to revoke
+   * @param args.delegateAddress - wallet address of the delegate
+   * @param args.role - role to revoke
    */
   public revokeRole = async (args: { delegateAddress: string; role: StoRole }) => {
     const { securityTokenSymbol: symbol, address } = this;
@@ -283,6 +387,9 @@ export abstract class Sto<P> extends Entity<P> {
     return procedure.prepare();
   };
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const {
       uid,
@@ -325,6 +432,9 @@ export abstract class Sto<P> extends Entity<P> {
     };
   }
 
+  /**
+   * Hydrate the entity
+   */
   public _refresh(params: Partial<Params>) {
     const {
       securityTokenSymbol,

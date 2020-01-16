@@ -4,6 +4,9 @@ import { serialize, unserialize } from '../utils';
 import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
+/**
+ * Properties that uniquely identify an ERC20 token balance
+ */
 export interface UniqueIdentifiers {
   tokenAddress: string;
   walletAddress: string;
@@ -15,11 +18,17 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   return typeof tokenAddress === 'string' && typeof walletAddress === 'string';
 }
 
+/**
+ * Constructor parameters
+ */
 export interface Params {
   tokenSymbol: string | null;
   balance: BigNumber;
 }
 
+/**
+ * Used to manage a ERC20 token balance
+ */
 export class Erc20TokenBalance extends Entity<Params> {
   public static generateId({ tokenAddress, walletAddress }: UniqueIdentifiers) {
     return serialize('erc20TokenBalance', {
@@ -28,6 +37,11 @@ export class Erc20TokenBalance extends Entity<Params> {
     });
   }
 
+  /**
+   * Unserialize a serialized erc20 token balance
+   *
+   * @param serialized - string with erc20 token balance entity information
+   */
   public static unserialize(serialized: any) {
     const unserialized = unserialize(serialized);
 
@@ -41,16 +55,31 @@ export class Erc20TokenBalance extends Entity<Params> {
     return unserialized;
   }
 
+  /**
+   * unique generated identifier for an ERC20 token balance
+   */
   public uid: string;
 
   public tokenSymbol: string | null;
 
+  /**
+   * address of the ERC20 token
+   */
   public tokenAddress: string;
 
+  /**
+   * wallet address of the token holder
+   */
   public walletAddress: string;
 
+  /**
+   * total number of tokens belonging to token holder
+   */
   public balance: BigNumber;
 
+  /**
+   * Create an ERC20 Token balance instance
+   */
   constructor(params: Params & UniqueIdentifiers) {
     super();
 
@@ -66,6 +95,9 @@ export class Erc20TokenBalance extends Entity<Params> {
     });
   }
 
+  /**
+   * Convert entity to a POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const { uid, tokenSymbol, tokenAddress, balance, walletAddress } = this;
 
@@ -78,6 +110,9 @@ export class Erc20TokenBalance extends Entity<Params> {
     };
   }
 
+  /**
+   * Hydrate the entity
+   */
   public _refresh(params: Partial<Params>) {
     const { tokenSymbol, balance } = params;
 
