@@ -12,19 +12,30 @@ import { PolymathError } from '../../PolymathError';
 import { DividendDistribution } from '../DividendDistribution';
 import { TaxWithholding } from '../TaxWithholding';
 
+/**
+ * Parameters of the [[getDistribution]] function
+ */
+export interface GetDistributionParams {
+  /**
+   * dividend distribution representation
+   */
+  dividendIndex: number;
+}
+
+/**
+ * Namespace that handles all Dividend related functionality
+ */
 export class Dividends extends SubModule {
   /**
    * Distribute dividends in POLY
    *
-   * @param checkpointId uuid of the checkpoint to use as reference for the distribution
-   * @param maturityDate date from which dividends can be paid/collected
-   * @param expiryDate date up to which dividends can be paid/collected
-   * @param amount amount to be distributed
-   * @param name human readable name of the distribution
-   * @param excludedAddresses shareholder addresses that will be excluded from the distribution (optional)
-   * @param taxWithholdings array that specifies how much to withhold from each shareholder for tax purposes
-   * @param taxWithholdings[].address shareholder address
-   * @param taxWithholdings[].percentage tax percentage to be withheld
+   * @param args.checkpointId - uuid of the checkpoint to use as reference for the distribution
+   * @param args.maturityDate - date from which dividends can be paid/collected
+   * @param args.expiryDate - date up to which dividends can be paid/collected
+   * @param args.amount - amount to be distributed
+   * @param args.name - human readable name of the distribution
+   * @param args.excludedAddresses - shareholder addresses that will be excluded from the distribution (optional)
+   * @param args.taxWithholdings - array that specifies how much to withhold from each shareholder for tax purposes
    */
   public createPolyDistribution = async (args: {
     checkpointId: string;
@@ -56,16 +67,14 @@ export class Dividends extends SubModule {
   /**
    * Distribute dividends in a specified ERC20 token
    *
-   * @param checkpointId uuid of the checkpoint to use as reference for the distribution
-   * @param maturityDate date from which dividends can be paid/collected
-   * @param expiryDate date up to which dividends can be paid/collected
-   * @param erc20Address address of the ERC20 token that will be used as currency
-   * @param amount amount to be distributed
-   * @param name human readable name of the distribution
-   * @param excludedAddresses shareholder addresses that will be excluded from the distribution (optional)
-   * @param taxWithholdings array that specifies how much to withhold from each shareholder for tax purposes
-   * @param taxWithholdings[].address shareholder address
-   * @param taxWithholdings[].percentage tax percentage to be withheld
+   * @param args.checkpointId - uuid of the checkpoint to use as reference for the distribution
+   * @param args.maturityDate - date from which dividends can be paid/collected
+   * @param args.expiryDate - date up to which dividends can be paid/collected
+   * @param args.erc20Address - address of the ERC20 token that will be used as currency
+   * @param args.amount - amount to be distributed
+   * @param args.name - human readable name of the distribution
+   * @param args.excludedAddresses - shareholder addresses that will be excluded from the distribution (optional)
+   * @param args.taxWithholdings - array that specifies how much to withhold from each shareholder for tax purposes
    */
   public createErc20Distribution = async (args: {
     checkpointId: string;
@@ -95,10 +104,7 @@ export class Dividends extends SubModule {
   /**
    * Set default tax withtholding list for a type of dividends
    *
-   * @param dividendType type of dividends for which to modify the tax withholding list
-   * @param taxWithholdings array that specifies how much to withhold from each shareholder for tax purposes
-   * @param taxWithholdings[].address shareholder address
-   * @param taxWithholdings[].percentage tax percentage to be withheld
+   * @param args.taxWithholdings - array that specifies how much to withhold from each shareholder for tax purposes
    */
   public modifyTaxWithholdingList = async (args: { taxWithholdings: TaxWithholdingEntry[] }) => {
     const { taxWithholdings, ...rest } = args;
@@ -124,7 +130,7 @@ export class Dividends extends SubModule {
   /**
    * Change dividends storage wallet address
    *
-   * @param address new storage wallet address
+   * @param args.address - new storage wallet address
    */
   public modifyStorageWallet = async (args: { address: string }) => {
     const { symbol } = this.securityToken;
@@ -141,7 +147,7 @@ export class Dividends extends SubModule {
   /**
    * Set default exclusion list for a type of dividends. Addresses on this list won't be considered for dividend distribution. This operation overrides the previous default exclusion list
    *
-   * @param shareholderAddresses array of shareholder addresses to be excluded from dividends
+   * @param args.shareholderAddresses - array of shareholder addresses to be excluded from dividends
    */
   public modifyDefaultExclusionList = async (args: { shareholderAddresses: string[] }) => {
     const { shareholderAddresses, ...rest } = args;
@@ -158,8 +164,7 @@ export class Dividends extends SubModule {
   };
 
   /**
-   * Retrieve a list of investor addresses and their corresponding tax withholding
-   * percentages
+   * Retrieve a list of investor addresses and their corresponding tax withholding percentages
    */
   public getTaxWithholdingList = async () => {
     const {
@@ -213,8 +218,6 @@ export class Dividends extends SubModule {
 
   /**
    * Retrieve all dividend distributions at a certain checkpoint
-   *
-   * @param checkpointId UUID of the checkpoint
    */
   public getDistributions = async (args: { checkpointId: string }) => {
     const { contractWrappers, factories } = this.context;
@@ -246,15 +249,9 @@ export class Dividends extends SubModule {
   /**
    * Retrieve a particular dividend distribution by type and index or UUID
    *
-   * @param dividendIndex index of the dividend distribution
+   * @param args - dividend uuid or object containing its index
    */
-  public getDistribution = async (
-    args:
-      | {
-          dividendIndex: number;
-        }
-      | string
-  ) => {
+  public getDistribution = async (args: GetDistributionParams | string) => {
     let dividendIndex: number;
     let uid: string;
 
