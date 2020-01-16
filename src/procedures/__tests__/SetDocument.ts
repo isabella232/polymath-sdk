@@ -129,7 +129,7 @@ describe('SetDocument', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `You must provide a valid document hash between between 1 and 32 characters long`,
+          message: `You must provide a valid document hash between 1 and 32 characters long`,
         })
       );
     });
@@ -148,7 +148,7 @@ describe('SetDocument', () => {
       await expect(target.prepareTransactions()).rejects.toThrowError(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `You must provide a valid document hash between between 1 and 32 characters long`,
+          message: `You must provide a valid document hash between 1 and 32 characters long`,
         })
       );
     });
