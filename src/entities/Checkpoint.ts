@@ -41,7 +41,7 @@ export interface Params {
    */
   securityTokenSymbol: string;
   /**
-   * shareholder balances at this specific checkpoint
+   * shareholder balances at this specific Checkpoint
    */
   shareholderBalances: ShareholderBalance[];
   totalSupply: BigNumber;
