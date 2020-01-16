@@ -37,7 +37,7 @@ import { range, flatten } from 'lodash';
 import P from 'bluebird';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';
-import { ErrorCode, SecurityTokenRole } from './types';
+import { ErrorCode, SecurityTokenRole, ShareholderBalance } from './types';
 import { ZERO_ADDRESS } from './utils/constants';
 
 interface GetModuleAddressesByNameParams {
@@ -158,11 +158,6 @@ interface GetAttachedModules {
 interface GetModuleFactoryAddressArgs {
   moduleName: ModuleName;
   tokenAddress: string;
-}
-
-export interface ShareholderBalance {
-  balance: BigNumber;
-  address: string;
 }
 
 export interface BaseCheckpoint {
