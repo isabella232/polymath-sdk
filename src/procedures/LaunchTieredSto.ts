@@ -28,11 +28,8 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
 
   /**
    * - Transfer the necessary amount of POLY to the Security Token to cover the STO's setup fee
-   *
    * - Launch the Tiered STO
-   *
    * - Allow pre-issuing (if applicable, defaults to false)
-   *
    * - Return the newly created STO
    *
    * Note that this procedure will fail if:

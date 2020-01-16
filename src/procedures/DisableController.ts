@@ -15,7 +15,6 @@ export class DisableController extends Procedure<DisableControllerProcedureArgs>
 
   /**
    * - If no signature acknowledgement data (optional) is appended to the procedure arguments, the procedure itself will request the user's signature or sign the data in place if the client was instanced with a private key
-   *
    * - Disable the Security Token's controller functionality
    *
    * Note that this procedure will fail if:

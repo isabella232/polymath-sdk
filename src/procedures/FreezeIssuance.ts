@@ -15,7 +15,6 @@ export class FreezeIssuance extends Procedure<FreezeIssuanceProcedureArgs> {
 
   /**
    * - If no signature acknowledgement data (optional) is appended to the procedure arguments, the procedure itself will request the user's signature or sign the data in place if the client was instanced with a private key
-   *
    * - Freeze the issuance of the Security Token
    *
    * Note this procedure will fail if:

@@ -28,11 +28,8 @@ export class LaunchSimpleSto extends Procedure<LaunchSimpleStoProcedureArgs, Sim
 
   /**
    * - Transfer the necessary amount of POLY to the Security Token to cover the STO's setup fee
-   *
    * - Launch the Simple STO
-   *
    * - Allow pre-issuing (if applicable)
-   *
    * - Return the newly created STO
 
    * Notes:

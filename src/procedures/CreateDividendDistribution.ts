@@ -18,7 +18,7 @@ import { SecurityToken, DividendDistribution } from '../entities';
 
 /**
  * Procedure to create a Dividend Distribution on a Security Token.
- * The funds to be distributed as dividends will come from the current user's wallet Optionally setting tax with holdings for investors represented with percentage
+ * The funds to be distributed as dividends will come from the current user's wallet
  */
 export class CreateDividendDistribution extends Procedure<
   CreateDividendDistributionProcedureArgs,
@@ -28,11 +28,8 @@ export class CreateDividendDistribution extends Procedure<
 
   /**
    * - Approve spend of the amount that will be distributed
-   *
    * - Create a Dividend Distribution for said amount
-   *
    * - Set tax withholding percentages (if supplied)
-   *
    * - Return the newly created Dividend Distribution
    *
    * Note that this procedure will fail if the ERC20 Dividends Feature has not been enabled
