@@ -37,32 +37,26 @@ export const createTieredStoFactoryRefreshResolver = (
 };
 
 /**
- * Procedure to modify data associated to a Tiered STO.
- * Transactions include times, funding type, oracles, tiers, limits, and addresses
+ * Procedure that modifies the configuration parameters of a Tiered STO
  */
 export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureArgs> {
   public type = ProcedureType.ModifyTieredStoData;
 
   /**
    * - Modify the start and end date of the STO
+   * - Modify the fundraise types of the STO
+   * - Modify the custom currency symbol and the oracles used to convert POLY and ETH to said currency
+   * - Modify the STO's tiers (rates, tokens per tier and discounts when buying with POLY)
+   * - Modify investment limits (min investment, max invested for non-accredited investors)
+   * - Modify treasury wallet, wallet for unsold tokens and stable coin addresses
    *
-   * - Modify the fundraise types of the STO, whether they be ETH, POLY, or Stablecoin
-   *
-   * - Modify the oracles of the STO including the denominated currency, as well the POLY and ETH oracle addresses
-   *
-   * - Modify the tier information of the STO including rates, tokens per tier, and discount information
-   *
-   * - Modify limits of the STO including minimum investment and non accredited invesment limits
-   *
-   * - Modify STO addresses including the treasuryWallet, wallet, and stable coin adddresses
-   *
-   * - After the last transaction takes place, refresh the tiered sto entity factory information on the SDK
+   * Only transactions that will effectively present changes will be submitted
    *
    * Note that this procedure will fail if:
    * - The STO has not been enabled or has been archived
    * - The STO has already started
-   * - A custom currency is used with a Tiered STO on version 3.0.0
-   * - There is nothing to modify, based on the STO state and the parameters given
+   * - Attempting to use a custom currency on an STO with version is 3.0.0 or lower
+   * - The supplied parameters don't represent any changes in the STO
    */
 
   public async prepareTransactions() {
