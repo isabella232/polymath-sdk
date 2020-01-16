@@ -4,7 +4,7 @@ import {
   isUSDTieredSTO_3_1_0,
   FundRaiseType,
 } from '@polymathnetwork/contract-wrappers';
-import { sortBy, toUpper, isEqual, range } from 'lodash';
+import { sortBy, toUpper, isEqual } from 'lodash';
 import { Procedure } from './Procedure';
 import {
   ProcedureType,
@@ -13,25 +13,21 @@ import {
   ModifyTieredStoDataProcedureArgs,
   StoType,
   Currency,
-  StoTier,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-import { areSameAddress } from '../utils';
+import { areSameAddress, checkStringLength } from '../utils';
 import { SecurityToken, TieredSto } from '../entities';
 import { TieredStoFactory } from '../entities/factories';
 
-const createRefreshResolver = (
+export const createTieredStoFactoryRefreshResolver = (
   tieredStoFactory: TieredStoFactory,
   addedTransactions: PolyTransactionTag[],
   tag: PolyTransactionTag,
-  securityTokenId: string,
-  stoAddress: string
+  tieredStoId: string
 ) => async () => {
   // refresh will only be called once at the last transaction
   if (addedTransactions[addedTransactions.length - 1] === tag) {
-    return tieredStoFactory.refresh(
-      TieredSto.generateId({ securityTokenId, stoType: StoType.Tiered, address: stoAddress })
-    );
+    return tieredStoFactory.refresh(tieredStoId);
   }
 
   return undefined;
@@ -81,23 +77,34 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       });
     }
 
-    const [
-      storageWallet,
-      treasuryWallet,
-      numberOfTiers,
-      usdTokens,
-      minInvestment,
-      investmentLimit,
-      { isRaisedInETH, isRaisedInPOLY, isRaisedInSC, startTime, endTime },
-    ] = await Promise.all([
-      stoModule.wallet(),
+    const securityTokenId = SecurityToken.generateId({ symbol });
+    const tieredStoId = TieredSto.generateId({
+      securityTokenId,
+      stoType: StoType.Tiered,
+      address: stoAddress,
+    });
+
+    const [sto, treasuryWallet] = await Promise.all([
+      tieredStoFactory.fetch(tieredStoId),
       contractWrappers.getTreasuryWallet({ module: stoModule }),
-      stoModule.getNumberOfTiers(),
-      stoModule.getUsdTokens(),
-      stoModule.minimumInvestmentUSD(),
-      stoModule.nonAccreditedLimitUSD(),
-      stoModule.getSTODetails(),
     ]);
+
+    const {
+      nonAccreditedInvestmentLimit: investmentLimit,
+      minimumInvestment: minInvestment,
+      startDate: startTime,
+      endDate: endTime,
+      raisedFundsWallet: storageWallet,
+      tiers: allTiers,
+      fundraiseCurrencies,
+      stableCoinAddresses: usdTokens,
+    } = sto;
+
+    const [isRaisedInETH, isRaisedInPOLY, isRaisedInSC] = [
+      fundraiseCurrencies.includes(FundRaiseType.ETH),
+      fundraiseCurrencies.includes(FundRaiseType.POLY),
+      fundraiseCurrencies.includes(FundRaiseType.StableCoin),
+    ];
 
     // STO can't have started
     if (startTime <= new Date()) {
@@ -109,7 +116,6 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
 
     // list of added transactions to keep track of the last added tx in order to refresh the entity only once
     const addedTransactions: PolyTransactionTag[] = [];
-    const securityTokenId = SecurityToken.generateId({ symbol });
 
     if (!startDate) {
       startDate = startTime;
@@ -125,12 +131,11 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyTimes, {
         tag,
         resolvers: [
-          createRefreshResolver(
+          createTieredStoFactoryRefreshResolver(
             tieredStoFactory,
             addedTransactions,
             tag,
-            securityTokenId,
-            stoAddress
+            tieredStoId
           ),
         ],
       })({ startTime: startDate, endTime: endDate });
@@ -152,9 +157,9 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       }
     }
 
-    const willRaiseinEth = currencies.find(cur => cur === Currency.ETH);
-    const willRaiseinPoly = currencies.find(cur => cur === Currency.POLY);
-    const willRaiseinSc = currencies.find(cur => cur === Currency.StableCoin);
+    const willRaiseinEth = currencies.includes(Currency.ETH);
+    const willRaiseinPoly = currencies.includes(Currency.POLY);
+    const willRaiseinSc = currencies.includes(Currency.StableCoin);
 
     const areSameCurrencies =
       ((!isRaisedInETH && !willRaiseinEth) || (isRaisedInETH && willRaiseinEth)) &&
@@ -167,33 +172,19 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyFunding, {
         tag,
         resolvers: [
-          createRefreshResolver(
+          createTieredStoFactoryRefreshResolver(
             tieredStoFactory,
             addedTransactions,
             tag,
-            securityTokenId,
-            stoAddress
+            tieredStoId
           ),
         ],
       })({ fundRaiseTypes: currencies });
     }
 
-    let assembledTiers: StoTier[];
-    let rawTiers;
-
     // this is needed because the return types of `tier` are different in the two versions
     // even if the properties used here are the same for both. Also custom currencies are only supported in 3.1
     if (isUSDTieredSTO_3_1_0(stoModule)) {
-      rawTiers = await Promise.all(range(numberOfTiers).map(tier => stoModule.tiers({ tier })));
-      assembledTiers = rawTiers.map(
-        ({ tokenTotal, rate, tokensDiscountPoly, rateDiscountPoly }) => ({
-          tokensOnSale: tokenTotal,
-          price: rate,
-          tokensWithDiscount: tokensDiscountPoly,
-          discountedPrice: rateDiscountPoly,
-        })
-      );
-
       const [
         currentEthOracleAddress,
         currentPolyOracleAddress,
@@ -228,21 +219,23 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
         polyOracleAddress = currentPolyOracleAddress;
       }
 
+      checkStringLength(currencySymbol, 'denominated currency symbol');
+
       if (
-        currencySymbol !== denominatedCurrency &&
-        ethOracleAddress !== currentEthOracleAddress &&
+        currencySymbol !== denominatedCurrency ||
+        ethOracleAddress !== currentEthOracleAddress ||
         polyOracleAddress !== currentPolyOracleAddress
       ) {
         const tag = PolyTransactionTag.ModifyOracles;
+        addedTransactions.push(tag);
         await this.addTransaction(stoModule.modifyOracles, {
           tag,
           resolvers: [
-            createRefreshResolver(
+            createTieredStoFactoryRefreshResolver(
               tieredStoFactory,
               addedTransactions,
               tag,
-              securityTokenId,
-              stoAddress
+              tieredStoId
             ),
           ],
         })({
@@ -250,30 +243,18 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
           customOracleAddresses: [ethOracleAddress, polyOracleAddress],
         });
       }
-    } else {
-      if (customCurrency) {
-        throw new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: 'Custom currency not supported in Tiered STO v3.0',
-        });
-      }
-
-      rawTiers = await Promise.all(range(numberOfTiers).map(tier => stoModule.tiers({ tier })));
-      assembledTiers = rawTiers.map(
-        ({ tokenTotal, rate, tokensDiscountPoly, rateDiscountPoly }) => ({
-          tokensOnSale: tokenTotal,
-          price: rate,
-          tokensWithDiscount: tokensDiscountPoly,
-          discountedPrice: rateDiscountPoly,
-        })
-      );
+    } else if (customCurrency) {
+      throw new PolymathError({
+        code: ErrorCode.ProcedureValidationError,
+        message: 'Custom currency not supported in Tiered STO v3.0',
+      });
     }
 
     if (!tiers) {
-      tiers = assembledTiers;
+      tiers = allTiers;
     }
 
-    const areSameTiers = isEqual(tiers, assembledTiers);
+    const areSameTiers = isEqual(tiers, allTiers);
 
     if (!areSameTiers) {
       const tokensPerTierTotal: BigNumber[] = [];
@@ -297,15 +278,19 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyTiers, {
         tag,
         resolvers: [
-          createRefreshResolver(
+          createTieredStoFactoryRefreshResolver(
             tieredStoFactory,
             addedTransactions,
             tag,
-            securityTokenId,
-            stoAddress
+            tieredStoId
           ),
         ],
-      })({ ratePerTier, tokensPerTierTotal, tokensPerTierDiscountPoly, ratePerTierDiscountPoly });
+      })({
+        ratePerTier,
+        tokensPerTierTotal,
+        tokensPerTierDiscountPoly,
+        ratePerTierDiscountPoly,
+      });
     }
 
     if (!minimumInvestment) {
@@ -325,12 +310,11 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyLimits, {
         tag,
         resolvers: [
-          createRefreshResolver(
+          createTieredStoFactoryRefreshResolver(
             tieredStoFactory,
             addedTransactions,
             tag,
-            securityTokenId,
-            stoAddress
+            tieredStoId
           ),
         ],
       })({
@@ -366,12 +350,11 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
       await this.addTransaction(stoModule.modifyAddresses, {
         tag,
         resolvers: [
-          createRefreshResolver(
+          createTieredStoFactoryRefreshResolver(
             tieredStoFactory,
             addedTransactions,
             tag,
-            securityTokenId,
-            stoAddress
+            tieredStoId
           ),
         ],
       })({
