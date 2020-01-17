@@ -11,7 +11,7 @@ export class SetController extends Procedure<SetControllerProcedureArgs> {
   public type = ProcedureType.SetController;
 
   /**
-   * Set the controller address of the security token
+   * Set the Controller address of the Security Token
    *
    * Note this procedure will fail if:
    * - The supplied address is invalid

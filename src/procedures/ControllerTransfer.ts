@@ -48,8 +48,8 @@ export class ControllerTransfer extends Procedure<ControllerTransferProcedureArg
    *
    * Note this procedure will fail if:
    * - Any of the addresses are invalid
-   * - The senders ("from" address) balance is less than the amount being transferred
-   * - The current wallet address is not the security token controller address
+   * - The sender's ("from" address) balance is less than the amount being transferred
+   * - The current wallet address is not the Security Token controller address
    */
   public async prepareTransactions() {
     const { symbol, amount, from, to, log = '', data = '' } = this.args;

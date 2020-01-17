@@ -30,7 +30,7 @@ export class TransferReservationOwnership extends Procedure<
   public type = ProcedureType.TransferReservationOwnership;
 
   /**
-   * Transfer the ownership for a Security Token Reservation to the supplied address
+   * Transfer the ownership of a Security Token Reservation to the supplied address
    *
    * Note this procedure will fail if:
    * - A Security Token has already been launched with this symbol

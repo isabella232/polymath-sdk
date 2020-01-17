@@ -49,7 +49,7 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
    * Note this procedure will fail if:
    * - The "from" address is invalid
    * - Attempting to redeem an amount of tokens greater than the account's balance
-   * - The current wallet address is not the security token controller address
+   * - The current wallet address is not the Security Token controller address
    */
   public async prepareTransactions() {
     const { symbol, amount, from, reason = '', data = '' } = this.args;

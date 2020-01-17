@@ -36,7 +36,7 @@ export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureA
    * Pull dividend payments from the Dividend Distribution
    *
    * Note this procedure will fail if:
-   * - The Dividends feature is not enabled
+   * - The Dividends Feature is not enabled
    * - The current wallet address is not a shareholder
    * - The current wallet address has already received payment for this Dividend Distribution
    * - The current wallet address is on the exclusion list
