@@ -7,9 +7,15 @@ import { Context } from '../../../Context';
 
 import { PolymathError } from '../../../PolymathError';
 
+/**
+ * Namespace that handles all Issuance related functionality
+ */
 export class Issuance extends SubModule {
   public offerings: Offerings;
 
+  /**
+   * Create a new Issuance instance
+   */
   constructor(securityToken: SecurityToken, context: Context) {
     super(securityToken, context);
 
@@ -19,17 +25,9 @@ export class Issuance extends SubModule {
   /**
    * Issue a certain amount of tokens to an address. The address must already have been added via `modifyData`. Otherwise,
    * the corresponding shareholder data for that address must be supplied to this method
-   * NOTE: If shareholder data is supplied, client-side validations to verify if the transfer is possible won't be performed
+   * **NOTE: If shareholder data is supplied, client-side validations to verify if the transfer is possible won't be performed**
    *
-   * @param issuanceData array of issuance data
-   * @param issuanceData[].address address of the shareholder to issue tokens for
-   * @param issuanceData[].amount amount of tokens to issue
-   * @param issuanceData[].shareholderData KYC-related and other shareholder data to add/modify (optional. If not supplied, the shareholder is implied to exist already)
-   * @param issuanceData[].shareholderData.canSendAfter date after which the shareholder can transfer tokens
-   * @param issuanceData[].shareholderData.canReceiveAfter date after which the shareholder can receive tokens
-   * @param issuanceData[].shareholderData.kycExpiry date at which the shareholder's KYC expires
-   * @param issuanceData[].shareholderData.isAccredited whether the shareholder is accredited (defaults to false)
-   * @param issuanceData[].shareholderData.canBuyFromSto whether the shareholder is allowed to purchase tokens in an STO (defaults to true)
+   * @param args.issuanceData - array that specifies who to issue tokens to and which amounts. Can also contain KYC data
    */
   public issue = async (args: { issuanceData: IssuanceDataEntry[] }) => {
     const procedure = new IssueTokens(
@@ -45,7 +43,7 @@ export class Issuance extends SubModule {
   /**
    * Permanently freeze issuance of the security token
    *
-   * @param signature optional signed data. If not passed, signing will be requested when the transaction queue is run. The data can be generated beforehand by the token owner calling `signFreezeAck`
+   * @param args.signature - optional signed data. If not passed, signing will be requested when the transaction queue is run. The data can be generated beforehand by the token owner calling `signFreezeAck`
    */
   public freeze = async (args?: { signature?: string }) => {
     const { symbol } = this.securityToken;
@@ -58,7 +56,7 @@ export class Issuance extends SubModule {
   /**
    * Generate a signature string that can be used to permanently freeze issuance of the Security Token
    *
-   * Note that only the owner's signature is valid for this operation
+   * **Note that only the owner's signature is valid for this operation**
    */
   public signFreezeAck = async () => {
     const { symbol } = this.securityToken;
