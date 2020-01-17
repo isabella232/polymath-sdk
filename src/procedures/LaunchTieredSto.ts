@@ -20,9 +20,23 @@ import { findEvents, isValidAddress } from '../utils';
 import { SecurityToken, TieredSto } from '../entities';
 import { ZERO_ADDRESS } from '../utils/constants';
 
+/**
+ * Procedure that launches a Tiered STO
+ */
 export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, TieredSto> {
   public type = ProcedureType.LaunchTieredSto;
 
+  /**
+   * - Transfer the necessary amount of POLY to the Security Token to cover the STO's setup fee
+   * - Launch the Tiered STO
+   * - Allow pre-issuing (if applicable, defaults to false)
+   * - Return the newly created STO
+   *
+   * Note that this procedure will fail if:
+   * - The supplied custom currency oracle addresses corresponding to the selected fund raise currencies are invalid
+   * - Raising in Stable Coin and not providing stable coin addresses
+   * - Attempting to allow pre-issuing on a version 3.0 STO
+   */
   public async prepareTransactions() {
     const { args, context } = this;
     const {
@@ -258,6 +272,18 @@ export class LaunchTieredSto extends Procedure<LaunchTieredStoProcedureArgs, Tie
         },
         {
           tag: PolyTransactionTag.AllowPreMinting,
+          resolvers: [
+            () => {
+              return tieredStoFactory.update(
+                TieredSto.generateId({
+                  securityTokenId: SecurityToken.generateId({ symbol }),
+                  stoType: StoType.Tiered,
+                  address: newStoAddress.result!,
+                }),
+                { preIssueAllowed: true }
+              );
+            },
+          ],
         }
       )({});
     }
