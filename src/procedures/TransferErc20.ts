@@ -5,6 +5,9 @@ import { PolymathError } from '../PolymathError';
 import { Erc20TokenBalance } from '../entities';
 import { Factories } from '~/Context';
 
+/**
+ * @hidden
+ */
 export const createTransferErc20Resolver = (
   factories: Factories,
   tokenAddress: string,
@@ -24,6 +27,14 @@ export const createTransferErc20Resolver = (
 export class TransferErc20 extends Procedure<TransferErc20ProcedureArgs> {
   public type = ProcedureType.TransferErc20;
 
+  /**
+   * Transfer an ERC20 token to another wallet. The token in question defaults to POLY if no address is supplied
+
+   * Note that the procedure will fail if:
+   * - The owner's token balance is less than the amount being transferred. The only exception to this is when transferring POLY on a testnet.
+   * If that is the case, an extra transaction will be submitted to request the missing amount of tokens from the faucet
+   * - The token being transferred is a Security Token. In that case, the corresponding Security Token transfer procedures should be used
+   */
   public async prepareTransactions() {
     const { amount, receiver, tokenAddress } = this.args;
     const { contractWrappers, currentWallet, factories } = this.context;
