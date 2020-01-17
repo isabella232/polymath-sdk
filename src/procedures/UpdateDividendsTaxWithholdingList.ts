@@ -45,7 +45,7 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
   public type = ProcedureType.UpdateDividendsTaxWithholdingList;
 
   /**
-   * Update withholding tax rates for investors
+   * Modify tax withholding percentage for shareholders
    *
    * Note that this procedure will fail if:
    * - The Security Token doesn't exist
