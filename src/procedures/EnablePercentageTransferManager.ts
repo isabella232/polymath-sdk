@@ -84,38 +84,39 @@ export class EnablePercentageTransferManager extends Procedure<
       },
     });
 
-    if (whitelistEntries !== undefined && !whitelistEntries.length) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `Whitelist data passed can not be an empty list`,
-      });
-    }
-
-    const investors: string[] = [];
-    const valids: boolean[] = [];
-
-    whitelistEntries!.forEach(({ address, whitelisted }) => {
-      investors.push(address);
-      valids.push(whitelisted);
-    });
-
-    await this.addTransaction(
-      {
-        futureValue: newPtmAddress,
-        futureMethod: async address => {
-          const percentageTransferManagerModule = await contractWrappers.moduleFactory.getModuleInstance(
-            {
-              name: ModuleName.PercentageTransferManager,
-              address,
-            }
-          );
-
-          return percentageTransferManagerModule.modifyWhitelistMulti;
-        },
-      },
-      {
-        tag: PolyTransactionTag.ModifyWhitelistMulti,
+    if (whitelistEntries !== undefined) {
+      if (!whitelistEntries.length) {
+        throw new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Whitelist data passed can not be an empty list`,
+        });
       }
-    )({ investors, valids });
+      const investors: string[] = [];
+      const valids: boolean[] = [];
+
+      whitelistEntries!.forEach(({ address, whitelisted }) => {
+        investors.push(address);
+        valids.push(whitelisted);
+      });
+
+      await this.addTransaction(
+        {
+          futureValue: newPtmAddress,
+          futureMethod: async address => {
+            const percentageTransferManagerModule = await contractWrappers.moduleFactory.getModuleInstance(
+              {
+                name: ModuleName.PercentageTransferManager,
+                address,
+              }
+            );
+
+            return percentageTransferManagerModule.modifyWhitelistMulti;
+          },
+        },
+        {
+          tag: PolyTransactionTag.ModifyWhitelistMulti,
+        }
+      )({ investors, valids });
+    }
   }
 }
