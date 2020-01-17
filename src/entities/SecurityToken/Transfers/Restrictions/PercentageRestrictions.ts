@@ -31,6 +31,9 @@ interface ModifyExemptionsMethod {
   >;
 }
 
+/**
+ * Namespace that handles all Percentage Restriction related functionality
+ */
 export class PercentageRestrictions extends SubModule {
   /**
    * Modify the conditions for exemption from percentage ownership restrictions. There are two (independent) methods of exemption:
@@ -38,10 +41,8 @@ export class PercentageRestrictions extends SubModule {
    * - Whitelisting: an address can be whitelisted and thus percentage ownership restrictions will not apply to it
    * - Primary issuance: if enabled, issuing tokens to an address will bypass percentage ownership restrictions (for example, if issuing tokens to a particular address would leave that address with a higher percentage than the limit, having this option set to `true` will allow that issuance operation)
    *
-   * @param whitelistEntries list of addresses to add/remove from the whitelist
-   * @param whitelistEntries.address address to modify
-   * @param whitelistEntries.whitelisted whether the address should be exempt or not
-   * @param allowPrimaryIssuance if set to true, issuing tokens to an address is allowed even if it would leave said address over the percentage ownership limit
+   * @param args.whitelistEntries - it can be optional. List of addresses to add/remove from the whitelist
+   * @param args.allowPrimaryIssuance - it can be optional. If set to true, issuing tokens to an address is allowed even if it would leave said address over the percentage ownership limit
    */
   public modifyExemptions: ModifyExemptionsMethod = async (args: {
     whitelistEntries?: PercentageWhitelistEntry[];
@@ -118,7 +119,7 @@ export class PercentageRestrictions extends SubModule {
   /**
    * Modify the maximum percentage of the total supply that a single shareholder can own at a given time
    *
-   * @param maxHolderPercentage limit to the percentage a shareholder can own (i.e. `new BigNumber(55.75)` for 55.75%)
+   * @param args.maxHolderPercentage - limit to the percentage a shareholder can own (i.e. `new BigNumber(55.75)` for 55.75%)
    */
   public modifyMaxHolderPercentage = async (args: { maxHolderPercentage: BigNumber }) => {
     const procedure = new ModifyMaxHolderPercentage(
@@ -132,7 +133,7 @@ export class PercentageRestrictions extends SubModule {
   };
 
   /**
-   * Retrieve the maximum percentage of the total supply that a single shareholder can own.
+   * Retrieve the maximum percentage of the total supply that a single shareholder can own
    * Can be modified with `modifyMaxHolderPercentage`
    */
   public getMaxHolderPercentage = async () => {
