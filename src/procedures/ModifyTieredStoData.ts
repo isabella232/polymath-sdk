@@ -55,7 +55,7 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
    * Note that this procedure will fail if:
    * - The STO has not been enabled or has been archived
    * - The STO has already started
-   * - Attempting to use a custom currency on an STO with version is 3.0.0 or lower
+   * - Attempting to use a custom currency on an STO with version 3.0.0 or lower
    * - The supplied parameters don't represent any changes in the STO
    */
 
