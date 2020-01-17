@@ -20,9 +20,22 @@ import { TransferErc20 } from './TransferErc20';
 import { SecurityToken, SimpleSto } from '../entities';
 import { findEvents } from '../utils';
 
+/**
+ * Procedure that launches a Simple STO
+ */
 export class LaunchSimpleSto extends Procedure<LaunchSimpleStoProcedureArgs, SimpleSto> {
   public type = ProcedureType.LaunchSimpleSto;
 
+  /**
+   * - Transfer the necessary amount of POLY to the Security Token to cover the STO's setup fee
+   * - Launch the Simple STO
+   * - Allow pre-issuing (if applicable)
+   * - Return the newly created STO
+
+   * Notes:
+   * - Pre-issuing defaults to false
+   * - Pre-issuing can only be enabled on a version 3.1 (or greater) Simple STO. Attempting to do so in versions 3.0 or lower will cause the procedure to fail
+   */
   public async prepareTransactions() {
     const { args, context } = this;
     const {
