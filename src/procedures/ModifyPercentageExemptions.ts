@@ -16,7 +16,8 @@ export class ModifyPercentageExemptions extends Procedure<ModifyPercentageExempt
   public type = ProcedureType.ModifyPercentageExemptions;
 
   /**
-   * Update whitelist data and issuance operations related to percentage restriction
+   * - Update the list of addresses that are exempt from percentage restrictions (if supplied)
+   * - Modify whether primary issuance is exempt from percentage restrictions (if supplied)
    *
    * Note that this procedure will fail if:
    * - The data supplied to it is no different to the data in the contract
