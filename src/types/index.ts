@@ -278,6 +278,7 @@ export interface EnablePercentageTransferManagerProcedureArgs {
   symbol: string;
   maxHolderPercentage: BigNumber;
   allowPrimaryIssuance?: boolean;
+  whitelistEntries?: PercentageWhitelistEntry[];
 }
 
 export interface DisableFeatureProcedureArgs {
