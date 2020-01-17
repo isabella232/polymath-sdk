@@ -13,11 +13,27 @@ import { PostTransactionResolver } from '../PostTransactionResolver';
  * External Types
  */
 
+/**
+ * @hidden
+ */
 export { Currency };
+
+/**
+ * @hidden
+ */
 export { Version };
 
+/**
+ * Properties of a Dividend Shareholder
+ */
 export interface DividendShareholderStatus {
+  /**
+   * wallet address of a Shareholder
+   */
   address: string;
+  /**
+   * whether Shareholder has received payment
+   */
   paymentReceived: boolean;
   excluded: boolean;
   withheldTax: BigNumber;
@@ -25,26 +41,57 @@ export interface DividendShareholderStatus {
   balance: BigNumber;
 }
 
+/**
+ * @hidden
+ */
 export enum StoType {
   Simple = 'Simple',
   Tiered = 'Tiered',
 }
 
+/**
+ * Check if the type is a valid STO Type
+ * @param type - the STO Type
+ */
 export function isStoType(type: any): type is StoType {
   return typeof type === 'string' && (type === StoType.Tiered || type === StoType.Simple);
 }
 
+/**
+ * Properties denoting a Shareholder's Tax Withholding Percentage
+ */
 export interface TaxWithholdingEntry {
+  /**
+   * wallet address of Shareholder
+   */
   address: string;
+  /**
+   * the Percentage that will be Tax Withheld
+   */
   percentage: number;
 }
 
+/**
+ * Properties of a Security Token Issuance
+ */
 export interface IssuanceDataEntry {
+  /**
+   * wallet address where Tokens will be received
+   */
   address: string;
+  /**
+   * amount of tokens issued
+   */
   amount: BigNumber;
+  /**
+   * shareholder data, where address is omitted
+   */
   shareholderData?: Omit<ShareholderDataEntry, 'address'>;
 }
 
+/**
+ * @hidden
+ */
 export enum ErrorCode {
   IncompatibleBrowser = 'IncompatibleBrowser',
   FeatureNotEnabled = 'FeatureNotEnabled',
@@ -66,11 +113,23 @@ export enum ErrorCode {
   IncorrectVersion = 'IncorrecVersion',
 }
 
+/**
+ * Properties denoting a Shareholder's balance
+ */
 export interface ShareholderBalance {
+  /**
+   * wallet address of the Shareholder
+   */
   address: string;
+  /**
+   * balance of Security Tokens
+   */
   balance: BigNumber;
 }
 
+/**
+ * @hidden
+ */
 export enum ProcedureType {
   UnnamedProcedure = 'UnnamedProcedure',
   ApproveErc20 = 'ApproveErc20',
@@ -124,6 +183,9 @@ export enum ProcedureType {
   TransferReservationOwnership = 'TransferReservationOwnership',
 }
 
+/**
+ * @hidden
+ */
 export enum PolyTransactionTag {
   Any = 'Any',
   GetTokens = 'GetTokens',
@@ -209,31 +271,91 @@ export enum PolyTransactionTag {
 
 // Procedure arguments
 
+/**
+ * Properties of an ERC20 Approval
+ */
 export interface ApproveErc20ProcedureArgs {
+  /**
+   * amount of tokens to be approved
+   */
   amount: BigNumber;
+  /**
+   * the spender of the tokens being approved
+   */
   spender: string;
+  /**
+   * the custom address of the ERC20 token
+   */
   tokenAddress?: string;
 }
 
+/**
+ * Properties of a ERC20 Token Transfer
+ */
 export interface TransferErc20ProcedureArgs {
+  /**
+   * amount of tokens to be transferred
+   */
   amount: BigNumber;
+  /**
+   * the receiver of the tokens being transferred
+   */
   receiver: string;
+  /**
+   * the custom address of the ERC20 token
+   */
   tokenAddress?: string;
 }
 
+/**
+ * Properties needed to create a Checkpoint
+ */
 export interface CreateCheckpointProcedureArgs {
+  /**
+   * the Security Token symbol
+   */
   symbol: string;
 }
 
+/**
+ * Properties needed to create a Dividend Distribution on a Security Token
+ */
 export interface CreateDividendDistributionProcedureArgs {
+  /**
+   * symbol of a Security Token
+   */
   symbol: string;
+  /**
+   * date the Dividend will mature
+   */
   maturityDate: Date;
+  /**
+   * date the Dividend with expire
+   */
   expiryDate: Date;
+  /**
+   * the address of the ERC20 token
+   */
   erc20Address: string;
+  /**
+   * amount to be distributed by the Dividend
+   */
   amount: BigNumber;
+  /**
+   * index of the Checkpoint for the Dividend Distribution
+   */
   checkpointIndex: number;
+  /**
+   * name of the Dividend
+   */
   name: string;
+  /**
+   * list of excluded addresses from the Dividend Distribution
+   */
   excludedAddresses?: string[];
+  /**
+   * tax withholding list for the Dividend
+   */
   taxWithholdings?: TaxWithholdingEntry[];
 }
 
@@ -605,6 +727,9 @@ export interface SignFreezeIssuanceAckProcedureArgs {
   symbol: string;
 }
 
+/**
+ * @hidden
+ */
 export interface ProcedureArguments {
   [ProcedureType.ApproveErc20]: ApproveErc20ProcedureArgs;
   [ProcedureType.TransferErc20]: TransferErc20ProcedureArgs;
@@ -657,6 +782,9 @@ export interface ProcedureArguments {
   [ProcedureType.UnnamedProcedure]: {};
 }
 
+/**
+ * @hidden
+ */
 export enum TransactionStatus {
   Idle = 'Idle',
   Unapproved = 'Unapproved',
@@ -666,6 +794,9 @@ export enum TransactionStatus {
   Failed = 'Failed',
 }
 
+/**
+ * @hidden
+ */
 export enum TransactionQueueStatus {
   Idle = 'Idle',
   Running = 'Running',
@@ -687,6 +818,9 @@ export interface Fees {
   poly: BigNumber;
 }
 
+/**
+ * @hidden
+ */
 export interface Pojo {
   [key: string]:
     | string
@@ -699,6 +833,10 @@ export interface Pojo {
     | (string | number | boolean | null | Pojo | BigNumber | Date)[];
 }
 
+/**
+ * Check to see if an object is a Plain Old Javascript Object (POJO)
+ * @param pojo - Javascript object
+ */
 export function isPojo(pojo: any): pojo is Pojo {
   if (!pojo) {
     return false;
@@ -713,6 +851,9 @@ export function isPojo(pojo: any): pojo is Pojo {
   );
 }
 
+/**
+ * @hidden
+ */
 export enum TransactionSpeed {
   Slow = 'Slow',
   Medium = 'Medium',
@@ -720,6 +861,9 @@ export enum TransactionSpeed {
   Fastest = 'Fastest',
 }
 
+/**
+ * @hidden
+ */
 export enum Feature {
   Permissions = 'Permissions',
   Shareholders = 'Shareholders',
@@ -728,6 +872,9 @@ export enum Feature {
   PercentageOwnershipRestrictions = 'PercentageOwnershipRestrictions',
 }
 
+/**
+ * @hidden
+ */
 export enum SecurityTokenRole {
   PermissionsAdministrator = 'PermissionsAdministrator',
   DividendsOperator = 'DividendsOperator',
@@ -737,11 +884,17 @@ export enum SecurityTokenRole {
   PercentageOwnershipRestrictionsAdministrator = 'PercentageOwnershipRestrictionsAdministrator',
 }
 
+/**
+ * @hidden
+ */
 export enum StoRole {
   StoOperator = 'StoOperator',
   StoAdministrator = 'StoAdministrator',
 }
 
+/**
+ * @hidden
+ */
 export enum TransferStatusCode {
   TransferFailure = 'TransferFailure',
   TransferSuccess = 'TransferSuccess',
