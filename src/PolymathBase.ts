@@ -439,7 +439,7 @@ export class PolymathBase extends PolymathAPI {
 
   /**
    * Fetch the address of the Treasury Wallet
-   * @param module - Module entity relevant to the wallet
+   * @param module - Module instance relevant to the wallet
    */
   public getTreasuryWallet = async ({ module }: { module: Module }) => {
     const stAddress = await module.securityToken();
@@ -499,7 +499,7 @@ export class PolymathBase extends PolymathAPI {
   };
 
   /**
-   * Fetch the addresses of a Security Token Module by Module name
+   * Fetch all addresses of a Module attached to a Security Token
    */
   public getModuleAddressesByName = async (
     { symbol, moduleName }: GetModuleAddressesByNameParams,
@@ -528,7 +528,7 @@ export class PolymathBase extends PolymathAPI {
   };
 
   /**
-   * Fetch the attached Security Token Modules
+   * Fetch all Modules of a certain type attached to a Security Token
    */
   public getAttachedModules: GetAttachedModules = async (
     { symbol, moduleName }: GetAttachedModulesParams,
@@ -834,7 +834,7 @@ export class PolymathBase extends PolymathAPI {
   };
 
   /**
-   * Get Dividends list at a certain Checkpoint
+   * Fetch list of all Dividends at a certain Checkpoint
    * @param checkpointId - Checkpoint ID
    * @param dividendsModule - instance of the module distributing the Dividends
    */
