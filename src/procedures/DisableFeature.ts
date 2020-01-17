@@ -8,9 +8,15 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure to disable a Feature on a Security Token
+ */
 export class DisableFeature extends Procedure<DisableFeatureProcedureArgs> {
   public type = ProcedureType.DisableFeature;
 
+  /**
+   * Disable the Feature by archiving the attached module that corresponds to that Feature
+   */
   public async prepareTransactions() {
     const { symbol, moduleName } = this.args;
     const { contractWrappers } = this.context;
