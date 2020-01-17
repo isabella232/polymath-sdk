@@ -6,11 +6,23 @@ import { PushDividendPayment, WithdrawTaxes, PullDividendPayment } from '../proc
 import { Context } from '../Context';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Properties that uniquely identify a Dividend Distribution
+ */
 export interface UniqueIdentifiers {
+  /**
+   * security token UUID
+   */
   securityTokenId: string;
+  /**
+   * ordered index of the distribution
+   */
   index: number;
 }
 
+/**
+ * Check if the provided value is of type [[UniqueIdentifiers]]
+ */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { securityTokenId, checkpointId, index } = identifiers;
 
@@ -21,24 +33,57 @@ function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers
   );
 }
 
+/**
+ * Dividend Distribution constructor parameters
+ */
 export interface Params {
   securityTokenSymbol: string;
   checkpointId: string;
+  /**
+   * date at which the dividend was created
+   */
   created: Date;
+  /**
+   * date after which dividend can be claimed
+   */
   maturity: Date;
+  /**
+   * date until which dividend can be claimed
+   */
   expiry: Date;
+  /**
+   * dividend amount
+   */
   amount: BigNumber;
+  /**
+   * amount of dividend claimed so far
+   */
   claimedAmount: BigNumber;
+  /**
+   * total supply at the associated checkpoint
+   */
   totalSupply: BigNumber;
+  /**
+   * true if expiry has passed and issuer has reclaimed remaining dividend
+   */
   reclaimed: boolean;
   totalWithheld: BigNumber;
   totalWithheldWithdrawn: BigNumber;
   shareholders: DividendShareholderStatus[];
   name: string;
+  /**
+   * symbol of the currency in which this dividend distribution is being paid
+   */
   currency: string | null;
 }
 
+/**
+ * Class used to manage the dividend distribution functionality
+ */
 export class DividendDistribution extends Entity<Params> {
+  /**
+   * Generate the Dividend Distribution's UUID from its identifying properties
+   */
   public static generateId({ securityTokenId, index }: UniqueIdentifiers) {
     return serialize('dividend', {
       securityTokenId,
@@ -46,6 +91,11 @@ export class DividendDistribution extends Entity<Params> {
     });
   }
 
+  /**
+   * Unserialize string to a Dividend Distribution object representation
+   *
+   * @param serialize - Dividend Distribution's serialized representation
+   */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);
 
@@ -95,6 +145,9 @@ export class DividendDistribution extends Entity<Params> {
 
   protected context: Context;
 
+  /**
+   * Create a new Dividend Distribution instance
+   */
   constructor(params: Params & UniqueIdentifiers, context: Context) {
     super();
 
@@ -186,6 +239,9 @@ export class DividendDistribution extends Entity<Params> {
     return procedure.prepare();
   };
 
+  /**
+   * Convert entity to POJO (Plain Old Javascript Object)
+   */
   public toPojo() {
     const {
       uid,
@@ -228,6 +284,9 @@ export class DividendDistribution extends Entity<Params> {
     };
   }
 
+  /**
+   * Hydrate the Dividend Distribution entity
+   */
   public _refresh(params: Partial<Params>) {
     const {
       securityTokenSymbol,
