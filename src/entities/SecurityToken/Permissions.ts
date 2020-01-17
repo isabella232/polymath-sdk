@@ -6,16 +6,21 @@ import { AssignSecurityTokenRole } from '../../procedures';
 import { SecurityTokenRole, Feature, ErrorCode } from '../../types';
 import { PolymathError } from '../../PolymathError';
 
+/**
+ * Namespace that handles all Permissions related functionality
+ */
 export class Permissions extends SubModule {
   /**
    * Get a list of all available roles.
    * The returned roles depend on which features are enabled, as per:
    *
-   * Feature           Roles
-   * -------------------------
-   * Permissions       Permissions Administrator
-   * Shareholders      Shareholders Administrator
-   * Dividends         Dividends Administrator, Dividends Operator
+   * | Feature                         | Roles                                           |
+   * |---------------------------------|-------------------------------------------------|
+   * | Permissions                     | Permissions Administrator                       |
+   * | Shareholders                    | Shareholders Administrator                      |
+   * | Dividends                       | Dividends Administrator, Dividends Operator     |
+   * | ShareholderCountRestrictions    | Shareholder Count Restrictions Administrator    |
+   * | PercentageOwnershipRestrictions | Percentage Ownership Restrictions Administrator |
    */
   public getAvailableRoles = async () => {
     const {
@@ -45,9 +50,7 @@ export class Permissions extends SubModule {
   };
 
   /**
-   * Returns whether a certain role is available to be assigned to delegates
-   *
-   * @param role role for which to check availability
+   * Return whether a certain role is available to be assigned to delegates
    */
   public isRoleAvailable = async (args: { role: SecurityTokenRole }) => {
     const { role } = args;
@@ -57,9 +60,7 @@ export class Permissions extends SubModule {
   };
 
   /**
-   * Returns which feature is associated with the supplied role
-   *
-   * @param role
+   * Return which feature is associated with the supplied role
    */
   public getFeatureFromRole = async (args: { role: SecurityTokenRole }) => {
     const {
@@ -87,11 +88,9 @@ export class Permissions extends SubModule {
   };
 
   /**
-   * Assigns a role on the Security Token to a delegate
+   * Assign a role on the Security Token to a delegate
    *
-   * @param delegateAddress wallet address of the delegate
-   * @param role role to assign
-   * @param description description of the delegate (is ignored if the delegate already exists)
+   * @param args.description - is ignored if the delegate already exists
    */
   public assignRole = async (args: {
     delegateAddress: string;
@@ -113,10 +112,7 @@ export class Permissions extends SubModule {
   };
 
   /**
-   * Removes a role from a delegate
-   *
-   * @param delegateAddress wallet address of the delegate
-   * @param role role to revoke
+   * Remove a role from a delegate
    */
   public revokeRole = async (args: { delegateAddress: string; role: SecurityTokenRole }) => {
     const { symbol } = this.securityToken;
@@ -135,9 +131,7 @@ export class Permissions extends SubModule {
   };
 
   /**
-   * Returns the list of roles assigned to a delegate address
-   *
-   * @param delegateAddress address for which to return assigned roles
+   * Return the list of roles assigned to a delegate address
    */
   public getAssignedRoles = async (args: { delegateAddress: string }) => {
     const { delegateAddress: delegate } = args;
@@ -185,9 +179,7 @@ export class Permissions extends SubModule {
   };
 
   /**
-   * Returns the list of delegate addresses and details that hold a specific role
-   *
-   * @param role role for which delegates must be fetched
+   * Return the list of delegate addresses and details that hold a specific role
    */
   public getDelegatesForRole = async (args: { role: SecurityTokenRole }) => {
     const { role } = args;
@@ -245,7 +237,7 @@ export class Permissions extends SubModule {
   };
 
   /**
-   * Returns a list of all delegates with their respective details and roles
+   * Return a list of all delegates with their respective details and roles
    */
   public getAllDelegates = async () => {
     const {

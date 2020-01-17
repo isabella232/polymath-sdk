@@ -4,19 +4,35 @@ import { ErrorCode } from '../../types';
 import { SetDocument } from '../../procedures/SetDocument';
 import { RemoveDocument } from '../../procedures/RemoveDocument';
 
+/**
+ * Represents a single Document attached to a Security Token
+ */
 interface Document {
+  /**
+   * name of the document. It should always be unique
+   */
   name: string;
+  /**
+   * off-chain uri of the document from where it is accessible to investors/advisors to read
+   */
   documentUri: string;
+  /**
+   * hash of the document's contents
+   */
   documentHash: string;
   updatedAt: Date;
 }
 
+/**
+ * Namespace that handles all document Related functionality
+ */
 export class Documents extends SubModule {
   /**
    * Attach a new document to the contract, or update the URI or hash of an existing attached document
-   * @param name Name of the document. It should be unique always
-   * @param uri Off-chain uri of the document from where it is accessible to investors/advisors to read.
-   * @param documentHash hash (of the contents) of the document.
+   *
+   * @param args.name - should always be unique
+   * @param args.uri - off-chain uri of the document from where it is accessible to investors/advisors to read
+   * @param args.documentHash - hash of the document's contents
    */
   public async set(args: { name: string; uri: string; documentHash: string }) {
     const { symbol } = this.securityToken;
@@ -27,8 +43,9 @@ export class Documents extends SubModule {
   }
 
   /**
-   * Remove an existing document from the contract giving the name of the document.
-   * @param name Name of the document. It should be unique always
+   * Remove an existing document from the Security Token
+   *
+   * @param args.name - should always be unique
    */
   public async remove(args: { name: string }) {
     const { symbol } = this.securityToken;
@@ -40,7 +57,6 @@ export class Documents extends SubModule {
 
   /**
    * Retrieve a specific document's data by name
-   * @param name Unique name of the document
    */
   public getDocument = async (args: { name: string }): Promise<Document> => {
     const {
