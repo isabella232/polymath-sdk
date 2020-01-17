@@ -40,80 +40,152 @@ import { PolymathError } from './PolymathError';
 import { ErrorCode, SecurityTokenRole, ShareholderBalance } from './types';
 import { ZERO_ADDRESS } from './utils/constants';
 
+/**
+ * Properties to fetch a module address by Security Token and module name
+ */
 interface GetModuleAddressesByNameParams {
+  /**
+   * Security Token symbol
+   */
   symbol: string;
+  /**
+   * the name of the Security Token module
+   */
   moduleName: ModuleName;
 }
 
+/**
+ * Optional property of unarchived status when fetching a module address
+ */
 interface GetModuleAddressesByNameOpts {
+  /**
+   * whether module is archived or unarchived
+   */
   unarchived: boolean;
 }
 
+/**
+ * Properties to fetch an attached module entity
+ */
 interface GetAttachedModulesParams {
+  /**
+   * Security Token symbol
+   */
   symbol: string;
+  /**
+   * name of the module
+   */
   moduleName: ModuleName;
 }
 
 interface GetAttachedModulesOpts {
+  /**
+   * whether module is archived or unarchived
+   */
   unarchived: boolean;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedGeneralPermissionManagersParams extends GetAttachedModulesParams {
   moduleName: ModuleName.GeneralPermissionManager;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedCountTransferManagersParams extends GetAttachedModulesParams {
   moduleName: ModuleName.CountTransferManager;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedGeneralTransferManagersParams extends GetAttachedModulesParams {
   moduleName: ModuleName.GeneralTransferManager;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedManualApprovalTransferManagersParams extends GetAttachedModulesParams {
   moduleName: ModuleName.ManualApprovalTransferManager;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedPercentageTransferManagersParams extends GetAttachedModulesParams {
   moduleName: ModuleName.PercentageTransferManager;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedVolumeRestrictionTransferManagersParams extends GetAttachedModulesParams {
   moduleName: ModuleName.VolumeRestrictionTM;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedBlacklistTransferManagersParams extends GetAttachedModulesParams {
   moduleName: ModuleName.BlacklistTransferManager;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedLockUpTransferManagersParams extends GetAttachedModulesParams {
   moduleName: ModuleName.LockUpTransferManager;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedRestrictedPartialSaleTransferManagersParams extends GetAttachedModulesParams {
   moduleName: ModuleName.RestrictedPartialSaleTM;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedCappedStosParams extends GetAttachedModulesParams {
   moduleName: ModuleName.CappedSTO;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedUSDTieredStosParams extends GetAttachedModulesParams {
   moduleName: ModuleName.UsdTieredSTO;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedErc20DividendCheckpointsParams extends GetAttachedModulesParams {
   moduleName: ModuleName.ERC20DividendCheckpoint;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedEtherDividendCheckpointsParams extends GetAttachedModulesParams {
   moduleName: ModuleName.EtherDividendCheckpoint;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedVestingEscrowWalletsParams extends GetAttachedModulesParams {
   moduleName: ModuleName.VestingEscrowWallet;
 }
 
+/**
+ * @hidden
+ */
 interface GetAttachedModules {
   (params: GetAttachedGeneralPermissionManagersParams, opts?: GetAttachedModulesOpts): Promise<
     GeneralPermissionManager[]
@@ -155,44 +227,137 @@ interface GetAttachedModules {
   (params: GetAttachedModulesParams, opts?: GetAttachedModulesOpts): Promise<Module[]>;
 }
 
+/**
+ * Properties denoting a Module Factory
+ */
 interface GetModuleFactoryAddressArgs {
+  /**
+   * name of Security Token module
+   */
   moduleName: ModuleName;
+  /**
+   * ethereum address of Module Factory
+   */
   tokenAddress: string;
 }
 
+/**
+ * Properties describing a Checkpoint
+ */
 export interface BaseCheckpoint {
+  /**
+   * index of the Checkpoint
+   */
   index: number;
+  /**
+   * total supply of the Security Token at the Checkpoint
+   */
   totalSupply: BigNumber;
+  /**
+   * shareholder balances at the Checkpoint
+   */
   shareholderBalances: ShareholderBalance[];
+  /**
+   * date at which the Checkpoint was created
+   */
   createdAt: Date;
 }
 
+/**
+ * Properties denoting a Shareholder with Dividend
+ */
 export interface DividendShareholderStatus {
+  /**
+   * Shareholder wallet address
+   */
   address: string;
+  /**
+   * whether payment was received or not
+   */
   paymentReceived: boolean;
+  /**
+   * whether the Shareholder is on the excluded list
+   */
   excluded: boolean;
+  /**
+   * amount of tax withheld from Shareholder
+   */
   withheldTax: BigNumber;
+  /**
+   * amount of Security Token dividend payment recieved
+   */
   amountReceived: BigNumber;
+  /**
+   * current Security Token balance
+   */
   balance: BigNumber;
 }
 
+/**
+ * Properties of a Dividend
+ */
 export interface BaseDividend {
+  /**
+   * index of the dividend
+   */
   index: number;
+  /**
+   * associated Checkpoint ID with this dividend
+   */
   checkpointId: number;
+  /**
+   * date at which the Dividend was created
+   */
   created: Date;
+  /**
+   * date at which the Dividend will mature
+   */
   maturity: Date;
+  /**
+   * date at which the Dividend will expire
+   */
   expiry: Date;
+  /**
+   * amount of tokens provided in the Dividend
+   */
   amount: BigNumber;
+  /**
+   * amount of tokens currently claimed as part of Dividend
+   */
   claimedAmount: BigNumber;
+  /**
+   * total supply of tokens in the Dividend
+   */
   totalSupply: BigNumber;
+  /**
+   * whether the Dividend has been reclaimed
+   */
   reclaimed: boolean;
+  /**
+   * total withheld by the Dividend
+   */
   totalWithheld: BigNumber;
+  /**
+   * total withheld tokens that have been withdrawn from the Dividend
+   */
   totalWithheldWithdrawn: BigNumber;
+  /**
+   * name of the Dividend
+   */
   name: string;
+  /**
+   * currency of the Dividend
+   */
   currency: string | null;
+  /**
+   * Dividend Shareholders
+   */
   shareholders: DividendShareholderStatus[];
 }
 
+/**
+ * @hidden
+ */
 export type Module =
   | GeneralPermissionManager
   | GeneralTransferManager
@@ -209,7 +374,15 @@ export type Module =
   | EtherDividendCheckpoint
   | VestingEscrowWallet;
 
+/**
+ * Interact with the Polymath SDK Security Token modules
+ */
 export class PolymathBase extends PolymathAPI {
+  /**
+   * Fetch the address of a specified Module Factory
+   * @param moduleName - Name of the Module corresponding to the Module Factory
+   * @param tokenAddress - Address of the Security Token
+   */
   public getModuleFactoryAddress = async ({
     moduleName,
     tokenAddress,
@@ -264,6 +437,10 @@ export class PolymathBase extends PolymathAPI {
     });
   };
 
+  /**
+   * Fetch the address of the Treasury Wallet
+   * @param module - Module entity relevant to the wallet
+   */
   public getTreasuryWallet = async ({ module }: { module: Module }) => {
     const stAddress = await module.securityToken();
     const token = await this.tokenFactory.getSecurityTokenInstanceFromAddress(stAddress);
@@ -321,6 +498,9 @@ export class PolymathBase extends PolymathAPI {
     return module.getTreasuryWallet();
   };
 
+  /**
+   * Fetch the addresses of a Security Token Module by Module name
+   */
   public getModuleAddressesByName = async (
     { symbol, moduleName }: GetModuleAddressesByNameParams,
     opts?: GetModuleAddressesByNameOpts
@@ -347,6 +527,9 @@ export class PolymathBase extends PolymathAPI {
     return filteredModuleAddresses;
   };
 
+  /**
+   * Fetch the attached Security Token Modules
+   */
   public getAttachedModules: GetAttachedModules = async (
     { symbol, moduleName }: GetAttachedModulesParams,
     opts?: GetAttachedModulesOpts
@@ -509,6 +692,11 @@ export class PolymathBase extends PolymathAPI {
     }
   };
 
+  /**
+   * Get the Checkpoint Data of a Security Token Checkpoint by ID
+   * @param checkpointId - ID of the Checkpoint
+   * @param securityToken - Instance of the current Security Token
+   */
   public getCheckpoint = async ({
     checkpointId,
     securityToken,
@@ -525,6 +713,10 @@ export class PolymathBase extends PolymathAPI {
     });
   };
 
+  /**
+   * Get all Checkpoints of a Security Token
+   * @param securityToken - Instance of the Security Token
+   */
   public getCheckpoints = async ({ securityToken }: { securityToken: SecurityToken }) => {
     const checkpointTimes = await securityToken.getCheckpointTimes();
 
@@ -541,6 +733,9 @@ export class PolymathBase extends PolymathAPI {
     });
   };
 
+  /**
+   * @hidden
+   */
   private getCheckpointData = async ({
     checkpointId,
     time,
@@ -573,6 +768,11 @@ export class PolymathBase extends PolymathAPI {
     };
   };
 
+  /**
+   * Get a Dividend of the Security Token given its Module and index
+   * @param dividendIndex - Index of the Dividend
+   * @param dividendsModule - Module Instance used to distribute Dividends
+   */
   public getDividend = async ({
     dividendIndex,
     dividendsModule,
@@ -633,6 +833,11 @@ export class PolymathBase extends PolymathAPI {
     };
   };
 
+  /**
+   * Get Dividends list at a certain Checkpoint
+   * @param checkpointId - Checkpoint ID
+   * @param dividendsModule - instance of the module distributing the Dividends
+   */
   public getDividendsByCheckpoint = async ({
     checkpointId,
     dividendsModule,
