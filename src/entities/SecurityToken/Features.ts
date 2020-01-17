@@ -21,6 +21,9 @@ import { PolymathError } from '../../PolymathError';
 import { TransactionQueue } from '../TransactionQueue';
 import { EnableCountTransferManager } from '../../procedures/EnableCountTransferManager';
 
+/**
+ * Current status (enabled/disabled) of all Security Token Features
+ */
 export interface FeatureStatuses {
   [Feature.Permissions]: boolean;
   [Feature.Shareholders]: boolean;
@@ -67,6 +70,9 @@ export interface Enable {
   ): Promise<TransactionQueue<EnablePercentageTransferManagerProcedureArgs>>;
 }
 
+/**
+ * Namespace that handles all Feature related functionality
+ */
 export class Features extends SubModule {
   /**
    * List of all existing features
@@ -82,7 +88,7 @@ export class Features extends SubModule {
   /**
    * Returns whether a particular feature has been enabled or not
    *
-   * @param feature feature for which to query status
+   * @param args.feature - feature for which to query status
    */
   public isEnabled = async (args: { feature: Feature }) => {
     const { feature } = args;
@@ -127,8 +133,7 @@ export class Features extends SubModule {
   /**
    * Enable a feature
    *
-   * @param feature feature to enable
-   * @param opts feature options
+   * @param args.feature - feature to enable
    */
   public enable: Enable = async (
     args: { feature: Feature },
@@ -203,7 +208,7 @@ export class Features extends SubModule {
   /**
    * Disable a feature
    *
-   * @param feature feature to enable
+   * @param args.feature - feature to disable
    */
   public disable = async (args: {
     feature: Feature;
