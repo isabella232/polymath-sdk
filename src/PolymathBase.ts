@@ -59,7 +59,7 @@ interface GetModuleAddressesByNameParams {
  */
 interface GetModuleAddressesByNameOpts {
   /**
-   * whether module is archived or unarchived
+   * whether the module is archived or unarchived
    */
   unarchived: boolean;
 }
