@@ -9,6 +9,15 @@ import { PolymathError } from '../PolymathError';
 export class ApproveErc20 extends Procedure<ApproveErc20ProcedureArgs> {
   public type = ProcedureType.ApproveErc20;
 
+  /**
+   * Approve spend of an ERC20 token by another wallet. The token in question defaults to POLY if no address is supplied
+   *
+   * Note that if the amount has already been approved, the spending approval transaction will not be added to the queue and the procedure will return
+   *
+   * Note that the procedure will fail if the owner's token balance is less than the amount being approved.
+   * The only exception to this is when approving a POLY spend on a testnet.
+   * If that is the case, an extra transaction will be submitted to request the missing amount of tokens from the faucet
+   */
   public async prepareTransactions() {
     const { amount, spender, tokenAddress } = this.args;
     const { contractWrappers, currentWallet } = this.context;

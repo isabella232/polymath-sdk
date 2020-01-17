@@ -18,12 +18,22 @@ import { findEvents } from '../utils';
 
 const { bigNumberToDate } = conversionUtils;
 
+/**
+ * Procedure that reserves a token ticker (symbol) to be used later on to launch a Security Token
+ *
+ * ***Note if the Reservation expires and the corresponding Security Token hasn't been launched yet, another issuer can reserve the same ticker***
+ */
 export class ReserveSecurityToken extends Procedure<
   ReserveSecurityTokenProcedureArgs,
   SecurityTokenReservation
 > {
   public type = ProcedureType.ReserveSecurityToken;
 
+  /**
+   * Reserve a new ticker
+   *
+   * Note that this procedure will fail if ticker has already been registered
+   */
   public async prepareTransactions() {
     const { args, context, addProcedure, addTransaction } = this;
     const { symbol, owner } = args;
