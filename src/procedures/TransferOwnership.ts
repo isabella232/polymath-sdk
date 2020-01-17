@@ -27,7 +27,7 @@ export class TransferOwnership extends Procedure<TransferOwnershipProcedureArgs>
   public type = ProcedureType.TransferOwnership;
 
   /**
-   * - Transfer ownership of a Security Token to another wallet
+   * Transfer ownership of a Security Token to another wallet
    *
    * Note this procedure will fail if:
    * - Trying to call the procedure from a wallet that is not the current owner of the Security Token
@@ -50,9 +50,12 @@ export class TransferOwnership extends Procedure<TransferOwnershipProcedureArgs>
       });
     }
 
-    const owner = await securityToken.owner();
+    const [owner, currentWalletAddress] = await Promise.all([
+      securityToken.owner(),
+      currentWallet.address(),
+    ]);
 
-    if ((await currentWallet.address()) !== owner) {
+    if (currentWalletAddress !== owner) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message: `You must be the owner of this Security Token to transfer ownership`,

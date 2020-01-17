@@ -195,8 +195,7 @@ export class SecurityToken extends Entity<Params> {
   }
 
   /**
-<<<<<<< HEAD
-   * Transfers ownership of the Security Token to a new owner
+   * Transfers ownership of the Security Token to a different wallet address
    *
    * @param args.newOwner - new owner address for the Security Token
    */
