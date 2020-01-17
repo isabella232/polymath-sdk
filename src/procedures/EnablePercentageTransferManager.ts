@@ -48,7 +48,7 @@ export class EnablePercentageTransferManager extends Procedure<
       moduleName,
     });
 
-    const newPTMAddress = await this.addTransaction<
+    const [newPtmAddress] = await this.addTransaction<
       TransactionParams.SecurityToken.AddPercentageTransferManager,
       [string]
     >(securityToken.addModuleWithLabel, {
@@ -91,20 +91,6 @@ export class EnablePercentageTransferManager extends Procedure<
       });
     }
 
-    /*
-      const percentageTransferManagerModule = (await contractWrappers.getAttachedModules(
-        { moduleName: ModuleName.PercentageTransferManager, symbol },
-        { unarchived: true }
-      ))[0];
-
-      if (!percentageTransferManagerModule) {
-        throw new PolymathError({
-          code: ErrorCode.ProcedureValidationError,
-          message: 'You must enable the PercentageOwnershipRestrictions Feature',
-        });
-      }
-      */
-
     const investors: string[] = [];
     const valids: boolean[] = [];
 
@@ -115,16 +101,21 @@ export class EnablePercentageTransferManager extends Procedure<
 
     await this.addTransaction(
       {
-        futureValue: newPTMAddress,
-        futureMethod: async address => {},
+        futureValue: newPtmAddress,
+        futureMethod: async address => {
+          const percentageTransferManagerModule = await contractWrappers.moduleFactory.getModuleInstance(
+            {
+              name: ModuleName.PercentageTransferManager,
+              address,
+            }
+          );
+
+          return percentageTransferManagerModule.modifyWhitelistMulti;
+        },
       },
       {
         tag: PolyTransactionTag.ModifyWhitelistMulti,
       }
     )({ investors, valids });
-
-    /* await this.addTransaction(percentageTransferManagerModule.modifyWhitelistMulti, {
-        tag: PolyTransactionTag.ModifyWhitelistMulti,
-      })({ investors, valids }); */
   }
 }
