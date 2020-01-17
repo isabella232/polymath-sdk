@@ -45,12 +45,12 @@ export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs>
    * Invest the specified amount in the STO
    *
    * Note that this procedure will fail if:
-   * - The security token symbol doesn't exist
+   * - The Security Token doesn't exist
    * - The STO address is invalid
    * - The STO is either archived or hasn't been launched
    * - The STO hasn't started yet
    * - The STO is paused
-   * - The STO doesn't allow beneficial investments when trying to invest on behalf of someone else if the STO doesn't allow beneficial investments
+   * - Trying to invest on behalf of someone else if the STO doesn't allow beneficial investments
    * - The STO doesn't support investments in the selected currency
    */
   public async prepareTransactions() {
