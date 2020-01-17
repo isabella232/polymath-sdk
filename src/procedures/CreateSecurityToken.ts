@@ -26,7 +26,7 @@ export class CreateSecurityToken extends Procedure<
    * Note that this procedure will fail if:
    * - The Security Token symbol hasn't been reserved
    * - The Security Token symbol has already been reserved by another issuer
-   * - The Security Token symbol already been launched
+   * - The Security Token already been launched
    */
   public async prepareTransactions() {
     const { args, context } = this;
