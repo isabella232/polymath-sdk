@@ -13,11 +13,19 @@ import {
 import { PolymathError } from '../PolymathError';
 import { findEvents } from '../utils';
 
+/**
+ * Procedure that enables Percentage Ownership Restictions on a Security Token. This allows setting a maximum percentage of the total supply that a single shareholder can own. Any token transfer that would result in a single shareholder owning more than the allowed percentage will fail
+ */
 export class EnablePercentageTransferManager extends Procedure<
   EnablePercentageTransferManagerProcedureArgs
 > {
   public type = ProcedureType.EnablePercentageTransferManager;
 
+  /**
+   * Enable Percentage Ownership restrictions and set the max ownership percentage and whether primary issuance is exempted from said restrictions
+   *
+   * Note: Primary issuance exemption is disallowed by default unless otherwise specified
+   */
   public async prepareTransactions() {
     const {
       symbol,

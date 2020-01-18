@@ -8,11 +8,17 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure that enables Shareholders (specifically the KYC whitelist) on a Security Token. This comes enabled by default
+ */
 export class EnableGeneralTransferManager extends Procedure<
   EnableGeneralTransferManagerProcedureArgs
 > {
   public type = ProcedureType.EnableGeneralTransferManager;
 
+  /**
+   * Enable Shareholders on the Security Token
+   */
   public async prepareTransactions() {
     const { symbol } = this.args;
     const { contractWrappers } = this.context;
