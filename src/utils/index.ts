@@ -67,7 +67,9 @@ export function checkStringLength(
     throw new PolymathError({
       code: ErrorCode.ProcedureValidationError,
       message: `You must provide a valid ${variableName} ${
-        opts.minLength != undefined ? `between ${minLength} and ${maxLength}` : `up to ${maxLength}`
+        opts.minLength !== undefined
+          ? `between ${minLength} and ${maxLength}`
+          : `up to ${maxLength}`
       } characters long`,
     });
   }
