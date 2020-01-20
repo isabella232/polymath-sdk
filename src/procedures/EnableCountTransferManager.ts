@@ -8,9 +8,15 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure that enables Count Restrictions on a Security Token. This allows setting a number of maximum token holders. Any token transfer that would result in the amount of token holders to exceed this maximum will fail
+ */
 export class EnableCountTransferManager extends Procedure<EnableCountTransferManagerProcedureArgs> {
   public type = ProcedureType.EnableCountTransferManager;
 
+  /**
+   * Enable Count Restrictions on the Security Token and set the supplied max holder count
+   */
   public async prepareTransactions() {
     const { symbol, maxHolderCount } = this.args;
     const { contractWrappers } = this.context;
