@@ -31,7 +31,7 @@ export class ReclaimFunds extends Procedure<ReclaimFundsProcedureArgs> {
    * Reclaim funds
    *
    * Note that this procedure will fail if:
-   * - The security token symbol doesn't exist
+   * - The Security Token doesn't exist
    * - The Dividends Feature hasn't been enabled
    */
   public async prepareTransactions() {
