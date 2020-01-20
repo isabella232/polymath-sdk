@@ -41,7 +41,7 @@ export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder
    * This means that if one of the wallets on the list doesn't clear transfer restrictions, the transaction will revert
    *
    * Note that this procedure will fail if:
-   * - The Security Token symbol doesn't exist
+   * - The Security Token doesn't exist
    * - At least one wallet address doesn't clear transfer restrictions. This check is bypassed if new KYC data is provided
    */
   public async prepareTransactions() {
