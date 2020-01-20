@@ -24,7 +24,7 @@ export { Currency };
 export { Version };
 
 /**
- * Properties of a Dividend Shareholder
+ * Properties representing a Dividend Shareholder
  */
 export interface DividendShareholderStatus {
   /**
@@ -35,9 +35,21 @@ export interface DividendShareholderStatus {
    * whether Shareholder has received payment
    */
   paymentReceived: boolean;
+  /**
+   * whether Shareholder is excluded from Dividend distribution
+   */
   excluded: boolean;
+  /**
+   * amount of tokens withheld for tax purposes
+   */
   withheldTax: BigNumber;
+  /**
+   * the amount of tokens the Shareholder has received as Dividend payment
+   */
   amountReceived: BigNumber;
+  /**
+   * the balance of the Shareholder
+   */
   balance: BigNumber;
 }
 
@@ -72,7 +84,7 @@ export interface TaxWithholdingEntry {
 }
 
 /**
- * Properties of a Security Token Issuance
+ * Internal properties of a Security Token Issuance
  */
 export interface IssuanceDataEntry {
   /**
@@ -114,7 +126,7 @@ export enum ErrorCode {
 }
 
 /**
- * Properties denoting a Shareholder's balance
+ * Internal properties represeting a Shareholder's balance
  */
 export interface ShareholderBalance {
   /**
@@ -272,7 +284,7 @@ export enum PolyTransactionTag {
 // Procedure arguments
 
 /**
- * Properties of an ERC20 Approval
+ * Internal properties of an ERC20 Approval
  */
 export interface ApproveErc20ProcedureArgs {
   /**
@@ -290,7 +302,7 @@ export interface ApproveErc20ProcedureArgs {
 }
 
 /**
- * Properties of a ERC20 Token Transfer
+ * Arguments for [[TransferErc20Procedure]]
  */
 export interface TransferErc20ProcedureArgs {
   /**
@@ -308,7 +320,7 @@ export interface TransferErc20ProcedureArgs {
 }
 
 /**
- * Properties needed to create a Checkpoint
+ * Arguments for [[CreateCheckpointProcedure]]
  */
 export interface CreateCheckpointProcedureArgs {
   /**
@@ -318,7 +330,7 @@ export interface CreateCheckpointProcedureArgs {
 }
 
 /**
- * Properties needed to create a Dividend Distribution on a Security Token
+ * Arguments for [[CreateDividendDistributionProcedure]]
  */
 export interface CreateDividendDistributionProcedureArgs {
   /**
@@ -359,17 +371,26 @@ export interface CreateDividendDistributionProcedureArgs {
   taxWithholdings?: TaxWithholdingEntry[];
 }
 
+/**
+ * Arguments for [[PushDividendPaymentProcedure]]
+ */
 export interface PushDividendPaymentProcedureArgs {
   symbol: string;
   dividendIndex: number;
   shareholderAddresses?: string[];
 }
 
+/**
+ * Arguments for [[PullDividendPaymentProcedure]]
+ */
 export interface PullDividendPaymentProcedureArgs {
   symbol: string;
   dividendIndex: number;
 }
 
+/**
+ * Arguments for [[CreateSecurityTokenProcedure]]
+ */
 export interface CreateSecurityTokenProcedureArgs {
   name: string;
   symbol: string;
@@ -378,35 +399,56 @@ export interface CreateSecurityTokenProcedureArgs {
   treasuryWallet?: string;
 }
 
+/**
+ * Arguments for [[EnableDividendManagerProcedure]]
+ */
 export interface EnableDividendManagerProcedureArgs {
   symbol: string;
   storageWalletAddress: string;
 }
 
+/**
+ * Arguments for [[EnableGeneralPermissionManagerProcedure]]
+ */
 export interface EnableGeneralPermissionManagerProcedureArgs {
   symbol: string;
 }
 
+/**
+ * Arguments for [[EnableGeneralTransferManagerProcedure]]
+ */
 export interface EnableGeneralTransferManagerProcedureArgs {
   symbol: string;
 }
 
+/**
+ * Arguments for [[EnableCountTransferManagerProcedure]]
+ */
 export interface EnableCountTransferManagerProcedureArgs {
   symbol: string;
   maxHolderCount: number;
 }
 
+/**
+ * Arguments for [[EnablePercentageTransferManagerProcedure]]
+ */
 export interface EnablePercentageTransferManagerProcedureArgs {
   symbol: string;
   maxHolderPercentage: BigNumber;
   allowPrimaryIssuance?: boolean;
 }
 
+/**
+ * Arguments for [[DisableFeatureProcedure]]
+ */
 export interface DisableFeatureProcedureArgs {
   symbol: string;
   moduleName: ModuleName;
 }
 
+/**
+ * Arguments for [[LaunchSimpleStoProcedure]]
+ */
 export interface LaunchSimpleStoProcedureArgs {
   symbol: string;
   startDate: Date;
@@ -419,11 +461,17 @@ export interface LaunchSimpleStoProcedureArgs {
   allowPreIssuing?: boolean;
 }
 
+/**
+ * Arguments for [[IssueTokensProcedure]]
+ */
 export interface IssueTokensProcedureArgs {
   symbol: string;
   issuanceData: IssuanceDataEntry[];
 }
 
+/**
+ * Arguments for [[ToggleAllowPreIssuingProcedure]]
+ */
 export interface ToggleAllowPreIssuingProcedureArgs {
   symbol: string;
   stoAddress: string;
@@ -431,6 +479,9 @@ export interface ToggleAllowPreIssuingProcedureArgs {
   allowPreIssuing: boolean;
 }
 
+/**
+ * Arguments for [[ToggleAllowBeneficialInvestmentsProcedure]]
+ */
 export interface ToggleAllowBeneficialInvestmentsProcedureArgs {
   symbol: string;
   stoAddress: string;
@@ -438,12 +489,18 @@ export interface ToggleAllowBeneficialInvestmentsProcedureArgs {
   allowBeneficialInvestments: boolean;
 }
 
+/**
+ * Arguments for [[ModifyTieredStoDataProcedure]]
+ */
 export interface ModifyTieredStoDataProcedureArgs
   extends Partial<Omit<LaunchTieredStoProcedureArgs, 'allowPreIssuing'>> {
   stoAddress: string;
   symbol: string;
 }
 
+/**
+ * Arguments for [[InvestInTieredStoBaseProcedure]]
+ */
 interface InvestInTieredStoBaseProcedureArgs {
   symbol: string;
   stoAddress: string;
@@ -453,11 +510,17 @@ interface InvestInTieredStoBaseProcedureArgs {
   beneficiary?: string;
 }
 
+/**
+ * Arguments to invest in Stable Coin for [[InvestInTieredStoProcedure]]
+ */
 export interface InvestWithStableCoinArgs extends InvestInTieredStoBaseProcedureArgs {
   currency: Currency.StableCoin;
   stableCoinAddress: string;
 }
 
+/**
+ * Arguments for [[InvestInTieredStoProcedure]]
+ */
 export type InvestInTieredStoProcedureArgs =
   | InvestInTieredStoBaseProcedureArgs & {
       currency: Currency.POLY | Currency.ETH;
@@ -465,6 +528,9 @@ export type InvestInTieredStoProcedureArgs =
     }
   | InvestWithStableCoinArgs;
 
+/**
+ * Arguments for [[InvestInSimpleStoProcedure]]
+ */
 export interface InvestInSimpleStoProcedureArgs {
   symbol: string;
   stoAddress: string;
@@ -472,12 +538,18 @@ export interface InvestInSimpleStoProcedureArgs {
   beneficiary?: string;
 }
 
+/**
+ * Confirm that the arguments are valid to invest with stable coin
+ */
 export function isInvestWithStableCoinArgs(args: any): args is InvestWithStableCoinArgs {
   const { currency, stableCoinAddress } = args;
 
   return currency === Currency.StableCoin && typeof stableCoinAddress === 'string';
 }
 
+/**
+ * Internal properties of an STO Tier
+ */
 export interface StoTier {
   /**
    * Amount of tokens to sell in this tier
@@ -516,6 +588,9 @@ export interface CustomCurrency {
   polyOracleAddress: string;
 }
 
+/**
+ * Arguments for [[LaunchTieredStoProcedure]]
+ */
 export interface LaunchTieredStoProcedureArgs {
   symbol: string;
   startDate: Date;
@@ -531,37 +606,58 @@ export interface LaunchTieredStoProcedureArgs {
   allowPreIssuing?: boolean;
 }
 
+/**
+ * Arguments for [[ReclaimFundsProcedure]]
+ */
 export interface ReclaimFundsProcedureArgs {
   symbol: string;
   dividendIndex: number;
 }
 
+/**
+ * Arguments for [[ReserveSecurityTokenProcedure]]
+ */
 export interface ReserveSecurityTokenProcedureArgs {
   symbol: string;
   owner?: string;
 }
 
+/**
+ * Arguments for [[WithdrawTaxesProcedure]]
+ */
 export interface WithdrawTaxesProcedureArgs {
   symbol: string;
   dividendIndex: number;
 }
 
+/**
+ * Arguments for [[UpdateDividendsTaxWithholdingListProcedure]]
+ */
 export interface UpdateDividendsTaxWithholdingListProcedureArgs {
   symbol: string;
   shareholderAddresses: string[];
   percentages: number[];
 }
 
+/**
+ * Arguments for [[SetDividendsWalletProcedure]]
+ */
 export interface SetDividendsWalletProcedureArgs {
   symbol: string;
   address: string;
 }
 
+/**
+ * Arguments for [[ModifyDividendsDefaultExclusionListProcedure]]
+ */
 export interface ModifyDividendsDefaultExclusionListProcedureArgs {
   symbol: string;
   shareholderAddresses: string[];
 }
 
+/**
+ * Arguments for [[AssignSecurityTokenRoleProcedure]]
+ */
 export interface AssignSecurityTokenRoleProcedureArgs {
   symbol: string;
   delegateAddress: string;
@@ -570,6 +666,9 @@ export interface AssignSecurityTokenRoleProcedureArgs {
   description: string;
 }
 
+/**
+ * Arguments for [[AssignStoRoleProcedure]]
+ */
 export interface AssignStoRoleProcedureArgs {
   symbol: string;
   delegateAddress: string;
@@ -579,6 +678,9 @@ export interface AssignStoRoleProcedureArgs {
   description?: string;
 }
 
+/**
+ * Arguments for [[ControllerTransferProcedure]]
+ */
 export interface ControllerTransferProcedureArgs {
   from: string;
   to: string;
@@ -588,6 +690,9 @@ export interface ControllerTransferProcedureArgs {
   log?: string;
 }
 
+/**
+ * Arguments for [[ControllerRedeemProcedure]]
+ */
 export interface ControllerRedeemProcedureArgs {
   from: string;
   symbol: string;
@@ -596,6 +701,9 @@ export interface ControllerRedeemProcedureArgs {
   reason?: string;
 }
 
+/**
+ * Arguments for [[TogglePauseStoProcedure]]
+ */
 export interface TogglePauseStoProcedureArgs {
   symbol: string;
   stoAddress: string;
@@ -603,17 +711,26 @@ export interface TogglePauseStoProcedureArgs {
   pause: boolean;
 }
 
+/**
+ * Arguments for [[FinalizeStoProcedure]]
+ */
 export interface FinalizeStoProcedureArgs {
   symbol: string;
   stoAddress: string;
   stoType: StoType;
 }
 
+/**
+ * Arguments for [[SetControllerProcedure]]
+ */
 export interface SetControllerProcedureArgs {
   symbol: string;
   controller: string;
 }
 
+/**
+ * Arguments for [[SetDocumentProcedure]]
+ */
 export interface SetDocumentProcedureArgs {
   symbol: string;
   name: string;
@@ -621,26 +738,41 @@ export interface SetDocumentProcedureArgs {
   documentHash: string;
 }
 
+/**
+ * Arguments for [[RemoveDocumentProcedure]]
+ */
 export interface RemoveDocumentProcedureArgs {
   symbol: string;
   name: string;
 }
 
+/**
+ * Arguments for [[FreezeIssuanceProcedure]]
+ */
 export interface FreezeIssuanceProcedureArgs {
   symbol: string;
   signature?: string;
 }
 
+/**
+ * Arguments for [[DisableControllerProcedure]]
+ */
 export interface DisableControllerProcedureArgs {
   symbol: string;
   signature?: string;
 }
 
+/**
+ * Arguments for [[TransferReservationOwnershipProcedure]]
+ */
 export interface TransferReservationOwnershipProcedureArgs {
   symbol: string;
   newOwner: string;
 }
 
+/**
+ * Properties expressing KYC data for a Shareholder
+ */
 export interface ShareholderDataEntry {
   /**
    * shareholder wallet address to whitelist
@@ -668,37 +800,58 @@ export interface ShareholderDataEntry {
   canBuyFromSto: boolean;
 }
 
+/**
+ * Arguments for [[ModifyShareholderDataProcedure]]
+ */
 export interface ModifyShareholderDataProcedureArgs {
   symbol: string;
   shareholderData: ShareholderDataEntry[];
 }
 
+/**
+ * Arguments for [[RevokeKycProcedure]]
+ */
 export interface RevokeKycProcedureArgs {
   symbol: string;
   shareholderAddresses: string[];
 }
 
+/**
+ * Arguments for [[ModifyMaxHolderCountProcedure]]
+ */
 export interface ModifyMaxHolderCountProcedureArgs {
   symbol: string;
   maxHolderCount: number;
 }
 
+/**
+ * Arguments for [[ModifyMaxHolderPercentageProcedure]]
+ */
 export interface ModifyMaxHolderPercentageProcedureArgs {
   symbol: string;
   maxHolderPercentage: BigNumber;
 }
 
+/**
+ * Properties of an entry in the Percentage Whitelist
+ */
 export interface PercentageWhitelistEntry {
   address: string;
   whitelisted: boolean;
 }
 
+/**
+ * Arguments for [[ModifyPercentageExemptionsProcedure]]
+ */
 export interface ModifyPercentageExemptionsProcedureArgs {
   symbol: string;
   whitelistEntries?: PercentageWhitelistEntry[];
   allowPrimaryIssuance?: boolean;
 }
 
+/**
+ * Arguments for [[TransferSecurityTokensProcedure]]
+ */
 export interface TransferSecurityTokensProcedureArgs {
   symbol: string;
   to: string;
@@ -707,11 +860,17 @@ export interface TransferSecurityTokensProcedureArgs {
   from?: string;
 }
 
+/**
+ * Arguments for [[ToggleFreezeTransfersProcedure]]
+ */
 export interface ToggleFreezeTransfersProcedureArgs {
   symbol: string;
   freeze: boolean;
 }
 
+/**
+ * Arguments for [[SignTransferDataProcedure]]
+ */
 export interface SignTransferDataProcedureArgs {
   symbol: string;
   kycData: Omit<Omit<ShareholderDataEntry, 'isAccredited'>, 'canBuyFromSto'>[];
@@ -719,10 +878,16 @@ export interface SignTransferDataProcedureArgs {
   validTo: Date;
 }
 
+/**
+ * Arguments for [[SignDisableControllerAckProcedure]]
+ */
 export interface SignDisableControllerAckProcedureArgs {
   symbol: string;
 }
 
+/**
+ * Arguments for [[SignFreezeIssuanceAckProcedure]]
+ */
 export interface SignFreezeIssuanceAckProcedureArgs {
   symbol: string;
 }
