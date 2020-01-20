@@ -380,11 +380,15 @@ export type Module =
 export class PolymathBase extends PolymathAPI {
   /**
    * Fetch the address of a specified Module Factory
-   * @param moduleName - Name of the Module corresponding to the Module Factory
-   * @param tokenAddress - Address of the Security Token
    */
   public getModuleFactoryAddress = async ({
+    /**
+     * name of the Module corresponding to the Module Factory
+     */
     moduleName,
+    /**
+     * address of the Security Token
+     */
     tokenAddress,
   }: GetModuleFactoryAddressArgs) => {
     const moduleTypes = {
@@ -439,9 +443,15 @@ export class PolymathBase extends PolymathAPI {
 
   /**
    * Fetch the address of the Treasury Wallet
-   * @param module - Module instance relevant to the wallet
    */
-  public getTreasuryWallet = async ({ module }: { module: Module }) => {
+  public getTreasuryWallet = async ({
+    /**
+     * module instance relevant to the wallet
+     */
+    module,
+  }: {
+    module: Module;
+  }) => {
     const stAddress = await module.securityToken();
     const token = await this.tokenFactory.getSecurityTokenInstanceFromAddress(stAddress);
     const defaultWallet = await token.getTreasuryWallet();
@@ -502,7 +512,16 @@ export class PolymathBase extends PolymathAPI {
    * Fetch all addresses of a Module attached to a Security Token
    */
   public getModuleAddressesByName = async (
-    { symbol, moduleName }: GetModuleAddressesByNameParams,
+    {
+      /**
+       * symbol of the Security Token
+       */
+      symbol,
+      /**
+       * name of the Module
+       */
+      moduleName,
+    }: GetModuleAddressesByNameParams,
     opts?: GetModuleAddressesByNameOpts
   ) => {
     const { tokenFactory } = this;
@@ -531,7 +550,19 @@ export class PolymathBase extends PolymathAPI {
    * Fetch all Modules of a certain type attached to a Security Token
    */
   public getAttachedModules: GetAttachedModules = async (
-    { symbol, moduleName }: GetAttachedModulesParams,
+    {
+      /**
+       * symbol of the Security Token
+       */
+      symbol,
+      /**
+       * name of the Module
+       */
+      moduleName,
+    }: GetAttachedModulesParams,
+    /**
+     * attached modules options: [[GetAttachedModulesOpts]]
+     */
     opts?: GetAttachedModulesOpts
   ): Promise<any[]> => {
     const { moduleFactory } = this;
@@ -694,11 +725,15 @@ export class PolymathBase extends PolymathAPI {
 
   /**
    * Get the Checkpoint Data of a Security Token Checkpoint by ID
-   * @param checkpointId - ID of the Checkpoint
-   * @param securityToken - Instance of the current Security Token
    */
   public getCheckpoint = async ({
+    /**
+     * id of the Checkpoint
+     */
     checkpointId,
+    /**
+     * instance of the current Security Token
+     */
     securityToken,
   }: {
     checkpointId: number;
@@ -715,9 +750,15 @@ export class PolymathBase extends PolymathAPI {
 
   /**
    * Get all Checkpoints of a Security Token
-   * @param securityToken - Instance of the Security Token
    */
-  public getCheckpoints = async ({ securityToken }: { securityToken: SecurityToken }) => {
+  public getCheckpoints = async ({
+    /**
+     * instance of the current Security Token
+     */
+    securityToken,
+  }: {
+    securityToken: SecurityToken;
+  }) => {
     const checkpointTimes = await securityToken.getCheckpointTimes();
 
     const checkpoints = await P.map(checkpointTimes, (time, index) =>
@@ -770,11 +811,15 @@ export class PolymathBase extends PolymathAPI {
 
   /**
    * Get a Dividend of the Security Token given its Module and index
-   * @param dividendIndex - Index of the Dividend
-   * @param dividendsModule - Module Instance used to distribute Dividends
    */
   public getDividend = async ({
+    /**
+     * index of the Dividend
+     */
     dividendIndex,
+    /**
+     * instance of Module used to distribute Dividends
+     */
     dividendsModule,
   }: {
     dividendIndex: number;
@@ -835,11 +880,15 @@ export class PolymathBase extends PolymathAPI {
 
   /**
    * Fetch list of all Dividends at a certain Checkpoint
-   * @param checkpointId - Checkpoint ID
-   * @param dividendsModule - instance of the module distributing the Dividends
    */
   public getDividendsByCheckpoint = async ({
+    /**
+     * id of the Checkpoint
+     */
     checkpointId,
+    /**
+     * instance of the module distributing the Dividends
+     */
     dividendsModule,
   }: {
     checkpointId: number;
@@ -875,7 +924,13 @@ export class PolymathBase extends PolymathAPI {
    * Auxiliary function to fetch all dividend distributions
    */
   public getAllDividends = async ({
+    /**
+     * symbol of the Security Token
+     */
     securityTokenSymbol,
+    /**
+     * id of the Checkpoint
+     */
     checkpointId,
   }: {
     securityTokenSymbol: string;
