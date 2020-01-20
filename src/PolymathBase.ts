@@ -41,7 +41,7 @@ import { ErrorCode, SecurityTokenRole, ShareholderBalance } from './types';
 import { ZERO_ADDRESS } from './utils/constants';
 
 /**
- * Properties to fetch a module address by Security Token and module name
+ * Arguments for [[getModuleAddressesByName]]
  */
 interface GetModuleAddressesByNameParams {
   /**
@@ -65,7 +65,7 @@ interface GetModuleAddressesByNameOpts {
 }
 
 /**
- * Properties to fetch an attached module entity
+ * Arguments for [[getAttachedModules]]
  */
 interface GetAttachedModulesParams {
   /**
@@ -231,7 +231,7 @@ interface GetAttachedModules {
 }
 
 /**
- * Properties denoting a Module Factory
+ * Arguments for [[getModuleFactoryAddress]]
  */
 interface GetModuleFactoryAddressArgs {
   /**
