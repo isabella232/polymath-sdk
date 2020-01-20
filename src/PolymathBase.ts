@@ -378,7 +378,7 @@ export type Module =
   | VestingEscrowWallet;
 
 /**
- * Interact with the Polymath SDK Security Token modules
+ * Class that wraps the polymathnetwork/contract-wrappers library to add utility functions
  */
 export class PolymathBase extends PolymathAPI {
   /**
