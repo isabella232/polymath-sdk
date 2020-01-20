@@ -59,7 +59,7 @@ interface GetModuleAddressesByNameParams {
  */
 interface GetModuleAddressesByNameOpts {
   /**
-   * whether the module is archived or unarchived
+   * whether to include unarchived modules in the search
    */
   unarchived: boolean;
 }
@@ -78,9 +78,12 @@ interface GetAttachedModulesParams {
   moduleName: ModuleName;
 }
 
+/**
+ * Optional property of unarchived status when fetching attached modules
+ */
 interface GetAttachedModulesOpts {
   /**
-   * whether module is archived or unarchived
+   * whether to include unarchived modules in the search
    */
   unarchived: boolean;
 }
@@ -242,7 +245,7 @@ interface GetModuleFactoryAddressArgs {
 }
 
 /**
- * Properties describing a Checkpoint
+ * Internal representation of a Checkpoint
  */
 export interface BaseCheckpoint {
   /**
@@ -264,7 +267,7 @@ export interface BaseCheckpoint {
 }
 
 /**
- * Properties denoting a Shareholder with Dividend
+ * Status of a particular Shareholder's Dividend payments in a specific Dividend Distribution
  */
 export interface DividendShareholderStatus {
   /**
@@ -276,15 +279,15 @@ export interface DividendShareholderStatus {
    */
   paymentReceived: boolean;
   /**
-   * whether the Shareholder is on the excluded list
+   * whether the Shareholder is on the exclusion list
    */
   excluded: boolean;
   /**
-   * amount of tax withheld from Shareholder
+   * amount of tax withheld so far
    */
   withheldTax: BigNumber;
   /**
-   * amount of Security Token dividend payment recieved
+   * amount received as payment
    */
   amountReceived: BigNumber;
   /**
@@ -294,7 +297,7 @@ export interface DividendShareholderStatus {
 }
 
 /**
- * Properties of a Dividend
+ * Internal representation of a Dividend Distribution
  */
 export interface BaseDividend {
   /**
@@ -302,7 +305,7 @@ export interface BaseDividend {
    */
   index: number;
   /**
-   * associated Checkpoint ID with this dividend
+   * checkpoint UUID to which this Dividend Distribution is associated
    */
   checkpointId: number;
   /**
@@ -310,7 +313,7 @@ export interface BaseDividend {
    */
   created: Date;
   /**
-   * date at which the Dividend will mature
+   * date from which payments can be distributed
    */
   maturity: Date;
   /**
@@ -322,23 +325,23 @@ export interface BaseDividend {
    */
   amount: BigNumber;
   /**
-   * amount of tokens currently claimed as part of Dividend
+   * amount of tokens paid so far
    */
   claimedAmount: BigNumber;
   /**
-   * total supply of tokens in the Dividend
+   * total supply of the Security Token
    */
   totalSupply: BigNumber;
   /**
-   * whether the Dividend has been reclaimed
+   * whether expired payments have been reclaimed
    */
   reclaimed: boolean;
   /**
-   * total withheld by the Dividend
+   * total amount of tokens withheld as tax so far
    */
   totalWithheld: BigNumber;
   /**
-   * total withheld tokens that have been withdrawn from the Dividend
+   * total amount of withheld taxes already withdrawn from the storage wallet
    */
   totalWithheldWithdrawn: BigNumber;
   /**
@@ -346,11 +349,11 @@ export interface BaseDividend {
    */
   name: string;
   /**
-   * currency of the Dividend
+   * symbol of the currency in which Dividends are being distributed
    */
   currency: string | null;
   /**
-   * Dividend Shareholders
+   * dividend Shareholders
    */
   shareholders: DividendShareholderStatus[];
 }
@@ -442,16 +445,9 @@ export class PolymathBase extends PolymathAPI {
   };
 
   /**
-   * Fetch the address of the Treasury Wallet
+   * Fetch a Module's Treasury Wallet
    */
-  public getTreasuryWallet = async ({
-    /**
-     * module instance relevant to the wallet
-     */
-    module,
-  }: {
-    module: Module;
-  }) => {
+  public getTreasuryWallet = async ({ module }: { module: Module }) => {
     const stAddress = await module.securityToken();
     const token = await this.tokenFactory.getSecurityTokenInstanceFromAddress(stAddress);
     const defaultWallet = await token.getTreasuryWallet();
@@ -509,7 +505,7 @@ export class PolymathBase extends PolymathAPI {
   };
 
   /**
-   * Fetch all addresses of a Module attached to a Security Token
+   * Fetch addresses of all Modules of a certain type attached to a Security Token
    */
   public getModuleAddressesByName = async (
     {
@@ -560,9 +556,6 @@ export class PolymathBase extends PolymathAPI {
        */
       moduleName,
     }: GetAttachedModulesParams,
-    /**
-     * attached modules options: [[GetAttachedModulesOpts]]
-     */
     opts?: GetAttachedModulesOpts
   ): Promise<any[]> => {
     const { moduleFactory } = this;
@@ -724,15 +717,15 @@ export class PolymathBase extends PolymathAPI {
   };
 
   /**
-   * Get the Checkpoint Data of a Security Token Checkpoint by ID
+   * Get data associated to a Checkpoint
    */
   public getCheckpoint = async ({
     /**
-     * id of the Checkpoint
+     * checkpoint UUID
      */
     checkpointId,
     /**
-     * instance of the current Security Token
+     * instance of the Security Token
      */
     securityToken,
   }: {
@@ -753,7 +746,7 @@ export class PolymathBase extends PolymathAPI {
    */
   public getCheckpoints = async ({
     /**
-     * instance of the current Security Token
+     * instance of the Security Token
      */
     securityToken,
   }: {
@@ -810,16 +803,13 @@ export class PolymathBase extends PolymathAPI {
   };
 
   /**
-   * Get a Dividend of the Security Token given its Module and index
+   * Get data associated to a specific Dividend Distribution
    */
   public getDividend = async ({
     /**
      * index of the Dividend
      */
     dividendIndex,
-    /**
-     * instance of Module used to distribute Dividends
-     */
     dividendsModule,
   }: {
     dividendIndex: number;
@@ -883,12 +873,9 @@ export class PolymathBase extends PolymathAPI {
    */
   public getDividendsByCheckpoint = async ({
     /**
-     * id of the Checkpoint
+     * checkpoint UUID
      */
     checkpointId,
-    /**
-     * instance of the module distributing the Dividends
-     */
     dividendsModule,
   }: {
     checkpointId: number;
@@ -929,7 +916,7 @@ export class PolymathBase extends PolymathAPI {
      */
     securityTokenSymbol,
     /**
-     * id of the Checkpoint
+     * checkpoint UUID
      */
     checkpointId,
   }: {
