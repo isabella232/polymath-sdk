@@ -16,6 +16,7 @@ import {
   EnableCountTransferManagerProcedureArgs,
   EnableGeneralTransferManagerProcedureArgs,
   EnablePercentageTransferManagerProcedureArgs,
+  PercentageWhitelistEntry,
 } from '../../types';
 import { PolymathError } from '../../PolymathError';
 import { TransactionQueue } from '../TransactionQueue';
@@ -45,6 +46,7 @@ export interface EnableShareholderCountRestrictionsOpts {
 export interface EnablePercentageOwnershipRestrictionsOpts {
   maxHolderPercentage: BigNumber;
   allowPrimaryIssuance?: boolean;
+  whitelistEntries?: PercentageWhitelistEntry[];
 }
 
 export interface Enable {

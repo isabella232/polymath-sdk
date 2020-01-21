@@ -1,11 +1,12 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
+import * as utilsModule from '../../utils';
 import { EnablePercentageTransferManager } from '../../procedures/EnablePercentageTransferManager';
 import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
@@ -74,10 +75,11 @@ describe('EnablePercentageTransferManager', () => {
       expect(
         addTransactionSpy
           .getCall(0)
-          .calledWithExactly(securityTokenMock.getMockInstance().addModuleWithLabel, {
-            tag: PolyTransactionTag.EnablePercentageTransferManager,
-          })
+          .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.EnablePercentageTransferManager
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
     });
 
@@ -96,11 +98,26 @@ describe('EnablePercentageTransferManager', () => {
       expect(
         addTransactionSpy
           .getCall(0)
-          .calledWithExactly(securityTokenMock.getMockInstance().addModuleWithLabel, {
-            tag: PolyTransactionTag.EnablePercentageTransferManager,
-          })
+          .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
+      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.EnablePercentageTransferManager
+      );
       expect(addTransactionSpy.callCount).toEqual(1);
+    });
+
+    test('should throw if whitelist parameter is defined but it is empty', async () => {
+      target = new EnablePercentageTransferManager(
+        { ...params, whitelistEntries: [] },
+        contextMock.getMockInstance()
+      );
+
+      await expect(target.prepareTransactions()).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.ProcedureValidationError,
+          message: `Whitelist data passed can not be an empty list`,
+        })
+      );
     });
 
     test('should throw if there is no valid security token supplied', async () => {

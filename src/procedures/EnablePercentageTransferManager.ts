@@ -2,6 +2,7 @@ import {
   ModuleName,
   TransactionParams,
   SecurityTokenEvents,
+  TransactionReceiptWithDecodedLogs,
 } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {
@@ -12,6 +13,35 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { findEvents } from '../utils';
+import { PolymathBase } from '~/PolymathBase';
+
+export const createPtmAddressResolver = async (receipt: TransactionReceiptWithDecodedLogs) => {
+  const { logs } = receipt;
+
+  const [event] = findEvents({
+    eventName: SecurityTokenEvents.ModuleAdded,
+    logs,
+  });
+
+  if (event) {
+    const { args: eventArgs } = event;
+    const { _module } = eventArgs;
+    return _module;
+  }
+  throw new PolymathError({
+    code: ErrorCode.UnexpectedEventLogs,
+    message:
+      "The Percentage Transfer Manager was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
+  });
+};
+
+export const createFutureMethod = async (contractWrappers: PolymathBase, address: string) => {
+  const percentageTransferManagerModule = await contractWrappers.moduleFactory.getModuleInstance({
+    name: ModuleName.PercentageTransferManager,
+    address,
+  });
+  return percentageTransferManagerModule.modifyWhitelistMulti;
+};
 
 export class EnablePercentageTransferManager extends Procedure<
   EnablePercentageTransferManagerProcedureArgs
@@ -53,27 +83,7 @@ export class EnablePercentageTransferManager extends Procedure<
       [string]
     >(securityToken.addModuleWithLabel, {
       tag: PolyTransactionTag.EnablePercentageTransferManager,
-      resolvers: [
-        async receipt => {
-          const { logs } = receipt;
-
-          const [event] = findEvents({
-            eventName: SecurityTokenEvents.ModuleAdded,
-            logs,
-          });
-
-          if (event) {
-            const { args: eventArgs } = event;
-            const { _module } = eventArgs;
-            return _module;
-          }
-          throw new PolymathError({
-            code: ErrorCode.UnexpectedEventLogs,
-            message:
-              "The Percentage Transfer Manager was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
-          });
-        },
-      ],
+      resolvers: [async receipt => createPtmAddressResolver(receipt)],
     })({
       moduleName,
       address: moduleAddress,
@@ -91,6 +101,7 @@ export class EnablePercentageTransferManager extends Procedure<
           message: `Whitelist data passed can not be an empty list`,
         });
       }
+
       const investors: string[] = [];
       const valids: boolean[] = [];
 
@@ -102,16 +113,7 @@ export class EnablePercentageTransferManager extends Procedure<
       await this.addTransaction(
         {
           futureValue: newPtmAddress,
-          futureMethod: async address => {
-            const percentageTransferManagerModule = await contractWrappers.moduleFactory.getModuleInstance(
-              {
-                name: ModuleName.PercentageTransferManager,
-                address,
-              }
-            );
-
-            return percentageTransferManagerModule.modifyWhitelistMulti;
-          },
+          futureMethod: async address => createFutureMethod(contractWrappers, address),
         },
         {
           tag: PolyTransactionTag.ModifyWhitelistMulti,
