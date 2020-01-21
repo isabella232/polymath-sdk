@@ -12,11 +12,19 @@ import { PolymathError } from '../PolymathError';
 
 const CHUNK_SIZE = 200;
 
+/**
+ * Procedure that modifies the list of shareholders which are excluded from receiving dividend payments
+ */
 export class ModifyDividendsDefaultExclusionList extends Procedure<
   ModifyDividendsDefaultExclusionListProcedureArgs
 > {
   public type = ProcedureType.ModifyDividendsDefaultExclusionList;
 
+  /**
+   * Set the default exclusion list for dividend distributions
+   *
+   * Note that this procedure will fail if the Dividends Feature is not enabled
+   */
   public async prepareTransactions() {
     const { symbol, shareholderAddresses: investors } = this.args;
     const { contractWrappers } = this.context;

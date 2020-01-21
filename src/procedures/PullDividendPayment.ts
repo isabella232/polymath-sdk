@@ -10,6 +10,9 @@ import { Factories } from '../Context';
 import { PolymathError } from '../PolymathError';
 import { DividendDistribution, SecurityToken } from '../entities';
 
+/**
+ * @hidden
+ */
 export const createPullDividendPaymentResolver = (
   factories: Factories,
   symbol: string,
@@ -23,9 +26,21 @@ export const createPullDividendPaymentResolver = (
   );
 };
 
+/**
+ * Procedure that allows a shareholder to pull their dividend payments from a Dividend Distribution
+ */
 export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureArgs> {
   public type = ProcedureType.PullDividendPayment;
 
+  /**
+   * Pull dividend payments from the Dividend Distribution
+   *
+   * Note this procedure will fail if:
+   * - The Dividends Feature is not enabled
+   * - The current wallet address is not a shareholder
+   * - The current wallet address has already received payment for this Dividend Distribution
+   * - The current wallet address is on the exclusion list
+   */
   public async prepareTransactions() {
     const { symbol, dividendIndex } = this.args;
     const { contractWrappers, factories, currentWallet } = this.context;

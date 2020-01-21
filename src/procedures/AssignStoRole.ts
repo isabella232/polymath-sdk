@@ -10,9 +10,20 @@ import {
 import { PolymathError } from '../PolymathError';
 import { checkStringLength } from '../utils';
 
+/**
+ * Procedure to assign an STO Role to a delegate
+ */
 export class AssignStoRole extends Procedure<AssignStoRoleProcedureArgs> {
   public type = ProcedureType.AssignStoRole;
 
+  /**
+   * - If the delegate does not exist, the delegate address will be added
+   * - The specified Role will be assigned/revoked to/from the delegate
+   *
+   * Note this procedure will fail if:
+   * - The Permissions Feature hasn't been enabled on the Security Token
+   * - You attempt to assign/revoke a Role that has already been assigned/revoked
+   */
   public async prepareTransactions() {
     const { symbol, role, assign, description = '', delegateAddress, stoAddress } = this.args;
     const { contractWrappers } = this.context;
