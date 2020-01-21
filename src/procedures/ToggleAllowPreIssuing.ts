@@ -16,6 +16,9 @@ import { isValidAddress } from '../utils';
 import { Factories } from '../Context';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 
+/**
+ * @hidden
+ */
 export const createToggleAllowPreIssuingResolver = (
   factories: Factories,
   symbol: string,
@@ -49,9 +52,23 @@ export const createToggleAllowPreIssuingResolver = (
   }
 };
 
+/**
+ * Procedure that toggles whether pre-issuing of tokens is allowed or not in an STO
+ */
 export class ToggleAllowPreIssuing extends Procedure<ToggleAllowPreIssuingProcedureArgs> {
   public type = ProcedureType.ToggleAllowPreIssuing;
 
+  /**
+   * Allow or disallow pre-issuing in the STO
+   *
+   * Note this procedure will fail if:
+   * - Trying to allow pre issuing when it is already allowed
+   * - Trying to disallow pre issuing when it is already disallowed
+   * - Trying to execute this procedure on an STO with version 3.0.0 or lower
+   * - The specified STO address is invalid
+   * - The specified STO type is invalid
+   * - The STO has not been launched, or the module has been archived
+   */
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol, allowPreIssuing } = this.args;
     const { contractWrappers, factories } = this.context;

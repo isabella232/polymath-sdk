@@ -37,7 +37,12 @@ import { range, flatten } from 'lodash';
 import P from 'bluebird';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';
-import { ErrorCode, SecurityTokenRole, ShareholderBalance } from './types';
+import {
+  ErrorCode,
+  SecurityTokenRole,
+  ShareholderBalance,
+  DividendShareholderStatus,
+} from './types';
 import { ZERO_ADDRESS } from './utils/constants';
 
 interface GetModuleAddressesByNameParams {
@@ -165,15 +170,6 @@ export interface BaseCheckpoint {
   totalSupply: BigNumber;
   shareholderBalances: ShareholderBalance[];
   createdAt: Date;
-}
-
-export interface DividendShareholderStatus {
-  address: string;
-  paymentReceived: boolean;
-  excluded: boolean;
-  withheldTax: BigNumber;
-  amountReceived: BigNumber;
-  balance: BigNumber;
 }
 
 export interface BaseDividend {
