@@ -13,30 +13,24 @@ import { PostTransactionResolver } from '../PostTransactionResolver';
  * External Types
  */
 
-/**
- * @hidden
- */
 export { Currency };
 
-/**
- * @hidden
- */
 export { Version };
 
 /**
- * Properties representing a Dividend Shareholder
+ * Status of a Shareholder in regards to a Dividend Distribution
  */
 export interface DividendShareholderStatus {
   /**
-   * wallet address of a Shareholder
+   * wallet address of the Shareholder
    */
   address: string;
   /**
-   * whether Shareholder has received payment
+   * whether the Shareholder has received payment
    */
   paymentReceived: boolean;
   /**
-   * whether Shareholder is excluded from Dividend distribution
+   * whether the Shareholder is excluded from the Dividend distribution
    */
   excluded: boolean;
   /**
@@ -53,17 +47,13 @@ export interface DividendShareholderStatus {
   balance: BigNumber;
 }
 
-/**
- * @hidden
- */
 export enum StoType {
   Simple = 'Simple',
   Tiered = 'Tiered',
 }
 
 /**
- * Check if the type is a valid STO Type
- * @param type - the STO Type
+ * Check if the argument is of type STO Type
  */
 export function isStoType(type: any): type is StoType {
   return typeof type === 'string' && (type === StoType.Tiered || type === StoType.Simple);
@@ -74,17 +64,17 @@ export function isStoType(type: any): type is StoType {
  */
 export interface TaxWithholdingEntry {
   /**
-   * wallet address of Shareholder
+   * wallet address of the Shareholder
    */
   address: string;
   /**
-   * the Percentage that will be Tax Withheld
+   * percentage of the Shareholder's Dividend payments that will be withheld for tax
    */
   percentage: number;
 }
 
 /**
- * Internal properties of a Security Token Issuance
+ * Specifies how many tokens to issue and who to issue them to
  */
 export interface IssuanceDataEntry {
   /**
@@ -92,17 +82,17 @@ export interface IssuanceDataEntry {
    */
   address: string;
   /**
-   * amount of tokens issued
+   * amount of tokens to be issued
    */
   amount: BigNumber;
   /**
-   * shareholder data, where address is omitted
+   * KYC data for the Shareholder
    */
   shareholderData?: Omit<ShareholderDataEntry, 'address'>;
 }
 
 /**
- * @hidden
+ * Specifies possible types of errors in the SDK
  */
 export enum ErrorCode {
   IncompatibleBrowser = 'IncompatibleBrowser',
@@ -126,7 +116,7 @@ export enum ErrorCode {
 }
 
 /**
- * Internal properties represeting a Shareholder's balance
+ * Balance in Security Tokens of a specific Shareholder
  */
 export interface ShareholderBalance {
   /**
@@ -134,13 +124,13 @@ export interface ShareholderBalance {
    */
   address: string;
   /**
-   * balance of Security Tokens
+   * amount of Security Tokens the Shareholder possesses
    */
   balance: BigNumber;
 }
 
 /**
- * @hidden
+ * Types of Procedures available in the SDK
  */
 export enum ProcedureType {
   UnnamedProcedure = 'UnnamedProcedure',
@@ -196,7 +186,7 @@ export enum ProcedureType {
 }
 
 /**
- * @hidden
+ * Tag to distinguish transactions for display purposes
  */
 export enum PolyTransactionTag {
   Any = 'Any',
@@ -284,7 +274,7 @@ export enum PolyTransactionTag {
 // Procedure arguments
 
 /**
- * Internal properties of an ERC20 Approval
+ * Arguments for the [[ApproveErc20]] Procedure
  */
 export interface ApproveErc20ProcedureArgs {
   /**
@@ -296,13 +286,13 @@ export interface ApproveErc20ProcedureArgs {
    */
   spender: string;
   /**
-   * the custom address of the ERC20 token
+   * address of the ERC20 token (defaults to POLY)
    */
   tokenAddress?: string;
 }
 
 /**
- * Arguments for [[TransferErc20Procedure]]
+ * Arguments for the [[TransferErc20]] Procedure
  */
 export interface TransferErc20ProcedureArgs {
   /**
@@ -310,101 +300,95 @@ export interface TransferErc20ProcedureArgs {
    */
   amount: BigNumber;
   /**
-   * the receiver of the tokens being transferred
+   * the receiver of tokens being transferred
    */
   receiver: string;
   /**
-   * the custom address of the ERC20 token
+   * address of the ERC20 token (defaults to POLY)
    */
   tokenAddress?: string;
 }
 
 /**
- * Arguments for [[CreateCheckpointProcedure]]
+ * Arguments for the [[CreateCheckpoint]] Procedure
  */
 export interface CreateCheckpointProcedureArgs {
   /**
-   * the Security Token symbol
+   * symbol of the Security Token
    */
   symbol: string;
 }
 
 /**
- * Arguments for [[CreateDividendDistributionProcedure]]
+ * Arguments for the [[CreateDividendDistribution]] Procedure
  */
 export interface CreateDividendDistributionProcedureArgs {
   /**
-   * symbol of a Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
-   * date the Dividend will mature
+   * date from which Dividend payments can be pushed/claimed
    */
   maturityDate: Date;
   /**
-   * date the Dividend with expire
+   * date the Dividend will expire
    */
   expiryDate: Date;
   /**
-   * the address of the ERC20 token
+   * address of the ERC20 token
    */
   erc20Address: string;
   /**
-   * amount to be distributed by the Dividend
+   * amount to be distributed as dividends
    */
   amount: BigNumber;
   /**
-   * index of the Checkpoint for the Dividend Distribution
+   * index of the Checkpoint in which the Dividend Distribution will be based
    */
   checkpointIndex: number;
   /**
-   * name of the Dividend
+   * name of the distribution
    */
   name: string;
   /**
-   * list of excluded addresses from the Dividend Distribution
+   * list of addresses that will be excluded from receiving payment
    */
   excludedAddresses?: string[];
   /**
-   * tax withholding list for the Dividend
+   * tax withholding list for the Dividend Distribution
    */
   taxWithholdings?: TaxWithholdingEntry[];
 }
 
 /**
- * Arguments for [[PushDividendPaymentProcedure]]
+ * Arguments for the [[PushDividendPayment]] Procedure
  */
 export interface PushDividendPaymentProcedureArgs {
   /**
-   * symbol for the security token
+   * symbol of the security token
    */
   symbol: string;
-  /**
-   * index of the dividend
-   */
   dividendIndex: number;
   /**
-   * wallet addresses of specific Shareholders
+   * list of addresses of the Shareholders that will receive payment
    */
   shareholderAddresses?: string[];
 }
 
 /**
- * Arguments for [[PullDividendPaymentProcedure]]
+ * Arguments for the [[PullDividendPayment]] Procedure
  */
 export interface PullDividendPaymentProcedureArgs {
   /**
-   * symbol for the security token
+   * symbol of the security token
    */
   symbol: string;
-  /**
-   * index of the dividend
-   */
   dividendIndex: number;
 }
 
 /**
- * Arguments for [[CreateSecurityTokenProcedure]]
+ * Arguments for the [[CreateSecurityToken]] Procedure
  */
 export interface CreateSecurityTokenProcedureArgs {
   /**
@@ -430,7 +414,7 @@ export interface CreateSecurityTokenProcedureArgs {
 }
 
 /**
- * Arguments for [[EnableDividendManagerProcedure]]
+ * Arguments for the [[EnableDividendManager]] Procedure
  */
 export interface EnableDividendManagerProcedureArgs {
   /**
@@ -444,7 +428,7 @@ export interface EnableDividendManagerProcedureArgs {
 }
 
 /**
- * Arguments for [[EnableGeneralPermissionManagerProcedure]]
+ * Arguments for the [[EnableGeneralPermissionManager]] Procedure
  */
 export interface EnableGeneralPermissionManagerProcedureArgs {
   /**
@@ -454,7 +438,7 @@ export interface EnableGeneralPermissionManagerProcedureArgs {
 }
 
 /**
- * Arguments for [[EnableGeneralTransferManagerProcedure]]
+ * Arguments for the [[EnableGeneralTransferManager]] Procedure
  */
 export interface EnableGeneralTransferManagerProcedureArgs {
   /**
@@ -464,7 +448,7 @@ export interface EnableGeneralTransferManagerProcedureArgs {
 }
 
 /**
- * Arguments for [[EnableCountTransferManagerProcedure]]
+ * Arguments for the [[EnableCountTransferManager]] Procedure
  */
 export interface EnableCountTransferManagerProcedureArgs {
   /**
@@ -472,25 +456,31 @@ export interface EnableCountTransferManagerProcedureArgs {
    */
   symbol: string;
   /**
-   * maximum number of token holders
+   * maximum number of simultaneous token holders
    */
   maxHolderCount: number;
 }
 
 /**
- * Arguments for [[EnablePercentageTransferManagerProcedure]]
+ * Arguments for the [[EnablePercentageTransferManager]] Procedure
  */
 export interface EnablePercentageTransferManagerProcedureArgs {
   /**
    * symbol of the Security Token
    */
   symbol: string;
+  /**
+   * maximum percentage of the total supply a single token holder can hold
+   */
   maxHolderPercentage: BigNumber;
+  /**
+   * whether to allow primary issuance or not
+   */
   allowPrimaryIssuance?: boolean;
 }
 
 /**
- * Arguments for [[DisableFeatureProcedure]]
+ * Arguments for the [[DisableFeature]] Procedure
  */
 export interface DisableFeatureProcedureArgs {
   /**
@@ -498,13 +488,13 @@ export interface DisableFeatureProcedureArgs {
    */
   symbol: string;
   /**
-   * name of Module you wish to disable
+   * name of Module that will be disabled
    */
   moduleName: ModuleName;
 }
 
 /**
- * Arguments for [[LaunchSimpleStoProcedure]]
+ * Arguments for the [[LaunchSimpleSto]] Procedure
  */
 export interface LaunchSimpleStoProcedureArgs {
   /**
@@ -524,7 +514,7 @@ export interface LaunchSimpleStoProcedureArgs {
    */
   tokensOnSale: BigNumber;
   /**
-   * rate at which tokens will be sold
+   * amount of tokens sold per unit of currency
    */
   rate: BigNumber;
   /**
@@ -536,17 +526,18 @@ export interface LaunchSimpleStoProcedureArgs {
    */
   raisedFundsWallet: string;
   /**
-   * wallet to which unsold tokens will be sent
+   * wallet to which unsold tokens will be sent if the STO expires
    */
   unsoldTokensWallet: string;
   /**
-   * whether to allow pre issuing of the STO or not
+   * whether the total amount of Security Tokens that will be sold should be issued at the time the STO starts.
+   * Otherwise, they will be issued on each purchase. Defaults to false
    */
   allowPreIssuing?: boolean;
 }
 
 /**
- * Arguments for [[IssueTokensProcedure]]
+ * Arguments for the [[IssueTokens]] Procedure
  */
 export interface IssueTokensProcedureArgs {
   /**
@@ -554,13 +545,13 @@ export interface IssueTokensProcedureArgs {
    */
   symbol: string;
   /**
-   * issuance data
+   * array of entries that specify who to issue tokens to and the amounts
    */
   issuanceData: IssuanceDataEntry[];
 }
 
 /**
- * Arguments for [[ToggleAllowPreIssuingProcedure]]
+ * Arguments for the [[ToggleAllowPreIssuing]] Procedure
  */
 export interface ToggleAllowPreIssuingProcedureArgs {
   /**
@@ -572,17 +563,18 @@ export interface ToggleAllowPreIssuingProcedureArgs {
    */
   stoAddress: string;
   /**
-   * the type of the STO
+   * type of the STO (Simple, Tiered, etc)
    */
   stoType: StoType;
   /**
-   * whether or not to allow pre-issuing
+   * whether the total amount of Security Tokens that will be sold should be issued at the time the STO starts.
+   * Otherwise, they will be issued on each purchase. Defaults to false
    */
   allowPreIssuing: boolean;
 }
 
 /**
- * Arguments for [[ToggleAllowBeneficialInvestmentsProcedure]]
+ * Arguments for the [[ToggleAllowBeneficialInvestments]] Procedure
  */
 export interface ToggleAllowBeneficialInvestmentsProcedureArgs {
   /**
@@ -594,7 +586,7 @@ export interface ToggleAllowBeneficialInvestmentsProcedureArgs {
    */
   stoAddress: string;
   /**
-   * type of the STO
+   * type of the STO (Simple, Tiered, etc)
    */
   stoType: StoType;
   /**
@@ -604,7 +596,7 @@ export interface ToggleAllowBeneficialInvestmentsProcedureArgs {
 }
 
 /**
- * Arguments for [[ModifyTieredStoDataProcedure]]
+ * Arguments for the [[ModifyTieredStoData]] Procedure
  */
 export interface ModifyTieredStoDataProcedureArgs
   extends Partial<Omit<LaunchTieredStoProcedureArgs, 'allowPreIssuing'>> {
@@ -618,9 +610,6 @@ export interface ModifyTieredStoDataProcedureArgs
   symbol: string;
 }
 
-/**
- * Arguments for [[InvestInTieredStoBaseProcedure]]
- */
 interface InvestInTieredStoBaseProcedureArgs {
   /**
    * symbol of the Security Token
@@ -631,38 +620,36 @@ interface InvestInTieredStoBaseProcedureArgs {
    */
   stoAddress: string;
   /**
-   * amount of tokens in investment
+   * amount to invest
    */
   amount: BigNumber;
   /**
-   * currency type in which funds will be raised
+   * currency type in which the investment is being made
    */
   currency: Currency;
   /**
-   * minimum token investment
+   * minimum amount of Security Tokens that should be bought.
+   * If, because of price fluctuations, a lower amount is being bought, the transaction will revert
    */
   minTokens?: BigNumber;
   /**
-   * beneficiary address to invest on behalf of
+   * if specified, the investment will be made on behalf of this address
    */
   beneficiary?: string;
 }
 
-/**
- * Arguments to invest in stable coin for [[InvestInTieredStoProcedure]]
- */
 export interface InvestWithStableCoinArgs extends InvestInTieredStoBaseProcedureArgs {
   currency: Currency.StableCoin;
   stableCoinAddress: string;
 }
 
 /**
- * Arguments for [[InvestInTieredStoProcedure]]
+ * Arguments for the [[InvestInTieredSto]] Procedure
  */
 export type InvestInTieredStoProcedureArgs =
   | InvestInTieredStoBaseProcedureArgs & {
       /**
-       * investing currency
+       * currency in which the investment is being made
        */
       currency: Currency.POLY | Currency.ETH;
       /**
@@ -673,7 +660,7 @@ export type InvestInTieredStoProcedureArgs =
   | InvestWithStableCoinArgs;
 
 /**
- * Arguments for [[InvestInSimpleStoProcedure]]
+ * Arguments for the [[InvestInSimpleSto]] Procedure
  */
 export interface InvestInSimpleStoProcedureArgs {
   /**
@@ -685,17 +672,17 @@ export interface InvestInSimpleStoProcedureArgs {
    */
   stoAddress: string;
   /**
-   * amount of tokens making up investment
+   * amount to invest
    */
   amount: BigNumber;
   /**
-   * beneficiary address to invest on behalf of
+   * if specified, the investment will be made on behalf of this address
    */
   beneficiary?: string;
 }
 
 /**
- * Confirm that the arguments are valid to invest with stable coin
+ * Check whether the arguments are of type [[InvestWithStableCoinArgs]]
  */
 export function isInvestWithStableCoinArgs(args: any): args is InvestWithStableCoinArgs {
   const { currency, stableCoinAddress } = args;
@@ -704,7 +691,8 @@ export function isInvestWithStableCoinArgs(args: any): args is InvestWithStableC
 }
 
 /**
- * Internal properties of an STO Tier
+ * Represents a tier of investment in a Tiered STO.
+ * Different tiers can sell different Security Token amounts at different prices, and apply discounts when purchasing with POLY
  */
 export interface StoTier {
   /**
@@ -745,7 +733,7 @@ export interface CustomCurrency {
 }
 
 /**
- * Arguments for [[LaunchTieredStoProcedure]]
+ * Arguments for the [[LaunchTieredSto]] Procedure
  */
 export interface LaunchTieredStoProcedureArgs {
   /**
@@ -765,15 +753,15 @@ export interface LaunchTieredStoProcedureArgs {
    */
   tiers: StoTier[];
   /**
-   * limit for non accredited investments of STO
+   * maximum amount that can be invested by non accredited investors
    */
   nonAccreditedInvestmentLimit: BigNumber;
   /**
-   * minimum investment of STO
+   * minimum amount that can be invested by any investor
    */
   minimumInvestment: BigNumber;
   /**
-   * array of currencies used to raise funds in the STO
+   * currencies in which Security Tokens can be purchased in the STO
    */
   currencies: Currency[];
   /**
@@ -781,67 +769,63 @@ export interface LaunchTieredStoProcedureArgs {
    */
   raisedFundsWallet: string;
   /**
-   * wallet where unsold tokens will be sent
+   * wallet where unsold tokens will be sent if the STO expires
    */
   unsoldTokensWallet: string;
   /**
-   * array of stable coin addresses
+   * list of the addresses of the Stable Coins that can be used to purchase Security Tokens in the STO
    */
   stableCoinAddresses?: string[];
   /**
-   * custom currency used to raise STO funds
+   * if raising in Stable Coin,
+   * this parameter can be used to specify a currency different than USD for the STO to be pegged in
    */
   customCurrency?: Partial<CustomCurrency>;
   /**
-   * whether pre-issuing is allowed or not
+   * whether the total amount of Security Tokens that will be sold should be issued at the time the STO starts.
+   * Otherwise, they will be issued on each purchase. Defaults to false
    */
   allowPreIssuing?: boolean;
 }
 
 /**
- * Arguments for [[ReclaimFundsProcedure]]
+ * Arguments for the [[ReclaimFunds]] Procedure
  */
 export interface ReclaimFundsProcedureArgs {
   /**
    * symbol of the Security Token
    */
   symbol: string;
-  /**
-   * the index of the Dividend
-   */
   dividendIndex: number;
 }
 
 /**
- * Arguments for [[ReserveSecurityTokenProcedure]]
+ * Arguments for the [[ReserveSecurityToken]] Procedure
  */
 export interface ReserveSecurityTokenProcedureArgs {
   /**
-   * the symbol of the Security Token Reservation
+   * the symbol to be reserved
    */
   symbol: string;
   /**
-   * the owner wallet of the Security Token Reservation
+   * if supplied, the reservation will be made on behalf of this address
    */
   owner?: string;
 }
 
 /**
- * Arguments for [[WithdrawTaxesProcedure]]
+ * Arguments for the [[WithdrawTaxes]] Procedure
  */
 export interface WithdrawTaxesProcedureArgs {
   /**
    * the symbol of the Security Token
    */
   symbol: string;
-  /**
-   * the index of the Dividend
-   */
   dividendIndex: number;
 }
 
 /**
- * Arguments for [[UpdateDividendsTaxWithholdingListProcedure]]
+ * Arguments for the [[UpdateDividendsTaxWithholdingList]] Procedure
  */
 export interface UpdateDividendsTaxWithholdingListProcedureArgs {
   /**
@@ -849,17 +833,17 @@ export interface UpdateDividendsTaxWithholdingListProcedureArgs {
    */
   symbol: string;
   /**
-   * array of Shareholder addresses
+   * list of addresses of the Shareholders for which to update the tax withholding percentages
    */
   shareholderAddresses: string[];
   /**
-   * array of tax withholding percentages
+   * list of percentages to update
    */
   percentages: number[];
 }
 
 /**
- * Arguments for [[SetDividendsWalletProcedure]]
+ * Arguments for the [[SetDividendsWallet]] Procedure
  */
 export interface SetDividendsWalletProcedureArgs {
   /**
@@ -873,7 +857,7 @@ export interface SetDividendsWalletProcedureArgs {
 }
 
 /**
- * Arguments for [[ModifyDividendsDefaultExclusionListProcedure]]
+ * Arguments for the [[ModifyDividendsDefaultExclusionList]] Procedure
  */
 export interface ModifyDividendsDefaultExclusionListProcedureArgs {
   /**
@@ -881,13 +865,14 @@ export interface ModifyDividendsDefaultExclusionListProcedureArgs {
    */
   symbol: string;
   /**
-   * array of Shareholder addresses to be included
+   * list of addresses to conform the new default exclusion list.
+   * Addresses in this list will not be considered for Dividend Distribution payments
    */
   shareholderAddresses: string[];
 }
 
 /**
- * Arguments for [[AssignSecurityTokenRoleProcedure]]
+ * Arguments for the [[AssignSecurityTokenRole]] Procedure
  */
 export interface AssignSecurityTokenRoleProcedureArgs {
   /**
@@ -895,55 +880,52 @@ export interface AssignSecurityTokenRoleProcedureArgs {
    */
   symbol: string;
   /**
-   * wallet address of the Delegate
+   * wallet address of the delegate
    */
   delegateAddress: string;
   /**
-   * the delegate role
+   * role to assign/revoke to/from the delegate
    */
   role: SecurityTokenRole;
   /**
-   * whether to assign or un-assign a Security Token Role
+   * whether to assign or revoke the role
    */
   assign: boolean;
   /**
-   * description of the Security Token Role
+   * description of the delegate (i.e. "company accountant")
    */
   description: string;
 }
 
 /**
- * Arguments for [[AssignStoRoleProcedure]]
+ * Arguments for the [[AssignStoRole]] Procedure
  */
 export interface AssignStoRoleProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
-   * the wallet address of the Delegate
+   * wallet address of the delegate
    */
   delegateAddress: string;
-  /**
-   * the address of the STO
-   */
   stoAddress: string;
   /**
-   * the STO Role being assigned
+   * role to assign/revoke to/from the delegate
    */
   role: StoRole;
   /**
-   * whether to assign or unassign a Security Token Role
+   * whether to assign or revoke the role
    */
   assign: boolean;
   /**
-   * description of the Security Token Role
+   * description of the delegate (i.e. "company lawyer")
    */
   description?: string;
 }
 
 /**
- * Arguments for [[ControllerTransferProcedure]]
+ * Arguments for the [[ControllerTransfer]] Procedure
  */
 export interface ControllerTransferProcedureArgs {
   /**
@@ -955,7 +937,7 @@ export interface ControllerTransferProcedureArgs {
    */
   to: string;
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
@@ -973,7 +955,7 @@ export interface ControllerTransferProcedureArgs {
 }
 
 /**
- * Arguments for [[ControllerRedeemProcedure]]
+ * Arguments for the [[ControllerRedeem]] Procedure
  */
 export interface ControllerRedeemProcedureArgs {
   /**
@@ -981,7 +963,7 @@ export interface ControllerRedeemProcedureArgs {
    */
   from: string;
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
@@ -999,47 +981,41 @@ export interface ControllerRedeemProcedureArgs {
 }
 
 /**
- * Arguments for [[TogglePauseStoProcedure]]
+ * Arguments for the [[TogglePauseSto]] Procedure
  */
 export interface TogglePauseStoProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
-  /**
-   * the STO address
-   */
   stoAddress: string;
   /**
-   * the type of the STO
+   * type of the STO (Simple, Tiered, etc)
    */
   stoType: StoType;
   /**
-   * whether to pause the STO or un-pause it
+   * true if pausing the STO, false if un-pausing it
    */
   pause: boolean;
 }
 
 /**
- * Arguments for [[FinalizeStoProcedure]]
+ * Arguments for the [[FinalizeSto]] Procedure
  */
 export interface FinalizeStoProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
-  /**
-   * the STO address
-   */
   stoAddress: string;
   /**
-   * the type of the STO
+   * type of the STO (Simple, Tiered, etc)
    */
   stoType: StoType;
 }
 
 /**
- * Arguments for [[SetControllerProcedure]]
+ * Arguments for the [[SetController]] Procedure
  */
 export interface SetControllerProcedureArgs {
   /**
@@ -1047,39 +1023,36 @@ export interface SetControllerProcedureArgs {
    */
   symbol: string;
   /**
-   * the controller wallet of the Security Token
+   * wallet address to be set as the Security Token's controller
    */
   controller: string;
 }
 
 /**
- * Arguments for [[SetDocumentProcedure]]
+ * Arguments for the [[SetDocument]] Procedure
  */
 export interface SetDocumentProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
-   * the name of the Document
+   * name of the Document. Must be unique for the Security Token
    */
   name: string;
-  /**
-   * the uri of the Document
-   */
   uri: string;
   /**
-   * the document hash representing the Document
+   * hash of the contents of the Document
    */
   documentHash: string;
 }
 
 /**
- * Arguments for [[RemoveDocumentProcedure]]
+ * Arguments for the [[RemoveDocument]] Procedure
  */
 export interface RemoveDocumentProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
@@ -1089,39 +1062,39 @@ export interface RemoveDocumentProcedureArgs {
 }
 
 /**
- * Arguments for [[FreezeIssuanceProcedure]]
+ * Arguments for the [[FreezeIssuance]] Procedure
  */
 export interface FreezeIssuanceProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
-   * the acknowledgement signature
+   * acknowledgement signature
    */
   signature?: string;
 }
 
 /**
- * Arguments for [[DisableControllerProcedure]]
+ * Arguments for the [[DisableController]] Procedure
  */
 export interface DisableControllerProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
-   * the acknowledgement signature
+   * acknowledgement signature
    */
   signature?: string;
 }
 
 /**
- * Arguments for [[TransferReservationOwnershipProcedure]]
+ * Arguments for the [[TransferReservationOwnership]] Procedure
  */
 export interface TransferReservationOwnershipProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
@@ -1131,7 +1104,7 @@ export interface TransferReservationOwnershipProcedureArgs {
 }
 
 /**
- * Properties expressing KYC data for a Shareholder
+ * A Shareholder's KYC data
  */
 export interface ShareholderDataEntry {
   /**
@@ -1161,49 +1134,49 @@ export interface ShareholderDataEntry {
 }
 
 /**
- * Arguments for [[ModifyShareholderDataProcedure]]
+ * Arguments for the [[ModifyShareholderData]] Procedure
  */
 export interface ModifyShareholderDataProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
-   * an array of KYC data
+   * shareholder KYC data that will be added/modified
    */
   shareholderData: ShareholderDataEntry[];
 }
 
 /**
- * Arguments for [[RevokeKycProcedure]]
+ * Arguments for the [[RevokeKyc]] Procedure
  */
 export interface RevokeKycProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
-   * an array of Shareholder addresses
+   * list of Shareholders addresses for which KYC will be revoked
    */
   shareholderAddresses: string[];
 }
 
 /**
- * Arguments for [[ModifyMaxHolderCountProcedure]]
+ * Arguments for the [[ModifyMaxHolderCount]] Procedure
  */
 export interface ModifyMaxHolderCountProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
-   * the maximum number of token holders
+   * maximum number of simultaneous token holders
    */
   maxHolderCount: number;
 }
 
 /**
- * Arguments for [[ModifyMaxHolderPercentageProcedure]]
+ * Arguments for the [[ModifyMaxHolderPercentage]] Procedure
  */
 export interface ModifyMaxHolderPercentageProcedureArgs {
   /**
@@ -1211,17 +1184,17 @@ export interface ModifyMaxHolderPercentageProcedureArgs {
    */
   symbol: string;
   /**
-   * the maximum percentage of total tokens a single Shareholder can hold
+   * maximum percentage of total tokens a single Shareholder can hold
    */
   maxHolderPercentage: BigNumber;
 }
 
 /**
- * Properties of an entry in the Percentage Whitelist
+ * Entry that represents whether a Shareholder is exempted from Percentage Restrictions
  */
 export interface PercentageWhitelistEntry {
   /**
-   * address on the whitelist
+   * Shareholder wallet address
    */
   address: string;
   /**
@@ -1231,29 +1204,30 @@ export interface PercentageWhitelistEntry {
 }
 
 /**
- * Arguments for [[ModifyPercentageExemptionsProcedure]]
+ * Arguments for the [[ModifyPercentageExemptions]] Procedure
  */
 export interface ModifyPercentageExemptionsProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
-   * array of whitelist percentage entries
+   * list of Shareholders to add/remove to/from the whitelist
    */
   whitelistEntries?: PercentageWhitelistEntry[];
   /**
-   * whether primary issuance is allowed or not
+   * whether primary issuance is exempted from percentage restrictions.
+   * If true, issuing tokens to a wallet that doesn't own tokens will bypass percentage restrictions
    */
   allowPrimaryIssuance?: boolean;
 }
 
 /**
- * Arguments for [[TransferSecurityTokensProcedure]]
+ * Arguments for the [[TransferSecurityTokens]] Procedure
  */
 export interface TransferSecurityTokensProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
@@ -1265,21 +1239,21 @@ export interface TransferSecurityTokensProcedureArgs {
    */
   amount: BigNumber;
   /**
-   * extra KYC data for transfer
+   * signed KYC data that will be considered (and applied to the Security Token) when checking for transfer restrictions
    */
   data?: string;
   /**
-   * wallet address sending Security Tokens
+   * wallet address sending Security Tokens. Defaults to the current wallet
    */
   from?: string;
 }
 
 /**
- * Arguments for [[ToggleFreezeTransfersProcedure]]
+ * Arguments for the [[ToggleFreezeTransfers]] Procedure
  */
 export interface ToggleFreezeTransfersProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
@@ -1289,43 +1263,43 @@ export interface ToggleFreezeTransfersProcedureArgs {
 }
 
 /**
- * Arguments for [[SignTransferDataProcedure]]
+ * Arguments for the [[SignTransferData]] Procedure
  */
 export interface SignTransferDataProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
   /**
-   * kyc data for a transfer
+   * KYC data to sign
    */
   kycData: Omit<Omit<ShareholderDataEntry, 'isAccredited'>, 'canBuyFromSto'>[];
   /**
-   * date from which the transfer is valid
+   * date from which the signature is valid
    */
   validFrom: Date;
   /**
-   * date until the transfer is valid
+   * date until which the signature is valid
    */
   validTo: Date;
 }
 
 /**
- * Arguments for [[SignDisableControllerAckProcedure]]
+ * Arguments for the [[SignDisableControllerAck]] Procedure
  */
 export interface SignDisableControllerAckProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
 }
 
 /**
- * Arguments for [[SignFreezeIssuanceAckProcedure]]
+ * Arguments for the [[SignFreezeIssuanceAck]] Procedure
  */
 export interface SignFreezeIssuanceAckProcedureArgs {
   /**
-   * the symbol of the Security Token
+   * symbol of the Security Token
    */
   symbol: string;
 }
@@ -1385,9 +1359,6 @@ export interface ProcedureArguments {
   [ProcedureType.UnnamedProcedure]: {};
 }
 
-/**
- * @hidden
- */
 export enum TransactionStatus {
   Idle = 'Idle',
   Unapproved = 'Unapproved',
@@ -1421,9 +1392,6 @@ export interface Fees {
   poly: BigNumber;
 }
 
-/**
- * @hidden
- */
 export interface Pojo {
   [key: string]:
     | string
@@ -1438,7 +1406,6 @@ export interface Pojo {
 
 /**
  * Check to see if an object is a Plain Old Javascript Object (POJO)
- * @param pojo - Javascript object
  */
 export function isPojo(pojo: any): pojo is Pojo {
   if (!pojo) {
@@ -1454,9 +1421,6 @@ export function isPojo(pojo: any): pojo is Pojo {
   );
 }
 
-/**
- * @hidden
- */
 export enum TransactionSpeed {
   Slow = 'Slow',
   Medium = 'Medium',
@@ -1464,9 +1428,6 @@ export enum TransactionSpeed {
   Fastest = 'Fastest',
 }
 
-/**
- * @hidden
- */
 export enum Feature {
   Permissions = 'Permissions',
   Shareholders = 'Shareholders',
@@ -1475,9 +1436,6 @@ export enum Feature {
   PercentageOwnershipRestrictions = 'PercentageOwnershipRestrictions',
 }
 
-/**
- * @hidden
- */
 export enum SecurityTokenRole {
   PermissionsAdministrator = 'PermissionsAdministrator',
   DividendsOperator = 'DividendsOperator',
@@ -1487,17 +1445,11 @@ export enum SecurityTokenRole {
   PercentageOwnershipRestrictionsAdministrator = 'PercentageOwnershipRestrictionsAdministrator',
 }
 
-/**
- * @hidden
- */
 export enum StoRole {
   StoOperator = 'StoOperator',
   StoAdministrator = 'StoAdministrator',
 }
 
-/**
- * @hidden
- */
 export enum TransferStatusCode {
   TransferFailure = 'TransferFailure',
   TransferSuccess = 'TransferSuccess',
