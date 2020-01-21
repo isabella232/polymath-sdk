@@ -12,6 +12,9 @@ import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createToggleAllowBeneficialInvestmentsResolver = (
   factories: Factories,
   symbol: string,
@@ -45,11 +48,24 @@ export const createToggleAllowBeneficialInvestmentsResolver = (
   }
 };
 
+/**
+ * Procedure that toggles whether beneficial investments are allowed or not in an STO
+ */
 export class ToggleAllowBeneficialInvestments extends Procedure<
   ToggleAllowBeneficialInvestmentsProcedureArgs
 > {
   public type = ProcedureType.ToggleAllowBeneficialInvestments;
 
+  /**
+   * Toggle to allow or disallow beneficial investments in the STO
+   *
+   * Note this procedure will fail if:
+   * - Trying to allow beneficial investments when they are already allowed
+   * - Trying to disallow beneficial investments when they are already disallowed
+   * - The specified STO address is invalid
+   * - The specified STO type is invalid
+   * - The STO has not been launched, or the module has been archived
+   */
   public async prepareTransactions() {
     const { stoAddress, stoType, symbol, allowBeneficialInvestments } = this.args;
     const { contractWrappers, factories } = this.context;
