@@ -37,7 +37,12 @@ import { range, flatten } from 'lodash';
 import P from 'bluebird';
 import semver from 'semver';
 import { PolymathError } from './PolymathError';
-import { ErrorCode, SecurityTokenRole, ShareholderBalance } from './types';
+import {
+  ErrorCode,
+  SecurityTokenRole,
+  ShareholderBalance,
+  DividendShareholderStatus,
+} from './types';
 import { ZERO_ADDRESS } from './utils/constants';
 
 /**
@@ -264,36 +269,6 @@ export interface BaseCheckpoint {
    * date at which the Checkpoint was created
    */
   createdAt: Date;
-}
-
-/**
- * Status of a particular Shareholder's Dividend payments in a specific Dividend Distribution
- */
-export interface DividendShareholderStatus {
-  /**
-   * Shareholder wallet address
-   */
-  address: string;
-  /**
-   * whether payment was received or not
-   */
-  paymentReceived: boolean;
-  /**
-   * whether the Shareholder is on the exclusion list
-   */
-  excluded: boolean;
-  /**
-   * amount of tax withheld so far
-   */
-  withheldTax: BigNumber;
-  /**
-   * amount received as payment
-   */
-  amountReceived: BigNumber;
-  /**
-   * current Security Token balance
-   */
-  balance: BigNumber;
 }
 
 /**
