@@ -55,7 +55,7 @@ interface GetModuleAddressesByNameParams {
 }
 
 /**
- * Options for [[getAttachedModules]]
+ * Options for [[getModuleAddressesByName]]
  */
 interface GetModuleAddressesByNameOpts {
   /**
@@ -79,7 +79,7 @@ interface GetAttachedModulesParams {
 }
 
 /**
- * Optional property of unarchived status when fetching attached modules
+ * Options for [[getAttachedModules]]
  */
 interface GetAttachedModulesOpts {
   /**
