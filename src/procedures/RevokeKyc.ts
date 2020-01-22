@@ -5,9 +5,21 @@ import { ProcedureType, PolyTransactionTag, ErrorCode, RevokeKycProcedureArgs } 
 import { PolymathError } from '../PolymathError';
 import { Shareholder, SecurityToken } from '../entities';
 
+/**
+ * Procedure that revokes KYC for a list of investors
+ */
 export class RevokeKyc extends Procedure<RevokeKycProcedureArgs, Shareholder[]> {
   public type = ProcedureType.RevokeKyc;
 
+  /**
+   * Sets all KYC dates for a shareholder to epoch. This effectively makes them unable to send or receive Security Tokens
+   *
+   * Note that this procedure will fail if:
+   * - The shareholder address array is empty
+   * - The Security Token doesn't exist
+   * - KYC is already revoked for at least one of the addresses in the list
+   * - Shareholders Feature isn't enabled
+   */
   public async prepareTransactions() {
     const { symbol, shareholderAddresses } = this.args;
     const { contractWrappers, factories } = this.context;
