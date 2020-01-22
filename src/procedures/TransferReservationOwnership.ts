@@ -9,6 +9,9 @@ import { PolymathError } from '../PolymathError';
 import { SecurityTokenReservation } from '../entities';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createTransferReservationOwnershipResolver = (
   factories: Factories,
   symbol: string
@@ -18,11 +21,22 @@ export const createTransferReservationOwnershipResolver = (
   );
 };
 
+/**
+ * Procedure that transfers ownership of a Security Token Reservation
+ */
 export class TransferReservationOwnership extends Procedure<
   TransferReservationOwnershipProcedureArgs
 > {
   public type = ProcedureType.TransferReservationOwnership;
 
+  /**
+   * Transfer the ownership of a Security Token Reservation to the supplied address
+   *
+   * Note this procedure will fail if:
+   * - A Security Token has already been launched with this symbol
+   * - The current wallet address is not the owner of the Reservation
+   * - Attempting to transfer ownership to the current owner
+   */
   public async prepareTransactions() {
     const { newOwner, symbol } = this.args;
     const {

@@ -8,11 +8,17 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure that enables Permissions on a Security Token
+ */
 export class EnableGeneralPermissionManager extends Procedure<
   EnableGeneralPermissionManagerProcedureArgs
 > {
   public type = ProcedureType.EnableGeneralPermissionManager;
 
+  /**
+   * Enable Permissions on the Security Token
+   */
   public async prepareTransactions() {
     const { symbol } = this.args;
     const { contractWrappers } = this.context;
