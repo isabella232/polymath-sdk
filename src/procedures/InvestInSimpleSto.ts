@@ -14,6 +14,9 @@ import { SecurityToken, SimpleSto } from '../entities';
 import { ApproveErc20 } from './ApproveErc20';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createRefreshSecurityTokenFactoryResolver = (
   factories: Factories,
   securityTokenId: string
@@ -21,6 +24,9 @@ export const createRefreshSecurityTokenFactoryResolver = (
   return factories.securityTokenFactory.refresh(securityTokenId);
 };
 
+/**
+ * @hidden
+ */
 export const createRefreshSimpleStoFactoryResolver = (
   factories: Factories,
   simpleStoId: string
@@ -28,9 +34,25 @@ export const createRefreshSimpleStoFactoryResolver = (
   return factories.simpleStoFactory.refresh(simpleStoId);
 };
 
+/**
+ * Procedure that invests in a Simple STO
+ */
 export class InvestInSimpleSto extends Procedure<InvestInSimpleStoProcedureArgs> {
   public type = ProcedureType.InvestInSimpleSto;
 
+  /**
+   * Buy Security Tokens from the STO
+   *
+   * Note that this procedure will fail if:
+   * - The Security Token doesn't exist
+   * - The STO address is invalid
+   * - The STO is either archived or hasn't been launched
+   * - The STO hasn't started yet
+   * - The STO is paused
+   * - The STO has already been finalized
+   * - Attempting to invest on behalf of another address when beneficial investments aren't allowed for the STO
+   * - The STO doesn't support investments in the selected currency
+   */
   public async prepareTransactions() {
     const { args, context } = this;
     const { stoAddress, symbol, amount } = args;
