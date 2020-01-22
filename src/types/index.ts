@@ -53,7 +53,7 @@ export enum StoType {
 }
 
 /**
- * Check if the argument is of type STO Type
+ * Check if the argument is of type [[STOType]]
  */
 export function isStoType(type: any): type is StoType {
   return typeof type === 'string' && (type === StoType.Tiered || type === StoType.Simple);
@@ -332,7 +332,7 @@ export interface CreateDividendDistributionProcedureArgs {
    */
   maturityDate: Date;
   /**
-   * date the Dividend will expire
+   * date on which the Dividend will expire
    */
   expiryDate: Date;
   /**
@@ -474,7 +474,8 @@ export interface EnablePercentageTransferManagerProcedureArgs {
    */
   maxHolderPercentage: BigNumber;
   /**
-   * whether to allow primary issuance or not
+   * whether primary issuance is exempted from percentage restrictions.
+   * If true, issuing tokens to a wallet that doesn't own tokens will bypass percentage restrictions
    */
   allowPrimaryIssuance?: boolean;
 }
@@ -488,7 +489,7 @@ export interface DisableFeatureProcedureArgs {
    */
   symbol: string;
   /**
-   * name of Module that will be disabled
+   * name of the Module that will be disabled
    */
   moduleName: ModuleName;
 }
@@ -761,7 +762,7 @@ export interface LaunchTieredStoProcedureArgs {
    */
   minimumInvestment: BigNumber;
   /**
-   * currencies in which Security Tokens can be purchased in the STO
+   * currencies with which Security Tokens can be purchased in the STO
    */
   currencies: Currency[];
   /**
