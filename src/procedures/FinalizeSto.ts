@@ -17,6 +17,9 @@ import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createRefreshStoFactoryResolver = (
   factories: Factories,
   symbol: string,
@@ -50,9 +53,15 @@ export const createRefreshStoFactoryResolver = (
   }
 };
 
+/**
+ * Procedure that finalizes an STO
+ */
 export class FinalizeSto extends Procedure<FinalizeStoProcedureArgs> {
   public type = ProcedureType.FinalizeSto;
 
+  /**
+   * @hidden
+   */
   private checkTransferStatus(
     statusCode: TransferStatusCode,
     fromAddress: string,
@@ -72,6 +81,17 @@ to finalize the STO. Possible reason: "${reasonCode}"`,
     }
   }
 
+  /**
+   * Finalize the STO
+   *
+   * Note this procedure will fail if:
+   * - The specified STO address is invalid
+   * - The STO has not been launched or the module has been archived
+   * - Attempting to finalize a Simple STO with version 3.0.0 or less
+   * - The specified STO type is invalid
+   * - The STO has already been finalized
+   * - The STO's treasury wallet does not clear all transfer restrictions
+   */
   public async prepareTransactions() {
     const { context, args } = this;
     const { stoAddress, stoType, symbol } = args;

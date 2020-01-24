@@ -8,9 +8,15 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure that enables Dividends on a Security Token
+ */
 export class EnableDividendManager extends Procedure<EnableDividendManagerProcedureArgs> {
   public type = ProcedureType.EnableDividendManager;
 
+  /**
+   * Enable Dividends on the Security Token and set a wallet address where reclaimed dividends and withheld tax will be stored
+   */
   public async prepareTransactions() {
     const { symbol, storageWalletAddress } = this.args;
     const { contractWrappers } = this.context;
