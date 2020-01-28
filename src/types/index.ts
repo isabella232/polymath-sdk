@@ -182,6 +182,7 @@ export enum ProcedureType {
   SignTransferData = 'SignTransferData',
   SignDisableControllerAck = 'SignDisableControllerAck',
   SignFreezeIssuanceAck = 'SignFreezeIssuanceAck',
+  TransferOwnership = 'TransferOwnership',
   TransferReservationOwnership = 'TransferReservationOwnership',
 }
 
@@ -251,6 +252,7 @@ export enum PolyTransactionTag {
   FreezeTransfers = 'FreezeTransfers',
   Signature = 'Signature',
   TransferReservationOwnership = 'TransferReservationOwnership',
+  TransferOwnership = 'TransferOwnership',
 }
 
 // TODO @monitz87: remake this interface when contract-wrappers exports the tx arguments
@@ -1088,6 +1090,20 @@ export interface DisableControllerProcedureArgs {
    * acknowledgement signature
    */
   signature?: string;
+}
+
+/**
+ * Arguments for the [[TransferOwnership]] Procedure
+ */
+export interface TransferOwnershipProcedureArgs {
+  /**
+   * symbol of the Security Token
+   */
+  symbol: string;
+  /**
+   * wallet address for the new Security Token owner
+   */
+  newOwner: string;
 }
 
 /**

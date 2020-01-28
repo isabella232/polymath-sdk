@@ -46,4 +46,5 @@ export { ToggleAllowPreIssuing } from './ToggleAllowPreIssuing';
 export { SignTransferData } from './SignTransferData';
 export { SignDisableControllerAck } from './SignDisableControllerAck';
 export { SignFreezeIssuanceAck } from './SignFreezeIssuanceAck';
+export { TransferOwnership } from './TransferOwnership';
 export { TransferReservationOwnership } from './TransferReservationOwnership';

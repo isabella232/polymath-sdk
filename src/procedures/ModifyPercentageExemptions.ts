@@ -9,9 +9,21 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Procedure responsible for modifying any exemption related to percentage restrictions
+ */
 export class ModifyPercentageExemptions extends Procedure<ModifyPercentageExemptionsProcedureArgs> {
   public type = ProcedureType.ModifyPercentageExemptions;
 
+  /**
+   * - Update the list of addresses that are exempt from percentage restrictions (if supplied)
+   * - Modify whether primary issuance is exempt from percentage restrictions (if supplied)
+   *
+   * Note that this procedure will fail if:
+   * - The data supplied to it is no different to the data in the contract
+   * - The Security Token doesn't exist
+   * - The Percentage Ownership Restrictions feature isn't enabled
+   */
   public async prepareTransactions() {
     const { symbol, whitelistEntries = [], allowPrimaryIssuance } = this.args;
     const { contractWrappers } = this.context;
