@@ -15,7 +15,6 @@ import {
 import { PolymathError } from '../../PolymathError';
 import { Wallet } from '../../Wallet';
 
-
 const params: DisableControllerProcedureArgs = {
   symbol: 'TEST1',
 };
@@ -103,23 +102,32 @@ describe('DisableController', () => {
     });
 
     test('should add a transaction to the queue to disable controller of the security token, without passing in a signature', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const disableControllerArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+
       const addSignatureRequestSpy = spy(target, 'addSignatureRequest');
       securityTokenMock.mock('signDisableControllerAck', randomSignature);
       securityTokenMock.mock('disableController', 'DisableController');
+      const { disableController } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(disableController).returns(disableControllerArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(disableControllerArgsSpy.getCall(0).args[0]).toEqual({
+        signature: randomSignature,
+      });
+      expect(disableControllerArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().disableController, {
             tag: PolyTransactionTag.DisableController,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
 
       expect(
         addSignatureRequestSpy
