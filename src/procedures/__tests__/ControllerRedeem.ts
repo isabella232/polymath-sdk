@@ -1,8 +1,9 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy } from 'sinon';
+import { stub } from 'sinon';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import sinon from 'sinon';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import { Wallet } from '../../Wallet';
@@ -83,20 +84,34 @@ describe('ControllerRedeem', () => {
 
   describe('ControllerRedeem', () => {
     test('should add a transaction to the queue to execute a controller redeem', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const controllerRedeemArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('controllerRedeem', Promise.resolve('ControllerRedeem'));
+      const { controllerRedeem } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(controllerRedeem).returns(controllerRedeemArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(controllerRedeemArgsSpy.getCall(0).args[0]).toEqual({
+        // from, value: amount, data, operatorData: reason
+        from: params.from,
+        value: params.amount,
+        data: '',
+        operatorData: '',
+      });
+      expect(controllerRedeemArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().controllerRedeem)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ControllerRedeem);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.ControllerRedeem
+      );
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {
