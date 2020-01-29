@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { spy, stub, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -14,6 +14,7 @@ import {
 } from '../../types';
 import { PolymathError } from '../../PolymathError';
 import { Wallet } from '../../Wallet';
+
 
 const params: DisableControllerProcedureArgs = {
   symbol: 'TEST1',
@@ -133,21 +134,28 @@ describe('DisableController', () => {
         { ...params, signature: randomSignature },
         contextMock.getMockInstance()
       );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const disableControllerArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('disableController', 'DisableController');
+      const { disableController } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(disableController).returns(disableControllerArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(disableControllerArgsSpy.getCall(0).args[0]).toEqual({
+        signature: randomSignature,
+      });
+      expect(disableControllerArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().disableController, {
             tag: PolyTransactionTag.DisableController,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
   });
 });
