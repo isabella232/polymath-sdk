@@ -2,7 +2,8 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
+import sinon from 'sinon';
 import * as contextModule from '../../Context';
 import * as polymathBaseModule from '../../PolymathBase';
 import { ApproveErc20 } from '../../procedures/ApproveErc20';
@@ -79,19 +80,27 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params, contextMock.getMockInstance());
 
-    const addTransactionSpy = spy(target, 'addTransaction');
+    const approveArgsSpy = sinon.spy();
+    const addTransactionStub = stub(target, 'addTransaction');
     polyTokenMock.mock('approve', Promise.resolve('Approve'));
+    const { approve } = polyTokenMock.getMockInstance();
+    addTransactionStub.withArgs(approve).returns(approveArgsSpy);
 
-    // Real call
     await target.prepareTransactions();
 
     // Verifications
+    expect(approveArgsSpy.getCall(0).args[0]).toEqual({
+      value: params.amount,
+      spender: params.spender,
+    });
+    expect(approveArgsSpy.callCount).toEqual(1);
+
     expect(
-      addTransactionSpy.getCall(0).calledWithExactly(polyTokenMock.getMockInstance().approve, {
+      addTransactionStub.getCall(0).calledWithExactly(polyTokenMock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
       })
     ).toEqual(true);
-    expect(addTransactionSpy.callCount).toEqual(1);
+    expect(addTransactionStub.callCount).toEqual(1);
   });
 
   test('should add an approve transaction to the queue using a custom ERC20 contract as a token address is supplied', async () => {
@@ -104,19 +113,27 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20({ ...params, tokenAddress }, contextMock.getMockInstance());
 
-    const addTransactionSpy = spy(target, 'addTransaction');
+    const approveArgsSpy = sinon.spy();
+    const addTransactionStub = stub(target, 'addTransaction');
     erc20Mock.mock('approve', Promise.resolve('Approve'));
+    const { approve } = erc20Mock.getMockInstance();
+    addTransactionStub.withArgs(approve).returns(approveArgsSpy);
 
-    // Real call
     await target.prepareTransactions();
 
     // Verifications
+    expect(approveArgsSpy.getCall(0).args[0]).toEqual({
+      value: params.amount,
+      spender: params.spender,
+    });
+    expect(approveArgsSpy.callCount).toEqual(1);
+
     expect(
-      addTransactionSpy.getCall(0).calledWithExactly(erc20Mock.getMockInstance().approve, {
+      addTransactionStub.getCall(0).calledWithExactly(erc20Mock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
       })
     ).toEqual(true);
-    expect(addTransactionSpy.callCount).toEqual(1);
+    expect(addTransactionStub.callCount).toEqual(1);
   });
 
   test("should throw an error if the wallet doesn't have enough funds to approve the required amount", async () => {
@@ -145,25 +162,44 @@ describe('ApproveErc20', () => {
     // Instantiate ApproveErc20
     target = new ApproveErc20(params, contextMock.getMockInstance());
 
-    const addTransactionSpy = spy(target, 'addTransaction');
+    const approveArgsSpy = sinon.spy();
+    const getPolyTokensArgsSpy = sinon.spy();
+    const addTransactionStub = stub(target, 'addTransaction');
     polyTokenMock.mock('approve', Promise.resolve('Approve'));
     wrappersMock.mock('getPolyTokens', Promise.resolve('GetPolyTokens'));
+    const { approve } = polyTokenMock.getMockInstance();
+    const { getPolyTokens } = wrappersMock.getMockInstance();
+    addTransactionStub.withArgs(approve).returns(approveArgsSpy);
+    addTransactionStub.withArgs(getPolyTokens).returns(getPolyTokensArgsSpy);
 
-    // Real call
     await target.prepareTransactions();
 
     // Verifications
+    expect(getPolyTokensArgsSpy.getCall(0).args[0]).toEqual({
+      address: params.owner,
+      amount: params.amount,
+    });
+    expect(getPolyTokensArgsSpy.callCount).toEqual(1);
     expect(
-      addTransactionSpy.getCall(0).calledWithExactly(wrappersMock.getMockInstance().getPolyTokens, {
-        tag: PolyTransactionTag.GetTokens,
-      })
+      addTransactionStub
+        .getCall(0)
+        .calledWithExactly(wrappersMock.getMockInstance().getPolyTokens, {
+          tag: PolyTransactionTag.GetTokens,
+        })
     ).toEqual(true);
+
+    expect(approveArgsSpy.getCall(0).args[0]).toEqual({
+      value: params.amount,
+      spender: params.spender,
+    });
+    expect(approveArgsSpy.callCount).toEqual(1);
     expect(
-      addTransactionSpy.getCall(1).calledWithExactly(polyTokenMock.getMockInstance().approve, {
+      addTransactionStub.getCall(1).calledWithExactly(polyTokenMock.getMockInstance().approve, {
         tag: PolyTransactionTag.ApproveErc20,
       })
     ).toEqual(true);
-    expect(addTransactionSpy.callCount).toEqual(2);
+
+    expect(addTransactionStub.callCount).toEqual(2);
   });
 
   test('should return if it has sufficient allowance, will never add the transaction', async () => {
