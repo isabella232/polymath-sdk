@@ -2,8 +2,9 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import { spy, restore } from 'sinon';
+import { spy, stub, restore } from 'sinon';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
+import sinon from 'sinon';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as approvalModule from '../ApproveErc20';
@@ -152,29 +153,44 @@ describe('CreateSecurityToken', () => {
 
     test('should add the transaction to the queue to create the security token and approve erc20 transfer', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const generateNewSecurityTokenArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenRegistryMock.mock(
         'generateNewSecurityToken',
         Promise.resolve('GenerateNewSecurityToken')
       );
+      const { generateNewSecurityToken } = securityTokenRegistryMock.getMockInstance();
+      addTransactionStub
+        .withArgs(generateNewSecurityToken)
+        .returns(generateNewSecurityTokenArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(generateNewSecurityTokenArgsSpy.getCall(0).args[0]).toEqual({
+        name: params.name,
+        ticker: params.symbol,
+        tokenDetails: '',
+        divisible: params.divisible,
+        protocolVersion: '0',
+        treasuryWallet: params.owner,
+      });
+      expect(generateNewSecurityTokenArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenRegistryMock.getMockInstance().generateNewSecurityToken)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+      expect(addTransactionStub.getCall(0).lastArg.fees).toEqual({
         usd: costInUsd,
         poly: costInPoly,
       });
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.CreateSecurityToken
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
       expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
       expect(addProcedureSpy.callCount).toEqual(1);
     });

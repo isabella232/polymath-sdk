@@ -1,9 +1,10 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import { spy, stub, restore } from 'sinon';
 import { BigNumber, ERC20DividendCheckpointEvents } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
+import sinon from 'sinon';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as approveModule from '../ApproveErc20';
@@ -98,28 +99,46 @@ describe('CreateDividendDistribution', () => {
   describe('CreateDividendDistribution', () => {
     test('should add a transaction to the queue to create an erc20 dividend distribution and to approve erc20 token', async () => {
       const addProcedureSpy = spy(target, 'addProcedure');
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const createDividendWithCheckpointAndExclusionsArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+
       erc20DividendsMock.mock(
         'createDividendWithCheckpointAndExclusions',
         Promise.resolve('CreateDividendWithCheckpointAndExclusions')
       );
+      const { createDividendWithCheckpointAndExclusions } = erc20DividendsMock.getMockInstance();
+      addTransactionStub
+        .withArgs(createDividendWithCheckpointAndExclusions)
+        .returns(createDividendWithCheckpointAndExclusionsArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(createDividendWithCheckpointAndExclusionsArgsSpy.getCall(0).args[0]).toEqual({
+        maturity: params.maturityDate,
+        expiry: params.expiryDate,
+        token: params.erc20Address,
+        amount: params.amount,
+        checkpointId: params.checkpointIndex,
+        name: params.name,
+        excluded: [],
+      });
+      expect(createDividendWithCheckpointAndExclusionsArgsSpy.callCount).toEqual(1);
+
       expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(
             erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.CreateErc20DividendDistribution
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
+
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
@@ -137,35 +156,63 @@ describe('CreateDividendDistribution', () => {
         contextMock.getMockInstance()
       );
       const addProcedureSpy = spy(target, 'addProcedure');
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const createDividendWithCheckpointAndExclusionsArgsSpy = sinon.spy();
+      const setWithholdingArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       erc20DividendsMock.mock(
         'createDividendWithCheckpointAndExclusions',
         Promise.resolve('CreateDividendWithCheckpointAndExclusions')
       );
       erc20DividendsMock.mock('setWithholding', Promise.resolve('SetWithholding'));
 
+      const { createDividendWithCheckpointAndExclusions } = erc20DividendsMock.getMockInstance();
+      const { setWithholding } = erc20DividendsMock.getMockInstance();
+      addTransactionStub
+        .withArgs(createDividendWithCheckpointAndExclusions)
+        .returns(createDividendWithCheckpointAndExclusionsArgsSpy);
+      addTransactionStub.withArgs(setWithholding).returns(setWithholdingArgsSpy);
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
       expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+
+      expect(createDividendWithCheckpointAndExclusionsArgsSpy.getCall(0).args[0]).toEqual({
+        maturity: params.maturityDate,
+        expiry: params.expiryDate,
+        token: params.erc20Address,
+        amount: params.amount,
+        checkpointId: params.checkpointIndex,
+        name: params.name,
+        excluded: [],
+      });
+      expect(createDividendWithCheckpointAndExclusionsArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(
             erc20DividendsMock.getMockInstance().createDividendWithCheckpointAndExclusions
           )
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.CreateErc20DividendDistribution
       );
+
+      expect(setWithholdingArgsSpy.getCall(0).args[0]).toEqual({
+        investors: ['0x5555555555555555555555555555555555555555'],
+        withholding: [50],
+      });
+      expect(setWithholdingArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy.getCall(1).calledWith(erc20DividendsMock.getMockInstance().setWithholding)
+        addTransactionStub
+          .getCall(1)
+          .calledWith(erc20DividendsMock.getMockInstance().setWithholding)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(1).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(1).lastArg.tag).toEqual(
         PolyTransactionTag.SetErc20TaxWithholding
       );
-      expect(addTransactionSpy.callCount).toEqual(2);
+      expect(addTransactionStub.callCount).toEqual(2);
       expect(addProcedureSpy.callCount).toEqual(1);
     });
 
