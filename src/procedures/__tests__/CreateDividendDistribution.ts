@@ -29,6 +29,8 @@ const params = {
   expiryDate: new Date(2031, 1),
 };
 
+const dividendsModuleAddress = '0x2';
+
 describe('CreateDividendDistribution', () => {
   let target: CreateDividendDistribution;
   let contextMock: MockManager<contextModule.Context>;
@@ -64,7 +66,7 @@ describe('CreateDividendDistribution', () => {
       'ERC20DividendCheckpoint_3_0_0'
     );
     tokenFactoryMock.mock('getSecurityTokenInstanceFromTicker', {});
-    erc20DividendsMock.mock('address', Promise.resolve(params.erc20Address));
+    erc20DividendsMock.mock('address', Promise.resolve(dividendsModuleAddress));
     wrappersMock.mock(
       'getAttachedModules',
       Promise.resolve([erc20DividendsMock.getMockInstance()])
@@ -98,8 +100,12 @@ describe('CreateDividendDistribution', () => {
 
   describe('CreateDividendDistribution', () => {
     test('should add a transaction to the queue to create an erc20 dividend distribution and to approve erc20 token', async () => {
-      const addProcedureSpy = spy(target, 'addProcedure');
-      const createDividendWithCheckpointAndExclusionsArgsSpy = sinon.spy();
+      const approveErc20ArgsSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(ApproveErc20).returns(approveErc20ArgsSpy);
+
+      const createDividendWithCheckpointAndExclusionsArgsStub = sinon.stub();
+      createDividendWithCheckpointAndExclusionsArgsStub.returns([{}]);
       const addTransactionStub = stub(target, 'addTransaction');
 
       erc20DividendsMock.mock(
@@ -109,13 +115,19 @@ describe('CreateDividendDistribution', () => {
       const { createDividendWithCheckpointAndExclusions } = erc20DividendsMock.getMockInstance();
       addTransactionStub
         .withArgs(createDividendWithCheckpointAndExclusions)
-        .returns(createDividendWithCheckpointAndExclusionsArgsSpy);
+        .returns(createDividendWithCheckpointAndExclusionsArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(createDividendWithCheckpointAndExclusionsArgsSpy.getCall(0).args[0]).toEqual({
+      expect(approveErc20ArgsSpy.getCall(0).args[0]).toEqual({
+        amount: params.amount,
+        spender: dividendsModuleAddress,
+        tokenAddress: params.erc20Address,
+      });
+      expect(approveErc20ArgsSpy.callCount).toBe(1);
+      expect(createDividendWithCheckpointAndExclusionsArgsStub.getCall(0).args[0]).toEqual({
         maturity: params.maturityDate,
         expiry: params.expiryDate,
         token: params.erc20Address,
@@ -124,9 +136,9 @@ describe('CreateDividendDistribution', () => {
         name: params.name,
         excluded: [],
       });
-      expect(createDividendWithCheckpointAndExclusionsArgsSpy.callCount).toEqual(1);
+      expect(createDividendWithCheckpointAndExclusionsArgsStub.callCount).toEqual(1);
 
-      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(addProcedureStub.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
       expect(
         addTransactionStub
           .getCall(0)
@@ -139,7 +151,7 @@ describe('CreateDividendDistribution', () => {
       );
       expect(addTransactionStub.callCount).toEqual(1);
 
-      expect(addProcedureSpy.callCount).toEqual(1);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
 
     test('should send add a transaction to the queue to create arc20 dividend distribution with taxWitholding data', async () => {
