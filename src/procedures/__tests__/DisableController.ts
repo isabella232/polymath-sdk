@@ -104,12 +104,18 @@ describe('DisableController', () => {
     test('should add a transaction to the queue to disable controller of the security token, without passing in a signature', async () => {
       const disableControllerArgsSpy = sinon.spy();
       const addTransactionStub = stub(target, 'addTransaction');
-
-      const addSignatureRequestSpy = spy(target, 'addSignatureRequest');
-      securityTokenMock.mock('signDisableControllerAck', randomSignature);
       securityTokenMock.mock('disableController', 'DisableController');
       const { disableController } = securityTokenMock.getMockInstance();
       addTransactionStub.withArgs(disableController).returns(disableControllerArgsSpy);
+
+      const addSignatureRequestArgsStub = sinon.stub();
+      addSignatureRequestArgsStub.returns(Promise.resolve(randomSignature));
+      const addSignatureRequestStub = stub(target, 'addSignatureRequest');
+
+      securityTokenMock.mock('signDisableControllerAck', randomSignature);
+      addSignatureRequestStub
+        .withArgs(securityTokenMock.getMockInstance().signDisableControllerAck)
+        .returns(addSignatureRequestArgsStub);
 
       // Real call
       await target.prepareTransactions();
@@ -130,11 +136,11 @@ describe('DisableController', () => {
       expect(addTransactionStub.callCount).toEqual(1);
 
       expect(
-        addSignatureRequestSpy
+        addSignatureRequestStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().signDisableControllerAck)
       ).toEqual(true);
-      expect(addSignatureRequestSpy.callCount).toEqual(1);
+      expect(addSignatureRequestStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to disable controller of the security token, passing in your own hex signature', async () => {
