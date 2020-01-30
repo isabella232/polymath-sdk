@@ -89,18 +89,19 @@ describe('CreateCheckpoint', () => {
 
   describe('createCheckpoint', () => {
     test('should add a transaction to the queue to create a new checkpoint', async () => {
-      const createCheckpointArgsSpy = sinon.spy();
+      const createCheckpointArgsStub = sinon.stub();
+      createCheckpointArgsStub.returns([{}]);
       const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('createCheckpoint', Promise.resolve('CreateCheckpoint'));
       const { createCheckpoint } = securityTokenMock.getMockInstance();
-      addTransactionStub.withArgs(createCheckpoint).returns(createCheckpointArgsSpy);
+      addTransactionStub.withArgs(createCheckpoint).returns(createCheckpointArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(createCheckpointArgsSpy.getCall(0).args[0]).toEqual({});
-      expect(createCheckpointArgsSpy.callCount).toEqual(1);
+      expect(createCheckpointArgsStub.getCall(0).args[0]).toEqual({});
+      expect(createCheckpointArgsStub.callCount).toEqual(1);
       expect(
         addTransactionStub
           .getCall(0)

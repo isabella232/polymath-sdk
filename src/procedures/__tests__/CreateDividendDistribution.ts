@@ -127,6 +127,7 @@ describe('CreateDividendDistribution', () => {
         tokenAddress: params.erc20Address,
       });
       expect(approveErc20ArgsSpy.callCount).toBe(1);
+
       expect(createDividendWithCheckpointAndExclusionsArgsStub.getCall(0).args[0]).toEqual({
         maturity: params.maturityDate,
         expiry: params.expiryDate,
@@ -149,27 +150,35 @@ describe('CreateDividendDistribution', () => {
       expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.CreateErc20DividendDistribution
       );
-      expect(addTransactionStub.callCount).toEqual(1);
 
+      expect(addTransactionStub.callCount).toEqual(1);
       expect(addProcedureStub.callCount).toEqual(1);
     });
 
     test('should send add a transaction to the queue to create arc20 dividend distribution with taxWitholding data', async () => {
+      const taxWithholdingAddress = '0x5555555555555555555555555555555555555555';
+      const taxWithholdingPercentage = 50;
       target = new CreateDividendDistribution(
         {
           ...params,
           taxWithholdings: [
             {
-              address: '0x5555555555555555555555555555555555555555',
-              percentage: 50,
+              address: taxWithholdingAddress,
+              percentage: taxWithholdingPercentage,
             },
           ],
         },
         contextMock.getMockInstance()
       );
-      const addProcedureSpy = spy(target, 'addProcedure');
-      const createDividendWithCheckpointAndExclusionsArgsSpy = sinon.spy();
-      const setWithholdingArgsSpy = sinon.spy();
+      const approveErc20ArgsSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(ApproveErc20).returns(approveErc20ArgsSpy);
+
+      const createDividendWithCheckpointAndExclusionsArgsStub = sinon.stub();
+      createDividendWithCheckpointAndExclusionsArgsStub.returns([{}]);
+      const setWithholdingArgsStub = sinon.stub();
+      setWithholdingArgsStub.returns([{}]);
+
       const addTransactionStub = stub(target, 'addTransaction');
       erc20DividendsMock.mock(
         'createDividendWithCheckpointAndExclusions',
@@ -181,16 +190,22 @@ describe('CreateDividendDistribution', () => {
       const { setWithholding } = erc20DividendsMock.getMockInstance();
       addTransactionStub
         .withArgs(createDividendWithCheckpointAndExclusions)
-        .returns(createDividendWithCheckpointAndExclusionsArgsSpy);
-      addTransactionStub.withArgs(setWithholding).returns(setWithholdingArgsSpy);
+        .returns(createDividendWithCheckpointAndExclusionsArgsStub);
+      addTransactionStub.withArgs(setWithholding).returns(setWithholdingArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(addProcedureStub.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(approveErc20ArgsSpy.getCall(0).args[0]).toEqual({
+        amount: params.amount,
+        spender: dividendsModuleAddress,
+        tokenAddress: params.erc20Address,
+      });
+      expect(approveErc20ArgsSpy.callCount).toBe(1);
 
-      expect(createDividendWithCheckpointAndExclusionsArgsSpy.getCall(0).args[0]).toEqual({
+      expect(createDividendWithCheckpointAndExclusionsArgsStub.getCall(0).args[0]).toEqual({
         maturity: params.maturityDate,
         expiry: params.expiryDate,
         token: params.erc20Address,
@@ -199,7 +214,7 @@ describe('CreateDividendDistribution', () => {
         name: params.name,
         excluded: [],
       });
-      expect(createDividendWithCheckpointAndExclusionsArgsSpy.callCount).toEqual(1);
+      expect(createDividendWithCheckpointAndExclusionsArgsStub.callCount).toEqual(1);
       expect(
         addTransactionStub
           .getCall(0)
@@ -210,12 +225,12 @@ describe('CreateDividendDistribution', () => {
       expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.CreateErc20DividendDistribution
       );
+      expect(setWithholdingArgsStub.getCall(0).args[0].investors).toEqual([taxWithholdingAddress]);
+      expect(setWithholdingArgsStub.getCall(0).args[0].withholding[0].toNumber()).toEqual(
+        taxWithholdingPercentage
+      );
 
-      expect(setWithholdingArgsSpy.getCall(0).args[0]).toEqual({
-        investors: ['0x5555555555555555555555555555555555555555'],
-        withholding: [50],
-      });
-      expect(setWithholdingArgsSpy.callCount).toEqual(1);
+      expect(setWithholdingArgsStub.callCount).toEqual(1);
       expect(
         addTransactionStub
           .getCall(1)
@@ -224,8 +239,9 @@ describe('CreateDividendDistribution', () => {
       expect(addTransactionStub.getCall(1).lastArg.tag).toEqual(
         PolyTransactionTag.SetErc20TaxWithholding
       );
+
       expect(addTransactionStub.callCount).toEqual(2);
-      expect(addProcedureSpy.callCount).toEqual(1);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {
