@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy } from 'sinon';
+import sinon, { stub, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { BigNumber, FundRaiseType } from '@polymathnetwork/contract-wrappers';
 import * as investInTieredStoModule from '../InvestInTieredSto';
@@ -158,25 +158,46 @@ describe('InvestInTieredSto', () => {
 
   describe('InvestInTieredSto', () => {
     test('should add a transaction to the queue to invest in a tiered sto with stablecoin', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
-      const addProcedureSpy = spy(target, 'addProcedure');
-      tieredStoMock.mock('buyWithUSDRateLimited', Promise.resolve('BuyWithUSDRateLimited'));
+      const approveErc20ArgsSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(ApproveErc20).returns(approveErc20ArgsSpy);
+
+      const buyTokensWithStableCoinSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+      tieredStoMock.mock('buyWithUSDRateLimited', Promise.resolve('BuywithUSDRateLimited'));
+      const { buyWithUSDRateLimited } = tieredStoMock.getMockInstance();
+      addTransactionStub.withArgs(buyWithUSDRateLimited).returns(buyTokensWithStableCoinSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(approveErc20ArgsSpy.getCall(0).args[0]).toEqual({
+        amount: tieredParams.amount,
+        spender: tieredParams.stoAddress,
+        tokenAddress: tieredParams.stableCoinAddress,
+      });
+      expect(approveErc20ArgsSpy.callCount).toBe(1);
+
+      expect(buyTokensWithStableCoinSpy.getCall(0).args[0]).toEqual({
+        beneficiary: tieredParams.beneficiary,
+        investedSC: tieredParams.amount,
+        minTokens: tieredParams.minTokens,
+        usdToken: tieredParams.stableCoinAddress,
+      });
+      expect(buyTokensWithStableCoinSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredStoMock.getMockInstance().buyWithUSDRateLimited)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.BuyWithScRateLimited
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
-      expect(addProcedureSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
+      expect(addProcedureStub.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to invest in a tiered sto with stablecoin without minimum tokens or beneficiary specified', async () => {
@@ -188,25 +209,47 @@ describe('InvestInTieredSto', () => {
         },
         contextMock.getMockInstance()
       );
-      const addTransactionSpy = spy(target, 'addTransaction');
-      const addProcedureSpy = spy(target, 'addProcedure');
-      tieredStoMock.mock('buyWithUSDRateLimited', Promise.resolve('BuyWithUSDRateLimited'));
+
+      const approveErc20ArgsSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(ApproveErc20).returns(approveErc20ArgsSpy);
+
+      const buyTokensWithStableCoinSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+      tieredStoMock.mock('buyWithUSDRateLimited', Promise.resolve('BuywithUSDRateLimited'));
+      const { buyWithUSDRateLimited } = tieredStoMock.getMockInstance();
+      addTransactionStub.withArgs(buyWithUSDRateLimited).returns(buyTokensWithStableCoinSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(approveErc20ArgsSpy.getCall(0).args[0]).toEqual({
+        amount: tieredParams.amount,
+        spender: tieredParams.stoAddress,
+        tokenAddress: tieredParams.stableCoinAddress,
+      });
+      expect(approveErc20ArgsSpy.callCount).toBe(1);
+
+      expect(buyTokensWithStableCoinSpy.getCall(0).args[0]).toEqual({
+        beneficiary: currentWalletAddress,
+        investedSC: tieredParams.amount,
+        minTokens: new BigNumber(0),
+        usdToken: tieredParams.stableCoinAddress,
+      });
+      expect(buyTokensWithStableCoinSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredStoMock.getMockInstance().buyWithUSDRateLimited)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.BuyWithScRateLimited
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
-      expect(addProcedureSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
+      expect(addProcedureStub.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
 
     test('should throw an error if the arguments indicate the currency is stable coin, but stable coin is not listed as a fundraise currency type', async () => {
@@ -237,22 +280,45 @@ describe('InvestInTieredSto', () => {
         ...tieredStoObject,
         fundraiseCurrencies: [FundRaiseType.POLY],
       });
-      const addTransactionSpy = spy(target, 'addTransaction');
-      tieredStoMock.mock('buyWithPOLYRateLimited', Promise.resolve('BuyWithPOLYRateLimited'));
+
+      const approveErc20ArgsSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(ApproveErc20).returns(approveErc20ArgsSpy);
+
+      const buyTokensWithPolySpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+      tieredStoMock.mock('buyWithPOLYRateLimited', Promise.resolve('BuywithPOLYRateLimited'));
+      const { buyWithPOLYRateLimited } = tieredStoMock.getMockInstance();
+      addTransactionStub.withArgs(buyWithPOLYRateLimited).returns(buyTokensWithPolySpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(approveErc20ArgsSpy.getCall(0).args[0]).toEqual({
+        amount: tieredParams.amount,
+        spender: tieredParams.stoAddress,
+      });
+      expect(approveErc20ArgsSpy.callCount).toBe(1);
+
+      expect(buyTokensWithPolySpy.getCall(0).args[0]).toEqual({
+        beneficiary: tieredParams.beneficiary,
+        investedPOLY: tieredParams.amount,
+        minTokens: tieredParams.minTokens,
+      });
+      expect(buyTokensWithPolySpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredStoMock.getMockInstance().buyWithPOLYRateLimited)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.BuyWithPolyRateLimited
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
+      expect(addProcedureStub.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
 
     test('should throw an error if the arguments indicate the currency is POLY, but POLY is not listed as a fundraise currency type', async () => {
@@ -288,22 +354,33 @@ describe('InvestInTieredSto', () => {
         ...tieredStoObject,
         fundraiseCurrencies: [FundRaiseType.ETH],
       });
-      const addTransactionSpy = spy(target, 'addTransaction');
-      tieredStoMock.mock('buyWithETHRateLimited', Promise.resolve('BuyWithETHRateLimited'));
+
+      const buyTokensWithETHSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+      tieredStoMock.mock('buyWithETHRateLimited', Promise.resolve('BuywithETHRateLimited'));
+      const { buyWithETHRateLimited } = tieredStoMock.getMockInstance();
+      addTransactionStub.withArgs(buyWithETHRateLimited).returns(buyTokensWithETHSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(buyTokensWithETHSpy.getCall(0).args[0]).toEqual({
+        beneficiary: tieredParams.beneficiary,
+        value: tieredParams.amount,
+        minTokens: tieredParams.minTokens,
+      });
+      expect(buyTokensWithETHSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredStoMock.getMockInstance().buyWithETHRateLimited)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.BuyWithEthRateLimited
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw an error if the arguments indicate the currency is ETH, but ETH is not listed as a fundraise currency type', async () => {
