@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager, StaticMockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { stub, restore } from 'sinon';
 import {
   BigNumber,
   TransactionReceiptWithDecodedLogs,
@@ -156,21 +156,51 @@ describe('IssueTokens', () => {
 
   describe('MintTokens', () => {
     test('should add the transaction to the queue to issue tokens and add a procedure to modify shareholder data', async () => {
-      const addProcedureSpy = spy(target, 'addProcedure');
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyShareholderDataSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(ModifyShareholderData).returns(modifyShareholderDataSpy);
+
+      const issueMultiArgsStub = sinon.stub();
+      issueMultiArgsStub.returns([{}]);
+      const addTransactionStub = stub(target, 'addTransaction');
+
       securityTokenMock.mock('issueMulti', Promise.resolve('IssueMulti'));
+      const { issueMulti } = securityTokenMock.getMockInstance();
+
+      addTransactionStub.withArgs(issueMulti).returns(issueMultiArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyShareholderDataSpy.getCall(0).args[0]).toEqual({
+        symbol: params.symbol,
+        shareholderData: [
+          {
+            address: params.issuanceData[0].address,
+            canBuyFromSto: params.issuanceData[0].shareholderData!.canBuyFromSto,
+            canReceiveAfter: params.issuanceData[0].shareholderData!.canReceiveAfter,
+            canSendAfter: params.issuanceData[0].shareholderData!.canSendAfter,
+            isAccredited: params.issuanceData[0].shareholderData!.isAccredited,
+            kycExpiry: params.issuanceData[0].shareholderData!.kycExpiry,
+          },
+        ],
+      });
+      expect(modifyShareholderDataSpy.callCount).toBe(1);
+
+      expect(issueMultiArgsStub.getCall(0).args[0]).toEqual({
+        investors: [testAddress3, testAddress],
+        values: [params.issuanceData[0].amount, params.issuanceData[0].amount],
+      });
+      expect(issueMultiArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(securityTokenMock.getMockInstance().issueMulti)
+        addTransactionStub.getCall(0).calledWith(securityTokenMock.getMockInstance().issueMulti)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.IssueMulti);
-      expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWithExactly(ModifyShareholderData)).toEqual(true);
-      expect(addProcedureSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.IssueMulti);
+      expect(addTransactionStub.callCount).toEqual(1);
+      expect(addProcedureStub.getCall(0).calledWithExactly(ModifyShareholderData)).toEqual(true);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
 
     test('should return an array of the shareholders for whom tokens were issued', async () => {
