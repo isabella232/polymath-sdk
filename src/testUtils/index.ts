@@ -34,6 +34,9 @@ interface MockEthereumBrowserArgs {
 }
 
 /* eslint-disable no-global-assign */
+/**
+ * @hidden
+ */
 export function mockEthereumBrowser({
   support = 'modern',
   options = {
@@ -74,11 +77,15 @@ export function mockEthereumBrowser({
 }
 /* eslint-enable no-global-assign */
 
+/**
+ * @hidden
+ */
 class MockPolyResponse extends PolyResponse {
   public resolve: () => void;
 
   public reject: (err: any) => void;
 
+  // eslint-disable-next-line require-jsdoc
   constructor(args: { txHash: string }) {
     const { txHash } = args;
     const values = {
@@ -113,6 +120,9 @@ class MockPolyResponse extends PolyResponse {
   }
 }
 
+/**
+ * @hidden
+ */
 export class MockedContract {
   public autoResolve: boolean;
 
@@ -154,6 +164,7 @@ export class MockedContract {
     return this.failureTxPolyResponse;
   });
 
+  // eslint-disable-next-line require-jsdoc
   constructor({
     autoResolve = true,
     errorMsg,
@@ -178,6 +189,9 @@ export class MockedContract {
   }
 }
 
+/**
+ * @hidden
+ */
 export const getMockTransactionSpec = (
   method: (args: any) => Promise<any>,
   args: any,
@@ -188,6 +202,9 @@ export const getMockTransactionSpec = (
   postTransactionResolvers: resolvers.map(resolver => new PostTransactionResolver(resolver)),
 });
 
+/**
+ * @hidden
+ */
 export async function getMockedPolyResponse(): Promise<PolyResponse> {
   return new PolyResponse(
     'TxHash',
@@ -211,28 +228,39 @@ export async function getMockedPolyResponse(): Promise<PolyResponse> {
   );
 }
 
+/**
+ * @hidden
+ */
 export class MockedCallMethod {
+  // eslint-disable-next-line require-jsdoc
   public callAsync(): Promise<any> {
     // eslint-disable-line
     return Promise.resolve();
   }
 
+  // eslint-disable-next-line require-jsdoc
   public getABIEncodedTransactionData(): string {
     return '';
   }
 }
 
+/**
+ * @hidden
+ */
 export class MockedSendMethod extends MockedCallMethod {
+  // eslint-disable-next-line require-jsdoc
   public sendTransactionAsync(): Promise<any> {
     // eslint-disable-line
     return Promise.resolve();
   }
 
+  // eslint-disable-next-line require-jsdoc
   public estimateGasAsync(): Promise<any> {
     // eslint-disable-line
     return Promise.resolve();
   }
 
+  // eslint-disable-next-line require-jsdoc
   public getABIEncodedTransactionData(): string {
     return '';
   }

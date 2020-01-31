@@ -112,6 +112,9 @@ interface InvestInOtherParams extends BaseInvestParams {
  * Used to manage a tiered sto
  */
 export class TieredSto extends Sto<Params> {
+  /**
+   * Generate the Tiered STO's UUID from its identifying properties
+   */
   public static generateId({ securityTokenId, stoType, address }: UniqueIdentifiers) {
     return serialize('tieredSto', {
       securityTokenId,

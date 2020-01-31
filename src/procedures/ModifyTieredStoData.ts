@@ -58,7 +58,6 @@ export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureA
    * - Attempting to use a custom currency on an STO with version 3.0.0 or lower
    * - The supplied parameters don't represent any changes in the STO
    */
-
   public async prepareTransactions() {
     const { args, context } = this;
     const { symbol, stoAddress } = args;

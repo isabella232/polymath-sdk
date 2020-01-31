@@ -17,9 +17,13 @@ export const ErrorMessagesPerCode: {
     'You must install the Metamask browser extension if attempting to use Polymath SDK from the browser',
 };
 
+/**
+ * Wraps an error to give more information about it's type
+ */
 export class PolymathError extends Error {
   public code: ErrorCode;
 
+  // eslint-disable-next-line require-jsdoc
   constructor({ message, code }: { message?: string; code: ErrorCode }) {
     super(message || ErrorMessagesPerCode[code] || `Unknown error, code: ${code}`);
     // eslint:disable-next-line
