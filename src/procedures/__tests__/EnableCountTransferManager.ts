@@ -15,7 +15,6 @@ import {
   ProcedureType,
 } from '../../types';
 
-
 const params: EnableCountTransferManagerProcedureArgs = {
   symbol: 'TEST1',
   maxHolderCount: 3,

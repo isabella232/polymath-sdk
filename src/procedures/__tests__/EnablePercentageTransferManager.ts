@@ -1,7 +1,7 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
-import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import sinon, { stub, restore } from 'sinon';
+import { BigNumber, ModuleName } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -64,21 +64,35 @@ describe('EnablePercentageTransferManager', () => {
 
   describe('EnablePercentageTransferManager', () => {
     test('should add a transaction to the queue to enable percentage transfer manager', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const addModuleWithLabelArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const { addModuleWithLabel } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(addModuleWithLabel).returns(addModuleWithLabelArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addModuleWithLabelArgsSpy.getCall(0).args[0]).toEqual({
+        moduleName: ModuleName.PercentageTransferManager,
+        address: moduleFactoryAddress,
+        archived: false,
+        data: {
+          allowPrimaryIssuance: false,
+          maxHolderPercentage: params.maxHolderPercentage,
+        },
+      });
+      expect(addModuleWithLabelArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().addModuleWithLabel, {
             tag: PolyTransactionTag.EnablePercentageTransferManager,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to enable percentage transfer manager with primary issuance', async () => {
@@ -86,21 +100,35 @@ describe('EnablePercentageTransferManager', () => {
         { ...params, allowPrimaryIssuance: true },
         contextMock.getMockInstance()
       );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const addModuleWithLabelArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const { addModuleWithLabel } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(addModuleWithLabel).returns(addModuleWithLabelArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addModuleWithLabelArgsSpy.getCall(0).args[0]).toEqual({
+        moduleName: ModuleName.PercentageTransferManager,
+        address: moduleFactoryAddress,
+        archived: false,
+        data: {
+          allowPrimaryIssuance: true,
+          maxHolderPercentage: params.maxHolderPercentage,
+        },
+      });
+      expect(addModuleWithLabelArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().addModuleWithLabel, {
             tag: PolyTransactionTag.EnablePercentageTransferManager,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {
