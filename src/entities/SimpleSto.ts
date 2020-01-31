@@ -34,6 +34,9 @@ export { UniqueIdentifiers };
  * Class used to manage a simple sto
  */
 export class SimpleSto extends Sto<Params> {
+  /**
+   * Generate the Simple STO's UUID from its identifying properties
+   */
   public static generateId({ securityTokenId, stoType, address }: UniqueIdentifiers) {
     return serialize('simpleSto', {
       securityTokenId,

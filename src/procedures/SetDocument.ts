@@ -3,9 +3,20 @@ import { ProcedureType, PolyTransactionTag, SetDocumentProcedureArgs, ErrorCode 
 import { PolymathError } from '../PolymathError';
 import { checkStringLength } from '../utils';
 
+/**
+ * Procedure that adds a document to a Security Token
+ */
 export class SetDocument extends Procedure<SetDocumentProcedureArgs> {
   public type = ProcedureType.SetDocument;
 
+  /**
+   * Set a document on the Security Token
+   *
+   * Note that this procedure will fail if:
+   * - The current wallet is not the Security Token owner
+   * - The name of the document is less than 1 or more than 32 characters long
+   * - The document hash is less than 1 or more than 32 characters long
+   */
   public async prepareTransactions() {
     const { symbol, name, uri, documentHash } = this.args;
     const { contractWrappers, currentWallet } = this.context;

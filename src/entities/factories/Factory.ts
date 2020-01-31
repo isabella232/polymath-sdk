@@ -52,7 +52,7 @@ export abstract class Factory<EntityType extends Entity<T>, T extends any, U ext
   /**
    * Get an entity from the cache. Fetches the necessary data to create it if it isn't cached, refreshes it if it is
    *
-   * @param uid unique identifier for the entity
+   * @param uid - unique identifier for the entity
    */
   public async fetch(uid: string) {
     const { cache, context } = this;

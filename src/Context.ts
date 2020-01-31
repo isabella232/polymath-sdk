@@ -44,6 +44,7 @@ export class Context {
 
   public factories: Factories;
 
+  // eslint-disable-next-line require-jsdoc
   constructor(params: ConstructorParams) {
     const { contractWrappers } = params;
 

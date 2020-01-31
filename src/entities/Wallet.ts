@@ -12,6 +12,10 @@ export interface UniqueIdentifiers {
   address: string;
 }
 
+/**
+ * @hidden
+ * Checks if a value is of type [[UniqueIdentifiers]]
+ */
 function isUniqueIdentifiers(identifier: any): identifier is UniqueIdentifiers {
   const { address } = identifier;
 
@@ -27,6 +31,9 @@ export interface Params extends UniqueIdentifiers {}
  * Used to manage a wallet
  */
 export class Wallet extends Entity<Params> {
+  /**
+   * Generate the Wallet's UUID from its identifying properties
+   */
   public static generateId({ address }: UniqueIdentifiers) {
     return serialize('wallet', {
       address,
@@ -36,7 +43,7 @@ export class Wallet extends Entity<Params> {
   /**
    * Unserialize a serialized entity
    *
-   * @param serialized string with entity information
+   * @param serialized - string with entity information
    */
   public static unserialize(serialized: string) {
     const unserialized = unserialize(serialized);

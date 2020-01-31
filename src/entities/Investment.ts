@@ -13,6 +13,10 @@ export interface UniqueIdentifiers {
   index: number;
 }
 
+/**
+ * @hidden
+ * Check if a value is of type [[UniqueIdentifiers]]
+ */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { securityTokenId, stoId, index } = identifiers;
 
@@ -35,6 +39,9 @@ export interface Params {
  * Used to manage an Investment in a Security Token Offering
  */
 export class Investment extends Entity<Params> {
+  /**
+   * Generate the Investment's UUID from its identifying properties
+   */
   public static generateId({ securityTokenId, stoId, index }: UniqueIdentifiers) {
     return serialize('investment', {
       securityTokenId,
