@@ -142,7 +142,7 @@ describe('LaunchSimpleSto', () => {
         moduleName: ModuleName.CappedSTO,
         address: moduleFactoryAddress,
         archived: false,
-        maxCost: costInUsd,
+        maxCost: costInPoly,
         data: {
           cap: params.tokensOnSale,
           endTime: params.endDate,
