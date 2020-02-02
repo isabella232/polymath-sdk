@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -85,7 +85,8 @@ describe('ModifyPercentageExemptions', () => {
         { symbol: params.symbol, allowPrimaryIssuance: true },
         contextMock.getMockInstance()
       );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const setAllowPrimaryIssuanceArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
 
       percentageTransferMock.mock(
         'setAllowPrimaryIssuance',
@@ -93,22 +94,32 @@ describe('ModifyPercentageExemptions', () => {
       );
       percentageTransferMock.mock('allowPrimaryIssuance', Promise.resolve(false));
 
+      const { setAllowPrimaryIssuance } = percentageTransferMock.getMockInstance();
+      addTransactionStub.withArgs(setAllowPrimaryIssuance).returns(setAllowPrimaryIssuanceArgsSpy);
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(setAllowPrimaryIssuanceArgsSpy.getCall(0).args[0]).toEqual({
+        allowPrimaryIssuance: params.allowPrimaryIssuance,
+      });
+      expect(setAllowPrimaryIssuanceArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(percentageTransferMock.getMockInstance().setAllowPrimaryIssuance, {
             tag: PolyTransactionTag.SetAllowPrimaryIssuance,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify percentage exemptions and make a change to allow primary issuance', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const setAllowPrimaryIssuanceArgsSpy = sinon.spy();
+      const modifyWhitelistMultiArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
 
       percentageTransferMock.mock(
         'setAllowPrimaryIssuance',
@@ -117,26 +128,40 @@ describe('ModifyPercentageExemptions', () => {
       percentageTransferMock.mock('modifyWhitelistMulti', Promise.resolve('ModifyWhitelistMulti'));
       percentageTransferMock.mock('allowPrimaryIssuance', Promise.resolve(false));
 
+      const { modifyWhitelistMulti } = percentageTransferMock.getMockInstance();
+      addTransactionStub.withArgs(modifyWhitelistMulti).returns(modifyWhitelistMultiArgsSpy);
+      const { setAllowPrimaryIssuance } = percentageTransferMock.getMockInstance();
+      addTransactionStub.withArgs(setAllowPrimaryIssuance).returns(setAllowPrimaryIssuanceArgsSpy);
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyWhitelistMultiArgsSpy.getCall(0).args[0]).toEqual({
+        investors: [params.whitelistEntries![0].address, params.whitelistEntries![1].address],
+        valids: [params.whitelistEntries![0].whitelisted, params.whitelistEntries![1].whitelisted],
+      });
+      expect(modifyWhitelistMultiArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(percentageTransferMock.getMockInstance().modifyWhitelistMulti, {
             tag: PolyTransactionTag.ModifyWhitelistMulti,
           })
       ).toEqual(true);
 
+      expect(setAllowPrimaryIssuanceArgsSpy.getCall(0).args[0]).toEqual({
+        allowPrimaryIssuance: params.allowPrimaryIssuance,
+      });
+      expect(setAllowPrimaryIssuanceArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(1)
           .calledWithExactly(percentageTransferMock.getMockInstance().setAllowPrimaryIssuance, {
             tag: PolyTransactionTag.SetAllowPrimaryIssuance,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(2);
+      expect(addTransactionStub.callCount).toEqual(2);
     });
 
     test('should add a transaction to the queue to only modify percentage exemptions', async () => {
@@ -146,21 +171,30 @@ describe('ModifyPercentageExemptions', () => {
         contextMock.getMockInstance()
       );
 
+      const modifyWhitelistMultiArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       percentageTransferMock.mock('modifyWhitelistMulti', Promise.resolve('ModifyWhitelistMulti'));
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const { modifyWhitelistMulti } = percentageTransferMock.getMockInstance();
+      addTransactionStub.withArgs(modifyWhitelistMulti).returns(modifyWhitelistMultiArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyWhitelistMultiArgsSpy.getCall(0).args[0]).toEqual({
+        investors: [params.whitelistEntries![0].address, params.whitelistEntries![1].address],
+        valids: [params.whitelistEntries![0].whitelisted, params.whitelistEntries![1].whitelisted],
+      });
+      expect(modifyWhitelistMultiArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(percentageTransferMock.getMockInstance().modifyWhitelistMulti, {
             tag: PolyTransactionTag.ModifyWhitelistMulti,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {

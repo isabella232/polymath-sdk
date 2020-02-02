@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
@@ -72,24 +72,32 @@ describe('ModifyMaxHolderPercentage', () => {
 
   describe('ModifyMaxHolderPercentage', () => {
     test('should add a transaction to the queue to modify max holder percentage', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const changeHolderPercentageArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       percentageTransferMock.mock(
         'changeHolderPercentage',
         Promise.resolve('ChangeHolderPercentage')
       );
+      const { changeHolderPercentage } = percentageTransferMock.getMockInstance();
+      addTransactionStub.withArgs(changeHolderPercentage).returns(changeHolderPercentageArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(changeHolderPercentageArgsSpy.getCall(0).args[0]).toEqual({
+        maxHolderPercentage: params.maxHolderPercentage,
+      });
+      expect(changeHolderPercentageArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(percentageTransferMock.getMockInstance().changeHolderPercentage, {
             tag: PolyTransactionTag.ChangeHolderPercentage,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {
