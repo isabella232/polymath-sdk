@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -147,20 +147,29 @@ describe('RemoveDocument', () => {
     test('should add a transaction to the queue to remove a document from the security token', async () => {
       target = new RemoveDocument(params, contextMock.getMockInstance());
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const removeDocumentArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+      securityTokenMock.mock('removeDocument', Promise.resolve('RemoveDocument'));
+      const { removeDocument } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(removeDocument).returns(removeDocumentArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(removeDocumentArgsSpy.getCall(0).args[0]).toEqual({
+        name: params.name,
+      });
+      expect(removeDocumentArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().removeDocument, {
             tag: PolyTransactionTag.RemoveDocument,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
   });
 });
