@@ -1,0 +1,94 @@
+[@polymathnetwork/sdk - v2.0.1-beta.120](../README.md) › [Globals](../globals.md) › ["browserUtils"](_browserutils_.md)
+
+# External module: "browserUtils"
+
+## Index
+
+### Enumerations
+
+- [BrowserSupport](../enums/_browserutils_.browsersupport.md)
+
+### Interfaces
+
+- [Ethereum](../interfaces/_browserutils_.ethereum.md)
+- [ExtendedWindow](../interfaces/_browserutils_.extendedwindow.md)
+- [InjectedWeb3](../interfaces/_browserutils_.injectedweb3.md)
+- [Web3VersionAPI](../interfaces/_browserutils_.web3versionapi.md)
+- [WindowWithEthereum](../interfaces/_browserutils_.windowwithethereum.md)
+- [WindowWithWeb3](../interfaces/_browserutils_.windowwithweb3.md)
+
+### Functions
+
+- [getBrowserSupport](_browserutils_.md#getbrowsersupport)
+- [onAddressChange](_browserutils_.md#onaddresschange)
+- [onNetworkChange](_browserutils_.md#onnetworkchange)
+
+## Functions
+
+### getBrowserSupport
+
+▸ **getBrowserSupport**(): _[NoMetamask](../enums/_browserutils_.browsersupport.md#nometamask) | [MetamaskLegacy](../enums/_browserutils_.browsersupport.md#metamasklegacy) | [MetamaskModern](../enums/_browserutils_.browsersupport.md#metamaskmodern) | [None](../enums/_browserutils_.browsersupport.md#none)_
+
+_Defined in [src/browserUtils.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/1da5bc5/src/browserUtils.ts#L45)_
+
+Returns the browser support for Ethereum
+
+**Returns:** _[NoMetamask](../enums/_browserutils_.browsersupport.md#nometamask) | [MetamaskLegacy](../enums/_browserutils_.browsersupport.md#metamasklegacy) | [MetamaskModern](../enums/_browserutils_.browsersupport.md#metamaskmodern) | [None](../enums/_browserutils_.browsersupport.md#none)_
+
+---
+
+### onAddressChange
+
+▸ **onAddressChange**(`cb`: function): _(Anonymous function)_
+
+_Defined in [src/browserUtils.ts:189](https://github.com/PolymathNetwork/polymath-sdk/blob/1da5bc5/src/browserUtils.ts#L189)_
+
+Runs the callback anytime the wallet address changes in the browser
+
+**Parameters:**
+
+▪ **cb**: _function_
+
+callback that receives the new address and the previous one
+
+▸ (`newAddress`: string, `previousAddress?`: undefined | string): _void_
+
+**Parameters:**
+
+| Name               | Type                    |
+| ------------------ | ----------------------- |
+| `newAddress`       | string                  |
+| `previousAddress?` | undefined &#124; string |
+
+**Returns:** _(Anonymous function)_
+
+an unsubscribe function
+
+---
+
+### onNetworkChange
+
+▸ **onNetworkChange**(`cb`: function): _(Anonymous function)_
+
+_Defined in [src/browserUtils.ts:225](https://github.com/PolymathNetwork/polymath-sdk/blob/1da5bc5/src/browserUtils.ts#L225)_
+
+Runs the callback anytime the current network changes in the browser
+
+**Parameters:**
+
+▪ **cb**: _function_
+
+callback that receives the new network id and the previous one
+
+▸ (`newNetwork`: number, `previousNetwork?`: undefined | number): _void_
+
+**Parameters:**
+
+| Name               | Type                    |
+| ------------------ | ----------------------- |
+| `newNetwork`       | number                  |
+| `previousNetwork?` | undefined &#124; number |
+
+**Returns:** _(Anonymous function)_
+
+an unsubscribe function

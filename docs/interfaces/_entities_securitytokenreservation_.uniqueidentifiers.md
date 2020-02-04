@@ -1,0 +1,23 @@
+[@polymathnetwork/sdk - v2.0.1-beta.120](../README.md) › [Globals](../globals.md) › ["entities/SecurityTokenReservation"](../modules/_entities_securitytokenreservation_.md) › [UniqueIdentifiers](_entities_securitytokenreservation_.uniqueidentifiers.md)
+
+# Interface: UniqueIdentifiers
+
+Properties that uniquely identify a Security Token Reservation
+
+## Hierarchy
+
+- **UniqueIdentifiers**
+
+## Index
+
+### Properties
+
+- [symbol](_entities_securitytokenreservation_.uniqueidentifiers.md#symbol)
+
+## Properties
+
+### symbol
+
+• **symbol**: _string_
+
+_Defined in [src/entities/SecurityTokenReservation.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/1da5bc5/src/entities/SecurityTokenReservation.ts#L12)_

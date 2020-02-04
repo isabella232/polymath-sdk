@@ -1,0 +1,36 @@
+[@polymathnetwork/sdk - v2.0.1-beta.120](../README.md) › [Globals](../globals.md) › ["types/index"](../modules/_types_index_.md) › [ReserveSecurityTokenProcedureArgs](_types_index_.reservesecuritytokenprocedureargs.md)
+
+# Interface: ReserveSecurityTokenProcedureArgs
+
+Arguments for the [ReserveSecurityToken](../enums/_types_index_.proceduretype.md#reservesecuritytoken) Procedure
+
+## Hierarchy
+
+- **ReserveSecurityTokenProcedureArgs**
+
+## Index
+
+### Properties
+
+- [owner](_types_index_.reservesecuritytokenprocedureargs.md#optional-owner)
+- [symbol](_types_index_.reservesecuritytokenprocedureargs.md#symbol)
+
+## Properties
+
+### `Optional` owner
+
+• **owner**? : _undefined | string_
+
+_Defined in [src/types/index.ts:816](https://github.com/PolymathNetwork/polymath-sdk/blob/1da5bc5/src/types/index.ts#L816)_
+
+if supplied, the reservation will be made on behalf of this address
+
+---
+
+### symbol
+
+• **symbol**: _string_
+
+_Defined in [src/types/index.ts:812](https://github.com/PolymathNetwork/polymath-sdk/blob/1da5bc5/src/types/index.ts#L812)_
+
+the symbol to be reserved
