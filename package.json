@@ -19,7 +19,7 @@
     "build:ts": "ttsc -b --watch",
     "build:dev": "webpack --mode development --display-error-details",
     "build:prod": "webpack --mode production && ttsc -b",
-    "build:docs": "typedoc --out docs src",
+    "build:docs": "typedoc --out docs/api --theme gitbook src",
     "build:ci": "yarn build:prod",
     "commit": "npx git-cz",
     "semantic-release": "semantic-release",
