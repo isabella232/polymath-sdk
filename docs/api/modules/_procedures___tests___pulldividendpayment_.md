@@ -16,7 +16,7 @@
 
 • **addresses**: _string[]_ = ['0x01', '0x02', '0x03', '0x04']
 
-_Defined in [src/procedures/**tests**/PullDividendPayment.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/PullDividendPayment.ts#L24)_
+_Defined in [src/procedures/**tests**/PullDividendPayment.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/PullDividendPayment.ts#L24)_
 
 ## Object literals
 
@@ -24,16 +24,16 @@ _Defined in [src/procedures/**tests**/PullDividendPayment.ts:24](https://github.
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/PullDividendPayment.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/PullDividendPayment.ts#L19)_
+_Defined in [src/procedures/**tests**/PullDividendPayment.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/PullDividendPayment.ts#L19)_
 
 ### dividendIndex
 
 • **dividendIndex**: _number_ = 0
 
-_Defined in [src/procedures/**tests**/PullDividendPayment.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/PullDividendPayment.ts#L21)_
+_Defined in [src/procedures/**tests**/PullDividendPayment.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/PullDividendPayment.ts#L21)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST"
 
-_Defined in [src/procedures/**tests**/PullDividendPayment.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/PullDividendPayment.ts#L20)_
+_Defined in [src/procedures/**tests**/PullDividendPayment.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/PullDividendPayment.ts#L20)_

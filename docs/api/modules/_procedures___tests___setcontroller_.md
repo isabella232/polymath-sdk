@@ -12,16 +12,16 @@
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/SetController.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SetController.ts#L13)_
+_Defined in [src/procedures/**tests**/SetController.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/SetController.ts#L13)_
 
 ### controller
 
 • **controller**: _string_ = "0x3333333333333333333333333333333333333333"
 
-_Defined in [src/procedures/**tests**/SetController.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SetController.ts#L15)_
+_Defined in [src/procedures/**tests**/SetController.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/SetController.ts#L15)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/SetController.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SetController.ts#L14)_
+_Defined in [src/procedures/**tests**/SetController.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/SetController.ts#L14)_

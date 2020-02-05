@@ -20,7 +20,7 @@
 
 • **costInPoly**: _BigNumber_ = new BigNumber(5)
 
-_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ReserveSecurityToken.ts#L37)_
+_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ReserveSecurityToken.ts#L37)_
 
 ---
 
@@ -28,7 +28,7 @@ _Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:37](https://github
 
 • **costInUsd**: _BigNumber_ = new BigNumber(6)
 
-_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ReserveSecurityToken.ts#L38)_
+_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ReserveSecurityToken.ts#L38)_
 
 ---
 
@@ -36,7 +36,7 @@ _Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:38](https://github
 
 • **currentWalletAddress**: _"0x4444444444444444444444444444444444444444"_ = "0x4444444444444444444444444444444444444444"
 
-_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ReserveSecurityToken.ts#L40)_
+_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ReserveSecurityToken.ts#L40)_
 
 ---
 
@@ -44,7 +44,7 @@ _Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:40](https://github
 
 • **dateToBigNumber**: _dateToBigNumber_
 
-_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ReserveSecurityToken.ts#L30)_
+_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ReserveSecurityToken.ts#L30)_
 
 ---
 
@@ -52,7 +52,7 @@ _Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:30](https://github
 
 • **securityTokenRegistryAddress**: _"0x5555555555555555555555555555555555555555"_ = "0x5555555555555555555555555555555555555555"
 
-_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ReserveSecurityToken.ts#L39)_
+_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ReserveSecurityToken.ts#L39)_
 
 ## Object literals
 
@@ -60,16 +60,16 @@ _Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:39](https://github
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ReserveSecurityToken.ts#L32)_
+_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ReserveSecurityToken.ts#L32)_
 
 ### owner
 
 • **owner**: _string_ = "0x3333333333333333333333333333333333333333"
 
-_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ReserveSecurityToken.ts#L34)_
+_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ReserveSecurityToken.ts#L34)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ReserveSecurityToken.ts#L33)_
+_Defined in [src/procedures/**tests**/ReserveSecurityToken.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ReserveSecurityToken.ts#L33)_

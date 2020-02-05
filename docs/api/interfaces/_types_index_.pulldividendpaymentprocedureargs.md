@@ -19,7 +19,7 @@ Arguments for the [PullDividendPayment](../enums/_types_index_.proceduretype.md#
 
 • **dividendIndex**: _number_
 
-_Defined in [src/types/index.ts:389](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L389)_
+_Defined in [src/types/index.ts:389](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L389)_
 
 ---
 
@@ -27,6 +27,6 @@ _Defined in [src/types/index.ts:389](https://github.com/PolymathNetwork/polymath
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:388](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L388)_
+_Defined in [src/types/index.ts:388](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L388)_
 
 symbol of the security token

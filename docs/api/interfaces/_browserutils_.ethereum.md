@@ -24,7 +24,7 @@
 
 • **\_metamask**? : _undefined | object_
 
-_Defined in [src/browserUtils.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/browserUtils.ts#L15)_
+_Defined in [src/browserUtils.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/browserUtils.ts#L15)_
 
 ---
 
@@ -32,7 +32,7 @@ _Defined in [src/browserUtils.ts:15](https://github.com/PolymathNetwork/polymath
 
 • **networkVersion**: _string_
 
-_Defined in [src/browserUtils.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/browserUtils.ts#L14)_
+_Defined in [src/browserUtils.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/browserUtils.ts#L14)_
 
 ## Methods
 
@@ -40,7 +40,7 @@ _Defined in [src/browserUtils.ts:14](https://github.com/PolymathNetwork/polymath
 
 ▸ **enable**(): _Promise‹any›_
 
-_Defined in [src/browserUtils.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/browserUtils.ts#L18)_
+_Defined in [src/browserUtils.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/browserUtils.ts#L18)_
 
 **Returns:** _Promise‹any›_
 

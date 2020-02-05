@@ -16,7 +16,7 @@
 
 • **moduleAddress**: _"0x9999999999999999999999999999999999999999"_ = "0x9999999999999999999999999999999999999999"
 
-_Defined in [src/procedures/**tests**/DisableFeature.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/DisableFeature.ts#L23)_
+_Defined in [src/procedures/**tests**/DisableFeature.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/DisableFeature.ts#L23)_
 
 ## Object literals
 
@@ -24,16 +24,16 @@ _Defined in [src/procedures/**tests**/DisableFeature.ts:23](https://github.com/P
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/DisableFeature.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/DisableFeature.ts#L18)_
+_Defined in [src/procedures/**tests**/DisableFeature.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/DisableFeature.ts#L18)_
 
 ### moduleName
 
 • **moduleName**: _GeneralTransferManager_ = ModuleName.GeneralTransferManager
 
-_Defined in [src/procedures/**tests**/DisableFeature.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/DisableFeature.ts#L20)_
+_Defined in [src/procedures/**tests**/DisableFeature.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/DisableFeature.ts#L20)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/DisableFeature.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/DisableFeature.ts#L19)_
+_Defined in [src/procedures/**tests**/DisableFeature.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/DisableFeature.ts#L19)_

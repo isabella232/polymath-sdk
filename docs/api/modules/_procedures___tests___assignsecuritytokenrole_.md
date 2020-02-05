@@ -16,7 +16,7 @@
 
 • **moduleAddress**: _"0x9999999999999999999999999999999999999999"_ = "0x9999999999999999999999999999999999999999"
 
-_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/AssignSecurityTokenRole.ts#L30)_
+_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/AssignSecurityTokenRole.ts#L30)_
 
 ## Object literals
 
@@ -24,34 +24,34 @@ _Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:30](https://git
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/AssignSecurityTokenRole.ts#L22)_
+_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/AssignSecurityTokenRole.ts#L22)_
 
 ### assign
 
 • **assign**: _boolean_ = true
 
-_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/AssignSecurityTokenRole.ts#L25)_
+_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/AssignSecurityTokenRole.ts#L25)_
 
 ### delegateAddress
 
 • **delegateAddress**: _string_ = "0x5555555555555555555555555555555555555555"
 
-_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/AssignSecurityTokenRole.ts#L24)_
+_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/AssignSecurityTokenRole.ts#L24)_
 
 ### description
 
 • **description**: _string_ = "Description"
 
-_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/AssignSecurityTokenRole.ts#L27)_
+_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/AssignSecurityTokenRole.ts#L27)_
 
 ### role
 
 • **role**: _[SecurityTokenRole](../enums/_types_index_.securitytokenrole.md)_ = SecurityTokenRole.PermissionsAdministrator
 
-_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/AssignSecurityTokenRole.ts#L26)_
+_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/AssignSecurityTokenRole.ts#L26)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/AssignSecurityTokenRole.ts#L23)_
+_Defined in [src/procedures/**tests**/AssignSecurityTokenRole.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/AssignSecurityTokenRole.ts#L23)_

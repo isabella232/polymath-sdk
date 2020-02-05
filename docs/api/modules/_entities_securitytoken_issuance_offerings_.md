@@ -36,7 +36,7 @@
 
 Ƭ **AllCurrencies**: _[Currency.StableCoin, Currency.ETH, Currency.POLY] | [Currency.ETH, Currency.StableCoin, Currency.POLY] | [Currency.ETH, Currency.POLY, Currency.StableCoin] | [Currency.StableCoin, Currency.POLY, Currency.ETH] | [Currency.POLY, Currency.StableCoin, Currency.ETH] | [Currency.POLY, Currency.ETH, Currency.StableCoin]_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Issuance/Offerings.ts#L39)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Issuance/Offerings.ts#L39)_
 
 ---
 
@@ -44,7 +44,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:39](https://github
 
 Ƭ **EthAndPoly**: _[Currency.ETH, Currency.POLY] | [Currency.POLY, Currency.ETH]_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Issuance/Offerings.ts#L38)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Issuance/Offerings.ts#L38)_
 
 ---
 
@@ -52,7 +52,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:38](https://github
 
 Ƭ **EthAndStableCoin**: _[Currency.StableCoin, Currency.ETH] | [Currency.ETH, Currency.StableCoin]_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Issuance/Offerings.ts#L33)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Issuance/Offerings.ts#L33)_
 
 ---
 
@@ -60,7 +60,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:33](https://github
 
 Ƭ **OnlyEth**: _[Currency.ETH]_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Issuance/Offerings.ts#L32)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Issuance/Offerings.ts#L32)_
 
 ---
 
@@ -68,7 +68,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:32](https://github
 
 Ƭ **OnlyPoly**: _[Currency.POLY]_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Issuance/Offerings.ts#L34)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Issuance/Offerings.ts#L34)_
 
 ---
 
@@ -76,4 +76,4 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:34](https://github
 
 Ƭ **PolyAndStableCoin**: _[Currency.StableCoin, Currency.POLY] | [Currency.POLY, Currency.StableCoin]_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Issuance/Offerings.ts#L35)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Issuance/Offerings.ts#L35)_

@@ -19,7 +19,7 @@ Arguments for the [DisableFeature](../enums/_types_index_.proceduretype.md#disab
 
 • **moduleName**: _ModuleName_
 
-_Defined in [src/types/index.ts:496](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L496)_
+_Defined in [src/types/index.ts:496](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L496)_
 
 name of the Module that will be disabled
 
@@ -29,6 +29,6 @@ name of the Module that will be disabled
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:492](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L492)_
+_Defined in [src/types/index.ts:492](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L492)_
 
 symbol of the Security Token

@@ -12,16 +12,16 @@
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/ReclaimFunds.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ReclaimFunds.ts#L23)_
+_Defined in [src/procedures/**tests**/ReclaimFunds.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ReclaimFunds.ts#L23)_
 
 ### dividendIndex
 
 • **dividendIndex**: _number_ = 1
 
-_Defined in [src/procedures/**tests**/ReclaimFunds.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ReclaimFunds.ts#L25)_
+_Defined in [src/procedures/**tests**/ReclaimFunds.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ReclaimFunds.ts#L25)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/ReclaimFunds.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ReclaimFunds.ts#L24)_
+_Defined in [src/procedures/**tests**/ReclaimFunds.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ReclaimFunds.ts#L24)_

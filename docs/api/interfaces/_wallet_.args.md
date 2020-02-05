@@ -16,7 +16,7 @@
 
 • **address**: _function_
 
-_Defined in [src/Wallet.ts:2](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/Wallet.ts#L2)_
+_Defined in [src/Wallet.ts:2](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/Wallet.ts#L2)_
 
 #### Type declaration:
 

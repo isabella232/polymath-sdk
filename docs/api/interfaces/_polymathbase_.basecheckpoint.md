@@ -21,7 +21,7 @@ Internal representation of a Checkpoint
 
 • **createdAt**: _Date_
 
-_Defined in [src/PolymathBase.ts:271](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/PolymathBase.ts#L271)_
+_Defined in [src/PolymathBase.ts:271](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/PolymathBase.ts#L271)_
 
 date at which the Checkpoint was created
 
@@ -31,7 +31,7 @@ date at which the Checkpoint was created
 
 • **index**: _number_
 
-_Defined in [src/PolymathBase.ts:259](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/PolymathBase.ts#L259)_
+_Defined in [src/PolymathBase.ts:259](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/PolymathBase.ts#L259)_
 
 index of the Checkpoint
 
@@ -41,7 +41,7 @@ index of the Checkpoint
 
 • **shareholderBalances**: _[ShareholderBalance](_types_index_.shareholderbalance.md)[]_
 
-_Defined in [src/PolymathBase.ts:267](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/PolymathBase.ts#L267)_
+_Defined in [src/PolymathBase.ts:267](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/PolymathBase.ts#L267)_
 
 shareholder balances at the Checkpoint
 
@@ -51,6 +51,6 @@ shareholder balances at the Checkpoint
 
 • **totalSupply**: _BigNumber_
 
-_Defined in [src/PolymathBase.ts:263](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/PolymathBase.ts#L263)_
+_Defined in [src/PolymathBase.ts:263](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/PolymathBase.ts#L263)_
 
 total supply of the Security Token at the Checkpoint

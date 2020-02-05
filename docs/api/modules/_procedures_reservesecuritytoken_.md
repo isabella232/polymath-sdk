@@ -16,4 +16,4 @@
 
 • **bigNumberToDate**: _bigNumberToDate_
 
-_Defined in [src/procedures/ReserveSecurityToken.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/ReserveSecurityToken.ts#L19)_
+_Defined in [src/procedures/ReserveSecurityToken.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/ReserveSecurityToken.ts#L19)_

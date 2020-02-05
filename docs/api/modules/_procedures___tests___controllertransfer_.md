@@ -16,7 +16,7 @@
 
 • **ownerAddress**: _"0x5555555555555555555555555555555555555555"_ = "0x5555555555555555555555555555555555555555"
 
-_Defined in [src/procedures/**tests**/ControllerTransfer.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ControllerTransfer.ts#L32)_
+_Defined in [src/procedures/**tests**/ControllerTransfer.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ControllerTransfer.ts#L32)_
 
 ## Object literals
 
@@ -24,28 +24,28 @@ _Defined in [src/procedures/**tests**/ControllerTransfer.ts:32](https://github.c
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/ControllerTransfer.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ControllerTransfer.ts#L25)_
+_Defined in [src/procedures/**tests**/ControllerTransfer.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ControllerTransfer.ts#L25)_
 
 ### amount
 
 • **amount**: _BigNumber_ = new BigNumber(1)
 
-_Defined in [src/procedures/**tests**/ControllerTransfer.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ControllerTransfer.ts#L29)_
+_Defined in [src/procedures/**tests**/ControllerTransfer.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ControllerTransfer.ts#L29)_
 
 ### from
 
 • **from**: _string_ = "0x2222222222222222222222222222222222222222"
 
-_Defined in [src/procedures/**tests**/ControllerTransfer.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ControllerTransfer.ts#L27)_
+_Defined in [src/procedures/**tests**/ControllerTransfer.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ControllerTransfer.ts#L27)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/ControllerTransfer.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ControllerTransfer.ts#L26)_
+_Defined in [src/procedures/**tests**/ControllerTransfer.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ControllerTransfer.ts#L26)_
 
 ### to
 
 • **to**: _string_ = "0x4444444444444444444444444444444444444444"
 
-_Defined in [src/procedures/**tests**/ControllerTransfer.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ControllerTransfer.ts#L28)_
+_Defined in [src/procedures/**tests**/ControllerTransfer.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ControllerTransfer.ts#L28)_

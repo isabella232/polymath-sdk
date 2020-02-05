@@ -16,7 +16,7 @@
 
 • **ownerAddress**: _"0x5555555555555555555555555555555555555555"_ = "0x5555555555555555555555555555555555555555"
 
-_Defined in [src/procedures/**tests**/ControllerRedeem.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ControllerRedeem.ts#L32)_
+_Defined in [src/procedures/**tests**/ControllerRedeem.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ControllerRedeem.ts#L32)_
 
 ## Object literals
 
@@ -24,22 +24,22 @@ _Defined in [src/procedures/**tests**/ControllerRedeem.ts:32](https://github.com
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/ControllerRedeem.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ControllerRedeem.ts#L26)_
+_Defined in [src/procedures/**tests**/ControllerRedeem.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ControllerRedeem.ts#L26)_
 
 ### amount
 
 • **amount**: _BigNumber_ = new BigNumber(1)
 
-_Defined in [src/procedures/**tests**/ControllerRedeem.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ControllerRedeem.ts#L29)_
+_Defined in [src/procedures/**tests**/ControllerRedeem.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ControllerRedeem.ts#L29)_
 
 ### from
 
 • **from**: _string_ = "0x2222222222222222222222222222222222222222"
 
-_Defined in [src/procedures/**tests**/ControllerRedeem.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ControllerRedeem.ts#L28)_
+_Defined in [src/procedures/**tests**/ControllerRedeem.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ControllerRedeem.ts#L28)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/ControllerRedeem.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ControllerRedeem.ts#L27)_
+_Defined in [src/procedures/**tests**/ControllerRedeem.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ControllerRedeem.ts#L27)_

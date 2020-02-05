@@ -31,7 +31,7 @@ Specifies possible types of errors in the SDK
 
 • **FatalError**: = "FatalError"
 
-_Defined in [src/types/index.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L108)_
+_Defined in [src/types/index.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L108)_
 
 ---
 
@@ -39,7 +39,7 @@ _Defined in [src/types/index.ts:108](https://github.com/PolymathNetwork/polymath
 
 • **FeatureNotEnabled**: = "FeatureNotEnabled"
 
-_Defined in [src/types/index.ts:99](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L99)_
+_Defined in [src/types/index.ts:99](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L99)_
 
 ---
 
@@ -47,7 +47,7 @@ _Defined in [src/types/index.ts:99](https://github.com/PolymathNetwork/polymath-
 
 • **FetcherValidationError**: = "FetcherValidationError"
 
-_Defined in [src/types/index.ts:105](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L105)_
+_Defined in [src/types/index.ts:105](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L105)_
 
 ---
 
@@ -55,7 +55,7 @@ _Defined in [src/types/index.ts:105](https://github.com/PolymathNetwork/polymath
 
 • **IncompatibleBrowser**: = "IncompatibleBrowser"
 
-_Defined in [src/types/index.ts:98](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L98)_
+_Defined in [src/types/index.ts:98](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L98)_
 
 ---
 
@@ -63,7 +63,7 @@ _Defined in [src/types/index.ts:98](https://github.com/PolymathNetwork/polymath-
 
 • **IncorrectVersion**: = "IncorrectVersion"
 
-_Defined in [src/types/index.ts:115](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L115)_
+_Defined in [src/types/index.ts:115](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L115)_
 
 ---
 
@@ -71,7 +71,7 @@ _Defined in [src/types/index.ts:115](https://github.com/PolymathNetwork/polymath
 
 • **InexistentModule**: = "InexistentModule"
 
-_Defined in [src/types/index.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L114)_
+_Defined in [src/types/index.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L114)_
 
 ---
 
@@ -79,7 +79,7 @@ _Defined in [src/types/index.ts:114](https://github.com/PolymathNetwork/polymath
 
 • **InsufficientBalance**: = "InsufficientBalance"
 
-_Defined in [src/types/index.ts:113](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L113)_
+_Defined in [src/types/index.ts:113](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L113)_
 
 ---
 
@@ -87,7 +87,7 @@ _Defined in [src/types/index.ts:113](https://github.com/PolymathNetwork/polymath
 
 • **InvalidAddress**: = "InvalidAddress"
 
-_Defined in [src/types/index.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L112)_
+_Defined in [src/types/index.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L112)_
 
 ---
 
@@ -95,7 +95,7 @@ _Defined in [src/types/index.ts:112](https://github.com/PolymathNetwork/polymath
 
 • **InvalidUuid**: = "InvalidUuid"
 
-_Defined in [src/types/index.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L111)_
+_Defined in [src/types/index.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L111)_
 
 ---
 
@@ -103,7 +103,7 @@ _Defined in [src/types/index.ts:111](https://github.com/PolymathNetwork/polymath
 
 • **MetamaskNotInstalled**: = "MetamaskNotInstalled"
 
-_Defined in [src/types/index.ts:101](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L101)_
+_Defined in [src/types/index.ts:101](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L101)_
 
 ---
 
@@ -111,7 +111,7 @@ _Defined in [src/types/index.ts:101](https://github.com/PolymathNetwork/polymath
 
 • **NonBrowserEnvironment**: = "NonBrowserEnvironment"
 
-_Defined in [src/types/index.ts:100](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L100)_
+_Defined in [src/types/index.ts:100](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L100)_
 
 ---
 
@@ -119,7 +119,7 @@ _Defined in [src/types/index.ts:100](https://github.com/PolymathNetwork/polymath
 
 • **ProcedureValidationError**: = "ProcedureValidationError"
 
-_Defined in [src/types/index.ts:104](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L104)_
+_Defined in [src/types/index.ts:104](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L104)_
 
 ---
 
@@ -127,7 +127,7 @@ _Defined in [src/types/index.ts:104](https://github.com/PolymathNetwork/polymath
 
 • **TransactionRejectedByUser**: = "TransactionRejectedByUser"
 
-_Defined in [src/types/index.ts:106](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L106)_
+_Defined in [src/types/index.ts:106](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L106)_
 
 ---
 
@@ -135,7 +135,7 @@ _Defined in [src/types/index.ts:106](https://github.com/PolymathNetwork/polymath
 
 • **TransactionReverted**: = "TransactionReverted"
 
-_Defined in [src/types/index.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L107)_
+_Defined in [src/types/index.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L107)_
 
 ---
 
@@ -143,7 +143,7 @@ _Defined in [src/types/index.ts:107](https://github.com/PolymathNetwork/polymath
 
 • **UnexpectedEventLogs**: = "UnexpectedEventLogs"
 
-_Defined in [src/types/index.ts:110](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L110)_
+_Defined in [src/types/index.ts:110](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L110)_
 
 ---
 
@@ -151,7 +151,7 @@ _Defined in [src/types/index.ts:110](https://github.com/PolymathNetwork/polymath
 
 • **UnexpectedReturnData**: = "UnexpectedReturnData"
 
-_Defined in [src/types/index.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L109)_
+_Defined in [src/types/index.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L109)_
 
 ---
 
@@ -159,7 +159,7 @@ _Defined in [src/types/index.ts:109](https://github.com/PolymathNetwork/polymath
 
 • **UserDeniedAccess**: = "UserDeniedAccess"
 
-_Defined in [src/types/index.ts:102](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L102)_
+_Defined in [src/types/index.ts:102](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L102)_
 
 ---
 
@@ -167,4 +167,4 @@ _Defined in [src/types/index.ts:102](https://github.com/PolymathNetwork/polymath
 
 • **WalletIsLocked**: = "WalletIsLocked"
 
-_Defined in [src/types/index.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L103)_
+_Defined in [src/types/index.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L103)_

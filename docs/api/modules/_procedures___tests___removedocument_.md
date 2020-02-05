@@ -12,16 +12,16 @@
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/RemoveDocument.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/RemoveDocument.ts#L18)_
+_Defined in [src/procedures/**tests**/RemoveDocument.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/RemoveDocument.ts#L18)_
 
 ### name
 
 • **name**: _string_ = "Doc Name"
 
-_Defined in [src/procedures/**tests**/RemoveDocument.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/RemoveDocument.ts#L20)_
+_Defined in [src/procedures/**tests**/RemoveDocument.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/RemoveDocument.ts#L20)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/RemoveDocument.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/RemoveDocument.ts#L19)_
+_Defined in [src/procedures/**tests**/RemoveDocument.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/RemoveDocument.ts#L19)_

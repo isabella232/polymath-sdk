@@ -17,7 +17,7 @@
 
 • **allowPrimaryIssuance**? : _undefined | false | true_
 
-_Defined in [src/entities/SecurityToken/Features.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Features.ts#L50)_
+_Defined in [src/entities/SecurityToken/Features.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Features.ts#L50)_
 
 ---
 
@@ -25,4 +25,4 @@ _Defined in [src/entities/SecurityToken/Features.ts:50](https://github.com/Polym
 
 • **maxHolderPercentage**: _BigNumber_
 
-_Defined in [src/entities/SecurityToken/Features.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Features.ts#L49)_
+_Defined in [src/entities/SecurityToken/Features.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Features.ts#L49)_

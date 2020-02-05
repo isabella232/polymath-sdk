@@ -104,7 +104,7 @@
 
 Ƭ **InvestInTieredStoProcedureArgs**: _[InvestInTieredStoBaseProcedureArgs](../interfaces/_types_index_.investintieredstobaseprocedureargs.md) & object | [InvestWithStableCoinArgs](../interfaces/_types_index_.investwithstablecoinargs.md)_
 
-_Defined in [src/types/index.ts:652](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L652)_
+_Defined in [src/types/index.ts:652](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L652)_
 
 Arguments for the [InvestInTieredSto](../enums/_types_index_.proceduretype.md#investintieredsto) Procedure
 
@@ -114,7 +114,7 @@ Arguments for the [InvestInTieredSto](../enums/_types_index_.proceduretype.md#in
 
 Ƭ **LowLevelMethod**: _function_
 
-_Defined in [src/types/index.ts:1499](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1499)_
+_Defined in [src/types/index.ts:1499](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1499)_
 
 Transaction method from the contract-wrappers package
 
@@ -134,7 +134,7 @@ Transaction method from the contract-wrappers package
 
 Ƭ **MapMaybeResolver**: _object_
 
-_Defined in [src/types/index.ts:1550](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1550)_
+_Defined in [src/types/index.ts:1550](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1550)_
 
 Apply the MaybeResolver type to a tuple of types
 
@@ -146,7 +146,7 @@ Apply the MaybeResolver type to a tuple of types
 
 Ƭ **MaybeResolver**: _PostTransactionResolver‹T, any› | T_
 
-_Defined in [src/types/index.ts:1545](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1545)_
+_Defined in [src/types/index.ts:1545](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1545)_
 
 Either a specific type or a Post Transaction Resolver that resolves to that type
 
@@ -156,7 +156,7 @@ Either a specific type or a Post Transaction Resolver that resolves to that type
 
 Ƭ **Omit**: _Pick‹T, Exclude‹keyof T, K››_
 
-_Defined in [src/types/index.ts:1492](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1492)_
+_Defined in [src/types/index.ts:1492](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1492)_
 
 Return the type that results from excluding a property from another type
 
@@ -166,7 +166,7 @@ Return the type that results from excluding a property from another type
 
 Ƭ **PostTransactionResolverArray**: _object_
 
-_Defined in [src/types/index.ts:1538](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1538)_
+_Defined in [src/types/index.ts:1538](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1538)_
 
 Transforms a tuple of types into an array of Post Transaction Resolvers. For each type in the tuple, the corresponding Post Transaction Resolver resolves to that type
 
@@ -178,7 +178,7 @@ Transforms a tuple of types into an array of Post Transaction Resolvers. For eac
 
 Ƭ **ResolverArray**: _object_
 
-_Defined in [src/types/index.ts:1529](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1529)_
+_Defined in [src/types/index.ts:1529](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1529)_
 
 Transforms a tuple of types into an array of resolver functions. For each type in the tuple, the corresponding resolver function returns that type wrapped in a promise
 
@@ -190,7 +190,7 @@ Transforms a tuple of types into an array of resolver functions. For each type i
 
 Ƭ **SignatureRequest**: _function_
 
-_Defined in [src/types/index.ts:1506](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1506)_
+_Defined in [src/types/index.ts:1506](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1506)_
 
 Signature request method from the contract-wrappers package
 
@@ -210,7 +210,7 @@ Signature request method from the contract-wrappers package
 
 ▸ **isInvestWithStableCoinArgs**(`args`: any): _args is InvestWithStableCoinArgs_
 
-_Defined in [src/types/index.ts:690](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L690)_
+_Defined in [src/types/index.ts:690](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L690)_
 
 Check whether the arguments are of type [InvestWithStableCoinArgs](../interfaces/_types_index_.investwithstablecoinargs.md)
 
@@ -228,7 +228,7 @@ Check whether the arguments are of type [InvestWithStableCoinArgs](../interfaces
 
 ▸ **isPojo**(`pojo`: any): _pojo is Pojo_
 
-_Defined in [src/types/index.ts:1427](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1427)_
+_Defined in [src/types/index.ts:1427](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1427)_
 
 Check to see if an object is a Plain Old Javascript Object (POJO)
 
@@ -246,7 +246,7 @@ Check to see if an object is a Plain Old Javascript Object (POJO)
 
 ▸ **isStoType**(`type`: any): _type is StoType_
 
-_Defined in [src/types/index.ts:58](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L58)_
+_Defined in [src/types/index.ts:58](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L58)_
 
 Check if the argument is of type [[STOType]]
 

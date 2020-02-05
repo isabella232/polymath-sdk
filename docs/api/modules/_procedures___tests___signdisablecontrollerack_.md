@@ -12,10 +12,10 @@
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/SignDisableControllerAck.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SignDisableControllerAck.ts#L15)_
+_Defined in [src/procedures/**tests**/SignDisableControllerAck.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/SignDisableControllerAck.ts#L15)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/SignDisableControllerAck.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SignDisableControllerAck.ts#L16)_
+_Defined in [src/procedures/**tests**/SignDisableControllerAck.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/SignDisableControllerAck.ts#L16)_

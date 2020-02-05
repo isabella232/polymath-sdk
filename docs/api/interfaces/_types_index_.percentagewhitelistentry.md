@@ -19,7 +19,7 @@ Entry that represents whether a Shareholder is exempted from Percentage Restrict
 
 • **address**: _string_
 
-_Defined in [src/types/index.ts:1216](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1216)_
+_Defined in [src/types/index.ts:1216](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1216)_
 
 Shareholder wallet address
 
@@ -29,6 +29,6 @@ Shareholder wallet address
 
 • **whitelisted**: _boolean_
 
-_Defined in [src/types/index.ts:1220](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1220)_
+_Defined in [src/types/index.ts:1220](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1220)_
 
 whether the address is whitelisted or not

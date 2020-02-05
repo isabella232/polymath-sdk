@@ -20,7 +20,7 @@ Properties that uniquely identify an STO
 
 • **address**: _string_
 
-_Defined in [src/entities/Sto.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L21)_
+_Defined in [src/entities/Sto.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/Sto.ts#L21)_
 
 ---
 
@@ -28,7 +28,7 @@ _Defined in [src/entities/Sto.ts:21](https://github.com/PolymathNetwork/polymath
 
 • **securityTokenId**: _string_
 
-_Defined in [src/entities/Sto.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L19)_
+_Defined in [src/entities/Sto.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/Sto.ts#L19)_
 
 ---
 
@@ -36,4 +36,4 @@ _Defined in [src/entities/Sto.ts:19](https://github.com/PolymathNetwork/polymath
 
 • **stoType**: _[StoType](../enums/_types_index_.stotype.md)_
 
-_Defined in [src/entities/Sto.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L20)_
+_Defined in [src/entities/Sto.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/Sto.ts#L20)_

@@ -35,7 +35,7 @@ isAccredited: false,
 },
 ]
 
-_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ModifyShareholderData.ts#L25)_
+_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ModifyShareholderData.ts#L25)_
 
 ---
 
@@ -43,7 +43,7 @@ _Defined in [src/procedures/**tests**/ModifyShareholderData.ts:25](https://githu
 
 • **testAddress**: _"0x6666666666666666666666666666666666666666"_ = "0x6666666666666666666666666666666666666666"
 
-_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ModifyShareholderData.ts#L23)_
+_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ModifyShareholderData.ts#L23)_
 
 ---
 
@@ -51,7 +51,7 @@ _Defined in [src/procedures/**tests**/ModifyShareholderData.ts:23](https://githu
 
 • **testAddress2**: _"0x9999999999999999999999999999999999999999"_ = "0x9999999999999999999999999999999999999999"
 
-_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ModifyShareholderData.ts#L24)_
+_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ModifyShareholderData.ts#L24)_
 
 ## Object literals
 
@@ -59,19 +59,19 @@ _Defined in [src/procedures/**tests**/ModifyShareholderData.ts:24](https://githu
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ModifyShareholderData.ts#L43)_
+_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ModifyShareholderData.ts#L43)_
 
 ### name
 
 • **name**: _string_ = "Test Token 1"
 
-_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ModifyShareholderData.ts#L45)_
+_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ModifyShareholderData.ts#L45)_
 
 ### owner
 
 • **owner**: _string_ = "0x3"
 
-_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:46](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ModifyShareholderData.ts#L46)_
+_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:46](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ModifyShareholderData.ts#L46)_
 
 ### shareholderData
 
@@ -94,10 +94,10 @@ isAccredited: true,
 },
 ]
 
-_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ModifyShareholderData.ts#L47)_
+_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ModifyShareholderData.ts#L47)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ModifyShareholderData.ts#L44)_
+_Defined in [src/procedures/**tests**/ModifyShareholderData.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ModifyShareholderData.ts#L44)_

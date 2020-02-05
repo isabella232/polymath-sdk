@@ -19,7 +19,7 @@ Arguments for the [DisableController](../enums/_types_index_.proceduretype.md#di
 
 • **signature**? : _undefined | string_
 
-_Defined in [src/types/index.ts:1092](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1092)_
+_Defined in [src/types/index.ts:1092](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1092)_
 
 acknowledgement signature
 
@@ -29,6 +29,6 @@ acknowledgement signature
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:1088](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1088)_
+_Defined in [src/types/index.ts:1088](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1088)_
 
 symbol of the Security Token

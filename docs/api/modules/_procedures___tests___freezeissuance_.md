@@ -17,7 +17,7 @@
 
 • **ownerAddress**: _"0x01"_ = "0x01"
 
-_Defined in [src/procedures/**tests**/FreezeIssuance.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/FreezeIssuance.ts#L22)_
+_Defined in [src/procedures/**tests**/FreezeIssuance.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/FreezeIssuance.ts#L22)_
 
 ---
 
@@ -25,7 +25,7 @@ _Defined in [src/procedures/**tests**/FreezeIssuance.ts:22](https://github.com/P
 
 • **randomSignature**: _"Random freeze issuance signature ack"_ = "Random freeze issuance signature ack"
 
-_Defined in [src/procedures/**tests**/FreezeIssuance.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/FreezeIssuance.ts#L23)_
+_Defined in [src/procedures/**tests**/FreezeIssuance.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/FreezeIssuance.ts#L23)_
 
 ## Object literals
 
@@ -33,10 +33,10 @@ _Defined in [src/procedures/**tests**/FreezeIssuance.ts:23](https://github.com/P
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/FreezeIssuance.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/FreezeIssuance.ts#L18)_
+_Defined in [src/procedures/**tests**/FreezeIssuance.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/FreezeIssuance.ts#L18)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/FreezeIssuance.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/FreezeIssuance.ts#L19)_
+_Defined in [src/procedures/**tests**/FreezeIssuance.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/FreezeIssuance.ts#L19)_

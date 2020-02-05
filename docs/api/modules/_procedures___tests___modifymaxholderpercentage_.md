@@ -16,7 +16,7 @@
 
 • **securityTokenAddress**: _"0x2222222222222222222222222222222222222222"_ = "0x2222222222222222222222222222222222222222"
 
-_Defined in [src/procedures/**tests**/ModifyMaxHolderPercentage.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ModifyMaxHolderPercentage.ts#L24)_
+_Defined in [src/procedures/**tests**/ModifyMaxHolderPercentage.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ModifyMaxHolderPercentage.ts#L24)_
 
 ## Object literals
 
@@ -24,16 +24,16 @@ _Defined in [src/procedures/**tests**/ModifyMaxHolderPercentage.ts:24](https://g
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/ModifyMaxHolderPercentage.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ModifyMaxHolderPercentage.ts#L19)_
+_Defined in [src/procedures/**tests**/ModifyMaxHolderPercentage.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ModifyMaxHolderPercentage.ts#L19)_
 
 ### maxHolderPercentage
 
 • **maxHolderPercentage**: _BigNumber_ = new BigNumber(30)
 
-_Defined in [src/procedures/**tests**/ModifyMaxHolderPercentage.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ModifyMaxHolderPercentage.ts#L21)_
+_Defined in [src/procedures/**tests**/ModifyMaxHolderPercentage.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ModifyMaxHolderPercentage.ts#L21)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/ModifyMaxHolderPercentage.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/ModifyMaxHolderPercentage.ts#L20)_
+_Defined in [src/procedures/**tests**/ModifyMaxHolderPercentage.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/ModifyMaxHolderPercentage.ts#L20)_

@@ -19,7 +19,7 @@ Arguments for the [ModifyMaxHolderCount](../enums/_types_index_.proceduretype.md
 
 • **maxHolderCount**: _number_
 
-_Defined in [src/types/index.ts:1192](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1192)_
+_Defined in [src/types/index.ts:1192](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1192)_
 
 maximum number of simultaneous token holders
 
@@ -29,6 +29,6 @@ maximum number of simultaneous token holders
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:1188](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1188)_
+_Defined in [src/types/index.ts:1188](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1188)_
 
 symbol of the Security Token

@@ -23,7 +23,7 @@ Arguments for the [ControllerTransfer](../enums/_types_index_.proceduretype.md#c
 
 • **amount**: _BigNumber_
 
-_Defined in [src/types/index.ts:949](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L949)_
+_Defined in [src/types/index.ts:949](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L949)_
 
 amount of tokens being forcefully transferred
 
@@ -33,7 +33,7 @@ amount of tokens being forcefully transferred
 
 • **data**? : _undefined | string_
 
-_Defined in [src/types/index.ts:953](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L953)_
+_Defined in [src/types/index.ts:953](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L953)_
 
 extra KYC transfer data
 
@@ -43,7 +43,7 @@ extra KYC transfer data
 
 • **from**: _string_
 
-_Defined in [src/types/index.ts:937](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L937)_
+_Defined in [src/types/index.ts:937](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L937)_
 
 sender's wallet address
 
@@ -53,7 +53,7 @@ sender's wallet address
 
 • **log**? : _undefined | string_
 
-_Defined in [src/types/index.ts:957](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L957)_
+_Defined in [src/types/index.ts:957](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L957)_
 
 extra log information
 
@@ -63,7 +63,7 @@ extra log information
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:945](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L945)_
+_Defined in [src/types/index.ts:945](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L945)_
 
 symbol of the Security Token
 
@@ -73,6 +73,6 @@ symbol of the Security Token
 
 • **to**: _string_
 
-_Defined in [src/types/index.ts:941](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L941)_
+_Defined in [src/types/index.ts:941](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L941)_
 
 receiver's wallet address

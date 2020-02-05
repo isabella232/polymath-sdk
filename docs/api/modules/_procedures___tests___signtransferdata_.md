@@ -12,7 +12,7 @@
 
 ### ▪ **params**: _object_
 
-_Defined in [src/procedures/**tests**/SignTransferData.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SignTransferData.ts#L15)_
+_Defined in [src/procedures/**tests**/SignTransferData.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/SignTransferData.ts#L15)_
 
 ### kycData
 
@@ -31,22 +31,22 @@ kycExpiry: new Date(),
 },
 ]
 
-_Defined in [src/procedures/**tests**/SignTransferData.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SignTransferData.ts#L17)_
+_Defined in [src/procedures/**tests**/SignTransferData.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/SignTransferData.ts#L17)_
 
 ### symbol
 
 • **symbol**: _string_ = "TEST1"
 
-_Defined in [src/procedures/**tests**/SignTransferData.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SignTransferData.ts#L16)_
+_Defined in [src/procedures/**tests**/SignTransferData.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/SignTransferData.ts#L16)_
 
 ### validFrom
 
 • **validFrom**: _Date_ = new Date(0)
 
-_Defined in [src/procedures/**tests**/SignTransferData.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SignTransferData.ts#L31)_
+_Defined in [src/procedures/**tests**/SignTransferData.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/SignTransferData.ts#L31)_
 
 ### validTo
 
 • **validTo**: _Date_ = new Date(new Date().getTime() + 10000)
 
-_Defined in [src/procedures/**tests**/SignTransferData.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SignTransferData.ts#L32)_
+_Defined in [src/procedures/**tests**/SignTransferData.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/__tests__/SignTransferData.ts#L32)_

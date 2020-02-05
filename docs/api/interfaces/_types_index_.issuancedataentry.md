@@ -20,7 +20,7 @@ Specifies how many tokens to issue and who to issue them to
 
 • **address**: _string_
 
-_Defined in [src/types/index.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L83)_
+_Defined in [src/types/index.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L83)_
 
 wallet address where Tokens will be received
 
@@ -30,7 +30,7 @@ wallet address where Tokens will be received
 
 • **amount**: _BigNumber_
 
-_Defined in [src/types/index.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L87)_
+_Defined in [src/types/index.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L87)_
 
 amount of tokens to be issued
 
@@ -40,6 +40,6 @@ amount of tokens to be issued
 
 • **shareholderData**? : _[Omit](../modules/_types_index_.md#omit)‹[ShareholderDataEntry](_types_index_.shareholderdataentry.md), "address"›_
 
-_Defined in [src/types/index.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L91)_
+_Defined in [src/types/index.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L91)_
 
 KYC data for the Shareholder
