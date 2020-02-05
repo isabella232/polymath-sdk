@@ -7,6 +7,10 @@ import { SecurityToken } from '../SecurityToken';
 import { PolymathError } from '../../PolymathError';
 import { Checkpoint } from '../Checkpoint';
 
+/**
+ * @hidden
+ * Generates Dividend Distribution entities
+ */
 export class DividendDistributionFactory extends Factory<
   DividendDistribution,
   Params,
@@ -47,6 +51,7 @@ export class DividendDistributionFactory extends Factory<
     };
   };
 
+  // eslint-disable-next-line require-jsdoc
   constructor(context: Context) {
     super(DividendDistribution, context);
   }

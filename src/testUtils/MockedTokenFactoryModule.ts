@@ -3,6 +3,10 @@ import SecurityTokenRegistryWrapper from '@polymathnetwork/contract-wrappers/lib
 import ERC20TokenWrapper from '@polymathnetwork/contract-wrappers/lib/contract_wrappers/tokens/erc20_wrapper';
 import ContractFactory from '@polymathnetwork/contract-wrappers/lib/factories/contractFactory';
 
+/**
+ * @hidden
+ * Mocks the behavior of the contract-wrappers Token Factory
+ */
 export abstract class MockedTokenFactoryModule {
   public readonly web3Wrapper: Web3Wrapper;
 
@@ -10,6 +14,7 @@ export abstract class MockedTokenFactoryModule {
 
   public securityTokenRegistry: SecurityTokenRegistryWrapper;
 
+  // eslint-disable-next-line require-jsdoc
   public constructor(
     web3Wrapper: Web3Wrapper,
     securityTokenRegistry: SecurityTokenRegistryWrapper,
@@ -26,6 +31,7 @@ export abstract class MockedTokenFactoryModule {
     address: string
   ): Promise<SecurityToken_3_0_0>;
 
+  // eslint-disable-next-line require-jsdoc
   public async getSecurityTokenInstanceFromTicker(): Promise<SecurityToken_3_0_0> {
     return {} as Promise<SecurityToken_3_0_0>;
   }

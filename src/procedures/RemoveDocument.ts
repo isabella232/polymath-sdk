@@ -6,10 +6,22 @@ import {
   ErrorCode,
 } from '../types';
 import { PolymathError } from '../PolymathError';
+import { checkStringLength } from '../utils';
 
+/**
+ * Procedure that removes a document from a Security Token
+ */
 export class RemoveDocument extends Procedure<RemoveDocumentProcedureArgs> {
   public type = ProcedureType.RemoveDocument;
 
+  /**
+   * Remove a document from the Security Token
+   *
+   * Note that this procedure will fail if:
+   * - The current wallet is not the Security Token owner
+   * - The name of the document is less than 1 or more than 32 characters long
+   * - The document doesn't exist in the Security Token
+   */
   public async prepareTransactions() {
     const { symbol, name } = this.args;
     const { contractWrappers, currentWallet } = this.context;
@@ -40,12 +52,7 @@ export class RemoveDocument extends Procedure<RemoveDocumentProcedureArgs> {
       });
     }
 
-    if (name.length < 1 || name.length > 32) {
-      throw new PolymathError({
-        code: ErrorCode.ProcedureValidationError,
-        message: `You must provide a valid name between 1 and 32 characters long`,
-      });
-    }
+    checkStringLength(name, 'name', { minLength: 1, maxLength: 32 });
 
     if (!allDocumentsList.includes(name)) {
       throw new PolymathError({

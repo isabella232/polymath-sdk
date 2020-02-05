@@ -112,7 +112,7 @@ export enum ErrorCode {
   InvalidAddress = 'InvalidAddress',
   InsufficientBalance = 'InsufficientBalance',
   InexistentModule = 'InexistentModule',
-  IncorrectVersion = 'IncorrecVersion',
+  IncorrectVersion = 'IncorrectVersion',
 }
 
 /**

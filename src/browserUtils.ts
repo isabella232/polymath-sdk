@@ -61,19 +61,31 @@ export function getBrowserSupport() {
 }
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/**
+ * @hidden
+ */
 function isModern(obj: any): obj is WindowWithEthereum {
   return getBrowserSupport() === BrowserSupport.MetamaskModern;
 }
 
+/**
+ * @hidden
+ */
 function isLegacy(obj: any): obj is WindowWithWeb3 {
   return getBrowserSupport() === BrowserSupport.MetamaskLegacy;
 }
 
+/**
+ * @hidden
+ */
 function isUnsupported(obj: any): obj is ExtendedWindow {
   return getBrowserSupport() === BrowserSupport.NoMetamask;
 }
 /* eslint-enable @typescript-eslint/no-unused-vars */
 
+/**
+ * @hidden
+ */
 export async function getInjectedProvider(): Promise<Provider | undefined> {
   const isClient = typeof window !== 'undefined';
 
@@ -100,6 +112,9 @@ export async function getInjectedProvider(): Promise<Provider | undefined> {
   }
 }
 
+/**
+ * @hidden
+ */
 export async function getWeb3() {
   const provider = await getInjectedProvider();
   if (!provider) {
@@ -109,7 +124,8 @@ export async function getWeb3() {
 }
 
 /**
- * Returns the current networkId provided by the browser
+ * @hidden
+ * Return the current networkId provided by the browser
  */
 export async function getNetworkId(): Promise<number | null> {
   const win: ExtendedWindow = window as ExtendedWindow;
@@ -135,6 +151,9 @@ export async function getNetworkId(): Promise<number | null> {
   return parseInt(rawNetworkId, 10);
 }
 
+/**
+ * @hidden
+ */
 export async function getCurrentAddress() {
   const win = window as ExtendedWindow;
   const web3 = await getWeb3();
@@ -163,7 +182,7 @@ export async function getCurrentAddress() {
 /**
  * Runs the callback anytime the wallet address changes in the browser
  *
- * @param cb callback that receives the new address and the previous one
+ * @param cb - callback that receives the new address and the previous one
  *
  * @returns an unsubscribe function
  */
@@ -176,6 +195,7 @@ export function onAddressChange(cb: (newAddress: string, previousAddress?: strin
 
   let previousAddress: string;
 
+  // eslint-disable-next-line require-jsdoc
   const checkAddress = async () => {
     const newAddress = await getCurrentAddress();
 
@@ -187,6 +207,7 @@ export function onAddressChange(cb: (newAddress: string, previousAddress?: strin
 
   const interval = setInterval(checkAddress, 1000);
 
+  // eslint-disable-next-line require-jsdoc
   const unsubscribe = () => {
     clearInterval(interval);
   };
@@ -197,7 +218,7 @@ export function onAddressChange(cb: (newAddress: string, previousAddress?: strin
 /**
  * Runs the callback anytime the current network changes in the browser
  *
- * @param cb callback that receives the new network id and the previous one
+ * @param cb - callback that receives the new network id and the previous one
  *
  * @returns an unsubscribe function
  */
@@ -210,6 +231,7 @@ export function onNetworkChange(cb: (newNetwork: number, previousNetwork?: numbe
 
   let previousNetwork: number;
 
+  // eslint-disable-next-line require-jsdoc
   const checkNetwork = async () => {
     const newNetwork = await getNetworkId();
 
@@ -221,6 +243,7 @@ export function onNetworkChange(cb: (newNetwork: number, previousNetwork?: numbe
 
   const interval = setInterval(checkNetwork, 1000);
 
+  // eslint-disable-next-line require-jsdoc
   const unsubscribe = () => {
     clearInterval(interval);
   };

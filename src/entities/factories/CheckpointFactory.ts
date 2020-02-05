@@ -6,6 +6,10 @@ import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 import { DividendDistribution } from '../DividendDistribution';
 
+/**
+ * @hidden
+ * Generates Checkpoint entities
+ */
 export class CheckpointFactory extends Factory<Checkpoint, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
     const { securityTokenId, index } = Checkpoint.unserialize(uid);
@@ -61,6 +65,7 @@ export class CheckpointFactory extends Factory<Checkpoint, Params, UniqueIdentif
     };
   };
 
+  // eslint-disable-next-line require-jsdoc
   constructor(context: Context) {
     super(Checkpoint, context);
   }

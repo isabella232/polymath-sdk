@@ -23,6 +23,11 @@ export interface ProcedureClass<Args = any, ReturnType extends any = any> {
 }
 
 // NOTE @RafaelVidaurre: We could add a preparation state cache to avoid repeated transactions and bad validations
+/**
+ * @hidden
+ * Represents an operation performed on the Polymath ecosystem. A Procedure can be prepared to yield a Transaction Queue
+ * that can be run
+ */
 export abstract class Procedure<Args, ReturnType = void> {
   public type: ProcedureType = ProcedureType.UnnamedProcedure;
 
@@ -34,6 +39,7 @@ export abstract class Procedure<Args, ReturnType = void> {
 
   private fees: Array<Fees> = [];
 
+  // eslint-disable-next-line require-jsdoc
   constructor(args: Args, context: Context) {
     this.args = args;
     this.context = context;
@@ -78,7 +84,7 @@ export abstract class Procedure<Args, ReturnType = void> {
    * Appends a Procedure into the TransactionQueue's queue. This defines
    * what will be run by the TransactionQueue when it is started.
    *
-   * @param Proc A Procedure that will be run in the Procedure's TransactionQueue
+   * @param Proc - A Procedure that will be run in the Procedure's TransactionQueue
    *
    * @returns whichever value is returned by the Procedure
    */
@@ -117,13 +123,13 @@ export abstract class Procedure<Args, ReturnType = void> {
    * Appends a method or future method into the TransactionQueue's queue. This defines
    * what will be run by the TransactionQueue when it is started.
    *
-   * @param method A method (or future method) that will be run in the Procedure's TransactionQueue.
+   * @param method - A method (or future method) that will be run in the Procedure's TransactionQueue.
    * A future method is a transaction that doesn't exist at prepare time
    * (for example a transaction on a module that hasn't been attached but will be by the time the previous transactions are run)
-   * @param options.tag An optional tag for SDK users to identify this transaction, this
+   * @param options.tag - An optional tag for SDK users to identify this transaction, this
    * can be used for doing things such as mapping descriptions to tags in the UI
-   * @param options.fee Value in POLY of the transaction (defaults to 0)
-   * @param options.resolver An asynchronous callback used to provide runtime data after
+   * @param options.fee - Value in POLY of the transaction (defaults to 0)
+   * @param options.resolver - An asynchronous callback used to provide runtime data after
    * the added transaction has finished successfully
    *
    * @returns a PostTransactionResolver that resolves to the value returned by the resolver function, or undefined if no resolver function was passed
@@ -166,7 +172,7 @@ export abstract class Procedure<Args, ReturnType = void> {
    * Appends a signature request into the TransactionQueue's queue. This defines
    * what will be run by the TransactionQueue when it is started.
    *
-   * @param request A signature request that will be run in the Procedure's TransactionQueue
+   * @param request - A signature request that will be run in the Procedure's TransactionQueue
    *
    * @returns a PostTransactionResolver that resolves to the signed data
    */
