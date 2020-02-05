@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager, StaticMockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import { BigNumber, GeneralTransferManager_3_0_0 } from '@polymathnetwork/contract-wrappers';
@@ -22,6 +22,8 @@ import { Shareholder } from '../../entities';
 
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
+
+const zeroDate = new Date(0);
 
 const params: RevokeKycProcedureArgs = {
   symbol: 'TEST1',
@@ -128,19 +130,32 @@ describe('RevokeKyc', () => {
 
   describe('RevokeKyc', () => {
     test('should add a transaction to the queue to revoke kyc for specified shareholders', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyKYCDataMultiArgsStub = sinon.stub();
+      modifyKYCDataMultiArgsStub.returns([{}]);
+      const addTransactionStub = stub(target, 'addTransaction');
       gtmMock.mock('modifyKYCDataMulti', Promise.resolve('ModifyKYCDataMulti'));
+      const { modifyKYCDataMulti } = gtmMock.getMockInstance();
+      addTransactionStub.withArgs(modifyKYCDataMulti).returns(modifyKYCDataMultiArgsStub);
 
       // Real call
       await target.prepareTransactions();
+
       // Verifications
-      expect(addTransactionSpy.getCall(0).calledWith(gtmMockInstance.modifyKYCDataMulti)).toEqual(
+      expect(modifyKYCDataMultiArgsStub.getCall(0).args[0]).toEqual({
+        investors: [oldShareholdersData[0].address, oldShareholdersData[1].address],
+        canReceiveAfter: [zeroDate, zeroDate],
+        canSendAfter: [zeroDate, zeroDate],
+        expiryTime: [zeroDate, zeroDate],
+      });
+      expect(modifyKYCDataMultiArgsStub.callCount).toEqual(1);
+
+      expect(addTransactionStub.getCall(0).calledWith(gtmMockInstance.modifyKYCDataMulti)).toEqual(
         true
       );
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.ModifyKycDataMulti
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should return an array of the shareholders which have been modified', async () => {
@@ -218,12 +233,12 @@ describe('RevokeKyc', () => {
 
     test('should throw if any shareholder addresses passed in were already revoked', async () => {
       const oldShareholdersRevoked = cloneDeep(oldShareholdersData);
-      oldShareholdersRevoked[0].kycExpiry = new Date(0);
-      oldShareholdersRevoked[0].canSendAfter = new Date(0);
-      oldShareholdersRevoked[0].canReceiveAfter = new Date(0);
-      oldShareholdersRevoked[1].kycExpiry = new Date(0);
-      oldShareholdersRevoked[1].canSendAfter = new Date(0);
-      oldShareholdersRevoked[1].canReceiveAfter = new Date(0);
+      oldShareholdersRevoked[0].kycExpiry = zeroDate;
+      oldShareholdersRevoked[0].canSendAfter = zeroDate;
+      oldShareholdersRevoked[0].canReceiveAfter = zeroDate;
+      oldShareholdersRevoked[1].kycExpiry = zeroDate;
+      oldShareholdersRevoked[1].canSendAfter = zeroDate;
+      oldShareholdersRevoked[1].canReceiveAfter = zeroDate;
       shareholdersEntityMock.mock('getShareholders', oldShareholdersRevoked);
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({

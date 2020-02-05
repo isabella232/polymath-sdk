@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -109,20 +109,29 @@ describe('SetController', () => {
 
       target = new SetController(params, contextMock.getMockInstance());
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const setControllerArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+      securityTokenMock.mock('setController', Promise.resolve('SetController'));
+      const { setController } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(setController).returns(setControllerArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(setControllerArgsSpy.getCall(0).args[0]).toEqual({
+        controller: params.controller,
+      });
+      expect(setControllerArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().setController, {
             tag: PolyTransactionTag.SetController,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
   });
 });

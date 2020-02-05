@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import { Factories } from '../../Context';
@@ -97,20 +97,28 @@ describe('SetDividendsWallet', () => {
         Promise.resolve([erc20DividendMock.getMockInstance()])
       );
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const changeWalletArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       erc20DividendMock.mock('changeWallet', Promise.resolve('ChangeWallet'));
+      const { changeWallet } = erc20DividendMock.getMockInstance();
+      addTransactionStub.withArgs(changeWallet).returns(changeWalletArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(changeWalletArgsSpy.getCall(0).args[0]).toEqual({
+        wallet: params.address,
+      });
+      expect(changeWalletArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(erc20DividendMock.getMockInstance().changeWallet)
+        addTransactionStub.getCall(0).calledWith(erc20DividendMock.getMockInstance().changeWallet)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.SetDividendsWallet
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
   });
 });
