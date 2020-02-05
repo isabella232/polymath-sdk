@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ContractVersion } from '@polymathnetwork/contract-wrappers';
 import { ToggleAllowPreIssuing } from '../ToggleAllowPreIssuing';
@@ -109,20 +109,26 @@ describe('ToggleAllowPreIssuing', () => {
 
   describe('ToggleAllowPreIssuing', () => {
     test('should add the transaction to the queue to allow pre issuing in a simple sto', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const allowPreMintingArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       simpleSto_3_1_0_Mock.mock('allowPreMinting', Promise.resolve('AllowPreMinting'));
+      const { allowPreMinting } = simpleSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(allowPreMinting).returns(allowPreMintingArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(allowPreMintingArgsSpy.getCall(0).args[0]).toEqual({});
+      expect(allowPreMintingArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(simpleSto_3_1_0_Mock.getMockInstance().allowPreMinting)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.AllowPreMinting);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.AllowPreMinting);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add the transaction to the queue to revoke pre issuing in a simple sto', async () => {
@@ -131,40 +137,53 @@ describe('ToggleAllowPreIssuing', () => {
         contextMock.getMockInstance()
       );
       simpleSto_3_1_0_Mock.mock('preMintAllowed', Promise.resolve(true));
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const revokePreMintFlagArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       simpleSto_3_1_0_Mock.mock('revokePreMintFlag', Promise.resolve('RevokePreMintFlag'));
+      const { revokePreMintFlag } = simpleSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(revokePreMintFlag).returns(revokePreMintFlagArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(revokePreMintFlagArgsSpy.getCall(0).args[0]).toEqual({});
+      expect(revokePreMintFlagArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(simpleSto_3_1_0_Mock.getMockInstance().revokePreMintFlag)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.RevokePreMinting);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.RevokePreMinting
+      );
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add the transaction to the queue to allow pre issuing in a tiered sto', async () => {
       moduleWrapperFactoryMock.mock('getModuleInstance', tieredSto_3_1_0_Mock.getMockInstance());
       target = new ToggleAllowPreIssuing(tieredParams, contextMock.getMockInstance());
-
-      const addTransactionSpy = spy(target, 'addTransaction');
-      tieredSto_3_1_0_Mock.mock('allowPreMinting', Promise.resolve('ChangeAllowPreIssuing'));
+      const allowPreMintingArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+      tieredSto_3_1_0_Mock.mock('allowPreMinting', Promise.resolve('AllowPreMinting'));
+      const { allowPreMinting } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(allowPreMinting).returns(allowPreMintingArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(allowPreMintingArgsSpy.getCall(0).args[0]).toEqual({});
+      expect(allowPreMintingArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().allowPreMinting)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.AllowPreMinting);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.AllowPreMinting);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add the transaction to the queue to revoke pre issuing in a tiered sto', async () => {
@@ -172,21 +191,30 @@ describe('ToggleAllowPreIssuing', () => {
         { ...tieredParams, allowPreIssuing: false },
         contextMock.getMockInstance()
       );
-      simpleSto_3_1_0_Mock.mock('preMintAllowed', Promise.resolve(true));
-      const addTransactionSpy = spy(target, 'addTransaction');
-      simpleSto_3_1_0_Mock.mock('revokePreMintFlag', Promise.resolve('RevokePreMintFlag'));
+      moduleWrapperFactoryMock.mock('getModuleInstance', tieredSto_3_1_0_Mock.getMockInstance());
+      tieredSto_3_1_0_Mock.mock('preMintAllowed', Promise.resolve(true));
+      const revokePreMintFlagArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+      tieredSto_3_1_0_Mock.mock('revokePreMintFlag', Promise.resolve('RevokePreMintFlag'));
+      const { revokePreMintFlag } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(revokePreMintFlag).returns(revokePreMintFlagArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(revokePreMintFlagArgsSpy.getCall(0).args[0]).toEqual({});
+      expect(revokePreMintFlagArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
-          .calledWith(simpleSto_3_1_0_Mock.getMockInstance().revokePreMintFlag)
+          .calledWith(tieredSto_3_1_0_Mock.getMockInstance().revokePreMintFlag)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.RevokePreMinting);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.RevokePreMinting
+      );
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if there is an invalid sto address', async () => {
