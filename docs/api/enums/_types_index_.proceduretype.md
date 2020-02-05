@@ -64,7 +64,7 @@ Types of Procedures available in the SDK
 
 • **ApproveErc20**: = "ApproveErc20"
 
-_Defined in [src/types/index.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L137)_
+_Defined in [src/types/index.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L137)_
 
 ---
 
@@ -72,7 +72,7 @@ _Defined in [src/types/index.ts:137](https://github.com/PolymathNetwork/polymath
 
 • **AssignSecurityTokenRole**: = "AssignSecurityTokenRole"
 
-_Defined in [src/types/index.ts:159](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L159)_
+_Defined in [src/types/index.ts:159](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L159)_
 
 ---
 
@@ -80,7 +80,7 @@ _Defined in [src/types/index.ts:159](https://github.com/PolymathNetwork/polymath
 
 • **AssignStoRole**: = "AssignStoRole"
 
-_Defined in [src/types/index.ts:160](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L160)_
+_Defined in [src/types/index.ts:160](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L160)_
 
 ---
 
@@ -88,7 +88,7 @@ _Defined in [src/types/index.ts:160](https://github.com/PolymathNetwork/polymath
 
 • **ControllerRedeem**: = "ControllerRedeem"
 
-_Defined in [src/types/index.ts:162](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L162)_
+_Defined in [src/types/index.ts:162](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L162)_
 
 ---
 
@@ -96,7 +96,7 @@ _Defined in [src/types/index.ts:162](https://github.com/PolymathNetwork/polymath
 
 • **ControllerTransfer**: = "ControllerTransfer"
 
-_Defined in [src/types/index.ts:161](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L161)_
+_Defined in [src/types/index.ts:161](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L161)_
 
 ---
 
@@ -104,7 +104,7 @@ _Defined in [src/types/index.ts:161](https://github.com/PolymathNetwork/polymath
 
 • **CreateCheckpoint**: = "CreateCheckpoint"
 
-_Defined in [src/types/index.ts:139](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L139)_
+_Defined in [src/types/index.ts:139](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L139)_
 
 ---
 
@@ -112,7 +112,7 @@ _Defined in [src/types/index.ts:139](https://github.com/PolymathNetwork/polymath
 
 • **CreateDividendDistribution**: = "CreateDividendDistribution"
 
-_Defined in [src/types/index.ts:147](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L147)_
+_Defined in [src/types/index.ts:147](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L147)_
 
 ---
 
@@ -120,7 +120,7 @@ _Defined in [src/types/index.ts:147](https://github.com/PolymathNetwork/polymath
 
 • **CreateSecurityToken**: = "CreateSecurityToken"
 
-_Defined in [src/types/index.ts:148](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L148)_
+_Defined in [src/types/index.ts:148](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L148)_
 
 ---
 
@@ -128,7 +128,7 @@ _Defined in [src/types/index.ts:148](https://github.com/PolymathNetwork/polymath
 
 • **DisableController**: = "DisableController"
 
-_Defined in [src/types/index.ts:168](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L168)_
+_Defined in [src/types/index.ts:168](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L168)_
 
 ---
 
@@ -136,7 +136,7 @@ _Defined in [src/types/index.ts:168](https://github.com/PolymathNetwork/polymath
 
 • **DisableFeature**: = "DisableFeature"
 
-_Defined in [src/types/index.ts:149](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L149)_
+_Defined in [src/types/index.ts:149](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L149)_
 
 ---
 
@@ -144,7 +144,7 @@ _Defined in [src/types/index.ts:149](https://github.com/PolymathNetwork/polymath
 
 • **EnableCountTransferManager**: = "EnableCountTransferManager"
 
-_Defined in [src/types/index.ts:143](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L143)_
+_Defined in [src/types/index.ts:143](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L143)_
 
 ---
 
@@ -152,7 +152,7 @@ _Defined in [src/types/index.ts:143](https://github.com/PolymathNetwork/polymath
 
 • **EnableDividendManager**: = "EnableDividendManager"
 
-_Defined in [src/types/index.ts:140](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L140)_
+_Defined in [src/types/index.ts:140](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L140)_
 
 ---
 
@@ -160,7 +160,7 @@ _Defined in [src/types/index.ts:140](https://github.com/PolymathNetwork/polymath
 
 • **EnableGeneralPermissionManager**: = "EnableGeneralPermissionManager"
 
-_Defined in [src/types/index.ts:141](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L141)_
+_Defined in [src/types/index.ts:141](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L141)_
 
 ---
 
@@ -168,7 +168,7 @@ _Defined in [src/types/index.ts:141](https://github.com/PolymathNetwork/polymath
 
 • **EnableGeneralTransferManager**: = "EnableGeneralTransferManager"
 
-_Defined in [src/types/index.ts:142](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L142)_
+_Defined in [src/types/index.ts:142](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L142)_
 
 ---
 
@@ -176,7 +176,7 @@ _Defined in [src/types/index.ts:142](https://github.com/PolymathNetwork/polymath
 
 • **EnablePercentageTransferManager**: = "EnablePercentageTransferManager"
 
-_Defined in [src/types/index.ts:144](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L144)_
+_Defined in [src/types/index.ts:144](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L144)_
 
 ---
 
@@ -184,7 +184,7 @@ _Defined in [src/types/index.ts:144](https://github.com/PolymathNetwork/polymath
 
 • **FinalizeSto**: = "FinalizeSto"
 
-_Defined in [src/types/index.ts:164](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L164)_
+_Defined in [src/types/index.ts:164](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L164)_
 
 ---
 
@@ -192,7 +192,7 @@ _Defined in [src/types/index.ts:164](https://github.com/PolymathNetwork/polymath
 
 • **FreezeIssuance**: = "FreezeIssuance"
 
-_Defined in [src/types/index.ts:150](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L150)_
+_Defined in [src/types/index.ts:150](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L150)_
 
 ---
 
@@ -200,7 +200,7 @@ _Defined in [src/types/index.ts:150](https://github.com/PolymathNetwork/polymath
 
 • **InvestInSimpleSto**: = "InvestInSimpleSto"
 
-_Defined in [src/types/index.ts:176](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L176)_
+_Defined in [src/types/index.ts:176](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L176)_
 
 ---
 
@@ -208,7 +208,7 @@ _Defined in [src/types/index.ts:176](https://github.com/PolymathNetwork/polymath
 
 • **InvestInTieredSto**: = "InvestInTieredSto"
 
-_Defined in [src/types/index.ts:175](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L175)_
+_Defined in [src/types/index.ts:175](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L175)_
 
 ---
 
@@ -216,7 +216,7 @@ _Defined in [src/types/index.ts:175](https://github.com/PolymathNetwork/polymath
 
 • **IssueTokens**: = "IssueTokens"
 
-_Defined in [src/types/index.ts:171](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L171)_
+_Defined in [src/types/index.ts:171](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L171)_
 
 ---
 
@@ -224,7 +224,7 @@ _Defined in [src/types/index.ts:171](https://github.com/PolymathNetwork/polymath
 
 • **LaunchSimpleSto**: = "LaunchSimpleSto"
 
-_Defined in [src/types/index.ts:145](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L145)_
+_Defined in [src/types/index.ts:145](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L145)_
 
 ---
 
@@ -232,7 +232,7 @@ _Defined in [src/types/index.ts:145](https://github.com/PolymathNetwork/polymath
 
 • **LaunchTieredSto**: = "LaunchTieredSto"
 
-_Defined in [src/types/index.ts:146](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L146)_
+_Defined in [src/types/index.ts:146](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L146)_
 
 ---
 
@@ -240,7 +240,7 @@ _Defined in [src/types/index.ts:146](https://github.com/PolymathNetwork/polymath
 
 • **ModifyDividendsDefaultExclusionList**: = "ModifyDividendsDefaultExclusionList"
 
-_Defined in [src/types/index.ts:158](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L158)_
+_Defined in [src/types/index.ts:158](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L158)_
 
 ---
 
@@ -248,7 +248,7 @@ _Defined in [src/types/index.ts:158](https://github.com/PolymathNetwork/polymath
 
 • **ModifyMaxHolderCount**: = "ModifyMaxHolderCount"
 
-_Defined in [src/types/index.ts:177](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L177)_
+_Defined in [src/types/index.ts:177](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L177)_
 
 ---
 
@@ -256,7 +256,7 @@ _Defined in [src/types/index.ts:177](https://github.com/PolymathNetwork/polymath
 
 • **ModifyMaxHolderPercentage**: = "ModifyMaxHolderPercentage"
 
-_Defined in [src/types/index.ts:178](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L178)_
+_Defined in [src/types/index.ts:178](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L178)_
 
 ---
 
@@ -264,7 +264,7 @@ _Defined in [src/types/index.ts:178](https://github.com/PolymathNetwork/polymath
 
 • **ModifyPercentageExemptions**: = "ModifyPercentageExemptions"
 
-_Defined in [src/types/index.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L179)_
+_Defined in [src/types/index.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L179)_
 
 ---
 
@@ -272,7 +272,7 @@ _Defined in [src/types/index.ts:179](https://github.com/PolymathNetwork/polymath
 
 • **ModifyShareholderData**: = "ModifyShareholderData"
 
-_Defined in [src/types/index.ts:169](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L169)_
+_Defined in [src/types/index.ts:169](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L169)_
 
 ---
 
@@ -280,7 +280,7 @@ _Defined in [src/types/index.ts:169](https://github.com/PolymathNetwork/polymath
 
 • **ModifyTieredStoData**: = "ModifyTieredStoData"
 
-_Defined in [src/types/index.ts:174](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L174)_
+_Defined in [src/types/index.ts:174](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L174)_
 
 ---
 
@@ -288,7 +288,7 @@ _Defined in [src/types/index.ts:174](https://github.com/PolymathNetwork/polymath
 
 • **PullDividendPayment**: = "PullDividendPayment"
 
-_Defined in [src/types/index.ts:157](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L157)_
+_Defined in [src/types/index.ts:157](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L157)_
 
 ---
 
@@ -296,7 +296,7 @@ _Defined in [src/types/index.ts:157](https://github.com/PolymathNetwork/polymath
 
 • **PushDividendPayment**: = "PushDividendPayment"
 
-_Defined in [src/types/index.ts:156](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L156)_
+_Defined in [src/types/index.ts:156](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L156)_
 
 ---
 
@@ -304,7 +304,7 @@ _Defined in [src/types/index.ts:156](https://github.com/PolymathNetwork/polymath
 
 • **ReclaimFunds**: = "ReclaimFunds"
 
-_Defined in [src/types/index.ts:151](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L151)_
+_Defined in [src/types/index.ts:151](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L151)_
 
 ---
 
@@ -312,7 +312,7 @@ _Defined in [src/types/index.ts:151](https://github.com/PolymathNetwork/polymath
 
 • **RemoveDocument**: = "RemoveDocument"
 
-_Defined in [src/types/index.ts:167](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L167)_
+_Defined in [src/types/index.ts:167](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L167)_
 
 ---
 
@@ -320,7 +320,7 @@ _Defined in [src/types/index.ts:167](https://github.com/PolymathNetwork/polymath
 
 • **ReserveSecurityToken**: = "ReserveSecurityToken"
 
-_Defined in [src/types/index.ts:152](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L152)_
+_Defined in [src/types/index.ts:152](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L152)_
 
 ---
 
@@ -328,7 +328,7 @@ _Defined in [src/types/index.ts:152](https://github.com/PolymathNetwork/polymath
 
 • **RevokeKyc**: = "RevokeKyc"
 
-_Defined in [src/types/index.ts:170](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L170)_
+_Defined in [src/types/index.ts:170](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L170)_
 
 ---
 
@@ -336,7 +336,7 @@ _Defined in [src/types/index.ts:170](https://github.com/PolymathNetwork/polymath
 
 • **SetController**: = "SetController"
 
-_Defined in [src/types/index.ts:165](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L165)_
+_Defined in [src/types/index.ts:165](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L165)_
 
 ---
 
@@ -344,7 +344,7 @@ _Defined in [src/types/index.ts:165](https://github.com/PolymathNetwork/polymath
 
 • **SetDividendsWallet**: = "SetDividendsWallet"
 
-_Defined in [src/types/index.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L155)_
+_Defined in [src/types/index.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L155)_
 
 ---
 
@@ -352,7 +352,7 @@ _Defined in [src/types/index.ts:155](https://github.com/PolymathNetwork/polymath
 
 • **SetDocument**: = "SetDocument"
 
-_Defined in [src/types/index.ts:166](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L166)_
+_Defined in [src/types/index.ts:166](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L166)_
 
 ---
 
@@ -360,7 +360,7 @@ _Defined in [src/types/index.ts:166](https://github.com/PolymathNetwork/polymath
 
 • **SignDisableControllerAck**: = "SignDisableControllerAck"
 
-_Defined in [src/types/index.ts:183](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L183)_
+_Defined in [src/types/index.ts:183](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L183)_
 
 ---
 
@@ -368,7 +368,7 @@ _Defined in [src/types/index.ts:183](https://github.com/PolymathNetwork/polymath
 
 • **SignFreezeIssuanceAck**: = "SignFreezeIssuanceAck"
 
-_Defined in [src/types/index.ts:184](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L184)_
+_Defined in [src/types/index.ts:184](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L184)_
 
 ---
 
@@ -376,7 +376,7 @@ _Defined in [src/types/index.ts:184](https://github.com/PolymathNetwork/polymath
 
 • **SignTransferData**: = "SignTransferData"
 
-_Defined in [src/types/index.ts:182](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L182)_
+_Defined in [src/types/index.ts:182](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L182)_
 
 ---
 
@@ -384,7 +384,7 @@ _Defined in [src/types/index.ts:182](https://github.com/PolymathNetwork/polymath
 
 • **ToggleAllowBeneficialInvestments**: = "ToggleAllowBeneficialInvestments"
 
-_Defined in [src/types/index.ts:173](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L173)_
+_Defined in [src/types/index.ts:173](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L173)_
 
 ---
 
@@ -392,7 +392,7 @@ _Defined in [src/types/index.ts:173](https://github.com/PolymathNetwork/polymath
 
 • **ToggleAllowPreIssuing**: = "ToggleAllowPreIssuing"
 
-_Defined in [src/types/index.ts:172](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L172)_
+_Defined in [src/types/index.ts:172](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L172)_
 
 ---
 
@@ -400,7 +400,7 @@ _Defined in [src/types/index.ts:172](https://github.com/PolymathNetwork/polymath
 
 • **ToggleFreezeTransfers**: = "ToggleFreezeTransfers"
 
-_Defined in [src/types/index.ts:181](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L181)_
+_Defined in [src/types/index.ts:181](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L181)_
 
 ---
 
@@ -408,7 +408,7 @@ _Defined in [src/types/index.ts:181](https://github.com/PolymathNetwork/polymath
 
 • **TogglePauseSto**: = "PauseSto"
 
-_Defined in [src/types/index.ts:163](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L163)_
+_Defined in [src/types/index.ts:163](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L163)_
 
 ---
 
@@ -416,7 +416,7 @@ _Defined in [src/types/index.ts:163](https://github.com/PolymathNetwork/polymath
 
 • **TransferErc20**: = "TransferErc20"
 
-_Defined in [src/types/index.ts:138](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L138)_
+_Defined in [src/types/index.ts:138](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L138)_
 
 ---
 
@@ -424,7 +424,7 @@ _Defined in [src/types/index.ts:138](https://github.com/PolymathNetwork/polymath
 
 • **TransferOwnership**: = "TransferOwnership"
 
-_Defined in [src/types/index.ts:185](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L185)_
+_Defined in [src/types/index.ts:185](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L185)_
 
 ---
 
@@ -432,7 +432,7 @@ _Defined in [src/types/index.ts:185](https://github.com/PolymathNetwork/polymath
 
 • **TransferReservationOwnership**: = "TransferReservationOwnership"
 
-_Defined in [src/types/index.ts:186](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L186)_
+_Defined in [src/types/index.ts:186](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L186)_
 
 ---
 
@@ -440,7 +440,7 @@ _Defined in [src/types/index.ts:186](https://github.com/PolymathNetwork/polymath
 
 • **TransferSecurityTokens**: = "TransferSecurityTokens"
 
-_Defined in [src/types/index.ts:180](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L180)_
+_Defined in [src/types/index.ts:180](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L180)_
 
 ---
 
@@ -448,7 +448,7 @@ _Defined in [src/types/index.ts:180](https://github.com/PolymathNetwork/polymath
 
 • **UnnamedProcedure**: = "UnnamedProcedure"
 
-_Defined in [src/types/index.ts:136](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L136)_
+_Defined in [src/types/index.ts:136](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L136)_
 
 ---
 
@@ -456,7 +456,7 @@ _Defined in [src/types/index.ts:136](https://github.com/PolymathNetwork/polymath
 
 • **UpdateDividendsTaxWithholdingList**: = "UpdateDividendsTaxWithholdingList"
 
-_Defined in [src/types/index.ts:154](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L154)_
+_Defined in [src/types/index.ts:154](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L154)_
 
 ---
 
@@ -464,4 +464,4 @@ _Defined in [src/types/index.ts:154](https://github.com/PolymathNetwork/polymath
 
 • **WithdrawTaxes**: = "WithdrawTaxes"
 
-_Defined in [src/types/index.ts:153](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L153)_
+_Defined in [src/types/index.ts:153](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L153)_

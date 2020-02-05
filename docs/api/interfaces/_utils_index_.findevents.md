@@ -8,7 +8,7 @@
 
 ▸ (`params`: [FindTickerRegisteredParams](_utils_index_.findtickerregisteredparams.md)): _LogWithDecodedArgs‹SecurityTokenRegistryRegisterTickerEventArgs›[]_
 
-_Defined in [src/utils/index.ts:215](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L215)_
+_Defined in [src/utils/index.ts:215](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L215)_
 
 **Parameters:**
 
@@ -20,7 +20,7 @@ _Defined in [src/utils/index.ts:215](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindNewSecurityTokenParams](_utils_index_.findnewsecuritytokenparams.md)): _LogWithDecodedArgs‹SecurityTokenRegistryNewSecurityTokenEventArgs›[]_
 
-_Defined in [src/utils/index.ts:218](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L218)_
+_Defined in [src/utils/index.ts:218](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L218)_
 
 **Parameters:**
 
@@ -32,7 +32,7 @@ _Defined in [src/utils/index.ts:218](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindModuleAddedParams](_utils_index_.findmoduleaddedparams.md)): _LogWithDecodedArgs‹SecurityTokenModuleAddedEventArgs›[]_
 
-_Defined in [src/utils/index.ts:221](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L221)_
+_Defined in [src/utils/index.ts:221](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L221)_
 
 **Parameters:**
 
@@ -44,7 +44,7 @@ _Defined in [src/utils/index.ts:221](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindCheckpointCreatedParams](_utils_index_.findcheckpointcreatedparams.md)): _LogWithDecodedArgs‹SecurityTokenCheckpointCreatedEventArgs›[]_
 
-_Defined in [src/utils/index.ts:222](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L222)_
+_Defined in [src/utils/index.ts:222](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L222)_
 
 **Parameters:**
 
@@ -56,7 +56,7 @@ _Defined in [src/utils/index.ts:222](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindControllerTransferParams](_utils_index_.findcontrollertransferparams.md)): _LogWithDecodedArgs‹SecurityTokenControllerTransferEventArgs›[]_
 
-_Defined in [src/utils/index.ts:225](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L225)_
+_Defined in [src/utils/index.ts:225](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L225)_
 
 **Parameters:**
 
@@ -68,7 +68,7 @@ _Defined in [src/utils/index.ts:225](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindErc20DividendDepositedParams](_utils_index_.finderc20dividenddepositedparams.md)): _LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendDepositedEventArgs›[]_
 
-_Defined in [src/utils/index.ts:228](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L228)_
+_Defined in [src/utils/index.ts:228](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L228)_
 
 **Parameters:**
 
@@ -80,7 +80,7 @@ _Defined in [src/utils/index.ts:228](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindEtherDividendDepositedParams](_utils_index_.findetherdividenddepositedparams.md)): _LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendDepositedEventArgs›[]_
 
-_Defined in [src/utils/index.ts:231](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L231)_
+_Defined in [src/utils/index.ts:231](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L231)_
 
 **Parameters:**
 
@@ -92,7 +92,7 @@ _Defined in [src/utils/index.ts:231](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindModifyKycDataParams](_utils_index_.findmodifykycdataparams.md)): _LogWithDecodedArgs‹GeneralTransferManagerModifyKYCDataEventArgs›[]_
 
-_Defined in [src/utils/index.ts:234](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L234)_
+_Defined in [src/utils/index.ts:234](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L234)_
 
 **Parameters:**
 
@@ -104,7 +104,7 @@ _Defined in [src/utils/index.ts:234](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindModifyInvestorFlagParams](_utils_index_.findmodifyinvestorflagparams.md)): _LogWithDecodedArgs‹GeneralTransferManagerModifyInvestorFlagEventArgs›[]_
 
-_Defined in [src/utils/index.ts:237](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L237)_
+_Defined in [src/utils/index.ts:237](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L237)_
 
 **Parameters:**
 
@@ -116,7 +116,7 @@ _Defined in [src/utils/index.ts:237](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindCappedStoPauseParams](_utils_index_.findcappedstopauseparams.md)): _LogWithDecodedArgs‹CappedSTOPauseEventArgs›[]_
 
-_Defined in [src/utils/index.ts:240](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L240)_
+_Defined in [src/utils/index.ts:240](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L240)_
 
 **Parameters:**
 
@@ -128,7 +128,7 @@ _Defined in [src/utils/index.ts:240](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindCappedStoPreMintAllowedParams](_utils_index_.findcappedstopremintallowedparams.md)): _LogWithDecodedArgs‹CappedSTOAllowPreMintFlagEventArgs›[]_
 
-_Defined in [src/utils/index.ts:241](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L241)_
+_Defined in [src/utils/index.ts:241](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L241)_
 
 **Parameters:**
 
@@ -140,7 +140,7 @@ _Defined in [src/utils/index.ts:241](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindTieredStoPauseParams](_utils_index_.findtieredstopauseparams.md)): _LogWithDecodedArgs‹USDTieredSTOPauseEventArgs›[]_
 
-_Defined in [src/utils/index.ts:244](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L244)_
+_Defined in [src/utils/index.ts:244](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L244)_
 
 **Parameters:**
 
@@ -152,7 +152,7 @@ _Defined in [src/utils/index.ts:244](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindTieredStoPreMintAllowedParams](_utils_index_.findtieredstopremintallowedparams.md)): _LogWithDecodedArgs‹USDTieredSTOAllowPreMintFlagEventArgs›[]_
 
-_Defined in [src/utils/index.ts:245](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L245)_
+_Defined in [src/utils/index.ts:245](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L245)_
 
 **Parameters:**
 
@@ -164,7 +164,7 @@ _Defined in [src/utils/index.ts:245](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindErc20DividendClaimedParams](_utils_index_.finderc20dividendclaimedparams.md)): _LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendClaimedEventArgs›[]_
 
-_Defined in [src/utils/index.ts:248](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L248)_
+_Defined in [src/utils/index.ts:248](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L248)_
 
 **Parameters:**
 
@@ -176,7 +176,7 @@ _Defined in [src/utils/index.ts:248](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindEthDividendClaimedParams](_utils_index_.findethdividendclaimedparams.md)): _LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendClaimedEventArgs›[]_
 
-_Defined in [src/utils/index.ts:251](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L251)_
+_Defined in [src/utils/index.ts:251](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L251)_
 
 **Parameters:**
 
@@ -188,7 +188,7 @@ _Defined in [src/utils/index.ts:251](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindErc20DividendReclaimedParams](_utils_index_.finderc20dividendreclaimedparams.md)): _LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendReclaimedEventArgs›[]_
 
-_Defined in [src/utils/index.ts:254](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L254)_
+_Defined in [src/utils/index.ts:254](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L254)_
 
 **Parameters:**
 
@@ -200,7 +200,7 @@ _Defined in [src/utils/index.ts:254](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindEthDividendReclaimedParams](_utils_index_.findethdividendreclaimedparams.md)): _LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendReclaimedEventArgs›[]_
 
-_Defined in [src/utils/index.ts:257](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L257)_
+_Defined in [src/utils/index.ts:257](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L257)_
 
 **Parameters:**
 
@@ -212,7 +212,7 @@ _Defined in [src/utils/index.ts:257](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindErc20SetWalletParams](_utils_index_.finderc20setwalletparams.md)): _LogWithDecodedArgs‹ERC20DividendCheckpointSetWalletEventArgs›[]_
 
-_Defined in [src/utils/index.ts:260](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L260)_
+_Defined in [src/utils/index.ts:260](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L260)_
 
 **Parameters:**
 
@@ -224,7 +224,7 @@ _Defined in [src/utils/index.ts:260](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindEthSetWalletParams](_utils_index_.findethsetwalletparams.md)): _LogWithDecodedArgs‹EtherDividendCheckpointSetWalletEventArgs›[]_
 
-_Defined in [src/utils/index.ts:263](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L263)_
+_Defined in [src/utils/index.ts:263](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L263)_
 
 **Parameters:**
 
@@ -236,7 +236,7 @@ _Defined in [src/utils/index.ts:263](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindErc20SetWithholdingParams](_utils_index_.finderc20setwithholdingparams.md)): _LogWithDecodedArgs‹ERC20DividendCheckpointSetWithholdingEventArgs›[]_
 
-_Defined in [src/utils/index.ts:264](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L264)_
+_Defined in [src/utils/index.ts:264](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L264)_
 
 **Parameters:**
 
@@ -248,7 +248,7 @@ _Defined in [src/utils/index.ts:264](https://github.com/PolymathNetwork/polymath
 
 ▸ (`params`: [FindEthSetWithholdingParams](_utils_index_.findethsetwithholdingparams.md)): _LogWithDecodedArgs‹EtherDividendCheckpointSetWithholdingEventArgs›[]_
 
-_Defined in [src/utils/index.ts:267](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L267)_
+_Defined in [src/utils/index.ts:267](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L267)_
 
 **Parameters:**
 

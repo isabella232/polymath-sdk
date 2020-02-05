@@ -39,7 +39,7 @@ Namespace that handles all Dividend related functionality
 
 _Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/SubModule.ts#L10)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/SubModule.ts#L10)_
 
 Create a new SubModule instance
 
@@ -60,7 +60,7 @@ Create a new SubModule instance
 
 _Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/SubModule.ts#L10)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/SubModule.ts#L10)_
 
 ---
 
@@ -70,7 +70,7 @@ _Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/Poly
 
 _Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/SubModule.ts#L8)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/SubModule.ts#L8)_
 
 ## Methods
 
@@ -78,7 +78,7 @@ _Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/Polym
 
 ▸ **createErc20Distribution**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateDividendDistributionProcedureArgs](../interfaces/_types_index_.createdividenddistributionprocedureargs.md), [DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)››_
 
-_Defined in [src/entities/SecurityToken/Dividends.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Dividends.ts#L79)_
+_Defined in [src/entities/SecurityToken/Dividends.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Dividends.ts#L79)_
 
 Distribute dividends in a specified ERC20 token
 
@@ -105,7 +105,7 @@ Distribute dividends in a specified ERC20 token
 
 ▸ **createPolyDistribution**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateDividendDistributionProcedureArgs](../interfaces/_types_index_.createdividenddistributionprocedureargs.md), [DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)››_
 
-_Defined in [src/entities/SecurityToken/Dividends.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Dividends.ts#L40)_
+_Defined in [src/entities/SecurityToken/Dividends.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Dividends.ts#L40)_
 
 Distribute dividends in POLY
 
@@ -131,7 +131,7 @@ Distribute dividends in POLY
 
 ▸ **getDefaultExclusionList**(): _Promise‹string[]›_
 
-_Defined in [src/entities/SecurityToken/Dividends.ts:278](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Dividends.ts#L278)_
+_Defined in [src/entities/SecurityToken/Dividends.ts:278](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Dividends.ts#L278)_
 
 Retrieve the list of addresses which are excluded from receiving dividend payments by default
 
@@ -143,7 +143,7 @@ Retrieve the list of addresses which are excluded from receiving dividend paymen
 
 ▸ **getDistribution**(`args`: [GetDistributionParams](../interfaces/_entities_securitytoken_dividends_.getdistributionparams.md) | string): _Promise‹[DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)›_
 
-_Defined in [src/entities/SecurityToken/Dividends.ts:254](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Dividends.ts#L254)_
+_Defined in [src/entities/SecurityToken/Dividends.ts:254](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Dividends.ts#L254)_
 
 Retrieve a particular dividend distribution by type and index or UUID
 
@@ -161,7 +161,7 @@ Retrieve a particular dividend distribution by type and index or UUID
 
 ▸ **getDistributions**(`args`: object): _Promise‹[DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)[]›_
 
-_Defined in [src/entities/SecurityToken/Dividends.ts:222](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Dividends.ts#L222)_
+_Defined in [src/entities/SecurityToken/Dividends.ts:222](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Dividends.ts#L222)_
 
 Retrieve all dividend distributions at a certain checkpoint
 
@@ -181,7 +181,7 @@ Retrieve all dividend distributions at a certain checkpoint
 
 ▸ **getTaxWithholdingList**(): _Promise‹[TaxWithholding](_entities_taxwithholding_.taxwithholding.md)[]›_
 
-_Defined in [src/entities/SecurityToken/Dividends.ts:169](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Dividends.ts#L169)_
+_Defined in [src/entities/SecurityToken/Dividends.ts:169](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Dividends.ts#L169)_
 
 Retrieve a list of investor addresses and their corresponding tax withholding percentages
 
@@ -193,7 +193,7 @@ Retrieve a list of investor addresses and their corresponding tax withholding pe
 
 ▸ **modifyDefaultExclusionList**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ModifyDividendsDefaultExclusionListProcedureArgs](../interfaces/_types_index_.modifydividendsdefaultexclusionlistprocedureargs.md), void››_
 
-_Defined in [src/entities/SecurityToken/Dividends.ts:152](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Dividends.ts#L152)_
+_Defined in [src/entities/SecurityToken/Dividends.ts:152](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Dividends.ts#L152)_
 
 Set default exclusion list for a type of dividends. Addresses on this list won't be considered for dividend distribution. This operation overrides the previous default exclusion list
 
@@ -213,7 +213,7 @@ Set default exclusion list for a type of dividends. Addresses on this list won't
 
 ▸ **modifyStorageWallet**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[SetDividendsWalletProcedureArgs](../interfaces/_types_index_.setdividendswalletprocedureargs.md), void››_
 
-_Defined in [src/entities/SecurityToken/Dividends.ts:135](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Dividends.ts#L135)_
+_Defined in [src/entities/SecurityToken/Dividends.ts:135](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Dividends.ts#L135)_
 
 Change dividends storage wallet address
 
@@ -233,7 +233,7 @@ Change dividends storage wallet address
 
 ▸ **modifyTaxWithholdingList**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[UpdateDividendsTaxWithholdingListProcedureArgs](../interfaces/_types_index_.updatedividendstaxwithholdinglistprocedureargs.md), void››_
 
-_Defined in [src/entities/SecurityToken/Dividends.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Dividends.ts#L109)_
+_Defined in [src/entities/SecurityToken/Dividends.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Dividends.ts#L109)_
 
 Set default tax withtholding list for a type of dividends
 

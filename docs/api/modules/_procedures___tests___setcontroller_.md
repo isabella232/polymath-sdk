@@ -1,0 +1,27 @@
+# External module: "procedures/**tests**/SetController"
+
+## Index
+
+### Object literals
+
+- [params](_procedures___tests___setcontroller_.md#const-params)
+
+## Object literals
+
+### `Const` params
+
+### ▪ **params**: _object_
+
+_Defined in [src/procedures/**tests**/SetController.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SetController.ts#L13)_
+
+### controller
+
+• **controller**: _string_ = "0x3333333333333333333333333333333333333333"
+
+_Defined in [src/procedures/**tests**/SetController.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SetController.ts#L15)_
+
+### symbol
+
+• **symbol**: _string_ = "TEST1"
+
+_Defined in [src/procedures/**tests**/SetController.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/__tests__/SetController.ts#L14)_

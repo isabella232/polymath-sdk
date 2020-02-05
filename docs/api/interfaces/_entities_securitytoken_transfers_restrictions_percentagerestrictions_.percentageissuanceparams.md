@@ -16,4 +16,4 @@
 
 • **allowPrimaryIssuance**: _boolean_
 
-_Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L22)_
+_Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L22)_

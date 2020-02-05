@@ -18,6 +18,6 @@ Arguments for the [SignFreezeIssuanceAck](../enums/_types_index_.proceduretype.m
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:1321](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1321)_
+_Defined in [src/types/index.ts:1321](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1321)_
 
 symbol of the Security Token

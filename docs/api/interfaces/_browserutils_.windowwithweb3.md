@@ -423,7 +423,7 @@ Defined in node_modules/typescript/lib/lib.dom.d.ts:16526
 
 _Inherited from [ExtendedWindow](_browserutils_.extendedwindow.md).[ethereum](_browserutils_.extendedwindow.md#optional-ethereum)_
 
-_Defined in [src/browserUtils.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/browserUtils.ts#L31)_
+_Defined in [src/browserUtils.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/browserUtils.ts#L31)_
 
 ---
 
@@ -2373,7 +2373,7 @@ Defined in node_modules/typescript/lib/lib.dom.d.ts:16600
 
 _Overrides [ExtendedWindow](_browserutils_.extendedwindow.md).[web3](_browserutils_.extendedwindow.md#optional-web3)_
 
-_Defined in [src/browserUtils.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/browserUtils.ts#L39)_
+_Defined in [src/browserUtils.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/browserUtils.ts#L39)_
 
 ---
 

@@ -20,4 +20,4 @@ Properties that uniquely identify a Wallet
 
 • **address**: _string_
 
-_Defined in [src/entities/Wallet.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Wallet.ts#L12)_
+_Defined in [src/entities/Wallet.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Wallet.ts#L12)_

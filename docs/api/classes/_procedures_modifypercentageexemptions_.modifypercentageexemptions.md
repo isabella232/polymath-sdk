@@ -40,7 +40,7 @@ Procedure responsible for modifying any exemption related to percentage restrict
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/procedures/Procedure.ts#L40)_
+_Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/Procedure.ts#L40)_
 
 **Parameters:**
 
@@ -59,7 +59,7 @@ _Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/procedures/Procedure.ts#L34)_
+_Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/Procedure.ts#L34)_
 
 ---
 
@@ -69,7 +69,7 @@ _Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/procedures/Procedure.ts#L36)_
+_Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/Procedure.ts#L36)_
 
 ---
 
@@ -79,7 +79,7 @@ _Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/
 
 _Overrides void_
 
-_Defined in [src/procedures/ModifyPercentageExemptions.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/procedures/ModifyPercentageExemptions.ts#L16)_
+_Defined in [src/procedures/ModifyPercentageExemptions.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/ModifyPercentageExemptions.ts#L16)_
 
 ## Methods
 
@@ -89,7 +89,7 @@ _Defined in [src/procedures/ModifyPercentageExemptions.ts:16](https://github.com
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/procedures/Procedure.ts#L91)_
+_Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/Procedure.ts#L91)_
 
 Appends a Procedure into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -118,7 +118,7 @@ whichever value is returned by the Procedure
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/procedures/Procedure.ts#L179)_
+_Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/Procedure.ts#L179)_
 
 Appends a signature request into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -145,7 +145,7 @@ a PostTransactionResolver that resolves to the signed data
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/procedures/Procedure.ts#L137)_
+_Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/Procedure.ts#L137)_
 
 Appends a method or future method into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -186,7 +186,7 @@ a PostTransactionResolver that resolves to the value returned by the resolver fu
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/procedures/Procedure.ts#L52)_
+_Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/Procedure.ts#L52)_
 
 Mandatory method that builds a list of transactions that will be
 run
@@ -201,7 +201,7 @@ run
 
 _Overrides void_
 
-_Defined in [src/procedures/ModifyPercentageExemptions.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/procedures/ModifyPercentageExemptions.ts#L27)_
+_Defined in [src/procedures/ModifyPercentageExemptions.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/procedures/ModifyPercentageExemptions.ts#L27)_
 
 - Update the list of addresses that are exempt from percentage restrictions (if supplied)
 - Modify whether primary issuance is exempt from percentage restrictions (if supplied)

@@ -13,7 +13,7 @@
 
 • **StatusChange**: = "StatusChange"
 
-_Defined in [src/entities/TransactionQueue.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TransactionQueue.ts#L18)_
+_Defined in [src/entities/TransactionQueue.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/TransactionQueue.ts#L18)_
 
 ---
 
@@ -21,4 +21,4 @@ _Defined in [src/entities/TransactionQueue.ts:18](https://github.com/PolymathNet
 
 • **TransactionStatusChange**: = "TransactionStatusChange"
 
-_Defined in [src/entities/TransactionQueue.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TransactionQueue.ts#L19)_
+_Defined in [src/entities/TransactionQueue.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/TransactionQueue.ts#L19)_

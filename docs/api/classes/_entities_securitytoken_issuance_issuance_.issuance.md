@@ -35,7 +35,7 @@ Namespace that handles all Issuance related functionality
 
 _Overrides [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)_
 
-_Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Issuance.ts#L14)_
+_Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Issuance/Issuance.ts#L14)_
 
 Create a new Issuance instance
 
@@ -56,7 +56,7 @@ Create a new Issuance instance
 
 _Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/SubModule.ts#L10)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/SubModule.ts#L10)_
 
 ---
 
@@ -64,7 +64,7 @@ _Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/Poly
 
 • **offerings**: _[Offerings](_entities_securitytoken_issuance_offerings_.offerings.md)_
 
-_Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Issuance.ts#L14)_
+_Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Issuance/Issuance.ts#L14)_
 
 ---
 
@@ -74,7 +74,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:14](https://github.
 
 _Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/SubModule.ts#L8)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/SubModule.ts#L8)_
 
 ## Methods
 
@@ -82,7 +82,7 @@ _Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/Polym
 
 ▸ **allowed**(): _Promise‹Boolean›_
 
-_Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Issuance.ts#L73)_
+_Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Issuance/Issuance.ts#L73)_
 
 Retrieve whether the issuance of tokens is allowed or not
 Can be permanently frozen with `freeze`
@@ -95,7 +95,7 @@ Can be permanently frozen with `freeze`
 
 ▸ **freeze**(`args?`: undefined | object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[FreezeIssuanceProcedureArgs](../interfaces/_types_index_.freezeissuanceprocedureargs.md), void››_
 
-_Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Issuance.ts#L48)_
+_Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Issuance/Issuance.ts#L48)_
 
 Permanently freeze issuance of the security token
 
@@ -113,7 +113,7 @@ Permanently freeze issuance of the security token
 
 ▸ **issue**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[IssueTokensProcedureArgs](../interfaces/_types_index_.issuetokensprocedureargs.md), [Shareholder](_entities_shareholder_.shareholder.md)[]››_
 
-_Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Issuance.ts#L32)_
+_Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Issuance/Issuance.ts#L32)_
 
 Issue a certain amount of tokens to an address. The address must already have been added via `modifyData`. Otherwise,
 the corresponding shareholder data for that address must be supplied to this method
@@ -135,7 +135,7 @@ the corresponding shareholder data for that address must be supplied to this met
 
 ▸ **signFreezeAck**(): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[SignFreezeIssuanceAckProcedureArgs](../interfaces/_types_index_.signfreezeissuanceackprocedureargs.md), void››_
 
-_Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Issuance.ts#L61)_
+_Defined in [src/entities/SecurityToken/Issuance/Issuance.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Issuance/Issuance.ts#L61)_
 
 Generate a signature string that can be used to permanently freeze issuance of the Security Token
 

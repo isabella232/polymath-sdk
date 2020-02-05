@@ -35,7 +35,7 @@ Represents the percentage that should be withheld from a Shareholder's dividend 
 
 \+ **new TaxWithholding**(`params`: [Params](../interfaces/_entities_taxwithholding_.params.md) & [UniqueIdentifiers](../interfaces/_entities_taxwithholding_.uniqueidentifiers.md)): _[TaxWithholding](_entities_taxwithholding_.taxwithholding.md)_
 
-_Defined in [src/entities/TaxWithholding.ts:82](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TaxWithholding.ts#L82)_
+_Defined in [src/entities/TaxWithholding.ts:82](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/TaxWithholding.ts#L82)_
 
 Create a new tax withholding instance
 
@@ -53,7 +53,7 @@ Create a new tax withholding instance
 
 • **percentage**: _number_
 
-_Defined in [src/entities/TaxWithholding.ts:82](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TaxWithholding.ts#L82)_
+_Defined in [src/entities/TaxWithholding.ts:82](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/TaxWithholding.ts#L82)_
 
 percentage of tax to be withheld (0 to 1)
 
@@ -63,7 +63,7 @@ percentage of tax to be withheld (0 to 1)
 
 • **securityTokenId**: _string_
 
-_Defined in [src/entities/TaxWithholding.ts:75](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TaxWithholding.ts#L75)_
+_Defined in [src/entities/TaxWithholding.ts:75](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/TaxWithholding.ts#L75)_
 
 ---
 
@@ -71,7 +71,7 @@ _Defined in [src/entities/TaxWithholding.ts:75](https://github.com/PolymathNetwo
 
 • **securityTokenSymbol**: _string_
 
-_Defined in [src/entities/TaxWithholding.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TaxWithholding.ts#L73)_
+_Defined in [src/entities/TaxWithholding.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/TaxWithholding.ts#L73)_
 
 ---
 
@@ -79,7 +79,7 @@ _Defined in [src/entities/TaxWithholding.ts:73](https://github.com/PolymathNetwo
 
 • **shareholderAddress**: _string_
 
-_Defined in [src/entities/TaxWithholding.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TaxWithholding.ts#L77)_
+_Defined in [src/entities/TaxWithholding.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/TaxWithholding.ts#L77)_
 
 ---
 
@@ -89,7 +89,7 @@ _Defined in [src/entities/TaxWithholding.ts:77](https://github.com/PolymathNetwo
 
 _Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)_
 
-_Defined in [src/entities/TaxWithholding.ts:71](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TaxWithholding.ts#L71)_
+_Defined in [src/entities/TaxWithholding.ts:71](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/TaxWithholding.ts#L71)_
 
 unique generated identifer for tax withholding entity
 
@@ -101,7 +101,7 @@ unique generated identifer for tax withholding entity
 
 _Overrides [Entity](_entities_entity_.entity.md).[\_refresh](_entities_entity_.entity.md#abstract-_refresh)_
 
-_Defined in [src/entities/TaxWithholding.ts:120](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TaxWithholding.ts#L120)_
+_Defined in [src/entities/TaxWithholding.ts:120](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/TaxWithholding.ts#L120)_
 
 Hydrate the entity
 
@@ -121,7 +121,7 @@ Hydrate the entity
 
 _Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)_
 
-_Defined in [src/entities/TaxWithholding.ts:105](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TaxWithholding.ts#L105)_
+_Defined in [src/entities/TaxWithholding.ts:105](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/TaxWithholding.ts#L105)_
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
@@ -143,7 +143,7 @@ Convert entity to a POJO (Plain Old Javascript Object)
 
 ▸ **generateId**(`__namedParameters`: object): _string_
 
-_Defined in [src/entities/TaxWithholding.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TaxWithholding.ts#L43)_
+_Defined in [src/entities/TaxWithholding.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/TaxWithholding.ts#L43)_
 
 Generate the Tax Withholding's UUID from its identifying properties
 
@@ -164,7 +164,7 @@ Generate the Tax Withholding's UUID from its identifying properties
 
 ▸ **unserialize**(`serialized`: string): _[UniqueIdentifiers](../interfaces/_entities_taxwithholding_.uniqueidentifiers.md)_
 
-_Defined in [src/entities/TaxWithholding.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TaxWithholding.ts#L55)_
+_Defined in [src/entities/TaxWithholding.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/TaxWithholding.ts#L55)_
 
 Unserialize a serialized entity of tax withholding information
 

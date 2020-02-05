@@ -21,7 +21,7 @@ Arguments for the [SetDocument](../enums/_types_index_.proceduretype.md#setdocum
 
 • **documentHash**: _string_
 
-_Defined in [src/types/index.ts:1050](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1050)_
+_Defined in [src/types/index.ts:1050](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1050)_
 
 hash of the contents of the Document
 
@@ -31,7 +31,7 @@ hash of the contents of the Document
 
 • **name**: _string_
 
-_Defined in [src/types/index.ts:1045](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1045)_
+_Defined in [src/types/index.ts:1045](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1045)_
 
 name of the Document. Must be unique for the Security Token
 
@@ -41,7 +41,7 @@ name of the Document. Must be unique for the Security Token
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:1041](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1041)_
+_Defined in [src/types/index.ts:1041](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1041)_
 
 symbol of the Security Token
 
@@ -51,4 +51,4 @@ symbol of the Security Token
 
 • **uri**: _string_
 
-_Defined in [src/types/index.ts:1046](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1046)_
+_Defined in [src/types/index.ts:1046](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1046)_

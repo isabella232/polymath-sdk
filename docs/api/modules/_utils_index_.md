@@ -41,7 +41,7 @@
 
 ▸ **areSameAddress**(`a`: string, `b`: string): _boolean_
 
-_Defined in [src/utils/index.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L57)_
+_Defined in [src/utils/index.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L57)_
 
 Check if two addresses correspond to the same wallet
 
@@ -60,7 +60,7 @@ Check if two addresses correspond to the same wallet
 
 ▸ **checkStringLength**(`value`: string, `variableName`: string, `opts`: object): _void_
 
-_Defined in [src/utils/index.ts:68](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L68)_
+_Defined in [src/utils/index.ts:68](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L68)_
 
 Check the length of a given string to ensure it meets correct bounds
 
@@ -91,7 +91,7 @@ optional min and max length of the string. Defaults to a minimum of 0 (empty str
 
 ▸ **convertVersionToEnum**(`versionBigNumber`: BigNumber[]): _V3_0_0 | V3_1_0_
 
-_Defined in [src/utils/index.ts:296](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L296)_
+_Defined in [src/utils/index.ts:296](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L296)_
 
 Convert a version number array into a string of type [[Version]]
 
@@ -109,7 +109,7 @@ Convert a version number array into a string of type [[Version]]
 
 ▸ **delay**(`amount`: number): _Promise‹Object›_
 
-_Defined in [src/utils/index.ts:46](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/index.ts#L46)_
+_Defined in [src/utils/index.ts:46](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/index.ts#L46)_
 
 Promisified version of a timeout
 

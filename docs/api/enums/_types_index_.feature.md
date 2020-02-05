@@ -16,7 +16,7 @@
 
 • **Dividends**: = "Dividends"
 
-_Defined in [src/types/index.ts:1451](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1451)_
+_Defined in [src/types/index.ts:1451](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1451)_
 
 ---
 
@@ -24,7 +24,7 @@ _Defined in [src/types/index.ts:1451](https://github.com/PolymathNetwork/polymat
 
 • **PercentageOwnershipRestrictions**: = "PercentageOwnershipRestrictions"
 
-_Defined in [src/types/index.ts:1453](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1453)_
+_Defined in [src/types/index.ts:1453](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1453)_
 
 ---
 
@@ -32,7 +32,7 @@ _Defined in [src/types/index.ts:1453](https://github.com/PolymathNetwork/polymat
 
 • **Permissions**: = "Permissions"
 
-_Defined in [src/types/index.ts:1449](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1449)_
+_Defined in [src/types/index.ts:1449](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1449)_
 
 ---
 
@@ -40,7 +40,7 @@ _Defined in [src/types/index.ts:1449](https://github.com/PolymathNetwork/polymat
 
 • **ShareholderCountRestrictions**: = "ShareholderCountRestrictions"
 
-_Defined in [src/types/index.ts:1452](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1452)_
+_Defined in [src/types/index.ts:1452](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1452)_
 
 ---
 
@@ -48,4 +48,4 @@ _Defined in [src/types/index.ts:1452](https://github.com/PolymathNetwork/polymat
 
 • **Shareholders**: = "Shareholders"
 
-_Defined in [src/types/index.ts:1450](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1450)_
+_Defined in [src/types/index.ts:1450](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1450)_

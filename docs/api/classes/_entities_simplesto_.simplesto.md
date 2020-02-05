@@ -64,7 +64,7 @@ Class used to manage a simple sto
 
 _Overrides [Sto](_entities_sto_.sto.md).[constructor](_entities_sto_.sto.md#constructor)_
 
-_Defined in [src/entities/SimpleSto.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SimpleSto.ts#L61)_
+_Defined in [src/entities/SimpleSto.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SimpleSto.ts#L61)_
 
 Create a new simple sto instance
 
@@ -85,7 +85,7 @@ Create a new simple sto instance
 
 _Inherited from [Sto](_entities_sto_.sto.md).[address](_entities_sto_.sto.md#address)_
 
-_Defined in [src/entities/Sto.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L107)_
+_Defined in [src/entities/Sto.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L107)_
 
 ethereum address for the STO
 
@@ -97,7 +97,7 @@ ethereum address for the STO
 
 _Inherited from [Sto](_entities_sto_.sto.md).[beneficialInvestmentsAllowed](_entities_sto_.sto.md#beneficialinvestmentsallowed)_
 
-_Defined in [src/entities/Sto.ts:175](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L175)_
+_Defined in [src/entities/Sto.ts:175](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L175)_
 
 whether investments can be made on behalf of a beneficiary or not
 
@@ -107,7 +107,7 @@ whether investments can be made on behalf of a beneficiary or not
 
 • **cap**: _BigNumber_
 
-_Defined in [src/entities/SimpleSto.ts:56](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SimpleSto.ts#L56)_
+_Defined in [src/entities/SimpleSto.ts:56](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SimpleSto.ts#L56)_
 
 cap of total tokens that can be sold in sto
 
@@ -119,7 +119,7 @@ cap of total tokens that can be sold in sto
 
 _Inherited from [Sto](_entities_sto_.sto.md).[capReached](_entities_sto_.sto.md#capreached)_
 
-_Defined in [src/entities/Sto.ts:160](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L160)_
+_Defined in [src/entities/Sto.ts:160](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L160)_
 
 whether the STO cap has been reached or not
 
@@ -131,7 +131,7 @@ whether the STO cap has been reached or not
 
 _Inherited from [Sto](_entities_sto_.sto.md).[context](_entities_sto_.sto.md#protected-context)_
 
-_Defined in [src/entities/Sto.ts:177](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L177)_
+_Defined in [src/entities/Sto.ts:177](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L177)_
 
 ---
 
@@ -141,7 +141,7 @@ _Defined in [src/entities/Sto.ts:177](https://github.com/PolymathNetwork/polymat
 
 _Inherited from [Sto](_entities_sto_.sto.md).[endDate](_entities_sto_.sto.md#enddate)_
 
-_Defined in [src/entities/Sto.ts:120](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L120)_
+_Defined in [src/entities/Sto.ts:120](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L120)_
 
 ---
 
@@ -151,7 +151,7 @@ _Defined in [src/entities/Sto.ts:120](https://github.com/PolymathNetwork/polymat
 
 _Inherited from [Sto](_entities_sto_.sto.md).[fundraiseCurrencies](_entities_sto_.sto.md#fundraisecurrencies)_
 
-_Defined in [src/entities/Sto.ts:150](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L150)_
+_Defined in [src/entities/Sto.ts:150](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L150)_
 
 types of currency in which funds can be raised
 
@@ -163,7 +163,7 @@ types of currency in which funds can be raised
 
 _Inherited from [Sto](_entities_sto_.sto.md).[investorCount](_entities_sto_.sto.md#investorcount)_
 
-_Defined in [src/entities/Sto.ts:145](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L145)_
+_Defined in [src/entities/Sto.ts:145](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L145)_
 
 number of investors that have purchased tokens in the STO
 
@@ -175,7 +175,7 @@ number of investors that have purchased tokens in the STO
 
 _Inherited from [Sto](_entities_sto_.sto.md).[isFinalized](_entities_sto_.sto.md#isfinalized)_
 
-_Defined in [src/entities/Sto.ts:165](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L165)_
+_Defined in [src/entities/Sto.ts:165](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L165)_
 
 whether the STO has been finalized or not
 
@@ -187,7 +187,7 @@ whether the STO has been finalized or not
 
 _Inherited from [Sto](_entities_sto_.sto.md).[isPaused](_entities_sto_.sto.md#ispaused)_
 
-_Defined in [src/entities/Sto.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L155)_
+_Defined in [src/entities/Sto.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L155)_
 
 whether the STO is currently paused or not
 
@@ -199,7 +199,7 @@ whether the STO is currently paused or not
 
 _Inherited from [Sto](_entities_sto_.sto.md).[preIssueAllowed](_entities_sto_.sto.md#preissueallowed)_
 
-_Defined in [src/entities/Sto.ts:170](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L170)_
+_Defined in [src/entities/Sto.ts:170](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L170)_
 
 whether all tokens due to be sold are issued when the STO starts. If false, the appropriate amount of tokens is issued to the buyer whenever a sale is made
 
@@ -211,7 +211,7 @@ whether all tokens due to be sold are issued when the STO starts. If false, the 
 
 _Inherited from [Sto](_entities_sto_.sto.md).[raisedAmount](_entities_sto_.sto.md#raisedamount)_
 
-_Defined in [src/entities/Sto.ts:135](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L135)_
+_Defined in [src/entities/Sto.ts:135](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L135)_
 
 amount of funds that have been raised so far
 
@@ -223,7 +223,7 @@ amount of funds that have been raised so far
 
 _Inherited from [Sto](_entities_sto_.sto.md).[raisedFundsWallet](_entities_sto_.sto.md#raisedfundswallet)_
 
-_Defined in [src/entities/Sto.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L125)_
+_Defined in [src/entities/Sto.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L125)_
 
 wallet where raised funds will be forwarded to
 
@@ -233,7 +233,7 @@ wallet where raised funds will be forwarded to
 
 • **rate**: _BigNumber_
 
-_Defined in [src/entities/SimpleSto.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SimpleSto.ts#L61)_
+_Defined in [src/entities/SimpleSto.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SimpleSto.ts#L61)_
 
 rate at which the tokens will be sold in sto
 
@@ -245,7 +245,7 @@ rate at which the tokens will be sold in sto
 
 _Inherited from [Sto](_entities_sto_.sto.md).[securityTokenId](_entities_sto_.sto.md#securitytokenid)_
 
-_Defined in [src/entities/Sto.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L111)_
+_Defined in [src/entities/Sto.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L111)_
 
 ---
 
@@ -255,7 +255,7 @@ _Defined in [src/entities/Sto.ts:111](https://github.com/PolymathNetwork/polymat
 
 _Inherited from [Sto](_entities_sto_.sto.md).[securityTokenSymbol](_entities_sto_.sto.md#securitytokensymbol)_
 
-_Defined in [src/entities/Sto.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L109)_
+_Defined in [src/entities/Sto.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L109)_
 
 ---
 
@@ -265,7 +265,7 @@ _Defined in [src/entities/Sto.ts:109](https://github.com/PolymathNetwork/polymat
 
 _Inherited from [Sto](_entities_sto_.sto.md).[soldTokensAmount](_entities_sto_.sto.md#soldtokensamount)_
 
-_Defined in [src/entities/Sto.ts:140](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L140)_
+_Defined in [src/entities/Sto.ts:140](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L140)_
 
 total number of tokens that have been sold so far
 
@@ -277,7 +277,7 @@ total number of tokens that have been sold so far
 
 _Inherited from [Sto](_entities_sto_.sto.md).[startDate](_entities_sto_.sto.md#startdate)_
 
-_Defined in [src/entities/Sto.ts:118](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L118)_
+_Defined in [src/entities/Sto.ts:118](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L118)_
 
 ---
 
@@ -287,7 +287,7 @@ _Defined in [src/entities/Sto.ts:118](https://github.com/PolymathNetwork/polymat
 
 _Inherited from [Sto](_entities_sto_.sto.md).[stoType](_entities_sto_.sto.md#stotype)_
 
-_Defined in [src/entities/Sto.ts:116](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L116)_
+_Defined in [src/entities/Sto.ts:116](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L116)_
 
 type of STO setup
 
@@ -299,7 +299,7 @@ type of STO setup
 
 _Overrides [Sto](_entities_sto_.sto.md).[uid](_entities_sto_.sto.md#abstract-uid)_
 
-_Defined in [src/entities/SimpleSto.ts:51](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SimpleSto.ts#L51)_
+_Defined in [src/entities/SimpleSto.ts:51](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SimpleSto.ts#L51)_
 
 unique generated Tiered STO id
 
@@ -311,7 +311,7 @@ unique generated Tiered STO id
 
 _Inherited from [Sto](_entities_sto_.sto.md).[unsoldTokensWallet](_entities_sto_.sto.md#unsoldtokenswallet)_
 
-_Defined in [src/entities/Sto.ts:130](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L130)_
+_Defined in [src/entities/Sto.ts:130](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L130)_
 
 wallet where unsold tokens will be returned to
 
@@ -323,7 +323,7 @@ wallet where unsold tokens will be returned to
 
 _Overrides [Sto](_entities_sto_.sto.md).[\_refresh](_entities_sto_.sto.md#_refresh)_
 
-_Defined in [src/entities/SimpleSto.ts:151](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SimpleSto.ts#L151)_
+_Defined in [src/entities/SimpleSto.ts:151](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SimpleSto.ts#L151)_
 
 Hydrate the entity
 
@@ -343,7 +343,7 @@ Hydrate the entity
 
 _Inherited from [Sto](_entities_sto_.sto.md)_
 
-_Defined in [src/entities/Sto.ts:316](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L316)_
+_Defined in [src/entities/Sto.ts:316](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L316)_
 
 Enable a party to invest in the STO on behalf of another party
 
@@ -357,7 +357,7 @@ Enable a party to invest in the STO on behalf of another party
 
 _Inherited from [Sto](_entities_sto_.sto.md)_
 
-_Defined in [src/entities/Sto.ts:287](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L287)_
+_Defined in [src/entities/Sto.ts:287](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L287)_
 
 Enable all offered tokens to be issued instantly at STO start (default behavior is to issue on purchase)
 Can be disabled _BEFORE_ the STO starts by calling disallowPreIssuing
@@ -372,7 +372,7 @@ Can be disabled _BEFORE_ the STO starts by calling disallowPreIssuing
 
 _Inherited from [Sto](_entities_sto_.sto.md)_
 
-_Defined in [src/entities/Sto.ts:348](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L348)_
+_Defined in [src/entities/Sto.ts:348](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L348)_
 
 Assign a role on the STO to a delegate
 
@@ -396,7 +396,7 @@ Assign a role on the STO to a delegate
 
 _Inherited from [Sto](_entities_sto_.sto.md)_
 
-_Defined in [src/entities/Sto.ts:330](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L330)_
+_Defined in [src/entities/Sto.ts:330](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L330)_
 
 Disable the possibility for a party to invest in the STO on behalf of another party
 
@@ -410,7 +410,7 @@ Disable the possibility for a party to invest in the STO on behalf of another pa
 
 _Inherited from [Sto](_entities_sto_.sto.md)_
 
-_Defined in [src/entities/Sto.ts:302](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L302)_
+_Defined in [src/entities/Sto.ts:302](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L302)_
 
 Disable pre-issuing of offered tokens at STO start (goes back to default behavior, which is to issue on purchase)
 Can be re-enabled _BEFORE_ the STO starts by calling allowPreIssuing
@@ -425,7 +425,7 @@ Can be re-enabled _BEFORE_ the STO starts by calling allowPreIssuing
 
 _Inherited from [Sto](_entities_sto_.sto.md)_
 
-_Defined in [src/entities/Sto.ts:275](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L275)_
+_Defined in [src/entities/Sto.ts:275](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L275)_
 
 Finalize the offering. The offering's treasury wallet (or the Security Token's treasury wallet if one was not specified for the offering)
 will receive the remaining unsold tokens. Throws an error if there are transfer restrictions which do not permit the wallet to receive that amount of tokens
@@ -438,7 +438,7 @@ will receive the remaining unsold tokens. Throws an error if there are transfer 
 
 ▸ **getInvestments**(): _Promise‹[Investment](_entities_investment_.investment.md)[]›_
 
-_Defined in [src/entities/SimpleSto.ts:81](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SimpleSto.ts#L81)_
+_Defined in [src/entities/SimpleSto.ts:81](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SimpleSto.ts#L81)_
 
 Retrieve all investments that have been made on this STO
 
@@ -450,7 +450,7 @@ Retrieve all investments that have been made on this STO
 
 ▸ **invest**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[InvestInSimpleStoProcedureArgs](../interfaces/_types_index_.investinsimplestoprocedureargs.md), void››_
 
-_Defined in [src/entities/SimpleSto.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SimpleSto.ts#L126)_
+_Defined in [src/entities/SimpleSto.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SimpleSto.ts#L126)_
 
 Invest in the STO
 
@@ -473,7 +473,7 @@ Invest in the STO
 
 _Inherited from [Sto](_entities_sto_.sto.md)_
 
-_Defined in [src/entities/Sto.ts:246](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L246)_
+_Defined in [src/entities/Sto.ts:246](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L246)_
 
 Pause the offering
 
@@ -487,7 +487,7 @@ Pause the offering
 
 _Inherited from [Sto](_entities_sto_.sto.md)_
 
-_Defined in [src/entities/Sto.ts:374](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L374)_
+_Defined in [src/entities/Sto.ts:374](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L374)_
 
 Remove a role from a delegate
 
@@ -510,7 +510,7 @@ Remove a role from a delegate
 
 _Overrides [Sto](_entities_sto_.sto.md).[toPojo](_entities_sto_.sto.md#topojo)_
 
-_Defined in [src/entities/SimpleSto.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SimpleSto.ts#L137)_
+_Defined in [src/entities/SimpleSto.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SimpleSto.ts#L137)_
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
@@ -528,7 +528,7 @@ Convert entity to a POJO (Plain Old Javascript Object)
 
 _Inherited from [Sto](_entities_sto_.sto.md)_
 
-_Defined in [src/entities/Sto.ts:260](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L260)_
+_Defined in [src/entities/Sto.ts:260](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L260)_
 
 Unpause the offering
 
@@ -540,7 +540,7 @@ Unpause the offering
 
 ▸ **generateId**(`__namedParameters`: object): _string_
 
-_Defined in [src/entities/SimpleSto.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SimpleSto.ts#L40)_
+_Defined in [src/entities/SimpleSto.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SimpleSto.ts#L40)_
 
 Generate the Simple STO's UUID from its identifying properties
 
@@ -564,7 +564,7 @@ Generate the Simple STO's UUID from its identifying properties
 
 _Inherited from [Sto](_entities_sto_.sto.md).[unserialize](_entities_sto_.sto.md#static-unserialize)_
 
-_Defined in [src/entities/Sto.ts:184](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Sto.ts#L184)_
+_Defined in [src/entities/Sto.ts:184](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/Sto.ts#L184)_
 
 Unserialize string to a Security Token Offering object representation
 

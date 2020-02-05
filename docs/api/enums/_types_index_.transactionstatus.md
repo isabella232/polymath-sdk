@@ -17,7 +17,7 @@
 
 • **Failed**: = "Failed"
 
-_Defined in [src/types/index.ts:1385](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1385)_
+_Defined in [src/types/index.ts:1385](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1385)_
 
 ---
 
@@ -25,7 +25,7 @@ _Defined in [src/types/index.ts:1385](https://github.com/PolymathNetwork/polymat
 
 • **Idle**: = "Idle"
 
-_Defined in [src/types/index.ts:1380](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1380)_
+_Defined in [src/types/index.ts:1380](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1380)_
 
 ---
 
@@ -33,7 +33,7 @@ _Defined in [src/types/index.ts:1380](https://github.com/PolymathNetwork/polymat
 
 • **Rejected**: = "Rejected"
 
-_Defined in [src/types/index.ts:1383](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1383)_
+_Defined in [src/types/index.ts:1383](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1383)_
 
 ---
 
@@ -41,7 +41,7 @@ _Defined in [src/types/index.ts:1383](https://github.com/PolymathNetwork/polymat
 
 • **Running**: = "Running"
 
-_Defined in [src/types/index.ts:1382](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1382)_
+_Defined in [src/types/index.ts:1382](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1382)_
 
 ---
 
@@ -49,7 +49,7 @@ _Defined in [src/types/index.ts:1382](https://github.com/PolymathNetwork/polymat
 
 • **Succeeded**: = "Succeeded"
 
-_Defined in [src/types/index.ts:1384](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1384)_
+_Defined in [src/types/index.ts:1384](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1384)_
 
 ---
 
@@ -57,4 +57,4 @@ _Defined in [src/types/index.ts:1384](https://github.com/PolymathNetwork/polymat
 
 • **Unapproved**: = "Unapproved"
 
-_Defined in [src/types/index.ts:1381](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1381)_
+_Defined in [src/types/index.ts:1381](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L1381)_

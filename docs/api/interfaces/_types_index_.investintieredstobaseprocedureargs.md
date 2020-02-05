@@ -23,7 +23,7 @@
 
 • **amount**: _BigNumber_
 
-_Defined in [src/types/index.ts:628](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L628)_
+_Defined in [src/types/index.ts:628](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L628)_
 
 amount to invest
 
@@ -33,7 +33,7 @@ amount to invest
 
 • **beneficiary**? : _undefined | string_
 
-_Defined in [src/types/index.ts:641](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L641)_
+_Defined in [src/types/index.ts:641](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L641)_
 
 if specified, the investment will be made on behalf of this address
 
@@ -43,7 +43,7 @@ if specified, the investment will be made on behalf of this address
 
 • **currency**: _Currency_
 
-_Defined in [src/types/index.ts:632](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L632)_
+_Defined in [src/types/index.ts:632](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L632)_
 
 currency type in which the investment is being made
 
@@ -53,7 +53,7 @@ currency type in which the investment is being made
 
 • **minTokens**? : _BigNumber_
 
-_Defined in [src/types/index.ts:637](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L637)_
+_Defined in [src/types/index.ts:637](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L637)_
 
 minimum amount of Security Tokens that should be bought.
 If, because of price fluctuations, a lower amount is being bought, the transaction will revert
@@ -64,7 +64,7 @@ If, because of price fluctuations, a lower amount is being bought, the transacti
 
 • **stoAddress**: _string_
 
-_Defined in [src/types/index.ts:624](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L624)_
+_Defined in [src/types/index.ts:624](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L624)_
 
 address of the STO
 
@@ -74,6 +74,6 @@ address of the STO
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:620](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L620)_
+_Defined in [src/types/index.ts:620](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/types/index.ts#L620)_
 
 symbol of the Security Token

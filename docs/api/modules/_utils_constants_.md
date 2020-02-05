@@ -13,7 +13,7 @@
 
 • **FULL_DECIMALS**: _BigNumber_ = new BigNumber(18)
 
-_Defined in [src/utils/constants.ts:3](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/constants.ts#L3)_
+_Defined in [src/utils/constants.ts:3](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/constants.ts#L3)_
 
 ---
 
@@ -21,4 +21,4 @@ _Defined in [src/utils/constants.ts:3](https://github.com/PolymathNetwork/polyma
 
 • **ZERO_ADDRESS**: _"0x0000000000000000000000000000000000000000"_ = "0x0000000000000000000000000000000000000000"
 
-_Defined in [src/utils/constants.ts:4](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/utils/constants.ts#L4)_
+_Defined in [src/utils/constants.ts:4](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/utils/constants.ts#L4)_

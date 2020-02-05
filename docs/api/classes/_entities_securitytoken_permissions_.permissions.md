@@ -42,7 +42,7 @@ Namespace that handles all Permissions related functionality
 
 _Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/SubModule.ts#L10)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/SubModule.ts#L10)_
 
 Create a new SubModule instance
 
@@ -63,7 +63,7 @@ Create a new SubModule instance
 
 _Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/SubModule.ts#L10)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/SubModule.ts#L10)_
 
 ---
 
@@ -73,7 +73,7 @@ _Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/Poly
 
 _Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/SubModule.ts#L8)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/SubModule.ts#L8)_
 
 ## Methods
 
@@ -81,7 +81,7 @@ _Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/Polym
 
 ▸ **assignRole**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignSecurityTokenRoleProcedureArgs](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md), void››_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:95](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L95)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:95](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L95)_
 
 Assign a role on the Security Token to a delegate
 
@@ -103,7 +103,7 @@ Assign a role on the Security Token to a delegate
 
 ▸ **getAllDelegates**(): _Promise‹object[]›_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:242](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L242)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:242](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L242)_
 
 Return a list of all delegates with their respective details and roles
 
@@ -115,7 +115,7 @@ Return a list of all delegates with their respective details and roles
 
 ▸ **getAssignedRoles**(`args`: object): _Promise‹[SecurityTokenRole](../enums/_types_index_.securitytokenrole.md)[]›_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:136](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L136)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:136](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L136)_
 
 Return the list of roles assigned to a delegate address
 
@@ -135,7 +135,7 @@ Return the list of roles assigned to a delegate address
 
 ▸ **getAvailableRoles**(): _Promise‹[SecurityTokenRole](../enums/_types_index_.securitytokenrole.md)[]›_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L25)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L25)_
 
 Get a list of all available roles.
 The returned roles depend on which features are enabled, as per:
@@ -156,7 +156,7 @@ The returned roles depend on which features are enabled, as per:
 
 ▸ **getDelegatesForRole**(`args`: object): _Promise‹object[]›_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:184](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L184)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:184](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L184)_
 
 Return the list of delegate addresses and details that hold a specific role
 
@@ -176,7 +176,7 @@ Return the list of delegate addresses and details that hold a specific role
 
 ▸ **getFeatureFromRole**(`args`: object): _Promise‹[Feature](../enums/_types_index_.feature.md)›_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:65](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L65)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:65](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L65)_
 
 Return which feature is associated with the supplied role
 
@@ -196,7 +196,7 @@ Return which feature is associated with the supplied role
 
 ▸ **isRoleAvailable**(`args`: object): _Promise‹boolean›_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L55)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L55)_
 
 Return whether a certain role is available to be assigned to delegates
 
@@ -216,7 +216,7 @@ Return whether a certain role is available to be assigned to delegates
 
 ▸ **revokeRole**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignSecurityTokenRoleProcedureArgs](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md), void››_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:117](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L117)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:117](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L117)_
 
 Remove a role from a delegate
 
@@ -237,7 +237,7 @@ Remove a role from a delegate
 
 ### ▪ **rolesPerFeature**: _object_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:279](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L279)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:279](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L279)_
 
 ### \_\_computed
 
@@ -245,12 +245,12 @@ _Defined in [src/entities/SecurityToken/Permissions.ts:279](https://github.com/P
 SecurityTokenRole.PercentageOwnershipRestrictionsAdministrator,
 ]
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:280](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L280)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:280](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L280)_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:281](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L281)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:281](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L281)_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:282](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L282)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:282](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L282)_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:286](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L286)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:286](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L286)_
 
-_Defined in [src/entities/SecurityToken/Permissions.ts:289](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Permissions.ts#L289)_
+_Defined in [src/entities/SecurityToken/Permissions.ts:289](https://github.com/PolymathNetwork/polymath-sdk/blob/660aba8/src/entities/SecurityToken/Permissions.ts#L289)_
