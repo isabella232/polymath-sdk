@@ -51,7 +51,7 @@ Represents an object or resource in the Polymath Ecosystem with its own set of p
 
 • **uid**: _string_
 
-_Defined in [src/entities/Entity.ts:5](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Entity.ts#L5)_
+_Defined in [src/entities/Entity.ts:5](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Entity.ts#L5)_
 
 ## Methods
 
@@ -59,7 +59,7 @@ _Defined in [src/entities/Entity.ts:5](https://github.com/PolymathNetwork/polyma
 
 ▸ **\_refresh**(`params`: Partial‹Params›): _void_
 
-_Defined in [src/entities/Entity.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Entity.ts#L9)_
+_Defined in [src/entities/Entity.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Entity.ts#L9)_
 
 **Parameters:**
 
@@ -75,6 +75,6 @@ _Defined in [src/entities/Entity.ts:9](https://github.com/PolymathNetwork/polyma
 
 ▸ **toPojo**(): _any_
 
-_Defined in [src/entities/Entity.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Entity.ts#L7)_
+_Defined in [src/entities/Entity.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Entity.ts#L7)_
 
 **Returns:** _any_

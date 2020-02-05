@@ -20,7 +20,7 @@ Arguments for the [EnablePercentageTransferManager](../enums/_types_index_.proce
 
 • **allowPrimaryIssuance**? : _undefined | false | true_
 
-_Defined in [src/types/index.ts:482](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L482)_
+_Defined in [src/types/index.ts:482](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L482)_
 
 whether primary issuance is exempted from percentage restrictions.
 If true, issuing tokens to a wallet that doesn't own tokens will bypass percentage restrictions
@@ -31,7 +31,7 @@ If true, issuing tokens to a wallet that doesn't own tokens will bypass percenta
 
 • **maxHolderPercentage**: _BigNumber_
 
-_Defined in [src/types/index.ts:477](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L477)_
+_Defined in [src/types/index.ts:477](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L477)_
 
 maximum percentage of the total supply a single token holder can hold
 
@@ -41,6 +41,6 @@ maximum percentage of the total supply a single token holder can hold
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:473](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L473)_
+_Defined in [src/types/index.ts:473](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L473)_
 
 symbol of the Security Token

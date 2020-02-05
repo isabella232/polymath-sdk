@@ -19,7 +19,7 @@ Arguments for the [ToggleFreezeTransfers](../enums/_types_index_.proceduretype.m
 
 • **freeze**: _boolean_
 
-_Defined in [src/types/index.ts:1279](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1279)_
+_Defined in [src/types/index.ts:1279](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1279)_
 
 whether to freeze or un-freeze transfers
 
@@ -29,6 +29,6 @@ whether to freeze or un-freeze transfers
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:1275](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1275)_
+_Defined in [src/types/index.ts:1275](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1275)_
 
 symbol of the Security Token

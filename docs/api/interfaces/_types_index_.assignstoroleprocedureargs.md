@@ -23,7 +23,7 @@ Arguments for the [AssignStoRole](../enums/_types_index_.proceduretype.md#assign
 
 • **assign**: _boolean_
 
-_Defined in [src/types/index.ts:923](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L923)_
+_Defined in [src/types/index.ts:923](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L923)_
 
 whether to assign or revoke the role
 
@@ -33,7 +33,7 @@ whether to assign or revoke the role
 
 • **delegateAddress**: _string_
 
-_Defined in [src/types/index.ts:914](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L914)_
+_Defined in [src/types/index.ts:914](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L914)_
 
 wallet address of the delegate
 
@@ -43,7 +43,7 @@ wallet address of the delegate
 
 • **description**? : _undefined | string_
 
-_Defined in [src/types/index.ts:927](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L927)_
+_Defined in [src/types/index.ts:927](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L927)_
 
 description of the delegate (i.e. "company lawyer")
 
@@ -53,7 +53,7 @@ description of the delegate (i.e. "company lawyer")
 
 • **role**: _[StoRole](../enums/_types_index_.storole.md)_
 
-_Defined in [src/types/index.ts:919](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L919)_
+_Defined in [src/types/index.ts:919](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L919)_
 
 role to assign/revoke to/from the delegate
 
@@ -63,7 +63,7 @@ role to assign/revoke to/from the delegate
 
 • **stoAddress**: _string_
 
-_Defined in [src/types/index.ts:915](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L915)_
+_Defined in [src/types/index.ts:915](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L915)_
 
 ---
 
@@ -71,6 +71,6 @@ _Defined in [src/types/index.ts:915](https://github.com/PolymathNetwork/polymath
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:910](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L910)_
+_Defined in [src/types/index.ts:910](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L910)_
 
 symbol of the Security Token

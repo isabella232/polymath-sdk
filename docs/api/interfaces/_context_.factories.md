@@ -25,7 +25,7 @@
 
 • **checkpointFactory**: _CheckpointFactory_
 
-_Defined in [src/Context.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/Context.ts#L28)_
+_Defined in [src/Context.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/Context.ts#L28)_
 
 ---
 
@@ -33,7 +33,7 @@ _Defined in [src/Context.ts:28](https://github.com/PolymathNetwork/polymath-sdk/
 
 • **dividendDistributionFactory**: _DividendDistributionFactory_
 
-_Defined in [src/Context.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/Context.ts#L27)_
+_Defined in [src/Context.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/Context.ts#L27)_
 
 ---
 
@@ -41,7 +41,7 @@ _Defined in [src/Context.ts:27](https://github.com/PolymathNetwork/polymath-sdk/
 
 • **erc20TokenBalanceFactory**: _[Erc20TokenBalanceFactory](../classes/_entities_factories_erc20tokenbalancefactory_.erc20tokenbalancefactory.md)_
 
-_Defined in [src/Context.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/Context.ts#L23)_
+_Defined in [src/Context.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/Context.ts#L23)_
 
 ---
 
@@ -49,7 +49,7 @@ _Defined in [src/Context.ts:23](https://github.com/PolymathNetwork/polymath-sdk/
 
 • **investmentFactory**: _[InvestmentFactory](../classes/_entities_factories_investmentfactory_.investmentfactory.md)_
 
-_Defined in [src/Context.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/Context.ts#L24)_
+_Defined in [src/Context.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/Context.ts#L24)_
 
 ---
 
@@ -57,7 +57,7 @@ _Defined in [src/Context.ts:24](https://github.com/PolymathNetwork/polymath-sdk/
 
 • **securityTokenFactory**: _SecurityTokenFactory_
 
-_Defined in [src/Context.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/Context.ts#L21)_
+_Defined in [src/Context.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/Context.ts#L21)_
 
 ---
 
@@ -65,7 +65,7 @@ _Defined in [src/Context.ts:21](https://github.com/PolymathNetwork/polymath-sdk/
 
 • **securityTokenReservationFactory**: _SecurityTokenReservationFactory_
 
-_Defined in [src/Context.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/Context.ts#L22)_
+_Defined in [src/Context.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/Context.ts#L22)_
 
 ---
 
@@ -73,7 +73,7 @@ _Defined in [src/Context.ts:22](https://github.com/PolymathNetwork/polymath-sdk/
 
 • **shareholderFactory**: _[ShareholderFactory](../classes/_entities_factories_shareholderfactory_.shareholderfactory.md)_
 
-_Defined in [src/Context.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/Context.ts#L29)_
+_Defined in [src/Context.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/Context.ts#L29)_
 
 ---
 
@@ -81,7 +81,7 @@ _Defined in [src/Context.ts:29](https://github.com/PolymathNetwork/polymath-sdk/
 
 • **simpleStoFactory**: _[SimpleStoFactory](../classes/_entities_factories_simplestofactory_.simplestofactory.md)_
 
-_Defined in [src/Context.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/Context.ts#L25)_
+_Defined in [src/Context.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/Context.ts#L25)_
 
 ---
 
@@ -89,7 +89,7 @@ _Defined in [src/Context.ts:25](https://github.com/PolymathNetwork/polymath-sdk/
 
 • **taxWithholdingFactory**: _[TaxWithholdingFactory](../classes/_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md)_
 
-_Defined in [src/Context.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/Context.ts#L30)_
+_Defined in [src/Context.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/Context.ts#L30)_
 
 ---
 
@@ -97,4 +97,4 @@ _Defined in [src/Context.ts:30](https://github.com/PolymathNetwork/polymath-sdk/
 
 • **tieredStoFactory**: _[TieredStoFactory](../classes/_entities_factories_tieredstofactory_.tieredstofactory.md)_
 
-_Defined in [src/Context.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/Context.ts#L26)_
+_Defined in [src/Context.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/Context.ts#L26)_

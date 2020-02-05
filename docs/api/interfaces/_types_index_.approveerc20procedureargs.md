@@ -20,7 +20,7 @@ Arguments for the [ApproveErc20](../enums/_types_index_.proceduretype.md#approve
 
 • **amount**: _BigNumber_
 
-_Defined in [src/types/index.ts:285](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L285)_
+_Defined in [src/types/index.ts:285](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L285)_
 
 amount of tokens to be approved
 
@@ -30,7 +30,7 @@ amount of tokens to be approved
 
 • **spender**: _string_
 
-_Defined in [src/types/index.ts:289](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L289)_
+_Defined in [src/types/index.ts:289](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L289)_
 
 the spender of the tokens being approved
 
@@ -40,6 +40,6 @@ the spender of the tokens being approved
 
 • **tokenAddress**? : _undefined | string_
 
-_Defined in [src/types/index.ts:293](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L293)_
+_Defined in [src/types/index.ts:293](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L293)_
 
 address of the ERC20 token (defaults to POLY)

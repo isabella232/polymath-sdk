@@ -21,7 +21,7 @@
 
 • **polymathRegistryAddress**? : _undefined | string_
 
-_Defined in [src/Polymath.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/Polymath.ts#L21)_
+_Defined in [src/Polymath.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/Polymath.ts#L21)_
 
 ---
 
@@ -29,4 +29,4 @@ _Defined in [src/Polymath.ts:21](https://github.com/PolymathNetwork/polymath-sdk
 
 • **speed**? : _[TransactionSpeed](../enums/_types_index_.transactionspeed.md)_
 
-_Defined in [src/Polymath.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/Polymath.ts#L22)_
+_Defined in [src/Polymath.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/Polymath.ts#L22)_

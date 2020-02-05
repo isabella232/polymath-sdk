@@ -19,7 +19,7 @@ Params for [getSto](../classes/_entities_securitytoken_issuance_offerings_.offer
 
 • **address**: _string_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L52)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L52)_
 
 ---
 
@@ -27,4 +27,4 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:52](https://github
 
 • **stoType**: _[StoType](../enums/_types_index_.stotype.md)_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:51](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L51)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:51](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L51)_

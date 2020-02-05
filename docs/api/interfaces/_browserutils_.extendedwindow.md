@@ -440,7 +440,7 @@ Defined in node_modules/typescript/lib/lib.dom.d.ts:16526
 
 • **ethereum**? : _[Ethereum](_browserutils_.ethereum.md)_
 
-_Defined in [src/browserUtils.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/browserUtils.ts#L31)_
+_Defined in [src/browserUtils.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/browserUtils.ts#L31)_
 
 ---
 
@@ -2388,7 +2388,7 @@ Defined in node_modules/typescript/lib/lib.dom.d.ts:16600
 
 • **web3**? : _[InjectedWeb3](_browserutils_.injectedweb3.md)_
 
-_Defined in [src/browserUtils.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/browserUtils.ts#L32)_
+_Defined in [src/browserUtils.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/browserUtils.ts#L32)_
 
 ---
 

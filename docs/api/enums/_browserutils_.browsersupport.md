@@ -15,7 +15,7 @@
 
 • **MetamaskLegacy**: = "MetamaskLegacy"
 
-_Defined in [src/browserUtils.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/browserUtils.ts#L8)_
+_Defined in [src/browserUtils.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/browserUtils.ts#L8)_
 
 ---
 
@@ -23,7 +23,7 @@ _Defined in [src/browserUtils.ts:8](https://github.com/PolymathNetwork/polymath-
 
 • **MetamaskModern**: = "MetamaskModern"
 
-_Defined in [src/browserUtils.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/browserUtils.ts#L9)_
+_Defined in [src/browserUtils.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/browserUtils.ts#L9)_
 
 ---
 
@@ -31,7 +31,7 @@ _Defined in [src/browserUtils.ts:9](https://github.com/PolymathNetwork/polymath-
 
 • **NoMetamask**: = "NoMetamask"
 
-_Defined in [src/browserUtils.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/browserUtils.ts#L7)_
+_Defined in [src/browserUtils.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/browserUtils.ts#L7)_
 
 ---
 
@@ -39,4 +39,4 @@ _Defined in [src/browserUtils.ts:7](https://github.com/PolymathNetwork/polymath-
 
 • **None**: = "None"
 
-_Defined in [src/browserUtils.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/browserUtils.ts#L10)_
+_Defined in [src/browserUtils.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/browserUtils.ts#L10)_

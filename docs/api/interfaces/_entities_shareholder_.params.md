@@ -24,7 +24,7 @@ Constructor parameters
 
 • **balance**: _BigNumber_
 
-_Defined in [src/entities/Shareholder.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Shareholder.ts#L35)_
+_Defined in [src/entities/Shareholder.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Shareholder.ts#L35)_
 
 ---
 
@@ -32,7 +32,7 @@ _Defined in [src/entities/Shareholder.ts:35](https://github.com/PolymathNetwork/
 
 • **canBuyFromSto**: _boolean_
 
-_Defined in [src/entities/Shareholder.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Shareholder.ts#L34)_
+_Defined in [src/entities/Shareholder.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Shareholder.ts#L34)_
 
 ---
 
@@ -40,7 +40,7 @@ _Defined in [src/entities/Shareholder.ts:34](https://github.com/PolymathNetwork/
 
 • **canReceiveAfter**: _Date_
 
-_Defined in [src/entities/Shareholder.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Shareholder.ts#L31)_
+_Defined in [src/entities/Shareholder.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Shareholder.ts#L31)_
 
 ---
 
@@ -48,7 +48,7 @@ _Defined in [src/entities/Shareholder.ts:31](https://github.com/PolymathNetwork/
 
 • **canSendAfter**: _Date_
 
-_Defined in [src/entities/Shareholder.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Shareholder.ts#L30)_
+_Defined in [src/entities/Shareholder.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Shareholder.ts#L30)_
 
 ---
 
@@ -56,7 +56,7 @@ _Defined in [src/entities/Shareholder.ts:30](https://github.com/PolymathNetwork/
 
 • **isAccredited**: _boolean_
 
-_Defined in [src/entities/Shareholder.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Shareholder.ts#L33)_
+_Defined in [src/entities/Shareholder.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Shareholder.ts#L33)_
 
 ---
 
@@ -64,7 +64,7 @@ _Defined in [src/entities/Shareholder.ts:33](https://github.com/PolymathNetwork/
 
 • **kycExpiry**: _Date_
 
-_Defined in [src/entities/Shareholder.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Shareholder.ts#L32)_
+_Defined in [src/entities/Shareholder.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Shareholder.ts#L32)_
 
 ---
 
@@ -72,4 +72,4 @@ _Defined in [src/entities/Shareholder.ts:32](https://github.com/PolymathNetwork/
 
 • **securityTokenSymbol**: _string_
 
-_Defined in [src/entities/Shareholder.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Shareholder.ts#L29)_
+_Defined in [src/entities/Shareholder.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Shareholder.ts#L29)_

@@ -30,7 +30,7 @@ type of the arguments object that the future method will accept
 
 • **futureMethod**: _function_
 
-_Defined in [src/types/index.ts:1519](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1519)_
+_Defined in [src/types/index.ts:1519](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1519)_
 
 function that returns a low level method
 
@@ -50,6 +50,6 @@ function that returns a low level method
 
 • **futureValue**: _PostTransactionResolver‹T›_
 
-_Defined in [src/types/index.ts:1523](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1523)_
+_Defined in [src/types/index.ts:1523](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1523)_
 
 post transaction resolver that resolves into the value that is passed to the future method

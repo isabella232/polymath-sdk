@@ -19,7 +19,7 @@ Balance in Security Tokens of a specific Shareholder
 
 • **address**: _string_
 
-_Defined in [src/types/index.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L125)_
+_Defined in [src/types/index.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L125)_
 
 wallet address of the Shareholder
 
@@ -29,6 +29,6 @@ wallet address of the Shareholder
 
 • **balance**: _BigNumber_
 
-_Defined in [src/types/index.ts:129](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L129)_
+_Defined in [src/types/index.ts:129](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L129)_
 
 amount of Security Tokens the Shareholder possesses

@@ -22,4 +22,4 @@ Constructor parameters
 
 _Inherited from [UniqueIdentifiers](_entities_wallet_.uniqueidentifiers.md).[address](_entities_wallet_.uniqueidentifiers.md#address)_
 
-_Defined in [src/entities/Wallet.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Wallet.ts#L12)_
+_Defined in [src/entities/Wallet.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Wallet.ts#L12)_

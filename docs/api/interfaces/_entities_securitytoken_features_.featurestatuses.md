@@ -22,7 +22,7 @@ Current status (enabled/disabled) of all Security Token Features
 
 • **[Feature.Dividends]**: _boolean_
 
-_Defined in [src/entities/SecurityToken/Features.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Features.ts#L30)_
+_Defined in [src/entities/SecurityToken/Features.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Features.ts#L30)_
 
 ---
 
@@ -30,7 +30,7 @@ _Defined in [src/entities/SecurityToken/Features.ts:30](https://github.com/Polym
 
 • **[Feature.PercentageOwnershipRestrictions]**: _boolean_
 
-_Defined in [src/entities/SecurityToken/Features.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Features.ts#L32)_
+_Defined in [src/entities/SecurityToken/Features.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Features.ts#L32)_
 
 ---
 
@@ -38,7 +38,7 @@ _Defined in [src/entities/SecurityToken/Features.ts:32](https://github.com/Polym
 
 • **[Feature.Permissions]**: _boolean_
 
-_Defined in [src/entities/SecurityToken/Features.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Features.ts#L28)_
+_Defined in [src/entities/SecurityToken/Features.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Features.ts#L28)_
 
 ---
 
@@ -46,7 +46,7 @@ _Defined in [src/entities/SecurityToken/Features.ts:28](https://github.com/Polym
 
 • **[Feature.ShareholderCountRestrictions]**: _boolean_
 
-_Defined in [src/entities/SecurityToken/Features.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Features.ts#L31)_
+_Defined in [src/entities/SecurityToken/Features.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Features.ts#L31)_
 
 ---
 
@@ -54,4 +54,4 @@ _Defined in [src/entities/SecurityToken/Features.ts:31](https://github.com/Polym
 
 • **[Feature.Shareholders]**: _boolean_
 
-_Defined in [src/entities/SecurityToken/Features.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Features.ts#L29)_
+_Defined in [src/entities/SecurityToken/Features.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Features.ts#L29)_

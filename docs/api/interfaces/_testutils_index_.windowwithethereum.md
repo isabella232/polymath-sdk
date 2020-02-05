@@ -435,7 +435,7 @@ Defined in node_modules/typescript/lib/lib.dom.d.ts:16526
 
 • **ethereum**: _object_
 
-_Defined in [src/testUtils/index.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/testUtils/index.ts#L13)_
+_Defined in [src/testUtils/index.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/testUtils/index.ts#L13)_
 
 #### Type declaration:
 

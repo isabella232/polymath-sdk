@@ -20,7 +20,7 @@
 
 • **FundsLocked**: = "FundsLocked"
 
-_Defined in [src/types/index.ts:1476](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1476)_
+_Defined in [src/types/index.ts:1476](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1476)_
 
 ---
 
@@ -28,7 +28,7 @@ _Defined in [src/types/index.ts:1476](https://github.com/PolymathNetwork/polymat
 
 • **InsufficientAllowance**: = "InsufficientAllowance"
 
-_Defined in [src/types/index.ts:1474](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1474)_
+_Defined in [src/types/index.ts:1474](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1474)_
 
 ---
 
@@ -36,7 +36,7 @@ _Defined in [src/types/index.ts:1474](https://github.com/PolymathNetwork/polymat
 
 • **InsufficientBalance**: = "InsufficientBalance"
 
-_Defined in [src/types/index.ts:1473](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1473)_
+_Defined in [src/types/index.ts:1473](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1473)_
 
 ---
 
@@ -44,7 +44,7 @@ _Defined in [src/types/index.ts:1473](https://github.com/PolymathNetwork/polymat
 
 • **InvalidOperator**: = "InvalidOperator"
 
-_Defined in [src/types/index.ts:1479](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1479)_
+_Defined in [src/types/index.ts:1479](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1479)_
 
 ---
 
@@ -52,7 +52,7 @@ _Defined in [src/types/index.ts:1479](https://github.com/PolymathNetwork/polymat
 
 • **InvalidReceiver**: = "InvalidReceiver"
 
-_Defined in [src/types/index.ts:1478](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1478)_
+_Defined in [src/types/index.ts:1478](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1478)_
 
 ---
 
@@ -60,7 +60,7 @@ _Defined in [src/types/index.ts:1478](https://github.com/PolymathNetwork/polymat
 
 • **InvalidSender**: = "InvalidSender"
 
-_Defined in [src/types/index.ts:1477](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1477)_
+_Defined in [src/types/index.ts:1477](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1477)_
 
 ---
 
@@ -68,7 +68,7 @@ _Defined in [src/types/index.ts:1477](https://github.com/PolymathNetwork/polymat
 
 • **TransferFailure**: = "TransferFailure"
 
-_Defined in [src/types/index.ts:1471](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1471)_
+_Defined in [src/types/index.ts:1471](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1471)_
 
 ---
 
@@ -76,7 +76,7 @@ _Defined in [src/types/index.ts:1471](https://github.com/PolymathNetwork/polymat
 
 • **TransferSuccess**: = "TransferSuccess"
 
-_Defined in [src/types/index.ts:1472](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1472)_
+_Defined in [src/types/index.ts:1472](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1472)_
 
 ---
 
@@ -84,4 +84,4 @@ _Defined in [src/types/index.ts:1472](https://github.com/PolymathNetwork/polymat
 
 • **TransfersHalted**: = "TransfersHalted"
 
-_Defined in [src/types/index.ts:1475](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1475)_
+_Defined in [src/types/index.ts:1475](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1475)_

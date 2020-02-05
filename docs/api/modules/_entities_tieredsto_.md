@@ -21,4 +21,4 @@
 
 • **weiToValue**: _weiToValue_
 
-_Defined in [src/entities/TieredSto.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/TieredSto.ts#L19)_
+_Defined in [src/entities/TieredSto.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/TieredSto.ts#L19)_

@@ -13,7 +13,7 @@
 
 • **StoAdministrator**: = "StoAdministrator"
 
-_Defined in [src/types/index.ts:1467](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1467)_
+_Defined in [src/types/index.ts:1467](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1467)_
 
 ---
 
@@ -21,4 +21,4 @@ _Defined in [src/types/index.ts:1467](https://github.com/PolymathNetwork/polymat
 
 • **StoOperator**: = "StoOperator"
 
-_Defined in [src/types/index.ts:1466](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1466)_
+_Defined in [src/types/index.ts:1466](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1466)_

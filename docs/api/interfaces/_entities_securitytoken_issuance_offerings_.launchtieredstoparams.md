@@ -32,7 +32,7 @@
 
 • **allowPreIssuance**? : _undefined | false | true_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L29)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L29)_
 
 ---
 
@@ -40,7 +40,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:29](https://github
 
 • **currencies**: _Currency[]_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L24)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L24)_
 
 ---
 
@@ -48,7 +48,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:24](https://github
 
 • **customCurrency**? : _Partial‹[CustomCurrency](_types_index_.customcurrency.md)›_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L28)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L28)_
 
 ---
 
@@ -56,7 +56,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:28](https://github
 
 • **endDate**: _Date_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L20)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L20)_
 
 ---
 
@@ -64,7 +64,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:20](https://github
 
 • **minimumInvestment**: _BigNumber_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L23)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L23)_
 
 ---
 
@@ -72,7 +72,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:23](https://github
 
 • **nonAccreditedInvestmentLimit**: _BigNumber_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L22)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L22)_
 
 ---
 
@@ -80,7 +80,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:22](https://github
 
 • **raisedFundsWallet**: _string_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L25)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L25)_
 
 ---
 
@@ -88,7 +88,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:25](https://github
 
 • **stableCoinAddresses**? : _string[]_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L27)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L27)_
 
 ---
 
@@ -96,7 +96,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:27](https://github
 
 • **startDate**: _Date_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L19)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L19)_
 
 ---
 
@@ -104,7 +104,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:19](https://github
 
 • **tiers**: _[StoTier](_types_index_.stotier.md)[]_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L21)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L21)_
 
 ---
 
@@ -112,4 +112,4 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:21](https://github
 
 • **unsoldTokensWallet**: _string_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityToken/Issuance/Offerings.ts#L26)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityToken/Issuance/Offerings.ts#L26)_

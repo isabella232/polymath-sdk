@@ -21,7 +21,7 @@
 
 ▸ **isUniqueIdentifiers**(`identifiers`: any): _identifiers is UniqueIdentifiers_
 
-_Defined in [src/entities/SecurityTokenReservation.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/SecurityTokenReservation.ts#L18)_
+_Defined in [src/entities/SecurityTokenReservation.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/SecurityTokenReservation.ts#L18)_
 
 Check if the provided value is of type [UniqueIdentifiers](../interfaces/_entities_securitytokenreservation_.uniqueidentifiers.md)
 

@@ -23,7 +23,7 @@ A Shareholder's KYC data
 
 • **address**: _string_
 
-_Defined in [src/types/index.ts:1130](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1130)_
+_Defined in [src/types/index.ts:1130](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1130)_
 
 shareholder wallet address to whitelist
 
@@ -33,7 +33,7 @@ shareholder wallet address to whitelist
 
 • **canBuyFromSto**: _boolean_
 
-_Defined in [src/types/index.ts:1150](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1150)_
+_Defined in [src/types/index.ts:1150](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1150)_
 
 whether the shareholder is allowed to purchase tokens in an STO
 
@@ -43,7 +43,7 @@ whether the shareholder is allowed to purchase tokens in an STO
 
 • **canReceiveAfter**: _Date_
 
-_Defined in [src/types/index.ts:1138](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1138)_
+_Defined in [src/types/index.ts:1138](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1138)_
 
 date from which the shareholder can receive tokens
 
@@ -53,7 +53,7 @@ date from which the shareholder can receive tokens
 
 • **canSendAfter**: _Date_
 
-_Defined in [src/types/index.ts:1134](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1134)_
+_Defined in [src/types/index.ts:1134](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1134)_
 
 date from which the shareholder can transfer tokens
 
@@ -63,7 +63,7 @@ date from which the shareholder can transfer tokens
 
 • **isAccredited**: _boolean_
 
-_Defined in [src/types/index.ts:1146](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1146)_
+_Defined in [src/types/index.ts:1146](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1146)_
 
 whether the shareholder is accredited
 
@@ -73,6 +73,6 @@ whether the shareholder is accredited
 
 • **kycExpiry**: _Date_
 
-_Defined in [src/types/index.ts:1142](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L1142)_
+_Defined in [src/types/index.ts:1142](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L1142)_
 
 date at which the shareholder's KYC expires

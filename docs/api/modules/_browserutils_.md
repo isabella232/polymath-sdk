@@ -27,7 +27,7 @@
 
 ▸ **getBrowserSupport**(): _[NoMetamask](../enums/_browserutils_.browsersupport.md#nometamask) | [MetamaskLegacy](../enums/_browserutils_.browsersupport.md#metamasklegacy) | [MetamaskModern](../enums/_browserutils_.browsersupport.md#metamaskmodern) | [None](../enums/_browserutils_.browsersupport.md#none)_
 
-_Defined in [src/browserUtils.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/browserUtils.ts#L45)_
+_Defined in [src/browserUtils.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/browserUtils.ts#L45)_
 
 Returns the browser support for Ethereum
 
@@ -39,7 +39,7 @@ Returns the browser support for Ethereum
 
 ▸ **onAddressChange**(`cb`: function): _(Anonymous function)_
 
-_Defined in [src/browserUtils.ts:189](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/browserUtils.ts#L189)_
+_Defined in [src/browserUtils.ts:189](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/browserUtils.ts#L189)_
 
 Runs the callback anytime the wallet address changes in the browser
 
@@ -68,7 +68,7 @@ an unsubscribe function
 
 ▸ **onNetworkChange**(`cb`: function): _(Anonymous function)_
 
-_Defined in [src/browserUtils.ts:225](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/browserUtils.ts#L225)_
+_Defined in [src/browserUtils.ts:225](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/browserUtils.ts#L225)_
 
 Runs the callback anytime the current network changes in the browser
 

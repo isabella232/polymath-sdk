@@ -19,7 +19,7 @@ Properties that uniquely identify a Shareholder of a specific Security Token
 
 • **address**: _string_
 
-_Defined in [src/entities/Shareholder.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Shareholder.ts#L12)_
+_Defined in [src/entities/Shareholder.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Shareholder.ts#L12)_
 
 ---
 
@@ -27,4 +27,4 @@ _Defined in [src/entities/Shareholder.ts:12](https://github.com/PolymathNetwork/
 
 • **securityTokenId**: _string_
 
-_Defined in [src/entities/Shareholder.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Shareholder.ts#L11)_
+_Defined in [src/entities/Shareholder.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Shareholder.ts#L11)_

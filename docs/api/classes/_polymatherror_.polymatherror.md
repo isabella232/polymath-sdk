@@ -28,7 +28,7 @@ Wraps an error to give more information about it's type
 
 \+ **new PolymathError**(`__namedParameters`: object): _[PolymathError](_polymatherror_.polymatherror.md)_
 
-_Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/PolymathError.ts#L24)_
+_Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/PolymathError.ts#L24)_
 
 **Parameters:**
 
@@ -47,7 +47,7 @@ _Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymat
 
 • **code**: _[ErrorCode](../enums/_types_index_.errorcode.md)_
 
-_Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/PolymathError.ts#L24)_
+_Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/PolymathError.ts#L24)_
 
 ---
 

@@ -18,4 +18,4 @@
 
 ### ▪ **originalWindow**: _object_
 
-_Defined in [src/testUtils/index.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/testUtils/index.ts#L8)_
+_Defined in [src/testUtils/index.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/testUtils/index.ts#L8)_

@@ -2375,7 +2375,7 @@ Defined in node_modules/typescript/lib/lib.dom.d.ts:16600
 
 • **web3**: _object_
 
-_Defined in [src/testUtils/index.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/testUtils/index.ts#L23)_
+_Defined in [src/testUtils/index.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/testUtils/index.ts#L23)_
 
 #### Type declaration:
 

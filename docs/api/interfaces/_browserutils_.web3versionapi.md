@@ -16,4 +16,4 @@
 
 • **network**? : _undefined | string_
 
-_Defined in [src/browserUtils.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/browserUtils.ts#L22)_
+_Defined in [src/browserUtils.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/browserUtils.ts#L22)_

@@ -19,7 +19,7 @@ Properties that uniquely identify a Checkpoint
 
 • **index**: _number_
 
-_Defined in [src/entities/Checkpoint.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Checkpoint.ts#L19)_
+_Defined in [src/entities/Checkpoint.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Checkpoint.ts#L19)_
 
 numerical index of the checkpoint. The higher the index, the more recent the checkpoint
 
@@ -29,6 +29,6 @@ numerical index of the checkpoint. The higher the index, the more recent the che
 
 • **securityTokenId**: _string_
 
-_Defined in [src/entities/Checkpoint.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/entities/Checkpoint.ts#L15)_
+_Defined in [src/entities/Checkpoint.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/entities/Checkpoint.ts#L15)_
 
 security token UUID

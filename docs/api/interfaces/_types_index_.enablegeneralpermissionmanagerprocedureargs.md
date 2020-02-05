@@ -18,6 +18,6 @@ Arguments for the [EnableGeneralPermissionManager](../enums/_types_index_.proced
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:439](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/types/index.ts#L439)_
+_Defined in [src/types/index.ts:439](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/types/index.ts#L439)_
 
 symbol of the Security Token

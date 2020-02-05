@@ -17,7 +17,7 @@
 
 • **options**? : _undefined | object_
 
-_Defined in [src/testUtils/index.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/testUtils/index.ts#L30)_
+_Defined in [src/testUtils/index.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/testUtils/index.ts#L30)_
 
 ---
 
@@ -25,4 +25,4 @@ _Defined in [src/testUtils/index.ts:30](https://github.com/PolymathNetwork/polym
 
 • **support**? : _"legacy" | "modern"_
 
-_Defined in [src/testUtils/index.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/d34930f/src/testUtils/index.ts#L29)_
+_Defined in [src/testUtils/index.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/a1cd5e3/src/testUtils/index.ts#L29)_
