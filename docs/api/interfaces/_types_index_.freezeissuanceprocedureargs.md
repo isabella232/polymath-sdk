@@ -19,7 +19,7 @@ Arguments for the [FreezeIssuance](../enums/_types_index_.proceduretype.md#freez
 
 • **signature**? : _undefined | string_
 
-_Defined in [src/types/index.ts:1078](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1078)_
+_Defined in [src/types/index.ts:1078](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1078)_
 
 acknowledgement signature
 
@@ -29,6 +29,6 @@ acknowledgement signature
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:1074](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1074)_
+_Defined in [src/types/index.ts:1074](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1074)_
 
 symbol of the Security Token

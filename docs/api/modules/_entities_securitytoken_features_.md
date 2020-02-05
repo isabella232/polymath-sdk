@@ -24,4 +24,4 @@
 
 Ƭ **EnableOpts**: _[EnableErc20DividendsOpts](../interfaces/_entities_securitytoken_features_.enableerc20dividendsopts.md) | [EnableShareholderCountRestrictionsOpts](../interfaces/_entities_securitytoken_features_.enableshareholdercountrestrictionsopts.md) | [EnablePercentageOwnershipRestrictionsOpts](../interfaces/_entities_securitytoken_features_.enablepercentageownershiprestrictionsopts.md)_
 
-_Defined in [src/entities/SecurityToken/Features.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Features.ts#L35)_
+_Defined in [src/entities/SecurityToken/Features.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L35)_

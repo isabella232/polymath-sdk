@@ -41,7 +41,7 @@ Can only be executed by the Security Token's Controller
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/Procedure.ts#L40)_
+_Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/Procedure.ts#L40)_
 
 **Parameters:**
 
@@ -60,7 +60,7 @@ _Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/Procedure.ts#L34)_
+_Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/Procedure.ts#L34)_
 
 ---
 
@@ -70,7 +70,7 @@ _Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/Procedure.ts#L36)_
+_Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/Procedure.ts#L36)_
 
 ---
 
@@ -80,7 +80,7 @@ _Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/
 
 _Overrides void_
 
-_Defined in [src/procedures/ControllerRedeem.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/ControllerRedeem.ts#L44)_
+_Defined in [src/procedures/ControllerRedeem.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/ControllerRedeem.ts#L44)_
 
 ## Methods
 
@@ -90,7 +90,7 @@ _Defined in [src/procedures/ControllerRedeem.ts:44](https://github.com/PolymathN
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/Procedure.ts#L91)_
+_Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/Procedure.ts#L91)_
 
 Appends a Procedure into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -119,7 +119,7 @@ whichever value is returned by the Procedure
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/Procedure.ts#L179)_
+_Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/Procedure.ts#L179)_
 
 Appends a signature request into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -146,7 +146,7 @@ a PostTransactionResolver that resolves to the signed data
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/Procedure.ts#L137)_
+_Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/Procedure.ts#L137)_
 
 Appends a method or future method into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -187,7 +187,7 @@ a PostTransactionResolver that resolves to the value returned by the resolver fu
 
 _Inherited from void_
 
-_Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/Procedure.ts#L52)_
+_Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/Procedure.ts#L52)_
 
 Mandatory method that builds a list of transactions that will be
 run
@@ -202,7 +202,7 @@ run
 
 _Overrides void_
 
-_Defined in [src/procedures/ControllerRedeem.ts:54](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/ControllerRedeem.ts#L54)_
+_Defined in [src/procedures/ControllerRedeem.ts:54](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/ControllerRedeem.ts#L54)_
 
 Redeem tokens from a specific address, optionally providing a reason or extra data for the action
 

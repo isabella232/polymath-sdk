@@ -22,7 +22,7 @@ Arguments for the [CreateSecurityToken](../enums/_types_index_.proceduretype.md#
 
 • **detailsUrl**? : _undefined | string_
 
-_Defined in [src/types/index.ts:407](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L407)_
+_Defined in [src/types/index.ts:407](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L407)_
 
 url where Security Token details can be found
 
@@ -32,7 +32,7 @@ url where Security Token details can be found
 
 • **divisible**: _boolean_
 
-_Defined in [src/types/index.ts:411](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L411)_
+_Defined in [src/types/index.ts:411](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L411)_
 
 whether or not the Security Token is divisible
 
@@ -42,7 +42,7 @@ whether or not the Security Token is divisible
 
 • **name**: _string_
 
-_Defined in [src/types/index.ts:399](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L399)_
+_Defined in [src/types/index.ts:399](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L399)_
 
 name of the Security Token
 
@@ -52,7 +52,7 @@ name of the Security Token
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:403](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L403)_
+_Defined in [src/types/index.ts:403](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L403)_
 
 symbol of the Security Token
 
@@ -62,6 +62,6 @@ symbol of the Security Token
 
 • **treasuryWallet**? : _undefined | string_
 
-_Defined in [src/types/index.ts:415](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L415)_
+_Defined in [src/types/index.ts:415](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L415)_
 
 the Treasury Wallet address

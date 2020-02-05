@@ -55,7 +55,7 @@ as well as fetching/refreshing the internal Security Token cache
 
 \+ **new Factory**(`eClass`: [EntityClass](../interfaces/_entities_factories_factory_.entityclass.md)‹T, U›, `context`: [Context](_context_.context.md)): _[Factory](_entities_factories_factory_.factory.md)_
 
-_Defined in [src/entities/factories/Factory.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/factories/Factory.ts#L42)_
+_Defined in [src/entities/factories/Factory.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L42)_
 
 Create a factory that can generate an entity
 
@@ -74,7 +74,7 @@ Create a factory that can generate an entity
 
 • **Entity**: _[EntityClass](../interfaces/_entities_factories_factory_.entityclass.md)‹T, U›_
 
-_Defined in [src/entities/factories/Factory.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/factories/Factory.ts#L37)_
+_Defined in [src/entities/factories/Factory.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L37)_
 
 entity class that this Factory is in charge of generating and caching
 
@@ -84,7 +84,7 @@ entity class that this Factory is in charge of generating and caching
 
 • **cache**: _object_
 
-_Defined in [src/entities/factories/Factory.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/factories/Factory.ts#L28)_
+_Defined in [src/entities/factories/Factory.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L28)_
 
 #### Type declaration:
 
@@ -96,7 +96,7 @@ _Defined in [src/entities/factories/Factory.ts:28](https://github.com/PolymathNe
 
 • **context**: _[Context](_context_.context.md)_
 
-_Defined in [src/entities/factories/Factory.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/factories/Factory.ts#L32)_
+_Defined in [src/entities/factories/Factory.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L32)_
 
 ## Methods
 
@@ -104,7 +104,7 @@ _Defined in [src/entities/factories/Factory.ts:32](https://github.com/PolymathNe
 
 ▸ **create**(`uid`: string, `params`: T): _EntityType_
 
-_Defined in [src/entities/factories/Factory.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/factories/Factory.ts#L87)_
+_Defined in [src/entities/factories/Factory.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L87)_
 
 Get an entity from the cache. Creates it if it isn't cached, updates it if it is
 
@@ -123,7 +123,7 @@ Get an entity from the cache. Creates it if it isn't cached, updates it if it is
 
 ▸ **fetch**(`uid`: string): _Promise‹EntityType›_
 
-_Defined in [src/entities/factories/Factory.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/factories/Factory.ts#L57)_
+_Defined in [src/entities/factories/Factory.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L57)_
 
 Get an entity from the cache. Fetches the necessary data to create it if it isn't cached, refreshes it if it is
 
@@ -141,7 +141,7 @@ Get an entity from the cache. Fetches the necessary data to create it if it isn'
 
 ▸ **refresh**(`uid`: string): _Promise‹void›_
 
-_Defined in [src/entities/factories/Factory.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/factories/Factory.ts#L108)_
+_Defined in [src/entities/factories/Factory.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L108)_
 
 Fetch the data for an entity and updates its properties
 
@@ -159,7 +159,7 @@ Fetch the data for an entity and updates its properties
 
 ▸ **update**(`uid`: string, `params`: Partial‹T›): _Promise‹void›_
 
-_Defined in [src/entities/factories/Factory.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/factories/Factory.ts#L126)_
+_Defined in [src/entities/factories/Factory.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L126)_
 
 Update an entity's properties in place
 

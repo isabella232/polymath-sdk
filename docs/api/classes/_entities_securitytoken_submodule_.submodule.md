@@ -47,7 +47,7 @@ Represents a namespace inside the Security Token that handles a set of related f
 
 \+ **new SubModule**(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)): _[SubModule](_entities_securitytoken_submodule_.submodule.md)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SubModule.ts#L10)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SubModule.ts#L10)_
 
 Create a new SubModule instance
 
@@ -66,7 +66,7 @@ Create a new SubModule instance
 
 • **context**: _[Context](_context_.context.md)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SubModule.ts#L10)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SubModule.ts#L10)_
 
 ---
 
@@ -74,4 +74,4 @@ _Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/Poly
 
 • **securityToken**: _[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SubModule.ts#L8)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SubModule.ts#L8)_

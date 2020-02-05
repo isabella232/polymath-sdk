@@ -16,4 +16,4 @@
 
 • **dateToBigNumber**: _dateToBigNumber_
 
-_Defined in [src/procedures/ModifyShareholderData.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/ModifyShareholderData.ts#L18)_
+_Defined in [src/procedures/ModifyShareholderData.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/ModifyShareholderData.ts#L18)_

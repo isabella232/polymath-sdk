@@ -26,7 +26,7 @@ Security Token constructor parameters
 
 • **address**: _string_
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SecurityToken.ts#L44)_
+_Defined in [src/entities/SecurityToken/SecurityToken.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L44)_
 
 address of the Security Token contract
 
@@ -36,7 +36,7 @@ address of the Security Token contract
 
 • **currentCheckpoint**: _number_
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SecurityToken.ts#L59)_
+_Defined in [src/entities/SecurityToken/SecurityToken.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L59)_
 
 index of the current checkpoint
 
@@ -46,7 +46,7 @@ index of the current checkpoint
 
 • **granularity**: _number_
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:54](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SecurityToken.ts#L54)_
+_Defined in [src/entities/SecurityToken/SecurityToken.ts:54](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L54)_
 
 ---
 
@@ -54,7 +54,7 @@ _Defined in [src/entities/SecurityToken/SecurityToken.ts:54](https://github.com/
 
 • **name**: _string_
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SecurityToken.ts#L40)_
+_Defined in [src/entities/SecurityToken/SecurityToken.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L40)_
 
 ---
 
@@ -62,7 +62,7 @@ _Defined in [src/entities/SecurityToken/SecurityToken.ts:40](https://github.com/
 
 • **owner**: _string_
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SecurityToken.ts#L48)_
+_Defined in [src/entities/SecurityToken/SecurityToken.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L48)_
 
 address that owns the Security Token
 
@@ -72,7 +72,7 @@ address that owns the Security Token
 
 • **tokenDetails**: _string_
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SecurityToken.ts#L52)_
+_Defined in [src/entities/SecurityToken/SecurityToken.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L52)_
 
 URL pointing to off-chain data associated with the Security Token
 
@@ -82,7 +82,7 @@ URL pointing to off-chain data associated with the Security Token
 
 • **totalSupply**: _BigNumber_
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SecurityToken.ts#L55)_
+_Defined in [src/entities/SecurityToken/SecurityToken.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L55)_
 
 ---
 
@@ -90,7 +90,7 @@ _Defined in [src/entities/SecurityToken/SecurityToken.ts:55](https://github.com/
 
 • **treasuryWallet**: _string_
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:64](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SecurityToken.ts#L64)_
+_Defined in [src/entities/SecurityToken/SecurityToken.ts:64](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L64)_
 
 default treasury wallet used by some features.
 **_For example, if an STO reaches its end date (or is finalized before that), remaining unsold tokens get transferred to this wallet unless otherwise specified by the STO itself_**
@@ -101,4 +101,4 @@ default treasury wallet used by some features.
 
 • **version**: _Version_
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SecurityToken.ts#L53)_
+_Defined in [src/entities/SecurityToken/SecurityToken.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L53)_

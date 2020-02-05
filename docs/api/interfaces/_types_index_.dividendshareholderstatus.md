@@ -23,7 +23,7 @@ Status of a Shareholder in regards to a Dividend Distribution
 
 • **address**: _string_
 
-_Defined in [src/types/index.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L27)_
+_Defined in [src/types/index.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L27)_
 
 wallet address of the Shareholder
 
@@ -33,7 +33,7 @@ wallet address of the Shareholder
 
 • **amountReceived**: _BigNumber_
 
-_Defined in [src/types/index.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L43)_
+_Defined in [src/types/index.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L43)_
 
 the amount of tokens the Shareholder has received as Dividend payment
 
@@ -43,7 +43,7 @@ the amount of tokens the Shareholder has received as Dividend payment
 
 • **balance**: _BigNumber_
 
-_Defined in [src/types/index.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L47)_
+_Defined in [src/types/index.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L47)_
 
 the balance of the Shareholder
 
@@ -53,7 +53,7 @@ the balance of the Shareholder
 
 • **excluded**: _boolean_
 
-_Defined in [src/types/index.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L35)_
+_Defined in [src/types/index.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L35)_
 
 whether the Shareholder is excluded from the Dividend distribution
 
@@ -63,7 +63,7 @@ whether the Shareholder is excluded from the Dividend distribution
 
 • **paymentReceived**: _boolean_
 
-_Defined in [src/types/index.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L31)_
+_Defined in [src/types/index.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L31)_
 
 whether the Shareholder has received payment
 
@@ -73,6 +73,6 @@ whether the Shareholder has received payment
 
 • **withheldTax**: _BigNumber_
 
-_Defined in [src/types/index.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L39)_
+_Defined in [src/types/index.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L39)_
 
 amount of tokens withheld for tax purposes

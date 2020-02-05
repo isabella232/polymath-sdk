@@ -8,7 +8,7 @@
 
 ▸ (`args`: object): _Promise‹[SimpleSto](../classes/_entities_simplesto_.simplesto.md)›_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:149](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Issuance/Offerings.ts#L149)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:149](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L149)_
 
 **Parameters:**
 
@@ -23,7 +23,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:149](https://githu
 
 ▸ (`args`: object): _Promise‹[TieredSto](../classes/_entities_tieredsto_.tieredsto.md)›_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:150](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Issuance/Offerings.ts#L150)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:150](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L150)_
 
 **Parameters:**
 
@@ -38,7 +38,7 @@ _Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:150](https://githu
 
 ▸ (`args`: string): _Promise‹[SimpleSto](../classes/_entities_simplesto_.simplesto.md) | [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)›_
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:151](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Issuance/Offerings.ts#L151)_
+_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:151](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L151)_
 
 **Parameters:**
 

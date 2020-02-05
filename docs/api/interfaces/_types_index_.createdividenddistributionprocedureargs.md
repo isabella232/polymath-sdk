@@ -26,7 +26,7 @@ Arguments for the [CreateDividendDistribution](../enums/_types_index_.proceduret
 
 • **amount**: _BigNumber_
 
-_Defined in [src/types/index.ts:347](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L347)_
+_Defined in [src/types/index.ts:347](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L347)_
 
 amount to be distributed as dividends
 
@@ -36,7 +36,7 @@ amount to be distributed as dividends
 
 • **checkpointIndex**: _number_
 
-_Defined in [src/types/index.ts:351](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L351)_
+_Defined in [src/types/index.ts:351](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L351)_
 
 index of the Checkpoint in which the Dividend Distribution will be based
 
@@ -46,7 +46,7 @@ index of the Checkpoint in which the Dividend Distribution will be based
 
 • **erc20Address**: _string_
 
-_Defined in [src/types/index.ts:343](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L343)_
+_Defined in [src/types/index.ts:343](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L343)_
 
 address of the ERC20 token
 
@@ -56,7 +56,7 @@ address of the ERC20 token
 
 • **excludedAddresses**? : _string[]_
 
-_Defined in [src/types/index.ts:359](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L359)_
+_Defined in [src/types/index.ts:359](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L359)_
 
 list of addresses that will be excluded from receiving payment
 
@@ -66,7 +66,7 @@ list of addresses that will be excluded from receiving payment
 
 • **expiryDate**: _Date_
 
-_Defined in [src/types/index.ts:339](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L339)_
+_Defined in [src/types/index.ts:339](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L339)_
 
 date on which the Dividend will expire
 
@@ -76,7 +76,7 @@ date on which the Dividend will expire
 
 • **maturityDate**: _Date_
 
-_Defined in [src/types/index.ts:335](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L335)_
+_Defined in [src/types/index.ts:335](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L335)_
 
 date from which Dividend payments can be pushed/claimed
 
@@ -86,7 +86,7 @@ date from which Dividend payments can be pushed/claimed
 
 • **name**: _string_
 
-_Defined in [src/types/index.ts:355](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L355)_
+_Defined in [src/types/index.ts:355](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L355)_
 
 name of the distribution
 
@@ -96,7 +96,7 @@ name of the distribution
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:331](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L331)_
+_Defined in [src/types/index.ts:331](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L331)_
 
 symbol of the Security Token
 
@@ -106,6 +106,6 @@ symbol of the Security Token
 
 • **taxWithholdings**? : _[TaxWithholdingEntry](_types_index_.taxwithholdingentry.md)[]_
 
-_Defined in [src/types/index.ts:363](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L363)_
+_Defined in [src/types/index.ts:363](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L363)_
 
 tax withholding list for the Dividend Distribution

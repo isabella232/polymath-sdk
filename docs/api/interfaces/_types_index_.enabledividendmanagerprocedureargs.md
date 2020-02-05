@@ -19,7 +19,7 @@ Arguments for the [EnableDividendManager](../enums/_types_index_.proceduretype.m
 
 • **storageWalletAddress**: _string_
 
-_Defined in [src/types/index.ts:429](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L429)_
+_Defined in [src/types/index.ts:429](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L429)_
 
 storage wallet where Dividends funds will be stored
 
@@ -29,6 +29,6 @@ storage wallet where Dividends funds will be stored
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:425](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L425)_
+_Defined in [src/types/index.ts:425](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L425)_
 
 symbol of the Security Token

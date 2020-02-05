@@ -51,7 +51,7 @@ Class used to manage the dividend distribution functionality
 
 \+ **new DividendDistribution**(`params`: [Params](../interfaces/_entities_dividenddistribution_.params.md) & [UniqueIdentifiers](../interfaces/_entities_dividenddistribution_.uniqueidentifiers.md), `context`: [Context](_context_.context.md)): _[DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)_
 
-_Defined in [src/entities/DividendDistribution.ts:146](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L146)_
+_Defined in [src/entities/DividendDistribution.ts:146](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L146)_
 
 Create a new Dividend Distribution instance
 
@@ -70,7 +70,7 @@ Create a new Dividend Distribution instance
 
 • **amount**: _BigNumber_
 
-_Defined in [src/entities/DividendDistribution.ts:128](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L128)_
+_Defined in [src/entities/DividendDistribution.ts:128](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L128)_
 
 ---
 
@@ -78,7 +78,7 @@ _Defined in [src/entities/DividendDistribution.ts:128](https://github.com/Polyma
 
 • **checkpointId**: _string_
 
-_Defined in [src/entities/DividendDistribution.ts:116](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L116)_
+_Defined in [src/entities/DividendDistribution.ts:116](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L116)_
 
 ---
 
@@ -86,7 +86,7 @@ _Defined in [src/entities/DividendDistribution.ts:116](https://github.com/Polyma
 
 • **claimedAmount**: _BigNumber_
 
-_Defined in [src/entities/DividendDistribution.ts:130](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L130)_
+_Defined in [src/entities/DividendDistribution.ts:130](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L130)_
 
 ---
 
@@ -94,7 +94,7 @@ _Defined in [src/entities/DividendDistribution.ts:130](https://github.com/Polyma
 
 • **context**: _[Context](_context_.context.md)_
 
-_Defined in [src/entities/DividendDistribution.ts:146](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L146)_
+_Defined in [src/entities/DividendDistribution.ts:146](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L146)_
 
 ---
 
@@ -102,7 +102,7 @@ _Defined in [src/entities/DividendDistribution.ts:146](https://github.com/Polyma
 
 • **created**: _Date_
 
-_Defined in [src/entities/DividendDistribution.ts:122](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L122)_
+_Defined in [src/entities/DividendDistribution.ts:122](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L122)_
 
 ---
 
@@ -110,7 +110,7 @@ _Defined in [src/entities/DividendDistribution.ts:122](https://github.com/Polyma
 
 • **currency**: _string | null_
 
-_Defined in [src/entities/DividendDistribution.ts:144](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L144)_
+_Defined in [src/entities/DividendDistribution.ts:144](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L144)_
 
 ---
 
@@ -118,7 +118,7 @@ _Defined in [src/entities/DividendDistribution.ts:144](https://github.com/Polyma
 
 • **expiry**: _Date_
 
-_Defined in [src/entities/DividendDistribution.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L126)_
+_Defined in [src/entities/DividendDistribution.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L126)_
 
 ---
 
@@ -126,7 +126,7 @@ _Defined in [src/entities/DividendDistribution.ts:126](https://github.com/Polyma
 
 • **index**: _number_
 
-_Defined in [src/entities/DividendDistribution.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L114)_
+_Defined in [src/entities/DividendDistribution.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L114)_
 
 ---
 
@@ -134,7 +134,7 @@ _Defined in [src/entities/DividendDistribution.ts:114](https://github.com/Polyma
 
 • **maturity**: _Date_
 
-_Defined in [src/entities/DividendDistribution.ts:124](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L124)_
+_Defined in [src/entities/DividendDistribution.ts:124](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L124)_
 
 ---
 
@@ -142,7 +142,7 @@ _Defined in [src/entities/DividendDistribution.ts:124](https://github.com/Polyma
 
 • **name**: _string_
 
-_Defined in [src/entities/DividendDistribution.ts:142](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L142)_
+_Defined in [src/entities/DividendDistribution.ts:142](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L142)_
 
 ---
 
@@ -150,7 +150,7 @@ _Defined in [src/entities/DividendDistribution.ts:142](https://github.com/Polyma
 
 • **reclaimed**: _boolean_
 
-_Defined in [src/entities/DividendDistribution.ts:134](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L134)_
+_Defined in [src/entities/DividendDistribution.ts:134](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L134)_
 
 ---
 
@@ -158,7 +158,7 @@ _Defined in [src/entities/DividendDistribution.ts:134](https://github.com/Polyma
 
 • **securityTokenId**: _string_
 
-_Defined in [src/entities/DividendDistribution.ts:120](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L120)_
+_Defined in [src/entities/DividendDistribution.ts:120](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L120)_
 
 ---
 
@@ -166,7 +166,7 @@ _Defined in [src/entities/DividendDistribution.ts:120](https://github.com/Polyma
 
 • **securityTokenSymbol**: _string_
 
-_Defined in [src/entities/DividendDistribution.ts:118](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L118)_
+_Defined in [src/entities/DividendDistribution.ts:118](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L118)_
 
 ---
 
@@ -174,7 +174,7 @@ _Defined in [src/entities/DividendDistribution.ts:118](https://github.com/Polyma
 
 • **shareholders**: _[DividendShareholderStatus](../interfaces/_types_index_.dividendshareholderstatus.md)[]_
 
-_Defined in [src/entities/DividendDistribution.ts:140](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L140)_
+_Defined in [src/entities/DividendDistribution.ts:140](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L140)_
 
 ---
 
@@ -182,7 +182,7 @@ _Defined in [src/entities/DividendDistribution.ts:140](https://github.com/Polyma
 
 • **totalSupply**: _BigNumber_
 
-_Defined in [src/entities/DividendDistribution.ts:132](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L132)_
+_Defined in [src/entities/DividendDistribution.ts:132](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L132)_
 
 ---
 
@@ -190,7 +190,7 @@ _Defined in [src/entities/DividendDistribution.ts:132](https://github.com/Polyma
 
 • **totalWithheld**: _BigNumber_
 
-_Defined in [src/entities/DividendDistribution.ts:136](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L136)_
+_Defined in [src/entities/DividendDistribution.ts:136](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L136)_
 
 ---
 
@@ -198,7 +198,7 @@ _Defined in [src/entities/DividendDistribution.ts:136](https://github.com/Polyma
 
 • **totalWithheldWithdrawn**: _BigNumber_
 
-_Defined in [src/entities/DividendDistribution.ts:138](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L138)_
+_Defined in [src/entities/DividendDistribution.ts:138](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L138)_
 
 ---
 
@@ -208,7 +208,7 @@ _Defined in [src/entities/DividendDistribution.ts:138](https://github.com/Polyma
 
 _Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)_
 
-_Defined in [src/entities/DividendDistribution.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L112)_
+_Defined in [src/entities/DividendDistribution.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L112)_
 
 ## Methods
 
@@ -218,7 +218,7 @@ _Defined in [src/entities/DividendDistribution.ts:112](https://github.com/Polyma
 
 _Overrides [Entity](_entities_entity_.entity.md).[\_refresh](_entities_entity_.entity.md#abstract-_refresh)_
 
-_Defined in [src/entities/DividendDistribution.ts:290](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L290)_
+_Defined in [src/entities/DividendDistribution.ts:290](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L290)_
 
 Hydrate the Dividend Distribution entity
 
@@ -236,7 +236,7 @@ Hydrate the Dividend Distribution entity
 
 ▸ **pullPayment**(): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[PullDividendPaymentProcedureArgs](../interfaces/_types_index_.pulldividendpaymentprocedureargs.md), void››_
 
-_Defined in [src/entities/DividendDistribution.ts:215](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L215)_
+_Defined in [src/entities/DividendDistribution.ts:215](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L215)_
 
 Pull payment from this dividend distribution to the current address
 
@@ -248,7 +248,7 @@ Pull payment from this dividend distribution to the current address
 
 ▸ **pushPayment**(): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[PushDividendPaymentProcedureArgs](../interfaces/_types_index_.pushdividendpaymentprocedureargs.md), void››_
 
-_Defined in [src/entities/DividendDistribution.ts:200](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L200)_
+_Defined in [src/entities/DividendDistribution.ts:200](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L200)_
 
 Push payment for this dividend distribution
 
@@ -262,7 +262,7 @@ Push payment for this dividend distribution
 
 _Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)_
 
-_Defined in [src/entities/DividendDistribution.ts:245](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L245)_
+_Defined in [src/entities/DividendDistribution.ts:245](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L245)_
 
 Convert entity to POJO (Plain Old Javascript Object)
 
@@ -308,7 +308,7 @@ Convert entity to POJO (Plain Old Javascript Object)
 
 ▸ **withdrawTaxes**(): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[WithdrawTaxesProcedureArgs](../interfaces/_types_index_.withdrawtaxesprocedureargs.md), void››_
 
-_Defined in [src/entities/DividendDistribution.ts:230](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L230)_
+_Defined in [src/entities/DividendDistribution.ts:230](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L230)_
 
 Withdraw collected taxes from this dividend distribution
 
@@ -320,7 +320,7 @@ Withdraw collected taxes from this dividend distribution
 
 ▸ **generateId**(`__namedParameters`: object): _string_
 
-_Defined in [src/entities/DividendDistribution.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L87)_
+_Defined in [src/entities/DividendDistribution.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L87)_
 
 Generate the Dividend Distribution's UUID from its identifying properties
 
@@ -341,7 +341,7 @@ Generate the Dividend Distribution's UUID from its identifying properties
 
 ▸ **unserialize**(`serialized`: string): _[UniqueIdentifiers](../interfaces/_entities_dividenddistribution_.uniqueidentifiers.md)_
 
-_Defined in [src/entities/DividendDistribution.ts:99](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/DividendDistribution.ts#L99)_
+_Defined in [src/entities/DividendDistribution.ts:99](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L99)_
 
 Unserialize string to a Dividend Distribution object representation
 

@@ -59,7 +59,7 @@
 
 • **eventName**: _ContractEvents_
 
-_Defined in [src/utils/index.ts:128](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/utils/index.ts#L128)_
+_Defined in [src/utils/index.ts:128](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/utils/index.ts#L128)_
 
 ---
 
@@ -67,4 +67,4 @@ _Defined in [src/utils/index.ts:128](https://github.com/PolymathNetwork/polymath
 
 • **logs**: _LogEntry | LogWithDecodedArgs‹DecodedLogArgs›[]_
 
-_Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/utils/index.ts#L127)_
+_Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/utils/index.ts#L127)_

@@ -22,7 +22,7 @@
 
 \+ **new ProcedureClass**(`args`: Args, `context`: [Context](../classes/_context_.context.md)): _Procedure‹Args, ReturnType›_
 
-_Defined in [src/procedures/Procedure.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/procedures/Procedure.ts#L21)_
+_Defined in [src/procedures/Procedure.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/Procedure.ts#L21)_
 
 **Parameters:**
 

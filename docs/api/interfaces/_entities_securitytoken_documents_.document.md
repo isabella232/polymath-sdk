@@ -21,7 +21,7 @@ Represents a single Document attached to a Security Token
 
 • **documentHash**: _string_
 
-_Defined in [src/entities/SecurityToken/Documents.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Documents.ts#L22)_
+_Defined in [src/entities/SecurityToken/Documents.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Documents.ts#L22)_
 
 hash of the document's contents
 
@@ -31,7 +31,7 @@ hash of the document's contents
 
 • **documentUri**: _string_
 
-_Defined in [src/entities/SecurityToken/Documents.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Documents.ts#L18)_
+_Defined in [src/entities/SecurityToken/Documents.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Documents.ts#L18)_
 
 off-chain uri of the document from where it is accessible to investors/advisors to read
 
@@ -41,7 +41,7 @@ off-chain uri of the document from where it is accessible to investors/advisors 
 
 • **name**: _string_
 
-_Defined in [src/entities/SecurityToken/Documents.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Documents.ts#L14)_
+_Defined in [src/entities/SecurityToken/Documents.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Documents.ts#L14)_
 
 name of the document. It should always be unique
 
@@ -51,4 +51,4 @@ name of the document. It should always be unique
 
 • **updatedAt**: _Date_
 
-_Defined in [src/entities/SecurityToken/Documents.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Documents.ts#L23)_
+_Defined in [src/entities/SecurityToken/Documents.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Documents.ts#L23)_

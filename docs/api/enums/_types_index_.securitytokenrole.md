@@ -17,7 +17,7 @@
 
 • **DividendsAdministrator**: = "DividendsAdministrator"
 
-_Defined in [src/types/index.ts:1459](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1459)_
+_Defined in [src/types/index.ts:1459](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1459)_
 
 ---
 
@@ -25,7 +25,7 @@ _Defined in [src/types/index.ts:1459](https://github.com/PolymathNetwork/polymat
 
 • **DividendsOperator**: = "DividendsOperator"
 
-_Defined in [src/types/index.ts:1458](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1458)_
+_Defined in [src/types/index.ts:1458](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1458)_
 
 ---
 
@@ -33,7 +33,7 @@ _Defined in [src/types/index.ts:1458](https://github.com/PolymathNetwork/polymat
 
 • **PercentageOwnershipRestrictionsAdministrator**: = "PercentageOwnershipRestrictionsAdministrator"
 
-_Defined in [src/types/index.ts:1462](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1462)_
+_Defined in [src/types/index.ts:1462](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1462)_
 
 ---
 
@@ -41,7 +41,7 @@ _Defined in [src/types/index.ts:1462](https://github.com/PolymathNetwork/polymat
 
 • **PermissionsAdministrator**: = "PermissionsAdministrator"
 
-_Defined in [src/types/index.ts:1457](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1457)_
+_Defined in [src/types/index.ts:1457](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1457)_
 
 ---
 
@@ -49,7 +49,7 @@ _Defined in [src/types/index.ts:1457](https://github.com/PolymathNetwork/polymat
 
 • **ShareholderCountRestrictionsAdministrator**: = "ShareholderCountRestrictionsAdministrator"
 
-_Defined in [src/types/index.ts:1461](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1461)_
+_Defined in [src/types/index.ts:1461](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1461)_
 
 ---
 
@@ -57,4 +57,4 @@ _Defined in [src/types/index.ts:1461](https://github.com/PolymathNetwork/polymat
 
 • **ShareholdersAdministrator**: = "ShareholdersAdministrator"
 
-_Defined in [src/types/index.ts:1460](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1460)_
+_Defined in [src/types/index.ts:1460](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1460)_

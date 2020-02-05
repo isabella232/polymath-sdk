@@ -19,7 +19,7 @@ Arguments for the [WithdrawTaxes](../enums/_types_index_.proceduretype.md#withdr
 
 • **dividendIndex**: _number_
 
-_Defined in [src/types/index.ts:827](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L827)_
+_Defined in [src/types/index.ts:827](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L827)_
 
 ---
 
@@ -27,6 +27,6 @@ _Defined in [src/types/index.ts:827](https://github.com/PolymathNetwork/polymath
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:826](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L826)_
+_Defined in [src/types/index.ts:826](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L826)_
 
 the symbol of the Security Token

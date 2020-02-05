@@ -16,4 +16,4 @@
 
 • **maxHolderCount**: _number_
 
-_Defined in [src/entities/SecurityToken/Features.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Features.ts#L45)_
+_Defined in [src/entities/SecurityToken/Features.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L45)_

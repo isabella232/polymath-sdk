@@ -18,6 +18,6 @@ Arguments for the [SignDisableControllerAck](../enums/_types_index_.proceduretyp
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:1311](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1311)_
+_Defined in [src/types/index.ts:1311](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1311)_
 
 symbol of the Security Token

@@ -8,7 +8,7 @@
 
 ▸ (`params`: [PolymathNetworkParams](_polymath_.polymathnetworkparams.md)): _Promise‹[Polymath](../classes/_polymath_.polymath.md)›_
 
-_Defined in [src/Polymath.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/Polymath.ts#L35)_
+_Defined in [src/Polymath.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L35)_
 
 **Parameters:**
 
@@ -20,7 +20,7 @@ _Defined in [src/Polymath.ts:35](https://github.com/PolymathNetwork/polymath-sdk
 
 ▸ (`params`: [PolymathNetworkNodeParams](_polymath_.polymathnetworknodeparams.md)): _Promise‹[Polymath](../classes/_polymath_.polymath.md)›_
 
-_Defined in [src/Polymath.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/Polymath.ts#L36)_
+_Defined in [src/Polymath.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L36)_
 
 **Parameters:**
 

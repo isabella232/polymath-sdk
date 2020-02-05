@@ -32,7 +32,7 @@ Namespace that handles all Count Restriction related functionality
 
 _Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SubModule.ts#L10)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SubModule.ts#L10)_
 
 Create a new SubModule instance
 
@@ -53,7 +53,7 @@ Create a new SubModule instance
 
 _Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SubModule.ts#L10)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SubModule.ts#L10)_
 
 ---
 
@@ -63,7 +63,7 @@ _Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/Poly
 
 _Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)_
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/SubModule.ts#L8)_
+_Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SubModule.ts#L8)_
 
 ## Methods
 
@@ -71,7 +71,7 @@ _Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/Polym
 
 ▸ **getMaxHolderCount**(): _Promise‹number›_
 
-_Defined in [src/entities/SecurityToken/Transfers/Restrictions/CountRestrictions.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Transfers/Restrictions/CountRestrictions.ts#L31)_
+_Defined in [src/entities/SecurityToken/Transfers/Restrictions/CountRestrictions.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Transfers/Restrictions/CountRestrictions.ts#L31)_
 
 Retrieve the maximum amonut of shareholders allowed to hold the token at once
 Can be modified with `modifyMaxHolderCount`
@@ -84,7 +84,7 @@ Can be modified with `modifyMaxHolderCount`
 
 ▸ **modifyMaxHolderCount**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ModifyMaxHolderCountProcedureArgs](../interfaces/_types_index_.modifymaxholdercountprocedureargs.md), void››_
 
-_Defined in [src/entities/SecurityToken/Transfers/Restrictions/CountRestrictions.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/SecurityToken/Transfers/Restrictions/CountRestrictions.ts#L16)_
+_Defined in [src/entities/SecurityToken/Transfers/Restrictions/CountRestrictions.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Transfers/Restrictions/CountRestrictions.ts#L16)_
 
 Modify the maximum amount of shareholders allowed to hold the token at once
 

@@ -22,7 +22,7 @@ Checkpoint constructor parameters
 
 • **createdAt**: _Date_
 
-_Defined in [src/entities/Checkpoint.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/Checkpoint.ts#L48)_
+_Defined in [src/entities/Checkpoint.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L48)_
 
 ---
 
@@ -30,7 +30,7 @@ _Defined in [src/entities/Checkpoint.ts:48](https://github.com/PolymathNetwork/p
 
 • **dividendDistributions**: _[DividendDistribution](../classes/_entities_dividenddistribution_.dividenddistribution.md)[]_
 
-_Defined in [src/entities/Checkpoint.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/Checkpoint.ts#L38)_
+_Defined in [src/entities/Checkpoint.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L38)_
 
 dividend distributions associated to this checkpoint
 
@@ -40,7 +40,7 @@ dividend distributions associated to this checkpoint
 
 • **securityTokenSymbol**: _string_
 
-_Defined in [src/entities/Checkpoint.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/Checkpoint.ts#L42)_
+_Defined in [src/entities/Checkpoint.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L42)_
 
 symbol of the security token
 
@@ -50,7 +50,7 @@ symbol of the security token
 
 • **shareholderBalances**: _[ShareholderBalance](_types_index_.shareholderbalance.md)[]_
 
-_Defined in [src/entities/Checkpoint.ts:46](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/Checkpoint.ts#L46)_
+_Defined in [src/entities/Checkpoint.ts:46](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L46)_
 
 shareholder balances at this specific Checkpoint
 
@@ -60,4 +60,4 @@ shareholder balances at this specific Checkpoint
 
 • **totalSupply**: _BigNumber_
 
-_Defined in [src/entities/Checkpoint.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/Checkpoint.ts#L47)_
+_Defined in [src/entities/Checkpoint.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L47)_

@@ -21,7 +21,7 @@
 
 ▸ **isUniqueIdentifiers**(`identifiers`: any): _identifiers is UniqueIdentifiers_
 
-_Defined in [src/entities/Checkpoint.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/entities/Checkpoint.ts#L25)_
+_Defined in [src/entities/Checkpoint.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L25)_
 
 Check if the provided value is of type [UniqueIdentifiers](../interfaces/_entities_checkpoint_.uniqueidentifiers.md)
 

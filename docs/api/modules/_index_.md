@@ -13,7 +13,7 @@
 
 • **browserUtils**: _any_ = isNode ? null : require('./browserUtils')
 
-_Defined in [src/index.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/index.ts#L9)_
+_Defined in [src/index.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/index.ts#L9)_
 
 ---
 
@@ -21,4 +21,4 @@ _Defined in [src/index.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blo
 
 • **isNode**: _boolean_ = typeof window === 'undefined'
 
-_Defined in [src/index.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/index.ts#L7)_
+_Defined in [src/index.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/index.ts#L7)_

@@ -22,7 +22,7 @@ Arguments for the [TransferSecurityTokens](../enums/_types_index_.proceduretype.
 
 • **amount**: _BigNumber_
 
-_Defined in [src/types/index.ts:1257](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1257)_
+_Defined in [src/types/index.ts:1257](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1257)_
 
 amount of tokens being transferred
 
@@ -32,7 +32,7 @@ amount of tokens being transferred
 
 • **data**? : _undefined | string_
 
-_Defined in [src/types/index.ts:1261](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1261)_
+_Defined in [src/types/index.ts:1261](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1261)_
 
 signed KYC data that will be considered (and applied to the Security Token) when checking for transfer restrictions
 
@@ -42,7 +42,7 @@ signed KYC data that will be considered (and applied to the Security Token) when
 
 • **from**? : _undefined | string_
 
-_Defined in [src/types/index.ts:1265](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1265)_
+_Defined in [src/types/index.ts:1265](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1265)_
 
 wallet address sending Security Tokens. Defaults to the current wallet
 
@@ -52,7 +52,7 @@ wallet address sending Security Tokens. Defaults to the current wallet
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:1249](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1249)_
+_Defined in [src/types/index.ts:1249](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1249)_
 
 symbol of the Security Token
 
@@ -62,6 +62,6 @@ symbol of the Security Token
 
 • **to**: _string_
 
-_Defined in [src/types/index.ts:1253](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L1253)_
+_Defined in [src/types/index.ts:1253](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1253)_
 
 wallet address receiving Security Tokens

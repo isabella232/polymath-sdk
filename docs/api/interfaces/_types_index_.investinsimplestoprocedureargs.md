@@ -21,7 +21,7 @@ Arguments for the [InvestInSimpleSto](../enums/_types_index_.proceduretype.md#in
 
 • **amount**: _BigNumber_
 
-_Defined in [src/types/index.ts:680](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L680)_
+_Defined in [src/types/index.ts:680](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L680)_
 
 amount to invest
 
@@ -31,7 +31,7 @@ amount to invest
 
 • **beneficiary**? : _undefined | string_
 
-_Defined in [src/types/index.ts:684](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L684)_
+_Defined in [src/types/index.ts:684](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L684)_
 
 if specified, the investment will be made on behalf of this address
 
@@ -41,7 +41,7 @@ if specified, the investment will be made on behalf of this address
 
 • **stoAddress**: _string_
 
-_Defined in [src/types/index.ts:676](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L676)_
+_Defined in [src/types/index.ts:676](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L676)_
 
 address of the STO
 
@@ -51,6 +51,6 @@ address of the STO
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:672](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L672)_
+_Defined in [src/types/index.ts:672](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L672)_
 
 symbol of the Security Token

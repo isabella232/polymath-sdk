@@ -21,7 +21,7 @@ Arguments for the [ToggleAllowPreIssuing](../enums/_types_index_.proceduretype.m
 
 • **allowPreIssuing**: _boolean_
 
-_Defined in [src/types/index.ts:576](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L576)_
+_Defined in [src/types/index.ts:576](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L576)_
 
 whether the total amount of Security Tokens that will be sold should be issued at the time the STO starts.
 Otherwise, they will be issued on each purchase. Defaults to false
@@ -32,7 +32,7 @@ Otherwise, they will be issued on each purchase. Defaults to false
 
 • **stoAddress**: _string_
 
-_Defined in [src/types/index.ts:567](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L567)_
+_Defined in [src/types/index.ts:567](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L567)_
 
 address of the STO
 
@@ -42,7 +42,7 @@ address of the STO
 
 • **stoType**: _[StoType](../enums/_types_index_.stotype.md)_
 
-_Defined in [src/types/index.ts:571](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L571)_
+_Defined in [src/types/index.ts:571](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L571)_
 
 type of the STO (Simple, Tiered, etc)
 
@@ -52,6 +52,6 @@ type of the STO (Simple, Tiered, etc)
 
 • **symbol**: _string_
 
-_Defined in [src/types/index.ts:563](https://github.com/PolymathNetwork/polymath-sdk/blob/d80c6e9/src/types/index.ts#L563)_
+_Defined in [src/types/index.ts:563](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L563)_
 
 symbol of the Security Token
