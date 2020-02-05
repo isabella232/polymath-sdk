@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [LaunchTieredSto](../classes/_procedures_launchtieredsto_.launchtieredsto.md)
+* [LaunchTieredSto](../classes/_procedures_launchtieredsto_.launchtieredsto.md)

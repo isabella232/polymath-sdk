@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- **FindEventParams**
+* **FindEventParams**
 
   ↳ [FindTickerRegisteredParams](_utils_index_.findtickerregisteredparams.md)
 
@@ -50,21 +50,21 @@
 
 ### Properties
 
-- [eventName](_utils_index_.findeventparams.md#eventname)
-- [logs](_utils_index_.findeventparams.md#logs)
+* [eventName](_utils_index_.findeventparams.md#eventname)
+* [logs](_utils_index_.findeventparams.md#logs)
 
 ## Properties
 
-### eventName
+###  eventName
 
-• **eventName**: _ContractEvents_
+• **eventName**: *ContractEvents*
 
-_Defined in [src/utils/index.ts:128](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/utils/index.ts#L128)_
+*Defined in [src/utils/index.ts:128](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/utils/index.ts#L128)*
 
----
+___
 
-### logs
+###  logs
 
-• **logs**: _LogEntry | LogWithDecodedArgs‹DecodedLogArgs›[]_
+• **logs**: *LogEntry | LogWithDecodedArgs‹DecodedLogArgs›[]*
 
-_Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/utils/index.ts#L127)_
+*Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/utils/index.ts#L127)*

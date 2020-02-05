@@ -2,18 +2,18 @@
 
 ## Hierarchy
 
-- **Web3VersionAPI**
+* **Web3VersionAPI**
 
 ## Index
 
 ### Properties
 
-- [network](_browserutils_.web3versionapi.md#optional-network)
+* [network](_browserutils_.web3versionapi.md#optional-network)
 
 ## Properties
 
 ### `Optional` network
 
-• **network**? : _undefined | string_
+• **network**? : *undefined | string*
 
-_Defined in [src/browserUtils.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/browserUtils.ts#L22)_
+*Defined in [src/browserUtils.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/browserUtils.ts#L22)*

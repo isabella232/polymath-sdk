@@ -4,16 +4,16 @@
 
 ### Classes
 
-- [ReserveSecurityToken](../classes/_procedures_reservesecuritytoken_.reservesecuritytoken.md)
+* [ReserveSecurityToken](../classes/_procedures_reservesecuritytoken_.reservesecuritytoken.md)
 
 ### Variables
 
-- [bigNumberToDate](_procedures_reservesecuritytoken_.md#bignumbertodate)
+* [bigNumberToDate](_procedures_reservesecuritytoken_.md#bignumbertodate)
 
 ## Variables
 
-### bigNumberToDate
+###  bigNumberToDate
 
-• **bigNumberToDate**: _bigNumberToDate_
+• **bigNumberToDate**: *bigNumberToDate*
 
-_Defined in [src/procedures/ReserveSecurityToken.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/ReserveSecurityToken.ts#L19)_
+*Defined in [src/procedures/ReserveSecurityToken.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/procedures/ReserveSecurityToken.ts#L19)*

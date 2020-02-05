@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [AssignStoRole](../classes/_procedures_assignstorole_.assignstorole.md)
+* [AssignStoRole](../classes/_procedures_assignstorole_.assignstorole.md)

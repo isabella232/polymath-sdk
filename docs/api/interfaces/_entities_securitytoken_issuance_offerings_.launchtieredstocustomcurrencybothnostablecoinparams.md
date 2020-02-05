@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- object
+* object
 
   ↳ **LaunchTieredStoCustomCurrencyBothNoStableCoinParams**
 
@@ -10,29 +10,29 @@
 
 ### Properties
 
-- [currencies](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencybothnostablecoinparams.md#currencies)
-- [customCurrency](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencybothnostablecoinparams.md#customcurrency)
+* [currencies](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencybothnostablecoinparams.md#currencies)
+* [customCurrency](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencybothnostablecoinparams.md#customcurrency)
 
 ## Properties
 
-### currencies
+###  currencies
 
-• **currencies**: _[EthAndPoly](../modules/_entities_securitytoken_issuance_offerings_.md#ethandpoly)_
+• **currencies**: *[EthAndPoly](../modules/_entities_securitytoken_issuance_offerings_.md#ethandpoly)*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L114)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L114)*
 
----
+___
 
-### customCurrency
+###  customCurrency
 
-• **customCurrency**: _object_
+• **customCurrency**: *object*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:115](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L115)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:115](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L115)*
 
 #### Type declaration:
 
-- **currencySymbol**? : _undefined | string_
+* **currencySymbol**? : *undefined | string*
 
-- **ethOracleAddress**: _string_
+* **ethOracleAddress**: *string*
 
-- **polyOracleAddress**: _string_
+* **polyOracleAddress**: *string*

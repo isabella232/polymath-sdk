@@ -4,13 +4,13 @@ Class to manage procedural transaction queues
 
 ## Type parameters
 
-▪ **Args**: _any_
+▪ **Args**: *any*
 
-▪ **ReturnType**: _any_
+▪ **ReturnType**: *any*
 
 ## Hierarchy
 
-- [Entity](_entities_entity_.entity.md)‹void›
+* [Entity](_entities_entity_.entity.md)‹void›
 
   ↳ **TransactionQueue**
 
@@ -18,249 +18,249 @@ Class to manage procedural transaction queues
 
 ### Constructors
 
-- [constructor](_entities_transactionqueue_.transactionqueue.md#constructor)
+* [constructor](_entities_transactionqueue_.transactionqueue.md#constructor)
 
 ### Properties
 
-- [args](_entities_transactionqueue_.transactionqueue.md#args)
-- [entityType](_entities_transactionqueue_.transactionqueue.md#entitytype)
-- [error](_entities_transactionqueue_.transactionqueue.md#optional-error)
-- [fees](_entities_transactionqueue_.transactionqueue.md#fees)
-- [procedureType](_entities_transactionqueue_.transactionqueue.md#proceduretype)
-- [status](_entities_transactionqueue_.transactionqueue.md#status)
-- [transactions](_entities_transactionqueue_.transactionqueue.md#transactions)
-- [uid](_entities_transactionqueue_.transactionqueue.md#uid)
+* [args](_entities_transactionqueue_.transactionqueue.md#args)
+* [entityType](_entities_transactionqueue_.transactionqueue.md#entitytype)
+* [error](_entities_transactionqueue_.transactionqueue.md#optional-error)
+* [fees](_entities_transactionqueue_.transactionqueue.md#fees)
+* [procedureType](_entities_transactionqueue_.transactionqueue.md#proceduretype)
+* [status](_entities_transactionqueue_.transactionqueue.md#status)
+* [transactions](_entities_transactionqueue_.transactionqueue.md#transactions)
+* [uid](_entities_transactionqueue_.transactionqueue.md#uid)
 
 ### Methods
 
-- [\_refresh](_entities_transactionqueue_.transactionqueue.md#_refresh)
-- [onStatusChange](_entities_transactionqueue_.transactionqueue.md#onstatuschange)
-- [onTransactionStatusChange](_entities_transactionqueue_.transactionqueue.md#ontransactionstatuschange)
-- [run](_entities_transactionqueue_.transactionqueue.md#run)
-- [toPojo](_entities_transactionqueue_.transactionqueue.md#topojo)
-- [generateId](_entities_transactionqueue_.transactionqueue.md#static-generateid)
+* [_refresh](_entities_transactionqueue_.transactionqueue.md#_refresh)
+* [onStatusChange](_entities_transactionqueue_.transactionqueue.md#onstatuschange)
+* [onTransactionStatusChange](_entities_transactionqueue_.transactionqueue.md#ontransactionstatuschange)
+* [run](_entities_transactionqueue_.transactionqueue.md#run)
+* [toPojo](_entities_transactionqueue_.transactionqueue.md#topojo)
+* [generateId](_entities_transactionqueue_.transactionqueue.md#static-generateid)
 
 ## Constructors
 
-### constructor
+###  constructor
 
-\+ **new TransactionQueue**(`transactions`: [TransactionSpec](../interfaces/_types_index_.transactionspec.md)[], `fees`: [Fees](../interfaces/_types_index_.fees.md), `returnValue`: [MaybeResolver](../modules/_types_index_.md#mayberesolver)‹ReturnType›, `args`: Args, `procedureType`: [ProcedureType](../enums/_types_index_.proceduretype.md)): _[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)_
+\+ **new TransactionQueue**(`transactions`: [TransactionSpec](../interfaces/_types_index_.transactionspec.md)[], `fees`: [Fees](../interfaces/_types_index_.fees.md), `returnValue`: [MaybeResolver](../modules/_types_index_.md#mayberesolver)‹ReturnType›, `args`: Args, `procedureType`: [ProcedureType](../enums/_types_index_.proceduretype.md)): *[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)*
 
-_Defined in [src/entities/TransactionQueue.ts:95](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L95)_
+*Defined in [src/entities/TransactionQueue.ts:95](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L95)*
 
 Create a transaction queue
 
 **Parameters:**
 
-| Name            | Type                                                                   | Default                        | Description                                                                                     |
-| --------------- | ---------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------- |
-| `transactions`  | [TransactionSpec](../interfaces/_types_index_.transactionspec.md)[]    | -                              | list of transactions to be run in this queue                                                    |
-| `fees`          | [Fees](../interfaces/_types_index_.fees.md)                            | -                              | -                                                                                               |
-| `returnValue`   | [MaybeResolver](../modules/_types_index_.md#mayberesolver)‹ReturnType› | -                              | value that will be returned by the queue after it is run. It can be a Post Transaction Resolver |
-| `args`          | Args                                                                   | -                              | arguments with which the Procedure that generated this queue was instanced                      |
-| `procedureType` | [ProcedureType](../enums/_types_index_.proceduretype.md)               | ProcedureType.UnnamedProcedure | -                                                                                               |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`transactions` | [TransactionSpec](../interfaces/_types_index_.transactionspec.md)[] | - | list of transactions to be run in this queue |
+`fees` | [Fees](../interfaces/_types_index_.fees.md) | - | - |
+`returnValue` | [MaybeResolver](../modules/_types_index_.md#mayberesolver)‹ReturnType› | - | value that will be returned by the queue after it is run. It can be a Post Transaction Resolver |
+`args` | Args | - | arguments with which the Procedure that generated this queue was instanced  |
+`procedureType` | [ProcedureType](../enums/_types_index_.proceduretype.md) |  ProcedureType.UnnamedProcedure | - |
 
-**Returns:** _[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)_
+**Returns:** *[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)*
 
 ## Properties
 
-### args
+###  args
 
-• **args**: _Args_
+• **args**: *Args*
 
-_Defined in [src/entities/TransactionQueue.ts:65](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L65)_
+*Defined in [src/entities/TransactionQueue.ts:65](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L65)*
 
 arguments provided to the transaction queue
 
----
+___
 
-### entityType
+###  entityType
 
-• **entityType**: _string_ = "transactionQueue"
+• **entityType**: *string* = "transactionQueue"
 
-_Defined in [src/entities/TransactionQueue.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L40)_
+*Defined in [src/entities/TransactionQueue.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L40)*
 
 type of entity
 
----
+___
 
 ### `Optional` error
 
-• **error**? : _[Error](_polymatherror_.polymatherror.md#static-error)_
+• **error**? : *[Error](_polymatherror_.polymatherror.md#static-error)*
 
-_Defined in [src/entities/TransactionQueue.ts:70](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L70)_
+*Defined in [src/entities/TransactionQueue.ts:70](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L70)*
 
 optional error information
 
----
+___
 
-### fees
+###  fees
 
-• **fees**: _[Fees](../interfaces/_types_index_.fees.md)_
+• **fees**: *[Fees](../interfaces/_types_index_.fees.md)*
 
-_Defined in [src/entities/TransactionQueue.ts:75](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L75)_
+*Defined in [src/entities/TransactionQueue.ts:75](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L75)*
 
 total cost of running the transactions in the queue. This does not include gas
 
----
+___
 
-### procedureType
+###  procedureType
 
-• **procedureType**: _[ProcedureType](../enums/_types_index_.proceduretype.md)_
+• **procedureType**: *[ProcedureType](../enums/_types_index_.proceduretype.md)*
 
-_Defined in [src/entities/TransactionQueue.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L45)_
+*Defined in [src/entities/TransactionQueue.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L45)*
 
 type of procedure being run
 
----
+___
 
-### status
+###  status
 
-• **status**: _TransactionQueueStatus_ = TransactionQueueStatus.Idle
+• **status**: *TransactionQueueStatus* =  TransactionQueueStatus.Idle
 
-_Defined in [src/entities/TransactionQueue.ts:60](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L60)_
+*Defined in [src/entities/TransactionQueue.ts:60](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L60)*
 
 status of the transaction queue
 
----
+___
 
-### transactions
+###  transactions
 
-• **transactions**: _[PolyTransaction](_entities_polytransaction_.polytransaction.md)[]_
+• **transactions**: *[PolyTransaction](_entities_polytransaction_.polytransaction.md)[]*
 
-_Defined in [src/entities/TransactionQueue.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L55)_
+*Defined in [src/entities/TransactionQueue.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L55)*
 
 array of poly transactions
 
----
+___
 
-### uid
+###  uid
 
-• **uid**: _string_
+• **uid**: *string*
 
-_Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)_
+*Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)*
 
-_Defined in [src/entities/TransactionQueue.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L50)_
+*Defined in [src/entities/TransactionQueue.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L50)*
 
 generated transaction queue unique identifier
 
 ## Methods
 
-### \_refresh
+###  _refresh
 
-▸ **\_refresh**(): _void_
+▸ **_refresh**(): *void*
 
-_Overrides [Entity](_entities_entity_.entity.md).[\_refresh](_entities_entity_.entity.md#abstract-_refresh)_
+*Overrides [Entity](_entities_entity_.entity.md).[_refresh](_entities_entity_.entity.md#abstract-_refresh)*
 
-_Defined in [src/entities/TransactionQueue.ts:269](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L269)_
+*Defined in [src/entities/TransactionQueue.ts:269](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L269)*
 
 Hydrate the entity
 
-**Returns:** _void_
+**Returns:** *void*
 
----
+___
 
-### onStatusChange
+###  onStatusChange
 
-▸ **onStatusChange**(`listener`: function): _(Anonymous function)_
+▸ **onStatusChange**(`listener`: function): *(Anonymous function)*
 
-_Defined in [src/entities/TransactionQueue.ts:188](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L188)_
+*Defined in [src/entities/TransactionQueue.ts:188](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L188)*
 
 Subscribe to status changes on the Transaction Queue
 
 **Parameters:**
 
-▪ **listener**: _function_
+▪ **listener**: *function*
 
 callback function that will be called whenever the Transaction Queue's status changes
 
-▸ (`transactionQueue`: this): _void_
+▸ (`transactionQueue`: this): *void*
 
 **Parameters:**
 
-| Name               | Type |
-| ------------------ | ---- |
-| `transactionQueue` | this |
+Name | Type |
+------ | ------ |
+`transactionQueue` | this |
 
-**Returns:** _(Anonymous function)_
+**Returns:** *(Anonymous function)*
 
 unsubscribe function
 
----
+___
 
-### onTransactionStatusChange
+###  onTransactionStatusChange
 
-▸ **onTransactionStatusChange**(`listener`: function): _(Anonymous function)_
+▸ **onTransactionStatusChange**(`listener`: function): *(Anonymous function)*
 
-_Defined in [src/entities/TransactionQueue.ts:203](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L203)_
+*Defined in [src/entities/TransactionQueue.ts:203](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L203)*
 
 Subscribe to status changes on individual transactions
 
 **Parameters:**
 
-▪ **listener**: _function_
+▪ **listener**: *function*
 
 callback function that will be called whenever the individual transaction's status changes
 
-▸ (`transaction`: [PolyTransaction](_entities_polytransaction_.polytransaction.md), `transactionQueue`: this): _void_
+▸ (`transaction`: [PolyTransaction](_entities_polytransaction_.polytransaction.md), `transactionQueue`: this): *void*
 
 **Parameters:**
 
-| Name               | Type                                                             |
-| ------------------ | ---------------------------------------------------------------- |
-| `transaction`      | [PolyTransaction](_entities_polytransaction_.polytransaction.md) |
-| `transactionQueue` | this                                                             |
+Name | Type |
+------ | ------ |
+`transaction` | [PolyTransaction](_entities_polytransaction_.polytransaction.md) |
+`transactionQueue` | this |
 
-**Returns:** _(Anonymous function)_
+**Returns:** *(Anonymous function)*
 
 unsubscribe function
 
----
+___
 
-### run
+###  run
 
-▸ **run**(): _Promise‹ReturnType›_
+▸ **run**(): *Promise‹ReturnType›*
 
-_Defined in [src/entities/TransactionQueue.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L155)_
+*Defined in [src/entities/TransactionQueue.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L155)*
 
 Run the transactions in the queue
 
-**Returns:** _Promise‹ReturnType›_
+**Returns:** *Promise‹ReturnType›*
 
----
+___
 
-### toPojo
+###  toPojo
 
-▸ **toPojo**(): _object_
+▸ **toPojo**(): *object*
 
-_Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)_
+*Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)*
 
-_Defined in [src/entities/TransactionQueue.ts:139](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L139)_
+*Defined in [src/entities/TransactionQueue.ts:139](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L139)*
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
-**Returns:** _object_
+**Returns:** *object*
 
-- **args**: _Args_
+* **args**: *Args*
 
-- **fees**: _[Fees](../interfaces/_types_index_.fees.md)_
+* **fees**: *[Fees](../interfaces/_types_index_.fees.md)*
 
-- **procedureType**: _[ProcedureType](../enums/_types_index_.proceduretype.md)_
+* **procedureType**: *[ProcedureType](../enums/_types_index_.proceduretype.md)*
 
-- **status**: _TransactionQueueStatus_
+* **status**: *TransactionQueueStatus*
 
-- **transactions**: _object[]_ = transactions.map(transaction => transaction.toPojo())
+* **transactions**: *object[]* =  transactions.map(transaction => transaction.toPojo())
 
-- **uid**: _string_
+* **uid**: *string*
 
----
+___
 
 ### `Static` generateId
 
-▸ **generateId**(): _string_
+▸ **generateId**(): *string*
 
-_Defined in [src/entities/TransactionQueue.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TransactionQueue.ts#L31)_
+*Defined in [src/entities/TransactionQueue.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L31)*
 
 Generate UUID for this Transaction Queue
 
-**Returns:** _string_
+**Returns:** *string*

@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [ApproveErc20](../classes/_procedures_approveerc20_.approveerc20.md)
+* [ApproveErc20](../classes/_procedures_approveerc20_.approveerc20.md)

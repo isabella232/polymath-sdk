@@ -2,102 +2,102 @@
 
 ## Hierarchy
 
-- **LaunchTieredStoMethod**
+* **LaunchTieredStoMethod**
 
 ## Callable
 
-▸ (`args`: [LaunchTieredStoNoCustomCurrencyParams](_entities_securitytoken_issuance_offerings_.launchtieredstonocustomcurrencyparams.md)): _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
+▸ (`args`: [LaunchTieredStoNoCustomCurrencyParams](_entities_securitytoken_issuance_offerings_.launchtieredstonocustomcurrencyparams.md)): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:122](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L122)_
-
-**Parameters:**
-
-| Name   | Type                                                                                                                          |
-| ------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| `args` | [LaunchTieredStoNoCustomCurrencyParams](_entities_securitytoken_issuance_offerings_.launchtieredstonocustomcurrencyparams.md) |
-
-**Returns:** _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
-
-▸ (`args`: [LaunchTieredStoNoCustomCurrencyNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstonocustomcurrencynostablecoinparams.md)): _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
-
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L125)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:122](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L122)*
 
 **Parameters:**
 
-| Name   | Type                                                                                                                                                  |
-| ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `args` | [LaunchTieredStoNoCustomCurrencyNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstonocustomcurrencynostablecoinparams.md) |
+Name | Type |
+------ | ------ |
+`args` | [LaunchTieredStoNoCustomCurrencyParams](_entities_securitytoken_issuance_offerings_.launchtieredstonocustomcurrencyparams.md) |
 
-**Returns:** _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
+**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
 
-▸ (`args`: [LaunchTieredStoCustomCurrencyEthParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethparams.md)): _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
+▸ (`args`: [LaunchTieredStoNoCustomCurrencyNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstonocustomcurrencynostablecoinparams.md)): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:128](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L128)_
-
-**Parameters:**
-
-| Name   | Type                                                                                                                            |
-| ------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `args` | [LaunchTieredStoCustomCurrencyEthParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethparams.md) |
-
-**Returns:** _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
-
-▸ (`args`: [LaunchTieredStoCustomCurrencyEthNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethnostablecoinparams.md)): _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
-
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:131](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L131)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L125)*
 
 **Parameters:**
 
-| Name   | Type                                                                                                                                                    |
-| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `args` | [LaunchTieredStoCustomCurrencyEthNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethnostablecoinparams.md) |
+Name | Type |
+------ | ------ |
+`args` | [LaunchTieredStoNoCustomCurrencyNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstonocustomcurrencynostablecoinparams.md) |
 
-**Returns:** _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
+**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
 
-▸ (`args`: [LaunchTieredStoCustomCurrencyPolyParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencypolyparams.md)): _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
+▸ (`args`: [LaunchTieredStoCustomCurrencyEthParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethparams.md)): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:134](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L134)_
-
-**Parameters:**
-
-| Name   | Type                                                                                                                              |
-| ------ | --------------------------------------------------------------------------------------------------------------------------------- |
-| `args` | [LaunchTieredStoCustomCurrencyPolyParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencypolyparams.md) |
-
-**Returns:** _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
-
-▸ (`args`: [LaunchTieredStoCustomCurrencyPolyNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencypolynostablecoinparams.md)): _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
-
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L137)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:128](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L128)*
 
 **Parameters:**
 
-| Name   | Type                                                                                                                                                      |
-| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `args` | [LaunchTieredStoCustomCurrencyPolyNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencypolynostablecoinparams.md) |
+Name | Type |
+------ | ------ |
+`args` | [LaunchTieredStoCustomCurrencyEthParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethparams.md) |
 
-**Returns:** _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
+**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
 
-▸ (`args`: [LaunchTieredStoCustomCurrencyBothParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencybothparams.md)): _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
+▸ (`args`: [LaunchTieredStoCustomCurrencyEthNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethnostablecoinparams.md)): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:140](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L140)_
-
-**Parameters:**
-
-| Name   | Type                                                                                                                              |
-| ------ | --------------------------------------------------------------------------------------------------------------------------------- |
-| `args` | [LaunchTieredStoCustomCurrencyBothParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencybothparams.md) |
-
-**Returns:** _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
-
-▸ (`args`: [LaunchTieredStoCustomCurrencyBothNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencybothnostablecoinparams.md)): _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
-
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:143](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L143)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:131](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L131)*
 
 **Parameters:**
 
-| Name   | Type                                                                                                                                                      |
-| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `args` | [LaunchTieredStoCustomCurrencyBothNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencybothnostablecoinparams.md) |
+Name | Type |
+------ | ------ |
+`args` | [LaunchTieredStoCustomCurrencyEthNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethnostablecoinparams.md) |
 
-**Returns:** _Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››_
+**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
+
+▸ (`args`: [LaunchTieredStoCustomCurrencyPolyParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencypolyparams.md)): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
+
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:134](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L134)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`args` | [LaunchTieredStoCustomCurrencyPolyParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencypolyparams.md) |
+
+**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
+
+▸ (`args`: [LaunchTieredStoCustomCurrencyPolyNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencypolynostablecoinparams.md)): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
+
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L137)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`args` | [LaunchTieredStoCustomCurrencyPolyNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencypolynostablecoinparams.md) |
+
+**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
+
+▸ (`args`: [LaunchTieredStoCustomCurrencyBothParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencybothparams.md)): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
+
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:140](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L140)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`args` | [LaunchTieredStoCustomCurrencyBothParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencybothparams.md) |
+
+**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
+
+▸ (`args`: [LaunchTieredStoCustomCurrencyBothNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencybothnostablecoinparams.md)): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*
+
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:143](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L143)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`args` | [LaunchTieredStoCustomCurrencyBothNoStableCoinParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencybothnostablecoinparams.md) |
+
+**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[LaunchTieredStoProcedureArgs](_types_index_.launchtieredstoprocedureargs.md), [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)››*

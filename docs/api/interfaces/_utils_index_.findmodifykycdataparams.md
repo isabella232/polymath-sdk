@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- [FindEventParams](_utils_index_.findeventparams.md)
+* [FindEventParams](_utils_index_.findeventparams.md)
 
   ↳ **FindModifyKycDataParams**
 
@@ -10,25 +10,25 @@
 
 ### Properties
 
-- [eventName](_utils_index_.findmodifykycdataparams.md#eventname)
-- [logs](_utils_index_.findmodifykycdataparams.md#logs)
+* [eventName](_utils_index_.findmodifykycdataparams.md#eventname)
+* [logs](_utils_index_.findmodifykycdataparams.md#logs)
 
 ## Properties
 
-### eventName
+###  eventName
 
-• **eventName**: _ModifyKYCData_
+• **eventName**: *ModifyKYCData*
 
-_Overrides [FindEventParams](_utils_index_.findeventparams.md).[eventName](_utils_index_.findeventparams.md#eventname)_
+*Overrides [FindEventParams](_utils_index_.findeventparams.md).[eventName](_utils_index_.findeventparams.md#eventname)*
 
-_Defined in [src/utils/index.ts:160](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/utils/index.ts#L160)_
+*Defined in [src/utils/index.ts:160](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/utils/index.ts#L160)*
 
----
+___
 
-### logs
+###  logs
 
-• **logs**: _LogEntry | LogWithDecodedArgs‹DecodedLogArgs›[]_
+• **logs**: *LogEntry | LogWithDecodedArgs‹DecodedLogArgs›[]*
 
-_Inherited from [FindEventParams](_utils_index_.findeventparams.md).[logs](_utils_index_.findeventparams.md#logs)_
+*Inherited from [FindEventParams](_utils_index_.findeventparams.md).[logs](_utils_index_.findeventparams.md#logs)*
 
-_Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/utils/index.ts#L127)_
+*Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/utils/index.ts#L127)*

@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [LaunchSimpleSto](../classes/_procedures_launchsimplesto_.launchsimplesto.md)
+* [LaunchSimpleSto](../classes/_procedures_launchsimplesto_.launchsimplesto.md)

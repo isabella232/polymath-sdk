@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- object
+* object
 
   ↳ **LaunchTieredStoCustomCurrencyEthNoStableCoinParams**
 
@@ -10,27 +10,27 @@
 
 ### Properties
 
-- [currencies](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethnostablecoinparams.md#currencies)
-- [customCurrency](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethnostablecoinparams.md#customcurrency)
+* [currencies](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethnostablecoinparams.md#currencies)
+* [customCurrency](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethnostablecoinparams.md#customcurrency)
 
 ## Properties
 
-### currencies
+###  currencies
 
-• **currencies**: _[OnlyEth](../modules/_entities_securitytoken_issuance_offerings_.md#onlyeth)_
+• **currencies**: *[OnlyEth](../modules/_entities_securitytoken_issuance_offerings_.md#onlyeth)*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L77)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L77)*
 
----
+___
 
-### customCurrency
+###  customCurrency
 
-• **customCurrency**: _object_
+• **customCurrency**: *object*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:78](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L78)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:78](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L78)*
 
 #### Type declaration:
 
-- **currencySymbol**? : _undefined | string_
+* **currencySymbol**? : *undefined | string*
 
-- **ethOracleAddress**: _string_
+* **ethOracleAddress**: *string*

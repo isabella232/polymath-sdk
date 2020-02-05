@@ -4,36 +4,36 @@ Properties that uniquely identify an Investment
 
 ## Hierarchy
 
-- **UniqueIdentifiers**
+* **UniqueIdentifiers**
 
 ## Index
 
 ### Properties
 
-- [index](_entities_investment_.uniqueidentifiers.md#index)
-- [securityTokenId](_entities_investment_.uniqueidentifiers.md#securitytokenid)
-- [stoId](_entities_investment_.uniqueidentifiers.md#stoid)
+* [index](_entities_investment_.uniqueidentifiers.md#index)
+* [securityTokenId](_entities_investment_.uniqueidentifiers.md#securitytokenid)
+* [stoId](_entities_investment_.uniqueidentifiers.md#stoid)
 
 ## Properties
 
-### index
+###  index
 
-• **index**: _number_
+• **index**: *number*
 
-_Defined in [src/entities/Investment.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L13)_
+*Defined in [src/entities/Investment.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L13)*
 
----
+___
 
-### securityTokenId
+###  securityTokenId
 
-• **securityTokenId**: _string_
+• **securityTokenId**: *string*
 
-_Defined in [src/entities/Investment.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L11)_
+*Defined in [src/entities/Investment.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L11)*
 
----
+___
 
-### stoId
+###  stoId
 
-• **stoId**: _string_
+• **stoId**: *string*
 
-_Defined in [src/entities/Investment.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L12)_
+*Defined in [src/entities/Investment.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L12)*

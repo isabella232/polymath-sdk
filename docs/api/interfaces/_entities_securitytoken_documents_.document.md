@@ -4,51 +4,51 @@ Represents a single Document attached to a Security Token
 
 ## Hierarchy
 
-- **Document**
+* **Document**
 
 ## Index
 
 ### Properties
 
-- [documentHash](_entities_securitytoken_documents_.document.md#documenthash)
-- [documentUri](_entities_securitytoken_documents_.document.md#documenturi)
-- [name](_entities_securitytoken_documents_.document.md#name)
-- [updatedAt](_entities_securitytoken_documents_.document.md#updatedat)
+* [documentHash](_entities_securitytoken_documents_.document.md#documenthash)
+* [documentUri](_entities_securitytoken_documents_.document.md#documenturi)
+* [name](_entities_securitytoken_documents_.document.md#name)
+* [updatedAt](_entities_securitytoken_documents_.document.md#updatedat)
 
 ## Properties
 
-### documentHash
+###  documentHash
 
-• **documentHash**: _string_
+• **documentHash**: *string*
 
-_Defined in [src/entities/SecurityToken/Documents.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Documents.ts#L22)_
+*Defined in [src/entities/SecurityToken/Documents.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Documents.ts#L22)*
 
 hash of the document's contents
 
----
+___
 
-### documentUri
+###  documentUri
 
-• **documentUri**: _string_
+• **documentUri**: *string*
 
-_Defined in [src/entities/SecurityToken/Documents.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Documents.ts#L18)_
+*Defined in [src/entities/SecurityToken/Documents.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Documents.ts#L18)*
 
 off-chain uri of the document from where it is accessible to investors/advisors to read
 
----
+___
 
-### name
+###  name
 
-• **name**: _string_
+• **name**: *string*
 
-_Defined in [src/entities/SecurityToken/Documents.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Documents.ts#L14)_
+*Defined in [src/entities/SecurityToken/Documents.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Documents.ts#L14)*
 
 name of the document. It should always be unique
 
----
+___
 
-### updatedAt
+###  updatedAt
 
-• **updatedAt**: _Date_
+• **updatedAt**: *Date*
 
-_Defined in [src/entities/SecurityToken/Documents.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Documents.ts#L23)_
+*Defined in [src/entities/SecurityToken/Documents.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Documents.ts#L23)*

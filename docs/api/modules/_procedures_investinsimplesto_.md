@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [InvestInSimpleSto](../classes/_procedures_investinsimplesto_.investinsimplesto.md)
+* [InvestInSimpleSto](../classes/_procedures_investinsimplesto_.investinsimplesto.md)

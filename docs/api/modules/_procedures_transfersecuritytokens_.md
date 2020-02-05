@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [TransferSecurityTokens](../classes/_procedures_transfersecuritytokens_.transfersecuritytokens.md)
+* [TransferSecurityTokens](../classes/_procedures_transfersecuritytokens_.transfersecuritytokens.md)

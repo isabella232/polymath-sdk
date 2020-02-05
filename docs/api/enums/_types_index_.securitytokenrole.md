@@ -4,57 +4,57 @@
 
 ### Enumeration members
 
-- [DividendsAdministrator](_types_index_.securitytokenrole.md#dividendsadministrator)
-- [DividendsOperator](_types_index_.securitytokenrole.md#dividendsoperator)
-- [PercentageOwnershipRestrictionsAdministrator](_types_index_.securitytokenrole.md#percentageownershiprestrictionsadministrator)
-- [PermissionsAdministrator](_types_index_.securitytokenrole.md#permissionsadministrator)
-- [ShareholderCountRestrictionsAdministrator](_types_index_.securitytokenrole.md#shareholdercountrestrictionsadministrator)
-- [ShareholdersAdministrator](_types_index_.securitytokenrole.md#shareholdersadministrator)
+* [DividendsAdministrator](_types_index_.securitytokenrole.md#dividendsadministrator)
+* [DividendsOperator](_types_index_.securitytokenrole.md#dividendsoperator)
+* [PercentageOwnershipRestrictionsAdministrator](_types_index_.securitytokenrole.md#percentageownershiprestrictionsadministrator)
+* [PermissionsAdministrator](_types_index_.securitytokenrole.md#permissionsadministrator)
+* [ShareholderCountRestrictionsAdministrator](_types_index_.securitytokenrole.md#shareholdercountrestrictionsadministrator)
+* [ShareholdersAdministrator](_types_index_.securitytokenrole.md#shareholdersadministrator)
 
 ## Enumeration members
 
-### DividendsAdministrator
+###  DividendsAdministrator
 
 • **DividendsAdministrator**: = "DividendsAdministrator"
 
-_Defined in [src/types/index.ts:1459](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1459)_
+*Defined in [src/types/index.ts:1459](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1459)*
 
----
+___
 
-### DividendsOperator
+###  DividendsOperator
 
 • **DividendsOperator**: = "DividendsOperator"
 
-_Defined in [src/types/index.ts:1458](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1458)_
+*Defined in [src/types/index.ts:1458](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1458)*
 
----
+___
 
-### PercentageOwnershipRestrictionsAdministrator
+###  PercentageOwnershipRestrictionsAdministrator
 
 • **PercentageOwnershipRestrictionsAdministrator**: = "PercentageOwnershipRestrictionsAdministrator"
 
-_Defined in [src/types/index.ts:1462](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1462)_
+*Defined in [src/types/index.ts:1462](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1462)*
 
----
+___
 
-### PermissionsAdministrator
+###  PermissionsAdministrator
 
 • **PermissionsAdministrator**: = "PermissionsAdministrator"
 
-_Defined in [src/types/index.ts:1457](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1457)_
+*Defined in [src/types/index.ts:1457](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1457)*
 
----
+___
 
-### ShareholderCountRestrictionsAdministrator
+###  ShareholderCountRestrictionsAdministrator
 
 • **ShareholderCountRestrictionsAdministrator**: = "ShareholderCountRestrictionsAdministrator"
 
-_Defined in [src/types/index.ts:1461](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1461)_
+*Defined in [src/types/index.ts:1461](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1461)*
 
----
+___
 
-### ShareholdersAdministrator
+###  ShareholdersAdministrator
 
 • **ShareholdersAdministrator**: = "ShareholdersAdministrator"
 
-_Defined in [src/types/index.ts:1460](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1460)_
+*Defined in [src/types/index.ts:1460](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1460)*

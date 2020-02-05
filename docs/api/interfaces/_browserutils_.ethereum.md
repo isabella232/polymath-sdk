@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- Provider
+* Provider
 
   ↳ **Ethereum**
 
@@ -10,55 +10,55 @@
 
 ### Properties
 
-- [\_metamask](_browserutils_.ethereum.md#optional-_metamask)
-- [networkVersion](_browserutils_.ethereum.md#networkversion)
+* [_metamask](_browserutils_.ethereum.md#optional-_metamask)
+* [networkVersion](_browserutils_.ethereum.md#networkversion)
 
 ### Methods
 
-- [enable](_browserutils_.ethereum.md#enable)
-- [sendAsync](_browserutils_.ethereum.md#sendasync)
+* [enable](_browserutils_.ethereum.md#enable)
+* [sendAsync](_browserutils_.ethereum.md#sendasync)
 
 ## Properties
 
-### `Optional` \_metamask
+### `Optional` _metamask
 
-• **\_metamask**? : _undefined | object_
+• **_metamask**? : *undefined | object*
 
-_Defined in [src/browserUtils.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/browserUtils.ts#L15)_
+*Defined in [src/browserUtils.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/browserUtils.ts#L15)*
 
----
+___
 
-### networkVersion
+###  networkVersion
 
-• **networkVersion**: _string_
+• **networkVersion**: *string*
 
-_Defined in [src/browserUtils.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/browserUtils.ts#L14)_
+*Defined in [src/browserUtils.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/browserUtils.ts#L14)*
 
 ## Methods
 
-### enable
+###  enable
 
-▸ **enable**(): _Promise‹any›_
+▸ **enable**(): *Promise‹any›*
 
-_Defined in [src/browserUtils.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/browserUtils.ts#L18)_
+*Defined in [src/browserUtils.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/browserUtils.ts#L18)*
 
-**Returns:** _Promise‹any›_
+**Returns:** *Promise‹any›*
 
----
+___
 
-### sendAsync
+###  sendAsync
 
-▸ **sendAsync**(`payload`: JSONRPCRequestPayload, `callback`: JSONRPCErrorCallback): _void_
+▸ **sendAsync**(`payload`: JSONRPCRequestPayload, `callback`: JSONRPCErrorCallback): *void*
 
-_Inherited from void_
+*Inherited from void*
 
 Defined in node_modules/ethereum-types/lib/index.d.ts:13
 
 **Parameters:**
 
-| Name       | Type                  |
-| ---------- | --------------------- |
-| `payload`  | JSONRPCRequestPayload |
-| `callback` | JSONRPCErrorCallback  |
+Name | Type |
+------ | ------ |
+`payload` | JSONRPCRequestPayload |
+`callback` | JSONRPCErrorCallback |
 
-**Returns:** _void_
+**Returns:** *void*

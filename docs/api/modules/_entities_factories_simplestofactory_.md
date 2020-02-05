@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [SimpleStoFactory](../classes/_entities_factories_simplestofactory_.simplestofactory.md)
+* [SimpleStoFactory](../classes/_entities_factories_simplestofactory_.simplestofactory.md)

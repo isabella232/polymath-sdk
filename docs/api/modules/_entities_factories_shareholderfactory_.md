@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [ShareholderFactory](../classes/_entities_factories_shareholderfactory_.shareholderfactory.md)
+* [ShareholderFactory](../classes/_entities_factories_shareholderfactory_.shareholderfactory.md)

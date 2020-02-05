@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- [FindEventParams](_utils_index_.findeventparams.md)
+* [FindEventParams](_utils_index_.findeventparams.md)
 
   ↳ **FindErc20SetWithholdingParams**
 
@@ -10,25 +10,25 @@
 
 ### Properties
 
-- [eventName](_utils_index_.finderc20setwithholdingparams.md#eventname)
-- [logs](_utils_index_.finderc20setwithholdingparams.md#logs)
+* [eventName](_utils_index_.finderc20setwithholdingparams.md#eventname)
+* [logs](_utils_index_.finderc20setwithholdingparams.md#logs)
 
 ## Properties
 
-### eventName
+###  eventName
 
-• **eventName**: _ERC20DividendCheckpointEvents.SetWithholding_
+• **eventName**: *ERC20DividendCheckpointEvents.SetWithholding*
 
-_Overrides [FindEventParams](_utils_index_.findeventparams.md).[eventName](_utils_index_.findeventparams.md#eventname)_
+*Overrides [FindEventParams](_utils_index_.findeventparams.md).[eventName](_utils_index_.findeventparams.md#eventname)*
 
-_Defined in [src/utils/index.ts:208](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/utils/index.ts#L208)_
+*Defined in [src/utils/index.ts:208](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/utils/index.ts#L208)*
 
----
+___
 
-### logs
+###  logs
 
-• **logs**: _LogEntry | LogWithDecodedArgs‹DecodedLogArgs›[]_
+• **logs**: *LogEntry | LogWithDecodedArgs‹DecodedLogArgs›[]*
 
-_Inherited from [FindEventParams](_utils_index_.findeventparams.md).[logs](_utils_index_.findeventparams.md#logs)_
+*Inherited from [FindEventParams](_utils_index_.findeventparams.md).[logs](_utils_index_.findeventparams.md#logs)*
 
-_Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/utils/index.ts#L127)_
+*Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/utils/index.ts#L127)*

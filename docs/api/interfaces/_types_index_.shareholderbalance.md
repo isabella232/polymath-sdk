@@ -4,31 +4,31 @@ Balance in Security Tokens of a specific Shareholder
 
 ## Hierarchy
 
-- **ShareholderBalance**
+* **ShareholderBalance**
 
 ## Index
 
 ### Properties
 
-- [address](_types_index_.shareholderbalance.md#address)
-- [balance](_types_index_.shareholderbalance.md#balance)
+* [address](_types_index_.shareholderbalance.md#address)
+* [balance](_types_index_.shareholderbalance.md#balance)
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Defined in [src/types/index.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L125)_
+*Defined in [src/types/index.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L125)*
 
 wallet address of the Shareholder
 
----
+___
 
-### balance
+###  balance
 
-• **balance**: _BigNumber_
+• **balance**: *BigNumber*
 
-_Defined in [src/types/index.ts:129](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L129)_
+*Defined in [src/types/index.ts:129](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L129)*
 
 amount of Security Tokens the Shareholder possesses

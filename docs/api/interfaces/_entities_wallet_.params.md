@@ -4,7 +4,7 @@ Constructor parameters
 
 ## Hierarchy
 
-- [UniqueIdentifiers](_entities_wallet_.uniqueidentifiers.md)
+* [UniqueIdentifiers](_entities_wallet_.uniqueidentifiers.md)
 
   ↳ **Params**
 
@@ -12,14 +12,14 @@ Constructor parameters
 
 ### Properties
 
-- [address](_entities_wallet_.params.md#address)
+* [address](_entities_wallet_.params.md#address)
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Inherited from [UniqueIdentifiers](_entities_wallet_.uniqueidentifiers.md).[address](_entities_wallet_.uniqueidentifiers.md#address)_
+*Inherited from [UniqueIdentifiers](_entities_wallet_.uniqueidentifiers.md).[address](_entities_wallet_.uniqueidentifiers.md#address)*
 
-_Defined in [src/entities/Wallet.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Wallet.ts#L12)_
+*Defined in [src/entities/Wallet.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Wallet.ts#L12)*

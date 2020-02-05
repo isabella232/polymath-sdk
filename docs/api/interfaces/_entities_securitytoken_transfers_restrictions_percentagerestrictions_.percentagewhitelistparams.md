@@ -2,18 +2,18 @@
 
 ## Hierarchy
 
-- **PercentageWhitelistParams**
+* **PercentageWhitelistParams**
 
 ## Index
 
 ### Properties
 
-- [whitelistEntries](_entities_securitytoken_transfers_restrictions_percentagerestrictions_.percentagewhitelistparams.md#whitelistentries)
+* [whitelistEntries](_entities_securitytoken_transfers_restrictions_percentagerestrictions_.percentagewhitelistparams.md#whitelistentries)
 
 ## Properties
 
-### whitelistEntries
+###  whitelistEntries
 
-• **whitelistEntries**: _[PercentageWhitelistEntry](_types_index_.percentagewhitelistentry.md)[]_
+• **whitelistEntries**: *[PercentageWhitelistEntry](_types_index_.percentagewhitelistentry.md)[]*
 
-_Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L18)_
+*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L18)*

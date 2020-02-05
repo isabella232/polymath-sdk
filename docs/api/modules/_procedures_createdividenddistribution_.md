@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [CreateDividendDistribution](../classes/_procedures_createdividenddistribution_.createdividenddistribution.md)
+* [CreateDividendDistribution](../classes/_procedures_createdividenddistribution_.createdividenddistribution.md)

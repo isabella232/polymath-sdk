@@ -4,7 +4,7 @@ Wraps an error to give more information about it's type
 
 ## Hierarchy
 
-- Error
+* Error
 
   ↳ **PolymathError**
 
@@ -12,79 +12,79 @@ Wraps an error to give more information about it's type
 
 ### Constructors
 
-- [constructor](_polymatherror_.polymatherror.md#constructor)
+* [constructor](_polymatherror_.polymatherror.md#constructor)
 
 ### Properties
 
-- [code](_polymatherror_.polymatherror.md#code)
-- [message](_polymatherror_.polymatherror.md#message)
-- [name](_polymatherror_.polymatherror.md#name)
-- [stack](_polymatherror_.polymatherror.md#optional-stack)
-- [Error](_polymatherror_.polymatherror.md#static-error)
+* [code](_polymatherror_.polymatherror.md#code)
+* [message](_polymatherror_.polymatherror.md#message)
+* [name](_polymatherror_.polymatherror.md#name)
+* [stack](_polymatherror_.polymatherror.md#optional-stack)
+* [Error](_polymatherror_.polymatherror.md#static-error)
 
 ## Constructors
 
-### constructor
+###  constructor
 
-\+ **new PolymathError**(`__namedParameters`: object): _[PolymathError](_polymatherror_.polymatherror.md)_
+\+ **new PolymathError**(`__namedParameters`: object): *[PolymathError](_polymatherror_.polymatherror.md)*
 
-_Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathError.ts#L24)_
+*Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathError.ts#L24)*
 
 **Parameters:**
 
-▪ **\_\_namedParameters**: _object_
+▪ **__namedParameters**: *object*
 
-| Name      | Type                                             |
-| --------- | ------------------------------------------------ |
-| `code`    | [ErrorCode](../enums/_types_index_.errorcode.md) |
-| `message` | undefined &#124; string                          |
+Name | Type |
+------ | ------ |
+`code` | [ErrorCode](../enums/_types_index_.errorcode.md) |
+`message` | undefined &#124; string |
 
-**Returns:** _[PolymathError](_polymatherror_.polymatherror.md)_
+**Returns:** *[PolymathError](_polymatherror_.polymatherror.md)*
 
 ## Properties
 
-### code
+###  code
 
-• **code**: _[ErrorCode](../enums/_types_index_.errorcode.md)_
+• **code**: *[ErrorCode](../enums/_types_index_.errorcode.md)*
 
-_Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathError.ts#L24)_
+*Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathError.ts#L24)*
 
----
+___
 
-### message
+###  message
 
-• **message**: _string_
+• **message**: *string*
 
-_Inherited from void_
+*Inherited from void*
 
 Defined in node_modules/typescript/lib/lib.es5.d.ts:964
 
----
+___
 
-### name
+###  name
 
-• **name**: _string_
+• **name**: *string*
 
-_Inherited from void_
+*Inherited from void*
 
 Defined in node_modules/typescript/lib/lib.es5.d.ts:963
 
----
+___
 
 ### `Optional` stack
 
-• **stack**? : _undefined | string_
+• **stack**? : *undefined | string*
 
-_Inherited from void_
+*Inherited from void*
 
-_Overrides void_
+*Overrides void*
 
 Defined in node_modules/typescript/lib/lib.es5.d.ts:965
 
----
+___
 
 ### `Static` Error
 
-▪ **Error**: _ErrorConstructor_
+▪ **Error**: *ErrorConstructor*
 
 Defined in node_modules/typescript/lib/lib.es5.d.ts:974

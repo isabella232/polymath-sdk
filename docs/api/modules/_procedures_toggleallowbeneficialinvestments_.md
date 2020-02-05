@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [ToggleAllowBeneficialInvestments](../classes/_procedures_toggleallowbeneficialinvestments_.toggleallowbeneficialinvestments.md)
+* [ToggleAllowBeneficialInvestments](../classes/_procedures_toggleallowbeneficialinvestments_.toggleallowbeneficialinvestments.md)

@@ -4,20 +4,20 @@ Arguments for the [EnableGeneralPermissionManager](../enums/_types_index_.proced
 
 ## Hierarchy
 
-- **EnableGeneralPermissionManagerProcedureArgs**
+* **EnableGeneralPermissionManagerProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [symbol](_types_index_.enablegeneralpermissionmanagerprocedureargs.md#symbol)
+* [symbol](_types_index_.enablegeneralpermissionmanagerprocedureargs.md#symbol)
 
 ## Properties
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:439](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L439)_
+*Defined in [src/types/index.ts:439](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L439)*
 
 symbol of the Security Token

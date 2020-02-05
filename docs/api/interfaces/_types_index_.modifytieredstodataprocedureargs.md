@@ -4,7 +4,7 @@ Arguments for the [ModifyTieredStoData](../enums/_types_index_.proceduretype.md#
 
 ## Hierarchy
 
-- object
+* object
 
   ↳ **ModifyTieredStoDataProcedureArgs**
 
@@ -12,25 +12,25 @@ Arguments for the [ModifyTieredStoData](../enums/_types_index_.proceduretype.md#
 
 ### Properties
 
-- [stoAddress](_types_index_.modifytieredstodataprocedureargs.md#stoaddress)
-- [symbol](_types_index_.modifytieredstodataprocedureargs.md#symbol)
+* [stoAddress](_types_index_.modifytieredstodataprocedureargs.md#stoaddress)
+* [symbol](_types_index_.modifytieredstodataprocedureargs.md#symbol)
 
 ## Properties
 
-### stoAddress
+###  stoAddress
 
-• **stoAddress**: _string_
+• **stoAddress**: *string*
 
-_Defined in [src/types/index.ts:609](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L609)_
+*Defined in [src/types/index.ts:609](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L609)*
 
 address of the STO
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:613](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L613)_
+*Defined in [src/types/index.ts:613](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L613)*
 
 symbol of the Security Token

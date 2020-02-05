@@ -4,48 +4,48 @@
 
 ### Enumeration members
 
-- [Dividends](_types_index_.feature.md#dividends)
-- [PercentageOwnershipRestrictions](_types_index_.feature.md#percentageownershiprestrictions)
-- [Permissions](_types_index_.feature.md#permissions)
-- [ShareholderCountRestrictions](_types_index_.feature.md#shareholdercountrestrictions)
-- [Shareholders](_types_index_.feature.md#shareholders)
+* [Dividends](_types_index_.feature.md#dividends)
+* [PercentageOwnershipRestrictions](_types_index_.feature.md#percentageownershiprestrictions)
+* [Permissions](_types_index_.feature.md#permissions)
+* [ShareholderCountRestrictions](_types_index_.feature.md#shareholdercountrestrictions)
+* [Shareholders](_types_index_.feature.md#shareholders)
 
 ## Enumeration members
 
-### Dividends
+###  Dividends
 
 • **Dividends**: = "Dividends"
 
-_Defined in [src/types/index.ts:1451](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1451)_
+*Defined in [src/types/index.ts:1451](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1451)*
 
----
+___
 
-### PercentageOwnershipRestrictions
+###  PercentageOwnershipRestrictions
 
 • **PercentageOwnershipRestrictions**: = "PercentageOwnershipRestrictions"
 
-_Defined in [src/types/index.ts:1453](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1453)_
+*Defined in [src/types/index.ts:1453](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1453)*
 
----
+___
 
-### Permissions
+###  Permissions
 
 • **Permissions**: = "Permissions"
 
-_Defined in [src/types/index.ts:1449](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1449)_
+*Defined in [src/types/index.ts:1449](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1449)*
 
----
+___
 
-### ShareholderCountRestrictions
+###  ShareholderCountRestrictions
 
 • **ShareholderCountRestrictions**: = "ShareholderCountRestrictions"
 
-_Defined in [src/types/index.ts:1452](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1452)_
+*Defined in [src/types/index.ts:1452](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1452)*
 
----
+___
 
-### Shareholders
+###  Shareholders
 
 • **Shareholders**: = "Shareholders"
 
-_Defined in [src/types/index.ts:1450](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1450)_
+*Defined in [src/types/index.ts:1450](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1450)*

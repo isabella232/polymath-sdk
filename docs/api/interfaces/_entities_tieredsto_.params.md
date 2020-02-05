@@ -4,7 +4,7 @@ Represents a Tiered STO
 
 ## Hierarchy
 
-- [Params](_entities_sto_.params.md)
+* [Params](_entities_sto_.params.md)
 
   ↳ **Params**
 
@@ -12,234 +12,234 @@ Represents a Tiered STO
 
 ### Properties
 
-- [beneficialInvestmentsAllowed](_entities_tieredsto_.params.md#beneficialinvestmentsallowed)
-- [capReached](_entities_tieredsto_.params.md#capreached)
-- [currentTier](_entities_tieredsto_.params.md#currenttier)
-- [endDate](_entities_tieredsto_.params.md#enddate)
-- [fundraiseCurrencies](_entities_tieredsto_.params.md#fundraisecurrencies)
-- [investorCount](_entities_tieredsto_.params.md#investorcount)
-- [isFinalized](_entities_tieredsto_.params.md#isfinalized)
-- [isPaused](_entities_tieredsto_.params.md#ispaused)
-- [minimumInvestment](_entities_tieredsto_.params.md#minimuminvestment)
-- [nonAccreditedInvestmentLimit](_entities_tieredsto_.params.md#nonaccreditedinvestmentlimit)
-- [preIssueAllowed](_entities_tieredsto_.params.md#preissueallowed)
-- [raisedAmount](_entities_tieredsto_.params.md#raisedamount)
-- [raisedFundsWallet](_entities_tieredsto_.params.md#raisedfundswallet)
-- [securityTokenSymbol](_entities_tieredsto_.params.md#securitytokensymbol)
-- [soldTokensAmount](_entities_tieredsto_.params.md#soldtokensamount)
-- [stableCoinAddresses](_entities_tieredsto_.params.md#stablecoinaddresses)
-- [startDate](_entities_tieredsto_.params.md#startdate)
-- [tiers](_entities_tieredsto_.params.md#tiers)
-- [unsoldTokensWallet](_entities_tieredsto_.params.md#unsoldtokenswallet)
+* [beneficialInvestmentsAllowed](_entities_tieredsto_.params.md#beneficialinvestmentsallowed)
+* [capReached](_entities_tieredsto_.params.md#capreached)
+* [currentTier](_entities_tieredsto_.params.md#currenttier)
+* [endDate](_entities_tieredsto_.params.md#enddate)
+* [fundraiseCurrencies](_entities_tieredsto_.params.md#fundraisecurrencies)
+* [investorCount](_entities_tieredsto_.params.md#investorcount)
+* [isFinalized](_entities_tieredsto_.params.md#isfinalized)
+* [isPaused](_entities_tieredsto_.params.md#ispaused)
+* [minimumInvestment](_entities_tieredsto_.params.md#minimuminvestment)
+* [nonAccreditedInvestmentLimit](_entities_tieredsto_.params.md#nonaccreditedinvestmentlimit)
+* [preIssueAllowed](_entities_tieredsto_.params.md#preissueallowed)
+* [raisedAmount](_entities_tieredsto_.params.md#raisedamount)
+* [raisedFundsWallet](_entities_tieredsto_.params.md#raisedfundswallet)
+* [securityTokenSymbol](_entities_tieredsto_.params.md#securitytokensymbol)
+* [soldTokensAmount](_entities_tieredsto_.params.md#soldtokensamount)
+* [stableCoinAddresses](_entities_tieredsto_.params.md#stablecoinaddresses)
+* [startDate](_entities_tieredsto_.params.md#startdate)
+* [tiers](_entities_tieredsto_.params.md#tiers)
+* [unsoldTokensWallet](_entities_tieredsto_.params.md#unsoldtokenswallet)
 
 ## Properties
 
-### beneficialInvestmentsAllowed
+###  beneficialInvestmentsAllowed
 
-• **beneficialInvestmentsAllowed**: _boolean_
+• **beneficialInvestmentsAllowed**: *boolean*
 
-_Inherited from [Params](_entities_sto_.params.md).[beneficialInvestmentsAllowed](_entities_sto_.params.md#beneficialinvestmentsallowed)_
+*Inherited from [Params](_entities_sto_.params.md).[beneficialInvestmentsAllowed](_entities_sto_.params.md#beneficialinvestmentsallowed)*
 
-_Defined in [src/entities/Sto.ts:92](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L92)_
+*Defined in [src/entities/Sto.ts:92](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L92)*
 
 whether or not investments can be made on behalf of a beneficiary in the sto
 
----
+___
 
-### capReached
+###  capReached
 
-• **capReached**: _boolean_
+• **capReached**: *boolean*
 
-_Inherited from [Params](_entities_sto_.params.md).[capReached](_entities_sto_.params.md#capreached)_
+*Inherited from [Params](_entities_sto_.params.md).[capReached](_entities_sto_.params.md#capreached)*
 
-_Defined in [src/entities/Sto.ts:80](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L80)_
+*Defined in [src/entities/Sto.ts:80](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L80)*
 
 whether or not the cap has been reached for the sto
 
----
+___
 
-### currentTier
+###  currentTier
 
-• **currentTier**: _number_
+• **currentTier**: *number*
 
-_Defined in [src/entities/TieredSto.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TieredSto.ts#L57)_
+*Defined in [src/entities/TieredSto.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TieredSto.ts#L57)*
 
 numerical identifier for the current tier index
 
----
+___
 
-### endDate
+###  endDate
 
-• **endDate**: _Date_
+• **endDate**: *Date*
 
-_Inherited from [Params](_entities_sto_.params.md).[endDate](_entities_sto_.params.md#enddate)_
+*Inherited from [Params](_entities_sto_.params.md).[endDate](_entities_sto_.params.md#enddate)*
 
-_Defined in [src/entities/Sto.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L48)_
+*Defined in [src/entities/Sto.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L48)*
 
 expiry date of the sto
 
----
+___
 
-### fundraiseCurrencies
+###  fundraiseCurrencies
 
-• **fundraiseCurrencies**: _Currency[]_
+• **fundraiseCurrencies**: *Currency[]*
 
-_Inherited from [Params](_entities_sto_.params.md).[fundraiseCurrencies](_entities_sto_.params.md#fundraisecurrencies)_
+*Inherited from [Params](_entities_sto_.params.md).[fundraiseCurrencies](_entities_sto_.params.md#fundraisecurrencies)*
 
-_Defined in [src/entities/Sto.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L52)_
+*Defined in [src/entities/Sto.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L52)*
 
 currencies that can be used to fundraise in this sto
 
----
+___
 
-### investorCount
+###  investorCount
 
-• **investorCount**: _number_
+• **investorCount**: *number*
 
-_Inherited from [Params](_entities_sto_.params.md).[investorCount](_entities_sto_.params.md#investorcount)_
+*Inherited from [Params](_entities_sto_.params.md).[investorCount](_entities_sto_.params.md#investorcount)*
 
-_Defined in [src/entities/Sto.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L72)_
+*Defined in [src/entities/Sto.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L72)*
 
 number of investors in the sto
 
----
+___
 
-### isFinalized
+###  isFinalized
 
-• **isFinalized**: _boolean_
+• **isFinalized**: *boolean*
 
-_Inherited from [Params](_entities_sto_.params.md).[isFinalized](_entities_sto_.params.md#isfinalized)_
+*Inherited from [Params](_entities_sto_.params.md).[isFinalized](_entities_sto_.params.md#isfinalized)*
 
-_Defined in [src/entities/Sto.ts:84](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L84)_
+*Defined in [src/entities/Sto.ts:84](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L84)*
 
 whether or not the sto has been finalized
 
----
+___
 
-### isPaused
+###  isPaused
 
-• **isPaused**: _boolean_
+• **isPaused**: *boolean*
 
-_Inherited from [Params](_entities_sto_.params.md).[isPaused](_entities_sto_.params.md#ispaused)_
+*Inherited from [Params](_entities_sto_.params.md).[isPaused](_entities_sto_.params.md#ispaused)*
 
-_Defined in [src/entities/Sto.ts:76](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L76)_
+*Defined in [src/entities/Sto.ts:76](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L76)*
 
 whether or not the sto is currently paused
 
----
+___
 
-### minimumInvestment
+###  minimumInvestment
 
-• **minimumInvestment**: _BigNumber_
+• **minimumInvestment**: *BigNumber*
 
-_Defined in [src/entities/TieredSto.ts:63](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TieredSto.ts#L63)_
+*Defined in [src/entities/TieredSto.ts:63](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TieredSto.ts#L63)*
 
----
+___
 
-### nonAccreditedInvestmentLimit
+###  nonAccreditedInvestmentLimit
 
-• **nonAccreditedInvestmentLimit**: _BigNumber_
+• **nonAccreditedInvestmentLimit**: *BigNumber*
 
-_Defined in [src/entities/TieredSto.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TieredSto.ts#L62)_
+*Defined in [src/entities/TieredSto.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TieredSto.ts#L62)*
 
----
+___
 
-### preIssueAllowed
+###  preIssueAllowed
 
-• **preIssueAllowed**: _boolean_
+• **preIssueAllowed**: *boolean*
 
-_Inherited from [Params](_entities_sto_.params.md).[preIssueAllowed](_entities_sto_.params.md#preissueallowed)_
+*Inherited from [Params](_entities_sto_.params.md).[preIssueAllowed](_entities_sto_.params.md#preissueallowed)*
 
-_Defined in [src/entities/Sto.ts:88](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L88)_
+*Defined in [src/entities/Sto.ts:88](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L88)*
 
 whether or not pre issuance is allowed for the sto
 
----
+___
 
-### raisedAmount
+###  raisedAmount
 
-• **raisedAmount**: _BigNumber_
+• **raisedAmount**: *BigNumber*
 
-_Inherited from [Params](_entities_sto_.params.md).[raisedAmount](_entities_sto_.params.md#raisedamount)_
+*Inherited from [Params](_entities_sto_.params.md).[raisedAmount](_entities_sto_.params.md#raisedamount)*
 
-_Defined in [src/entities/Sto.ts:64](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L64)_
+*Defined in [src/entities/Sto.ts:64](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L64)*
 
 funds that have been raised to this date
 
----
+___
 
-### raisedFundsWallet
+###  raisedFundsWallet
 
-• **raisedFundsWallet**: _string_
+• **raisedFundsWallet**: *string*
 
-_Inherited from [Params](_entities_sto_.params.md).[raisedFundsWallet](_entities_sto_.params.md#raisedfundswallet)_
+*Inherited from [Params](_entities_sto_.params.md).[raisedFundsWallet](_entities_sto_.params.md#raisedfundswallet)*
 
-_Defined in [src/entities/Sto.ts:56](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L56)_
+*Defined in [src/entities/Sto.ts:56](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L56)*
 
 wallet address where raised funds will be stored
 
----
+___
 
-### securityTokenSymbol
+###  securityTokenSymbol
 
-• **securityTokenSymbol**: _string_
+• **securityTokenSymbol**: *string*
 
-_Inherited from [Params](_entities_sto_.params.md).[securityTokenSymbol](_entities_sto_.params.md#securitytokensymbol)_
+*Inherited from [Params](_entities_sto_.params.md).[securityTokenSymbol](_entities_sto_.params.md#securitytokensymbol)*
 
-_Defined in [src/entities/Sto.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L40)_
+*Defined in [src/entities/Sto.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L40)*
 
 symbol of security token
 
----
+___
 
-### soldTokensAmount
+###  soldTokensAmount
 
-• **soldTokensAmount**: _BigNumber_
+• **soldTokensAmount**: *BigNumber*
 
-_Inherited from [Params](_entities_sto_.params.md).[soldTokensAmount](_entities_sto_.params.md#soldtokensamount)_
+*Inherited from [Params](_entities_sto_.params.md).[soldTokensAmount](_entities_sto_.params.md#soldtokensamount)*
 
-_Defined in [src/entities/Sto.ts:68](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L68)_
+*Defined in [src/entities/Sto.ts:68](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L68)*
 
 amount of tokens that have been sold
 
----
+___
 
-### stableCoinAddresses
+###  stableCoinAddresses
 
-• **stableCoinAddresses**: _string[]_
+• **stableCoinAddresses**: *string[]*
 
-_Defined in [src/entities/TieredSto.ts:64](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TieredSto.ts#L64)_
+*Defined in [src/entities/TieredSto.ts:64](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TieredSto.ts#L64)*
 
----
+___
 
-### startDate
+###  startDate
 
-• **startDate**: _Date_
+• **startDate**: *Date*
 
-_Inherited from [Params](_entities_sto_.params.md).[startDate](_entities_sto_.params.md#startdate)_
+*Inherited from [Params](_entities_sto_.params.md).[startDate](_entities_sto_.params.md#startdate)*
 
-_Defined in [src/entities/Sto.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L44)_
+*Defined in [src/entities/Sto.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L44)*
 
 start date of the sto
 
----
+___
 
-### tiers
+###  tiers
 
-• **tiers**: _[Tier](_entities_tieredsto_.tier.md)[]_
+• **tiers**: *[Tier](_entities_tieredsto_.tier.md)[]*
 
-_Defined in [src/entities/TieredSto.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TieredSto.ts#L61)_
+*Defined in [src/entities/TieredSto.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TieredSto.ts#L61)*
 
 array of tier information
 
----
+___
 
-### unsoldTokensWallet
+###  unsoldTokensWallet
 
-• **unsoldTokensWallet**: _string_
+• **unsoldTokensWallet**: *string*
 
-_Inherited from [Params](_entities_sto_.params.md).[unsoldTokensWallet](_entities_sto_.params.md#unsoldtokenswallet)_
+*Inherited from [Params](_entities_sto_.params.md).[unsoldTokensWallet](_entities_sto_.params.md#unsoldtokenswallet)*
 
-_Defined in [src/entities/Sto.ts:60](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L60)_
+*Defined in [src/entities/Sto.ts:60](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L60)*
 
 wallet address where unsold tokens will be returned to

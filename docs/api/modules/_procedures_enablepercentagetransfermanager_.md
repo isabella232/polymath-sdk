@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [EnablePercentageTransferManager](../classes/_procedures_enablepercentagetransfermanager_.enablepercentagetransfermanager.md)
+* [EnablePercentageTransferManager](../classes/_procedures_enablepercentagetransfermanager_.enablepercentagetransfermanager.md)

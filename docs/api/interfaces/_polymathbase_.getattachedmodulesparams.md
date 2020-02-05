@@ -4,31 +4,31 @@ Arguments for [getAttachedModules](../classes/_polymathbase_.polymathbase.md#get
 
 ## Hierarchy
 
-- **GetAttachedModulesParams**
+* **GetAttachedModulesParams**
 
 ## Index
 
 ### Properties
 
-- [moduleName](_polymathbase_.getattachedmodulesparams.md#modulename)
-- [symbol](_polymathbase_.getattachedmodulesparams.md#symbol)
+* [moduleName](_polymathbase_.getattachedmodulesparams.md#modulename)
+* [symbol](_polymathbase_.getattachedmodulesparams.md#symbol)
 
 ## Properties
 
-### moduleName
+###  moduleName
 
-• **moduleName**: _ModuleName_
+• **moduleName**: *ModuleName*
 
-_Defined in [src/PolymathBase.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathBase.ts#L83)_
+*Defined in [src/PolymathBase.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathBase.ts#L83)*
 
 name of the module
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/PolymathBase.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathBase.ts#L79)_
+*Defined in [src/PolymathBase.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathBase.ts#L79)*
 
 Security Token symbol

@@ -4,27 +4,27 @@ Properties that uniquely identify a Shareholder of a specific Security Token
 
 ## Hierarchy
 
-- **UniqueIdentifiers**
+* **UniqueIdentifiers**
 
 ## Index
 
 ### Properties
 
-- [address](_entities_shareholder_.uniqueidentifiers.md#address)
-- [securityTokenId](_entities_shareholder_.uniqueidentifiers.md#securitytokenid)
+* [address](_entities_shareholder_.uniqueidentifiers.md#address)
+* [securityTokenId](_entities_shareholder_.uniqueidentifiers.md#securitytokenid)
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Defined in [src/entities/Shareholder.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Shareholder.ts#L12)_
+*Defined in [src/entities/Shareholder.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Shareholder.ts#L12)*
 
----
+___
 
-### securityTokenId
+###  securityTokenId
 
-• **securityTokenId**: _string_
+• **securityTokenId**: *string*
 
-_Defined in [src/entities/Shareholder.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Shareholder.ts#L11)_
+*Defined in [src/entities/Shareholder.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Shareholder.ts#L11)*

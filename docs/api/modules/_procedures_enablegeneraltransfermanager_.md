@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [EnableGeneralTransferManager](../classes/_procedures_enablegeneraltransfermanager_.enablegeneraltransfermanager.md)
+* [EnableGeneralTransferManager](../classes/_procedures_enablegeneraltransfermanager_.enablegeneraltransfermanager.md)

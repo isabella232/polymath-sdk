@@ -2,18 +2,18 @@
 
 ## Hierarchy
 
-- **EnableErc20DividendsOpts**
+* **EnableErc20DividendsOpts**
 
 ## Index
 
 ### Properties
 
-- [storageWalletAddress](_entities_securitytoken_features_.enableerc20dividendsopts.md#storagewalletaddress)
+* [storageWalletAddress](_entities_securitytoken_features_.enableerc20dividendsopts.md#storagewalletaddress)
 
 ## Properties
 
-### storageWalletAddress
+###  storageWalletAddress
 
-• **storageWalletAddress**: _string_
+• **storageWalletAddress**: *string*
 
-_Defined in [src/entities/SecurityToken/Features.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L41)_
+*Defined in [src/entities/SecurityToken/Features.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L41)*

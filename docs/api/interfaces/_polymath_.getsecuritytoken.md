@@ -2,42 +2,42 @@
 
 ## Hierarchy
 
-- **GetSecurityToken**
+* **GetSecurityToken**
 
 ## Callable
 
-▸ (`params`: [SymbolParams](_polymath_.symbolparams.md)): _Promise‹[SecurityToken](../classes/_entities_securitytoken_securitytoken_.securitytoken.md)›_
+▸ (`params`: [SymbolParams](_polymath_.symbolparams.md)): *Promise‹[SecurityToken](../classes/_entities_securitytoken_securitytoken_.securitytoken.md)›*
 
-_Defined in [src/Polymath.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L48)_
-
-**Parameters:**
-
-| Name     | Type                                       |
-| -------- | ------------------------------------------ |
-| `params` | [SymbolParams](_polymath_.symbolparams.md) |
-
-**Returns:** _Promise‹[SecurityToken](../classes/_entities_securitytoken_securitytoken_.securitytoken.md)›_
-
-▸ (`params`: [AddressParams](_polymath_.addressparams.md)): _Promise‹[SecurityToken](../classes/_entities_securitytoken_securitytoken_.securitytoken.md)›_
-
-_Defined in [src/Polymath.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L49)_
+*Defined in [src/Polymath.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L48)*
 
 **Parameters:**
 
-| Name     | Type                                         |
-| -------- | -------------------------------------------- |
-| `params` | [AddressParams](_polymath_.addressparams.md) |
+Name | Type |
+------ | ------ |
+`params` | [SymbolParams](_polymath_.symbolparams.md) |
 
-**Returns:** _Promise‹[SecurityToken](../classes/_entities_securitytoken_securitytoken_.securitytoken.md)›_
+**Returns:** *Promise‹[SecurityToken](../classes/_entities_securitytoken_securitytoken_.securitytoken.md)›*
 
-▸ (`params`: string): _Promise‹[SecurityToken](../classes/_entities_securitytoken_securitytoken_.securitytoken.md)›_
+▸ (`params`: [AddressParams](_polymath_.addressparams.md)): *Promise‹[SecurityToken](../classes/_entities_securitytoken_securitytoken_.securitytoken.md)›*
 
-_Defined in [src/Polymath.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L50)_
+*Defined in [src/Polymath.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L49)*
 
 **Parameters:**
 
-| Name     | Type   |
-| -------- | ------ |
-| `params` | string |
+Name | Type |
+------ | ------ |
+`params` | [AddressParams](_polymath_.addressparams.md) |
 
-**Returns:** _Promise‹[SecurityToken](../classes/_entities_securitytoken_securitytoken_.securitytoken.md)›_
+**Returns:** *Promise‹[SecurityToken](../classes/_entities_securitytoken_securitytoken_.securitytoken.md)›*
+
+▸ (`params`: string): *Promise‹[SecurityToken](../classes/_entities_securitytoken_securitytoken_.securitytoken.md)›*
+
+*Defined in [src/Polymath.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L50)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`params` | string |
+
+**Returns:** *Promise‹[SecurityToken](../classes/_entities_securitytoken_securitytoken_.securitytoken.md)›*

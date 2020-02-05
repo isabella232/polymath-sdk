@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [Transfers](../classes/_entities_securitytoken_transfers_transfers_.transfers.md)
+* [Transfers](../classes/_entities_securitytoken_transfers_transfers_.transfers.md)

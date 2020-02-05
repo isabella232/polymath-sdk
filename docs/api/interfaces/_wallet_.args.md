@@ -2,22 +2,22 @@
 
 ## Hierarchy
 
-- **Args**
+* **Args**
 
 ## Index
 
 ### Properties
 
-- [address](_wallet_.args.md#address)
+* [address](_wallet_.args.md#address)
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _function_
+• **address**: *function*
 
-_Defined in [src/Wallet.ts:2](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Wallet.ts#L2)_
+*Defined in [src/Wallet.ts:2](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Wallet.ts#L2)*
 
 #### Type declaration:
 
-▸ (): _Promise‹string›_
+▸ (): *Promise‹string›*

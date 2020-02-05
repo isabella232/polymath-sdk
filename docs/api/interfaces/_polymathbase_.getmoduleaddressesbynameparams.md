@@ -4,31 +4,31 @@ Arguments for [getModuleAddressesByName](../classes/_polymathbase_.polymathbase.
 
 ## Hierarchy
 
-- **GetModuleAddressesByNameParams**
+* **GetModuleAddressesByNameParams**
 
 ## Index
 
 ### Properties
 
-- [moduleName](_polymathbase_.getmoduleaddressesbynameparams.md#modulename)
-- [symbol](_polymathbase_.getmoduleaddressesbynameparams.md#symbol)
+* [moduleName](_polymathbase_.getmoduleaddressesbynameparams.md#modulename)
+* [symbol](_polymathbase_.getmoduleaddressesbynameparams.md#symbol)
 
 ## Properties
 
-### moduleName
+###  moduleName
 
-• **moduleName**: _ModuleName_
+• **moduleName**: *ModuleName*
 
-_Defined in [src/PolymathBase.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathBase.ts#L59)_
+*Defined in [src/PolymathBase.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathBase.ts#L59)*
 
 the name of the Security Token module
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/PolymathBase.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathBase.ts#L55)_
+*Defined in [src/PolymathBase.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathBase.ts#L55)*
 
 Security Token symbol

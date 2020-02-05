@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [WithdrawTaxes](../classes/_procedures_withdrawtaxes_.withdrawtaxes.md)
+* [WithdrawTaxes](../classes/_procedures_withdrawtaxes_.withdrawtaxes.md)

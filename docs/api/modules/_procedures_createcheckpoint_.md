@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [CreateCheckpoint](../classes/_procedures_createcheckpoint_.createcheckpoint.md)
+* [CreateCheckpoint](../classes/_procedures_createcheckpoint_.createcheckpoint.md)

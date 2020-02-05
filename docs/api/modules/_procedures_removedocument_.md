@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [RemoveDocument](../classes/_procedures_removedocument_.removedocument.md)
+* [RemoveDocument](../classes/_procedures_removedocument_.removedocument.md)

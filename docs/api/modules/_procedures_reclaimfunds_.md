@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [ReclaimFunds](../classes/_procedures_reclaimfunds_.reclaimfunds.md)
+* [ReclaimFunds](../classes/_procedures_reclaimfunds_.reclaimfunds.md)

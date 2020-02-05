@@ -4,7 +4,7 @@ Represents a namespace inside the Security Token that handles a set of related f
 
 ## Hierarchy
 
-- **SubModule**
+* **SubModule**
 
   ↳ [Features](_entities_securitytoken_features_.features.md)
 
@@ -34,44 +34,44 @@ Represents a namespace inside the Security Token that handles a set of related f
 
 ### Constructors
 
-- [constructor](_entities_securitytoken_submodule_.submodule.md#constructor)
+* [constructor](_entities_securitytoken_submodule_.submodule.md#constructor)
 
 ### Properties
 
-- [context](_entities_securitytoken_submodule_.submodule.md#protected-context)
-- [securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)
+* [context](_entities_securitytoken_submodule_.submodule.md#protected-context)
+* [securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)
 
 ## Constructors
 
-### constructor
+###  constructor
 
-\+ **new SubModule**(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)): _[SubModule](_entities_securitytoken_submodule_.submodule.md)_
+\+ **new SubModule**(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)): *[SubModule](_entities_securitytoken_submodule_.submodule.md)*
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SubModule.ts#L10)_
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SubModule.ts#L10)*
 
 Create a new SubModule instance
 
 **Parameters:**
 
-| Name            | Type                                                                     |
-| --------------- | ------------------------------------------------------------------------ |
-| `securityToken` | [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md) |
-| `context`       | [Context](_context_.context.md)                                          |
+Name | Type |
+------ | ------ |
+`securityToken` | [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md) |
+`context` | [Context](_context_.context.md) |
 
-**Returns:** _[SubModule](_entities_securitytoken_submodule_.submodule.md)_
+**Returns:** *[SubModule](_entities_securitytoken_submodule_.submodule.md)*
 
 ## Properties
 
 ### `Protected` context
 
-• **context**: _[Context](_context_.context.md)_
+• **context**: *[Context](_context_.context.md)*
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SubModule.ts#L10)_
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SubModule.ts#L10)*
 
----
+___
 
 ### `Protected` securityToken
 
-• **securityToken**: _[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)_
+• **securityToken**: *[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)*
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SubModule.ts#L8)_
+*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SubModule.ts#L8)*

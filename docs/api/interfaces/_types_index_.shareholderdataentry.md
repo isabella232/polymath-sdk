@@ -4,75 +4,75 @@ A Shareholder's KYC data
 
 ## Hierarchy
 
-- **ShareholderDataEntry**
+* **ShareholderDataEntry**
 
 ## Index
 
 ### Properties
 
-- [address](_types_index_.shareholderdataentry.md#address)
-- [canBuyFromSto](_types_index_.shareholderdataentry.md#canbuyfromsto)
-- [canReceiveAfter](_types_index_.shareholderdataentry.md#canreceiveafter)
-- [canSendAfter](_types_index_.shareholderdataentry.md#cansendafter)
-- [isAccredited](_types_index_.shareholderdataentry.md#isaccredited)
-- [kycExpiry](_types_index_.shareholderdataentry.md#kycexpiry)
+* [address](_types_index_.shareholderdataentry.md#address)
+* [canBuyFromSto](_types_index_.shareholderdataentry.md#canbuyfromsto)
+* [canReceiveAfter](_types_index_.shareholderdataentry.md#canreceiveafter)
+* [canSendAfter](_types_index_.shareholderdataentry.md#cansendafter)
+* [isAccredited](_types_index_.shareholderdataentry.md#isaccredited)
+* [kycExpiry](_types_index_.shareholderdataentry.md#kycexpiry)
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Defined in [src/types/index.ts:1130](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1130)_
+*Defined in [src/types/index.ts:1130](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1130)*
 
 shareholder wallet address to whitelist
 
----
+___
 
-### canBuyFromSto
+###  canBuyFromSto
 
-• **canBuyFromSto**: _boolean_
+• **canBuyFromSto**: *boolean*
 
-_Defined in [src/types/index.ts:1150](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1150)_
+*Defined in [src/types/index.ts:1150](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1150)*
 
 whether the shareholder is allowed to purchase tokens in an STO
 
----
+___
 
-### canReceiveAfter
+###  canReceiveAfter
 
-• **canReceiveAfter**: _Date_
+• **canReceiveAfter**: *Date*
 
-_Defined in [src/types/index.ts:1138](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1138)_
+*Defined in [src/types/index.ts:1138](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1138)*
 
 date from which the shareholder can receive tokens
 
----
+___
 
-### canSendAfter
+###  canSendAfter
 
-• **canSendAfter**: _Date_
+• **canSendAfter**: *Date*
 
-_Defined in [src/types/index.ts:1134](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1134)_
+*Defined in [src/types/index.ts:1134](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1134)*
 
 date from which the shareholder can transfer tokens
 
----
+___
 
-### isAccredited
+###  isAccredited
 
-• **isAccredited**: _boolean_
+• **isAccredited**: *boolean*
 
-_Defined in [src/types/index.ts:1146](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1146)_
+*Defined in [src/types/index.ts:1146](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1146)*
 
 whether the shareholder is accredited
 
----
+___
 
-### kycExpiry
+###  kycExpiry
 
-• **kycExpiry**: _Date_
+• **kycExpiry**: *Date*
 
-_Defined in [src/types/index.ts:1142](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1142)_
+*Defined in [src/types/index.ts:1142](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1142)*
 
 date at which the shareholder's KYC expires

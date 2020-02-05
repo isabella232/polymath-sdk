@@ -4,7 +4,7 @@ Properties that uniquely identify a Wallet
 
 ## Hierarchy
 
-- **UniqueIdentifiers**
+* **UniqueIdentifiers**
 
   ↳ [Params](_entities_wallet_.params.md)
 
@@ -12,12 +12,12 @@ Properties that uniquely identify a Wallet
 
 ### Properties
 
-- [address](_entities_wallet_.uniqueidentifiers.md#address)
+* [address](_entities_wallet_.uniqueidentifiers.md#address)
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Defined in [src/entities/Wallet.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Wallet.ts#L12)_
+*Defined in [src/entities/Wallet.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Wallet.ts#L12)*

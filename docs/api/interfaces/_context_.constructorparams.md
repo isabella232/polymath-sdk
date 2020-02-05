@@ -2,18 +2,18 @@
 
 ## Hierarchy
 
-- **ConstructorParams**
+* **ConstructorParams**
 
 ## Index
 
 ### Properties
 
-- [contractWrappers](_context_.constructorparams.md#contractwrappers)
+* [contractWrappers](_context_.constructorparams.md#contractwrappers)
 
 ## Properties
 
-### contractWrappers
+###  contractWrappers
 
-• **contractWrappers**: _[PolymathBase](../classes/_polymathbase_.polymathbase.md)_
+• **contractWrappers**: *[PolymathBase](../classes/_polymathbase_.polymathbase.md)*
 
-_Defined in [src/Context.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Context.ts#L17)_
+*Defined in [src/Context.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Context.ts#L17)*

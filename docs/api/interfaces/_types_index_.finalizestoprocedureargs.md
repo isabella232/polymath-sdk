@@ -4,40 +4,40 @@ Arguments for the [FinalizeSto](../enums/_types_index_.proceduretype.md#finalize
 
 ## Hierarchy
 
-- **FinalizeStoProcedureArgs**
+* **FinalizeStoProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [stoAddress](_types_index_.finalizestoprocedureargs.md#stoaddress)
-- [stoType](_types_index_.finalizestoprocedureargs.md#stotype)
-- [symbol](_types_index_.finalizestoprocedureargs.md#symbol)
+* [stoAddress](_types_index_.finalizestoprocedureargs.md#stoaddress)
+* [stoType](_types_index_.finalizestoprocedureargs.md#stotype)
+* [symbol](_types_index_.finalizestoprocedureargs.md#symbol)
 
 ## Properties
 
-### stoAddress
+###  stoAddress
 
-• **stoAddress**: _string_
+• **stoAddress**: *string*
 
-_Defined in [src/types/index.ts:1013](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1013)_
+*Defined in [src/types/index.ts:1013](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1013)*
 
----
+___
 
-### stoType
+###  stoType
 
-• **stoType**: _[StoType](../enums/_types_index_.stotype.md)_
+• **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
 
-_Defined in [src/types/index.ts:1017](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1017)_
+*Defined in [src/types/index.ts:1017](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1017)*
 
 type of the STO (Simple, Tiered, etc)
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:1012](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1012)_
+*Defined in [src/types/index.ts:1012](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1012)*
 
 symbol of the Security Token

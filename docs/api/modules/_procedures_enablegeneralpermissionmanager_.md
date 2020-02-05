@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [EnableGeneralPermissionManager](../classes/_procedures_enablegeneralpermissionmanager_.enablegeneralpermissionmanager.md)
+* [EnableGeneralPermissionManager](../classes/_procedures_enablegeneralpermissionmanager_.enablegeneralpermissionmanager.md)

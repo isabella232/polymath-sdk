@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [Permissions](../classes/_entities_securitytoken_permissions_.permissions.md)
+* [Permissions](../classes/_entities_securitytoken_permissions_.permissions.md)

@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [AssignSecurityTokenRole](../classes/_procedures_assignsecuritytokenrole_.assignsecuritytokenrole.md)
+* [AssignSecurityTokenRole](../classes/_procedures_assignsecuritytokenrole_.assignsecuritytokenrole.md)

@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [ToggleFreezeTransfers](../classes/_procedures_togglefreezetransfers_.togglefreezetransfers.md)
+* [ToggleFreezeTransfers](../classes/_procedures_togglefreezetransfers_.togglefreezetransfers.md)

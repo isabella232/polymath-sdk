@@ -4,31 +4,31 @@ Arguments for the [ToggleFreezeTransfers](../enums/_types_index_.proceduretype.m
 
 ## Hierarchy
 
-- **ToggleFreezeTransfersProcedureArgs**
+* **ToggleFreezeTransfersProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [freeze](_types_index_.togglefreezetransfersprocedureargs.md#freeze)
-- [symbol](_types_index_.togglefreezetransfersprocedureargs.md#symbol)
+* [freeze](_types_index_.togglefreezetransfersprocedureargs.md#freeze)
+* [symbol](_types_index_.togglefreezetransfersprocedureargs.md#symbol)
 
 ## Properties
 
-### freeze
+###  freeze
 
-• **freeze**: _boolean_
+• **freeze**: *boolean*
 
-_Defined in [src/types/index.ts:1279](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1279)_
+*Defined in [src/types/index.ts:1279](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1279)*
 
 whether to freeze or un-freeze transfers
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:1275](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1275)_
+*Defined in [src/types/index.ts:1275](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1275)*
 
 symbol of the Security Token

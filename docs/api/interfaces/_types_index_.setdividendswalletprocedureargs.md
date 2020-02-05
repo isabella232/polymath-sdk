@@ -4,31 +4,31 @@ Arguments for the [SetDividendsWallet](../enums/_types_index_.proceduretype.md#s
 
 ## Hierarchy
 
-- **SetDividendsWalletProcedureArgs**
+* **SetDividendsWalletProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [address](_types_index_.setdividendswalletprocedureargs.md#address)
-- [symbol](_types_index_.setdividendswalletprocedureargs.md#symbol)
+* [address](_types_index_.setdividendswalletprocedureargs.md#address)
+* [symbol](_types_index_.setdividendswalletprocedureargs.md#symbol)
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Defined in [src/types/index.ts:859](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L859)_
+*Defined in [src/types/index.ts:859](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L859)*
 
 wallet address
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:855](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L855)_
+*Defined in [src/types/index.ts:855](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L855)*
 
 the symbol of the Security Token

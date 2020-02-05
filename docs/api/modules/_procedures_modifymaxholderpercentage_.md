@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [ModifyMaxHolderPercentage](../classes/_procedures_modifymaxholderpercentage_.modifymaxholderpercentage.md)
+* [ModifyMaxHolderPercentage](../classes/_procedures_modifymaxholderpercentage_.modifymaxholderpercentage.md)

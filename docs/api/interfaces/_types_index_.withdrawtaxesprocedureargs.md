@@ -4,29 +4,29 @@ Arguments for the [WithdrawTaxes](../enums/_types_index_.proceduretype.md#withdr
 
 ## Hierarchy
 
-- **WithdrawTaxesProcedureArgs**
+* **WithdrawTaxesProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [dividendIndex](_types_index_.withdrawtaxesprocedureargs.md#dividendindex)
-- [symbol](_types_index_.withdrawtaxesprocedureargs.md#symbol)
+* [dividendIndex](_types_index_.withdrawtaxesprocedureargs.md#dividendindex)
+* [symbol](_types_index_.withdrawtaxesprocedureargs.md#symbol)
 
 ## Properties
 
-### dividendIndex
+###  dividendIndex
 
-• **dividendIndex**: _number_
+• **dividendIndex**: *number*
 
-_Defined in [src/types/index.ts:827](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L827)_
+*Defined in [src/types/index.ts:827](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L827)*
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:826](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L826)_
+*Defined in [src/types/index.ts:826](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L826)*
 
 the symbol of the Security Token

@@ -4,8 +4,8 @@
 
 ### Classes
 
-- [Shareholders](../classes/_entities_securitytoken_shareholders_.shareholders.md)
+* [Shareholders](../classes/_entities_securitytoken_shareholders_.shareholders.md)
 
 ### Interfaces
 
-- [GetCheckpointParams](../interfaces/_entities_securitytoken_shareholders_.getcheckpointparams.md)
+* [GetCheckpointParams](../interfaces/_entities_securitytoken_shareholders_.getcheckpointparams.md)

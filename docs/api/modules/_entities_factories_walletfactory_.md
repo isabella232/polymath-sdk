@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [WalletFactory](../classes/_entities_factories_walletfactory_.walletfactory.md)
+* [WalletFactory](../classes/_entities_factories_walletfactory_.walletfactory.md)

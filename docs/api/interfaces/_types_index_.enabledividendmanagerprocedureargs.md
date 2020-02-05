@@ -4,31 +4,31 @@ Arguments for the [EnableDividendManager](../enums/_types_index_.proceduretype.m
 
 ## Hierarchy
 
-- **EnableDividendManagerProcedureArgs**
+* **EnableDividendManagerProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [storageWalletAddress](_types_index_.enabledividendmanagerprocedureargs.md#storagewalletaddress)
-- [symbol](_types_index_.enabledividendmanagerprocedureargs.md#symbol)
+* [storageWalletAddress](_types_index_.enabledividendmanagerprocedureargs.md#storagewalletaddress)
+* [symbol](_types_index_.enabledividendmanagerprocedureargs.md#symbol)
 
 ## Properties
 
-### storageWalletAddress
+###  storageWalletAddress
 
-• **storageWalletAddress**: _string_
+• **storageWalletAddress**: *string*
 
-_Defined in [src/types/index.ts:429](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L429)_
+*Defined in [src/types/index.ts:429](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L429)*
 
 storage wallet where Dividends funds will be stored
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:425](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L425)_
+*Defined in [src/types/index.ts:425](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L425)*
 
 symbol of the Security Token

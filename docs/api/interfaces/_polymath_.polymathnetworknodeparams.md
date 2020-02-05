@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- [PolymathNetworkParams](_polymath_.polymathnetworkparams.md)
+* [PolymathNetworkParams](_polymath_.polymathnetworkparams.md)
 
   ↳ **PolymathNetworkNodeParams**
 
@@ -10,43 +10,43 @@
 
 ### Properties
 
-- [polymathRegistryAddress](_polymath_.polymathnetworknodeparams.md#optional-polymathregistryaddress)
-- [privateKey](_polymath_.polymathnetworknodeparams.md#privatekey)
-- [providerUrl](_polymath_.polymathnetworknodeparams.md#providerurl)
-- [speed](_polymath_.polymathnetworknodeparams.md#optional-speed)
+* [polymathRegistryAddress](_polymath_.polymathnetworknodeparams.md#optional-polymathregistryaddress)
+* [privateKey](_polymath_.polymathnetworknodeparams.md#privatekey)
+* [providerUrl](_polymath_.polymathnetworknodeparams.md#providerurl)
+* [speed](_polymath_.polymathnetworknodeparams.md#optional-speed)
 
 ## Properties
 
 ### `Optional` polymathRegistryAddress
 
-• **polymathRegistryAddress**? : _undefined | string_
+• **polymathRegistryAddress**? : *undefined | string*
 
-_Inherited from [PolymathNetworkParams](_polymath_.polymathnetworkparams.md).[polymathRegistryAddress](_polymath_.polymathnetworkparams.md#optional-polymathregistryaddress)_
+*Inherited from [PolymathNetworkParams](_polymath_.polymathnetworkparams.md).[polymathRegistryAddress](_polymath_.polymathnetworkparams.md#optional-polymathregistryaddress)*
 
-_Defined in [src/Polymath.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L21)_
+*Defined in [src/Polymath.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L21)*
 
----
+___
 
-### privateKey
+###  privateKey
 
-• **privateKey**: _string_
+• **privateKey**: *string*
 
-_Defined in [src/Polymath.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L27)_
+*Defined in [src/Polymath.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L27)*
 
----
+___
 
-### providerUrl
+###  providerUrl
 
-• **providerUrl**: _string_
+• **providerUrl**: *string*
 
-_Defined in [src/Polymath.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L26)_
+*Defined in [src/Polymath.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L26)*
 
----
+___
 
 ### `Optional` speed
 
-• **speed**? : _[TransactionSpeed](../enums/_types_index_.transactionspeed.md)_
+• **speed**? : *[TransactionSpeed](../enums/_types_index_.transactionspeed.md)*
 
-_Inherited from [PolymathNetworkParams](_polymath_.polymathnetworkparams.md).[speed](_polymath_.polymathnetworkparams.md#optional-speed)_
+*Inherited from [PolymathNetworkParams](_polymath_.polymathnetworkparams.md).[speed](_polymath_.polymathnetworkparams.md#optional-speed)*
 
-_Defined in [src/Polymath.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L22)_
+*Defined in [src/Polymath.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L22)*

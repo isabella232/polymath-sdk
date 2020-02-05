@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [TransferReservationOwnership](../classes/_procedures_transferreservationownership_.transferreservationownership.md)
+* [TransferReservationOwnership](../classes/_procedures_transferreservationownership_.transferreservationownership.md)

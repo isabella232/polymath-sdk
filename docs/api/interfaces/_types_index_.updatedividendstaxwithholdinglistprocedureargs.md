@@ -4,42 +4,42 @@ Arguments for the [UpdateDividendsTaxWithholdingList](../enums/_types_index_.pro
 
 ## Hierarchy
 
-- **UpdateDividendsTaxWithholdingListProcedureArgs**
+* **UpdateDividendsTaxWithholdingListProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [percentages](_types_index_.updatedividendstaxwithholdinglistprocedureargs.md#percentages)
-- [shareholderAddresses](_types_index_.updatedividendstaxwithholdinglistprocedureargs.md#shareholderaddresses)
-- [symbol](_types_index_.updatedividendstaxwithholdinglistprocedureargs.md#symbol)
+* [percentages](_types_index_.updatedividendstaxwithholdinglistprocedureargs.md#percentages)
+* [shareholderAddresses](_types_index_.updatedividendstaxwithholdinglistprocedureargs.md#shareholderaddresses)
+* [symbol](_types_index_.updatedividendstaxwithholdinglistprocedureargs.md#symbol)
 
 ## Properties
 
-### percentages
+###  percentages
 
-• **percentages**: _number[]_
+• **percentages**: *number[]*
 
-_Defined in [src/types/index.ts:845](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L845)_
+*Defined in [src/types/index.ts:845](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L845)*
 
 list of percentages to update
 
----
+___
 
-### shareholderAddresses
+###  shareholderAddresses
 
-• **shareholderAddresses**: _string[]_
+• **shareholderAddresses**: *string[]*
 
-_Defined in [src/types/index.ts:841](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L841)_
+*Defined in [src/types/index.ts:841](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L841)*
 
 list of addresses of the Shareholders for which to update the tax withholding percentages
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:837](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L837)_
+*Defined in [src/types/index.ts:837](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L837)*
 
 the symbol of the Security Token

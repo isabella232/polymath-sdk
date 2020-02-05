@@ -2,27 +2,27 @@
 
 ## Hierarchy
 
-- **EnablePercentageOwnershipRestrictionsOpts**
+* **EnablePercentageOwnershipRestrictionsOpts**
 
 ## Index
 
 ### Properties
 
-- [allowPrimaryIssuance](_entities_securitytoken_features_.enablepercentageownershiprestrictionsopts.md#optional-allowprimaryissuance)
-- [maxHolderPercentage](_entities_securitytoken_features_.enablepercentageownershiprestrictionsopts.md#maxholderpercentage)
+* [allowPrimaryIssuance](_entities_securitytoken_features_.enablepercentageownershiprestrictionsopts.md#optional-allowprimaryissuance)
+* [maxHolderPercentage](_entities_securitytoken_features_.enablepercentageownershiprestrictionsopts.md#maxholderpercentage)
 
 ## Properties
 
 ### `Optional` allowPrimaryIssuance
 
-• **allowPrimaryIssuance**? : _undefined | false | true_
+• **allowPrimaryIssuance**? : *undefined | false | true*
 
-_Defined in [src/entities/SecurityToken/Features.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L50)_
+*Defined in [src/entities/SecurityToken/Features.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L50)*
 
----
+___
 
-### maxHolderPercentage
+###  maxHolderPercentage
 
-• **maxHolderPercentage**: _BigNumber_
+• **maxHolderPercentage**: *BigNumber*
 
-_Defined in [src/entities/SecurityToken/Features.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L49)_
+*Defined in [src/entities/SecurityToken/Features.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L49)*

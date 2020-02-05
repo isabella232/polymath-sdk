@@ -4,42 +4,42 @@ Arguments for the [TransferErc20](../enums/_types_index_.proceduretype.md#transf
 
 ## Hierarchy
 
-- **TransferErc20ProcedureArgs**
+* **TransferErc20ProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [amount](_types_index_.transfererc20procedureargs.md#amount)
-- [receiver](_types_index_.transfererc20procedureargs.md#receiver)
-- [tokenAddress](_types_index_.transfererc20procedureargs.md#optional-tokenaddress)
+* [amount](_types_index_.transfererc20procedureargs.md#amount)
+* [receiver](_types_index_.transfererc20procedureargs.md#receiver)
+* [tokenAddress](_types_index_.transfererc20procedureargs.md#optional-tokenaddress)
 
 ## Properties
 
-### amount
+###  amount
 
-• **amount**: _BigNumber_
+• **amount**: *BigNumber*
 
-_Defined in [src/types/index.ts:303](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L303)_
+*Defined in [src/types/index.ts:303](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L303)*
 
 amount of tokens to be transferred
 
----
+___
 
-### receiver
+###  receiver
 
-• **receiver**: _string_
+• **receiver**: *string*
 
-_Defined in [src/types/index.ts:307](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L307)_
+*Defined in [src/types/index.ts:307](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L307)*
 
 the receiver of tokens being transferred
 
----
+___
 
 ### `Optional` tokenAddress
 
-• **tokenAddress**? : _undefined | string_
+• **tokenAddress**? : *undefined | string*
 
-_Defined in [src/types/index.ts:311](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L311)_
+*Defined in [src/types/index.ts:311](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L311)*
 
 address of the ERC20 token (defaults to POLY)

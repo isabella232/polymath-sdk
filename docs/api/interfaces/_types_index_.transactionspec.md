@@ -6,53 +6,53 @@ Schema of a specific transaction
 
 ▪ **Args**
 
-▪ **Value**: _any[]_
+▪ **Value**: *any[]*
 
-▪ **Receipt**: _any_
+▪ **Receipt**: *any*
 
-▪ **FutureValue**: _any_
+▪ **FutureValue**: *any*
 
 ## Hierarchy
 
-- **TransactionSpec**
+* **TransactionSpec**
 
 ## Index
 
 ### Properties
 
-- [args](_types_index_.transactionspec.md#args)
-- [method](_types_index_.transactionspec.md#method)
-- [postTransactionResolvers](_types_index_.transactionspec.md#optional-posttransactionresolvers)
-- [tag](_types_index_.transactionspec.md#optional-tag)
+* [args](_types_index_.transactionspec.md#args)
+* [method](_types_index_.transactionspec.md#method)
+* [postTransactionResolvers](_types_index_.transactionspec.md#optional-posttransactionresolvers)
+* [tag](_types_index_.transactionspec.md#optional-tag)
 
 ## Properties
 
-### args
+###  args
 
-• **args**: _[MapMaybeResolver](../modules/_types_index_.md#mapmayberesolver)‹Args›_
+• **args**: *[MapMaybeResolver](../modules/_types_index_.md#mapmayberesolver)‹Args›*
 
-_Defined in [src/types/index.ts:1562](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1562)_
+*Defined in [src/types/index.ts:1562](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1562)*
 
----
+___
 
-### method
+###  method
 
-• **method**: _[LowLevelMethod](../modules/_types_index_.md#lowlevelmethod)‹Args› | [SignatureRequest](../modules/_types_index_.md#signaturerequest)‹Args› | [FutureLowLevelMethod](_types_index_.futurelowlevelmethod.md)‹FutureValue, Args›_
+• **method**: *[LowLevelMethod](../modules/_types_index_.md#lowlevelmethod)‹Args› | [SignatureRequest](../modules/_types_index_.md#signaturerequest)‹Args› | [FutureLowLevelMethod](_types_index_.futurelowlevelmethod.md)‹FutureValue, Args›*
 
-_Defined in [src/types/index.ts:1561](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1561)_
+*Defined in [src/types/index.ts:1561](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1561)*
 
----
+___
 
 ### `Optional` postTransactionResolvers
 
-• **postTransactionResolvers**? : _[PostTransactionResolverArray](../modules/_types_index_.md#posttransactionresolverarray)‹Value, Receipt›_
+• **postTransactionResolvers**? : *[PostTransactionResolverArray](../modules/_types_index_.md#posttransactionresolverarray)‹Value, Receipt›*
 
-_Defined in [src/types/index.ts:1563](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1563)_
+*Defined in [src/types/index.ts:1563](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1563)*
 
----
+___
 
 ### `Optional` tag
 
-• **tag**? : _[PolyTransactionTag](../enums/_types_index_.polytransactiontag.md)_
+• **tag**? : *[PolyTransactionTag](../enums/_types_index_.polytransactiontag.md)*
 
-_Defined in [src/types/index.ts:1564](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1564)_
+*Defined in [src/types/index.ts:1564](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1564)*

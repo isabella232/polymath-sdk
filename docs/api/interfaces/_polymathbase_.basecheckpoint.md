@@ -4,53 +4,53 @@ Internal representation of a Checkpoint
 
 ## Hierarchy
 
-- **BaseCheckpoint**
+* **BaseCheckpoint**
 
 ## Index
 
 ### Properties
 
-- [createdAt](_polymathbase_.basecheckpoint.md#createdat)
-- [index](_polymathbase_.basecheckpoint.md#index)
-- [shareholderBalances](_polymathbase_.basecheckpoint.md#shareholderbalances)
-- [totalSupply](_polymathbase_.basecheckpoint.md#totalsupply)
+* [createdAt](_polymathbase_.basecheckpoint.md#createdat)
+* [index](_polymathbase_.basecheckpoint.md#index)
+* [shareholderBalances](_polymathbase_.basecheckpoint.md#shareholderbalances)
+* [totalSupply](_polymathbase_.basecheckpoint.md#totalsupply)
 
 ## Properties
 
-### createdAt
+###  createdAt
 
-• **createdAt**: _Date_
+• **createdAt**: *Date*
 
-_Defined in [src/PolymathBase.ts:271](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathBase.ts#L271)_
+*Defined in [src/PolymathBase.ts:271](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathBase.ts#L271)*
 
 date at which the Checkpoint was created
 
----
+___
 
-### index
+###  index
 
-• **index**: _number_
+• **index**: *number*
 
-_Defined in [src/PolymathBase.ts:259](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathBase.ts#L259)_
+*Defined in [src/PolymathBase.ts:259](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathBase.ts#L259)*
 
 index of the Checkpoint
 
----
+___
 
-### shareholderBalances
+###  shareholderBalances
 
-• **shareholderBalances**: _[ShareholderBalance](_types_index_.shareholderbalance.md)[]_
+• **shareholderBalances**: *[ShareholderBalance](_types_index_.shareholderbalance.md)[]*
 
-_Defined in [src/PolymathBase.ts:267](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathBase.ts#L267)_
+*Defined in [src/PolymathBase.ts:267](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathBase.ts#L267)*
 
 shareholder balances at the Checkpoint
 
----
+___
 
-### totalSupply
+###  totalSupply
 
-• **totalSupply**: _BigNumber_
+• **totalSupply**: *BigNumber*
 
-_Defined in [src/PolymathBase.ts:263](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathBase.ts#L263)_
+*Defined in [src/PolymathBase.ts:263](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathBase.ts#L263)*
 
 total supply of the Security Token at the Checkpoint

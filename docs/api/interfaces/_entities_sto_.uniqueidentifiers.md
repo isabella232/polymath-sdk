@@ -4,36 +4,36 @@ Properties that uniquely identify an STO
 
 ## Hierarchy
 
-- **UniqueIdentifiers**
+* **UniqueIdentifiers**
 
 ## Index
 
 ### Properties
 
-- [address](_entities_sto_.uniqueidentifiers.md#address)
-- [securityTokenId](_entities_sto_.uniqueidentifiers.md#securitytokenid)
-- [stoType](_entities_sto_.uniqueidentifiers.md#stotype)
+* [address](_entities_sto_.uniqueidentifiers.md#address)
+* [securityTokenId](_entities_sto_.uniqueidentifiers.md#securitytokenid)
+* [stoType](_entities_sto_.uniqueidentifiers.md#stotype)
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Defined in [src/entities/Sto.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L21)_
+*Defined in [src/entities/Sto.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L21)*
 
----
+___
 
-### securityTokenId
+###  securityTokenId
 
-• **securityTokenId**: _string_
+• **securityTokenId**: *string*
 
-_Defined in [src/entities/Sto.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L19)_
+*Defined in [src/entities/Sto.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L19)*
 
----
+___
 
-### stoType
+###  stoType
 
-• **stoType**: _[StoType](../enums/_types_index_.stotype.md)_
+• **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
 
-_Defined in [src/entities/Sto.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L20)_
+*Defined in [src/entities/Sto.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L20)*

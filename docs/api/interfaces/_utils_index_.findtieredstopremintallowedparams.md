@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- [FindEventParams](_utils_index_.findeventparams.md)
+* [FindEventParams](_utils_index_.findeventparams.md)
 
   ↳ **FindTieredStoPreMintAllowedParams**
 
@@ -10,25 +10,25 @@
 
 ### Properties
 
-- [eventName](_utils_index_.findtieredstopremintallowedparams.md#eventname)
-- [logs](_utils_index_.findtieredstopremintallowedparams.md#logs)
+* [eventName](_utils_index_.findtieredstopremintallowedparams.md#eventname)
+* [logs](_utils_index_.findtieredstopremintallowedparams.md#logs)
 
 ## Properties
 
-### eventName
+###  eventName
 
-• **eventName**: _AllowPreMintFlag_
+• **eventName**: *AllowPreMintFlag*
 
-_Overrides [FindEventParams](_utils_index_.findeventparams.md).[eventName](_utils_index_.findeventparams.md#eventname)_
+*Overrides [FindEventParams](_utils_index_.findeventparams.md).[eventName](_utils_index_.findeventparams.md#eventname)*
 
-_Defined in [src/utils/index.ts:180](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/utils/index.ts#L180)_
+*Defined in [src/utils/index.ts:180](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/utils/index.ts#L180)*
 
----
+___
 
-### logs
+###  logs
 
-• **logs**: _LogEntry | LogWithDecodedArgs‹DecodedLogArgs›[]_
+• **logs**: *LogEntry | LogWithDecodedArgs‹DecodedLogArgs›[]*
 
-_Inherited from [FindEventParams](_utils_index_.findeventparams.md).[logs](_utils_index_.findeventparams.md#logs)_
+*Inherited from [FindEventParams](_utils_index_.findeventparams.md).[logs](_utils_index_.findeventparams.md#logs)*
 
-_Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/utils/index.ts#L127)_
+*Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/utils/index.ts#L127)*

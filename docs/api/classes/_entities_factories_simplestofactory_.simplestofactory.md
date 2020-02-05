@@ -4,7 +4,7 @@ Factory generates information for a simple sto entity
 
 ## Hierarchy
 
-- [Factory](_entities_factories_factory_.factory.md)‹[SimpleSto](_entities_simplesto_.simplesto.md), [Params](../interfaces/_entities_simplesto_.params.md), [UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md)›
+* [Factory](_entities_factories_factory_.factory.md)‹[SimpleSto](_entities_simplesto_.simplesto.md), [Params](../interfaces/_entities_simplesto_.params.md), [UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md)›
 
   ↳ **SimpleStoFactory**
 
@@ -12,174 +12,174 @@ Factory generates information for a simple sto entity
 
 ### Constructors
 
-- [constructor](_entities_factories_simplestofactory_.simplestofactory.md#constructor)
+* [constructor](_entities_factories_simplestofactory_.simplestofactory.md#constructor)
 
 ### Properties
 
-- [Entity](_entities_factories_simplestofactory_.simplestofactory.md#entity)
-- [cache](_entities_factories_simplestofactory_.simplestofactory.md#cache)
-- [context](_entities_factories_simplestofactory_.simplestofactory.md#context)
+* [Entity](_entities_factories_simplestofactory_.simplestofactory.md#entity)
+* [cache](_entities_factories_simplestofactory_.simplestofactory.md#cache)
+* [context](_entities_factories_simplestofactory_.simplestofactory.md#context)
 
 ### Methods
 
-- [create](_entities_factories_simplestofactory_.simplestofactory.md#create)
-- [fetch](_entities_factories_simplestofactory_.simplestofactory.md#fetch)
-- [generateProperties](_entities_factories_simplestofactory_.simplestofactory.md#protected-generateproperties)
-- [refresh](_entities_factories_simplestofactory_.simplestofactory.md#refresh)
-- [update](_entities_factories_simplestofactory_.simplestofactory.md#update)
+* [create](_entities_factories_simplestofactory_.simplestofactory.md#create)
+* [fetch](_entities_factories_simplestofactory_.simplestofactory.md#fetch)
+* [generateProperties](_entities_factories_simplestofactory_.simplestofactory.md#protected-generateproperties)
+* [refresh](_entities_factories_simplestofactory_.simplestofactory.md#refresh)
+* [update](_entities_factories_simplestofactory_.simplestofactory.md#update)
 
 ## Constructors
 
-### constructor
+###  constructor
 
-\+ **new SimpleStoFactory**(`context`: [Context](_context_.context.md)): _[SimpleStoFactory](_entities_factories_simplestofactory_.simplestofactory.md)_
+\+ **new SimpleStoFactory**(`context`: [Context](_context_.context.md)): *[SimpleStoFactory](_entities_factories_simplestofactory_.simplestofactory.md)*
 
-_Overrides [Factory](_entities_factories_factory_.factory.md).[constructor](_entities_factories_factory_.factory.md#constructor)_
+*Overrides [Factory](_entities_factories_factory_.factory.md).[constructor](_entities_factories_factory_.factory.md#constructor)*
 
-_Defined in [src/entities/factories/SimpleStoFactory.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/SimpleStoFactory.ts#L79)_
+*Defined in [src/entities/factories/SimpleStoFactory.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/SimpleStoFactory.ts#L79)*
 
 Create an instance of the simple sto factory
 
 **Parameters:**
 
-| Name      | Type                            |
-| --------- | ------------------------------- |
-| `context` | [Context](_context_.context.md) |
+Name | Type |
+------ | ------ |
+`context` | [Context](_context_.context.md) |
 
-**Returns:** _[SimpleStoFactory](_entities_factories_simplestofactory_.simplestofactory.md)_
+**Returns:** *[SimpleStoFactory](_entities_factories_simplestofactory_.simplestofactory.md)*
 
 ## Properties
 
-### Entity
+###  Entity
 
-• **Entity**: _[EntityClass](../interfaces/_entities_factories_factory_.entityclass.md)‹[Params](../interfaces/_entities_simplesto_.params.md), [UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md)›_
+• **Entity**: *[EntityClass](../interfaces/_entities_factories_factory_.entityclass.md)‹[Params](../interfaces/_entities_simplesto_.params.md), [UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md)›*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[Entity](_entities_factories_factory_.factory.md#entity)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[Entity](_entities_factories_factory_.factory.md#entity)*
 
-_Defined in [src/entities/factories/Factory.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L37)_
+*Defined in [src/entities/factories/Factory.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L37)*
 
 entity class that this Factory is in charge of generating and caching
 
----
+___
 
-### cache
+###  cache
 
-• **cache**: _object_
+• **cache**: *object*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[cache](_entities_factories_factory_.factory.md#cache)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[cache](_entities_factories_factory_.factory.md#cache)*
 
-_Defined in [src/entities/factories/Factory.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L28)_
+*Defined in [src/entities/factories/Factory.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L28)*
 
 #### Type declaration:
 
-- \[ **key**: _string_\]: [SimpleSto](_entities_simplesto_.simplesto.md) | undefined
+* \[ **key**: *string*\]: [SimpleSto](_entities_simplesto_.simplesto.md) | undefined
 
----
+___
 
-### context
+###  context
 
-• **context**: _[Context](_context_.context.md)_
+• **context**: *[Context](_context_.context.md)*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[context](_entities_factories_factory_.factory.md#context)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[context](_entities_factories_factory_.factory.md#context)*
 
-_Defined in [src/entities/factories/Factory.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L32)_
+*Defined in [src/entities/factories/Factory.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L32)*
 
 ## Methods
 
-### create
+###  create
 
-▸ **create**(`uid`: string, `params`: [Params](../interfaces/_entities_simplesto_.params.md)): _EntityType_
+▸ **create**(`uid`: string, `params`: [Params](../interfaces/_entities_simplesto_.params.md)): *EntityType*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[create](_entities_factories_factory_.factory.md#create)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[create](_entities_factories_factory_.factory.md#create)*
 
-_Defined in [src/entities/factories/Factory.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L87)_
+*Defined in [src/entities/factories/Factory.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L87)*
 
 Get an entity from the cache. Creates it if it isn't cached, updates it if it is
 
 **Parameters:**
 
-| Name     | Type                                                   | Description                      |
-| -------- | ------------------------------------------------------ | -------------------------------- |
-| `uid`    | string                                                 | unique identifier for the entity |
-| `params` | [Params](../interfaces/_entities_simplesto_.params.md) | constructor data for the entity  |
+Name | Type | Description |
+------ | ------ | ------ |
+`uid` | string | unique identifier for the entity |
+`params` | [Params](../interfaces/_entities_simplesto_.params.md) | constructor data for the entity  |
 
-**Returns:** _EntityType_
+**Returns:** *EntityType*
 
----
+___
 
-### fetch
+###  fetch
 
-▸ **fetch**(`uid`: string): _Promise‹EntityType›_
+▸ **fetch**(`uid`: string): *Promise‹EntityType›*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[fetch](_entities_factories_factory_.factory.md#fetch)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[fetch](_entities_factories_factory_.factory.md#fetch)*
 
-_Defined in [src/entities/factories/Factory.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L57)_
+*Defined in [src/entities/factories/Factory.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L57)*
 
 Get an entity from the cache. Fetches the necessary data to create it if it isn't cached, refreshes it if it is
 
 **Parameters:**
 
-| Name  | Type   | Description                      |
-| ----- | ------ | -------------------------------- |
-| `uid` | string | unique identifier for the entity |
+Name | Type | Description |
+------ | ------ | ------ |
+`uid` | string | unique identifier for the entity  |
 
-**Returns:** _Promise‹EntityType›_
+**Returns:** *Promise‹EntityType›*
 
----
+___
 
 ### `Protected` generateProperties
 
-▸ **generateProperties**(`uid`: string): _Promise‹object›_
+▸ **generateProperties**(`uid`: string): *Promise‹object›*
 
-_Overrides void_
+*Overrides void*
 
-_Defined in [src/entities/factories/SimpleStoFactory.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/SimpleStoFactory.ts#L12)_
+*Defined in [src/entities/factories/SimpleStoFactory.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/SimpleStoFactory.ts#L12)*
 
 **Parameters:**
 
-| Name  | Type   |
-| ----- | ------ |
-| `uid` | string |
+Name | Type |
+------ | ------ |
+`uid` | string |
 
-**Returns:** _Promise‹object›_
+**Returns:** *Promise‹object›*
 
----
+___
 
-### refresh
+###  refresh
 
-▸ **refresh**(`uid`: string): _Promise‹void›_
+▸ **refresh**(`uid`: string): *Promise‹void›*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[refresh](_entities_factories_factory_.factory.md#refresh)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[refresh](_entities_factories_factory_.factory.md#refresh)*
 
-_Defined in [src/entities/factories/Factory.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L108)_
+*Defined in [src/entities/factories/Factory.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L108)*
 
 Fetch the data for an entity and updates its properties
 
 **Parameters:**
 
-| Name  | Type   | Description                      |
-| ----- | ------ | -------------------------------- |
-| `uid` | string | unique identifier for the entity |
+Name | Type | Description |
+------ | ------ | ------ |
+`uid` | string | unique identifier for the entity  |
 
-**Returns:** _Promise‹void›_
+**Returns:** *Promise‹void›*
 
----
+___
 
-### update
+###  update
 
-▸ **update**(`uid`: string, `params`: Partial‹[Params](../interfaces/_entities_simplesto_.params.md)›): _Promise‹void›_
+▸ **update**(`uid`: string, `params`: Partial‹[Params](../interfaces/_entities_simplesto_.params.md)›): *Promise‹void›*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[update](_entities_factories_factory_.factory.md#update)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[update](_entities_factories_factory_.factory.md#update)*
 
-_Defined in [src/entities/factories/Factory.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L126)_
+*Defined in [src/entities/factories/Factory.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L126)*
 
 Update an entity's properties in place
 
 **Parameters:**
 
-| Name     | Type                                                            | Description                       |
-| -------- | --------------------------------------------------------------- | --------------------------------- |
-| `uid`    | string                                                          | unique identifier for the entity  |
-| `params` | Partial‹[Params](../interfaces/_entities_simplesto_.params.md)› | properties that should be updated |
+Name | Type | Description |
+------ | ------ | ------ |
+`uid` | string | unique identifier for the entity |
+`params` | Partial‹[Params](../interfaces/_entities_simplesto_.params.md)› | properties that should be updated  |
 
-**Returns:** _Promise‹void›_
+**Returns:** *Promise‹void›*

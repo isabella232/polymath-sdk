@@ -2,48 +2,48 @@
 
 ## Hierarchy
 
-- **GetStoMethod**
+* **GetStoMethod**
 
 ## Callable
 
-▸ (`args`: object): _Promise‹[SimpleSto](../classes/_entities_simplesto_.simplesto.md)›_
+▸ (`args`: object): *Promise‹[SimpleSto](../classes/_entities_simplesto_.simplesto.md)›*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:149](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L149)_
-
-**Parameters:**
-
-▪ **args**: _object_
-
-| Name      | Type                                               |
-| --------- | -------------------------------------------------- |
-| `address` | string                                             |
-| `stoType` | [Simple](../enums/_types_index_.stotype.md#simple) |
-
-**Returns:** _Promise‹[SimpleSto](../classes/_entities_simplesto_.simplesto.md)›_
-
-▸ (`args`: object): _Promise‹[TieredSto](../classes/_entities_tieredsto_.tieredsto.md)›_
-
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:150](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L150)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:149](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L149)*
 
 **Parameters:**
 
-▪ **args**: _object_
+▪ **args**: *object*
 
-| Name      | Type                                               |
-| --------- | -------------------------------------------------- |
-| `address` | string                                             |
-| `stoType` | [Tiered](../enums/_types_index_.stotype.md#tiered) |
+Name | Type |
+------ | ------ |
+`address` | string |
+`stoType` | [Simple](../enums/_types_index_.stotype.md#simple) |
 
-**Returns:** _Promise‹[TieredSto](../classes/_entities_tieredsto_.tieredsto.md)›_
+**Returns:** *Promise‹[SimpleSto](../classes/_entities_simplesto_.simplesto.md)›*
 
-▸ (`args`: string): _Promise‹[SimpleSto](../classes/_entities_simplesto_.simplesto.md) | [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)›_
+▸ (`args`: object): *Promise‹[TieredSto](../classes/_entities_tieredsto_.tieredsto.md)›*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:151](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L151)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:150](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L150)*
 
 **Parameters:**
 
-| Name   | Type   |
-| ------ | ------ |
-| `args` | string |
+▪ **args**: *object*
 
-**Returns:** _Promise‹[SimpleSto](../classes/_entities_simplesto_.simplesto.md) | [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)›_
+Name | Type |
+------ | ------ |
+`address` | string |
+`stoType` | [Tiered](../enums/_types_index_.stotype.md#tiered) |
+
+**Returns:** *Promise‹[TieredSto](../classes/_entities_tieredsto_.tieredsto.md)›*
+
+▸ (`args`: string): *Promise‹[SimpleSto](../classes/_entities_simplesto_.simplesto.md) | [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)›*
+
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:151](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L151)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`args` | string |
+
+**Returns:** *Promise‹[SimpleSto](../classes/_entities_simplesto_.simplesto.md) | [TieredSto](../classes/_entities_tieredsto_.tieredsto.md)›*

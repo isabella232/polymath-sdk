@@ -4,31 +4,31 @@ Arguments for the [IssueTokens](../enums/_types_index_.proceduretype.md#issuetok
 
 ## Hierarchy
 
-- **IssueTokensProcedureArgs**
+* **IssueTokensProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [issuanceData](_types_index_.issuetokensprocedureargs.md#issuancedata)
-- [symbol](_types_index_.issuetokensprocedureargs.md#symbol)
+* [issuanceData](_types_index_.issuetokensprocedureargs.md#issuancedata)
+* [symbol](_types_index_.issuetokensprocedureargs.md#symbol)
 
 ## Properties
 
-### issuanceData
+###  issuanceData
 
-• **issuanceData**: _[IssuanceDataEntry](_types_index_.issuancedataentry.md)[]_
+• **issuanceData**: *[IssuanceDataEntry](_types_index_.issuancedataentry.md)[]*
 
-_Defined in [src/types/index.ts:553](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L553)_
+*Defined in [src/types/index.ts:553](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L553)*
 
 array of entries that specify who to issue tokens to and the amounts
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:549](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L549)_
+*Defined in [src/types/index.ts:549](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L549)*
 
 symbol of the Security Token

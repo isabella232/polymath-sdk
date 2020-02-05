@@ -4,31 +4,31 @@ Properties that uniquely identify a Checkpoint
 
 ## Hierarchy
 
-- **UniqueIdentifiers**
+* **UniqueIdentifiers**
 
 ## Index
 
 ### Properties
 
-- [index](_entities_checkpoint_.uniqueidentifiers.md#index)
-- [securityTokenId](_entities_checkpoint_.uniqueidentifiers.md#securitytokenid)
+* [index](_entities_checkpoint_.uniqueidentifiers.md#index)
+* [securityTokenId](_entities_checkpoint_.uniqueidentifiers.md#securitytokenid)
 
 ## Properties
 
-### index
+###  index
 
-• **index**: _number_
+• **index**: *number*
 
-_Defined in [src/entities/Checkpoint.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L19)_
+*Defined in [src/entities/Checkpoint.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Checkpoint.ts#L19)*
 
 numerical index of the checkpoint. The higher the index, the more recent the checkpoint
 
----
+___
 
-### securityTokenId
+###  securityTokenId
 
-• **securityTokenId**: _string_
+• **securityTokenId**: *string*
 
-_Defined in [src/entities/Checkpoint.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L15)_
+*Defined in [src/entities/Checkpoint.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Checkpoint.ts#L15)*
 
 security token UUID

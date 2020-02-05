@@ -4,31 +4,31 @@ Properties that uniquely identify a Dividend Distribution
 
 ## Hierarchy
 
-- **UniqueIdentifiers**
+* **UniqueIdentifiers**
 
 ## Index
 
 ### Properties
 
-- [index](_entities_dividenddistribution_.uniqueidentifiers.md#index)
-- [securityTokenId](_entities_dividenddistribution_.uniqueidentifiers.md#securitytokenid)
+* [index](_entities_dividenddistribution_.uniqueidentifiers.md#index)
+* [securityTokenId](_entities_dividenddistribution_.uniqueidentifiers.md#securitytokenid)
 
 ## Properties
 
-### index
+###  index
 
-• **index**: _number_
+• **index**: *number*
 
-_Defined in [src/entities/DividendDistribution.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L20)_
+*Defined in [src/entities/DividendDistribution.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L20)*
 
 ordered index of the distribution
 
----
+___
 
-### securityTokenId
+###  securityTokenId
 
-• **securityTokenId**: _string_
+• **securityTokenId**: *string*
 
-_Defined in [src/entities/DividendDistribution.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L16)_
+*Defined in [src/entities/DividendDistribution.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L16)*
 
 security token UUID

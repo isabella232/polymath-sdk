@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [EnableDividendManager](../classes/_procedures_enabledividendmanager_.enabledividendmanager.md)
+* [EnableDividendManager](../classes/_procedures_enabledividendmanager_.enabledividendmanager.md)

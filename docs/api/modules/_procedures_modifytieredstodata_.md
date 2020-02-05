@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [ModifyTieredStoData](../classes/_procedures_modifytieredstodata_.modifytieredstodata.md)
+* [ModifyTieredStoData](../classes/_procedures_modifytieredstodata_.modifytieredstodata.md)

@@ -4,31 +4,31 @@ Arguments for the [TransferOwnership](../enums/_types_index_.proceduretype.md#tr
 
 ## Hierarchy
 
-- **TransferOwnershipProcedureArgs**
+* **TransferOwnershipProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [newOwner](_types_index_.transferownershipprocedureargs.md#newowner)
-- [symbol](_types_index_.transferownershipprocedureargs.md#symbol)
+* [newOwner](_types_index_.transferownershipprocedureargs.md#newowner)
+* [symbol](_types_index_.transferownershipprocedureargs.md#symbol)
 
 ## Properties
 
-### newOwner
+###  newOwner
 
-• **newOwner**: _string_
+• **newOwner**: *string*
 
-_Defined in [src/types/index.ts:1106](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1106)_
+*Defined in [src/types/index.ts:1106](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1106)*
 
 wallet address for the new Security Token owner
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:1102](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1102)_
+*Defined in [src/types/index.ts:1102](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1102)*
 
 symbol of the Security Token

@@ -4,57 +4,57 @@
 
 ### Enumeration members
 
-- [Failed](_types_index_.transactionstatus.md#failed)
-- [Idle](_types_index_.transactionstatus.md#idle)
-- [Rejected](_types_index_.transactionstatus.md#rejected)
-- [Running](_types_index_.transactionstatus.md#running)
-- [Succeeded](_types_index_.transactionstatus.md#succeeded)
-- [Unapproved](_types_index_.transactionstatus.md#unapproved)
+* [Failed](_types_index_.transactionstatus.md#failed)
+* [Idle](_types_index_.transactionstatus.md#idle)
+* [Rejected](_types_index_.transactionstatus.md#rejected)
+* [Running](_types_index_.transactionstatus.md#running)
+* [Succeeded](_types_index_.transactionstatus.md#succeeded)
+* [Unapproved](_types_index_.transactionstatus.md#unapproved)
 
 ## Enumeration members
 
-### Failed
+###  Failed
 
 • **Failed**: = "Failed"
 
-_Defined in [src/types/index.ts:1385](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1385)_
+*Defined in [src/types/index.ts:1385](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1385)*
 
----
+___
 
-### Idle
+###  Idle
 
 • **Idle**: = "Idle"
 
-_Defined in [src/types/index.ts:1380](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1380)_
+*Defined in [src/types/index.ts:1380](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1380)*
 
----
+___
 
-### Rejected
+###  Rejected
 
 • **Rejected**: = "Rejected"
 
-_Defined in [src/types/index.ts:1383](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1383)_
+*Defined in [src/types/index.ts:1383](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1383)*
 
----
+___
 
-### Running
+###  Running
 
 • **Running**: = "Running"
 
-_Defined in [src/types/index.ts:1382](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1382)_
+*Defined in [src/types/index.ts:1382](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1382)*
 
----
+___
 
-### Succeeded
+###  Succeeded
 
 • **Succeeded**: = "Succeeded"
 
-_Defined in [src/types/index.ts:1384](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1384)_
+*Defined in [src/types/index.ts:1384](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1384)*
 
----
+___
 
-### Unapproved
+###  Unapproved
 
 • **Unapproved**: = "Unapproved"
 
-_Defined in [src/types/index.ts:1381](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1381)_
+*Defined in [src/types/index.ts:1381](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1381)*

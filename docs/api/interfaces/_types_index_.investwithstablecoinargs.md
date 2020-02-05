@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md)
+* [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md)
 
   ↳ **InvestWithStableCoinArgs**
 
@@ -10,89 +10,89 @@
 
 ### Properties
 
-- [amount](_types_index_.investwithstablecoinargs.md#amount)
-- [beneficiary](_types_index_.investwithstablecoinargs.md#optional-beneficiary)
-- [currency](_types_index_.investwithstablecoinargs.md#currency)
-- [minTokens](_types_index_.investwithstablecoinargs.md#optional-mintokens)
-- [stableCoinAddress](_types_index_.investwithstablecoinargs.md#stablecoinaddress)
-- [stoAddress](_types_index_.investwithstablecoinargs.md#stoaddress)
-- [symbol](_types_index_.investwithstablecoinargs.md#symbol)
+* [amount](_types_index_.investwithstablecoinargs.md#amount)
+* [beneficiary](_types_index_.investwithstablecoinargs.md#optional-beneficiary)
+* [currency](_types_index_.investwithstablecoinargs.md#currency)
+* [minTokens](_types_index_.investwithstablecoinargs.md#optional-mintokens)
+* [stableCoinAddress](_types_index_.investwithstablecoinargs.md#stablecoinaddress)
+* [stoAddress](_types_index_.investwithstablecoinargs.md#stoaddress)
+* [symbol](_types_index_.investwithstablecoinargs.md#symbol)
 
 ## Properties
 
-### amount
+###  amount
 
-• **amount**: _BigNumber_
+• **amount**: *BigNumber*
 
-_Inherited from [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md).[amount](_types_index_.investintieredstobaseprocedureargs.md#amount)_
+*Inherited from [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md).[amount](_types_index_.investintieredstobaseprocedureargs.md#amount)*
 
-_Defined in [src/types/index.ts:628](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L628)_
+*Defined in [src/types/index.ts:628](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L628)*
 
 amount to invest
 
----
+___
 
 ### `Optional` beneficiary
 
-• **beneficiary**? : _undefined | string_
+• **beneficiary**? : *undefined | string*
 
-_Inherited from [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md).[beneficiary](_types_index_.investintieredstobaseprocedureargs.md#optional-beneficiary)_
+*Inherited from [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md).[beneficiary](_types_index_.investintieredstobaseprocedureargs.md#optional-beneficiary)*
 
-_Defined in [src/types/index.ts:641](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L641)_
+*Defined in [src/types/index.ts:641](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L641)*
 
 if specified, the investment will be made on behalf of this address
 
----
+___
 
-### currency
+###  currency
 
-• **currency**: _Currency.StableCoin_
+• **currency**: *Currency.StableCoin*
 
-_Overrides [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md).[currency](_types_index_.investintieredstobaseprocedureargs.md#currency)_
+*Overrides [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md).[currency](_types_index_.investintieredstobaseprocedureargs.md#currency)*
 
-_Defined in [src/types/index.ts:645](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L645)_
+*Defined in [src/types/index.ts:645](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L645)*
 
----
+___
 
 ### `Optional` minTokens
 
-• **minTokens**? : _BigNumber_
+• **minTokens**? : *BigNumber*
 
-_Inherited from [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md).[minTokens](_types_index_.investintieredstobaseprocedureargs.md#optional-mintokens)_
+*Inherited from [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md).[minTokens](_types_index_.investintieredstobaseprocedureargs.md#optional-mintokens)*
 
-_Defined in [src/types/index.ts:637](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L637)_
+*Defined in [src/types/index.ts:637](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L637)*
 
 minimum amount of Security Tokens that should be bought.
 If, because of price fluctuations, a lower amount is being bought, the transaction will revert
 
----
+___
 
-### stableCoinAddress
+###  stableCoinAddress
 
-• **stableCoinAddress**: _string_
+• **stableCoinAddress**: *string*
 
-_Defined in [src/types/index.ts:646](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L646)_
+*Defined in [src/types/index.ts:646](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L646)*
 
----
+___
 
-### stoAddress
+###  stoAddress
 
-• **stoAddress**: _string_
+• **stoAddress**: *string*
 
-_Inherited from [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md).[stoAddress](_types_index_.investintieredstobaseprocedureargs.md#stoaddress)_
+*Inherited from [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md).[stoAddress](_types_index_.investintieredstobaseprocedureargs.md#stoaddress)*
 
-_Defined in [src/types/index.ts:624](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L624)_
+*Defined in [src/types/index.ts:624](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L624)*
 
 address of the STO
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Inherited from [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md).[symbol](_types_index_.investintieredstobaseprocedureargs.md#symbol)_
+*Inherited from [InvestInTieredStoBaseProcedureArgs](_types_index_.investintieredstobaseprocedureargs.md).[symbol](_types_index_.investintieredstobaseprocedureargs.md#symbol)*
 
-_Defined in [src/types/index.ts:620](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L620)_
+*Defined in [src/types/index.ts:620](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L620)*
 
 symbol of the Security Token

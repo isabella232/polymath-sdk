@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [DisableFeature](../classes/_procedures_disablefeature_.disablefeature.md)
+* [DisableFeature](../classes/_procedures_disablefeature_.disablefeature.md)

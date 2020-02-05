@@ -4,31 +4,31 @@ Fees associated with running a [TransactionQueue](../classes/_entities_transacti
 
 ## Hierarchy
 
-- **Fees**
+* **Fees**
 
 ## Index
 
 ### Properties
 
-- [poly](_types_index_.fees.md#poly)
-- [usd](_types_index_.fees.md#usd)
+* [poly](_types_index_.fees.md#poly)
+* [usd](_types_index_.fees.md#usd)
 
 ## Properties
 
-### poly
+###  poly
 
-• **poly**: _BigNumber_
+• **poly**: *BigNumber*
 
-_Defined in [src/types/index.ts:1409](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1409)_
+*Defined in [src/types/index.ts:1409](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1409)*
 
 fees expressed in POLY
 
----
+___
 
-### usd
+###  usd
 
-• **usd**: _BigNumber | null_
+• **usd**: *BigNumber | null*
 
-_Defined in [src/types/index.ts:1405](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1405)_
+*Defined in [src/types/index.ts:1405](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1405)*
 
 fees expressed in USD. Can be null if the Smart Contract doesn't specify one

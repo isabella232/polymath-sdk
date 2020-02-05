@@ -2,30 +2,30 @@
 
 ## Hierarchy
 
-- **Connect**
+* **Connect**
 
 ## Callable
 
-▸ (`params`: [PolymathNetworkParams](_polymath_.polymathnetworkparams.md)): _Promise‹[Polymath](../classes/_polymath_.polymath.md)›_
+▸ (`params`: [PolymathNetworkParams](_polymath_.polymathnetworkparams.md)): *Promise‹[Polymath](../classes/_polymath_.polymath.md)›*
 
-_Defined in [src/Polymath.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L35)_
-
-**Parameters:**
-
-| Name     | Type                                                         |
-| -------- | ------------------------------------------------------------ |
-| `params` | [PolymathNetworkParams](_polymath_.polymathnetworkparams.md) |
-
-**Returns:** _Promise‹[Polymath](../classes/_polymath_.polymath.md)›_
-
-▸ (`params`: [PolymathNetworkNodeParams](_polymath_.polymathnetworknodeparams.md)): _Promise‹[Polymath](../classes/_polymath_.polymath.md)›_
-
-_Defined in [src/Polymath.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L36)_
+*Defined in [src/Polymath.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L35)*
 
 **Parameters:**
 
-| Name     | Type                                                                 |
-| -------- | -------------------------------------------------------------------- |
-| `params` | [PolymathNetworkNodeParams](_polymath_.polymathnetworknodeparams.md) |
+Name | Type |
+------ | ------ |
+`params` | [PolymathNetworkParams](_polymath_.polymathnetworkparams.md) |
 
-**Returns:** _Promise‹[Polymath](../classes/_polymath_.polymath.md)›_
+**Returns:** *Promise‹[Polymath](../classes/_polymath_.polymath.md)›*
+
+▸ (`params`: [PolymathNetworkNodeParams](_polymath_.polymathnetworknodeparams.md)): *Promise‹[Polymath](../classes/_polymath_.polymath.md)›*
+
+*Defined in [src/Polymath.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L36)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`params` | [PolymathNetworkNodeParams](_polymath_.polymathnetworknodeparams.md) |
+
+**Returns:** *Promise‹[Polymath](../classes/_polymath_.polymath.md)›*

@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- **LaunchTieredStoParams**
+* **LaunchTieredStoParams**
 
   ↳ [LaunchTieredStoCustomCurrencyEthParams](_entities_securitytoken_issuance_offerings_.launchtieredstocustomcurrencyethparams.md)
 
@@ -14,102 +14,102 @@
 
 ### Properties
 
-- [allowPreIssuance](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#optional-allowpreissuance)
-- [currencies](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#currencies)
-- [customCurrency](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#optional-customcurrency)
-- [endDate](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#enddate)
-- [minimumInvestment](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#minimuminvestment)
-- [nonAccreditedInvestmentLimit](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#nonaccreditedinvestmentlimit)
-- [raisedFundsWallet](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#raisedfundswallet)
-- [stableCoinAddresses](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#optional-stablecoinaddresses)
-- [startDate](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#startdate)
-- [tiers](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#tiers)
-- [unsoldTokensWallet](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#unsoldtokenswallet)
+* [allowPreIssuance](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#optional-allowpreissuance)
+* [currencies](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#currencies)
+* [customCurrency](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#optional-customcurrency)
+* [endDate](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#enddate)
+* [minimumInvestment](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#minimuminvestment)
+* [nonAccreditedInvestmentLimit](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#nonaccreditedinvestmentlimit)
+* [raisedFundsWallet](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#raisedfundswallet)
+* [stableCoinAddresses](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#optional-stablecoinaddresses)
+* [startDate](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#startdate)
+* [tiers](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#tiers)
+* [unsoldTokensWallet](_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md#unsoldtokenswallet)
 
 ## Properties
 
 ### `Optional` allowPreIssuance
 
-• **allowPreIssuance**? : _undefined | false | true_
+• **allowPreIssuance**? : *undefined | false | true*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L29)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L29)*
 
----
+___
 
-### currencies
+###  currencies
 
-• **currencies**: _Currency[]_
+• **currencies**: *Currency[]*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L24)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L24)*
 
----
+___
 
 ### `Optional` customCurrency
 
-• **customCurrency**? : _Partial‹[CustomCurrency](_types_index_.customcurrency.md)›_
+• **customCurrency**? : *Partial‹[CustomCurrency](_types_index_.customcurrency.md)›*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L28)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L28)*
 
----
+___
 
-### endDate
+###  endDate
 
-• **endDate**: _Date_
+• **endDate**: *Date*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L20)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L20)*
 
----
+___
 
-### minimumInvestment
+###  minimumInvestment
 
-• **minimumInvestment**: _BigNumber_
+• **minimumInvestment**: *BigNumber*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L23)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L23)*
 
----
+___
 
-### nonAccreditedInvestmentLimit
+###  nonAccreditedInvestmentLimit
 
-• **nonAccreditedInvestmentLimit**: _BigNumber_
+• **nonAccreditedInvestmentLimit**: *BigNumber*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L22)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L22)*
 
----
+___
 
-### raisedFundsWallet
+###  raisedFundsWallet
 
-• **raisedFundsWallet**: _string_
+• **raisedFundsWallet**: *string*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L25)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L25)*
 
----
+___
 
 ### `Optional` stableCoinAddresses
 
-• **stableCoinAddresses**? : _string[]_
+• **stableCoinAddresses**? : *string[]*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L27)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L27)*
 
----
+___
 
-### startDate
+###  startDate
 
-• **startDate**: _Date_
+• **startDate**: *Date*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L19)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L19)*
 
----
+___
 
-### tiers
+###  tiers
 
-• **tiers**: _[StoTier](_types_index_.stotier.md)[]_
+• **tiers**: *[StoTier](_types_index_.stotier.md)[]*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L21)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L21)*
 
----
+___
 
-### unsoldTokensWallet
+###  unsoldTokensWallet
 
-• **unsoldTokensWallet**: _string_
+• **unsoldTokensWallet**: *string*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L26)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L26)*

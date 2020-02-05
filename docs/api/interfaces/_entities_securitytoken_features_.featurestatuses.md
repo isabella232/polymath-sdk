@@ -4,54 +4,54 @@ Current status (enabled/disabled) of all Security Token Features
 
 ## Hierarchy
 
-- **FeatureStatuses**
+* **FeatureStatuses**
 
 ## Index
 
 ### Properties
 
-- [[Feature.Dividends]](_entities_securitytoken_features_.featurestatuses.md#[feature.dividends])
-- [[Feature.PercentageOwnershipRestrictions]](_entities_securitytoken_features_.featurestatuses.md#[feature.percentageownershiprestrictions])
-- [[Feature.Permissions]](_entities_securitytoken_features_.featurestatuses.md#[feature.permissions])
-- [[Feature.ShareholderCountRestrictions]](_entities_securitytoken_features_.featurestatuses.md#[feature.shareholdercountrestrictions])
-- [[Feature.Shareholders]](_entities_securitytoken_features_.featurestatuses.md#[feature.shareholders])
+* [[Feature.Dividends]](_entities_securitytoken_features_.featurestatuses.md#[feature.dividends])
+* [[Feature.PercentageOwnershipRestrictions]](_entities_securitytoken_features_.featurestatuses.md#[feature.percentageownershiprestrictions])
+* [[Feature.Permissions]](_entities_securitytoken_features_.featurestatuses.md#[feature.permissions])
+* [[Feature.ShareholderCountRestrictions]](_entities_securitytoken_features_.featurestatuses.md#[feature.shareholdercountrestrictions])
+* [[Feature.Shareholders]](_entities_securitytoken_features_.featurestatuses.md#[feature.shareholders])
 
 ## Properties
 
-### [Feature.Dividends]
+###  [Feature.Dividends]
 
-• **[Feature.Dividends]**: _boolean_
+• **[Feature.Dividends]**: *boolean*
 
-_Defined in [src/entities/SecurityToken/Features.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L30)_
+*Defined in [src/entities/SecurityToken/Features.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L30)*
 
----
+___
 
-### [Feature.PercentageOwnershipRestrictions]
+###  [Feature.PercentageOwnershipRestrictions]
 
-• **[Feature.PercentageOwnershipRestrictions]**: _boolean_
+• **[Feature.PercentageOwnershipRestrictions]**: *boolean*
 
-_Defined in [src/entities/SecurityToken/Features.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L32)_
+*Defined in [src/entities/SecurityToken/Features.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L32)*
 
----
+___
 
-### [Feature.Permissions]
+###  [Feature.Permissions]
 
-• **[Feature.Permissions]**: _boolean_
+• **[Feature.Permissions]**: *boolean*
 
-_Defined in [src/entities/SecurityToken/Features.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L28)_
+*Defined in [src/entities/SecurityToken/Features.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L28)*
 
----
+___
 
-### [Feature.ShareholderCountRestrictions]
+###  [Feature.ShareholderCountRestrictions]
 
-• **[Feature.ShareholderCountRestrictions]**: _boolean_
+• **[Feature.ShareholderCountRestrictions]**: *boolean*
 
-_Defined in [src/entities/SecurityToken/Features.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L31)_
+*Defined in [src/entities/SecurityToken/Features.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L31)*
 
----
+___
 
-### [Feature.Shareholders]
+###  [Feature.Shareholders]
 
-• **[Feature.Shareholders]**: _boolean_
+• **[Feature.Shareholders]**: *boolean*
 
-_Defined in [src/entities/SecurityToken/Features.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L29)_
+*Defined in [src/entities/SecurityToken/Features.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L29)*

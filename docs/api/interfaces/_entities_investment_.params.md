@@ -4,45 +4,45 @@ Constructor parameters
 
 ## Hierarchy
 
-- **Params**
+* **Params**
 
 ## Index
 
 ### Properties
 
-- [address](_entities_investment_.params.md#address)
-- [investedFunds](_entities_investment_.params.md#investedfunds)
-- [securityTokenSymbol](_entities_investment_.params.md#securitytokensymbol)
-- [tokenAmount](_entities_investment_.params.md#tokenamount)
+* [address](_entities_investment_.params.md#address)
+* [investedFunds](_entities_investment_.params.md#investedfunds)
+* [securityTokenSymbol](_entities_investment_.params.md#securitytokensymbol)
+* [tokenAmount](_entities_investment_.params.md#tokenamount)
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Defined in [src/entities/Investment.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L33)_
+*Defined in [src/entities/Investment.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L33)*
 
----
+___
 
-### investedFunds
+###  investedFunds
 
-• **investedFunds**: _BigNumber_
+• **investedFunds**: *BigNumber*
 
-_Defined in [src/entities/Investment.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L35)_
+*Defined in [src/entities/Investment.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L35)*
 
----
+___
 
-### securityTokenSymbol
+###  securityTokenSymbol
 
-• **securityTokenSymbol**: _string_
+• **securityTokenSymbol**: *string*
 
-_Defined in [src/entities/Investment.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L32)_
+*Defined in [src/entities/Investment.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L32)*
 
----
+___
 
-### tokenAmount
+###  tokenAmount
 
-• **tokenAmount**: _BigNumber_
+• **tokenAmount**: *BigNumber*
 
-_Defined in [src/entities/Investment.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L34)_
+*Defined in [src/entities/Investment.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L34)*

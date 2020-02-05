@@ -4,20 +4,20 @@ Properties that uniquely identify a Security Token
 
 ## Hierarchy
 
-- **UniqueIdentifiers**
+* **UniqueIdentifiers**
 
 ## Index
 
 ### Properties
 
-- [symbol](_entities_securitytoken_securitytoken_.uniqueidentifiers.md#symbol)
+* [symbol](_entities_securitytoken_securitytoken_.uniqueidentifiers.md#symbol)
 
 ## Properties
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L24)_
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L24)*
 
 symbol of the security token

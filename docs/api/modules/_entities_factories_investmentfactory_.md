@@ -4,16 +4,16 @@
 
 ### Classes
 
-- [InvestmentFactory](../classes/_entities_factories_investmentfactory_.investmentfactory.md)
+* [InvestmentFactory](../classes/_entities_factories_investmentfactory_.investmentfactory.md)
 
 ### Variables
 
-- [weiToValue](_entities_factories_investmentfactory_.md#weitovalue)
+* [weiToValue](_entities_factories_investmentfactory_.md#weitovalue)
 
 ## Variables
 
-### weiToValue
+###  weiToValue
 
-• **weiToValue**: _weiToValue_
+• **weiToValue**: *weiToValue*
 
-_Defined in [src/entities/factories/InvestmentFactory.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/InvestmentFactory.ts#L17)_
+*Defined in [src/entities/factories/InvestmentFactory.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/InvestmentFactory.ts#L17)*

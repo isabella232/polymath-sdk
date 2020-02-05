@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- object
+* object
 
   ↳ **LaunchTieredStoNoCustomCurrencyParams**
 
@@ -10,21 +10,21 @@
 
 ### Properties
 
-- [currencies](_entities_securitytoken_issuance_offerings_.launchtieredstonocustomcurrencyparams.md#currencies)
-- [stableCoinAddresses](_entities_securitytoken_issuance_offerings_.launchtieredstonocustomcurrencyparams.md#stablecoinaddresses)
+* [currencies](_entities_securitytoken_issuance_offerings_.launchtieredstonocustomcurrencyparams.md#currencies)
+* [stableCoinAddresses](_entities_securitytoken_issuance_offerings_.launchtieredstonocustomcurrencyparams.md#stablecoinaddresses)
 
 ## Properties
 
-### currencies
+###  currencies
 
-• **currencies**: _[EthAndStableCoin](../modules/_entities_securitytoken_issuance_offerings_.md#ethandstablecoin) | [PolyAndStableCoin](../modules/_entities_securitytoken_issuance_offerings_.md#polyandstablecoin) | [AllCurrencies](../modules/_entities_securitytoken_issuance_offerings_.md#allcurrencies)_
+• **currencies**: *[EthAndStableCoin](../modules/_entities_securitytoken_issuance_offerings_.md#ethandstablecoin) | [PolyAndStableCoin](../modules/_entities_securitytoken_issuance_offerings_.md#polyandstablecoin) | [AllCurrencies](../modules/_entities_securitytoken_issuance_offerings_.md#allcurrencies)*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L62)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L62)*
 
----
+___
 
-### stableCoinAddresses
+###  stableCoinAddresses
 
-• **stableCoinAddresses**: _string[]_
+• **stableCoinAddresses**: *string[]*
 
-_Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:63](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Issuance/Offerings.ts#L63)_
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:63](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L63)*

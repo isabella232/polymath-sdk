@@ -4,21 +4,21 @@
 
 ### Enumeration members
 
-- [StoAdministrator](_types_index_.storole.md#stoadministrator)
-- [StoOperator](_types_index_.storole.md#stooperator)
+* [StoAdministrator](_types_index_.storole.md#stoadministrator)
+* [StoOperator](_types_index_.storole.md#stooperator)
 
 ## Enumeration members
 
-### StoAdministrator
+###  StoAdministrator
 
 • **StoAdministrator**: = "StoAdministrator"
 
-_Defined in [src/types/index.ts:1467](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1467)_
+*Defined in [src/types/index.ts:1467](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1467)*
 
----
+___
 
-### StoOperator
+###  StoOperator
 
 • **StoOperator**: = "StoOperator"
 
-_Defined in [src/types/index.ts:1466](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1466)_
+*Defined in [src/types/index.ts:1466](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1466)*

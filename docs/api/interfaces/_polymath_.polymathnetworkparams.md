@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- **PolymathNetworkParams**
+* **PolymathNetworkParams**
 
   ↳ [PolymathNetworkNodeParams](_polymath_.polymathnetworknodeparams.md)
 
@@ -12,21 +12,21 @@
 
 ### Properties
 
-- [polymathRegistryAddress](_polymath_.polymathnetworkparams.md#optional-polymathregistryaddress)
-- [speed](_polymath_.polymathnetworkparams.md#optional-speed)
+* [polymathRegistryAddress](_polymath_.polymathnetworkparams.md#optional-polymathregistryaddress)
+* [speed](_polymath_.polymathnetworkparams.md#optional-speed)
 
 ## Properties
 
 ### `Optional` polymathRegistryAddress
 
-• **polymathRegistryAddress**? : _undefined | string_
+• **polymathRegistryAddress**? : *undefined | string*
 
-_Defined in [src/Polymath.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L21)_
+*Defined in [src/Polymath.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L21)*
 
----
+___
 
 ### `Optional` speed
 
-• **speed**? : _[TransactionSpeed](../enums/_types_index_.transactionspeed.md)_
+• **speed**? : *[TransactionSpeed](../enums/_types_index_.transactionspeed.md)*
 
-_Defined in [src/Polymath.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L22)_
+*Defined in [src/Polymath.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L22)*

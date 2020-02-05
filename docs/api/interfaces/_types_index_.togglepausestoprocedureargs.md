@@ -4,51 +4,51 @@ Arguments for the [TogglePauseSto](../enums/_types_index_.proceduretype.md#toggl
 
 ## Hierarchy
 
-- **TogglePauseStoProcedureArgs**
+* **TogglePauseStoProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [pause](_types_index_.togglepausestoprocedureargs.md#pause)
-- [stoAddress](_types_index_.togglepausestoprocedureargs.md#stoaddress)
-- [stoType](_types_index_.togglepausestoprocedureargs.md#stotype)
-- [symbol](_types_index_.togglepausestoprocedureargs.md#symbol)
+* [pause](_types_index_.togglepausestoprocedureargs.md#pause)
+* [stoAddress](_types_index_.togglepausestoprocedureargs.md#stoaddress)
+* [stoType](_types_index_.togglepausestoprocedureargs.md#stotype)
+* [symbol](_types_index_.togglepausestoprocedureargs.md#symbol)
 
 ## Properties
 
-### pause
+###  pause
 
-• **pause**: _boolean_
+• **pause**: *boolean*
 
-_Defined in [src/types/index.ts:1002](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1002)_
+*Defined in [src/types/index.ts:1002](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1002)*
 
 true if pausing the STO, false if un-pausing it
 
----
+___
 
-### stoAddress
+###  stoAddress
 
-• **stoAddress**: _string_
+• **stoAddress**: *string*
 
-_Defined in [src/types/index.ts:994](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L994)_
+*Defined in [src/types/index.ts:994](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L994)*
 
----
+___
 
-### stoType
+###  stoType
 
-• **stoType**: _[StoType](../enums/_types_index_.stotype.md)_
+• **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
 
-_Defined in [src/types/index.ts:998](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L998)_
+*Defined in [src/types/index.ts:998](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L998)*
 
 type of the STO (Simple, Tiered, etc)
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:993](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L993)_
+*Defined in [src/types/index.ts:993](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L993)*
 
 symbol of the Security Token

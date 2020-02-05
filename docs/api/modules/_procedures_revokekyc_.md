@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [RevokeKyc](../classes/_procedures_revokekyc_.revokekyc.md)
+* [RevokeKyc](../classes/_procedures_revokekyc_.revokekyc.md)

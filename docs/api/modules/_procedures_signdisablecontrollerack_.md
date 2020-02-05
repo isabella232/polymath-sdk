@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [SignDisableControllerAck](../classes/_procedures_signdisablecontrollerack_.signdisablecontrollerack.md)
+* [SignDisableControllerAck](../classes/_procedures_signdisablecontrollerack_.signdisablecontrollerack.md)

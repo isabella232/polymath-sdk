@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [SubModule](../classes/_entities_securitytoken_submodule_.submodule.md)
+* [SubModule](../classes/_entities_securitytoken_submodule_.submodule.md)

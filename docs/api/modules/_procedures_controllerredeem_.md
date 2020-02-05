@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [ControllerRedeem](../classes/_procedures_controllerredeem_.controllerredeem.md)
+* [ControllerRedeem](../classes/_procedures_controllerredeem_.controllerredeem.md)

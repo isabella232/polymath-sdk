@@ -4,31 +4,31 @@ Arguments for the [ModifyMaxHolderCount](../enums/_types_index_.proceduretype.md
 
 ## Hierarchy
 
-- **ModifyMaxHolderCountProcedureArgs**
+* **ModifyMaxHolderCountProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [maxHolderCount](_types_index_.modifymaxholdercountprocedureargs.md#maxholdercount)
-- [symbol](_types_index_.modifymaxholdercountprocedureargs.md#symbol)
+* [maxHolderCount](_types_index_.modifymaxholdercountprocedureargs.md#maxholdercount)
+* [symbol](_types_index_.modifymaxholdercountprocedureargs.md#symbol)
 
 ## Properties
 
-### maxHolderCount
+###  maxHolderCount
 
-• **maxHolderCount**: _number_
+• **maxHolderCount**: *number*
 
-_Defined in [src/types/index.ts:1192](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1192)_
+*Defined in [src/types/index.ts:1192](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1192)*
 
 maximum number of simultaneous token holders
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:1188](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1188)_
+*Defined in [src/types/index.ts:1188](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1188)*
 
 symbol of the Security Token

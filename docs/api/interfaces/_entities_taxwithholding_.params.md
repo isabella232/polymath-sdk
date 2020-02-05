@@ -4,27 +4,27 @@ Constructor parameters
 
 ## Hierarchy
 
-- **Params**
+* **Params**
 
 ## Index
 
 ### Properties
 
-- [percentage](_entities_taxwithholding_.params.md#percentage)
-- [securityTokenSymbol](_entities_taxwithholding_.params.md#securitytokensymbol)
+* [percentage](_entities_taxwithholding_.params.md#percentage)
+* [securityTokenSymbol](_entities_taxwithholding_.params.md#securitytokensymbol)
 
 ## Properties
 
-### percentage
+###  percentage
 
-• **percentage**: _number_
+• **percentage**: *number*
 
-_Defined in [src/entities/TaxWithholding.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TaxWithholding.ts#L33)_
+*Defined in [src/entities/TaxWithholding.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TaxWithholding.ts#L33)*
 
----
+___
 
-### securityTokenSymbol
+###  securityTokenSymbol
 
-• **securityTokenSymbol**: _string_
+• **securityTokenSymbol**: *string*
 
-_Defined in [src/entities/TaxWithholding.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/TaxWithholding.ts#L32)_
+*Defined in [src/entities/TaxWithholding.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TaxWithholding.ts#L32)*

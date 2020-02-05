@@ -4,20 +4,20 @@ Options for [getModuleAddressesByName](../classes/_polymathbase_.polymathbase.md
 
 ## Hierarchy
 
-- **GetModuleAddressesByNameOpts**
+* **GetModuleAddressesByNameOpts**
 
 ## Index
 
 ### Properties
 
-- [unarchived](_polymathbase_.getmoduleaddressesbynameopts.md#unarchived)
+* [unarchived](_polymathbase_.getmoduleaddressesbynameopts.md#unarchived)
 
 ## Properties
 
-### unarchived
+###  unarchived
 
-• **unarchived**: _boolean_
+• **unarchived**: *boolean*
 
-_Defined in [src/PolymathBase.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathBase.ts#L69)_
+*Defined in [src/PolymathBase.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathBase.ts#L69)*
 
 whether to include unarchived modules in the search

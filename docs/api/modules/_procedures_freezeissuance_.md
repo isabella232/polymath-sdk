@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [FreezeIssuance](../classes/_procedures_freezeissuance_.freezeissuance.md)
+* [FreezeIssuance](../classes/_procedures_freezeissuance_.freezeissuance.md)

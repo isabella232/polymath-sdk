@@ -4,36 +4,36 @@
 
 ### Classes
 
-- [PolymathError](../classes/_polymatherror_.polymatherror.md)
+* [PolymathError](../classes/_polymatherror_.polymatherror.md)
 
 ### Object literals
 
-- [ErrorMessagesPerCode](_polymatherror_.md#const-errormessagespercode)
+* [ErrorMessagesPerCode](_polymatherror_.md#const-errormessagespercode)
 
 ## Object literals
 
 ### `Const` ErrorMessagesPerCode
 
-### ▪ **ErrorMessagesPerCode**: _object_
+### ▪ **ErrorMessagesPerCode**: *object*
 
-_Defined in [src/PolymathError.ts:3](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathError.ts#L3)_
+*Defined in [src/PolymathError.ts:3](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathError.ts#L3)*
 
-### \_\_computed
+###  __computed
 
-• **\_\_computed**: _string_ = "You must install the Metamask browser extension if attempting to use Polymath SDK from the browser"
+• **__computed**: *string* = "You must install the Metamask browser extension if attempting to use Polymath SDK from the browser"
 
-_Defined in [src/PolymathError.ts:6](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathError.ts#L6)_
+*Defined in [src/PolymathError.ts:6](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathError.ts#L6)*
 
-_Defined in [src/PolymathError.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathError.ts#L7)_
+*Defined in [src/PolymathError.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathError.ts#L7)*
 
-_Defined in [src/PolymathError.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathError.ts#L9)_
+*Defined in [src/PolymathError.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathError.ts#L9)*
 
-_Defined in [src/PolymathError.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathError.ts#L10)_
+*Defined in [src/PolymathError.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathError.ts#L10)*
 
-_Defined in [src/PolymathError.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathError.ts#L11)_
+*Defined in [src/PolymathError.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathError.ts#L11)*
 
-_Defined in [src/PolymathError.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathError.ts#L13)_
+*Defined in [src/PolymathError.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathError.ts#L13)*
 
-_Defined in [src/PolymathError.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathError.ts#L14)_
+*Defined in [src/PolymathError.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathError.ts#L14)*
 
-_Defined in [src/PolymathError.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/PolymathError.ts#L16)_
+*Defined in [src/PolymathError.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/PolymathError.ts#L16)*

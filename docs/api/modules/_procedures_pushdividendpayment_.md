@@ -4,16 +4,16 @@
 
 ### Classes
 
-- [PushDividendPayment](../classes/_procedures_pushdividendpayment_.pushdividendpayment.md)
+* [PushDividendPayment](../classes/_procedures_pushdividendpayment_.pushdividendpayment.md)
 
 ### Variables
 
-- [CHUNK_SIZE](_procedures_pushdividendpayment_.md#const-chunk_size)
+* [CHUNK_SIZE](_procedures_pushdividendpayment_.md#const-chunk_size)
 
 ## Variables
 
 ### `Const` CHUNK_SIZE
 
-• **CHUNK_SIZE**: _100_ = 100
+• **CHUNK_SIZE**: *100* = 100
 
-_Defined in [src/procedures/PushDividendPayment.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/PushDividendPayment.ts#L15)_
+*Defined in [src/procedures/PushDividendPayment.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/procedures/PushDividendPayment.ts#L15)*

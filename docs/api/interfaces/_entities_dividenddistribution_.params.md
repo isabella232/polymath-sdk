@@ -4,151 +4,151 @@ Dividend Distribution constructor parameters
 
 ## Hierarchy
 
-- **Params**
+* **Params**
 
 ## Index
 
 ### Properties
 
-- [amount](_entities_dividenddistribution_.params.md#amount)
-- [checkpointId](_entities_dividenddistribution_.params.md#checkpointid)
-- [claimedAmount](_entities_dividenddistribution_.params.md#claimedamount)
-- [created](_entities_dividenddistribution_.params.md#created)
-- [currency](_entities_dividenddistribution_.params.md#currency)
-- [expiry](_entities_dividenddistribution_.params.md#expiry)
-- [maturity](_entities_dividenddistribution_.params.md#maturity)
-- [name](_entities_dividenddistribution_.params.md#name)
-- [reclaimed](_entities_dividenddistribution_.params.md#reclaimed)
-- [securityTokenSymbol](_entities_dividenddistribution_.params.md#securitytokensymbol)
-- [shareholders](_entities_dividenddistribution_.params.md#shareholders)
-- [totalSupply](_entities_dividenddistribution_.params.md#totalsupply)
-- [totalWithheld](_entities_dividenddistribution_.params.md#totalwithheld)
-- [totalWithheldWithdrawn](_entities_dividenddistribution_.params.md#totalwithheldwithdrawn)
+* [amount](_entities_dividenddistribution_.params.md#amount)
+* [checkpointId](_entities_dividenddistribution_.params.md#checkpointid)
+* [claimedAmount](_entities_dividenddistribution_.params.md#claimedamount)
+* [created](_entities_dividenddistribution_.params.md#created)
+* [currency](_entities_dividenddistribution_.params.md#currency)
+* [expiry](_entities_dividenddistribution_.params.md#expiry)
+* [maturity](_entities_dividenddistribution_.params.md#maturity)
+* [name](_entities_dividenddistribution_.params.md#name)
+* [reclaimed](_entities_dividenddistribution_.params.md#reclaimed)
+* [securityTokenSymbol](_entities_dividenddistribution_.params.md#securitytokensymbol)
+* [shareholders](_entities_dividenddistribution_.params.md#shareholders)
+* [totalSupply](_entities_dividenddistribution_.params.md#totalsupply)
+* [totalWithheld](_entities_dividenddistribution_.params.md#totalwithheld)
+* [totalWithheldWithdrawn](_entities_dividenddistribution_.params.md#totalwithheldwithdrawn)
 
 ## Properties
 
-### amount
+###  amount
 
-• **amount**: _BigNumber_
+• **amount**: *BigNumber*
 
-_Defined in [src/entities/DividendDistribution.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L57)_
+*Defined in [src/entities/DividendDistribution.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L57)*
 
 dividend amount
 
----
+___
 
-### checkpointId
+###  checkpointId
 
-• **checkpointId**: _string_
+• **checkpointId**: *string*
 
-_Defined in [src/entities/DividendDistribution.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L41)_
+*Defined in [src/entities/DividendDistribution.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L41)*
 
----
+___
 
-### claimedAmount
+###  claimedAmount
 
-• **claimedAmount**: _BigNumber_
+• **claimedAmount**: *BigNumber*
 
-_Defined in [src/entities/DividendDistribution.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L61)_
+*Defined in [src/entities/DividendDistribution.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L61)*
 
 amount of dividend claimed so far
 
----
+___
 
-### created
+###  created
 
-• **created**: _Date_
+• **created**: *Date*
 
-_Defined in [src/entities/DividendDistribution.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L45)_
+*Defined in [src/entities/DividendDistribution.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L45)*
 
 date at which the dividend was created
 
----
+___
 
-### currency
+###  currency
 
-• **currency**: _string | null_
+• **currency**: *string | null*
 
-_Defined in [src/entities/DividendDistribution.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L77)_
+*Defined in [src/entities/DividendDistribution.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L77)*
 
 symbol of the currency in which this dividend distribution is being paid
 
----
+___
 
-### expiry
+###  expiry
 
-• **expiry**: _Date_
+• **expiry**: *Date*
 
-_Defined in [src/entities/DividendDistribution.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L53)_
+*Defined in [src/entities/DividendDistribution.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L53)*
 
 date until which dividend can be claimed
 
----
+___
 
-### maturity
+###  maturity
 
-• **maturity**: _Date_
+• **maturity**: *Date*
 
-_Defined in [src/entities/DividendDistribution.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L49)_
+*Defined in [src/entities/DividendDistribution.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L49)*
 
 date after which dividend can be claimed
 
----
+___
 
-### name
+###  name
 
-• **name**: _string_
+• **name**: *string*
 
-_Defined in [src/entities/DividendDistribution.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L73)_
+*Defined in [src/entities/DividendDistribution.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L73)*
 
----
+___
 
-### reclaimed
+###  reclaimed
 
-• **reclaimed**: _boolean_
+• **reclaimed**: *boolean*
 
-_Defined in [src/entities/DividendDistribution.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L69)_
+*Defined in [src/entities/DividendDistribution.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L69)*
 
 true if expiry has passed and issuer has reclaimed remaining dividend
 
----
+___
 
-### securityTokenSymbol
+###  securityTokenSymbol
 
-• **securityTokenSymbol**: _string_
+• **securityTokenSymbol**: *string*
 
-_Defined in [src/entities/DividendDistribution.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L40)_
+*Defined in [src/entities/DividendDistribution.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L40)*
 
----
+___
 
-### shareholders
+###  shareholders
 
-• **shareholders**: _[DividendShareholderStatus](_types_index_.dividendshareholderstatus.md)[]_
+• **shareholders**: *[DividendShareholderStatus](_types_index_.dividendshareholderstatus.md)[]*
 
-_Defined in [src/entities/DividendDistribution.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L72)_
+*Defined in [src/entities/DividendDistribution.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L72)*
 
----
+___
 
-### totalSupply
+###  totalSupply
 
-• **totalSupply**: _BigNumber_
+• **totalSupply**: *BigNumber*
 
-_Defined in [src/entities/DividendDistribution.ts:65](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L65)_
+*Defined in [src/entities/DividendDistribution.ts:65](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L65)*
 
 total supply at the associated checkpoint
 
----
+___
 
-### totalWithheld
+###  totalWithheld
 
-• **totalWithheld**: _BigNumber_
+• **totalWithheld**: *BigNumber*
 
-_Defined in [src/entities/DividendDistribution.ts:70](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L70)_
+*Defined in [src/entities/DividendDistribution.ts:70](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L70)*
 
----
+___
 
-### totalWithheldWithdrawn
+###  totalWithheldWithdrawn
 
-• **totalWithheldWithdrawn**: _BigNumber_
+• **totalWithheldWithdrawn**: *BigNumber*
 
-_Defined in [src/entities/DividendDistribution.ts:71](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/DividendDistribution.ts#L71)_
+*Defined in [src/entities/DividendDistribution.ts:71](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/DividendDistribution.ts#L71)*

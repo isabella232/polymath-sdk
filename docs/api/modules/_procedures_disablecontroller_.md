@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [DisableController](../classes/_procedures_disablecontroller_.disablecontroller.md)
+* [DisableController](../classes/_procedures_disablecontroller_.disablecontroller.md)

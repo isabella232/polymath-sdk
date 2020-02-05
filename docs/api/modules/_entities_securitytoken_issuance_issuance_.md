@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [Issuance](../classes/_entities_securitytoken_issuance_issuance_.issuance.md)
+* [Issuance](../classes/_entities_securitytoken_issuance_issuance_.issuance.md)

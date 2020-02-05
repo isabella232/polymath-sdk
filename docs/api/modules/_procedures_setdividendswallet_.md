@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [SetDividendsWallet](../classes/_procedures_setdividendswallet_.setdividendswallet.md)
+* [SetDividendsWallet](../classes/_procedures_setdividendswallet_.setdividendswallet.md)

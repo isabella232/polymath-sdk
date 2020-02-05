@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [TogglePauseSto](../classes/_procedures_togglepausesto_.togglepausesto.md)
+* [TogglePauseSto](../classes/_procedures_togglepausesto_.togglepausesto.md)

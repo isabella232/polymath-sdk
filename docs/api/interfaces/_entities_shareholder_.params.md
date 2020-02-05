@@ -4,72 +4,72 @@ Constructor parameters
 
 ## Hierarchy
 
-- **Params**
+* **Params**
 
 ## Index
 
 ### Properties
 
-- [balance](_entities_shareholder_.params.md#balance)
-- [canBuyFromSto](_entities_shareholder_.params.md#canbuyfromsto)
-- [canReceiveAfter](_entities_shareholder_.params.md#canreceiveafter)
-- [canSendAfter](_entities_shareholder_.params.md#cansendafter)
-- [isAccredited](_entities_shareholder_.params.md#isaccredited)
-- [kycExpiry](_entities_shareholder_.params.md#kycexpiry)
-- [securityTokenSymbol](_entities_shareholder_.params.md#securitytokensymbol)
+* [balance](_entities_shareholder_.params.md#balance)
+* [canBuyFromSto](_entities_shareholder_.params.md#canbuyfromsto)
+* [canReceiveAfter](_entities_shareholder_.params.md#canreceiveafter)
+* [canSendAfter](_entities_shareholder_.params.md#cansendafter)
+* [isAccredited](_entities_shareholder_.params.md#isaccredited)
+* [kycExpiry](_entities_shareholder_.params.md#kycexpiry)
+* [securityTokenSymbol](_entities_shareholder_.params.md#securitytokensymbol)
 
 ## Properties
 
-### balance
+###  balance
 
-• **balance**: _BigNumber_
+• **balance**: *BigNumber*
 
-_Defined in [src/entities/Shareholder.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Shareholder.ts#L35)_
+*Defined in [src/entities/Shareholder.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Shareholder.ts#L35)*
 
----
+___
 
-### canBuyFromSto
+###  canBuyFromSto
 
-• **canBuyFromSto**: _boolean_
+• **canBuyFromSto**: *boolean*
 
-_Defined in [src/entities/Shareholder.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Shareholder.ts#L34)_
+*Defined in [src/entities/Shareholder.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Shareholder.ts#L34)*
 
----
+___
 
-### canReceiveAfter
+###  canReceiveAfter
 
-• **canReceiveAfter**: _Date_
+• **canReceiveAfter**: *Date*
 
-_Defined in [src/entities/Shareholder.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Shareholder.ts#L31)_
+*Defined in [src/entities/Shareholder.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Shareholder.ts#L31)*
 
----
+___
 
-### canSendAfter
+###  canSendAfter
 
-• **canSendAfter**: _Date_
+• **canSendAfter**: *Date*
 
-_Defined in [src/entities/Shareholder.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Shareholder.ts#L30)_
+*Defined in [src/entities/Shareholder.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Shareholder.ts#L30)*
 
----
+___
 
-### isAccredited
+###  isAccredited
 
-• **isAccredited**: _boolean_
+• **isAccredited**: *boolean*
 
-_Defined in [src/entities/Shareholder.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Shareholder.ts#L33)_
+*Defined in [src/entities/Shareholder.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Shareholder.ts#L33)*
 
----
+___
 
-### kycExpiry
+###  kycExpiry
 
-• **kycExpiry**: _Date_
+• **kycExpiry**: *Date*
 
-_Defined in [src/entities/Shareholder.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Shareholder.ts#L32)_
+*Defined in [src/entities/Shareholder.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Shareholder.ts#L32)*
 
----
+___
 
-### securityTokenSymbol
+###  securityTokenSymbol
 
-• **securityTokenSymbol**: _string_
+• **securityTokenSymbol**: *string*
 
-_Defined in [src/entities/Shareholder.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Shareholder.ts#L29)_
+*Defined in [src/entities/Shareholder.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Shareholder.ts#L29)*

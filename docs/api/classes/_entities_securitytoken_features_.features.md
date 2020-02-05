@@ -4,7 +4,7 @@ Namespace that handles all Feature related functionality
 
 ## Hierarchy
 
-- [SubModule](_entities_securitytoken_submodule_.submodule.md)
+* [SubModule](_entities_securitytoken_submodule_.submodule.md)
 
   ↳ **Features**
 
@@ -12,165 +12,165 @@ Namespace that handles all Feature related functionality
 
 ### Constructors
 
-- [constructor](_entities_securitytoken_features_.features.md#constructor)
+* [constructor](_entities_securitytoken_features_.features.md#constructor)
 
 ### Properties
 
-- [context](_entities_securitytoken_features_.features.md#protected-context)
-- [list](_entities_securitytoken_features_.features.md#list)
-- [securityToken](_entities_securitytoken_features_.features.md#protected-securitytoken)
+* [context](_entities_securitytoken_features_.features.md#protected-context)
+* [list](_entities_securitytoken_features_.features.md#list)
+* [securityToken](_entities_securitytoken_features_.features.md#protected-securitytoken)
 
 ### Methods
 
-- [disable](_entities_securitytoken_features_.features.md#disable)
-- [enable](_entities_securitytoken_features_.features.md#enable)
-- [getModuleNameFromFeature](_entities_securitytoken_features_.features.md#private-getmodulenamefromfeature)
-- [getStatus](_entities_securitytoken_features_.features.md#getstatus)
-- [isEnabled](_entities_securitytoken_features_.features.md#isenabled)
+* [disable](_entities_securitytoken_features_.features.md#disable)
+* [enable](_entities_securitytoken_features_.features.md#enable)
+* [getModuleNameFromFeature](_entities_securitytoken_features_.features.md#private-getmodulenamefromfeature)
+* [getStatus](_entities_securitytoken_features_.features.md#getstatus)
+* [isEnabled](_entities_securitytoken_features_.features.md#isenabled)
 
 ## Constructors
 
-### constructor
+###  constructor
 
-\+ **new Features**(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)): _[Features](_entities_securitytoken_features_.features.md)_
+\+ **new Features**(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)): *[Features](_entities_securitytoken_features_.features.md)*
 
-_Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)_
+*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)*
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SubModule.ts#L10)_
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SubModule.ts#L10)*
 
 Create a new SubModule instance
 
 **Parameters:**
 
-| Name            | Type                                                                     |
-| --------------- | ------------------------------------------------------------------------ |
-| `securityToken` | [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md) |
-| `context`       | [Context](_context_.context.md)                                          |
+Name | Type |
+------ | ------ |
+`securityToken` | [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md) |
+`context` | [Context](_context_.context.md) |
 
-**Returns:** _[Features](_entities_securitytoken_features_.features.md)_
+**Returns:** *[Features](_entities_securitytoken_features_.features.md)*
 
 ## Properties
 
 ### `Protected` context
 
-• **context**: _[Context](_context_.context.md)_
+• **context**: *[Context](_context_.context.md)*
 
-_Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)_
+*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)*
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SubModule.ts#L10)_
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SubModule.ts#L10)*
 
----
+___
 
-### list
+###  list
 
-• **list**: _[Feature](../enums/_types_index_.feature.md)[]_ = [
-Feature.Permissions,
-Feature.Shareholders,
-Feature.Dividends,
-Feature.ShareholderCountRestrictions,
-Feature.PercentageOwnershipRestrictions,
-]
+• **list**: *[Feature](../enums/_types_index_.feature.md)[]* =  [
+    Feature.Permissions,
+    Feature.Shareholders,
+    Feature.Dividends,
+    Feature.ShareholderCountRestrictions,
+    Feature.PercentageOwnershipRestrictions,
+  ]
 
-_Defined in [src/entities/SecurityToken/Features.ts:80](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L80)_
+*Defined in [src/entities/SecurityToken/Features.ts:80](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L80)*
 
 List of all existing features
 
----
+___
 
 ### `Protected` securityToken
 
-• **securityToken**: _[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)_
+• **securityToken**: *[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)*
 
-_Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)_
+*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)*
 
-_Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SubModule.ts#L8)_
+*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SubModule.ts#L8)*
 
 ## Methods
 
-### disable
+###  disable
 
-▸ **disable**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[DisableFeatureProcedureArgs](../interfaces/_types_index_.disablefeatureprocedureargs.md)››_
+▸ **disable**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[DisableFeatureProcedureArgs](../interfaces/_types_index_.disablefeatureprocedureargs.md)››*
 
-_Defined in [src/entities/SecurityToken/Features.ts:213](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L213)_
+*Defined in [src/entities/SecurityToken/Features.ts:213](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L213)*
 
 Disable a feature
 
 **Parameters:**
 
-▪ **args**: _object_
+▪ **args**: *object*
 
-| Name      | Type                                         |
-| --------- | -------------------------------------------- |
-| `feature` | [Feature](../enums/_types_index_.feature.md) |
+Name | Type |
+------ | ------ |
+`feature` | [Feature](../enums/_types_index_.feature.md) |
 
-**Returns:** _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[DisableFeatureProcedureArgs](../interfaces/_types_index_.disablefeatureprocedureargs.md)››_
+**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[DisableFeatureProcedureArgs](../interfaces/_types_index_.disablefeatureprocedureargs.md)››*
 
----
+___
 
-### enable
+###  enable
 
-▸ **enable**(`args`: object, `opts?`: [EnableOpts](../modules/_entities_securitytoken_features_.md#enableopts)): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)›_
+▸ **enable**(`args`: object, `opts?`: [EnableOpts](../modules/_entities_securitytoken_features_.md#enableopts)): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)›*
 
-_Defined in [src/entities/SecurityToken/Features.ts:138](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L138)_
+*Defined in [src/entities/SecurityToken/Features.ts:138](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L138)*
 
 Enable a feature
 
 **Parameters:**
 
-▪ **args**: _object_
+▪ **args**: *object*
 
-| Name      | Type                                         |
-| --------- | -------------------------------------------- |
-| `feature` | [Feature](../enums/_types_index_.feature.md) |
+Name | Type |
+------ | ------ |
+`feature` | [Feature](../enums/_types_index_.feature.md) |
 
-▪`Optional` **opts**: _[EnableOpts](../modules/_entities_securitytoken_features_.md#enableopts)_
+▪`Optional`  **opts**: *[EnableOpts](../modules/_entities_securitytoken_features_.md#enableopts)*
 
-**Returns:** _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)›_
+**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)›*
 
----
+___
 
 ### `Private` getModuleNameFromFeature
 
-▸ **getModuleNameFromFeature**(`feature`: [Feature](../enums/_types_index_.feature.md)): _ModuleName_
+▸ **getModuleNameFromFeature**(`feature`: [Feature](../enums/_types_index_.feature.md)): *ModuleName*
 
-_Defined in [src/entities/SecurityToken/Features.ts:240](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L240)_
+*Defined in [src/entities/SecurityToken/Features.ts:240](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L240)*
 
 **Parameters:**
 
-| Name      | Type                                         |
-| --------- | -------------------------------------------- |
-| `feature` | [Feature](../enums/_types_index_.feature.md) |
+Name | Type |
+------ | ------ |
+`feature` | [Feature](../enums/_types_index_.feature.md) |
 
-**Returns:** _ModuleName_
+**Returns:** *ModuleName*
 
----
+___
 
-### getStatus
+###  getStatus
 
-▸ **getStatus**(): _Promise‹[FeatureStatuses](../interfaces/_entities_securitytoken_features_.featurestatuses.md)›_
+▸ **getStatus**(): *Promise‹[FeatureStatuses](../interfaces/_entities_securitytoken_features_.featurestatuses.md)›*
 
-_Defined in [src/entities/SecurityToken/Features.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L111)_
+*Defined in [src/entities/SecurityToken/Features.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L111)*
 
 Gets the status on all Security Token features (true = enabled, false = not enabled/disabled)
 
-**Returns:** _Promise‹[FeatureStatuses](../interfaces/_entities_securitytoken_features_.featurestatuses.md)›_
+**Returns:** *Promise‹[FeatureStatuses](../interfaces/_entities_securitytoken_features_.featurestatuses.md)›*
 
----
+___
 
-### isEnabled
+###  isEnabled
 
-▸ **isEnabled**(`args`: object): _Promise‹boolean›_
+▸ **isEnabled**(`args`: object): *Promise‹boolean›*
 
-_Defined in [src/entities/SecurityToken/Features.ts:93](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L93)_
+*Defined in [src/entities/SecurityToken/Features.ts:93](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L93)*
 
 Returns whether a particular feature has been enabled or not
 
 **Parameters:**
 
-▪ **args**: _object_
+▪ **args**: *object*
 
-| Name      | Type                                         |
-| --------- | -------------------------------------------- |
-| `feature` | [Feature](../enums/_types_index_.feature.md) |
+Name | Type |
+------ | ------ |
+`feature` | [Feature](../enums/_types_index_.feature.md) |
 
-**Returns:** _Promise‹boolean›_
+**Returns:** *Promise‹boolean›*

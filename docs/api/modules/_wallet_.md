@@ -4,4 +4,4 @@
 
 ### Interfaces
 
-- [Args](../interfaces/_wallet_.args.md)
+* [Args](../interfaces/_wallet_.args.md)

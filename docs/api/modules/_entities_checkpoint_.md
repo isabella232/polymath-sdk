@@ -4,31 +4,31 @@
 
 ### Classes
 
-- [Checkpoint](../classes/_entities_checkpoint_.checkpoint.md)
+* [Checkpoint](../classes/_entities_checkpoint_.checkpoint.md)
 
 ### Interfaces
 
-- [Params](../interfaces/_entities_checkpoint_.params.md)
-- [UniqueIdentifiers](../interfaces/_entities_checkpoint_.uniqueidentifiers.md)
+* [Params](../interfaces/_entities_checkpoint_.params.md)
+* [UniqueIdentifiers](../interfaces/_entities_checkpoint_.uniqueidentifiers.md)
 
 ### Functions
 
-- [isUniqueIdentifiers](_entities_checkpoint_.md#isuniqueidentifiers)
+* [isUniqueIdentifiers](_entities_checkpoint_.md#isuniqueidentifiers)
 
 ## Functions
 
-### isUniqueIdentifiers
+###  isUniqueIdentifiers
 
-▸ **isUniqueIdentifiers**(`identifiers`: any): _identifiers is UniqueIdentifiers_
+▸ **isUniqueIdentifiers**(`identifiers`: any): *identifiers is UniqueIdentifiers*
 
-_Defined in [src/entities/Checkpoint.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L25)_
+*Defined in [src/entities/Checkpoint.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Checkpoint.ts#L25)*
 
 Check if the provided value is of type [UniqueIdentifiers](../interfaces/_entities_checkpoint_.uniqueidentifiers.md)
 
 **Parameters:**
 
-| Name          | Type |
-| ------------- | ---- |
-| `identifiers` | any  |
+Name | Type |
+------ | ------ |
+`identifiers` | any |
 
-**Returns:** _identifiers is UniqueIdentifiers_
+**Returns:** *identifiers is UniqueIdentifiers*

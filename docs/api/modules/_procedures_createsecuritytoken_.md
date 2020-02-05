@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [CreateSecurityToken](../classes/_procedures_createsecuritytoken_.createsecuritytoken.md)
+* [CreateSecurityToken](../classes/_procedures_createsecuritytoken_.createsecuritytoken.md)

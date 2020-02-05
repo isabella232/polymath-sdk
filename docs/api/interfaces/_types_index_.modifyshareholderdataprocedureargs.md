@@ -4,31 +4,31 @@ Arguments for the [ModifyShareholderData](../enums/_types_index_.proceduretype.m
 
 ## Hierarchy
 
-- **ModifyShareholderDataProcedureArgs**
+* **ModifyShareholderDataProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [shareholderData](_types_index_.modifyshareholderdataprocedureargs.md#shareholderdata)
-- [symbol](_types_index_.modifyshareholderdataprocedureargs.md#symbol)
+* [shareholderData](_types_index_.modifyshareholderdataprocedureargs.md#shareholderdata)
+* [symbol](_types_index_.modifyshareholderdataprocedureargs.md#symbol)
 
 ## Properties
 
-### shareholderData
+###  shareholderData
 
-• **shareholderData**: _[ShareholderDataEntry](_types_index_.shareholderdataentry.md)[]_
+• **shareholderData**: *[ShareholderDataEntry](_types_index_.shareholderdataentry.md)[]*
 
-_Defined in [src/types/index.ts:1164](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1164)_
+*Defined in [src/types/index.ts:1164](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1164)*
 
 shareholder KYC data that will be added/modified
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:1160](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1160)_
+*Defined in [src/types/index.ts:1160](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1160)*
 
 symbol of the Security Token

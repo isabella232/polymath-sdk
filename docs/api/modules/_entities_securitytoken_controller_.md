@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [Controller](../classes/_entities_securitytoken_controller_.controller.md)
+* [Controller](../classes/_entities_securitytoken_controller_.controller.md)

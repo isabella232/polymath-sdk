@@ -4,18 +4,18 @@ Properties that uniquely identify a Security Token Reservation
 
 ## Hierarchy
 
-- **UniqueIdentifiers**
+* **UniqueIdentifiers**
 
 ## Index
 
 ### Properties
 
-- [symbol](_entities_securitytokenreservation_.uniqueidentifiers.md#symbol)
+* [symbol](_entities_securitytokenreservation_.uniqueidentifiers.md#symbol)
 
 ## Properties
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/entities/SecurityTokenReservation.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityTokenReservation.ts#L12)_
+*Defined in [src/entities/SecurityTokenReservation.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityTokenReservation.ts#L12)*

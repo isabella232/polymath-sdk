@@ -4,75 +4,75 @@ Arguments for the [ControllerTransfer](../enums/_types_index_.proceduretype.md#c
 
 ## Hierarchy
 
-- **ControllerTransferProcedureArgs**
+* **ControllerTransferProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [amount](_types_index_.controllertransferprocedureargs.md#amount)
-- [data](_types_index_.controllertransferprocedureargs.md#optional-data)
-- [from](_types_index_.controllertransferprocedureargs.md#from)
-- [log](_types_index_.controllertransferprocedureargs.md#optional-log)
-- [symbol](_types_index_.controllertransferprocedureargs.md#symbol)
-- [to](_types_index_.controllertransferprocedureargs.md#to)
+* [amount](_types_index_.controllertransferprocedureargs.md#amount)
+* [data](_types_index_.controllertransferprocedureargs.md#optional-data)
+* [from](_types_index_.controllertransferprocedureargs.md#from)
+* [log](_types_index_.controllertransferprocedureargs.md#optional-log)
+* [symbol](_types_index_.controllertransferprocedureargs.md#symbol)
+* [to](_types_index_.controllertransferprocedureargs.md#to)
 
 ## Properties
 
-### amount
+###  amount
 
-• **amount**: _BigNumber_
+• **amount**: *BigNumber*
 
-_Defined in [src/types/index.ts:949](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L949)_
+*Defined in [src/types/index.ts:949](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L949)*
 
 amount of tokens being forcefully transferred
 
----
+___
 
 ### `Optional` data
 
-• **data**? : _undefined | string_
+• **data**? : *undefined | string*
 
-_Defined in [src/types/index.ts:953](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L953)_
+*Defined in [src/types/index.ts:953](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L953)*
 
 extra KYC transfer data
 
----
+___
 
-### from
+###  from
 
-• **from**: _string_
+• **from**: *string*
 
-_Defined in [src/types/index.ts:937](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L937)_
+*Defined in [src/types/index.ts:937](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L937)*
 
 sender's wallet address
 
----
+___
 
 ### `Optional` log
 
-• **log**? : _undefined | string_
+• **log**? : *undefined | string*
 
-_Defined in [src/types/index.ts:957](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L957)_
+*Defined in [src/types/index.ts:957](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L957)*
 
 extra log information
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:945](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L945)_
+*Defined in [src/types/index.ts:945](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L945)*
 
 symbol of the Security Token
 
----
+___
 
-### to
+###  to
 
-• **to**: _string_
+• **to**: *string*
 
-_Defined in [src/types/index.ts:941](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L941)_
+*Defined in [src/types/index.ts:941](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L941)*
 
 receiver's wallet address

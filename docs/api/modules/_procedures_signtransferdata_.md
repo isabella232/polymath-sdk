@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [SignTransferData](../classes/_procedures_signtransferdata_.signtransferdata.md)
+* [SignTransferData](../classes/_procedures_signtransferdata_.signtransferdata.md)

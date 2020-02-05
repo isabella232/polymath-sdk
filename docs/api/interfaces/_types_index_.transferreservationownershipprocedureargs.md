@@ -4,31 +4,31 @@ Arguments for the [TransferReservationOwnership](../enums/_types_index_.procedur
 
 ## Hierarchy
 
-- **TransferReservationOwnershipProcedureArgs**
+* **TransferReservationOwnershipProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [newOwner](_types_index_.transferreservationownershipprocedureargs.md#newowner)
-- [symbol](_types_index_.transferreservationownershipprocedureargs.md#symbol)
+* [newOwner](_types_index_.transferreservationownershipprocedureargs.md#newowner)
+* [symbol](_types_index_.transferreservationownershipprocedureargs.md#symbol)
 
 ## Properties
 
-### newOwner
+###  newOwner
 
-• **newOwner**: _string_
+• **newOwner**: *string*
 
-_Defined in [src/types/index.ts:1120](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1120)_
+*Defined in [src/types/index.ts:1120](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1120)*
 
 wallet address for the new symbol Reservation owner
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:1116](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1116)_
+*Defined in [src/types/index.ts:1116](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1116)*
 
 symbol of the Security Token

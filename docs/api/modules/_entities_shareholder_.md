@@ -4,9 +4,9 @@
 
 ### Classes
 
-- [Shareholder](../classes/_entities_shareholder_.shareholder.md)
+* [Shareholder](../classes/_entities_shareholder_.shareholder.md)
 
 ### Interfaces
 
-- [Params](../interfaces/_entities_shareholder_.params.md)
-- [UniqueIdentifiers](../interfaces/_entities_shareholder_.uniqueidentifiers.md)
+* [Params](../interfaces/_entities_shareholder_.params.md)
+* [UniqueIdentifiers](../interfaces/_entities_shareholder_.uniqueidentifiers.md)

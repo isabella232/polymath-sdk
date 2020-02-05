@@ -4,7 +4,7 @@ Used to manage an Investment in a Security Token Offering
 
 ## Hierarchy
 
-- [Entity](_entities_entity_.entity.md)‹[Params](../interfaces/_entities_investment_.params.md)›
+* [Entity](_entities_entity_.entity.md)‹[Params](../interfaces/_entities_investment_.params.md)›
 
   ↳ **Investment**
 
@@ -12,208 +12,208 @@ Used to manage an Investment in a Security Token Offering
 
 ### Constructors
 
-- [constructor](_entities_investment_.investment.md#constructor)
+* [constructor](_entities_investment_.investment.md#constructor)
 
 ### Properties
 
-- [address](_entities_investment_.investment.md#address)
-- [index](_entities_investment_.investment.md#index)
-- [investedFunds](_entities_investment_.investment.md#investedfunds)
-- [securityTokenId](_entities_investment_.investment.md#securitytokenid)
-- [securityTokenSymbol](_entities_investment_.investment.md#securitytokensymbol)
-- [stoId](_entities_investment_.investment.md#stoid)
-- [tokenAmount](_entities_investment_.investment.md#tokenamount)
-- [uid](_entities_investment_.investment.md#uid)
+* [address](_entities_investment_.investment.md#address)
+* [index](_entities_investment_.investment.md#index)
+* [investedFunds](_entities_investment_.investment.md#investedfunds)
+* [securityTokenId](_entities_investment_.investment.md#securitytokenid)
+* [securityTokenSymbol](_entities_investment_.investment.md#securitytokensymbol)
+* [stoId](_entities_investment_.investment.md#stoid)
+* [tokenAmount](_entities_investment_.investment.md#tokenamount)
+* [uid](_entities_investment_.investment.md#uid)
 
 ### Methods
 
-- [\_refresh](_entities_investment_.investment.md#_refresh)
-- [toPojo](_entities_investment_.investment.md#topojo)
-- [generateId](_entities_investment_.investment.md#static-generateid)
-- [unserialize](_entities_investment_.investment.md#static-unserialize)
+* [_refresh](_entities_investment_.investment.md#_refresh)
+* [toPojo](_entities_investment_.investment.md#topojo)
+* [generateId](_entities_investment_.investment.md#static-generateid)
+* [unserialize](_entities_investment_.investment.md#static-unserialize)
 
 ## Constructors
 
-### constructor
+###  constructor
 
-\+ **new Investment**(`params`: [Params](../interfaces/_entities_investment_.params.md) & [UniqueIdentifiers](../interfaces/_entities_investment_.uniqueidentifiers.md)): _[Investment](_entities_investment_.investment.md)_
+\+ **new Investment**(`params`: [Params](../interfaces/_entities_investment_.params.md) & [UniqueIdentifiers](../interfaces/_entities_investment_.uniqueidentifiers.md)): *[Investment](_entities_investment_.investment.md)*
 
-_Defined in [src/entities/Investment.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L103)_
+*Defined in [src/entities/Investment.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L103)*
 
 Create an Investment instance
 
 **Parameters:**
 
-| Name     | Type                                                                                                                                    |
-| -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `params` | [Params](../interfaces/_entities_investment_.params.md) & [UniqueIdentifiers](../interfaces/_entities_investment_.uniqueidentifiers.md) |
+Name | Type |
+------ | ------ |
+`params` | [Params](../interfaces/_entities_investment_.params.md) & [UniqueIdentifiers](../interfaces/_entities_investment_.uniqueidentifiers.md) |
 
-**Returns:** _[Investment](_entities_investment_.investment.md)_
+**Returns:** *[Investment](_entities_investment_.investment.md)*
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Defined in [src/entities/Investment.ts:88](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L88)_
+*Defined in [src/entities/Investment.ts:88](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L88)*
 
 wallet address of token holder
 
----
+___
 
-### index
+###  index
 
-• **index**: _number_
+• **index**: *number*
 
-_Defined in [src/entities/Investment.ts:93](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L93)_
+*Defined in [src/entities/Investment.ts:93](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L93)*
 
 index of the Investment
 
----
+___
 
-### investedFunds
+###  investedFunds
 
-• **investedFunds**: _BigNumber_
+• **investedFunds**: *BigNumber*
 
-_Defined in [src/entities/Investment.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L103)_
+*Defined in [src/entities/Investment.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L103)*
 
 amount of funds used to make Investment
 
----
+___
 
-### securityTokenId
+###  securityTokenId
 
-• **securityTokenId**: _string_
+• **securityTokenId**: *string*
 
-_Defined in [src/entities/Investment.ts:76](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L76)_
+*Defined in [src/entities/Investment.ts:76](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L76)*
 
----
+___
 
-### securityTokenSymbol
+###  securityTokenSymbol
 
-• **securityTokenSymbol**: _string_
+• **securityTokenSymbol**: *string*
 
-_Defined in [src/entities/Investment.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L83)_
+*Defined in [src/entities/Investment.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L83)*
 
----
+___
 
-### stoId
+###  stoId
 
-• **stoId**: _string_
+• **stoId**: *string*
 
-_Defined in [src/entities/Investment.ts:81](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L81)_
+*Defined in [src/entities/Investment.ts:81](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L81)*
 
 unique ID for the Investment
 
----
+___
 
-### tokenAmount
+###  tokenAmount
 
-• **tokenAmount**: _BigNumber_
+• **tokenAmount**: *BigNumber*
 
-_Defined in [src/entities/Investment.ts:98](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L98)_
+*Defined in [src/entities/Investment.ts:98](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L98)*
 
 total amount of tokens involved in the Investment
 
----
+___
 
-### uid
+###  uid
 
-• **uid**: _string_
+• **uid**: *string*
 
-_Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)_
+*Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)*
 
-_Defined in [src/entities/Investment.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L74)_
+*Defined in [src/entities/Investment.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L74)*
 
 unique generated identifier for an Investment
 
 ## Methods
 
-### \_refresh
+###  _refresh
 
-▸ **\_refresh**(`params`: Partial‹[Params](../interfaces/_entities_investment_.params.md)›): _void_
+▸ **_refresh**(`params`: Partial‹[Params](../interfaces/_entities_investment_.params.md)›): *void*
 
-_Overrides [Entity](_entities_entity_.entity.md).[\_refresh](_entities_entity_.entity.md#abstract-_refresh)_
+*Overrides [Entity](_entities_entity_.entity.md).[_refresh](_entities_entity_.entity.md#abstract-_refresh)*
 
-_Defined in [src/entities/Investment.ts:165](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L165)_
+*Defined in [src/entities/Investment.ts:165](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L165)*
 
 Hydrate the entity
 
 **Parameters:**
 
-| Name     | Type                                                             |
-| -------- | ---------------------------------------------------------------- |
-| `params` | Partial‹[Params](../interfaces/_entities_investment_.params.md)› |
+Name | Type |
+------ | ------ |
+`params` | Partial‹[Params](../interfaces/_entities_investment_.params.md)› |
 
-**Returns:** _void_
+**Returns:** *void*
 
----
+___
 
-### toPojo
+###  toPojo
 
-▸ **toPojo**(): _object_
+▸ **toPojo**(): *object*
 
-_Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)_
+*Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)*
 
-_Defined in [src/entities/Investment.ts:138](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L138)_
+*Defined in [src/entities/Investment.ts:138](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L138)*
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
-**Returns:** _object_
+**Returns:** *object*
 
-- **address**: _string_
+* **address**: *string*
 
-- **index**: _number_
+* **index**: *number*
 
-- **investedFunds**: _BigNumber_
+* **investedFunds**: *BigNumber*
 
-- **securityTokenId**: _string_
+* **securityTokenId**: *string*
 
-- **securityTokenSymbol**: _string_
+* **securityTokenSymbol**: *string*
 
-- **stoId**: _string_
+* **stoId**: *string*
 
-- **tokenAmount**: _BigNumber_
+* **tokenAmount**: *BigNumber*
 
-- **uid**: _string_
+* **uid**: *string*
 
----
+___
 
 ### `Static` generateId
 
-▸ **generateId**(`__namedParameters`: object): _string_
+▸ **generateId**(`__namedParameters`: object): *string*
 
-_Defined in [src/entities/Investment.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L45)_
+*Defined in [src/entities/Investment.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L45)*
 
 Generate the Investment's UUID from its identifying properties
 
 **Parameters:**
 
-▪ **\_\_namedParameters**: _object_
+▪ **__namedParameters**: *object*
 
-| Name              | Type   |
-| ----------------- | ------ |
-| `index`           | number |
-| `securityTokenId` | string |
-| `stoId`           | string |
+Name | Type |
+------ | ------ |
+`index` | number |
+`securityTokenId` | string |
+`stoId` | string |
 
-**Returns:** _string_
+**Returns:** *string*
 
----
+___
 
 ### `Static` unserialize
 
-▸ **unserialize**(`serialized`: string): _[UniqueIdentifiers](../interfaces/_entities_investment_.uniqueidentifiers.md)_
+▸ **unserialize**(`serialized`: string): *[UniqueIdentifiers](../interfaces/_entities_investment_.uniqueidentifiers.md)*
 
-_Defined in [src/entities/Investment.ts:58](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Investment.ts#L58)_
+*Defined in [src/entities/Investment.ts:58](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Investment.ts#L58)*
 
 Unserialize a serialized Investment entity
 
 **Parameters:**
 
-| Name         | Type   | Description                               |
-| ------------ | ------ | ----------------------------------------- |
-| `serialized` | string | string with Investment entity information |
+Name | Type | Description |
+------ | ------ | ------ |
+`serialized` | string | string with Investment entity information  |
 
-**Returns:** _[UniqueIdentifiers](../interfaces/_entities_investment_.uniqueidentifiers.md)_
+**Returns:** *[UniqueIdentifiers](../interfaces/_entities_investment_.uniqueidentifiers.md)*

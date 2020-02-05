@@ -4,53 +4,53 @@ Arguments for the [SignTransferData](../enums/_types_index_.proceduretype.md#sig
 
 ## Hierarchy
 
-- **SignTransferDataProcedureArgs**
+* **SignTransferDataProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [kycData](_types_index_.signtransferdataprocedureargs.md#kycdata)
-- [symbol](_types_index_.signtransferdataprocedureargs.md#symbol)
-- [validFrom](_types_index_.signtransferdataprocedureargs.md#validfrom)
-- [validTo](_types_index_.signtransferdataprocedureargs.md#validto)
+* [kycData](_types_index_.signtransferdataprocedureargs.md#kycdata)
+* [symbol](_types_index_.signtransferdataprocedureargs.md#symbol)
+* [validFrom](_types_index_.signtransferdataprocedureargs.md#validfrom)
+* [validTo](_types_index_.signtransferdataprocedureargs.md#validto)
 
 ## Properties
 
-### kycData
+###  kycData
 
-• **kycData**: _[Omit](../modules/_types_index_.md#omit)‹[Omit](../modules/_types_index_.md#omit)‹[ShareholderDataEntry](_types_index_.shareholderdataentry.md), "isAccredited"›, "canBuyFromSto"›[]_
+• **kycData**: *[Omit](../modules/_types_index_.md#omit)‹[Omit](../modules/_types_index_.md#omit)‹[ShareholderDataEntry](_types_index_.shareholderdataentry.md), "isAccredited"›, "canBuyFromSto"›[]*
 
-_Defined in [src/types/index.ts:1293](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1293)_
+*Defined in [src/types/index.ts:1293](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1293)*
 
 KYC data to sign
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:1289](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1289)_
+*Defined in [src/types/index.ts:1289](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1289)*
 
 symbol of the Security Token
 
----
+___
 
-### validFrom
+###  validFrom
 
-• **validFrom**: _Date_
+• **validFrom**: *Date*
 
-_Defined in [src/types/index.ts:1297](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1297)_
+*Defined in [src/types/index.ts:1297](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1297)*
 
 date from which the signature is valid
 
----
+___
 
-### validTo
+###  validTo
 
-• **validTo**: _Date_
+• **validTo**: *Date*
 
-_Defined in [src/types/index.ts:1301](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1301)_
+*Defined in [src/types/index.ts:1301](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1301)*
 
 date until which the signature is valid

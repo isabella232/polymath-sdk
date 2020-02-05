@@ -4,574 +4,574 @@ Class used to manage a simple sto
 
 ## Hierarchy
 
-↳ [Sto](_entities_sto_.sto.md)‹[Params](../interfaces/_entities_simplesto_.params.md)›
+  ↳ [Sto](_entities_sto_.sto.md)‹[Params](../interfaces/_entities_simplesto_.params.md)›
 
-↳ **SimpleSto**
+  ↳ **SimpleSto**
 
 ## Index
 
 ### Constructors
 
-- [constructor](_entities_simplesto_.simplesto.md#constructor)
+* [constructor](_entities_simplesto_.simplesto.md#constructor)
 
 ### Properties
 
-- [address](_entities_simplesto_.simplesto.md#address)
-- [beneficialInvestmentsAllowed](_entities_simplesto_.simplesto.md#beneficialinvestmentsallowed)
-- [cap](_entities_simplesto_.simplesto.md#cap)
-- [capReached](_entities_simplesto_.simplesto.md#capreached)
-- [context](_entities_simplesto_.simplesto.md#protected-context)
-- [endDate](_entities_simplesto_.simplesto.md#enddate)
-- [fundraiseCurrencies](_entities_simplesto_.simplesto.md#fundraisecurrencies)
-- [investorCount](_entities_simplesto_.simplesto.md#investorcount)
-- [isFinalized](_entities_simplesto_.simplesto.md#isfinalized)
-- [isPaused](_entities_simplesto_.simplesto.md#ispaused)
-- [preIssueAllowed](_entities_simplesto_.simplesto.md#preissueallowed)
-- [raisedAmount](_entities_simplesto_.simplesto.md#raisedamount)
-- [raisedFundsWallet](_entities_simplesto_.simplesto.md#raisedfundswallet)
-- [rate](_entities_simplesto_.simplesto.md#rate)
-- [securityTokenId](_entities_simplesto_.simplesto.md#securitytokenid)
-- [securityTokenSymbol](_entities_simplesto_.simplesto.md#securitytokensymbol)
-- [soldTokensAmount](_entities_simplesto_.simplesto.md#soldtokensamount)
-- [startDate](_entities_simplesto_.simplesto.md#startdate)
-- [stoType](_entities_simplesto_.simplesto.md#stotype)
-- [uid](_entities_simplesto_.simplesto.md#uid)
-- [unsoldTokensWallet](_entities_simplesto_.simplesto.md#unsoldtokenswallet)
+* [address](_entities_simplesto_.simplesto.md#address)
+* [beneficialInvestmentsAllowed](_entities_simplesto_.simplesto.md#beneficialinvestmentsallowed)
+* [cap](_entities_simplesto_.simplesto.md#cap)
+* [capReached](_entities_simplesto_.simplesto.md#capreached)
+* [context](_entities_simplesto_.simplesto.md#protected-context)
+* [endDate](_entities_simplesto_.simplesto.md#enddate)
+* [fundraiseCurrencies](_entities_simplesto_.simplesto.md#fundraisecurrencies)
+* [investorCount](_entities_simplesto_.simplesto.md#investorcount)
+* [isFinalized](_entities_simplesto_.simplesto.md#isfinalized)
+* [isPaused](_entities_simplesto_.simplesto.md#ispaused)
+* [preIssueAllowed](_entities_simplesto_.simplesto.md#preissueallowed)
+* [raisedAmount](_entities_simplesto_.simplesto.md#raisedamount)
+* [raisedFundsWallet](_entities_simplesto_.simplesto.md#raisedfundswallet)
+* [rate](_entities_simplesto_.simplesto.md#rate)
+* [securityTokenId](_entities_simplesto_.simplesto.md#securitytokenid)
+* [securityTokenSymbol](_entities_simplesto_.simplesto.md#securitytokensymbol)
+* [soldTokensAmount](_entities_simplesto_.simplesto.md#soldtokensamount)
+* [startDate](_entities_simplesto_.simplesto.md#startdate)
+* [stoType](_entities_simplesto_.simplesto.md#stotype)
+* [uid](_entities_simplesto_.simplesto.md#uid)
+* [unsoldTokensWallet](_entities_simplesto_.simplesto.md#unsoldtokenswallet)
 
 ### Methods
 
-- [\_refresh](_entities_simplesto_.simplesto.md#_refresh)
-- [allowBeneficialInvestments](_entities_simplesto_.simplesto.md#allowbeneficialinvestments)
-- [allowPreIssuing](_entities_simplesto_.simplesto.md#allowpreissuing)
-- [assignRole](_entities_simplesto_.simplesto.md#assignrole)
-- [disallowBeneficialInvestments](_entities_simplesto_.simplesto.md#disallowbeneficialinvestments)
-- [disallowPreIssuing](_entities_simplesto_.simplesto.md#disallowpreissuing)
-- [finalize](_entities_simplesto_.simplesto.md#finalize)
-- [getInvestments](_entities_simplesto_.simplesto.md#getinvestments)
-- [invest](_entities_simplesto_.simplesto.md#invest)
-- [pause](_entities_simplesto_.simplesto.md#pause)
-- [revokeRole](_entities_simplesto_.simplesto.md#revokerole)
-- [toPojo](_entities_simplesto_.simplesto.md#topojo)
-- [unpause](_entities_simplesto_.simplesto.md#unpause)
-- [generateId](_entities_simplesto_.simplesto.md#static-generateid)
-- [unserialize](_entities_simplesto_.simplesto.md#static-unserialize)
+* [_refresh](_entities_simplesto_.simplesto.md#_refresh)
+* [allowBeneficialInvestments](_entities_simplesto_.simplesto.md#allowbeneficialinvestments)
+* [allowPreIssuing](_entities_simplesto_.simplesto.md#allowpreissuing)
+* [assignRole](_entities_simplesto_.simplesto.md#assignrole)
+* [disallowBeneficialInvestments](_entities_simplesto_.simplesto.md#disallowbeneficialinvestments)
+* [disallowPreIssuing](_entities_simplesto_.simplesto.md#disallowpreissuing)
+* [finalize](_entities_simplesto_.simplesto.md#finalize)
+* [getInvestments](_entities_simplesto_.simplesto.md#getinvestments)
+* [invest](_entities_simplesto_.simplesto.md#invest)
+* [pause](_entities_simplesto_.simplesto.md#pause)
+* [revokeRole](_entities_simplesto_.simplesto.md#revokerole)
+* [toPojo](_entities_simplesto_.simplesto.md#topojo)
+* [unpause](_entities_simplesto_.simplesto.md#unpause)
+* [generateId](_entities_simplesto_.simplesto.md#static-generateid)
+* [unserialize](_entities_simplesto_.simplesto.md#static-unserialize)
 
 ## Constructors
 
-### constructor
+###  constructor
 
-\+ **new SimpleSto**(`params`: [Params](../interfaces/_entities_simplesto_.params.md) & [UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md), `context`: [Context](_context_.context.md)): _[SimpleSto](_entities_simplesto_.simplesto.md)_
+\+ **new SimpleSto**(`params`: [Params](../interfaces/_entities_simplesto_.params.md) & [UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md), `context`: [Context](_context_.context.md)): *[SimpleSto](_entities_simplesto_.simplesto.md)*
 
-_Overrides [Sto](_entities_sto_.sto.md).[constructor](_entities_sto_.sto.md#constructor)_
+*Overrides [Sto](_entities_sto_.sto.md).[constructor](_entities_sto_.sto.md#constructor)*
 
-_Defined in [src/entities/SimpleSto.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SimpleSto.ts#L61)_
+*Defined in [src/entities/SimpleSto.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SimpleSto.ts#L61)*
 
 Create a new simple sto instance
 
 **Parameters:**
 
-| Name      | Type                                                                                                                            |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `params`  | [Params](../interfaces/_entities_simplesto_.params.md) & [UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md) |
-| `context` | [Context](_context_.context.md)                                                                                                 |
+Name | Type |
+------ | ------ |
+`params` | [Params](../interfaces/_entities_simplesto_.params.md) & [UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md) |
+`context` | [Context](_context_.context.md) |
 
-**Returns:** _[SimpleSto](_entities_simplesto_.simplesto.md)_
+**Returns:** *[SimpleSto](_entities_simplesto_.simplesto.md)*
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[address](_entities_sto_.sto.md#address)_
+*Inherited from [Sto](_entities_sto_.sto.md).[address](_entities_sto_.sto.md#address)*
 
-_Defined in [src/entities/Sto.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L107)_
+*Defined in [src/entities/Sto.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L107)*
 
 ethereum address for the STO
 
----
+___
 
-### beneficialInvestmentsAllowed
+###  beneficialInvestmentsAllowed
 
-• **beneficialInvestmentsAllowed**: _boolean_
+• **beneficialInvestmentsAllowed**: *boolean*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[beneficialInvestmentsAllowed](_entities_sto_.sto.md#beneficialinvestmentsallowed)_
+*Inherited from [Sto](_entities_sto_.sto.md).[beneficialInvestmentsAllowed](_entities_sto_.sto.md#beneficialinvestmentsallowed)*
 
-_Defined in [src/entities/Sto.ts:175](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L175)_
+*Defined in [src/entities/Sto.ts:175](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L175)*
 
 whether investments can be made on behalf of a beneficiary or not
 
----
+___
 
-### cap
+###  cap
 
-• **cap**: _BigNumber_
+• **cap**: *BigNumber*
 
-_Defined in [src/entities/SimpleSto.ts:56](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SimpleSto.ts#L56)_
+*Defined in [src/entities/SimpleSto.ts:56](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SimpleSto.ts#L56)*
 
 cap of total tokens that can be sold in sto
 
----
+___
 
-### capReached
+###  capReached
 
-• **capReached**: _boolean_
+• **capReached**: *boolean*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[capReached](_entities_sto_.sto.md#capreached)_
+*Inherited from [Sto](_entities_sto_.sto.md).[capReached](_entities_sto_.sto.md#capreached)*
 
-_Defined in [src/entities/Sto.ts:160](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L160)_
+*Defined in [src/entities/Sto.ts:160](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L160)*
 
 whether the STO cap has been reached or not
 
----
+___
 
 ### `Protected` context
 
-• **context**: _[Context](_context_.context.md)_
+• **context**: *[Context](_context_.context.md)*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[context](_entities_sto_.sto.md#protected-context)_
+*Inherited from [Sto](_entities_sto_.sto.md).[context](_entities_sto_.sto.md#protected-context)*
 
-_Defined in [src/entities/Sto.ts:177](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L177)_
+*Defined in [src/entities/Sto.ts:177](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L177)*
 
----
+___
 
-### endDate
+###  endDate
 
-• **endDate**: _Date_
+• **endDate**: *Date*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[endDate](_entities_sto_.sto.md#enddate)_
+*Inherited from [Sto](_entities_sto_.sto.md).[endDate](_entities_sto_.sto.md#enddate)*
 
-_Defined in [src/entities/Sto.ts:120](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L120)_
+*Defined in [src/entities/Sto.ts:120](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L120)*
 
----
+___
 
-### fundraiseCurrencies
+###  fundraiseCurrencies
 
-• **fundraiseCurrencies**: _Currency[]_
+• **fundraiseCurrencies**: *Currency[]*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[fundraiseCurrencies](_entities_sto_.sto.md#fundraisecurrencies)_
+*Inherited from [Sto](_entities_sto_.sto.md).[fundraiseCurrencies](_entities_sto_.sto.md#fundraisecurrencies)*
 
-_Defined in [src/entities/Sto.ts:150](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L150)_
+*Defined in [src/entities/Sto.ts:150](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L150)*
 
 types of currency in which funds can be raised
 
----
+___
 
-### investorCount
+###  investorCount
 
-• **investorCount**: _number_
+• **investorCount**: *number*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[investorCount](_entities_sto_.sto.md#investorcount)_
+*Inherited from [Sto](_entities_sto_.sto.md).[investorCount](_entities_sto_.sto.md#investorcount)*
 
-_Defined in [src/entities/Sto.ts:145](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L145)_
+*Defined in [src/entities/Sto.ts:145](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L145)*
 
 number of investors that have purchased tokens in the STO
 
----
+___
 
-### isFinalized
+###  isFinalized
 
-• **isFinalized**: _boolean_
+• **isFinalized**: *boolean*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[isFinalized](_entities_sto_.sto.md#isfinalized)_
+*Inherited from [Sto](_entities_sto_.sto.md).[isFinalized](_entities_sto_.sto.md#isfinalized)*
 
-_Defined in [src/entities/Sto.ts:165](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L165)_
+*Defined in [src/entities/Sto.ts:165](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L165)*
 
 whether the STO has been finalized or not
 
----
+___
 
-### isPaused
+###  isPaused
 
-• **isPaused**: _boolean_
+• **isPaused**: *boolean*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[isPaused](_entities_sto_.sto.md#ispaused)_
+*Inherited from [Sto](_entities_sto_.sto.md).[isPaused](_entities_sto_.sto.md#ispaused)*
 
-_Defined in [src/entities/Sto.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L155)_
+*Defined in [src/entities/Sto.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L155)*
 
 whether the STO is currently paused or not
 
----
+___
 
-### preIssueAllowed
+###  preIssueAllowed
 
-• **preIssueAllowed**: _boolean_
+• **preIssueAllowed**: *boolean*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[preIssueAllowed](_entities_sto_.sto.md#preissueallowed)_
+*Inherited from [Sto](_entities_sto_.sto.md).[preIssueAllowed](_entities_sto_.sto.md#preissueallowed)*
 
-_Defined in [src/entities/Sto.ts:170](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L170)_
+*Defined in [src/entities/Sto.ts:170](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L170)*
 
 whether all tokens due to be sold are issued when the STO starts. If false, the appropriate amount of tokens is issued to the buyer whenever a sale is made
 
----
+___
 
-### raisedAmount
+###  raisedAmount
 
-• **raisedAmount**: _BigNumber_
+• **raisedAmount**: *BigNumber*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[raisedAmount](_entities_sto_.sto.md#raisedamount)_
+*Inherited from [Sto](_entities_sto_.sto.md).[raisedAmount](_entities_sto_.sto.md#raisedamount)*
 
-_Defined in [src/entities/Sto.ts:135](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L135)_
+*Defined in [src/entities/Sto.ts:135](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L135)*
 
 amount of funds that have been raised so far
 
----
+___
 
-### raisedFundsWallet
+###  raisedFundsWallet
 
-• **raisedFundsWallet**: _string_
+• **raisedFundsWallet**: *string*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[raisedFundsWallet](_entities_sto_.sto.md#raisedfundswallet)_
+*Inherited from [Sto](_entities_sto_.sto.md).[raisedFundsWallet](_entities_sto_.sto.md#raisedfundswallet)*
 
-_Defined in [src/entities/Sto.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L125)_
+*Defined in [src/entities/Sto.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L125)*
 
 wallet where raised funds will be forwarded to
 
----
+___
 
-### rate
+###  rate
 
-• **rate**: _BigNumber_
+• **rate**: *BigNumber*
 
-_Defined in [src/entities/SimpleSto.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SimpleSto.ts#L61)_
+*Defined in [src/entities/SimpleSto.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SimpleSto.ts#L61)*
 
 rate at which the tokens will be sold in sto
 
----
+___
 
-### securityTokenId
+###  securityTokenId
 
-• **securityTokenId**: _string_
+• **securityTokenId**: *string*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[securityTokenId](_entities_sto_.sto.md#securitytokenid)_
+*Inherited from [Sto](_entities_sto_.sto.md).[securityTokenId](_entities_sto_.sto.md#securitytokenid)*
 
-_Defined in [src/entities/Sto.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L111)_
+*Defined in [src/entities/Sto.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L111)*
 
----
+___
 
-### securityTokenSymbol
+###  securityTokenSymbol
 
-• **securityTokenSymbol**: _string_
+• **securityTokenSymbol**: *string*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[securityTokenSymbol](_entities_sto_.sto.md#securitytokensymbol)_
+*Inherited from [Sto](_entities_sto_.sto.md).[securityTokenSymbol](_entities_sto_.sto.md#securitytokensymbol)*
 
-_Defined in [src/entities/Sto.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L109)_
+*Defined in [src/entities/Sto.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L109)*
 
----
+___
 
-### soldTokensAmount
+###  soldTokensAmount
 
-• **soldTokensAmount**: _BigNumber_
+• **soldTokensAmount**: *BigNumber*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[soldTokensAmount](_entities_sto_.sto.md#soldtokensamount)_
+*Inherited from [Sto](_entities_sto_.sto.md).[soldTokensAmount](_entities_sto_.sto.md#soldtokensamount)*
 
-_Defined in [src/entities/Sto.ts:140](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L140)_
+*Defined in [src/entities/Sto.ts:140](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L140)*
 
 total number of tokens that have been sold so far
 
----
+___
 
-### startDate
+###  startDate
 
-• **startDate**: _Date_
+• **startDate**: *Date*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[startDate](_entities_sto_.sto.md#startdate)_
+*Inherited from [Sto](_entities_sto_.sto.md).[startDate](_entities_sto_.sto.md#startdate)*
 
-_Defined in [src/entities/Sto.ts:118](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L118)_
+*Defined in [src/entities/Sto.ts:118](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L118)*
 
----
+___
 
-### stoType
+###  stoType
 
-• **stoType**: _[StoType](../enums/_types_index_.stotype.md)_
+• **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[stoType](_entities_sto_.sto.md#stotype)_
+*Inherited from [Sto](_entities_sto_.sto.md).[stoType](_entities_sto_.sto.md#stotype)*
 
-_Defined in [src/entities/Sto.ts:116](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L116)_
+*Defined in [src/entities/Sto.ts:116](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L116)*
 
 type of STO setup
 
----
+___
 
-### uid
+###  uid
 
-• **uid**: _string_
+• **uid**: *string*
 
-_Overrides [Sto](_entities_sto_.sto.md).[uid](_entities_sto_.sto.md#abstract-uid)_
+*Overrides [Sto](_entities_sto_.sto.md).[uid](_entities_sto_.sto.md#abstract-uid)*
 
-_Defined in [src/entities/SimpleSto.ts:51](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SimpleSto.ts#L51)_
+*Defined in [src/entities/SimpleSto.ts:51](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SimpleSto.ts#L51)*
 
 unique generated Tiered STO id
 
----
+___
 
-### unsoldTokensWallet
+###  unsoldTokensWallet
 
-• **unsoldTokensWallet**: _string_
+• **unsoldTokensWallet**: *string*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[unsoldTokensWallet](_entities_sto_.sto.md#unsoldtokenswallet)_
+*Inherited from [Sto](_entities_sto_.sto.md).[unsoldTokensWallet](_entities_sto_.sto.md#unsoldtokenswallet)*
 
-_Defined in [src/entities/Sto.ts:130](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L130)_
+*Defined in [src/entities/Sto.ts:130](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L130)*
 
 wallet where unsold tokens will be returned to
 
 ## Methods
 
-### \_refresh
+###  _refresh
 
-▸ **\_refresh**(`params`: Partial‹[Params](../interfaces/_entities_simplesto_.params.md)›): _void_
+▸ **_refresh**(`params`: Partial‹[Params](../interfaces/_entities_simplesto_.params.md)›): *void*
 
-_Overrides [Sto](_entities_sto_.sto.md).[\_refresh](_entities_sto_.sto.md#_refresh)_
+*Overrides [Sto](_entities_sto_.sto.md).[_refresh](_entities_sto_.sto.md#_refresh)*
 
-_Defined in [src/entities/SimpleSto.ts:151](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SimpleSto.ts#L151)_
+*Defined in [src/entities/SimpleSto.ts:151](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SimpleSto.ts#L151)*
 
 Hydrate the entity
 
 **Parameters:**
 
-| Name     | Type                                                            |
-| -------- | --------------------------------------------------------------- |
-| `params` | Partial‹[Params](../interfaces/_entities_simplesto_.params.md)› |
+Name | Type |
+------ | ------ |
+`params` | Partial‹[Params](../interfaces/_entities_simplesto_.params.md)› |
 
-**Returns:** _void_
+**Returns:** *void*
 
----
+___
 
-### allowBeneficialInvestments
+###  allowBeneficialInvestments
 
-▸ **allowBeneficialInvestments**(): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowBeneficialInvestmentsProcedureArgs](../interfaces/_types_index_.toggleallowbeneficialinvestmentsprocedureargs.md), void››_
+▸ **allowBeneficialInvestments**(): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowBeneficialInvestmentsProcedureArgs](../interfaces/_types_index_.toggleallowbeneficialinvestmentsprocedureargs.md), void››*
 
-_Inherited from [Sto](_entities_sto_.sto.md)_
+*Inherited from [Sto](_entities_sto_.sto.md)*
 
-_Defined in [src/entities/Sto.ts:316](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L316)_
+*Defined in [src/entities/Sto.ts:316](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L316)*
 
 Enable a party to invest in the STO on behalf of another party
 
-**Returns:** _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowBeneficialInvestmentsProcedureArgs](../interfaces/_types_index_.toggleallowbeneficialinvestmentsprocedureargs.md), void››_
+**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowBeneficialInvestmentsProcedureArgs](../interfaces/_types_index_.toggleallowbeneficialinvestmentsprocedureargs.md), void››*
 
----
+___
 
-### allowPreIssuing
+###  allowPreIssuing
 
-▸ **allowPreIssuing**(): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowPreIssuingProcedureArgs](../interfaces/_types_index_.toggleallowpreissuingprocedureargs.md), void››_
+▸ **allowPreIssuing**(): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowPreIssuingProcedureArgs](../interfaces/_types_index_.toggleallowpreissuingprocedureargs.md), void››*
 
-_Inherited from [Sto](_entities_sto_.sto.md)_
+*Inherited from [Sto](_entities_sto_.sto.md)*
 
-_Defined in [src/entities/Sto.ts:287](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L287)_
+*Defined in [src/entities/Sto.ts:287](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L287)*
 
 Enable all offered tokens to be issued instantly at STO start (default behavior is to issue on purchase)
-Can be disabled _BEFORE_ the STO starts by calling disallowPreIssuing
+Can be disabled *BEFORE* the STO starts by calling disallowPreIssuing
 
-**Returns:** _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowPreIssuingProcedureArgs](../interfaces/_types_index_.toggleallowpreissuingprocedureargs.md), void››_
+**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowPreIssuingProcedureArgs](../interfaces/_types_index_.toggleallowpreissuingprocedureargs.md), void››*
 
----
+___
 
-### assignRole
+###  assignRole
 
-▸ **assignRole**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignStoRoleProcedureArgs](../interfaces/_types_index_.assignstoroleprocedureargs.md), void››_
+▸ **assignRole**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignStoRoleProcedureArgs](../interfaces/_types_index_.assignstoroleprocedureargs.md), void››*
 
-_Inherited from [Sto](_entities_sto_.sto.md)_
+*Inherited from [Sto](_entities_sto_.sto.md)*
 
-_Defined in [src/entities/Sto.ts:348](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L348)_
+*Defined in [src/entities/Sto.ts:348](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L348)*
 
 Assign a role on the STO to a delegate
 
 **Parameters:**
 
-▪ **args**: _object_
+▪ **args**: *object*
 
-| Name              | Type                                         |
-| ----------------- | -------------------------------------------- |
-| `delegateAddress` | string                                       |
-| `description?`    | undefined &#124; string                      |
-| `role`            | [StoRole](../enums/_types_index_.storole.md) |
+Name | Type |
+------ | ------ |
+`delegateAddress` | string |
+`description?` | undefined &#124; string |
+`role` | [StoRole](../enums/_types_index_.storole.md) |
 
-**Returns:** _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignStoRoleProcedureArgs](../interfaces/_types_index_.assignstoroleprocedureargs.md), void››_
+**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignStoRoleProcedureArgs](../interfaces/_types_index_.assignstoroleprocedureargs.md), void››*
 
----
+___
 
-### disallowBeneficialInvestments
+###  disallowBeneficialInvestments
 
-▸ **disallowBeneficialInvestments**(): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowBeneficialInvestmentsProcedureArgs](../interfaces/_types_index_.toggleallowbeneficialinvestmentsprocedureargs.md), void››_
+▸ **disallowBeneficialInvestments**(): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowBeneficialInvestmentsProcedureArgs](../interfaces/_types_index_.toggleallowbeneficialinvestmentsprocedureargs.md), void››*
 
-_Inherited from [Sto](_entities_sto_.sto.md)_
+*Inherited from [Sto](_entities_sto_.sto.md)*
 
-_Defined in [src/entities/Sto.ts:330](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L330)_
+*Defined in [src/entities/Sto.ts:330](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L330)*
 
 Disable the possibility for a party to invest in the STO on behalf of another party
 
-**Returns:** _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowBeneficialInvestmentsProcedureArgs](../interfaces/_types_index_.toggleallowbeneficialinvestmentsprocedureargs.md), void››_
+**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowBeneficialInvestmentsProcedureArgs](../interfaces/_types_index_.toggleallowbeneficialinvestmentsprocedureargs.md), void››*
 
----
+___
 
-### disallowPreIssuing
+###  disallowPreIssuing
 
-▸ **disallowPreIssuing**(): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowPreIssuingProcedureArgs](../interfaces/_types_index_.toggleallowpreissuingprocedureargs.md), void››_
+▸ **disallowPreIssuing**(): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowPreIssuingProcedureArgs](../interfaces/_types_index_.toggleallowpreissuingprocedureargs.md), void››*
 
-_Inherited from [Sto](_entities_sto_.sto.md)_
+*Inherited from [Sto](_entities_sto_.sto.md)*
 
-_Defined in [src/entities/Sto.ts:302](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L302)_
+*Defined in [src/entities/Sto.ts:302](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L302)*
 
 Disable pre-issuing of offered tokens at STO start (goes back to default behavior, which is to issue on purchase)
-Can be re-enabled _BEFORE_ the STO starts by calling allowPreIssuing
+Can be re-enabled *BEFORE* the STO starts by calling allowPreIssuing
 
-**Returns:** _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowPreIssuingProcedureArgs](../interfaces/_types_index_.toggleallowpreissuingprocedureargs.md), void››_
+**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleAllowPreIssuingProcedureArgs](../interfaces/_types_index_.toggleallowpreissuingprocedureargs.md), void››*
 
----
+___
 
-### finalize
+###  finalize
 
-▸ **finalize**(): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[FinalizeStoProcedureArgs](../interfaces/_types_index_.finalizestoprocedureargs.md), void››_
+▸ **finalize**(): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[FinalizeStoProcedureArgs](../interfaces/_types_index_.finalizestoprocedureargs.md), void››*
 
-_Inherited from [Sto](_entities_sto_.sto.md)_
+*Inherited from [Sto](_entities_sto_.sto.md)*
 
-_Defined in [src/entities/Sto.ts:275](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L275)_
+*Defined in [src/entities/Sto.ts:275](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L275)*
 
 Finalize the offering. The offering's treasury wallet (or the Security Token's treasury wallet if one was not specified for the offering)
 will receive the remaining unsold tokens. Throws an error if there are transfer restrictions which do not permit the wallet to receive that amount of tokens
 
-**Returns:** _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[FinalizeStoProcedureArgs](../interfaces/_types_index_.finalizestoprocedureargs.md), void››_
+**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[FinalizeStoProcedureArgs](../interfaces/_types_index_.finalizestoprocedureargs.md), void››*
 
----
+___
 
-### getInvestments
+###  getInvestments
 
-▸ **getInvestments**(): _Promise‹[Investment](_entities_investment_.investment.md)[]›_
+▸ **getInvestments**(): *Promise‹[Investment](_entities_investment_.investment.md)[]›*
 
-_Defined in [src/entities/SimpleSto.ts:81](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SimpleSto.ts#L81)_
+*Defined in [src/entities/SimpleSto.ts:81](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SimpleSto.ts#L81)*
 
 Retrieve all investments that have been made on this STO
 
-**Returns:** _Promise‹[Investment](_entities_investment_.investment.md)[]›_
+**Returns:** *Promise‹[Investment](_entities_investment_.investment.md)[]›*
 
----
+___
 
-### invest
+###  invest
 
-▸ **invest**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[InvestInSimpleStoProcedureArgs](../interfaces/_types_index_.investinsimplestoprocedureargs.md), void››_
+▸ **invest**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[InvestInSimpleStoProcedureArgs](../interfaces/_types_index_.investinsimplestoprocedureargs.md), void››*
 
-_Defined in [src/entities/SimpleSto.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SimpleSto.ts#L126)_
+*Defined in [src/entities/SimpleSto.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SimpleSto.ts#L126)*
 
 Invest in the STO
 
 **Parameters:**
 
-▪ **args**: _object_
+▪ **args**: *object*
 
-| Name           | Type                    | Description                                                                                                                                                                              |
-| -------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `amount`       | BigNumber               | amount to spend                                                                                                                                                                          |
-| `beneficiary?` | undefined &#124; string | address that will receive the purchased tokens (defaults to current wallet, will fail if beneficial investments are not allowed for the STO, only applicable if the STO currency is ETH) |
+Name | Type | Description |
+------ | ------ | ------ |
+`amount` | BigNumber | amount to spend |
+`beneficiary?` | undefined &#124; string | address that will receive the purchased tokens (defaults to current wallet, will fail if beneficial investments are not allowed for the STO, only applicable if the STO currency is ETH)  |
 
-**Returns:** _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[InvestInSimpleStoProcedureArgs](../interfaces/_types_index_.investinsimplestoprocedureargs.md), void››_
+**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[InvestInSimpleStoProcedureArgs](../interfaces/_types_index_.investinsimplestoprocedureargs.md), void››*
 
----
+___
 
-### pause
+###  pause
 
-▸ **pause**(): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[TogglePauseStoProcedureArgs](../interfaces/_types_index_.togglepausestoprocedureargs.md), void››_
+▸ **pause**(): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[TogglePauseStoProcedureArgs](../interfaces/_types_index_.togglepausestoprocedureargs.md), void››*
 
-_Inherited from [Sto](_entities_sto_.sto.md)_
+*Inherited from [Sto](_entities_sto_.sto.md)*
 
-_Defined in [src/entities/Sto.ts:246](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L246)_
+*Defined in [src/entities/Sto.ts:246](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L246)*
 
 Pause the offering
 
-**Returns:** _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[TogglePauseStoProcedureArgs](../interfaces/_types_index_.togglepausestoprocedureargs.md), void››_
+**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[TogglePauseStoProcedureArgs](../interfaces/_types_index_.togglepausestoprocedureargs.md), void››*
 
----
+___
 
-### revokeRole
+###  revokeRole
 
-▸ **revokeRole**(`args`: object): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignStoRoleProcedureArgs](../interfaces/_types_index_.assignstoroleprocedureargs.md), void››_
+▸ **revokeRole**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignStoRoleProcedureArgs](../interfaces/_types_index_.assignstoroleprocedureargs.md), void››*
 
-_Inherited from [Sto](_entities_sto_.sto.md)_
+*Inherited from [Sto](_entities_sto_.sto.md)*
 
-_Defined in [src/entities/Sto.ts:374](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L374)_
+*Defined in [src/entities/Sto.ts:374](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L374)*
 
 Remove a role from a delegate
 
 **Parameters:**
 
-▪ **args**: _object_
+▪ **args**: *object*
 
-| Name              | Type                                         |
-| ----------------- | -------------------------------------------- |
-| `delegateAddress` | string                                       |
-| `role`            | [StoRole](../enums/_types_index_.storole.md) |
+Name | Type |
+------ | ------ |
+`delegateAddress` | string |
+`role` | [StoRole](../enums/_types_index_.storole.md) |
 
-**Returns:** _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignStoRoleProcedureArgs](../interfaces/_types_index_.assignstoroleprocedureargs.md), void››_
+**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignStoRoleProcedureArgs](../interfaces/_types_index_.assignstoroleprocedureargs.md), void››*
 
----
+___
 
-### toPojo
+###  toPojo
 
-▸ **toPojo**(): _object_
+▸ **toPojo**(): *object*
 
-_Overrides [Sto](_entities_sto_.sto.md).[toPojo](_entities_sto_.sto.md#topojo)_
+*Overrides [Sto](_entities_sto_.sto.md).[toPojo](_entities_sto_.sto.md#topojo)*
 
-_Defined in [src/entities/SimpleSto.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SimpleSto.ts#L137)_
+*Defined in [src/entities/SimpleSto.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SimpleSto.ts#L137)*
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
-**Returns:** _object_
+**Returns:** *object*
 
-- **cap**: _BigNumber_
+* **cap**: *BigNumber*
 
-- **rate**: _BigNumber_
+* **rate**: *BigNumber*
 
----
+___
 
-### unpause
+###  unpause
 
-▸ **unpause**(): _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[TogglePauseStoProcedureArgs](../interfaces/_types_index_.togglepausestoprocedureargs.md), void››_
+▸ **unpause**(): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[TogglePauseStoProcedureArgs](../interfaces/_types_index_.togglepausestoprocedureargs.md), void››*
 
-_Inherited from [Sto](_entities_sto_.sto.md)_
+*Inherited from [Sto](_entities_sto_.sto.md)*
 
-_Defined in [src/entities/Sto.ts:260](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L260)_
+*Defined in [src/entities/Sto.ts:260](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L260)*
 
 Unpause the offering
 
-**Returns:** _Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[TogglePauseStoProcedureArgs](../interfaces/_types_index_.togglepausestoprocedureargs.md), void››_
+**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[TogglePauseStoProcedureArgs](../interfaces/_types_index_.togglepausestoprocedureargs.md), void››*
 
----
+___
 
 ### `Static` generateId
 
-▸ **generateId**(`__namedParameters`: object): _string_
+▸ **generateId**(`__namedParameters`: object): *string*
 
-_Defined in [src/entities/SimpleSto.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SimpleSto.ts#L40)_
+*Defined in [src/entities/SimpleSto.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SimpleSto.ts#L40)*
 
 Generate the Simple STO's UUID from its identifying properties
 
 **Parameters:**
 
-▪ **\_\_namedParameters**: _object_
+▪ **__namedParameters**: *object*
 
-| Name              | Type                                         |
-| ----------------- | -------------------------------------------- |
-| `address`         | string                                       |
-| `securityTokenId` | string                                       |
-| `stoType`         | [StoType](../enums/_types_index_.stotype.md) |
+Name | Type |
+------ | ------ |
+`address` | string |
+`securityTokenId` | string |
+`stoType` | [StoType](../enums/_types_index_.stotype.md) |
 
-**Returns:** _string_
+**Returns:** *string*
 
----
+___
 
 ### `Static` unserialize
 
-▸ **unserialize**(`serialized`: string): _[UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md)_
+▸ **unserialize**(`serialized`: string): *[UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md)*
 
-_Inherited from [Sto](_entities_sto_.sto.md).[unserialize](_entities_sto_.sto.md#static-unserialize)_
+*Inherited from [Sto](_entities_sto_.sto.md).[unserialize](_entities_sto_.sto.md#static-unserialize)*
 
-_Defined in [src/entities/Sto.ts:184](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Sto.ts#L184)_
+*Defined in [src/entities/Sto.ts:184](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Sto.ts#L184)*
 
 Unserialize string to a Security Token Offering object representation
 
 **Parameters:**
 
-| Name         | Type   |
-| ------------ | ------ |
-| `serialized` | string |
+Name | Type |
+------ | ------ |
+`serialized` | string |
 
-**Returns:** _[UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md)_
+**Returns:** *[UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md)*

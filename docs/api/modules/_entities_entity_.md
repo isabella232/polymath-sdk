@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [Entity](../classes/_entities_entity_.entity.md)
+* [Entity](../classes/_entities_entity_.entity.md)

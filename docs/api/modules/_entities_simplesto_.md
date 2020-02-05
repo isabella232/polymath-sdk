@@ -4,20 +4,20 @@
 
 ### Classes
 
-- [SimpleSto](../classes/_entities_simplesto_.simplesto.md)
+* [SimpleSto](../classes/_entities_simplesto_.simplesto.md)
 
 ### Interfaces
 
-- [Params](../interfaces/_entities_simplesto_.params.md)
+* [Params](../interfaces/_entities_simplesto_.params.md)
 
 ### Variables
 
-- [weiToValue](_entities_simplesto_.md#weitovalue)
+* [weiToValue](_entities_simplesto_.md#weitovalue)
 
 ## Variables
 
-### weiToValue
+###  weiToValue
 
-• **weiToValue**: _weiToValue_
+• **weiToValue**: *weiToValue*
 
-_Defined in [src/entities/SimpleSto.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SimpleSto.ts#L15)_
+*Defined in [src/entities/SimpleSto.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SimpleSto.ts#L15)*

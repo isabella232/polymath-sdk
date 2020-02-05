@@ -2,18 +2,18 @@
 
 ## Hierarchy
 
-- **EnableShareholderCountRestrictionsOpts**
+* **EnableShareholderCountRestrictionsOpts**
 
 ## Index
 
 ### Properties
 
-- [maxHolderCount](_entities_securitytoken_features_.enableshareholdercountrestrictionsopts.md#maxholdercount)
+* [maxHolderCount](_entities_securitytoken_features_.enableshareholdercountrestrictionsopts.md#maxholdercount)
 
 ## Properties
 
-### maxHolderCount
+###  maxHolderCount
 
-• **maxHolderCount**: _number_
+• **maxHolderCount**: *number*
 
-_Defined in [src/entities/SecurityToken/Features.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/Features.ts#L45)_
+*Defined in [src/entities/SecurityToken/Features.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Features.ts#L45)*

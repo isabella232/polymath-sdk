@@ -4,101 +4,101 @@ Security Token constructor parameters
 
 ## Hierarchy
 
-- **Params**
+* **Params**
 
 ## Index
 
 ### Properties
 
-- [address](_entities_securitytoken_securitytoken_.params.md#address)
-- [currentCheckpoint](_entities_securitytoken_securitytoken_.params.md#currentcheckpoint)
-- [granularity](_entities_securitytoken_securitytoken_.params.md#granularity)
-- [name](_entities_securitytoken_securitytoken_.params.md#name)
-- [owner](_entities_securitytoken_securitytoken_.params.md#owner)
-- [tokenDetails](_entities_securitytoken_securitytoken_.params.md#tokendetails)
-- [totalSupply](_entities_securitytoken_securitytoken_.params.md#totalsupply)
-- [treasuryWallet](_entities_securitytoken_securitytoken_.params.md#treasurywallet)
-- [version](_entities_securitytoken_securitytoken_.params.md#version)
+* [address](_entities_securitytoken_securitytoken_.params.md#address)
+* [currentCheckpoint](_entities_securitytoken_securitytoken_.params.md#currentcheckpoint)
+* [granularity](_entities_securitytoken_securitytoken_.params.md#granularity)
+* [name](_entities_securitytoken_securitytoken_.params.md#name)
+* [owner](_entities_securitytoken_securitytoken_.params.md#owner)
+* [tokenDetails](_entities_securitytoken_securitytoken_.params.md#tokendetails)
+* [totalSupply](_entities_securitytoken_securitytoken_.params.md#totalsupply)
+* [treasuryWallet](_entities_securitytoken_securitytoken_.params.md#treasurywallet)
+* [version](_entities_securitytoken_securitytoken_.params.md#version)
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L44)_
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L44)*
 
 address of the Security Token contract
 
----
+___
 
-### currentCheckpoint
+###  currentCheckpoint
 
-• **currentCheckpoint**: _number_
+• **currentCheckpoint**: *number*
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L59)_
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L59)*
 
 index of the current checkpoint
 
----
+___
 
-### granularity
+###  granularity
 
-• **granularity**: _number_
+• **granularity**: *number*
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:54](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L54)_
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:54](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L54)*
 
----
+___
 
-### name
+###  name
 
-• **name**: _string_
+• **name**: *string*
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L40)_
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L40)*
 
----
+___
 
-### owner
+###  owner
 
-• **owner**: _string_
+• **owner**: *string*
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L48)_
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L48)*
 
 address that owns the Security Token
 
----
+___
 
-### tokenDetails
+###  tokenDetails
 
-• **tokenDetails**: _string_
+• **tokenDetails**: *string*
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L52)_
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L52)*
 
 URL pointing to off-chain data associated with the Security Token
 
----
+___
 
-### totalSupply
+###  totalSupply
 
-• **totalSupply**: _BigNumber_
+• **totalSupply**: *BigNumber*
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L55)_
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L55)*
 
----
+___
 
-### treasuryWallet
+###  treasuryWallet
 
-• **treasuryWallet**: _string_
+• **treasuryWallet**: *string*
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:64](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L64)_
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:64](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L64)*
 
 default treasury wallet used by some features.
-**_For example, if an STO reaches its end date (or is finalized before that), remaining unsold tokens get transferred to this wallet unless otherwise specified by the STO itself_**
+***For example, if an STO reaches its end date (or is finalized before that), remaining unsold tokens get transferred to this wallet unless otherwise specified by the STO itself***
 
----
+___
 
-### version
+###  version
 
-• **version**: _Version_
+• **version**: *Version*
 
-_Defined in [src/entities/SecurityToken/SecurityToken.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/SecurityToken/SecurityToken.ts#L53)_
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L53)*

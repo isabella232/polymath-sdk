@@ -4,27 +4,27 @@ Properties that uniquely identify an ERC20 token balance
 
 ## Hierarchy
 
-- **UniqueIdentifiers**
+* **UniqueIdentifiers**
 
 ## Index
 
 ### Properties
 
-- [tokenAddress](_entities_erc20tokenbalance_.uniqueidentifiers.md#tokenaddress)
-- [walletAddress](_entities_erc20tokenbalance_.uniqueidentifiers.md#walletaddress)
+* [tokenAddress](_entities_erc20tokenbalance_.uniqueidentifiers.md#tokenaddress)
+* [walletAddress](_entities_erc20tokenbalance_.uniqueidentifiers.md#walletaddress)
 
 ## Properties
 
-### tokenAddress
+###  tokenAddress
 
-• **tokenAddress**: _string_
+• **tokenAddress**: *string*
 
-_Defined in [src/entities/Erc20TokenBalance.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Erc20TokenBalance.ts#L11)_
+*Defined in [src/entities/Erc20TokenBalance.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Erc20TokenBalance.ts#L11)*
 
----
+___
 
-### walletAddress
+###  walletAddress
 
-• **walletAddress**: _string_
+• **walletAddress**: *string*
 
-_Defined in [src/entities/Erc20TokenBalance.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Erc20TokenBalance.ts#L12)_
+*Defined in [src/entities/Erc20TokenBalance.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Erc20TokenBalance.ts#L12)*

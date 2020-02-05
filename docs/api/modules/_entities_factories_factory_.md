@@ -4,8 +4,8 @@
 
 ### Classes
 
-- [Factory](../classes/_entities_factories_factory_.factory.md)
+* [Factory](../classes/_entities_factories_factory_.factory.md)
 
 ### Interfaces
 
-- [EntityClass](../interfaces/_entities_factories_factory_.entityclass.md)
+* [EntityClass](../interfaces/_entities_factories_factory_.entityclass.md)

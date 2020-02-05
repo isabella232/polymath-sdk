@@ -4,60 +4,60 @@ Checkpoint constructor parameters
 
 ## Hierarchy
 
-- **Params**
+* **Params**
 
 ## Index
 
 ### Properties
 
-- [createdAt](_entities_checkpoint_.params.md#createdat)
-- [dividendDistributions](_entities_checkpoint_.params.md#dividenddistributions)
-- [securityTokenSymbol](_entities_checkpoint_.params.md#securitytokensymbol)
-- [shareholderBalances](_entities_checkpoint_.params.md#shareholderbalances)
-- [totalSupply](_entities_checkpoint_.params.md#totalsupply)
+* [createdAt](_entities_checkpoint_.params.md#createdat)
+* [dividendDistributions](_entities_checkpoint_.params.md#dividenddistributions)
+* [securityTokenSymbol](_entities_checkpoint_.params.md#securitytokensymbol)
+* [shareholderBalances](_entities_checkpoint_.params.md#shareholderbalances)
+* [totalSupply](_entities_checkpoint_.params.md#totalsupply)
 
 ## Properties
 
-### createdAt
+###  createdAt
 
-• **createdAt**: _Date_
+• **createdAt**: *Date*
 
-_Defined in [src/entities/Checkpoint.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L48)_
+*Defined in [src/entities/Checkpoint.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Checkpoint.ts#L48)*
 
----
+___
 
-### dividendDistributions
+###  dividendDistributions
 
-• **dividendDistributions**: _[DividendDistribution](../classes/_entities_dividenddistribution_.dividenddistribution.md)[]_
+• **dividendDistributions**: *[DividendDistribution](../classes/_entities_dividenddistribution_.dividenddistribution.md)[]*
 
-_Defined in [src/entities/Checkpoint.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L38)_
+*Defined in [src/entities/Checkpoint.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Checkpoint.ts#L38)*
 
 dividend distributions associated to this checkpoint
 
----
+___
 
-### securityTokenSymbol
+###  securityTokenSymbol
 
-• **securityTokenSymbol**: _string_
+• **securityTokenSymbol**: *string*
 
-_Defined in [src/entities/Checkpoint.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L42)_
+*Defined in [src/entities/Checkpoint.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Checkpoint.ts#L42)*
 
 symbol of the security token
 
----
+___
 
-### shareholderBalances
+###  shareholderBalances
 
-• **shareholderBalances**: _[ShareholderBalance](_types_index_.shareholderbalance.md)[]_
+• **shareholderBalances**: *[ShareholderBalance](_types_index_.shareholderbalance.md)[]*
 
-_Defined in [src/entities/Checkpoint.ts:46](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L46)_
+*Defined in [src/entities/Checkpoint.ts:46](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Checkpoint.ts#L46)*
 
 shareholder balances at this specific Checkpoint
 
----
+___
 
-### totalSupply
+###  totalSupply
 
-• **totalSupply**: _BigNumber_
+• **totalSupply**: *BigNumber*
 
-_Defined in [src/entities/Checkpoint.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Checkpoint.ts#L47)_
+*Defined in [src/entities/Checkpoint.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Checkpoint.ts#L47)*

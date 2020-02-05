@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [PullDividendPayment](../classes/_procedures_pulldividendpayment_.pulldividendpayment.md)
+* [PullDividendPayment](../classes/_procedures_pulldividendpayment_.pulldividendpayment.md)

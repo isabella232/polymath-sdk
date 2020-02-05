@@ -4,73 +4,73 @@ Arguments for the [AssignStoRole](../enums/_types_index_.proceduretype.md#assign
 
 ## Hierarchy
 
-- **AssignStoRoleProcedureArgs**
+* **AssignStoRoleProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [assign](_types_index_.assignstoroleprocedureargs.md#assign)
-- [delegateAddress](_types_index_.assignstoroleprocedureargs.md#delegateaddress)
-- [description](_types_index_.assignstoroleprocedureargs.md#optional-description)
-- [role](_types_index_.assignstoroleprocedureargs.md#role)
-- [stoAddress](_types_index_.assignstoroleprocedureargs.md#stoaddress)
-- [symbol](_types_index_.assignstoroleprocedureargs.md#symbol)
+* [assign](_types_index_.assignstoroleprocedureargs.md#assign)
+* [delegateAddress](_types_index_.assignstoroleprocedureargs.md#delegateaddress)
+* [description](_types_index_.assignstoroleprocedureargs.md#optional-description)
+* [role](_types_index_.assignstoroleprocedureargs.md#role)
+* [stoAddress](_types_index_.assignstoroleprocedureargs.md#stoaddress)
+* [symbol](_types_index_.assignstoroleprocedureargs.md#symbol)
 
 ## Properties
 
-### assign
+###  assign
 
-• **assign**: _boolean_
+• **assign**: *boolean*
 
-_Defined in [src/types/index.ts:923](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L923)_
+*Defined in [src/types/index.ts:923](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L923)*
 
 whether to assign or revoke the role
 
----
+___
 
-### delegateAddress
+###  delegateAddress
 
-• **delegateAddress**: _string_
+• **delegateAddress**: *string*
 
-_Defined in [src/types/index.ts:914](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L914)_
+*Defined in [src/types/index.ts:914](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L914)*
 
 wallet address of the delegate
 
----
+___
 
 ### `Optional` description
 
-• **description**? : _undefined | string_
+• **description**? : *undefined | string*
 
-_Defined in [src/types/index.ts:927](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L927)_
+*Defined in [src/types/index.ts:927](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L927)*
 
 description of the delegate (i.e. "company lawyer")
 
----
+___
 
-### role
+###  role
 
-• **role**: _[StoRole](../enums/_types_index_.storole.md)_
+• **role**: *[StoRole](../enums/_types_index_.storole.md)*
 
-_Defined in [src/types/index.ts:919](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L919)_
+*Defined in [src/types/index.ts:919](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L919)*
 
 role to assign/revoke to/from the delegate
 
----
+___
 
-### stoAddress
+###  stoAddress
 
-• **stoAddress**: _string_
+• **stoAddress**: *string*
 
-_Defined in [src/types/index.ts:915](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L915)_
+*Defined in [src/types/index.ts:915](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L915)*
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:910](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L910)_
+*Defined in [src/types/index.ts:910](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L910)*
 
 symbol of the Security Token

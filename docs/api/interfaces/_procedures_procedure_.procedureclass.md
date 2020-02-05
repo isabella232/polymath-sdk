@@ -4,31 +4,31 @@
 
 ▪ **Args**
 
-▪ **ReturnType**: _any_
+▪ **ReturnType**: *any*
 
 ## Hierarchy
 
-- **ProcedureClass**
+* **ProcedureClass**
 
 ## Index
 
 ### Constructors
 
-- [constructor](_procedures_procedure_.procedureclass.md#constructor)
+* [constructor](_procedures_procedure_.procedureclass.md#constructor)
 
 ## Constructors
 
-### constructor
+###  constructor
 
-\+ **new ProcedureClass**(`args`: Args, `context`: [Context](../classes/_context_.context.md)): _Procedure‹Args, ReturnType›_
+\+ **new ProcedureClass**(`args`: Args, `context`: [Context](../classes/_context_.context.md)): *Procedure‹Args, ReturnType›*
 
-_Defined in [src/procedures/Procedure.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/procedures/Procedure.ts#L21)_
+*Defined in [src/procedures/Procedure.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/procedures/Procedure.ts#L21)*
 
 **Parameters:**
 
-| Name      | Type                                       |
-| --------- | ------------------------------------------ |
-| `args`    | Args                                       |
-| `context` | [Context](../classes/_context_.context.md) |
+Name | Type |
+------ | ------ |
+`args` | Args |
+`context` | [Context](../classes/_context_.context.md) |
 
-**Returns:** _Procedure‹Args, ReturnType›_
+**Returns:** *Procedure‹Args, ReturnType›*

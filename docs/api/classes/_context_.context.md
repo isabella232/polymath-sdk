@@ -8,56 +8,56 @@ Context in which the SDK is being used
 
 ## Hierarchy
 
-- **Context**
+* **Context**
 
 ## Index
 
 ### Constructors
 
-- [constructor](_context_.context.md#constructor)
+* [constructor](_context_.context.md#constructor)
 
 ### Properties
 
-- [contractWrappers](_context_.context.md#contractwrappers)
-- [currentWallet](_context_.context.md#currentwallet)
-- [factories](_context_.context.md#factories)
+* [contractWrappers](_context_.context.md#contractwrappers)
+* [currentWallet](_context_.context.md#currentwallet)
+* [factories](_context_.context.md#factories)
 
 ## Constructors
 
-### constructor
+###  constructor
 
-\+ **new Context**(`params`: [ConstructorParams](../interfaces/_context_.constructorparams.md)): _[Context](_context_.context.md)_
+\+ **new Context**(`params`: [ConstructorParams](../interfaces/_context_.constructorparams.md)): *[Context](_context_.context.md)*
 
-_Defined in [src/Context.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Context.ts#L45)_
+*Defined in [src/Context.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Context.ts#L45)*
 
 **Parameters:**
 
-| Name     | Type                                                              |
-| -------- | ----------------------------------------------------------------- |
-| `params` | [ConstructorParams](../interfaces/_context_.constructorparams.md) |
+Name | Type |
+------ | ------ |
+`params` | [ConstructorParams](../interfaces/_context_.constructorparams.md) |
 
-**Returns:** _[Context](_context_.context.md)_
+**Returns:** *[Context](_context_.context.md)*
 
 ## Properties
 
-### contractWrappers
+###  contractWrappers
 
-• **contractWrappers**: _[PolymathBase](_polymathbase_.polymathbase.md)_
+• **contractWrappers**: *[PolymathBase](_polymathbase_.polymathbase.md)*
 
-_Defined in [src/Context.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Context.ts#L41)_
+*Defined in [src/Context.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Context.ts#L41)*
 
----
+___
 
-### currentWallet
+###  currentWallet
 
-• **currentWallet**: _Wallet_
+• **currentWallet**: *Wallet*
 
-_Defined in [src/Context.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Context.ts#L43)_
+*Defined in [src/Context.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Context.ts#L43)*
 
----
+___
 
-### factories
+###  factories
 
-• **factories**: _[Factories](../interfaces/_context_.factories.md)_
+• **factories**: *[Factories](../interfaces/_context_.factories.md)*
 
-_Defined in [src/Context.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Context.ts#L45)_
+*Defined in [src/Context.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Context.ts#L45)*

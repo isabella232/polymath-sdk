@@ -15,41 +15,41 @@ type of the arguments object that the future method will accept
 
 ## Hierarchy
 
-- **FutureLowLevelMethod**
+* **FutureLowLevelMethod**
 
 ## Index
 
 ### Properties
 
-- [futureMethod](_types_index_.futurelowlevelmethod.md#futuremethod)
-- [futureValue](_types_index_.futurelowlevelmethod.md#futurevalue)
+* [futureMethod](_types_index_.futurelowlevelmethod.md#futuremethod)
+* [futureValue](_types_index_.futurelowlevelmethod.md#futurevalue)
 
 ## Properties
 
-### futureMethod
+###  futureMethod
 
-• **futureMethod**: _function_
+• **futureMethod**: *function*
 
-_Defined in [src/types/index.ts:1519](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1519)_
+*Defined in [src/types/index.ts:1519](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1519)*
 
 function that returns a low level method
 
 #### Type declaration:
 
-▸ (`resolvedValue`: T): _Promise‹[LowLevelMethod](../modules/_types_index_.md#lowlevelmethod)‹U››_
+▸ (`resolvedValue`: T): *Promise‹[LowLevelMethod](../modules/_types_index_.md#lowlevelmethod)‹U››*
 
 **Parameters:**
 
-| Name            | Type |
-| --------------- | ---- |
-| `resolvedValue` | T    |
+Name | Type |
+------ | ------ |
+`resolvedValue` | T |
 
----
+___
 
-### futureValue
+###  futureValue
 
-• **futureValue**: _PostTransactionResolver‹T›_
+• **futureValue**: *PostTransactionResolver‹T›*
 
-_Defined in [src/types/index.ts:1523](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1523)_
+*Defined in [src/types/index.ts:1523](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1523)*
 
 post transaction resolver that resolves into the value that is passed to the future method

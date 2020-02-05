@@ -4,31 +4,31 @@ Properties denoting a Shareholder's Tax Withholding Percentage
 
 ## Hierarchy
 
-- **TaxWithholdingEntry**
+* **TaxWithholdingEntry**
 
 ## Index
 
 ### Properties
 
-- [address](_types_index_.taxwithholdingentry.md#address)
-- [percentage](_types_index_.taxwithholdingentry.md#percentage)
+* [address](_types_index_.taxwithholdingentry.md#address)
+* [percentage](_types_index_.taxwithholdingentry.md#percentage)
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Defined in [src/types/index.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L69)_
+*Defined in [src/types/index.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L69)*
 
 wallet address of the Shareholder
 
----
+___
 
-### percentage
+###  percentage
 
-• **percentage**: _number_
+• **percentage**: *number*
 
-_Defined in [src/types/index.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L73)_
+*Defined in [src/types/index.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L73)*
 
 percentage of the Shareholder's Dividend payments that will be withheld for tax

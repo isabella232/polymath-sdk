@@ -2,18 +2,18 @@
 
 ## Hierarchy
 
-- **AddressParams**
+* **AddressParams**
 
 ## Index
 
 ### Properties
 
-- [address](_polymath_.addressparams.md#address)
+* [address](_polymath_.addressparams.md#address)
 
 ## Properties
 
-### address
+###  address
 
-• **address**: _string_
+• **address**: *string*
 
-_Defined in [src/Polymath.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/Polymath.ts#L45)_
+*Defined in [src/Polymath.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L45)*

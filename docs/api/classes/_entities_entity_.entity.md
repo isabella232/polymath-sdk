@@ -8,7 +8,7 @@ Represents an object or resource in the Polymath Ecosystem with its own set of p
 
 ## Hierarchy
 
-- **Entity**
+* **Entity**
 
   ↳ [PolyTransaction](_entities_polytransaction_.polytransaction.md)
 
@@ -38,43 +38,43 @@ Represents an object or resource in the Polymath Ecosystem with its own set of p
 
 ### Properties
 
-- [uid](_entities_entity_.entity.md#abstract-uid)
+* [uid](_entities_entity_.entity.md#abstract-uid)
 
 ### Methods
 
-- [\_refresh](_entities_entity_.entity.md#abstract-_refresh)
-- [toPojo](_entities_entity_.entity.md#abstract-topojo)
+* [_refresh](_entities_entity_.entity.md#abstract-_refresh)
+* [toPojo](_entities_entity_.entity.md#abstract-topojo)
 
 ## Properties
 
 ### `Abstract` uid
 
-• **uid**: _string_
+• **uid**: *string*
 
-_Defined in [src/entities/Entity.ts:5](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Entity.ts#L5)_
+*Defined in [src/entities/Entity.ts:5](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Entity.ts#L5)*
 
 ## Methods
 
-### `Abstract` \_refresh
+### `Abstract` _refresh
 
-▸ **\_refresh**(`params`: Partial‹Params›): _void_
+▸ **_refresh**(`params`: Partial‹Params›): *void*
 
-_Defined in [src/entities/Entity.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Entity.ts#L9)_
+*Defined in [src/entities/Entity.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Entity.ts#L9)*
 
 **Parameters:**
 
-| Name     | Type            |
-| -------- | --------------- |
-| `params` | Partial‹Params› |
+Name | Type |
+------ | ------ |
+`params` | Partial‹Params› |
 
-**Returns:** _void_
+**Returns:** *void*
 
----
+___
 
 ### `Abstract` toPojo
 
-▸ **toPojo**(): _any_
+▸ **toPojo**(): *any*
 
-_Defined in [src/entities/Entity.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Entity.ts#L7)_
+*Defined in [src/entities/Entity.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Entity.ts#L7)*
 
-**Returns:** _any_
+**Returns:** *any*

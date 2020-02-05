@@ -4,143 +4,143 @@ Arguments for the [LaunchTieredSto](../enums/_types_index_.proceduretype.md#laun
 
 ## Hierarchy
 
-- **LaunchTieredStoProcedureArgs**
+* **LaunchTieredStoProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [allowPreIssuing](_types_index_.launchtieredstoprocedureargs.md#optional-allowpreissuing)
-- [currencies](_types_index_.launchtieredstoprocedureargs.md#currencies)
-- [customCurrency](_types_index_.launchtieredstoprocedureargs.md#optional-customcurrency)
-- [endDate](_types_index_.launchtieredstoprocedureargs.md#enddate)
-- [minimumInvestment](_types_index_.launchtieredstoprocedureargs.md#minimuminvestment)
-- [nonAccreditedInvestmentLimit](_types_index_.launchtieredstoprocedureargs.md#nonaccreditedinvestmentlimit)
-- [raisedFundsWallet](_types_index_.launchtieredstoprocedureargs.md#raisedfundswallet)
-- [stableCoinAddresses](_types_index_.launchtieredstoprocedureargs.md#optional-stablecoinaddresses)
-- [startDate](_types_index_.launchtieredstoprocedureargs.md#startdate)
-- [symbol](_types_index_.launchtieredstoprocedureargs.md#symbol)
-- [tiers](_types_index_.launchtieredstoprocedureargs.md#tiers)
-- [unsoldTokensWallet](_types_index_.launchtieredstoprocedureargs.md#unsoldtokenswallet)
+* [allowPreIssuing](_types_index_.launchtieredstoprocedureargs.md#optional-allowpreissuing)
+* [currencies](_types_index_.launchtieredstoprocedureargs.md#currencies)
+* [customCurrency](_types_index_.launchtieredstoprocedureargs.md#optional-customcurrency)
+* [endDate](_types_index_.launchtieredstoprocedureargs.md#enddate)
+* [minimumInvestment](_types_index_.launchtieredstoprocedureargs.md#minimuminvestment)
+* [nonAccreditedInvestmentLimit](_types_index_.launchtieredstoprocedureargs.md#nonaccreditedinvestmentlimit)
+* [raisedFundsWallet](_types_index_.launchtieredstoprocedureargs.md#raisedfundswallet)
+* [stableCoinAddresses](_types_index_.launchtieredstoprocedureargs.md#optional-stablecoinaddresses)
+* [startDate](_types_index_.launchtieredstoprocedureargs.md#startdate)
+* [symbol](_types_index_.launchtieredstoprocedureargs.md#symbol)
+* [tiers](_types_index_.launchtieredstoprocedureargs.md#tiers)
+* [unsoldTokensWallet](_types_index_.launchtieredstoprocedureargs.md#unsoldtokenswallet)
 
 ## Properties
 
 ### `Optional` allowPreIssuing
 
-• **allowPreIssuing**? : _undefined | false | true_
+• **allowPreIssuing**? : *undefined | false | true*
 
-_Defined in [src/types/index.ts:791](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L791)_
+*Defined in [src/types/index.ts:791](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L791)*
 
 whether the total amount of Security Tokens that will be sold should be issued at the time the STO starts.
 Otherwise, they will be issued on each purchase. Defaults to false
 
----
+___
 
-### currencies
+###  currencies
 
-• **currencies**: _Currency[]_
+• **currencies**: *Currency[]*
 
-_Defined in [src/types/index.ts:769](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L769)_
+*Defined in [src/types/index.ts:769](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L769)*
 
 currencies with which Security Tokens can be purchased in the STO
 
----
+___
 
 ### `Optional` customCurrency
 
-• **customCurrency**? : _Partial‹[CustomCurrency](_types_index_.customcurrency.md)›_
+• **customCurrency**? : *Partial‹[CustomCurrency](_types_index_.customcurrency.md)›*
 
-_Defined in [src/types/index.ts:786](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L786)_
+*Defined in [src/types/index.ts:786](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L786)*
 
 if raising in Stable Coin,
 this parameter can be used to specify a currency different than USD for the STO to be pegged in
 
----
+___
 
-### endDate
+###  endDate
 
-• **endDate**: _Date_
+• **endDate**: *Date*
 
-_Defined in [src/types/index.ts:753](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L753)_
+*Defined in [src/types/index.ts:753](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L753)*
 
 end date of the STO
 
----
+___
 
-### minimumInvestment
+###  minimumInvestment
 
-• **minimumInvestment**: _BigNumber_
+• **minimumInvestment**: *BigNumber*
 
-_Defined in [src/types/index.ts:765](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L765)_
+*Defined in [src/types/index.ts:765](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L765)*
 
 minimum amount that can be invested by any investor
 
----
+___
 
-### nonAccreditedInvestmentLimit
+###  nonAccreditedInvestmentLimit
 
-• **nonAccreditedInvestmentLimit**: _BigNumber_
+• **nonAccreditedInvestmentLimit**: *BigNumber*
 
-_Defined in [src/types/index.ts:761](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L761)_
+*Defined in [src/types/index.ts:761](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L761)*
 
 maximum amount that can be invested by non accredited investors
 
----
+___
 
-### raisedFundsWallet
+###  raisedFundsWallet
 
-• **raisedFundsWallet**: _string_
+• **raisedFundsWallet**: *string*
 
-_Defined in [src/types/index.ts:773](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L773)_
+*Defined in [src/types/index.ts:773](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L773)*
 
 wallet where raised funds will be sent
 
----
+___
 
 ### `Optional` stableCoinAddresses
 
-• **stableCoinAddresses**? : _string[]_
+• **stableCoinAddresses**? : *string[]*
 
-_Defined in [src/types/index.ts:781](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L781)_
+*Defined in [src/types/index.ts:781](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L781)*
 
 list of the addresses of the Stable Coins that can be used to purchase Security Tokens in the STO
 
----
+___
 
-### startDate
+###  startDate
 
-• **startDate**: _Date_
+• **startDate**: *Date*
 
-_Defined in [src/types/index.ts:749](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L749)_
+*Defined in [src/types/index.ts:749](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L749)*
 
 start date of the STO
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:745](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L745)_
+*Defined in [src/types/index.ts:745](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L745)*
 
 symbol of the Security Token
 
----
+___
 
-### tiers
+###  tiers
 
-• **tiers**: _[StoTier](_types_index_.stotier.md)[]_
+• **tiers**: *[StoTier](_types_index_.stotier.md)[]*
 
-_Defined in [src/types/index.ts:757](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L757)_
+*Defined in [src/types/index.ts:757](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L757)*
 
 array of Tier information
 
----
+___
 
-### unsoldTokensWallet
+###  unsoldTokensWallet
 
-• **unsoldTokensWallet**: _string_
+• **unsoldTokensWallet**: *string*
 
-_Defined in [src/types/index.ts:777](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L777)_
+*Defined in [src/types/index.ts:777](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L777)*
 
 wallet where unsold tokens will be sent if the STO expires

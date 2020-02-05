@@ -4,31 +4,31 @@ Arguments for the [RevokeKyc](../enums/_types_index_.proceduretype.md#revokekyc)
 
 ## Hierarchy
 
-- **RevokeKycProcedureArgs**
+* **RevokeKycProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [shareholderAddresses](_types_index_.revokekycprocedureargs.md#shareholderaddresses)
-- [symbol](_types_index_.revokekycprocedureargs.md#symbol)
+* [shareholderAddresses](_types_index_.revokekycprocedureargs.md#shareholderaddresses)
+* [symbol](_types_index_.revokekycprocedureargs.md#symbol)
 
 ## Properties
 
-### shareholderAddresses
+###  shareholderAddresses
 
-• **shareholderAddresses**: _string[]_
+• **shareholderAddresses**: *string[]*
 
-_Defined in [src/types/index.ts:1178](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1178)_
+*Defined in [src/types/index.ts:1178](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1178)*
 
 list of Shareholders addresses for which KYC will be revoked
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:1174](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L1174)_
+*Defined in [src/types/index.ts:1174](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1174)*
 
 symbol of the Security Token

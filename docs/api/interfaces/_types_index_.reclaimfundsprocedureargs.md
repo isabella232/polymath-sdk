@@ -4,29 +4,29 @@ Arguments for the [ReclaimFunds](../enums/_types_index_.proceduretype.md#reclaim
 
 ## Hierarchy
 
-- **ReclaimFundsProcedureArgs**
+* **ReclaimFundsProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [dividendIndex](_types_index_.reclaimfundsprocedureargs.md#dividendindex)
-- [symbol](_types_index_.reclaimfundsprocedureargs.md#symbol)
+* [dividendIndex](_types_index_.reclaimfundsprocedureargs.md#dividendindex)
+* [symbol](_types_index_.reclaimfundsprocedureargs.md#symbol)
 
 ## Properties
 
-### dividendIndex
+###  dividendIndex
 
-• **dividendIndex**: _number_
+• **dividendIndex**: *number*
 
-_Defined in [src/types/index.ts:802](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L802)_
+*Defined in [src/types/index.ts:802](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L802)*
 
----
+___
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:801](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L801)_
+*Defined in [src/types/index.ts:801](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L801)*
 
 symbol of the Security Token

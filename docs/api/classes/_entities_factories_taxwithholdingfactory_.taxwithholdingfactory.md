@@ -4,7 +4,7 @@ Factory generates information for a Tax Withholding entity
 
 ## Hierarchy
 
-- [Factory](_entities_factories_factory_.factory.md)‹[TaxWithholding](_entities_taxwithholding_.taxwithholding.md), [Params](../interfaces/_entities_taxwithholding_.params.md), [UniqueIdentifiers](../interfaces/_entities_taxwithholding_.uniqueidentifiers.md)›
+* [Factory](_entities_factories_factory_.factory.md)‹[TaxWithholding](_entities_taxwithholding_.taxwithholding.md), [Params](../interfaces/_entities_taxwithholding_.params.md), [UniqueIdentifiers](../interfaces/_entities_taxwithholding_.uniqueidentifiers.md)›
 
   ↳ **TaxWithholdingFactory**
 
@@ -12,155 +12,155 @@ Factory generates information for a Tax Withholding entity
 
 ### Constructors
 
-- [constructor](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#constructor)
+* [constructor](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#constructor)
 
 ### Properties
 
-- [Entity](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#entity)
-- [cache](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#cache)
-- [context](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#context)
+* [Entity](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#entity)
+* [cache](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#cache)
+* [context](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#context)
 
 ### Methods
 
-- [create](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#create)
-- [fetch](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#fetch)
-- [refresh](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#refresh)
-- [update](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#update)
+* [create](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#create)
+* [fetch](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#fetch)
+* [refresh](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#refresh)
+* [update](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md#update)
 
 ## Constructors
 
-### constructor
+###  constructor
 
-\+ **new TaxWithholdingFactory**(`context`: [Context](_context_.context.md)): _[TaxWithholdingFactory](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md)_
+\+ **new TaxWithholdingFactory**(`context`: [Context](_context_.context.md)): *[TaxWithholdingFactory](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md)*
 
-_Overrides [Factory](_entities_factories_factory_.factory.md).[constructor](_entities_factories_factory_.factory.md#constructor)_
+*Overrides [Factory](_entities_factories_factory_.factory.md).[constructor](_entities_factories_factory_.factory.md#constructor)*
 
-_Defined in [src/entities/factories/TaxWithholdingFactory.ts:71](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/TaxWithholdingFactory.ts#L71)_
+*Defined in [src/entities/factories/TaxWithholdingFactory.ts:71](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/TaxWithholdingFactory.ts#L71)*
 
 Create an instance of the Tax Withholding Factory
 
 **Parameters:**
 
-| Name      | Type                            |
-| --------- | ------------------------------- |
-| `context` | [Context](_context_.context.md) |
+Name | Type |
+------ | ------ |
+`context` | [Context](_context_.context.md) |
 
-**Returns:** _[TaxWithholdingFactory](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md)_
+**Returns:** *[TaxWithholdingFactory](_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md)*
 
 ## Properties
 
-### Entity
+###  Entity
 
-• **Entity**: _[EntityClass](../interfaces/_entities_factories_factory_.entityclass.md)‹[Params](../interfaces/_entities_taxwithholding_.params.md), [UniqueIdentifiers](../interfaces/_entities_taxwithholding_.uniqueidentifiers.md)›_
+• **Entity**: *[EntityClass](../interfaces/_entities_factories_factory_.entityclass.md)‹[Params](../interfaces/_entities_taxwithholding_.params.md), [UniqueIdentifiers](../interfaces/_entities_taxwithholding_.uniqueidentifiers.md)›*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[Entity](_entities_factories_factory_.factory.md#entity)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[Entity](_entities_factories_factory_.factory.md#entity)*
 
-_Defined in [src/entities/factories/Factory.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L37)_
+*Defined in [src/entities/factories/Factory.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L37)*
 
 entity class that this Factory is in charge of generating and caching
 
----
+___
 
-### cache
+###  cache
 
-• **cache**: _object_
+• **cache**: *object*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[cache](_entities_factories_factory_.factory.md#cache)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[cache](_entities_factories_factory_.factory.md#cache)*
 
-_Defined in [src/entities/factories/Factory.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L28)_
+*Defined in [src/entities/factories/Factory.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L28)*
 
 #### Type declaration:
 
-- \[ **key**: _string_\]: [TaxWithholding](_entities_taxwithholding_.taxwithholding.md) | undefined
+* \[ **key**: *string*\]: [TaxWithholding](_entities_taxwithholding_.taxwithholding.md) | undefined
 
----
+___
 
-### context
+###  context
 
-• **context**: _[Context](_context_.context.md)_
+• **context**: *[Context](_context_.context.md)*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[context](_entities_factories_factory_.factory.md#context)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[context](_entities_factories_factory_.factory.md#context)*
 
-_Defined in [src/entities/factories/Factory.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L32)_
+*Defined in [src/entities/factories/Factory.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L32)*
 
 ## Methods
 
-### create
+###  create
 
-▸ **create**(`uid`: string, `params`: [Params](../interfaces/_entities_taxwithholding_.params.md)): _EntityType_
+▸ **create**(`uid`: string, `params`: [Params](../interfaces/_entities_taxwithholding_.params.md)): *EntityType*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[create](_entities_factories_factory_.factory.md#create)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[create](_entities_factories_factory_.factory.md#create)*
 
-_Defined in [src/entities/factories/Factory.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L87)_
+*Defined in [src/entities/factories/Factory.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L87)*
 
 Get an entity from the cache. Creates it if it isn't cached, updates it if it is
 
 **Parameters:**
 
-| Name     | Type                                                        | Description                      |
-| -------- | ----------------------------------------------------------- | -------------------------------- |
-| `uid`    | string                                                      | unique identifier for the entity |
-| `params` | [Params](../interfaces/_entities_taxwithholding_.params.md) | constructor data for the entity  |
+Name | Type | Description |
+------ | ------ | ------ |
+`uid` | string | unique identifier for the entity |
+`params` | [Params](../interfaces/_entities_taxwithholding_.params.md) | constructor data for the entity  |
 
-**Returns:** _EntityType_
+**Returns:** *EntityType*
 
----
+___
 
-### fetch
+###  fetch
 
-▸ **fetch**(`uid`: string): _Promise‹EntityType›_
+▸ **fetch**(`uid`: string): *Promise‹EntityType›*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[fetch](_entities_factories_factory_.factory.md#fetch)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[fetch](_entities_factories_factory_.factory.md#fetch)*
 
-_Defined in [src/entities/factories/Factory.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L57)_
+*Defined in [src/entities/factories/Factory.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L57)*
 
 Get an entity from the cache. Fetches the necessary data to create it if it isn't cached, refreshes it if it is
 
 **Parameters:**
 
-| Name  | Type   | Description                      |
-| ----- | ------ | -------------------------------- |
-| `uid` | string | unique identifier for the entity |
+Name | Type | Description |
+------ | ------ | ------ |
+`uid` | string | unique identifier for the entity  |
 
-**Returns:** _Promise‹EntityType›_
+**Returns:** *Promise‹EntityType›*
 
----
+___
 
-### refresh
+###  refresh
 
-▸ **refresh**(`uid`: string): _Promise‹void›_
+▸ **refresh**(`uid`: string): *Promise‹void›*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[refresh](_entities_factories_factory_.factory.md#refresh)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[refresh](_entities_factories_factory_.factory.md#refresh)*
 
-_Defined in [src/entities/factories/Factory.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L108)_
+*Defined in [src/entities/factories/Factory.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L108)*
 
 Fetch the data for an entity and updates its properties
 
 **Parameters:**
 
-| Name  | Type   | Description                      |
-| ----- | ------ | -------------------------------- |
-| `uid` | string | unique identifier for the entity |
+Name | Type | Description |
+------ | ------ | ------ |
+`uid` | string | unique identifier for the entity  |
 
-**Returns:** _Promise‹void›_
+**Returns:** *Promise‹void›*
 
----
+___
 
-### update
+###  update
 
-▸ **update**(`uid`: string, `params`: Partial‹[Params](../interfaces/_entities_taxwithholding_.params.md)›): _Promise‹void›_
+▸ **update**(`uid`: string, `params`: Partial‹[Params](../interfaces/_entities_taxwithholding_.params.md)›): *Promise‹void›*
 
-_Inherited from [Factory](_entities_factories_factory_.factory.md).[update](_entities_factories_factory_.factory.md#update)_
+*Inherited from [Factory](_entities_factories_factory_.factory.md).[update](_entities_factories_factory_.factory.md#update)*
 
-_Defined in [src/entities/factories/Factory.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/factories/Factory.ts#L126)_
+*Defined in [src/entities/factories/Factory.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L126)*
 
 Update an entity's properties in place
 
 **Parameters:**
 
-| Name     | Type                                                                 | Description                       |
-| -------- | -------------------------------------------------------------------- | --------------------------------- |
-| `uid`    | string                                                               | unique identifier for the entity  |
-| `params` | Partial‹[Params](../interfaces/_entities_taxwithholding_.params.md)› | properties that should be updated |
+Name | Type | Description |
+------ | ------ | ------ |
+`uid` | string | unique identifier for the entity |
+`params` | Partial‹[Params](../interfaces/_entities_taxwithholding_.params.md)› | properties that should be updated  |
 
-**Returns:** _Promise‹void›_
+**Returns:** *Promise‹void›*

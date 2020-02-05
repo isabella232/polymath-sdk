@@ -4,4 +4,4 @@
 
 ### Classes
 
-- [ModifyPercentageExemptions](../classes/_procedures_modifypercentageexemptions_.modifypercentageexemptions.md)
+* [ModifyPercentageExemptions](../classes/_procedures_modifypercentageexemptions_.modifypercentageexemptions.md)

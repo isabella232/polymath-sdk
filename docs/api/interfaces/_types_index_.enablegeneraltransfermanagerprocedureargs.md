@@ -4,20 +4,20 @@ Arguments for the [EnableGeneralTransferManager](../enums/_types_index_.procedur
 
 ## Hierarchy
 
-- **EnableGeneralTransferManagerProcedureArgs**
+* **EnableGeneralTransferManagerProcedureArgs**
 
 ## Index
 
 ### Properties
 
-- [symbol](_types_index_.enablegeneraltransfermanagerprocedureargs.md#symbol)
+* [symbol](_types_index_.enablegeneraltransfermanagerprocedureargs.md#symbol)
 
 ## Properties
 
-### symbol
+###  symbol
 
-• **symbol**: _string_
+• **symbol**: *string*
 
-_Defined in [src/types/index.ts:449](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/types/index.ts#L449)_
+*Defined in [src/types/index.ts:449](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L449)*
 
 symbol of the Security Token

@@ -4,27 +4,27 @@ Constructor parameters
 
 ## Hierarchy
 
-- **Params**
+* **Params**
 
 ## Index
 
 ### Properties
 
-- [balance](_entities_erc20tokenbalance_.params.md#balance)
-- [tokenSymbol](_entities_erc20tokenbalance_.params.md#tokensymbol)
+* [balance](_entities_erc20tokenbalance_.params.md#balance)
+* [tokenSymbol](_entities_erc20tokenbalance_.params.md#tokensymbol)
 
 ## Properties
 
-### balance
+###  balance
 
-• **balance**: _BigNumber_
+• **balance**: *BigNumber*
 
-_Defined in [src/entities/Erc20TokenBalance.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Erc20TokenBalance.ts#L29)_
+*Defined in [src/entities/Erc20TokenBalance.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Erc20TokenBalance.ts#L29)*
 
----
+___
 
-### tokenSymbol
+###  tokenSymbol
 
-• **tokenSymbol**: _string | null_
+• **tokenSymbol**: *string | null*
 
-_Defined in [src/entities/Erc20TokenBalance.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/c47ae7a/src/entities/Erc20TokenBalance.ts#L28)_
+*Defined in [src/entities/Erc20TokenBalance.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/Erc20TokenBalance.ts#L28)*
