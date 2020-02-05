@@ -125,6 +125,8 @@ describe('DisableController', () => {
         signature: randomSignature,
       });
       expect(disableControllerArgsSpy.callCount).toEqual(1);
+      expect(addSignatureRequestArgsStub.getCall(0).args[0]).toEqual({});
+      expect(addSignatureRequestArgsStub.callCount).toEqual(1);
 
       expect(
         addTransactionStub
