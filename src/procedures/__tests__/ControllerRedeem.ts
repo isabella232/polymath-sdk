@@ -95,7 +95,6 @@ describe('ControllerRedeem', () => {
 
       // Verifications
       expect(controllerRedeemArgsSpy.getCall(0).args[0]).toEqual({
-        // from, value: amount, data, operatorData: reason
         from: params.from,
         value: params.amount,
         data: '',
