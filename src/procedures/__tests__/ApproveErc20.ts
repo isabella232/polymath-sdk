@@ -86,6 +86,7 @@ describe('ApproveErc20', () => {
     const { approve } = polyTokenMock.getMockInstance();
     addTransactionStub.withArgs(approve).returns(approveArgsSpy);
 
+    // Real call
     await target.prepareTransactions();
 
     // Verifications
@@ -118,7 +119,8 @@ describe('ApproveErc20', () => {
     erc20Mock.mock('approve', Promise.resolve('Approve'));
     const { approve } = erc20Mock.getMockInstance();
     addTransactionStub.withArgs(approve).returns(approveArgsSpy);
-
+    
+    // Real call
     await target.prepareTransactions();
 
     // Verifications
