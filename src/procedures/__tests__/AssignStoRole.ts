@@ -10,7 +10,6 @@ import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode, PolyTransactionTag, ProcedureType, StoRole } from '../../types';
 
-
 const params = {
   symbol: 'TEST1',
   delegateAddress: '0x5555555555555555555555555555555555555555',
