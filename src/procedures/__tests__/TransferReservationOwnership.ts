@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -60,7 +60,7 @@ describe('TransferReservationOwnership', () => {
 
     factoryMockSetup = mockFactories();
     // prettier-ignore
-    factoryMockSetup.securityTokenReservationFactory = 
+    factoryMockSetup.securityTokenReservationFactory =
       securityTokenReservationFactoryMock.getMockInstance();
 
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
@@ -129,25 +129,34 @@ describe('TransferReservationOwnership', () => {
     test('should add a transaction to the queue to transfer ownership of the reservation', async () => {
       contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve('0x01') }));
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const transferTickerOwnershipArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenRegistryMock.mock(
         'transferTickerOwnership',
         Promise.resolve('TransferTickerOwnership')
       );
+      const { transferTickerOwnership } = securityTokenRegistryMock.getMockInstance();
+      addTransactionStub.withArgs(transferTickerOwnership).returns(transferTickerOwnershipArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(transferTickerOwnershipArgsSpy.getCall(0).args[0]).toEqual({
+        newOwner: params.newOwner,
+        ticker: params.symbol,
+      });
+      expect(transferTickerOwnershipArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenRegistryMock.getMockInstance().transferTickerOwnership)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.TransferReservationOwnership
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should successfully refresh the security token reservation with the new owner address', async () => {
@@ -157,7 +166,7 @@ describe('TransferReservationOwnership', () => {
       );
 
       // prettier-ignore
-      const resolverValue = 
+      const resolverValue =
         await TransferReservationOwnershipModule.createTransferReservationOwnershipResolver(
           factoryMockSetup,
           params.symbol

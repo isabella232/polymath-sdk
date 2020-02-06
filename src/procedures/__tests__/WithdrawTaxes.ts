@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import { Factories } from '../../Context';
@@ -106,22 +106,30 @@ describe('WithdrawTaxes', () => {
         Promise.resolve([erc20DividendMock.getMockInstance()])
       );
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const withdrawWithholdingArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       erc20DividendMock.mock('withdrawWithholding', Promise.resolve('WithdrawTaxWithholdings'));
+      const { withdrawWithholding } = erc20DividendMock.getMockInstance();
+      addTransactionStub.withArgs(withdrawWithholding).returns(withdrawWithholdingArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(withdrawWithholdingArgsSpy.getCall(0).args[0]).toEqual({
+        dividendIndex: params.dividendIndex,
+      });
+      expect(withdrawWithholdingArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(erc20DividendMock.getMockInstance().withdrawWithholding)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.WithdrawTaxWithholdings
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should successfully refresh the dividend distribution', async () => {

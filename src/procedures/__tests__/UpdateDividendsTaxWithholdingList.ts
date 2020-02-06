@@ -1,7 +1,8 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import { Factories } from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -115,21 +116,33 @@ describe('UpdateDividendsTaxWithholdingList', () => {
         Promise.resolve([erc20DividendsMock.getMockInstance()])
       );
 
+      const setWithholdingArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       erc20DividendsMock.mock('setWithholding', Promise.resolve('SetWithholding'));
-
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const { setWithholding } = erc20DividendsMock.getMockInstance();
+      addTransactionStub.withArgs(setWithholding).returns(setWithholdingArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(setWithholdingArgsSpy.getCall(0).args[0]).toEqual({
+        investors: params.shareholderAddresses,
+        withholding: params.percentages.map(percentage => {
+          return new BigNumber(percentage);
+        }),
+      });
+      expect(setWithholdingArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(erc20DividendsMock.getMockInstance().setWithholding)
+        addTransactionStub
+          .getCall(0)
+          .calledWith(erc20DividendsMock.getMockInstance().setWithholding)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.SetErc20TaxWithholding
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should update the dividends tax withholding list for erc20 dividend type', async () => {
