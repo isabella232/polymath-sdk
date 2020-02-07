@@ -12,6 +12,7 @@ import { Documents } from './Documents';
 import { Controller } from './Controller';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode, Version } from '../../types';
+import { TransferOwnership } from '../../procedures';
 
 /**
  * Properties that uniquely identify a Security Token
@@ -149,6 +150,8 @@ export class SecurityToken extends Entity<Params> {
 
   public documents: Documents;
 
+  public context: Context;
+
   /**
    * Create a new SecurityToken instance
    */
@@ -187,7 +190,25 @@ export class SecurityToken extends Entity<Params> {
     this.transfers = new Transfers(this, context);
     this.documents = new Documents(this, context);
     this.controller = new Controller(this, context);
+
+    this.context = context;
   }
+
+  /**
+   * Transfers ownership of the Security Token to a different wallet address
+   *
+   * @param args.newOwner - new owner address for the Security Token
+   */
+  public transferOwnership = async (args: { newOwner: string }) => {
+    const procedure = new TransferOwnership(
+      {
+        symbol: this.symbol,
+        ...args,
+      },
+      this.context
+    );
+    return procedure.prepare();
+  };
 
   /**
    * Convert entity to a POJO (Plain Old Javascript Object)

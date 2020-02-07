@@ -20,6 +20,9 @@ enum Event {
 }
 
 // TODO @RafaelVidaurre: Cleanup code
+/**
+ * @hidden
+ */
 const mapValuesDeep = (
   obj: { [key: string]: any },
   fn: (...args: any[]) => any
@@ -31,6 +34,9 @@ const mapValuesDeep = (
  * Wrapper class for a Polymath Transaction
  */
 export class PolyTransaction<Args = any, Values extends any[] = any[]> extends Entity<void> {
+  /**
+   * Generate the Poly Transaction's UUID from its identifying properties
+   */
   public static generateId() {
     return serialize('transaction', {
       random: v4(),

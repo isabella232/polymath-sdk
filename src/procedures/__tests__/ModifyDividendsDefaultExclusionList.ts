@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
@@ -22,32 +23,18 @@ describe('ModifyDividendsDefaultExclusionList', () => {
   let target: ModifyDividendsDefaultExclusionList;
   let contextMock: MockManager<contextModule.Context>;
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
-  let tokenFactoryMock: MockManager<
-    tokenFactoryModule.MockedTokenFactoryModule
-  >;
-  let securityTokenMock: MockManager<
-    contractWrappersModule.SecurityToken_3_0_0
-  >;
-  let erc20DividendsMock: MockManager<
-    contractWrappersModule.ERC20DividendCheckpoint_3_0_0
-  >;
-  let dividendFactoryMock: MockManager<
-    dividendFactoryModule.DividendDistributionFactory
-  >;
+  let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
+  let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
+  let erc20DividendsMock: MockManager<contractWrappersModule.ERC20DividendCheckpoint_3_0_0>;
+  let dividendFactoryMock: MockManager<dividendFactoryModule.DividendDistributionFactory>;
   let factoriesMockedSetup: Factories;
 
   beforeEach(() => {
     // Mock the context, wrappers, tokenFactory and securityToken to test ModifyDividendsDefaultExclusionList
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
-    tokenFactoryMock = ImportMock.mockClass(
-      tokenFactoryModule,
-      'MockedTokenFactoryModule'
-    );
-    securityTokenMock = ImportMock.mockClass(
-      contractWrappersModule,
-      'SecurityToken_3_0_0'
-    );
+    tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
+    securityTokenMock = ImportMock.mockClass(contractWrappersModule, 'SecurityToken_3_0_0');
     erc20DividendsMock = ImportMock.mockClass(
       contractWrappersModule,
       'ERC20DividendCheckpoint_3_0_0'
@@ -65,14 +52,8 @@ describe('ModifyDividendsDefaultExclusionList', () => {
     factoriesMockedSetup = mockFactories();
     factoriesMockedSetup.dividendDistributionFactory = dividendFactoryMock.getMockInstance();
     contextMock.set('factories', factoriesMockedSetup);
-    contextMock.set(
-      'currentWallet',
-      new Wallet({ address: () => Promise.resolve('0x01') })
-    );
-    target = new ModifyDividendsDefaultExclusionList(
-      params,
-      contextMock.getMockInstance()
-    );
+    contextMock.set('currentWallet', new Wallet({ address: () => Promise.resolve('0x01') }));
+    target = new ModifyDividendsDefaultExclusionList(params, contextMock.getMockInstance());
   });
 
   afterEach(() => {
@@ -82,9 +63,7 @@ describe('ModifyDividendsDefaultExclusionList', () => {
   describe('Types', () => {
     test('should extend procedure and have ModifyDividendsDefaultExclusionList type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe(
-        ProcedureType.ModifyDividendsDefaultExclusionList
-      );
+      expect(target.type).toBe(ProcedureType.ModifyDividendsDefaultExclusionList);
     });
   });
 
@@ -121,10 +100,7 @@ describe('ModifyDividendsDefaultExclusionList', () => {
         Promise.resolve([erc20DividendsMock.getMockInstance()])
       );
 
-      erc20DividendsMock.mock(
-        'setDefaultExcluded',
-        Promise.resolve('SetDefaultExcluded')
-      );
+      erc20DividendsMock.mock('setDefaultExcluded', Promise.resolve('SetDefaultExcluded'));
 
       const addTransactionSpy = spy(target, 'addTransaction');
 

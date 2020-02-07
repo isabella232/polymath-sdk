@@ -5,6 +5,9 @@ import { PolymathError } from '../PolymathError';
 import { DividendDistribution, SecurityToken } from '../entities';
 import { Factories } from '~/Context';
 
+/**
+ * @hidden
+ */
 export const createReclaimFundsResolver = (
   dividendIndex: number,
   factories: Factories,
@@ -18,9 +21,19 @@ export const createReclaimFundsResolver = (
   );
 };
 
+/**
+ * Procedure that allows the issuer to reclaim dividends after they expire without being claimed by shareholders
+ */
 export class ReclaimFunds extends Procedure<ReclaimFundsProcedureArgs> {
   public type = ProcedureType.ReclaimFunds;
 
+  /**
+   * Reclaim funds
+   *
+   * Note that this procedure will fail if:
+   * - The Security Token doesn't exist
+   * - The Dividends Feature hasn't been enabled
+   */
   public async prepareTransactions() {
     const { symbol, dividendIndex } = this.args;
     const { contractWrappers, factories } = this.context;

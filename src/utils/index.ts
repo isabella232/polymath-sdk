@@ -38,6 +38,11 @@ import { isAddress } from 'ethereum-address';
 import { ErrorCode, Pojo, Version } from '../types';
 import { PolymathError } from '../PolymathError';
 
+/**
+ * Promisified version of a timeout
+ *
+ * @param amount - time to wait
+ */
 export const delay = async (amount: number) => {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -46,6 +51,9 @@ export const delay = async (amount: number) => {
   });
 };
 
+/**
+ * Check if two addresses correspond to the same wallet
+ */
 export function areSameAddress(a: string, b: string) {
   return a.toUpperCase() === b.toUpperCase();
 }
@@ -67,16 +75,26 @@ export function checkStringLength(
     throw new PolymathError({
       code: ErrorCode.ProcedureValidationError,
       message: `You must provide a valid ${variableName} ${
-        opts.minLength != undefined ? `between ${minLength} and ${maxLength}` : `up to ${maxLength}`
+        opts.minLength !== undefined
+          ? `between ${minLength} and ${maxLength}`
+          : `up to ${maxLength}`
       } characters long`,
     });
   }
 }
 
-export function serialize(entityType: string, pojo: Pojo) {
-  return Buffer.from(`${entityType}:${stringify(pojo)}`).toString('base64');
+/**
+ * @hidden
+ * Generate a hash of an Entity's unique identifiers
+ */
+export function serialize(entityType: string, uniqueIdentifiers: Pojo) {
+  return Buffer.from(`${entityType}:${stringify(uniqueIdentifiers)}`).toString('base64');
 }
 
+/**
+ * @hidden
+ * Retrieve an Entity's unique identifiers from their hashed version
+ */
 export function unserialize(id: string) {
   const unserialized = Buffer.from(id, 'base64').toString('utf8');
 
@@ -97,6 +115,10 @@ export function unserialize(id: string) {
   }
 }
 
+/**
+ * @hidden
+ * Check if a string is a valid Ethereum address
+ */
 export function isValidAddress(address: string) {
   return isAddress(address);
 }
@@ -248,6 +270,10 @@ interface FindEvents {
   >[];
 }
 
+/**
+ * @hidden
+ * Find all occurrences of a certain event in an array
+ */
 export const findEvents: FindEvents = ({
   logs,
   eventName,
@@ -264,6 +290,9 @@ export const findEvents: FindEvents = ({
   return foundLogs;
 };
 
+/**
+ * Convert a version number array into a string of type [[Version]]
+ */
 export function convertVersionToEnum(versionBigNumber: BigNumber[]) {
   const version = versionBigNumber
     .map(num => {

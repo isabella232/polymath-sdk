@@ -19,6 +19,9 @@ import { areSameAddress, checkStringLength } from '../utils';
 import { SecurityToken, TieredSto } from '../entities';
 import { TieredStoFactory } from '../entities/factories';
 
+/**
+ * @hidden
+ */
 export const createTieredStoFactoryRefreshResolver = (
   tieredStoFactory: TieredStoFactory,
   addedTransactions: PolyTransactionTag[],
@@ -33,9 +36,28 @@ export const createTieredStoFactoryRefreshResolver = (
   return undefined;
 };
 
+/**
+ * Procedure that modifies the configuration parameters of a Tiered STO
+ */
 export class ModifyTieredStoData extends Procedure<ModifyTieredStoDataProcedureArgs> {
   public type = ProcedureType.ModifyTieredStoData;
 
+  /**
+   * - Modify the start and end date of the STO
+   * - Modify the fundraise types of the STO
+   * - Modify the custom currency symbol and the oracles used to convert POLY and ETH to said currency
+   * - Modify the STO's tiers (rates, tokens per tier and discounts when buying with POLY)
+   * - Modify investment limits (min investment, max invested for non-accredited investors)
+   * - Modify treasury wallet, wallet for unsold tokens and stable coin addresses
+   *
+   * Only transactions that will effectively present changes will be submitted
+   *
+   * Note that this procedure will fail if:
+   * - The STO has not been enabled or has been archived
+   * - The STO has already started
+   * - Attempting to use a custom currency on an STO with version 3.0.0 or lower
+   * - The supplied parameters don't represent any changes in the STO
+   */
   public async prepareTransactions() {
     const { args, context } = this;
     const { symbol, stoAddress } = args;

@@ -19,6 +19,9 @@ import { ModifyShareholderData } from './ModifyShareholderData';
 import { Factories } from '../Context';
 import { ZERO_ADDRESS } from '../utils/constants';
 
+/**
+ * @hidden
+ */
 export const createRefreshSecurityTokenFactoryResolver = (
   factories: Factories,
   securityTokenId: string
@@ -26,9 +29,21 @@ export const createRefreshSecurityTokenFactoryResolver = (
   return factories.securityTokenFactory.refresh(securityTokenId);
 };
 
+/**
+ * Procedure that issues tokens to the specified addresses. KYC data for those addresses must already exist or otherwise be provided in this procedure
+ */
 export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder[]> {
   public type = ProcedureType.IssueTokens;
 
+  /**
+   * Issue the specified amounts to the corresponding addresses
+   * If KYC data is provided, transfer restrictions will not be checked before submitting the issuing transaction
+   * This means that if one of the wallets on the list doesn't clear transfer restrictions, the transaction will revert
+   *
+   * Note that this procedure will fail if:
+   * - The Security Token doesn't exist
+   * - At least one wallet address doesn't clear transfer restrictions. This check is bypassed if new KYC data is provided
+   */
   public async prepareTransactions() {
     const { symbol, issuanceData } = this.args;
     const { contractWrappers, factories } = this.context;

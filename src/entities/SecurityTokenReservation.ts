@@ -111,10 +111,10 @@ export class SecurityTokenReservation extends Entity<Params> {
   /**
    * Creates a security token with the reserved symbol
    *
-   * @param name name of the security token
-   * @param detailsUrl URL containing information about the security
-   * @param divisible whether the token should be divisible or not
-   * @param treasuryWallet address of a wallet to be used to store tokens for some operations (defaults to)
+   * @param name - name of the security token
+   * @param detailsUrl - URL containing information about the security
+   * @param divisible - whether the token should be divisible or not
+   * @param treasuryWallet - address of a wallet to be used to store tokens for some operations (defaults to)
    */
   public createSecurityToken = async (args: {
     name: string;

@@ -12,6 +12,9 @@ export interface UniqueIdentifiers {
   walletAddress: string;
 }
 
+/**
+ * Check if a value is of type [[UniqueIdentifiers]]
+ */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { tokenAddress, walletAddress } = identifiers;
 
@@ -30,6 +33,9 @@ export interface Params {
  * Used to manage a ERC20 token balance
  */
 export class Erc20TokenBalance extends Entity<Params> {
+  /**
+   * Generate the ERC20 Token Balance's UUID from its identifying properties
+   */
   public static generateId({ tokenAddress, walletAddress }: UniqueIdentifiers) {
     return serialize('erc20TokenBalance', {
       tokenAddress,

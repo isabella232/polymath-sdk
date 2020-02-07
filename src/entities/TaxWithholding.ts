@@ -11,6 +11,10 @@ export interface UniqueIdentifiers {
   shareholderAddress: string;
 }
 
+/**
+ * @hidden
+ * Check if a value is of type [[UniqueIdentifiers]]
+ */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
   const { securityTokenId, shareholderAddress, checkpointIndex } = identifiers;
 
@@ -33,6 +37,9 @@ export interface Params {
  * Represents the percentage that should be withheld from a Shareholder's dividend payment for tax purposes
  */
 export class TaxWithholding extends Entity<Params> {
+  /**
+   * Generate the Tax Withholding's UUID from its identifying properties
+   */
   public static generateId({ securityTokenId, shareholderAddress }: UniqueIdentifiers) {
     return serialize('taxWithholding', {
       securityTokenId,

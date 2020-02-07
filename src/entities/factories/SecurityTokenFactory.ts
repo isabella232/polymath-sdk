@@ -5,6 +5,10 @@ import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 import { convertVersionToEnum } from '../../utils';
 
+/**
+ * @hidden
+ * Generates Security Token entities
+ */
 export class SecurityTokenFactory extends Factory<SecurityToken, Params, UniqueIdentifiers> {
   protected generateProperties = async (uid: string) => {
     const { symbol } = SecurityToken.unserialize(uid);
@@ -60,6 +64,7 @@ export class SecurityTokenFactory extends Factory<SecurityToken, Params, UniqueI
     };
   };
 
+  // eslint-disable-next-line require-jsdoc
   constructor(context: Context) {
     super(SecurityToken, context);
   }

@@ -9,6 +9,9 @@ import { PolymathError } from '../PolymathError';
 import { SecurityToken } from '../entities';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createToggleFreezeTransfersResolver = (
   factories: Factories,
   symbol: string
@@ -17,11 +20,18 @@ export const createToggleFreezeTransfersResolver = (
 };
 
 /**
- * Procedure to transfer security tokens.
+ * Procedure that toggles whether transfers of a Security Token are frozen or no
  */
 export class ToggleFreezeTransfers extends Procedure<ToggleFreezeTransfersProcedureArgs> {
   public type = ProcedureType.ToggleFreezeTransfers;
 
+  /**
+   * Freeze or unfreeze Security Token transfers
+   *
+   * Note this procedure will fail if:
+   * - The current wallet address is not the owner
+   * - Trying to freeze/unfreeze a security token that is already frozen/unfrozen
+   */
   public async prepareTransactions() {
     const { symbol, freeze } = this.args;
     const { contractWrappers, currentWallet, factories } = this.context;

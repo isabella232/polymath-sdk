@@ -15,6 +15,9 @@ import { SecurityToken, TieredSto } from '../entities';
 import { ApproveErc20 } from './ApproveErc20';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createRefreshSecurityTokenFactoryResolver = (
   factories: Factories,
   securityTokenId: string
@@ -22,6 +25,9 @@ export const createRefreshSecurityTokenFactoryResolver = (
   return factories.securityTokenFactory.refresh(securityTokenId);
 };
 
+/**
+ * @hidden
+ */
 export const createRefreshTieredStoFactoryResolver = (
   factories: Factories,
   tieredStoId: string
@@ -29,9 +35,24 @@ export const createRefreshTieredStoFactoryResolver = (
   return factories.tieredStoFactory.refresh(tieredStoId);
 };
 
+/**
+ * Procedure that invests in a Tiered STO
+ */
 export class InvestInTieredSto extends Procedure<InvestInTieredStoProcedureArgs> {
   public type = ProcedureType.InvestInTieredSto;
 
+  /**
+   * Invest the specified amount in the STO
+   *
+   * Note that this procedure will fail if:
+   * - The Security Token doesn't exist
+   * - The STO address is invalid
+   * - The STO is either archived or hasn't been launched
+   * - The STO hasn't started yet
+   * - The STO is paused
+   * - Trying to invest on behalf of someone else if the STO doesn't allow beneficial investments
+   * - The STO doesn't support investments in the selected currency
+   */
   public async prepareTransactions() {
     const { args, context } = this;
     const { stoAddress, symbol, amount, currency, minTokens = new BigNumber(0) } = args;

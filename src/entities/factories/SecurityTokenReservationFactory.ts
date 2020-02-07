@@ -4,6 +4,10 @@ import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 import { SecurityTokenReservation, Params, UniqueIdentifiers } from '../SecurityTokenReservation';
 
+/**
+ * @hidden
+ * Generates Security Token Reservation entities
+ */
 export class SecurityTokenReservationFactory extends Factory<
   SecurityTokenReservation,
   Params,
@@ -46,6 +50,7 @@ export class SecurityTokenReservationFactory extends Factory<
     };
   };
 
+  // eslint-disable-next-line require-jsdoc
   constructor(context: Context) {
     super(SecurityTokenReservation, context);
   }

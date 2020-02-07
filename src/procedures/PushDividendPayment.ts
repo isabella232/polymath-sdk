@@ -14,6 +14,9 @@ import { DividendDistribution, SecurityToken } from '../entities';
 
 const CHUNK_SIZE = 100;
 
+/**
+ * @hidden
+ */
 export const createPushDividendPaymentResolver = (
   factories: Factories,
   symbol: string,
@@ -27,9 +30,19 @@ export const createPushDividendPaymentResolver = (
   );
 };
 
+/**
+ * Procedure that forwards a Dividend Distribution's payments to shareholders
+ */
 export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureArgs> {
   public type = ProcedureType.PushDividendPayment;
 
+  /**
+   * Push dividends to provided shareholder addresses
+   *
+   * Note that this procedure will fail if:
+   * - The Security Token doesn't exist
+   * - The Dividends Feature hasn't been enabled
+   */
   public async prepareTransactions() {
     const { symbol, dividendIndex, shareholderAddresses } = this.args;
     const { contractWrappers, factories } = this.context;

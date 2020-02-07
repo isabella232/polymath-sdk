@@ -10,6 +10,9 @@ import { isValidAddress } from '../utils';
 import { SecurityToken, Shareholder } from '../entities';
 import { Factories } from '../Context';
 
+/**
+ * @hidden
+ */
 export const createControllerTransferResolver = (
   factories: Factories,
   symbol: string,
@@ -33,9 +36,21 @@ export const createControllerTransferResolver = (
   return Promise.all([refreshingFrom, refreshingTo]);
 };
 
+/**
+ * Procedure that forcefully transfers Security Tokens from one account to another.
+ * Can only be executed by the Security Token's Controller
+ */
 export class ControllerTransfer extends Procedure<ControllerTransferProcedureArgs> {
   public type = ProcedureType.ControllerTransfer;
 
+  /**
+   * Forcefully transfer tokens from one address to another
+   *
+   * Note this procedure will fail if:
+   * - Any of the addresses are invalid
+   * - The sender's ("from" address) balance is less than the amount being transferred
+   * - The current wallet address is not the Security Token controller address
+   */
   public async prepareTransactions() {
     const { symbol, amount, from, to, log = '', data = '' } = this.args;
     const { contractWrappers, currentWallet, factories } = this.context;
