@@ -1,13 +1,17 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
-import { BigNumber, TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
+import sinon, { stub, restore } from 'sinon';
+import {
+  BigNumber,
+  ModuleName,
+  TransactionReceiptWithDecodedLogs,
+} from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
-import * as utilsModule from '../../utils';
 import { EnablePercentageTransferManager } from '../../procedures/EnablePercentageTransferManager';
+import * as enablePercentageTransferManagerModule from '../EnablePercentageTransferManager';
 import { Procedure } from '../Procedure';
 import { PolymathError } from '../../PolymathError';
 import {
@@ -16,6 +20,7 @@ import {
   PolyTransactionTag,
   ProcedureType,
 } from '../../types';
+import * as utilsModule from '~/utils';
 
 const params: EnablePercentageTransferManagerProcedureArgs = {
   symbol: 'TEST1',
@@ -65,22 +70,38 @@ describe('EnablePercentageTransferManager', () => {
 
   describe('EnablePercentageTransferManager', () => {
     test('should add a transaction to the queue to enable percentage transfer manager', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const addModuleWithLabelArgsStub = sinon.stub();
+      addModuleWithLabelArgsStub.returns([{}]);
+
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const { addModuleWithLabel } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(addModuleWithLabel).returns(addModuleWithLabelArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addModuleWithLabelArgsStub.getCall(0).args[0]).toEqual({
+        moduleName: ModuleName.PercentageTransferManager,
+        address: moduleFactoryAddress,
+        archived: false,
+        data: {
+          allowPrimaryIssuance: false,
+          maxHolderPercentage: params.maxHolderPercentage,
+        },
+      });
+      expect(addModuleWithLabelArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.EnablePercentageTransferManager
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to enable percentage transfer manager with primary issuance', async () => {
@@ -88,22 +109,37 @@ describe('EnablePercentageTransferManager', () => {
         { ...params, allowPrimaryIssuance: true },
         contextMock.getMockInstance()
       );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const addModuleWithLabelArgsStub = sinon.stub();
+      addModuleWithLabelArgsStub.returns([{}]);
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const { addModuleWithLabel } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(addModuleWithLabel).returns(addModuleWithLabelArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addModuleWithLabelArgsStub.getCall(0).args[0]).toEqual({
+        moduleName: ModuleName.PercentageTransferManager,
+        address: moduleFactoryAddress,
+        archived: false,
+        data: {
+          allowPrimaryIssuance: true,
+          maxHolderPercentage: params.maxHolderPercentage,
+        },
+      });
+      expect(addModuleWithLabelArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.EnablePercentageTransferManager
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if whitelist parameter is defined but it is empty', async () => {
@@ -116,6 +152,23 @@ describe('EnablePercentageTransferManager', () => {
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message: `Whitelist data passed can not be an empty list`,
+        })
+      );
+    });
+
+    test('should throw if corresponding enable percentage transfer manager event is not fired', async () => {
+      ImportMock.mockFunction(utilsModule, 'findEvents', []);
+
+      // Real call
+      await expect(
+        enablePercentageTransferManagerModule.createPtmAddressResolver(
+          {} as TransactionReceiptWithDecodedLogs
+        )
+      ).rejects.toThrow(
+        new PolymathError({
+          code: ErrorCode.UnexpectedEventLogs,
+          message:
+            "The Percentage Transfer Manager was successfully launched but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
         })
       );
     });
