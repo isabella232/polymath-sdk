@@ -38,7 +38,7 @@ Namespace that handles all Shareholder related functionality
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SubModule.ts#L10)*
 
 Create a new SubModule instance
 
@@ -59,7 +59,7 @@ Name | Type |
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SubModule.ts#L10)*
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SubModule.ts#L8)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SubModule.ts#L8)*
 
 ## Methods
 
@@ -77,7 +77,7 @@ ___
 
 ▸ **allTimeInvestorCount**(): *Promise‹number›*
 
-*Defined in [src/entities/SecurityToken/Shareholders.ts:221](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Shareholders.ts#L221)*
+*Defined in [src/entities/SecurityToken/Shareholders.ts:221](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Shareholders.ts#L221)*
 
 Retrieve the amount of wallets that ever held tokens or have any KYC data
 
@@ -89,7 +89,7 @@ ___
 
 ▸ **createCheckpoint**(): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateCheckpointProcedureArgs](../interfaces/_types_index_.createcheckpointprocedureargs.md), [Checkpoint](_entities_checkpoint_.checkpoint.md)››*
 
-*Defined in [src/entities/SecurityToken/Shareholders.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Shareholders.ts#L59)*
+*Defined in [src/entities/SecurityToken/Shareholders.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Shareholders.ts#L59)*
 
 Create a snapshot of the balances of every shareholder at the current date
 
@@ -101,7 +101,7 @@ ___
 
 ▸ **getCheckpoint**(`args`: [GetCheckpointParams](../interfaces/_entities_securitytoken_shareholders_.getcheckpointparams.md) | string): *Promise‹[Checkpoint](_entities_checkpoint_.checkpoint.md)›*
 
-*Defined in [src/entities/SecurityToken/Shareholders.ts:133](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Shareholders.ts#L133)*
+*Defined in [src/entities/SecurityToken/Shareholders.ts:133](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Shareholders.ts#L133)*
 
 Retrieve a checkpoint from the security token by index or UUID
 
@@ -119,7 +119,7 @@ ___
 
 ▸ **getCheckpoints**(): *Promise‹[Checkpoint](_entities_checkpoint_.checkpoint.md)[]›*
 
-*Defined in [src/entities/SecurityToken/Shareholders.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Shareholders.ts#L74)*
+*Defined in [src/entities/SecurityToken/Shareholders.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Shareholders.ts#L74)*
 
 Retrieve list of checkpoints and their corresponding dividend distributions of every type
 
@@ -131,7 +131,7 @@ ___
 
 ▸ **getShareholders**(): *Promise‹[Shareholder](_entities_shareholder_.shareholder.md)[]›*
 
-*Defined in [src/entities/SecurityToken/Shareholders.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Shareholders.ts#L155)*
+*Defined in [src/entities/SecurityToken/Shareholders.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Shareholders.ts#L155)*
 
 Get data for all shareholders associated to the Security Token
 
@@ -143,7 +143,7 @@ ___
 
 ▸ **holderCount**(): *Promise‹number›*
 
-*Defined in [src/entities/SecurityToken/Shareholders.ts:247](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Shareholders.ts#L247)*
+*Defined in [src/entities/SecurityToken/Shareholders.ts:247](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Shareholders.ts#L247)*
 
 Retrieve the amount of wallets that currently hold tokens
 
@@ -155,7 +155,7 @@ ___
 
 ▸ **modifyData**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ModifyShareholderDataProcedureArgs](../interfaces/_types_index_.modifyshareholderdataprocedureargs.md), [Shareholder](_entities_shareholder_.shareholder.md)[]››*
 
-*Defined in [src/entities/SecurityToken/Shareholders.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Shareholders.ts#L31)*
+*Defined in [src/entities/SecurityToken/Shareholders.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Shareholders.ts#L31)*
 
 Add/modify investor data. For an investor to be able to hold, sell or purchase tokens, his address (and other KYC data)
 must be added/modified via this method
@@ -176,7 +176,7 @@ ___
 
 ▸ **revokeKyc**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[RevokeKycProcedureArgs](../interfaces/_types_index_.revokekycprocedureargs.md), [Shareholder](_entities_shareholder_.shareholder.md)[]››*
 
-*Defined in [src/entities/SecurityToken/Shareholders.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Shareholders.ts#L45)*
+*Defined in [src/entities/SecurityToken/Shareholders.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Shareholders.ts#L45)*
 
 Revoke KYC for a group of shareholder addresses. Supplied addresses must have valid KYC
 

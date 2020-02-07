@@ -19,7 +19,7 @@ Arguments for the [TransferReservationOwnership](../enums/_types_index_.procedur
 
 • **newOwner**: *string*
 
-*Defined in [src/types/index.ts:1120](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1120)*
+*Defined in [src/types/index.ts:1120](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1120)*
 
 wallet address for the new symbol Reservation owner
 
@@ -29,6 +29,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:1116](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1116)*
+*Defined in [src/types/index.ts:1116](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1116)*
 
 symbol of the Security Token

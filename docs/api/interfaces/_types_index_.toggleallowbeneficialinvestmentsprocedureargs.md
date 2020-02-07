@@ -21,7 +21,7 @@ Arguments for the [ToggleAllowBeneficialInvestments](../enums/_types_index_.proc
 
 • **allowBeneficialInvestments**: *boolean*
 
-*Defined in [src/types/index.ts:598](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L598)*
+*Defined in [src/types/index.ts:598](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L598)*
 
 whether the STO allows investing on behalf of a beneficiary
 
@@ -31,7 +31,7 @@ ___
 
 • **stoAddress**: *string*
 
-*Defined in [src/types/index.ts:590](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L590)*
+*Defined in [src/types/index.ts:590](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L590)*
 
 address of the STO
 
@@ -41,7 +41,7 @@ ___
 
 • **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
 
-*Defined in [src/types/index.ts:594](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L594)*
+*Defined in [src/types/index.ts:594](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L594)*
 
 type of the STO (Simple, Tiered, etc)
 
@@ -51,6 +51,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:586](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L586)*
+*Defined in [src/types/index.ts:586](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L586)*
 
 symbol of the Security Token

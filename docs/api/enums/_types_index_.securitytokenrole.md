@@ -17,7 +17,7 @@
 
 • **DividendsAdministrator**: = "DividendsAdministrator"
 
-*Defined in [src/types/index.ts:1459](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1459)*
+*Defined in [src/types/index.ts:1459](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1459)*
 
 ___
 
@@ -25,7 +25,7 @@ ___
 
 • **DividendsOperator**: = "DividendsOperator"
 
-*Defined in [src/types/index.ts:1458](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1458)*
+*Defined in [src/types/index.ts:1458](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1458)*
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • **PercentageOwnershipRestrictionsAdministrator**: = "PercentageOwnershipRestrictionsAdministrator"
 
-*Defined in [src/types/index.ts:1462](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1462)*
+*Defined in [src/types/index.ts:1462](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1462)*
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 • **PermissionsAdministrator**: = "PermissionsAdministrator"
 
-*Defined in [src/types/index.ts:1457](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1457)*
+*Defined in [src/types/index.ts:1457](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1457)*
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 • **ShareholderCountRestrictionsAdministrator**: = "ShareholderCountRestrictionsAdministrator"
 
-*Defined in [src/types/index.ts:1461](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1461)*
+*Defined in [src/types/index.ts:1461](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1461)*
 
 ___
 
@@ -57,4 +57,4 @@ ___
 
 • **ShareholdersAdministrator**: = "ShareholdersAdministrator"
 
-*Defined in [src/types/index.ts:1460](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1460)*
+*Defined in [src/types/index.ts:1460](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1460)*

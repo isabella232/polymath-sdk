@@ -440,7 +440,7 @@ ___
 
 • **ethereum**? : *[Ethereum](_browserutils_.ethereum.md)*
 
-*Defined in [src/browserUtils.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/browserUtils.ts#L31)*
+*Defined in [src/browserUtils.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/browserUtils.ts#L31)*
 
 ___
 
@@ -2388,7 +2388,7 @@ ___
 
 • **web3**? : *[InjectedWeb3](_browserutils_.injectedweb3.md)*
 
-*Defined in [src/browserUtils.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/browserUtils.ts#L32)*
+*Defined in [src/browserUtils.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/browserUtils.ts#L32)*
 
 ___
 

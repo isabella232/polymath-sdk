@@ -13,7 +13,7 @@
 
 • **browserUtils**: *any* =  isNode ? null : require('./browserUtils')
 
-*Defined in [src/index.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/index.ts#L9)*
+*Defined in [src/index.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/index.ts#L9)*
 
 ___
 
@@ -21,4 +21,4 @@ ___
 
 • **isNode**: *boolean* =  typeof window === 'undefined'
 
-*Defined in [src/index.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/index.ts#L7)*
+*Defined in [src/index.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/index.ts#L7)*

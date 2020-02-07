@@ -23,7 +23,7 @@
 
 *Inherited from [PolymathNetworkParams](_polymath_.polymathnetworkparams.md).[polymathRegistryAddress](_polymath_.polymathnetworkparams.md#optional-polymathregistryaddress)*
 
-*Defined in [src/Polymath.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L21)*
+*Defined in [src/Polymath.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/Polymath.ts#L21)*
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 • **privateKey**? : *undefined | string*
 
-*Defined in [src/Polymath.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L32)*
+*Defined in [src/Polymath.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/Polymath.ts#L32)*
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 • **providerUrl**? : *undefined | string*
 
-*Defined in [src/Polymath.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L31)*
+*Defined in [src/Polymath.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/Polymath.ts#L31)*
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 *Inherited from [PolymathNetworkParams](_polymath_.polymathnetworkparams.md).[speed](_polymath_.polymathnetworkparams.md#optional-speed)*
 
-*Defined in [src/Polymath.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/Polymath.ts#L22)*
+*Defined in [src/Polymath.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/Polymath.ts#L22)*

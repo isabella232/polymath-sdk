@@ -104,7 +104,7 @@
 
 Ƭ **InvestInTieredStoProcedureArgs**: *[InvestInTieredStoBaseProcedureArgs](../interfaces/_types_index_.investintieredstobaseprocedureargs.md) & object | [InvestWithStableCoinArgs](../interfaces/_types_index_.investwithstablecoinargs.md)*
 
-*Defined in [src/types/index.ts:652](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L652)*
+*Defined in [src/types/index.ts:652](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L652)*
 
 Arguments for the [InvestInTieredSto](../enums/_types_index_.proceduretype.md#investintieredsto) Procedure
 
@@ -114,7 +114,7 @@ ___
 
 Ƭ **LowLevelMethod**: *function*
 
-*Defined in [src/types/index.ts:1499](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1499)*
+*Defined in [src/types/index.ts:1499](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1499)*
 
 Transaction method from the contract-wrappers package
 
@@ -134,7 +134,7 @@ ___
 
 Ƭ **MapMaybeResolver**: *object*
 
-*Defined in [src/types/index.ts:1550](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1550)*
+*Defined in [src/types/index.ts:1550](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1550)*
 
 Apply the MaybeResolver type to a tuple of types
 
@@ -146,7 +146,7 @@ ___
 
 Ƭ **MaybeResolver**: *PostTransactionResolver‹T, any› | T*
 
-*Defined in [src/types/index.ts:1545](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1545)*
+*Defined in [src/types/index.ts:1545](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1545)*
 
 Either a specific type or a Post Transaction Resolver that resolves to that type
 
@@ -156,7 +156,7 @@ ___
 
 Ƭ **Omit**: *Pick‹T, Exclude‹keyof T, K››*
 
-*Defined in [src/types/index.ts:1492](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1492)*
+*Defined in [src/types/index.ts:1492](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1492)*
 
 Return the type that results from excluding a property from another type
 
@@ -166,7 +166,7 @@ ___
 
 Ƭ **PostTransactionResolverArray**: *object*
 
-*Defined in [src/types/index.ts:1538](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1538)*
+*Defined in [src/types/index.ts:1538](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1538)*
 
 Transforms a tuple of types into an array of Post Transaction Resolvers. For each type in the tuple, the corresponding Post Transaction Resolver resolves to that type
 
@@ -178,7 +178,7 @@ ___
 
 Ƭ **ResolverArray**: *object*
 
-*Defined in [src/types/index.ts:1529](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1529)*
+*Defined in [src/types/index.ts:1529](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1529)*
 
 Transforms a tuple of types into an array of resolver functions. For each type in the tuple, the corresponding resolver function returns that type wrapped in a promise
 
@@ -190,7 +190,7 @@ ___
 
 Ƭ **SignatureRequest**: *function*
 
-*Defined in [src/types/index.ts:1506](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1506)*
+*Defined in [src/types/index.ts:1506](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1506)*
 
 Signature request method from the contract-wrappers package
 
@@ -210,7 +210,7 @@ Name | Type |
 
 ▸ **isInvestWithStableCoinArgs**(`args`: any): *args is InvestWithStableCoinArgs*
 
-*Defined in [src/types/index.ts:690](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L690)*
+*Defined in [src/types/index.ts:690](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L690)*
 
 Check whether the arguments are of type [InvestWithStableCoinArgs](../interfaces/_types_index_.investwithstablecoinargs.md)
 
@@ -228,7 +228,7 @@ ___
 
 ▸ **isPojo**(`pojo`: any): *pojo is Pojo*
 
-*Defined in [src/types/index.ts:1427](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1427)*
+*Defined in [src/types/index.ts:1427](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1427)*
 
 Check to see if an object is a Plain Old Javascript Object (POJO)
 
@@ -246,7 +246,7 @@ ___
 
 ▸ **isStoType**(`type`: any): *type is StoType*
 
-*Defined in [src/types/index.ts:58](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L58)*
+*Defined in [src/types/index.ts:58](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L58)*
 
 Check if the argument is of type [[STOType]]
 

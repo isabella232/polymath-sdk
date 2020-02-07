@@ -22,7 +22,7 @@ Arguments for the [ControllerRedeem](../enums/_types_index_.proceduretype.md#con
 
 • **amount**: *BigNumber*
 
-*Defined in [src/types/index.ts:975](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L975)*
+*Defined in [src/types/index.ts:975](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L975)*
 
 amount of tokens being redeemed (burned)
 
@@ -32,7 +32,7 @@ ___
 
 • **data**? : *undefined | string*
 
-*Defined in [src/types/index.ts:979](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L979)*
+*Defined in [src/types/index.ts:979](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L979)*
 
 extra KYC transfer data
 
@@ -42,7 +42,7 @@ ___
 
 • **from**: *string*
 
-*Defined in [src/types/index.ts:967](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L967)*
+*Defined in [src/types/index.ts:967](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L967)*
 
 wallet address from which tokens will be redeemed (burned)
 
@@ -52,7 +52,7 @@ ___
 
 • **reason**? : *undefined | string*
 
-*Defined in [src/types/index.ts:983](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L983)*
+*Defined in [src/types/index.ts:983](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L983)*
 
 reason why tokens are being redeemed
 
@@ -62,6 +62,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:971](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L971)*
+*Defined in [src/types/index.ts:971](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L971)*
 
 symbol of the Security Token

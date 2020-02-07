@@ -19,7 +19,7 @@
 
 • **currencies**: *[EthAndPoly](../modules/_entities_securitytoken_issuance_offerings_.md#ethandpoly)*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L114)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Issuance/Offerings.ts#L114)*
 
 ___
 
@@ -27,7 +27,7 @@ ___
 
 • **customCurrency**: *object*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:115](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Issuance/Offerings.ts#L115)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:115](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Issuance/Offerings.ts#L115)*
 
 #### Type declaration:
 

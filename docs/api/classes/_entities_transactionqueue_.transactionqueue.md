@@ -46,7 +46,7 @@ Class to manage procedural transaction queues
 
 \+ **new TransactionQueue**(`transactions`: [TransactionSpec](../interfaces/_types_index_.transactionspec.md)[], `fees`: [Fees](../interfaces/_types_index_.fees.md), `returnValue`: [MaybeResolver](../modules/_types_index_.md#mayberesolver)‹ReturnType›, `args`: Args, `procedureType`: [ProcedureType](../enums/_types_index_.proceduretype.md)): *[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)*
 
-*Defined in [src/entities/TransactionQueue.ts:95](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L95)*
+*Defined in [src/entities/TransactionQueue.ts:95](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L95)*
 
 Create a transaction queue
 
@@ -68,7 +68,7 @@ Name | Type | Default | Description |
 
 • **args**: *Args*
 
-*Defined in [src/entities/TransactionQueue.ts:65](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L65)*
+*Defined in [src/entities/TransactionQueue.ts:65](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L65)*
 
 arguments provided to the transaction queue
 
@@ -78,7 +78,7 @@ ___
 
 • **entityType**: *string* = "transactionQueue"
 
-*Defined in [src/entities/TransactionQueue.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L40)*
+*Defined in [src/entities/TransactionQueue.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L40)*
 
 type of entity
 
@@ -88,7 +88,7 @@ ___
 
 • **error**? : *[Error](_polymatherror_.polymatherror.md#static-error)*
 
-*Defined in [src/entities/TransactionQueue.ts:70](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L70)*
+*Defined in [src/entities/TransactionQueue.ts:70](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L70)*
 
 optional error information
 
@@ -98,7 +98,7 @@ ___
 
 • **fees**: *[Fees](../interfaces/_types_index_.fees.md)*
 
-*Defined in [src/entities/TransactionQueue.ts:75](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L75)*
+*Defined in [src/entities/TransactionQueue.ts:75](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L75)*
 
 total cost of running the transactions in the queue. This does not include gas
 
@@ -108,7 +108,7 @@ ___
 
 • **procedureType**: *[ProcedureType](../enums/_types_index_.proceduretype.md)*
 
-*Defined in [src/entities/TransactionQueue.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L45)*
+*Defined in [src/entities/TransactionQueue.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L45)*
 
 type of procedure being run
 
@@ -118,7 +118,7 @@ ___
 
 • **status**: *TransactionQueueStatus* =  TransactionQueueStatus.Idle
 
-*Defined in [src/entities/TransactionQueue.ts:60](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L60)*
+*Defined in [src/entities/TransactionQueue.ts:60](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L60)*
 
 status of the transaction queue
 
@@ -128,7 +128,7 @@ ___
 
 • **transactions**: *[PolyTransaction](_entities_polytransaction_.polytransaction.md)[]*
 
-*Defined in [src/entities/TransactionQueue.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L55)*
+*Defined in [src/entities/TransactionQueue.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L55)*
 
 array of poly transactions
 
@@ -140,7 +140,7 @@ ___
 
 *Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)*
 
-*Defined in [src/entities/TransactionQueue.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L50)*
+*Defined in [src/entities/TransactionQueue.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L50)*
 
 generated transaction queue unique identifier
 
@@ -152,7 +152,7 @@ generated transaction queue unique identifier
 
 *Overrides [Entity](_entities_entity_.entity.md).[_refresh](_entities_entity_.entity.md#abstract-_refresh)*
 
-*Defined in [src/entities/TransactionQueue.ts:269](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L269)*
+*Defined in [src/entities/TransactionQueue.ts:269](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L269)*
 
 Hydrate the entity
 
@@ -164,7 +164,7 @@ ___
 
 ▸ **onStatusChange**(`listener`: function): *(Anonymous function)*
 
-*Defined in [src/entities/TransactionQueue.ts:188](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L188)*
+*Defined in [src/entities/TransactionQueue.ts:188](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L188)*
 
 Subscribe to status changes on the Transaction Queue
 
@@ -192,7 +192,7 @@ ___
 
 ▸ **onTransactionStatusChange**(`listener`: function): *(Anonymous function)*
 
-*Defined in [src/entities/TransactionQueue.ts:203](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L203)*
+*Defined in [src/entities/TransactionQueue.ts:203](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L203)*
 
 Subscribe to status changes on individual transactions
 
@@ -221,7 +221,7 @@ ___
 
 ▸ **run**(): *Promise‹ReturnType›*
 
-*Defined in [src/entities/TransactionQueue.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L155)*
+*Defined in [src/entities/TransactionQueue.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L155)*
 
 Run the transactions in the queue
 
@@ -235,7 +235,7 @@ ___
 
 *Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)*
 
-*Defined in [src/entities/TransactionQueue.ts:139](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L139)*
+*Defined in [src/entities/TransactionQueue.ts:139](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L139)*
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
@@ -259,7 +259,7 @@ ___
 
 ▸ **generateId**(): *string*
 
-*Defined in [src/entities/TransactionQueue.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/TransactionQueue.ts#L31)*
+*Defined in [src/entities/TransactionQueue.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TransactionQueue.ts#L31)*
 
 Generate UUID for this Transaction Queue
 

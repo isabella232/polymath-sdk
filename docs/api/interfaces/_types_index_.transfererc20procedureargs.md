@@ -20,7 +20,7 @@ Arguments for the [TransferErc20](../enums/_types_index_.proceduretype.md#transf
 
 • **amount**: *BigNumber*
 
-*Defined in [src/types/index.ts:303](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L303)*
+*Defined in [src/types/index.ts:303](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L303)*
 
 amount of tokens to be transferred
 
@@ -30,7 +30,7 @@ ___
 
 • **receiver**: *string*
 
-*Defined in [src/types/index.ts:307](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L307)*
+*Defined in [src/types/index.ts:307](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L307)*
 
 the receiver of tokens being transferred
 
@@ -40,6 +40,6 @@ ___
 
 • **tokenAddress**? : *undefined | string*
 
-*Defined in [src/types/index.ts:311](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L311)*
+*Defined in [src/types/index.ts:311](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L311)*
 
 address of the ERC20 token (defaults to POLY)

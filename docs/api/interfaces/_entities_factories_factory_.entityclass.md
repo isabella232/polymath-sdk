@@ -29,7 +29,7 @@ Represents an entity
 
 \+ **new EntityClass**(`params`: T & U, `context`: [Context](../classes/_context_.context.md)): *[Entity](../classes/_entities_entity_.entity.md)‹T›*
 
-*Defined in [src/entities/factories/Factory.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L8)*
+*Defined in [src/entities/factories/Factory.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/factories/Factory.ts#L8)*
 
 **Parameters:**
 
@@ -46,7 +46,7 @@ Name | Type |
 
 ▸ **generateId**(`identifiers`: U): *string*
 
-*Defined in [src/entities/factories/Factory.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L19)*
+*Defined in [src/entities/factories/Factory.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/factories/Factory.ts#L19)*
 
 generate a unique identifier for an entity
 
@@ -64,7 +64,7 @@ ___
 
 ▸ **unserialize**(`uid`: string): *U*
 
-*Defined in [src/entities/factories/Factory.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/factories/Factory.ts#L14)*
+*Defined in [src/entities/factories/Factory.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/factories/Factory.ts#L14)*
 
 unserialize serialized entity information
 

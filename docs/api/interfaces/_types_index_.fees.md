@@ -19,7 +19,7 @@ Fees associated with running a [TransactionQueue](../classes/_entities_transacti
 
 • **poly**: *BigNumber*
 
-*Defined in [src/types/index.ts:1409](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1409)*
+*Defined in [src/types/index.ts:1409](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1409)*
 
 fees expressed in POLY
 
@@ -29,6 +29,6 @@ ___
 
 • **usd**: *BigNumber | null*
 
-*Defined in [src/types/index.ts:1405](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1405)*
+*Defined in [src/types/index.ts:1405](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1405)*
 
 fees expressed in USD. Can be null if the Smart Contract doesn't specify one

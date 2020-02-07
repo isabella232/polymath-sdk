@@ -51,7 +51,7 @@ Class used to manage all the Security Token functionality
 
 \+ **new SecurityToken**(`params`: [Params](../interfaces/_entities_securitytoken_securitytoken_.params.md) & [UniqueIdentifiers](../interfaces/_entities_securitytoken_securitytoken_.uniqueidentifiers.md), `context`: [Context](_context_.context.md)): *[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:153](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L153)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:153](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L153)*
 
 Create a new SecurityToken instance
 
@@ -70,7 +70,7 @@ Name | Type |
 
 • **address**: *string*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L114)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L114)*
 
 address that owns the Security Token
 
@@ -80,7 +80,7 @@ ___
 
 • **context**: *[Context](_context_.context.md)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:153](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L153)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:153](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L153)*
 
 ___
 
@@ -88,7 +88,7 @@ ___
 
 • **controller**: *[Controller](_entities_securitytoken_controller_.controller.md)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:147](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L147)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:147](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L147)*
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 • **currentCheckpoint**: *number*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:130](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L130)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:130](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L130)*
 
 index of the current checkpoint
 
@@ -106,7 +106,7 @@ ___
 
 • **dividends**: *[Dividends](_entities_securitytoken_dividends_.dividends.md)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:141](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L141)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:141](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L141)*
 
 ___
 
@@ -114,7 +114,7 @@ ___
 
 • **documents**: *[Documents](_entities_securitytoken_documents_.documents.md)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:151](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L151)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:151](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L151)*
 
 ___
 
@@ -122,7 +122,7 @@ ___
 
 • **features**: *[Features](_entities_securitytoken_features_.features.md)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L137)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L137)*
 
 ___
 
@@ -130,7 +130,7 @@ ___
 
 • **granularity**: *number*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:123](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L123)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:123](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L123)*
 
 ___
 
@@ -138,7 +138,7 @@ ___
 
 • **issuance**: *[Issuance](_entities_securitytoken_issuance_issuance_.issuance.md)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:143](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L143)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:143](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L143)*
 
 ___
 
@@ -146,7 +146,7 @@ ___
 
 • **name**: *string*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:104](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L104)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:104](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L104)*
 
 ___
 
@@ -154,7 +154,7 @@ ___
 
 • **owner**: *string*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L109)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L109)*
 
 address of the Security Token contract
 
@@ -164,7 +164,7 @@ ___
 
 • **permissions**: *[Permissions](_entities_securitytoken_permissions_.permissions.md)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:145](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L145)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:145](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L145)*
 
 ___
 
@@ -172,7 +172,7 @@ ___
 
 • **shareholders**: *[Shareholders](_entities_securitytoken_shareholders_.shareholders.md)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:139](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L139)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:139](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L139)*
 
 ___
 
@@ -180,7 +180,7 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:102](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L102)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:102](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L102)*
 
 ___
 
@@ -188,7 +188,7 @@ ___
 
 • **tokenDetails**: *string*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:119](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L119)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:119](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L119)*
 
 URL pointing to off-chain data associated with the Security Token
 
@@ -198,7 +198,7 @@ ___
 
 • **totalSupply**: *BigNumber*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L125)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L125)*
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 • **transfers**: *[Transfers](_entities_securitytoken_transfers_transfers_.transfers.md)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:149](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L149)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:149](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L149)*
 
 ___
 
@@ -214,7 +214,7 @@ ___
 
 • **treasuryWallet**: *string*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:135](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L135)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:135](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L135)*
 
 treasury wallet used by some features
 
@@ -226,7 +226,7 @@ ___
 
 *Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:100](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L100)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:100](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L100)*
 
 ___
 
@@ -234,7 +234,7 @@ ___
 
 • **version**: *Version*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:121](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L121)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:121](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L121)*
 
 ___
 
@@ -242,7 +242,7 @@ ___
 
 ▪ **unserialize**: *unserialize* =  unserialize
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:98](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L98)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:98](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L98)*
 
 ## Methods
 
@@ -252,7 +252,7 @@ ___
 
 *Overrides [Entity](_entities_entity_.entity.md).[_refresh](_entities_entity_.entity.md#abstract-_refresh)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:249](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L249)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:249](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L249)*
 
 Hydrate the entity
 
@@ -272,7 +272,7 @@ ___
 
 *Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:216](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L216)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:216](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L216)*
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
@@ -306,7 +306,7 @@ ___
 
 ▸ **transferOwnership**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[TransferOwnershipProcedureArgs](../interfaces/_types_index_.transferownershipprocedureargs.md), void››*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:202](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L202)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:202](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L202)*
 
 Transfers ownership of the Security Token to a different wallet address
 
@@ -326,7 +326,7 @@ ___
 
 ▸ **generateId**(`__namedParameters`: object): *string*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:92](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L92)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:92](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L92)*
 
 Generate the Security Token's UUID from its identifying properties
 

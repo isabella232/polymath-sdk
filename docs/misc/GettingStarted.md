@@ -48,7 +48,3 @@ Here is an overview of the parameters passed to the `connect` function:
 - `privateKey` is the private key of the wallet that will be performing transactions
 
 **NOTE:** if using the SDK on a browser environment (i.e. with MetaMask), there is no need to supply the node URL nor the private key.
-
-## Moving on
-
-The following section will walk you through [creating your very first Security Token](http://insert-link-here)

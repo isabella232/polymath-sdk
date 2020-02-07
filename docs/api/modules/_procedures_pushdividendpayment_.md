@@ -16,4 +16,4 @@
 
 • **CHUNK_SIZE**: *100* = 100
 
-*Defined in [src/procedures/PushDividendPayment.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/procedures/PushDividendPayment.ts#L15)*
+*Defined in [src/procedures/PushDividendPayment.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/PushDividendPayment.ts#L15)*

@@ -15,7 +15,7 @@
 
 • **Fast**: = "Fast"
 
-*Defined in [src/types/index.ts:1444](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1444)*
+*Defined in [src/types/index.ts:1444](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1444)*
 
 ___
 
@@ -23,7 +23,7 @@ ___
 
 • **Fastest**: = "Fastest"
 
-*Defined in [src/types/index.ts:1445](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1445)*
+*Defined in [src/types/index.ts:1445](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1445)*
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 • **Medium**: = "Medium"
 
-*Defined in [src/types/index.ts:1443](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1443)*
+*Defined in [src/types/index.ts:1443](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1443)*
 
 ___
 
@@ -39,4 +39,4 @@ ___
 
 • **Slow**: = "Slow"
 
-*Defined in [src/types/index.ts:1442](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/types/index.ts#L1442)*
+*Defined in [src/types/index.ts:1442](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1442)*

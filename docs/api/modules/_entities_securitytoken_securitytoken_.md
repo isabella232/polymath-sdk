@@ -22,7 +22,7 @@
 
 ▸ **isUniqueIdentifiers**(`identifiers`: any): *identifiers is UniqueIdentifiers*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L30)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L30)*
 
 Check if the provided value is of type [UniqueIdentifiers](../interfaces/_entities_securitytoken_securitytoken_.uniqueidentifiers.md)
 
@@ -40,7 +40,7 @@ ___
 
 ▸ **unserialize**(`serialized`: string): *[UniqueIdentifiers](../interfaces/_entities_securitytoken_securitytoken_.uniqueidentifiers.md)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SecurityToken.ts#L72)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SecurityToken.ts#L72)*
 
 Unserialize string to a Security Token object representation
 

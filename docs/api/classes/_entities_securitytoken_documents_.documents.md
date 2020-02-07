@@ -34,7 +34,7 @@ Namespace that handles all document Related functionality
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SubModule.ts#L10)*
 
 Create a new SubModule instance
 
@@ -55,7 +55,7 @@ Name | Type |
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SubModule.ts#L10)*
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/SubModule.ts#L8)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SubModule.ts#L8)*
 
 ## Methods
 
@@ -73,7 +73,7 @@ ___
 
 ▸ **getAllDocuments**(): *Promise‹[Document](../interfaces/_entities_securitytoken_documents_.document.md)[]›*
 
-*Defined in [src/entities/SecurityToken/Documents.ts:90](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Documents.ts#L90)*
+*Defined in [src/entities/SecurityToken/Documents.ts:90](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Documents.ts#L90)*
 
 Retrieve an array of all the documents attached to the security token
 
@@ -85,7 +85,7 @@ ___
 
 ▸ **getDocument**(`args`: object): *Promise‹[Document](../interfaces/_entities_securitytoken_documents_.document.md)›*
 
-*Defined in [src/entities/SecurityToken/Documents.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Documents.ts#L61)*
+*Defined in [src/entities/SecurityToken/Documents.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Documents.ts#L61)*
 
 Retrieve a specific document's data by name
 
@@ -105,7 +105,7 @@ ___
 
 ▸ **remove**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[RemoveDocumentProcedureArgs](../interfaces/_types_index_.removedocumentprocedureargs.md), void››*
 
-*Defined in [src/entities/SecurityToken/Documents.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Documents.ts#L50)*
+*Defined in [src/entities/SecurityToken/Documents.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Documents.ts#L50)*
 
 Remove an existing document from the Security Token
 
@@ -125,7 +125,7 @@ ___
 
 ▸ **set**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[SetDocumentProcedureArgs](../interfaces/_types_index_.setdocumentprocedureargs.md), void››*
 
-*Defined in [src/entities/SecurityToken/Documents.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/entities/SecurityToken/Documents.ts#L37)*
+*Defined in [src/entities/SecurityToken/Documents.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Documents.ts#L37)*
 
 Attach a new document to the contract, or update the URI or hash of an existing attached document
 

@@ -16,4 +16,4 @@
 
 • **CHUNK_SIZE**: *200* = 200
 
-*Defined in [src/procedures/UpdateDividendsTaxWithholdingList.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/fb8c7c9/src/procedures/UpdateDividendsTaxWithholdingList.ts#L15)*
+*Defined in [src/procedures/UpdateDividendsTaxWithholdingList.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/UpdateDividendsTaxWithholdingList.ts#L15)*
