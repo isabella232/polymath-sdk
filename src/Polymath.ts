@@ -300,14 +300,26 @@ export class Polymath {
       contractWrappers.securityTokenRegistry.getTokensByDelegate(walletAddress),
     ]);
 
+    const ownedTickersNotLaunchedYet = await P.map(delegatedAddresses, async address => {
+      const details = await contractWrappers.securityTokenRegistry.getSecurityTokenData({
+        securityTokenAddress: address,
+      });
+      // If the ticker is not deployed, then we should include it.
+      if (!details.deployedAt) {
+        return details.ticker;
+      }
+    });
+
     const delegateTickers = await P.map(delegatedAddresses, async address => {
       const details = await contractWrappers.securityTokenRegistry.getSecurityTokenData({
         securityTokenAddress: address,
       });
+      // If a Security Token has the current wallet is a delegate, then we should include it.
       return details.ticker;
     });
 
-    return union(ownedTickers, delegateTickers);
+    // TODO - only pass owned tickers to the user that are ST owned by user and are not ST yet
+    return union(ownedTickersNotLaunchedYet, delegateTickers);
   };
 
   /**
