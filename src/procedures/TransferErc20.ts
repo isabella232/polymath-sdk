@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import { BigNumber, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import { TransferErc20ProcedureArgs, ErrorCode, ProcedureType, PolyTransactionTag } from '../types';

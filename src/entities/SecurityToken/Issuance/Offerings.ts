@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.SecurityToken.Issuance
+ */
+
 import { BigNumber, ModuleName } from '@polymathnetwork/contract-wrappers';
 import { includes } from 'lodash';
 import { SubModule } from '../SubModule';

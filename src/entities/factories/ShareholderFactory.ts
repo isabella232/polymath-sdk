@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.Factories
+ */
+
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Factory } from './Factory';
 import { Context } from '../../Context';

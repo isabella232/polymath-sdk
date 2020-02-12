@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.SecurityToken
+ */
+
 import { SecurityToken } from './SecurityToken';
 import { Context } from '../../Context';
 

@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import { ModuleName, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { difference } from 'lodash';
 import { Procedure } from './Procedure';

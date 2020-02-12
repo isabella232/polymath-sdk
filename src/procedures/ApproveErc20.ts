@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import { ApproveErc20ProcedureArgs, ErrorCode, ProcedureType, PolyTransactionTag } from '../types';

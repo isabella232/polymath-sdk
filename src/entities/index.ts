@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities
+ */
+
 export { Entity } from './Entity';
 export { SecurityTokenReservation } from './SecurityTokenReservation';
 export { SecurityToken } from './SecurityToken';

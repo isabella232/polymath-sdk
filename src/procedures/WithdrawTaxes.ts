@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import { ModuleName, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import { WithdrawTaxesProcedureArgs, ProcedureType, PolyTransactionTag, ErrorCode } from '../types';

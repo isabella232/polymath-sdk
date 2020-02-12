@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.SecurityToken
+ */
+
 import {
   ModuleName,
   SecurityToken as SecurityTokenWrapper,

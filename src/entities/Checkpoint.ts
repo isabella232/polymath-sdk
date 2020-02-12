@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities
+ */
+
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';

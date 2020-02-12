@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.SecurityToken.Transfers.Restrictions
+ */
+
 import {
   ModuleName,
   BigNumber,

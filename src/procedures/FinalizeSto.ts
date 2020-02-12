@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import {
   ModuleName,
   isCappedSTO_3_0_0,

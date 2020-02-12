@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities
+ */
+
 import { EventEmitter } from 'events';
 import v4 from 'uuid/v4';
 import {

@@ -22,7 +22,7 @@ Different tiers can sell different Security Token amounts at different prices, a
 
 • **discountedPrice**? : *BigNumber*
 
-*Defined in [src/types/index.ts:717](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L717)*
+*Defined in [src/types/index.ts:717](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/types/index.ts#L717)*
 
 Price of tokens sold at a discount
 
@@ -32,7 +32,7 @@ ___
 
 • **price**: *BigNumber*
 
-*Defined in [src/types/index.ts:708](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L708)*
+*Defined in [src/types/index.ts:708](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/types/index.ts#L708)*
 
 Price of each token in this tier
 
@@ -42,7 +42,7 @@ ___
 
 • **tokensOnSale**: *BigNumber*
 
-*Defined in [src/types/index.ts:704](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L704)*
+*Defined in [src/types/index.ts:704](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/types/index.ts#L704)*
 
 Amount of tokens to sell in this tier
 
@@ -52,7 +52,7 @@ ___
 
 • **tokensWithDiscount**? : *BigNumber*
 
-*Defined in [src/types/index.ts:713](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L713)*
+*Defined in [src/types/index.ts:713](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/types/index.ts#L713)*
 
 Amount of tokens to sell at a discount if paid in POLY.
 Must be less than the amount of tokens on sale

@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.Factories
+ */
+
 import {
   ModuleName,
   BlockParamLiteral,

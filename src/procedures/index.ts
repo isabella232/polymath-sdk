@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 export { ApproveErc20 } from './ApproveErc20';
 export { TransferErc20 } from './TransferErc20';
 export { ReserveSecurityToken } from './ReserveSecurityToken';

@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities
+ */
+
 import {
   BigNumber,
   ModuleName,

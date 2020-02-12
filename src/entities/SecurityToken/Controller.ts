@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.SecurityToken
+ */
+
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SubModule } from './SubModule';
 import {

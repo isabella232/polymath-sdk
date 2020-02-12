@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import { Procedure } from './Procedure';
 import { ProcedureType, ErrorCode, SignDisableControllerAckProcedureArgs } from '../types';
 import { PolymathError } from '../PolymathError';

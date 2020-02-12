@@ -19,7 +19,7 @@ Arguments for the [ReserveSecurityToken](../enums/_types_index_.proceduretype.md
 
 • **owner**? : *undefined | string*
 
-*Defined in [src/types/index.ts:816](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L816)*
+*Defined in [src/types/index.ts:816](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/types/index.ts#L816)*
 
 if supplied, the reservation will be made on behalf of this address
 
@@ -29,6 +29,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:812](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L812)*
+*Defined in [src/types/index.ts:812](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/types/index.ts#L812)*
 
 the symbol to be reserved

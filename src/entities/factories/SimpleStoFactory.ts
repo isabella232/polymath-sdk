@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.Factories
+ */
+
 import { ModuleName, isCappedSTO_3_1_0 } from '@polymathnetwork/contract-wrappers';
 import { Factory } from './Factory';
 import { Context } from '../../Context';

@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.SecurityToken
+ */
+
 import { SubModule } from './SubModule';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';

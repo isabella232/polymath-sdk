@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import { Procedure } from './Procedure';
 import {
   ToggleFreezeTransfersProcedureArgs,

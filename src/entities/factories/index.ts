@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.Factories
+ */
+
 export { SecurityTokenFactory } from './SecurityTokenFactory';
 export { SecurityTokenReservationFactory } from './SecurityTokenReservationFactory';
 export { Erc20TokenBalanceFactory } from './Erc20TokenBalanceFactory';

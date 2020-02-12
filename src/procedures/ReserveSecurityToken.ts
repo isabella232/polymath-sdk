@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import {
   SecurityTokenRegistryEvents,
   conversionUtils,

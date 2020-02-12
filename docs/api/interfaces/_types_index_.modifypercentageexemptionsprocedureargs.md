@@ -20,7 +20,7 @@ Arguments for the [ModifyPercentageExemptions](../enums/_types_index_.proceduret
 
 • **allowPrimaryIssuance**? : *undefined | false | true*
 
-*Defined in [src/types/index.ts:1239](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1239)*
+*Defined in [src/types/index.ts:1239](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/types/index.ts#L1239)*
 
 whether primary issuance is exempted from percentage restrictions.
 If true, issuing tokens to a wallet that doesn't own tokens will bypass percentage restrictions
@@ -31,7 +31,7 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:1230](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1230)*
+*Defined in [src/types/index.ts:1230](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/types/index.ts#L1230)*
 
 symbol of the Security Token
 
@@ -41,6 +41,6 @@ ___
 
 • **whitelistEntries**? : *[PercentageWhitelistEntry](_types_index_.percentagewhitelistentry.md)[]*
 
-*Defined in [src/types/index.ts:1234](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1234)*
+*Defined in [src/types/index.ts:1234](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/types/index.ts#L1234)*
 
 list of Shareholders to add/remove to/from the whitelist

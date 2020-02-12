@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.Factories
+ */
+
 import { Factory } from './Factory';
 import { Context } from '../../Context';
 import { Checkpoint, Params, UniqueIdentifiers } from '../Checkpoint';

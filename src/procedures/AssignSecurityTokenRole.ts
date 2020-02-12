@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import { ModuleName, conversionUtils } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {

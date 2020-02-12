@@ -18,6 +18,6 @@ Arguments for the [EnableGeneralTransferManager](../enums/_types_index_.procedur
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:449](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L449)*
+*Defined in [src/types/index.ts:449](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/types/index.ts#L449)*
 
 symbol of the Security Token

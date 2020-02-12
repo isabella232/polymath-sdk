@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.SecurityToken.Issuance
+ */
+
 import { SubModule } from '../SubModule';
 import { FreezeIssuance, IssueTokens, SignFreezeIssuanceAck } from '../../../procedures';
 import { ErrorCode, IssuanceDataEntry } from '../../../types';

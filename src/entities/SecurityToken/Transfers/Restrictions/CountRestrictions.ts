@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.SecurityToken.Transfers.Restrictions
+ */
+
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { ErrorCode } from '../../../../types';
 import { ModifyMaxHolderCount } from '../../../../procedures';

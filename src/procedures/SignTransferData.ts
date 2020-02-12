@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import { Procedure } from './Procedure';
 import { ProcedureType, ErrorCode, SignTransferDataProcedureArgs } from '../types';
 import { PolymathError } from '../PolymathError';

@@ -19,7 +19,7 @@ Arguments for the [RemoveDocument](../enums/_types_index_.proceduretype.md#remov
 
 • **name**: *string*
 
-*Defined in [src/types/index.ts:1064](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1064)*
+*Defined in [src/types/index.ts:1064](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/types/index.ts#L1064)*
 
 the name of the Document being removed
 
@@ -29,6 +29,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:1060](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1060)*
+*Defined in [src/types/index.ts:1060](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/types/index.ts#L1060)*
 
 symbol of the Security Token

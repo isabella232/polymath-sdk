@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.Factories
+ */
+
 import { merge } from 'lodash';
 import { Entity } from '../Entity';
 import { Context } from '../../Context';

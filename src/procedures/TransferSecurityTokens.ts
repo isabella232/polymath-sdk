@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import { BigNumber, TransferStatusCode } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import {

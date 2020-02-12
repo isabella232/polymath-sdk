@@ -1,4 +1,9 @@
 /**
+ * @packageDocumentation
+ * @module Entities
+ */
+
+/**
  * Represents an object or resource in the Polymath Ecosystem with its own set of properties and functionality
  */
 export abstract class Entity<Params> {

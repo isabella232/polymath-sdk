@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities
+ */
+
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
 import { Context } from '../Context';

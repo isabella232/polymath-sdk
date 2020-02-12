@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.SecurityToken
+ */
+
 import { forEach } from 'lodash';
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import P from 'bluebird';

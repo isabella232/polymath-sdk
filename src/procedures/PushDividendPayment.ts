@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import { chunk } from 'lodash';
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import P from 'bluebird';

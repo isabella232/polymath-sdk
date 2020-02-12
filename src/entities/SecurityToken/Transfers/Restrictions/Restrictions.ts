@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.SecurityToken.Transfers.Restrictions
+ */
+
 import { SubModule } from '../../SubModule';
 import { CountRestrictions } from './CountRestrictions';
 import { PercentageRestrictions } from './PercentageRestrictions';

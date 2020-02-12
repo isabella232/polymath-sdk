@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.Factories
+ */
+
 import { SecurityToken, Params, UniqueIdentifiers } from '../SecurityToken';
 import { Factory } from './Factory';
 import { Context } from '../../Context';

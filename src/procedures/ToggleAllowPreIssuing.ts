@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import {
   ModuleName,
   isUSDTieredSTO_3_0_0,

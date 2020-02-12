@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Entities.Factories
+ */
+
 import { ModuleName, isUSDTieredSTO_3_1_0 } from '@polymathnetwork/contract-wrappers';
 import { range } from 'lodash';
 import { Factory } from './Factory';

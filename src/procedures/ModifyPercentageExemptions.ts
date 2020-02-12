@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Procedures
+ */
+
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import P from 'bluebird';
 import { Procedure } from './Procedure';
