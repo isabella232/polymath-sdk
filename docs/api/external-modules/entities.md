@@ -1,4 +1,4 @@
-# External module: Entities
+# Entities
 
 ## Index
 
@@ -47,3 +47,4 @@
 * [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-6.md)
 * [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-7.md)
 * [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-8.md)
+
