@@ -1,6 +1,6 @@
 # Interface: Params
 
-Constructor parameters
+Checkpoint constructor parameters
 
 ## Hierarchy
 
@@ -10,61 +10,29 @@ Constructor parameters
 
 ### Properties
 
-* [balance](entities.params-2.md#balance)
-* [canBuyFromSto](entities.params-2.md#canbuyfromsto)
-* [canReceiveAfter](entities.params-2.md#canreceiveafter)
-* [canSendAfter](entities.params-2.md#cansendafter)
-* [isAccredited](entities.params-2.md#isaccredited)
-* [kycExpiry](entities.params-2.md#kycexpiry)
+* [createdAt](entities.params-2.md#createdat)
+* [dividendDistributions](entities.params-2.md#dividenddistributions)
 * [securityTokenSymbol](entities.params-2.md#securitytokensymbol)
+* [shareholderBalances](entities.params-2.md#shareholderbalances)
+* [totalSupply](entities.params-2.md#totalsupply)
 
 ## Properties
 
-###  balance
+###  createdAt
 
-• **balance**: *BigNumber*
+• **createdAt**: *Date*
 
-*Defined in [src/entities/Shareholder.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Shareholder.ts#L40)*
-
-___
-
-###  canBuyFromSto
-
-• **canBuyFromSto**: *boolean*
-
-*Defined in [src/entities/Shareholder.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Shareholder.ts#L39)*
+*Defined in [src/entities/Checkpoint.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L53)*
 
 ___
 
-###  canReceiveAfter
+###  dividendDistributions
 
-• **canReceiveAfter**: *Date*
+• **dividendDistributions**: *[DividendDistribution](../classes/entities.dividenddistribution.md)[]*
 
-*Defined in [src/entities/Shareholder.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Shareholder.ts#L36)*
+*Defined in [src/entities/Checkpoint.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L43)*
 
-___
-
-###  canSendAfter
-
-• **canSendAfter**: *Date*
-
-*Defined in [src/entities/Shareholder.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Shareholder.ts#L35)*
-
-___
-
-###  isAccredited
-
-• **isAccredited**: *boolean*
-
-*Defined in [src/entities/Shareholder.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Shareholder.ts#L38)*
-
-___
-
-###  kycExpiry
-
-• **kycExpiry**: *Date*
-
-*Defined in [src/entities/Shareholder.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Shareholder.ts#L37)*
+dividend distributions associated to this checkpoint
 
 ___
 
@@ -72,4 +40,24 @@ ___
 
 • **securityTokenSymbol**: *string*
 
-*Defined in [src/entities/Shareholder.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Shareholder.ts#L34)*
+*Defined in [src/entities/Checkpoint.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L47)*
+
+symbol of the security token
+
+___
+
+###  shareholderBalances
+
+• **shareholderBalances**: *ShareholderBalance[]*
+
+*Defined in [src/entities/Checkpoint.ts:51](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L51)*
+
+shareholder balances at this specific Checkpoint
+
+___
+
+###  totalSupply
+
+• **totalSupply**: *BigNumber*
+
+*Defined in [src/entities/Checkpoint.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L52)*

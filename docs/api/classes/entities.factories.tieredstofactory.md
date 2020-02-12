@@ -4,7 +4,7 @@ Factory generates information for a tiered sto entity
 
 ## Hierarchy
 
-* [Factory](entities.factories.factory.md)‹[TieredSto](entities.tieredsto.md), [Params](../interfaces/entities.params-9.md), [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers.md)›
+* [Factory](entities.factories.factory.md)‹[TieredSto](entities.tieredsto.md), [Params](../interfaces/entities.params-8.md), [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-6.md)›
 
   ↳ **TieredStoFactory**
 
@@ -36,7 +36,7 @@ Factory generates information for a tiered sto entity
 
 *Overrides [Factory](entities.factories.factory.md).[constructor](entities.factories.factory.md#constructor)*
 
-*Defined in [src/entities/factories/TieredStoFactory.ts:153](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/factories/TieredStoFactory.ts#L153)*
+*Defined in [src/entities/factories/TieredStoFactory.ts:153](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/factories/TieredStoFactory.ts#L153)*
 
 Create an instance of the tiered sto factory
 
@@ -52,11 +52,11 @@ Name | Type |
 
 ###  Entity
 
-• **Entity**: *[EntityClass](../interfaces/entities.factories.entityclass.md)‹[Params](../interfaces/entities.params-9.md), [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers.md)›*
+• **Entity**: *[EntityClass](../interfaces/entities.factories.entityclass.md)‹[Params](../interfaces/entities.params-8.md), [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-6.md)›*
 
 *Inherited from [Factory](entities.factories.factory.md).[Entity](entities.factories.factory.md#entity)*
 
-*Defined in [src/entities/factories/Factory.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/factories/Factory.ts#L42)*
+*Defined in [src/entities/factories/Factory.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/factories/Factory.ts#L42)*
 
 entity class that this Factory is in charge of generating and caching
 
@@ -68,7 +68,7 @@ ___
 
 *Inherited from [Factory](entities.factories.factory.md).[cache](entities.factories.factory.md#cache)*
 
-*Defined in [src/entities/factories/Factory.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/factories/Factory.ts#L33)*
+*Defined in [src/entities/factories/Factory.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/factories/Factory.ts#L33)*
 
 #### Type declaration:
 
@@ -82,17 +82,17 @@ ___
 
 *Inherited from [Factory](entities.factories.factory.md).[context](entities.factories.factory.md#context)*
 
-*Defined in [src/entities/factories/Factory.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/factories/Factory.ts#L37)*
+*Defined in [src/entities/factories/Factory.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/factories/Factory.ts#L37)*
 
 ## Methods
 
 ###  create
 
-▸ **create**(`uid`: string, `params`: [Params](../interfaces/entities.params-9.md)): *EntityType*
+▸ **create**(`uid`: string, `params`: [Params](../interfaces/entities.params-8.md)): *EntityType*
 
 *Inherited from [Factory](entities.factories.factory.md).[create](entities.factories.factory.md#create)*
 
-*Defined in [src/entities/factories/Factory.ts:92](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/factories/Factory.ts#L92)*
+*Defined in [src/entities/factories/Factory.ts:92](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/factories/Factory.ts#L92)*
 
 Get an entity from the cache. Creates it if it isn't cached, updates it if it is
 
@@ -101,7 +101,7 @@ Get an entity from the cache. Creates it if it isn't cached, updates it if it is
 Name | Type | Description |
 ------ | ------ | ------ |
 `uid` | string | unique identifier for the entity |
-`params` | [Params](../interfaces/entities.params-9.md) | constructor data for the entity  |
+`params` | [Params](../interfaces/entities.params-8.md) | constructor data for the entity  |
 
 **Returns:** *EntityType*
 
@@ -113,7 +113,7 @@ ___
 
 *Inherited from [Factory](entities.factories.factory.md).[fetch](entities.factories.factory.md#fetch)*
 
-*Defined in [src/entities/factories/Factory.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/factories/Factory.ts#L62)*
+*Defined in [src/entities/factories/Factory.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/factories/Factory.ts#L62)*
 
 Get an entity from the cache. Fetches the necessary data to create it if it isn't cached, refreshes it if it is
 
@@ -133,7 +133,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/entities/factories/TieredStoFactory.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/factories/TieredStoFactory.ts#L18)*
+*Defined in [src/entities/factories/TieredStoFactory.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/factories/TieredStoFactory.ts#L18)*
 
 **Parameters:**
 
@@ -151,7 +151,7 @@ ___
 
 *Inherited from [Factory](entities.factories.factory.md).[refresh](entities.factories.factory.md#refresh)*
 
-*Defined in [src/entities/factories/Factory.ts:113](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/factories/Factory.ts#L113)*
+*Defined in [src/entities/factories/Factory.ts:113](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/factories/Factory.ts#L113)*
 
 Fetch the data for an entity and updates its properties
 
@@ -167,11 +167,11 @@ ___
 
 ###  update
 
-▸ **update**(`uid`: string, `params`: Partial‹[Params](../interfaces/entities.params-9.md)›): *Promise‹void›*
+▸ **update**(`uid`: string, `params`: Partial‹[Params](../interfaces/entities.params-8.md)›): *Promise‹void›*
 
 *Inherited from [Factory](entities.factories.factory.md).[update](entities.factories.factory.md#update)*
 
-*Defined in [src/entities/factories/Factory.ts:131](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/factories/Factory.ts#L131)*
+*Defined in [src/entities/factories/Factory.ts:131](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/factories/Factory.ts#L131)*
 
 Update an entity's properties in place
 
@@ -180,6 +180,6 @@ Update an entity's properties in place
 Name | Type | Description |
 ------ | ------ | ------ |
 `uid` | string | unique identifier for the entity |
-`params` | Partial‹[Params](../interfaces/entities.params-9.md)› | properties that should be updated  |
+`params` | Partial‹[Params](../interfaces/entities.params-8.md)› | properties that should be updated  |
 
 **Returns:** *Promise‹void›*

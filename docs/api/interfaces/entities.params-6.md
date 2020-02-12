@@ -1,6 +1,6 @@
 # Interface: Params
 
-Checkpoint constructor parameters
+Constructor parameters
 
 ## Hierarchy
 
@@ -10,54 +10,41 @@ Checkpoint constructor parameters
 
 ### Properties
 
-* [createdAt](entities.params-6.md#createdat)
-* [dividendDistributions](entities.params-6.md#dividenddistributions)
-* [securityTokenSymbol](entities.params-6.md#securitytokensymbol)
-* [shareholderBalances](entities.params-6.md#shareholderbalances)
-* [totalSupply](entities.params-6.md#totalsupply)
+* [expiry](entities.params-6.md#expiry)
+* [ownerAddress](entities.params-6.md#owneraddress)
+* [reservedAt](entities.params-6.md#reservedat)
+* [securityTokenAddress](entities.params-6.md#optional-securitytokenaddress)
 
 ## Properties
 
-###  createdAt
+###  expiry
 
-• **createdAt**: *Date*
+• **expiry**: *Date*
 
-*Defined in [src/entities/Checkpoint.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L53)*
+*Defined in [src/entities/SecurityTokenReservation.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityTokenReservation.ts#L36)*
 
-___
-
-###  dividendDistributions
-
-• **dividendDistributions**: *[DividendDistribution](../classes/entities.dividenddistribution.md)[]*
-
-*Defined in [src/entities/Checkpoint.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L43)*
-
-dividend distributions associated to this checkpoint
+expiry date for the ticker reservation
 
 ___
 
-###  securityTokenSymbol
+###  ownerAddress
 
-• **securityTokenSymbol**: *string*
+• **ownerAddress**: *string*
 
-*Defined in [src/entities/Checkpoint.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L47)*
-
-symbol of the security token
+*Defined in [src/entities/SecurityTokenReservation.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityTokenReservation.ts#L38)*
 
 ___
 
-###  shareholderBalances
+###  reservedAt
 
-• **shareholderBalances**: *[ShareholderBalance](_types_index_.shareholderbalance.md)[]*
+• **reservedAt**: *Date*
 
-*Defined in [src/entities/Checkpoint.ts:51](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L51)*
-
-shareholder balances at this specific Checkpoint
+*Defined in [src/entities/SecurityTokenReservation.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityTokenReservation.ts#L37)*
 
 ___
 
-###  totalSupply
+### `Optional` securityTokenAddress
 
-• **totalSupply**: *BigNumber*
+• **securityTokenAddress**? : *undefined | string*
 
-*Defined in [src/entities/Checkpoint.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L52)*
+*Defined in [src/entities/SecurityTokenReservation.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityTokenReservation.ts#L39)*

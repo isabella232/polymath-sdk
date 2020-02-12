@@ -1,6 +1,6 @@
 # Interface: UniqueIdentifiers
 
-Properties that uniquely identify a Security Token Reservation
+Properties that uniquely identify an STO
 
 ## Hierarchy
 
@@ -10,12 +10,30 @@ Properties that uniquely identify a Security Token Reservation
 
 ### Properties
 
-* [symbol](entities.uniqueidentifiers-6.md#symbol)
+* [address](entities.uniqueidentifiers-6.md#address)
+* [securityTokenId](entities.uniqueidentifiers-6.md#securitytokenid)
+* [stoType](entities.uniqueidentifiers-6.md#stotype)
 
 ## Properties
 
-###  symbol
+###  address
 
-• **symbol**: *string*
+• **address**: *string*
 
-*Defined in [src/entities/SecurityTokenReservation.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityTokenReservation.ts#L17)*
+*Defined in [src/entities/Sto.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Sto.ts#L26)*
+
+___
+
+###  securityTokenId
+
+• **securityTokenId**: *string*
+
+*Defined in [src/entities/Sto.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Sto.ts#L24)*
+
+___
+
+###  stoType
+
+• **stoType**: *StoType*
+
+*Defined in [src/entities/Sto.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Sto.ts#L25)*

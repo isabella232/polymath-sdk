@@ -18,4 +18,4 @@ Parameters for [getCheckpoint](../classes/_polymathbase_.polymathbase.md#getchec
 
 • **checkpointIndex**: *number*
 
-*Defined in [src/entities/SecurityToken/Shareholders.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityToken/Shareholders.ts#L23)*
+*Defined in [src/entities/SecurityToken/Shareholders.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/Shareholders.ts#L23)*

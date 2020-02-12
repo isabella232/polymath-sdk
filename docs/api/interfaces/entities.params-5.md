@@ -4,22 +4,72 @@ Constructor parameters
 
 ## Hierarchy
 
-* [UniqueIdentifiers](entities.uniqueidentifiers-4.md)
-
-  ↳ **Params**
+* **Params**
 
 ## Index
 
 ### Properties
 
-* [address](entities.params-5.md#address)
+* [balance](entities.params-5.md#balance)
+* [canBuyFromSto](entities.params-5.md#canbuyfromsto)
+* [canReceiveAfter](entities.params-5.md#canreceiveafter)
+* [canSendAfter](entities.params-5.md#cansendafter)
+* [isAccredited](entities.params-5.md#isaccredited)
+* [kycExpiry](entities.params-5.md#kycexpiry)
+* [securityTokenSymbol](entities.params-5.md#securitytokensymbol)
 
 ## Properties
 
-###  address
+###  balance
 
-• **address**: *string*
+• **balance**: *BigNumber*
 
-*Inherited from [UniqueIdentifiers](entities.uniqueidentifiers-4.md).[address](entities.uniqueidentifiers-4.md#address)*
+*Defined in [src/entities/Shareholder.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L40)*
 
-*Defined in [src/entities/Wallet.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Wallet.ts#L17)*
+___
+
+###  canBuyFromSto
+
+• **canBuyFromSto**: *boolean*
+
+*Defined in [src/entities/Shareholder.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L39)*
+
+___
+
+###  canReceiveAfter
+
+• **canReceiveAfter**: *Date*
+
+*Defined in [src/entities/Shareholder.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L36)*
+
+___
+
+###  canSendAfter
+
+• **canSendAfter**: *Date*
+
+*Defined in [src/entities/Shareholder.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L35)*
+
+___
+
+###  isAccredited
+
+• **isAccredited**: *boolean*
+
+*Defined in [src/entities/Shareholder.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L38)*
+
+___
+
+###  kycExpiry
+
+• **kycExpiry**: *Date*
+
+*Defined in [src/entities/Shareholder.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L37)*
+
+___
+
+###  securityTokenSymbol
+
+• **securityTokenSymbol**: *string*
+
+*Defined in [src/entities/Shareholder.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L34)*

@@ -10,41 +10,21 @@ Constructor parameters
 
 ### Properties
 
-* [expiry](entities.params.md#expiry)
-* [ownerAddress](entities.params.md#owneraddress)
-* [reservedAt](entities.params.md#reservedat)
-* [securityTokenAddress](entities.params.md#optional-securitytokenaddress)
+* [percentage](entities.params.md#percentage)
+* [securityTokenSymbol](entities.params.md#securitytokensymbol)
 
 ## Properties
 
-###  expiry
+###  percentage
 
-• **expiry**: *Date*
+• **percentage**: *number*
 
-*Defined in [src/entities/SecurityTokenReservation.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityTokenReservation.ts#L36)*
-
-expiry date for the ticker reservation
+*Defined in [src/entities/TaxWithholding.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/TaxWithholding.ts#L38)*
 
 ___
 
-###  ownerAddress
+###  securityTokenSymbol
 
-• **ownerAddress**: *string*
+• **securityTokenSymbol**: *string*
 
-*Defined in [src/entities/SecurityTokenReservation.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityTokenReservation.ts#L38)*
-
-___
-
-###  reservedAt
-
-• **reservedAt**: *Date*
-
-*Defined in [src/entities/SecurityTokenReservation.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityTokenReservation.ts#L37)*
-
-___
-
-### `Optional` securityTokenAddress
-
-• **securityTokenAddress**? : *undefined | string*
-
-*Defined in [src/entities/SecurityTokenReservation.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityTokenReservation.ts#L39)*
+*Defined in [src/entities/TaxWithholding.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/TaxWithholding.ts#L37)*

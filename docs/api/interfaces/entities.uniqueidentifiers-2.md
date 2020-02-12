@@ -1,6 +1,6 @@
 # Interface: UniqueIdentifiers
 
-Properties that uniquely identify an ERC20 token balance
+Properties that uniquely identify a Shareholder of a specific Security Token
 
 ## Hierarchy
 
@@ -10,21 +10,21 @@ Properties that uniquely identify an ERC20 token balance
 
 ### Properties
 
-* [tokenAddress](entities.uniqueidentifiers-2.md#tokenaddress)
-* [walletAddress](entities.uniqueidentifiers-2.md#walletaddress)
+* [address](entities.uniqueidentifiers-2.md#address)
+* [securityTokenId](entities.uniqueidentifiers-2.md#securitytokenid)
 
 ## Properties
 
-###  tokenAddress
+###  address
 
-• **tokenAddress**: *string*
+• **address**: *string*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Erc20TokenBalance.ts#L16)*
+*Defined in [src/entities/Shareholder.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L17)*
 
 ___
 
-###  walletAddress
+###  securityTokenId
 
-• **walletAddress**: *string*
+• **securityTokenId**: *string*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Erc20TokenBalance.ts#L17)*
+*Defined in [src/entities/Shareholder.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L16)*

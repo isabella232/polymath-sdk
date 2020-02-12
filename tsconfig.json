@@ -24,5 +24,19 @@
     "lib": ["es2017", "dom"],
     "typeRoots": ["./node_modules/@types", "./src/typings"]
   },
-  "exclude": ["config", "dist", "node_modules", "test.ts"]
+  "exclude": ["config", "dist", "node_modules", "test.ts"],
+  "typedocOptions": {
+    "mode": "modules",
+    "out": "docs/api",
+    "exclude": ["**/*test*/**", "**/*index.ts"],
+    "theme": "gitbook",
+    "readme": "docs/misc/GettingStarted.md",
+    "ignoreCompilerErrors": true,
+    "excludePrivate": true,
+    "excludeNotExported": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "stripInternal": true
+  }
 }

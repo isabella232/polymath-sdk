@@ -1,23 +1,34 @@
 # Interface: UniqueIdentifiers
 
-Properties that uniquely identify a Wallet
+Properties that uniquely identify a Dividend Distribution
 
 ## Hierarchy
 
 * **UniqueIdentifiers**
 
-  ↳ [Params](entities.params-5.md)
-
 ## Index
 
 ### Properties
 
-* [address](entities.uniqueidentifiers-4.md#address)
+* [index](entities.uniqueidentifiers-4.md#index)
+* [securityTokenId](entities.uniqueidentifiers-4.md#securitytokenid)
 
 ## Properties
 
-###  address
+###  index
 
-• **address**: *string*
+• **index**: *number*
 
-*Defined in [src/entities/Wallet.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Wallet.ts#L17)*
+*Defined in [src/entities/DividendDistribution.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L25)*
+
+ordered index of the distribution
+
+___
+
+###  securityTokenId
+
+• **securityTokenId**: *string*
+
+*Defined in [src/entities/DividendDistribution.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L21)*
+
+security token UUID

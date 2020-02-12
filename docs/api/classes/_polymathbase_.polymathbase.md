@@ -300,18 +300,15 @@ Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:
 
 ▸ **getAllDividends**(`__namedParameters`: object): *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)[]›*
 
-*Defined in [src/PolymathBase.ts:888](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L888)*
+*Defined in [src/PolymathBase.ts:888](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L888)*
 
 Auxiliary function to fetch all dividend distributions
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
-Name | Type | Description |
------- | ------ | ------ |
-`checkpointId` | undefined &#124; number | checkpoint UUID |
-`securityTokenSymbol` | string | symbol of the Security Token |
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
 
 **Returns:** *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)[]›*
 
@@ -319,22 +316,18 @@ ___
 
 ###  getAttachedModules
 
-▸ **getAttachedModules**(`__namedParameters`: object, `opts?`: [GetAttachedModulesOpts](../interfaces/_polymathbase_.getattachedmodulesopts.md)): *Promise‹any[]›*
+▸ **getAttachedModules**(`__namedParameters`: object, `opts?`: GetAttachedModulesOpts): *Promise‹any[]›*
 
-*Defined in [src/PolymathBase.ts:523](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L523)*
+*Defined in [src/PolymathBase.ts:523](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L523)*
 
 Fetch all Modules of a certain type attached to a Security Token
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
-Name | Type | Description |
------- | ------ | ------ |
-`moduleName` | ModuleName | name of the Module |
-`symbol` | string | symbol of the Security Token |
-
-▪`Optional`  **opts**: *[GetAttachedModulesOpts](../interfaces/_polymathbase_.getattachedmodulesopts.md)*
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
+`opts?` | GetAttachedModulesOpts |
 
 **Returns:** *Promise‹any[]›*
 
@@ -344,18 +337,15 @@ ___
 
 ▸ **getCheckpoint**(`__namedParameters`: object): *Promise‹[BaseCheckpoint](../interfaces/_polymathbase_.basecheckpoint.md)›*
 
-*Defined in [src/PolymathBase.ts:697](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L697)*
+*Defined in [src/PolymathBase.ts:697](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L697)*
 
 Get data associated to a Checkpoint
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
-Name | Type | Description |
------- | ------ | ------ |
-`checkpointId` | number | checkpoint UUID |
-`securityToken` | SecurityToken_3_0_0 | instance of the Security Token |
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
 
 **Returns:** *Promise‹[BaseCheckpoint](../interfaces/_polymathbase_.basecheckpoint.md)›*
 
@@ -365,17 +355,15 @@ ___
 
 ▸ **getCheckpoints**(`__namedParameters`: object): *Promise‹[BaseCheckpoint](../interfaces/_polymathbase_.basecheckpoint.md)[]›*
 
-*Defined in [src/PolymathBase.ts:722](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L722)*
+*Defined in [src/PolymathBase.ts:722](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L722)*
 
 Get all Checkpoints of a Security Token
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
-Name | Type | Description |
------- | ------ | ------ |
-`securityToken` | SecurityToken_3_0_0 | instance of the Security Token |
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
 
 **Returns:** *Promise‹[BaseCheckpoint](../interfaces/_polymathbase_.basecheckpoint.md)[]›*
 
@@ -385,18 +373,15 @@ ___
 
 ▸ **getDividend**(`__namedParameters`: object): *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)›*
 
-*Defined in [src/PolymathBase.ts:783](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L783)*
+*Defined in [src/PolymathBase.ts:783](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L783)*
 
 Get data associated to a specific Dividend Distribution
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
-Name | Type | Description |
------- | ------ | ------ |
-`dividendIndex` | number | index of the Dividend |
-`dividendsModule` | ERC20DividendCheckpoint_3_0_0 | - |
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
 
 **Returns:** *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)›*
 
@@ -406,15 +391,13 @@ ___
 
 ▸ **getDividends**(`__namedParameters`: object): *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)[]›*
 
-*Defined in [src/PolymathBase.ts:868](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L868)*
+*Defined in [src/PolymathBase.ts:868](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L868)*
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
 Name | Type |
 ------ | ------ |
-`dividendsModule` | ERC20DividendCheckpoint_3_0_0 |
+`__namedParameters` | object |
 
 **Returns:** *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)[]›*
 
@@ -424,18 +407,15 @@ ___
 
 ▸ **getDividendsByCheckpoint**(`__namedParameters`: object): *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)[]›*
 
-*Defined in [src/PolymathBase.ts:849](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L849)*
+*Defined in [src/PolymathBase.ts:849](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L849)*
 
 Fetch list of all Dividends at a certain Checkpoint
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
-Name | Type | Description |
------- | ------ | ------ |
-`checkpointId` | number | checkpoint UUID |
-`dividendsModule` | ERC20DividendCheckpoint_3_0_0 | - |
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
 
 **Returns:** *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)[]›*
 
@@ -443,22 +423,18 @@ ___
 
 ###  getModuleAddressesByName
 
-▸ **getModuleAddressesByName**(`__namedParameters`: object, `opts?`: [GetModuleAddressesByNameOpts](../interfaces/_polymathbase_.getmoduleaddressesbynameopts.md)): *Promise‹string[]›*
+▸ **getModuleAddressesByName**(`__namedParameters`: object, `opts?`: GetModuleAddressesByNameOpts): *Promise‹string[]›*
 
-*Defined in [src/PolymathBase.ts:485](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L485)*
+*Defined in [src/PolymathBase.ts:485](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L485)*
 
 Fetch addresses of all Modules of a certain type attached to a Security Token
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
-Name | Type | Description |
------- | ------ | ------ |
-`moduleName` | ModuleName | name of the Module |
-`symbol` | string | symbol of the Security Token |
-
-▪`Optional`  **opts**: *[GetModuleAddressesByNameOpts](../interfaces/_polymathbase_.getmoduleaddressesbynameopts.md)*
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
+`opts?` | GetModuleAddressesByNameOpts |
 
 **Returns:** *Promise‹string[]›*
 
@@ -468,18 +444,15 @@ ___
 
 ▸ **getModuleFactoryAddress**(`__namedParameters`: object): *Promise‹string›*
 
-*Defined in [src/PolymathBase.ts:362](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L362)*
+*Defined in [src/PolymathBase.ts:362](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L362)*
 
 Fetch the address of a specified Module Factory
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
-Name | Type | Description |
------- | ------ | ------ |
-`moduleName` | ModuleName | name of the Module corresponding to the Module Factory |
-`tokenAddress` | string | address of the Security Token |
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
 
 **Returns:** *Promise‹string›*
 
@@ -489,17 +462,15 @@ ___
 
 ▸ **getTreasuryWallet**(`__namedParameters`: object): *Promise‹string›*
 
-*Defined in [src/PolymathBase.ts:425](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L425)*
+*Defined in [src/PolymathBase.ts:425](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L425)*
 
 Fetch a Module's Treasury Wallet
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
 Name | Type |
 ------ | ------ |
-`module` | GeneralPermissionManager_3_0_0 &#124; GeneralPermissionManager_3_1_0 &#124; CountTransferManager_3_0_0 &#124; GeneralTransferManager_3_0_0 &#124; GeneralTransferManager_3_1_0 &#124; ManualApprovalTransferManager_3_0_0 &#124; PercentageTransferManager_3_0_0 &#124; VolumeRestrictionTransferManager_3_0_0 &#124; BlacklistTransferManager_3_0_0 &#124; LockUpTransferManager_3_0_0 &#124; RestrictedPartialSaleTransferManager_3_1_0 &#124; CappedSTO_3_0_0 &#124; CappedSTO_3_1_0 &#124; USDTieredSTO_3_0_0 &#124; USDTieredSTO_3_1_0 &#124; ERC20DividendCheckpoint_3_0_0 &#124; VestingEscrowWallet_3_0_0 &#124; VestingEscrowWallet_3_1_0 &#124; EtherDividendCheckpoint_3_0_0 |
+`__namedParameters` | object |
 
 **Returns:** *Promise‹string›*
 
@@ -509,14 +480,12 @@ ___
 
 ▸ **roleToPermission**(`__namedParameters`: object): *Promise‹object›*
 
-*Defined in [src/PolymathBase.ts:923](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L923)*
+*Defined in [src/PolymathBase.ts:923](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L923)*
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
 Name | Type |
 ------ | ------ |
-`role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
+`__namedParameters` | object |
 
 **Returns:** *Promise‹object›*

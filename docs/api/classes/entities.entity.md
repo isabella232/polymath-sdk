@@ -51,7 +51,7 @@ Represents an object or resource in the Polymath Ecosystem with its own set of p
 
 • **uid**: *string*
 
-*Defined in [src/entities/Entity.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Entity.ts#L10)*
+*Defined in [src/entities/Entity.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Entity.ts#L10)*
 
 ## Methods
 
@@ -59,7 +59,7 @@ Represents an object or resource in the Polymath Ecosystem with its own set of p
 
 ▸ **_refresh**(`params`: Partial‹Params›): *void*
 
-*Defined in [src/entities/Entity.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Entity.ts#L14)*
+*Defined in [src/entities/Entity.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Entity.ts#L14)*
 
 **Parameters:**
 
@@ -75,6 +75,6 @@ ___
 
 ▸ **toPojo**(): *any*
 
-*Defined in [src/entities/Entity.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Entity.ts#L12)*
+*Defined in [src/entities/Entity.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Entity.ts#L12)*
 
 **Returns:** *any*

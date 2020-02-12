@@ -4,7 +4,7 @@ Used to manage a ERC20 token balance
 
 ## Hierarchy
 
-* [Entity](entities.entity.md)‹[Params](../interfaces/entities.params-4.md)›
+* [Entity](entities.entity.md)‹[Params](../interfaces/entities.params-1.md)›
 
   ↳ **Erc20TokenBalance**
 
@@ -33,9 +33,9 @@ Used to manage a ERC20 token balance
 
 ###  constructor
 
-\+ **new Erc20TokenBalance**(`params`: [Params](../interfaces/entities.params-4.md) & [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-2.md)): *[Erc20TokenBalance](entities.erc20tokenbalance.md)*
+\+ **new Erc20TokenBalance**(`params`: [Params](../interfaces/entities.params-1.md) & [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-7.md)): *[Erc20TokenBalance](entities.erc20tokenbalance.md)*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:89](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Erc20TokenBalance.ts#L89)*
+*Defined in [src/entities/Erc20TokenBalance.ts:89](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L89)*
 
 Create an ERC20 Token balance instance
 
@@ -43,7 +43,7 @@ Create an ERC20 Token balance instance
 
 Name | Type |
 ------ | ------ |
-`params` | [Params](../interfaces/entities.params-4.md) & [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-2.md) |
+`params` | [Params](../interfaces/entities.params-1.md) & [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-7.md) |
 
 **Returns:** *[Erc20TokenBalance](entities.erc20tokenbalance.md)*
 
@@ -53,7 +53,7 @@ Name | Type |
 
 • **balance**: *BigNumber*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:89](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Erc20TokenBalance.ts#L89)*
+*Defined in [src/entities/Erc20TokenBalance.ts:89](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L89)*
 
 total number of tokens belonging to token holder
 
@@ -63,7 +63,7 @@ ___
 
 • **tokenAddress**: *string*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Erc20TokenBalance.ts#L79)*
+*Defined in [src/entities/Erc20TokenBalance.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L79)*
 
 address of the ERC20 token
 
@@ -73,7 +73,7 @@ ___
 
 • **tokenSymbol**: *string | null*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Erc20TokenBalance.ts#L74)*
+*Defined in [src/entities/Erc20TokenBalance.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L74)*
 
 ___
 
@@ -83,7 +83,7 @@ ___
 
 *Overrides [Entity](entities.entity.md).[uid](entities.entity.md#abstract-uid)*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Erc20TokenBalance.ts#L72)*
+*Defined in [src/entities/Erc20TokenBalance.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L72)*
 
 unique generated identifier for an ERC20 token balance
 
@@ -93,7 +93,7 @@ ___
 
 • **walletAddress**: *string*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:84](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Erc20TokenBalance.ts#L84)*
+*Defined in [src/entities/Erc20TokenBalance.ts:84](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L84)*
 
 wallet address of the token holder
 
@@ -101,11 +101,11 @@ wallet address of the token holder
 
 ###  _refresh
 
-▸ **_refresh**(`params`: Partial‹[Params](../interfaces/entities.params-4.md)›): *void*
+▸ **_refresh**(`params`: Partial‹[Params](../interfaces/entities.params-1.md)›): *void*
 
 *Overrides [Entity](entities.entity.md).[_refresh](entities.entity.md#abstract-_refresh)*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Erc20TokenBalance.ts#L127)*
+*Defined in [src/entities/Erc20TokenBalance.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L127)*
 
 Hydrate the entity
 
@@ -113,7 +113,7 @@ Hydrate the entity
 
 Name | Type |
 ------ | ------ |
-`params` | Partial‹[Params](../interfaces/entities.params-4.md)› |
+`params` | Partial‹[Params](../interfaces/entities.params-1.md)› |
 
 **Returns:** *void*
 
@@ -125,21 +125,11 @@ ___
 
 *Overrides [Entity](entities.entity.md).[toPojo](entities.entity.md#abstract-topojo)*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Erc20TokenBalance.ts#L112)*
+*Defined in [src/entities/Erc20TokenBalance.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L112)*
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
 **Returns:** *object*
-
-* **balance**: *BigNumber*
-
-* **tokenAddress**: *string*
-
-* **tokenSymbol**: *null | string*
-
-* **uid**: *string*
-
-* **walletAddress**: *string*
 
 ___
 
@@ -147,18 +137,15 @@ ___
 
 ▸ **generateId**(`__namedParameters`: object): *string*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Erc20TokenBalance.ts#L44)*
+*Defined in [src/entities/Erc20TokenBalance.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L44)*
 
 Generate the ERC20 Token Balance's UUID from its identifying properties
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
 Name | Type |
 ------ | ------ |
-`tokenAddress` | string |
-`walletAddress` | string |
+`__namedParameters` | object |
 
 **Returns:** *string*
 
@@ -166,9 +153,9 @@ ___
 
 ### `Static` unserialize
 
-▸ **unserialize**(`serialized`: any): *[UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-2.md)*
+▸ **unserialize**(`serialized`: any): *[UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-7.md)*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:56](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Erc20TokenBalance.ts#L56)*
+*Defined in [src/entities/Erc20TokenBalance.ts:56](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L56)*
 
 Unserialize a serialized erc20 token balance
 
@@ -178,4 +165,4 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `serialized` | any | string with erc20 token balance entity information  |
 
-**Returns:** *[UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-2.md)*
+**Returns:** *[UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-7.md)*

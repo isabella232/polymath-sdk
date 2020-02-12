@@ -4,7 +4,7 @@ Represents a snapshot of the Security Token's supply and Shareholder balances at
 
 ## Hierarchy
 
-* [Entity](entities.entity.md)‹[Params](../interfaces/entities.params-6.md)›
+* [Entity](entities.entity.md)‹[Params](../interfaces/entities.params-2.md)›
 
   ↳ **Checkpoint**
 
@@ -36,9 +36,9 @@ Represents a snapshot of the Security Token's supply and Shareholder balances at
 
 ###  constructor
 
-\+ **new Checkpoint**(`params`: [Params](../interfaces/entities.params-6.md) & [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-5.md)): *[Checkpoint](entities.checkpoint.md)*
+\+ **new Checkpoint**(`params`: [Params](../interfaces/entities.params-2.md) & [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-3.md)): *[Checkpoint](entities.checkpoint.md)*
 
-*Defined in [src/entities/Checkpoint.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L111)*
+*Defined in [src/entities/Checkpoint.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L111)*
 
 Create a new Chekpoint instance
 
@@ -46,7 +46,7 @@ Create a new Chekpoint instance
 
 Name | Type |
 ------ | ------ |
-`params` | [Params](../interfaces/entities.params-6.md) & [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-5.md) |
+`params` | [Params](../interfaces/entities.params-2.md) & [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-3.md) |
 
 **Returns:** *[Checkpoint](entities.checkpoint.md)*
 
@@ -56,7 +56,7 @@ Name | Type |
 
 • **createdAt**: *Date*
 
-*Defined in [src/entities/Checkpoint.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L111)*
+*Defined in [src/entities/Checkpoint.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L111)*
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 • **dividendDistributions**: *[DividendDistribution](entities.dividenddistribution.md)[]*
 
-*Defined in [src/entities/Checkpoint.ts:93](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L93)*
+*Defined in [src/entities/Checkpoint.ts:93](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L93)*
 
 dividend distributions associated to this snapshot
 
@@ -74,7 +74,7 @@ ___
 
 • **index**: *number*
 
-*Defined in [src/entities/Checkpoint.ts:102](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L102)*
+*Defined in [src/entities/Checkpoint.ts:102](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L102)*
 
 numerical index of the checkpoint associated to this snapshot
 
@@ -84,7 +84,7 @@ ___
 
 • **securityTokenId**: *string*
 
-*Defined in [src/entities/Checkpoint.ts:97](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L97)*
+*Defined in [src/entities/Checkpoint.ts:97](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L97)*
 
 ___
 
@@ -92,15 +92,15 @@ ___
 
 • **securityTokenSymbol**: *string*
 
-*Defined in [src/entities/Checkpoint.ts:95](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L95)*
+*Defined in [src/entities/Checkpoint.ts:95](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L95)*
 
 ___
 
 ###  shareholderBalances
 
-• **shareholderBalances**: *[ShareholderBalance](../interfaces/_types_index_.shareholderbalance.md)[]*
+• **shareholderBalances**: *ShareholderBalance[]*
 
-*Defined in [src/entities/Checkpoint.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L107)*
+*Defined in [src/entities/Checkpoint.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L107)*
 
 shareholder balances at this specific checkpoint
 
@@ -110,7 +110,7 @@ ___
 
 • **totalSupply**: *BigNumber*
 
-*Defined in [src/entities/Checkpoint.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L109)*
+*Defined in [src/entities/Checkpoint.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L109)*
 
 ___
 
@@ -120,17 +120,17 @@ ___
 
 *Overrides [Entity](entities.entity.md).[uid](entities.entity.md#abstract-uid)*
 
-*Defined in [src/entities/Checkpoint.ts:88](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L88)*
+*Defined in [src/entities/Checkpoint.ts:88](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L88)*
 
 ## Methods
 
 ###  _refresh
 
-▸ **_refresh**(`params`: Partial‹[Params](../interfaces/entities.params-6.md)›): *void*
+▸ **_refresh**(`params`: Partial‹[Params](../interfaces/entities.params-2.md)›): *void*
 
 *Overrides [Entity](entities.entity.md).[_refresh](entities.entity.md#abstract-_refresh)*
 
-*Defined in [src/entities/Checkpoint.ts:169](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L169)*
+*Defined in [src/entities/Checkpoint.ts:169](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L169)*
 
 Hydrate the entity
 
@@ -138,7 +138,7 @@ Hydrate the entity
 
 Name | Type |
 ------ | ------ |
-`params` | Partial‹[Params](../interfaces/entities.params-6.md)› |
+`params` | Partial‹[Params](../interfaces/entities.params-2.md)› |
 
 **Returns:** *void*
 
@@ -150,27 +150,11 @@ ___
 
 *Overrides [Entity](entities.entity.md).[toPojo](entities.entity.md#abstract-topojo)*
 
-*Defined in [src/entities/Checkpoint.ts:142](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L142)*
+*Defined in [src/entities/Checkpoint.ts:142](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L142)*
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
 **Returns:** *object*
-
-* **createdAt**: *Date*
-
-* **dividendDistributions**: *object[]* =  dividendDistributions.map(distribution => distribution.toPojo())
-
-* **index**: *number*
-
-* **securityTokenId**: *string*
-
-* **securityTokenSymbol**: *string*
-
-* **shareholderBalances**: *[ShareholderBalance](../interfaces/_types_index_.shareholderbalance.md)[]*
-
-* **totalSupply**: *BigNumber*
-
-* **uid**: *string*
 
 ___
 
@@ -178,18 +162,15 @@ ___
 
 ▸ **generateId**(`__namedParameters`: object): *string*
 
-*Defined in [src/entities/Checkpoint.ts:63](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L63)*
+*Defined in [src/entities/Checkpoint.ts:63](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L63)*
 
 Generate the Checkpoint's UUID from its identifying properties
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
 Name | Type |
 ------ | ------ |
-`index` | number |
-`securityTokenId` | string |
+`__namedParameters` | object |
 
 **Returns:** *string*
 
@@ -197,9 +178,9 @@ ___
 
 ### `Static` unserialize
 
-▸ **unserialize**(`serialized`: string): *[UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-5.md)*
+▸ **unserialize**(`serialized`: string): *[UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-3.md)*
 
-*Defined in [src/entities/Checkpoint.ts:75](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L75)*
+*Defined in [src/entities/Checkpoint.ts:75](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Checkpoint.ts#L75)*
 
 Unserialize string to Checkpoint object
 
@@ -209,4 +190,4 @@ Name | Type |
 ------ | ------ |
 `serialized` | string |
 
-**Returns:** *[UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-5.md)*
+**Returns:** *[UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-3.md)*

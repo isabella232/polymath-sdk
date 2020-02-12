@@ -26,15 +26,15 @@ Context in which the SDK is being used
 
 ###  constructor
 
-\+ **new Context**(`params`: [ConstructorParams](../interfaces/_context_.constructorparams.md)): *[Context](_context_.context.md)*
+\+ **new Context**(`params`: ConstructorParams): *[Context](_context_.context.md)*
 
-*Defined in [src/Context.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/Context.ts#L45)*
+*Defined in [src/Context.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L45)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`params` | [ConstructorParams](../interfaces/_context_.constructorparams.md) |
+`params` | ConstructorParams |
 
 **Returns:** *[Context](_context_.context.md)*
 
@@ -44,7 +44,7 @@ Name | Type |
 
 • **contractWrappers**: *[PolymathBase](_polymathbase_.polymathbase.md)*
 
-*Defined in [src/Context.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/Context.ts#L41)*
+*Defined in [src/Context.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L41)*
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 • **currentWallet**: *Wallet*
 
-*Defined in [src/Context.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/Context.ts#L43)*
+*Defined in [src/Context.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L43)*
 
 ___
 
@@ -60,4 +60,4 @@ ___
 
 • **factories**: *[Factories](../interfaces/_context_.factories.md)*
 
-*Defined in [src/Context.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/Context.ts#L45)*
+*Defined in [src/Context.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L45)*

@@ -1,6 +1,6 @@
 # Interface: UniqueIdentifiers
 
-Properties that uniquely identify a Shareholder of a specific Security Token
+Properties that uniquely identify a Security Token Reservation
 
 ## Hierarchy
 
@@ -10,21 +10,12 @@ Properties that uniquely identify a Shareholder of a specific Security Token
 
 ### Properties
 
-* [address](entities.uniqueidentifiers-8.md#address)
-* [securityTokenId](entities.uniqueidentifiers-8.md#securitytokenid)
+* [symbol](entities.uniqueidentifiers-8.md#symbol)
 
 ## Properties
 
-###  address
+###  symbol
 
-• **address**: *string*
+• **symbol**: *string*
 
-*Defined in [src/entities/Shareholder.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Shareholder.ts#L17)*
-
-___
-
-###  securityTokenId
-
-• **securityTokenId**: *string*
-
-*Defined in [src/entities/Shareholder.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Shareholder.ts#L16)*
+*Defined in [src/entities/SecurityTokenReservation.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityTokenReservation.ts#L17)*

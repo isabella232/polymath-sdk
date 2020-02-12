@@ -1,34 +1,23 @@
 # Interface: UniqueIdentifiers
 
-Properties that uniquely identify a Checkpoint
+Properties that uniquely identify a Wallet
 
 ## Hierarchy
 
 * **UniqueIdentifiers**
 
+  ↳ [Params](entities.params-3.md)
+
 ## Index
 
 ### Properties
 
-* [index](entities.uniqueidentifiers-5.md#index)
-* [securityTokenId](entities.uniqueidentifiers-5.md#securitytokenid)
+* [address](entities.uniqueidentifiers-5.md#address)
 
 ## Properties
 
-###  index
+###  address
 
-• **index**: *number*
+• **address**: *string*
 
-*Defined in [src/entities/Checkpoint.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L24)*
-
-numerical index of the checkpoint. The higher the index, the more recent the checkpoint
-
-___
-
-###  securityTokenId
-
-• **securityTokenId**: *string*
-
-*Defined in [src/entities/Checkpoint.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Checkpoint.ts#L20)*
-
-security token UUID
+*Defined in [src/entities/Wallet.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Wallet.ts#L17)*

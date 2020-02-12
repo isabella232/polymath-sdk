@@ -10,21 +10,21 @@ Constructor parameters
 
 ### Properties
 
-* [percentage](entities.params-1.md#percentage)
-* [securityTokenSymbol](entities.params-1.md#securitytokensymbol)
+* [balance](entities.params-1.md#balance)
+* [tokenSymbol](entities.params-1.md#tokensymbol)
 
 ## Properties
 
-###  percentage
+###  balance
 
-• **percentage**: *number*
+• **balance**: *BigNumber*
 
-*Defined in [src/entities/TaxWithholding.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/TaxWithholding.ts#L38)*
+*Defined in [src/entities/Erc20TokenBalance.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L34)*
 
 ___
 
-###  securityTokenSymbol
+###  tokenSymbol
 
-• **securityTokenSymbol**: *string*
+• **tokenSymbol**: *string | null*
 
-*Defined in [src/entities/TaxWithholding.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/TaxWithholding.ts#L37)*
+*Defined in [src/entities/Erc20TokenBalance.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L33)*

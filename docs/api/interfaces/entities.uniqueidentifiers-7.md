@@ -1,6 +1,6 @@
 # Interface: UniqueIdentifiers
 
-Properties that uniquely identify an Investment
+Properties that uniquely identify an ERC20 token balance
 
 ## Hierarchy
 
@@ -10,30 +10,21 @@ Properties that uniquely identify an Investment
 
 ### Properties
 
-* [index](entities.uniqueidentifiers-7.md#index)
-* [securityTokenId](entities.uniqueidentifiers-7.md#securitytokenid)
-* [stoId](entities.uniqueidentifiers-7.md#stoid)
+* [tokenAddress](entities.uniqueidentifiers-7.md#tokenaddress)
+* [walletAddress](entities.uniqueidentifiers-7.md#walletaddress)
 
 ## Properties
 
-###  index
+###  tokenAddress
 
-• **index**: *number*
+• **tokenAddress**: *string*
 
-*Defined in [src/entities/Investment.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Investment.ts#L18)*
-
-___
-
-###  securityTokenId
-
-• **securityTokenId**: *string*
-
-*Defined in [src/entities/Investment.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Investment.ts#L16)*
+*Defined in [src/entities/Erc20TokenBalance.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L16)*
 
 ___
 
-###  stoId
+###  walletAddress
 
-• **stoId**: *string*
+• **walletAddress**: *string*
 
-*Defined in [src/entities/Investment.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Investment.ts#L17)*
+*Defined in [src/entities/Erc20TokenBalance.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Erc20TokenBalance.ts#L17)*

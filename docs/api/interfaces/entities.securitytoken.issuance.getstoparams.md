@@ -19,12 +19,12 @@ Params for [getSto](../classes/entities.securitytoken.issuance.offerings.md#gets
 
 • **address**: *string*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityToken/Issuance/Offerings.ts#L57)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/Issuance/Offerings.ts#L57)*
 
 ___
 
 ###  stoType
 
-• **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
+• **stoType**: *StoType*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:56](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityToken/Issuance/Offerings.ts#L56)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:56](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/Issuance/Offerings.ts#L56)*

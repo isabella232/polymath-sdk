@@ -16,15 +16,3 @@
 ### Interfaces
 
 * [EntityClass](../interfaces/entities.factories.entityclass.md)
-
-### Variables
-
-* [weiToValue](entities.factories.md#weitovalue)
-
-## Variables
-
-###  weiToValue
-
-• **weiToValue**: *weiToValue*
-
-*Defined in [src/entities/factories/InvestmentFactory.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/factories/InvestmentFactory.ts#L22)*

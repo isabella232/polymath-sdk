@@ -1,6 +1,6 @@
 # Interface: UniqueIdentifiers
 
-Properties that uniquely identify a Dividend Distribution
+Properties that uniquely identify an Investment
 
 ## Hierarchy
 
@@ -12,6 +12,7 @@ Properties that uniquely identify a Dividend Distribution
 
 * [index](entities.uniqueidentifiers-1.md#index)
 * [securityTokenId](entities.uniqueidentifiers-1.md#securitytokenid)
+* [stoId](entities.uniqueidentifiers-1.md#stoid)
 
 ## Properties
 
@@ -19,9 +20,7 @@ Properties that uniquely identify a Dividend Distribution
 
 • **index**: *number*
 
-*Defined in [src/entities/DividendDistribution.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/DividendDistribution.ts#L25)*
-
-ordered index of the distribution
+*Defined in [src/entities/Investment.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Investment.ts#L18)*
 
 ___
 
@@ -29,6 +28,12 @@ ___
 
 • **securityTokenId**: *string*
 
-*Defined in [src/entities/DividendDistribution.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/DividendDistribution.ts#L21)*
+*Defined in [src/entities/Investment.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Investment.ts#L16)*
 
-security token UUID
+___
+
+###  stoId
+
+• **stoId**: *string*
+
+*Defined in [src/entities/Investment.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Investment.ts#L17)*

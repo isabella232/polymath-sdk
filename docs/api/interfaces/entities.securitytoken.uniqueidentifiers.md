@@ -18,6 +18,6 @@ Properties that uniquely identify a Security Token
 
 • **symbol**: *string*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityToken/SecurityToken.ts#L29)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/SecurityToken.ts#L29)*
 
 symbol of the security token

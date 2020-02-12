@@ -1,133 +1,115 @@
 # Interface: Params
 
-STO constructor parameters
+Dividend Distribution constructor parameters
 
 ## Hierarchy
 
 * **Params**
 
-  ↳ [Params](entities.params-3.md)
-
-  ↳ [Params](entities.params-9.md)
-
 ## Index
 
 ### Properties
 
-* [beneficialInvestmentsAllowed](entities.params-10.md#beneficialinvestmentsallowed)
-* [capReached](entities.params-10.md#capreached)
-* [endDate](entities.params-10.md#enddate)
-* [fundraiseCurrencies](entities.params-10.md#fundraisecurrencies)
-* [investorCount](entities.params-10.md#investorcount)
-* [isFinalized](entities.params-10.md#isfinalized)
-* [isPaused](entities.params-10.md#ispaused)
-* [preIssueAllowed](entities.params-10.md#preissueallowed)
-* [raisedAmount](entities.params-10.md#raisedamount)
-* [raisedFundsWallet](entities.params-10.md#raisedfundswallet)
+* [amount](entities.params-10.md#amount)
+* [checkpointId](entities.params-10.md#checkpointid)
+* [claimedAmount](entities.params-10.md#claimedamount)
+* [created](entities.params-10.md#created)
+* [currency](entities.params-10.md#currency)
+* [expiry](entities.params-10.md#expiry)
+* [maturity](entities.params-10.md#maturity)
+* [name](entities.params-10.md#name)
+* [reclaimed](entities.params-10.md#reclaimed)
 * [securityTokenSymbol](entities.params-10.md#securitytokensymbol)
-* [soldTokensAmount](entities.params-10.md#soldtokensamount)
-* [startDate](entities.params-10.md#startdate)
-* [unsoldTokensWallet](entities.params-10.md#unsoldtokenswallet)
+* [shareholders](entities.params-10.md#shareholders)
+* [totalSupply](entities.params-10.md#totalsupply)
+* [totalWithheld](entities.params-10.md#totalwithheld)
+* [totalWithheldWithdrawn](entities.params-10.md#totalwithheldwithdrawn)
 
 ## Properties
 
-###  beneficialInvestmentsAllowed
+###  amount
 
-• **beneficialInvestmentsAllowed**: *boolean*
+• **amount**: *BigNumber*
 
-*Defined in [src/entities/Sto.ts:97](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L97)*
+*Defined in [src/entities/DividendDistribution.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L62)*
 
-whether or not investments can be made on behalf of a beneficiary in the sto
-
-___
-
-###  capReached
-
-• **capReached**: *boolean*
-
-*Defined in [src/entities/Sto.ts:85](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L85)*
-
-whether or not the cap has been reached for the sto
+dividend amount
 
 ___
 
-###  endDate
+###  checkpointId
 
-• **endDate**: *Date*
+• **checkpointId**: *string*
 
-*Defined in [src/entities/Sto.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L53)*
-
-expiry date of the sto
+*Defined in [src/entities/DividendDistribution.ts:46](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L46)*
 
 ___
 
-###  fundraiseCurrencies
+###  claimedAmount
 
-• **fundraiseCurrencies**: *Currency[]*
+• **claimedAmount**: *BigNumber*
 
-*Defined in [src/entities/Sto.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L57)*
+*Defined in [src/entities/DividendDistribution.ts:66](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L66)*
 
-currencies that can be used to fundraise in this sto
-
-___
-
-###  investorCount
-
-• **investorCount**: *number*
-
-*Defined in [src/entities/Sto.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L77)*
-
-number of investors in the sto
+amount of dividend claimed so far
 
 ___
 
-###  isFinalized
+###  created
 
-• **isFinalized**: *boolean*
+• **created**: *Date*
 
-*Defined in [src/entities/Sto.ts:89](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L89)*
+*Defined in [src/entities/DividendDistribution.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L50)*
 
-whether or not the sto has been finalized
-
-___
-
-###  isPaused
-
-• **isPaused**: *boolean*
-
-*Defined in [src/entities/Sto.ts:81](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L81)*
-
-whether or not the sto is currently paused
+date at which the dividend was created
 
 ___
 
-###  preIssueAllowed
+###  currency
 
-• **preIssueAllowed**: *boolean*
+• **currency**: *string | null*
 
-*Defined in [src/entities/Sto.ts:93](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L93)*
+*Defined in [src/entities/DividendDistribution.ts:82](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L82)*
 
-whether or not pre issuance is allowed for the sto
-
-___
-
-###  raisedAmount
-
-• **raisedAmount**: *BigNumber*
-
-*Defined in [src/entities/Sto.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L69)*
-
-funds that have been raised to this date
+symbol of the currency in which this dividend distribution is being paid
 
 ___
 
-###  raisedFundsWallet
+###  expiry
 
-• **raisedFundsWallet**: *string*
+• **expiry**: *Date*
 
-*Defined in [src/entities/Sto.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L61)*
+*Defined in [src/entities/DividendDistribution.ts:58](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L58)*
 
-wallet address where raised funds will be stored
+date until which dividend can be claimed
+
+___
+
+###  maturity
+
+• **maturity**: *Date*
+
+*Defined in [src/entities/DividendDistribution.ts:54](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L54)*
+
+date after which dividend can be claimed
+
+___
+
+###  name
+
+• **name**: *string*
+
+*Defined in [src/entities/DividendDistribution.ts:78](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L78)*
+
+___
+
+###  reclaimed
+
+• **reclaimed**: *boolean*
+
+*Defined in [src/entities/DividendDistribution.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L74)*
+
+true if expiry has passed and issuer has reclaimed remaining dividend
 
 ___
 
@@ -135,36 +117,38 @@ ___
 
 • **securityTokenSymbol**: *string*
 
-*Defined in [src/entities/Sto.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L45)*
-
-symbol of security token
+*Defined in [src/entities/DividendDistribution.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L45)*
 
 ___
 
-###  soldTokensAmount
+###  shareholders
 
-• **soldTokensAmount**: *BigNumber*
+• **shareholders**: *DividendShareholderStatus[]*
 
-*Defined in [src/entities/Sto.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L73)*
-
-amount of tokens that have been sold
+*Defined in [src/entities/DividendDistribution.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L77)*
 
 ___
 
-###  startDate
+###  totalSupply
 
-• **startDate**: *Date*
+• **totalSupply**: *BigNumber*
 
-*Defined in [src/entities/Sto.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L49)*
+*Defined in [src/entities/DividendDistribution.ts:70](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L70)*
 
-start date of the sto
+total supply at the associated checkpoint
 
 ___
 
-###  unsoldTokensWallet
+###  totalWithheld
 
-• **unsoldTokensWallet**: *string*
+• **totalWithheld**: *BigNumber*
 
-*Defined in [src/entities/Sto.ts:65](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/Sto.ts#L65)*
+*Defined in [src/entities/DividendDistribution.ts:75](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L75)*
 
-wallet address where unsold tokens will be returned to
+___
+
+###  totalWithheldWithdrawn
+
+• **totalWithheldWithdrawn**: *BigNumber*
+
+*Defined in [src/entities/DividendDistribution.ts:76](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L76)*

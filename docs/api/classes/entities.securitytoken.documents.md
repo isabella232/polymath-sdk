@@ -34,7 +34,7 @@ Namespace that handles all document Related functionality
 
 *Inherited from [SubModule](entities.securitytoken.submodule.md).[constructor](entities.securitytoken.submodule.md#constructor)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityToken/SubModule.ts#L15)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/SubModule.ts#L15)*
 
 Create a new SubModule instance
 
@@ -55,7 +55,7 @@ Name | Type |
 
 *Inherited from [SubModule](entities.securitytoken.submodule.md).[context](entities.securitytoken.submodule.md#protected-context)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityToken/SubModule.ts#L15)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/SubModule.ts#L15)*
 
 ___
 
@@ -65,78 +65,70 @@ ___
 
 *Inherited from [SubModule](entities.securitytoken.submodule.md).[securityToken](entities.securitytoken.submodule.md#protected-securitytoken)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityToken/SubModule.ts#L13)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/SubModule.ts#L13)*
 
 ## Methods
 
 ###  getAllDocuments
 
-▸ **getAllDocuments**(): *Promise‹[Document](../interfaces/entities.securitytoken.document.md)[]›*
+▸ **getAllDocuments**(): *Promise‹Document[]›*
 
-*Defined in [src/entities/SecurityToken/Documents.ts:95](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityToken/Documents.ts#L95)*
+*Defined in [src/entities/SecurityToken/Documents.ts:95](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/Documents.ts#L95)*
 
 Retrieve an array of all the documents attached to the security token
 
-**Returns:** *Promise‹[Document](../interfaces/entities.securitytoken.document.md)[]›*
+**Returns:** *Promise‹Document[]›*
 
 ___
 
 ###  getDocument
 
-▸ **getDocument**(`args`: object): *Promise‹[Document](../interfaces/entities.securitytoken.document.md)›*
+▸ **getDocument**(`args`: object): *Promise‹Document›*
 
-*Defined in [src/entities/SecurityToken/Documents.ts:66](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityToken/Documents.ts#L66)*
+*Defined in [src/entities/SecurityToken/Documents.ts:66](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/Documents.ts#L66)*
 
 Retrieve a specific document's data by name
 
 **Parameters:**
 
-▪ **args**: *object*
-
 Name | Type |
 ------ | ------ |
-`name` | string |
+`args` | object |
 
-**Returns:** *Promise‹[Document](../interfaces/entities.securitytoken.document.md)›*
+**Returns:** *Promise‹Document›*
 
 ___
 
 ###  remove
 
-▸ **remove**(`args`: object): *Promise‹[TransactionQueue](entities.transactionqueue.md)‹[RemoveDocumentProcedureArgs](../interfaces/_types_index_.removedocumentprocedureargs.md), void››*
+▸ **remove**(`args`: object): *Promise‹[TransactionQueue](entities.transactionqueue.md)‹RemoveDocumentProcedureArgs, void››*
 
-*Defined in [src/entities/SecurityToken/Documents.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityToken/Documents.ts#L55)*
+*Defined in [src/entities/SecurityToken/Documents.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/Documents.ts#L55)*
 
 Remove an existing document from the Security Token
 
 **Parameters:**
 
-▪ **args**: *object*
+Name | Type |
+------ | ------ |
+`args` | object |
 
-Name | Type | Description |
------- | ------ | ------ |
-`name` | string | should always be unique  |
-
-**Returns:** *Promise‹[TransactionQueue](entities.transactionqueue.md)‹[RemoveDocumentProcedureArgs](../interfaces/_types_index_.removedocumentprocedureargs.md), void››*
+**Returns:** *Promise‹[TransactionQueue](entities.transactionqueue.md)‹RemoveDocumentProcedureArgs, void››*
 
 ___
 
 ###  set
 
-▸ **set**(`args`: object): *Promise‹[TransactionQueue](entities.transactionqueue.md)‹[SetDocumentProcedureArgs](../interfaces/_types_index_.setdocumentprocedureargs.md), void››*
+▸ **set**(`args`: object): *Promise‹[TransactionQueue](entities.transactionqueue.md)‹SetDocumentProcedureArgs, void››*
 
-*Defined in [src/entities/SecurityToken/Documents.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/entities/SecurityToken/Documents.ts#L42)*
+*Defined in [src/entities/SecurityToken/Documents.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/Documents.ts#L42)*
 
 Attach a new document to the contract, or update the URI or hash of an existing attached document
 
 **Parameters:**
 
-▪ **args**: *object*
+Name | Type |
+------ | ------ |
+`args` | object |
 
-Name | Type | Description |
------- | ------ | ------ |
-`documentHash` | string | hash of the document's contents  |
-`name` | string | should always be unique |
-`uri` | string | off-chain uri of the document from where it is accessible to investors/advisors to read |
-
-**Returns:** *Promise‹[TransactionQueue](entities.transactionqueue.md)‹[SetDocumentProcedureArgs](../interfaces/_types_index_.setdocumentprocedureargs.md), void››*
+**Returns:** *Promise‹[TransactionQueue](entities.transactionqueue.md)‹SetDocumentProcedureArgs, void››*

@@ -28,16 +28,13 @@ Wraps an error to give more information about it's type
 
 \+ **new PolymathError**(`__namedParameters`: object): *[PolymathError](_polymatherror_.polymatherror.md)*
 
-*Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathError.ts#L24)*
+*Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathError.ts#L24)*
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
-
 Name | Type |
 ------ | ------ |
-`code` | [ErrorCode](../enums/_types_index_.errorcode.md) |
-`message` | undefined &#124; string |
+`__namedParameters` | object |
 
 **Returns:** *[PolymathError](_polymatherror_.polymatherror.md)*
 
@@ -45,9 +42,9 @@ Name | Type |
 
 ###  code
 
-• **code**: *[ErrorCode](../enums/_types_index_.errorcode.md)*
+• **code**: *ErrorCode*
 
-*Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathError.ts#L24)*
+*Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathError.ts#L24)*
 
 ___
 

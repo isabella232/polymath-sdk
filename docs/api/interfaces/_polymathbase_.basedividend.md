@@ -31,7 +31,7 @@ Internal representation of a Dividend Distribution
 
 • **amount**: *BigNumber*
 
-*Defined in [src/PolymathBase.ts:301](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L301)*
+*Defined in [src/PolymathBase.ts:301](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L301)*
 
 amount of tokens provided in the Dividend
 
@@ -41,7 +41,7 @@ ___
 
 • **checkpointId**: *number*
 
-*Defined in [src/PolymathBase.ts:285](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L285)*
+*Defined in [src/PolymathBase.ts:285](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L285)*
 
 checkpoint UUID to which this Dividend Distribution is associated
 
@@ -51,7 +51,7 @@ ___
 
 • **claimedAmount**: *BigNumber*
 
-*Defined in [src/PolymathBase.ts:305](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L305)*
+*Defined in [src/PolymathBase.ts:305](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L305)*
 
 amount of tokens paid so far
 
@@ -61,7 +61,7 @@ ___
 
 • **created**: *Date*
 
-*Defined in [src/PolymathBase.ts:289](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L289)*
+*Defined in [src/PolymathBase.ts:289](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L289)*
 
 date at which the Dividend was created
 
@@ -71,7 +71,7 @@ ___
 
 • **currency**: *string | null*
 
-*Defined in [src/PolymathBase.ts:329](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L329)*
+*Defined in [src/PolymathBase.ts:329](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L329)*
 
 symbol of the currency in which Dividends are being distributed
 
@@ -81,7 +81,7 @@ ___
 
 • **expiry**: *Date*
 
-*Defined in [src/PolymathBase.ts:297](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L297)*
+*Defined in [src/PolymathBase.ts:297](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L297)*
 
 date at which the Dividend will expire
 
@@ -91,7 +91,7 @@ ___
 
 • **index**: *number*
 
-*Defined in [src/PolymathBase.ts:281](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L281)*
+*Defined in [src/PolymathBase.ts:281](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L281)*
 
 index of the dividend
 
@@ -101,7 +101,7 @@ ___
 
 • **maturity**: *Date*
 
-*Defined in [src/PolymathBase.ts:293](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L293)*
+*Defined in [src/PolymathBase.ts:293](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L293)*
 
 date from which payments can be distributed
 
@@ -111,7 +111,7 @@ ___
 
 • **name**: *string*
 
-*Defined in [src/PolymathBase.ts:325](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L325)*
+*Defined in [src/PolymathBase.ts:325](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L325)*
 
 name of the Dividend
 
@@ -121,7 +121,7 @@ ___
 
 • **reclaimed**: *boolean*
 
-*Defined in [src/PolymathBase.ts:313](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L313)*
+*Defined in [src/PolymathBase.ts:313](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L313)*
 
 whether expired payments have been reclaimed
 
@@ -129,9 +129,9 @@ ___
 
 ###  shareholders
 
-• **shareholders**: *[DividendShareholderStatus](_types_index_.dividendshareholderstatus.md)[]*
+• **shareholders**: *DividendShareholderStatus[]*
 
-*Defined in [src/PolymathBase.ts:333](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L333)*
+*Defined in [src/PolymathBase.ts:333](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L333)*
 
 dividend Shareholders
 
@@ -141,7 +141,7 @@ ___
 
 • **totalSupply**: *BigNumber*
 
-*Defined in [src/PolymathBase.ts:309](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L309)*
+*Defined in [src/PolymathBase.ts:309](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L309)*
 
 total supply of the Security Token
 
@@ -151,7 +151,7 @@ ___
 
 • **totalWithheld**: *BigNumber*
 
-*Defined in [src/PolymathBase.ts:317](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L317)*
+*Defined in [src/PolymathBase.ts:317](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L317)*
 
 total amount of tokens withheld as tax so far
 
@@ -161,6 +161,6 @@ ___
 
 • **totalWithheldWithdrawn**: *BigNumber*
 
-*Defined in [src/PolymathBase.ts:321](https://github.com/PolymathNetwork/polymath-sdk/blob/454d285/src/PolymathBase.ts#L321)*
+*Defined in [src/PolymathBase.ts:321](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/PolymathBase.ts#L321)*
 
 total amount of withheld taxes already withdrawn from the storage wallet
