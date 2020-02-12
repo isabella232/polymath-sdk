@@ -18,10 +18,10 @@ import {
   IssueTokensProcedureArgs,
   ShareholderDataEntry,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { Shareholder, SecurityToken } from '../entities';
 import { ModifyShareholderData } from './ModifyShareholderData';
-import { Factories } from '../Context';
+import { Factories } from '../base/Context';
 import { ZERO_ADDRESS } from '../utils/constants';
 
 /**

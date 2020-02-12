@@ -8,17 +8,17 @@ import { SecurityTokenEvents } from '@polymathnetwork/contract-wrappers';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
 import * as createCheckpointModule from '../../procedures/CreateCheckpoint';
 import { Procedure } from '../../procedures/Procedure';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 import * as utilsModule from '../../utils';
 import * as checkpointFactoryModule from '../../entities/factories/CheckpointFactory';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
-import * as contextModule from '../../Context';
-import * as wrappersModule from '../../PolymathBase';
+import * as contextModule from '../../base/Context';
+import * as wrappersModule from '../../base/PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { Checkpoint, SecurityToken } from '../../entities';
-import { Factories } from '../../Context';
+import { Factories } from '../../base/Context';
 
 const params = {
   symbol: 'TEST1',

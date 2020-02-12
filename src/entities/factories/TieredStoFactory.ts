@@ -6,7 +6,7 @@
 import { ModuleName, isUSDTieredSTO_3_1_0 } from '@polymathnetwork/contract-wrappers';
 import { range } from 'lodash';
 import { Factory } from './Factory';
-import { Context } from '../../Context';
+import { Context } from '../../base/Context';
 import { Currency } from '../../types';
 import { SecurityToken } from '../SecurityToken';
 import { TieredSto, Params, UniqueIdentifiers, Tier } from '../TieredSto';

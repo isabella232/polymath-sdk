@@ -11,7 +11,7 @@ import {
   EnableGeneralPermissionManagerProcedureArgs,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 
 /**
  * Procedure that enables Permissions on a Security Token

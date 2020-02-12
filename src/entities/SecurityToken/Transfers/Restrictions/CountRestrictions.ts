@@ -7,7 +7,7 @@ import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { ErrorCode } from '../../../../types';
 import { ModifyMaxHolderCount } from '../../../../procedures';
 import { SubModule } from '../../SubModule';
-import { PolymathError } from '../../../../PolymathError';
+import { PolymathError } from '../../../../base/PolymathError';
 
 /**
  * Namespace that handles all Count Restriction related functionality

@@ -10,7 +10,7 @@ import {
   RemoveDocumentProcedureArgs,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { checkStringLength } from '../utils';
 
 /**

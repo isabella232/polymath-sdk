@@ -5,9 +5,9 @@
 
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Factory } from './Factory';
-import { Context } from '../../Context';
+import { Context } from '../../base/Context';
 import { SecurityToken } from '../SecurityToken';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import { ErrorCode } from '../../types';
 import { TaxWithholding, Params, UniqueIdentifiers } from '../TaxWithholding';
 

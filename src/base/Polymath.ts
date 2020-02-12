@@ -10,12 +10,12 @@ import phin from 'phin';
 import { union, compact, chunk } from 'lodash';
 import { Context } from './Context';
 import { getInjectedProvider } from './browserUtils';
-import { ErrorCode, TransactionSpeed, Version } from './types';
-import { SecurityToken, Wallet } from './entities';
-import { ReserveSecurityToken } from './procedures';
+import { ErrorCode, TransactionSpeed, Version } from '../types';
+import { SecurityToken, Wallet } from '../entities';
+import { ReserveSecurityToken } from '../procedures';
 import { PolymathError } from './PolymathError';
 import { PolymathBase } from './PolymathBase';
-import { convertVersionToEnum } from './utils';
+import { convertVersionToEnum } from '../utils';
 
 interface PolymathNetworkParams {
   polymathRegistryAddress?: string;

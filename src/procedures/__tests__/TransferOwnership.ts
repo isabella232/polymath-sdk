@@ -2,8 +2,8 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import * as contextModule from '../../Context';
-import * as wrappersModule from '../../PolymathBase';
+import * as contextModule from '../../base/Context';
+import * as wrappersModule from '../../base/PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { TransferOwnership } from '../../procedures/TransferOwnership';
 import * as TransferOwnershipModule from '../../procedures/TransferOwnership';
@@ -14,9 +14,9 @@ import {
   ErrorCode,
   TransferOwnershipProcedureArgs,
 } from '../../types';
-import { PolymathError } from '../../PolymathError';
-import { Wallet } from '../../Wallet';
-import { Factories } from '../../Context';
+import { PolymathError } from '../../base/PolymathError';
+import { Wallet } from '../../base/Wallet';
+import { Factories } from '../../base/Context';
 import { mockFactories } from '../../testUtils/mockFactories';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import { SecurityToken } from '../../entities';

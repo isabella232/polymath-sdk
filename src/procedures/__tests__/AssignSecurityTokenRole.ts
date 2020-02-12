@@ -3,12 +3,12 @@ import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ModuleName, Perm } from '@polymathnetwork/contract-wrappers';
-import * as contextModule from '../../Context';
-import * as wrappersModule from '../../PolymathBase';
+import * as contextModule from '../../base/Context';
+import * as wrappersModule from '../../base/PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { AssignSecurityTokenRole } from '../../procedures/AssignSecurityTokenRole';
 import { Procedure } from '../Procedure';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import {
   ErrorCode,
   Feature,

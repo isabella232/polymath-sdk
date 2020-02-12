@@ -4,7 +4,7 @@
  */
 
 import { Factory } from './Factory';
-import { Context } from '../../Context';
+import { Context } from '../../base/Context';
 import { Wallet, Params, UniqueIdentifiers } from '../Wallet';
 
 /**

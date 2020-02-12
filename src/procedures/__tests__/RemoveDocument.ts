@@ -1,8 +1,8 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import * as contextModule from '../../Context';
-import * as wrappersModule from '../../PolymathBase';
+import * as contextModule from '../../base/Context';
+import * as wrappersModule from '../../base/PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { RemoveDocument } from '../../procedures/RemoveDocument';
 import { Procedure } from '../../procedures/Procedure';
@@ -12,8 +12,8 @@ import {
   ErrorCode,
   RemoveDocumentProcedureArgs,
 } from '../../types';
-import { PolymathError } from '../../PolymathError';
-import { Wallet } from '../../Wallet';
+import { PolymathError } from '../../base/PolymathError';
+import { Wallet } from '../../base/Wallet';
 
 const params: RemoveDocumentProcedureArgs = {
   symbol: 'TEST1',

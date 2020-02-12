@@ -11,7 +11,7 @@ import {
   EnableGeneralTransferManagerProcedureArgs,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 
 /**
  * Procedure that enables Shareholders (specifically the KYC whitelist) on a Security Token. This comes enabled by default

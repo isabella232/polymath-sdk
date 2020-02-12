@@ -12,7 +12,7 @@ import {
   PolyTransactionTag,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { SecurityToken } from '../entities';
 
 /**

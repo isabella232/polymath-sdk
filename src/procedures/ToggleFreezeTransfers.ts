@@ -10,9 +10,9 @@ import {
   ProcedureType,
   PolyTransactionTag,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { SecurityToken } from '../entities';
-import { Factories } from '../Context';
+import { Factories } from '../base/Context';
 
 /**
  * @hidden

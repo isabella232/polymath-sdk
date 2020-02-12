@@ -3,14 +3,14 @@ import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy } from 'sinon';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import * as contextModule from '../../Context';
-import * as wrappersModule from '../../PolymathBase';
-import { Wallet } from '../../Wallet';
+import * as contextModule from '../../base/Context';
+import * as wrappersModule from '../../base/PolymathBase';
+import { Wallet } from '../../base/Wallet';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { ControllerRedeem } from '../../procedures/ControllerRedeem';
 import * as controllerRedeemModule from '../../procedures/ControllerRedeem';
 import { Procedure } from '../../procedures/Procedure';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import {
   ControllerRedeemProcedureArgs,
   ErrorCode,
@@ -20,7 +20,7 @@ import {
 import { mockFactories } from '../../testUtils/mockFactories';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
-import { Factories } from '../../Context';
+import { Factories } from '../../base/Context';
 import { SecurityToken, Shareholder } from '../../entities';
 
 const params: ControllerRedeemProcedureArgs = {

@@ -2,14 +2,14 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import * as contextModule from '../../Context';
-import { Factories } from '../../Context';
-import * as wrappersModule from '../../PolymathBase';
+import * as contextModule from '../../base/Context';
+import { Factories } from '../../base/Context';
+import * as wrappersModule from '../../base/PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { SignFreezeIssuanceAck } from '../SignFreezeIssuanceAck';
 import { Procedure } from '../Procedure';
 import { ProcedureType, ErrorCode } from '../../types';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import { mockFactories } from '../../testUtils/mockFactories';
 
 const params = {

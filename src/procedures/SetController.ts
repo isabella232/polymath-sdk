@@ -5,7 +5,7 @@
 
 import { Procedure } from './Procedure';
 import { ProcedureType, PolyTransactionTag, SetControllerProcedureArgs, ErrorCode } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { isValidAddress } from '../utils';
 
 /**

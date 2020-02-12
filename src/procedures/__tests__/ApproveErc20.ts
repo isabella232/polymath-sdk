@@ -3,12 +3,12 @@ import { ImportMock, MockManager } from 'ts-mock-imports';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { spy } from 'sinon';
-import * as contextModule from '../../Context';
-import * as polymathBaseModule from '../../PolymathBase';
+import * as contextModule from '../../base/Context';
+import * as polymathBaseModule from '../../base/PolymathBase';
 import { ApproveErc20 } from '../../procedures/ApproveErc20';
 import { Procedure } from '../../procedures/Procedure';
-import { Wallet } from '../../Wallet';
-import { PolymathError } from '../../PolymathError';
+import { Wallet } from '../../base/Wallet';
+import { PolymathError } from '../../base/PolymathError';
 import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
 
 const params = {

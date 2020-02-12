@@ -5,7 +5,7 @@
 
 import { Procedure } from './Procedure';
 import { ProcedureType, ErrorCode, SignTransferDataProcedureArgs } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 
 /**
  * Procedure that signs KYC data for transfers.

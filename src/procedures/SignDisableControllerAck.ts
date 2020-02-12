@@ -5,7 +5,7 @@
 
 import { Procedure } from './Procedure';
 import { ProcedureType, ErrorCode, SignDisableControllerAckProcedureArgs } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 
 /**
  * Procedure that signs an acknowledgement to permanently disable a Security Token's Controller functionality

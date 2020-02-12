@@ -20,7 +20,7 @@ import {
   StoType,
   Currency,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { TransferErc20 } from './TransferErc20';
 import { SecurityToken, SimpleSto } from '../entities';
 import { findEvents } from '../utils';

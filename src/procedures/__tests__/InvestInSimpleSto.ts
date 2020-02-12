@@ -5,7 +5,7 @@ import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { InvestInSimpleSto } from '../InvestInSimpleSto';
 import { Procedure } from '../Procedure';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import {
   Currency,
   ErrorCode,
@@ -16,15 +16,15 @@ import {
 } from '../../types';
 import * as investInSimpleStoModule from '../InvestInSimpleSto';
 import * as simpleStoFactoryModule from '../../entities/factories/SimpleStoFactory';
-import * as contextModule from '../../Context';
-import * as wrappersModule from '../../PolymathBase';
+import * as contextModule from '../../base/Context';
+import * as wrappersModule from '../../base/PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
-import { Factories } from '../../Context';
+import { Factories } from '../../base/Context';
 import { SimpleSto, SecurityToken } from '../../entities';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
-import { Wallet } from '../../Wallet';
+import { Wallet } from '../../base/Wallet';
 import { ApproveErc20 } from '../../procedures';
 
 const simpleParams: InvestInSimpleStoProcedureArgs = {

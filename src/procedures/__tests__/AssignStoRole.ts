@@ -1,12 +1,12 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import * as contextModule from '../../Context';
-import * as wrappersModule from '../../PolymathBase';
+import * as contextModule from '../../base/Context';
+import * as wrappersModule from '../../base/PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { AssignStoRole } from '../../procedures/AssignStoRole';
 import { Procedure } from '../Procedure';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import { ErrorCode, PolyTransactionTag, ProcedureType, StoRole } from '../../types';
 
 const params = {

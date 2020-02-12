@@ -2,18 +2,18 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import * as contextModule from '../../Context';
-import * as wrappersModule from '../../PolymathBase';
+import * as contextModule from '../../base/Context';
+import * as wrappersModule from '../../base/PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { TransferReservationOwnership } from '../../procedures/TransferReservationOwnership';
 import { Procedure } from '../../procedures/Procedure';
 import { ProcedureType, PolyTransactionTag, ErrorCode } from '../../types';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import * as TransferReservationOwnershipModule from '../../procedures/TransferReservationOwnership';
 import * as securityTokenReservationFactoryModule from '../../entities/factories/SecurityTokenReservationFactory';
 import { mockFactories } from '../../testUtils/mockFactories';
-import { Wallet } from '../../Wallet';
-import { Factories } from '../../Context';
+import { Wallet } from '../../base/Wallet';
+import { Factories } from '../../base/Context';
 import { SecurityTokenReservation } from '../../entities';
 
 const params = {

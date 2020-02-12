@@ -11,7 +11,7 @@ import {
   CheckpointFactory,
   ShareholderFactory,
   TaxWithholdingFactory,
-} from './entities/factories';
+} from '../entities/factories';
 
 interface ConstructorParams {
   contractWrappers: PolymathBase;

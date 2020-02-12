@@ -1,6 +1,6 @@
 import { getNetworkId } from '../browserUtils';
-import { delay } from '../utils';
-import { mockEthereumBrowser } from '../testUtils';
+import { delay } from '../../utils';
+import { mockEthereumBrowser } from '../../testUtils';
 
 describe('browserUtils', () => {
   describe('.getNetworkId', () => {

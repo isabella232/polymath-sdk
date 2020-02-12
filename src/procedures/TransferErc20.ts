@@ -6,9 +6,9 @@
 import { BigNumber, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import { TransferErc20ProcedureArgs, ErrorCode, ProcedureType, PolyTransactionTag } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { Erc20TokenBalance } from '../entities';
-import { Factories } from '~/Context';
+import { Factories } from '~/base/Context';
 
 /**
  * @hidden

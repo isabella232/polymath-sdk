@@ -15,7 +15,7 @@ import {
 } from '@polymathnetwork/contract-wrappers';
 import { serialize } from '../utils';
 import { Sto, UniqueIdentifiers, Params as StoParams } from './Sto';
-import { Context } from '../Context';
+import { Context } from '../base/Context';
 import { StoTier, Currency, InvestInTieredStoProcedureArgs, CustomCurrency } from '../types';
 import { ModifyTieredStoData, InvestInTieredSto } from '../procedures';
 import { TransactionQueue } from './TransactionQueue';

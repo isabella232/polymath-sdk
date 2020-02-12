@@ -12,7 +12,7 @@ import {
   ErrorCode,
   ModifyPercentageExemptionsProcedureArgs,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 
 /**
  * Procedure responsible for modifying any exemption related to percentage restrictions

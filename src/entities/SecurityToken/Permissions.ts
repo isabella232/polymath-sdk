@@ -9,7 +9,7 @@ import P from 'bluebird';
 import { SubModule } from './SubModule';
 import { AssignSecurityTokenRole } from '../../procedures';
 import { SecurityTokenRole, Feature, ErrorCode } from '../../types';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 
 /**
  * Namespace that handles all Permissions related functionality

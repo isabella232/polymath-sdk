@@ -5,7 +5,7 @@
 
 import { merge } from 'lodash';
 import { Entity } from '../Entity';
-import { Context } from '../../Context';
+import { Context } from '../../base/Context';
 
 /**
  * Represents an entity

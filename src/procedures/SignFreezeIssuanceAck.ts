@@ -5,7 +5,7 @@
 
 import { Procedure } from './Procedure';
 import { ProcedureType, ErrorCode, SignFreezeIssuanceAckProcedureArgs } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 
 /**
  * Procedure that signs an acknowledgement to permanently freeze issuance of a Security Token

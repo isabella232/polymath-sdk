@@ -6,9 +6,9 @@
 import { ModuleName, TransactionParams } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import { ReclaimFundsProcedureArgs, ProcedureType, PolyTransactionTag, ErrorCode } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { DividendDistribution, SecurityToken } from '../entities';
-import { Factories } from '~/Context';
+import { Factories } from '~/base/Context';
 
 /**
  * @hidden

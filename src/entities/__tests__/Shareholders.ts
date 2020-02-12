@@ -1,7 +1,7 @@
 import * as sinon from 'sinon';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import * as contextModule from '../../Context';
+import * as contextModule from '../../base/Context';
 import * as createCheckpointProcedure from '../../procedures/CreateCheckpoint';
 import { Shareholders } from '../../entities/SecurityToken/Shareholders';
 import { SubModule } from '../../entities/SecurityToken/SubModule';

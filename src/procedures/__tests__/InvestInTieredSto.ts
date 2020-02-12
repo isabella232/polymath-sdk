@@ -6,7 +6,7 @@ import { BigNumber, FundRaiseType } from '@polymathnetwork/contract-wrappers';
 import * as investInTieredStoModule from '../InvestInTieredSto';
 import { InvestInTieredSto } from '../InvestInTieredSto';
 import { Procedure } from '../Procedure';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import {
   Currency,
   ErrorCode,
@@ -16,15 +16,15 @@ import {
   StoType,
 } from '../../types';
 import * as tieredStoFactoryModule from '../../entities/factories/TieredStoFactory';
-import * as contextModule from '../../Context';
-import { Factories } from '../../Context';
-import * as wrappersModule from '../../PolymathBase';
+import * as contextModule from '../../base/Context';
+import { Factories } from '../../base/Context';
+import * as wrappersModule from '../../base/PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { SecurityToken, TieredSto } from '../../entities';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
-import { Wallet } from '../../Wallet';
+import { Wallet } from '../../base/Wallet';
 import { ApproveErc20 } from '../../procedures';
 
 const treasuryWallet = '0x1111111111111111111111111111111111111111';

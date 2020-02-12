@@ -13,11 +13,11 @@ import {
   StoType,
   Currency,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto } from '../entities';
 import { ApproveErc20 } from './ApproveErc20';
-import { Factories } from '../Context';
+import { Factories } from '../base/Context';
 
 /**
  * @hidden

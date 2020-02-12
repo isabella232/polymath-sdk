@@ -8,8 +8,8 @@ import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
 import { DividendShareholderStatus, ErrorCode } from '../types';
 import { PushDividendPayment, WithdrawTaxes, PullDividendPayment } from '../procedures';
-import { Context } from '../Context';
-import { PolymathError } from '../PolymathError';
+import { Context } from '../base/Context';
+import { PolymathError } from '../base/PolymathError';
 
 /**
  * Properties that uniquely identify a Dividend Distribution

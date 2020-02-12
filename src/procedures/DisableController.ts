@@ -10,7 +10,7 @@ import {
   DisableControllerProcedureArgs,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 
 /**
  * Procedure that permanently disables a Security Token's controller functionality. This requires the Security Token's owner to send signed data in acknowledgement

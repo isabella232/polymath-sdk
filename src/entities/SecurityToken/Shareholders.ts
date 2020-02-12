@@ -11,8 +11,8 @@ import { ShareholderDataEntry, ErrorCode } from '../../types';
 import { ModifyShareholderData, CreateCheckpoint, RevokeKyc } from '../../procedures';
 import { SubModule } from './SubModule';
 import { Checkpoint } from '../Checkpoint';
-import { PolymathError } from '../../PolymathError';
-import { BaseCheckpoint } from '../../PolymathBase';
+import { PolymathError } from '../../base/PolymathError';
+import { BaseCheckpoint } from '../../base/PolymathBase';
 import { DividendDistribution } from '../DividendDistribution';
 import { Shareholder } from '../Shareholder';
 

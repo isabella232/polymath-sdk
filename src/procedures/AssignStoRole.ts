@@ -12,7 +12,7 @@ import {
   ErrorCode,
   StoRole,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { checkStringLength } from '../utils';
 
 /**

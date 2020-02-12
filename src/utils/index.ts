@@ -36,7 +36,7 @@ import {
 } from '@polymathnetwork/contract-wrappers';
 import { isAddress } from 'ethereum-address';
 import { ErrorCode, Pojo, Version } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 
 /**
  * Promisified version of a timeout

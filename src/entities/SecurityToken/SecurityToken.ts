@@ -4,7 +4,7 @@
  */
 
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
-import { Context } from '../../Context';
+import { Context } from '../../base/Context';
 import { Entity } from '../Entity';
 import { serialize, unserialize as unserializeUtil } from '../../utils';
 import { Features } from './Features';
@@ -15,7 +15,7 @@ import { Permissions } from './Permissions';
 import { Transfers } from './Transfers';
 import { Documents } from './Documents';
 import { Controller } from './Controller';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import { ErrorCode, Version } from '../../types';
 import { TransferOwnership } from '../../procedures';
 

@@ -17,7 +17,7 @@ import {
   ErrorCode,
   ModifyShareholderDataProcedureArgs,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { Shareholder, SecurityToken } from '../entities';
 
 const { dateToBigNumber } = conversionUtils;

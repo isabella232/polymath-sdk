@@ -6,7 +6,7 @@ import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransferSecurityTokens } from '../../procedures/TransferSecurityTokens';
 import { Procedure } from '../../procedures/Procedure';
 import * as transferSecurityTokensModule from '../../procedures/TransferSecurityTokens';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import {
   ErrorCode,
   TransferSecurityTokensProcedureArgs,
@@ -14,14 +14,14 @@ import {
   ProcedureType,
 } from '../../types';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
-import * as contextModule from '../../Context';
-import * as wrappersModule from '../../PolymathBase';
+import * as contextModule from '../../base/Context';
+import * as wrappersModule from '../../base/PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { Shareholder } from '../../entities';
 import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
-import { Wallet } from '../../Wallet';
-import { Factories } from '../../Context';
+import { Wallet } from '../../base/Wallet';
+import { Factories } from '../../base/Context';
 
 const params: TransferSecurityTokensProcedureArgs = {
   symbol: 'TEST',

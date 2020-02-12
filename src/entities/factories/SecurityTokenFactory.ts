@@ -5,8 +5,8 @@
 
 import { SecurityToken, Params, UniqueIdentifiers } from '../SecurityToken';
 import { Factory } from './Factory';
-import { Context } from '../../Context';
-import { PolymathError } from '../../PolymathError';
+import { Context } from '../../base/Context';
+import { PolymathError } from '../../base/PolymathError';
 import { ErrorCode } from '../../types';
 import { convertVersionToEnum } from '../../utils';
 

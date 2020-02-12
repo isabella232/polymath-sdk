@@ -12,10 +12,10 @@ import {
   ErrorCode,
   StoType,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, SimpleSto, TieredSto } from '../entities';
-import { Factories } from '~/Context';
+import { Factories } from '~/base/Context';
 
 /**
  * @hidden

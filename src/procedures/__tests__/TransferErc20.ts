@@ -11,17 +11,17 @@ import {
   TransferErc20ProcedureArgs,
 } from '../../types';
 import * as erc20TokenBalanceFactoryModule from '../../entities/factories/Erc20TokenBalanceFactory';
-import * as contextModule from '../../Context';
-import * as wrappersModule from '../../PolymathBase';
+import * as contextModule from '../../base/Context';
+import * as wrappersModule from '../../base/PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { Wallet } from '../../Wallet';
+import { Wallet } from '../../base/Wallet';
 import { TransferErc20 } from '../../procedures';
 import * as transferErc20Module from '../../procedures/TransferErc20';
 import { mockFactories } from '../../testUtils/mockFactories';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import { Erc20TokenBalance } from '../../entities';
-import { Factories } from '../../Context';
+import { Factories } from '../../base/Context';
 
 const params: TransferErc20ProcedureArgs = {
   amount: new BigNumber(10),

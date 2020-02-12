@@ -11,7 +11,7 @@ import {
   EnablePercentageTransferManagerProcedureArgs,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 
 /**
  * Procedure that enables Percentage Ownership Restictions on a Security Token. This allows setting a maximum percentage of the total supply that a single shareholder can own. Any token transfer that would result in a single shareholder owning more than the allowed percentage will fail

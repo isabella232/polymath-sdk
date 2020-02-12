@@ -11,7 +11,7 @@ import {
   PolyTransactionTag,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 
 /**
  * Procedure to disable a Feature on a Security Token

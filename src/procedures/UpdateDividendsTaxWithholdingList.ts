@@ -13,9 +13,9 @@ import {
   ProcedureType,
   UpdateDividendsTaxWithholdingListProcedureArgs,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { SecurityToken, TaxWithholding } from '../entities';
-import { Factories } from '../Context';
+import { Factories } from '../base/Context';
 
 const CHUNK_SIZE = 200;
 

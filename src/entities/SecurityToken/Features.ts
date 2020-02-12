@@ -22,7 +22,7 @@ import {
   EnableGeneralTransferManagerProcedureArgs,
   EnablePercentageTransferManagerProcedureArgs,
 } from '../../types';
-import { PolymathError } from '../../PolymathError';
+import { PolymathError } from '../../base/PolymathError';
 import { TransactionQueue } from '../TransactionQueue';
 import { EnableCountTransferManager } from '../../procedures/EnableCountTransferManager';
 

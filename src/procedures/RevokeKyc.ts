@@ -7,7 +7,7 @@ import { ModuleName, TransactionParams } from '@polymathnetwork/contract-wrapper
 import { difference } from 'lodash';
 import { Procedure } from './Procedure';
 import { ProcedureType, PolyTransactionTag, ErrorCode, RevokeKycProcedureArgs } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { Shareholder, SecurityToken } from '../entities';
 
 /**

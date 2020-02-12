@@ -10,10 +10,10 @@ import {
   ErrorCode,
   ControllerRedeemProcedureArgs,
 } from '../types';
-import { PolymathError } from '../PolymathError';
+import { PolymathError } from '../base/PolymathError';
 import { isValidAddress } from '../utils';
 import { SecurityToken, Shareholder } from '../entities';
-import { Factories } from '../Context';
+import { Factories } from '../base/Context';
 
 /**
  * @hidden
