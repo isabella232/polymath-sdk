@@ -25,7 +25,7 @@
 
 • **checkpointFactory**: *CheckpointFactory*
 
-*Defined in [src/Context.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L28)*
+*Defined in [src/Context.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/Context.ts#L28)*
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • **dividendDistributionFactory**: *DividendDistributionFactory*
 
-*Defined in [src/Context.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L27)*
+*Defined in [src/Context.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/Context.ts#L27)*
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 • **erc20TokenBalanceFactory**: *[Erc20TokenBalanceFactory](../classes/entities.factories.erc20tokenbalancefactory.md)*
 
-*Defined in [src/Context.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L23)*
+*Defined in [src/Context.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/Context.ts#L23)*
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 • **investmentFactory**: *[InvestmentFactory](../classes/entities.factories.investmentfactory.md)*
 
-*Defined in [src/Context.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L24)*
+*Defined in [src/Context.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/Context.ts#L24)*
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 • **securityTokenFactory**: *SecurityTokenFactory*
 
-*Defined in [src/Context.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L21)*
+*Defined in [src/Context.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/Context.ts#L21)*
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 • **securityTokenReservationFactory**: *SecurityTokenReservationFactory*
 
-*Defined in [src/Context.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L22)*
+*Defined in [src/Context.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/Context.ts#L22)*
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 • **shareholderFactory**: *[ShareholderFactory](../classes/entities.factories.shareholderfactory.md)*
 
-*Defined in [src/Context.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L29)*
+*Defined in [src/Context.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/Context.ts#L29)*
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 • **simpleStoFactory**: *[SimpleStoFactory](../classes/entities.factories.simplestofactory.md)*
 
-*Defined in [src/Context.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L25)*
+*Defined in [src/Context.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/Context.ts#L25)*
 
 ___
 
@@ -89,7 +89,7 @@ ___
 
 • **taxWithholdingFactory**: *[TaxWithholdingFactory](../classes/entities.factories.taxwithholdingfactory.md)*
 
-*Defined in [src/Context.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L30)*
+*Defined in [src/Context.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/Context.ts#L30)*
 
 ___
 
@@ -97,4 +97,4 @@ ___
 
 • **tieredStoFactory**: *[TieredStoFactory](../classes/entities.factories.tieredstofactory.md)*
 
-*Defined in [src/Context.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/Context.ts#L26)*
+*Defined in [src/Context.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/Context.ts#L26)*

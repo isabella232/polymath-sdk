@@ -40,7 +40,7 @@
 
 ▸ **unserialize**(`serialized`: string): *[UniqueIdentifiers](../interfaces/entities.securitytoken.uniqueidentifiers.md)*
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/SecurityToken.ts#L77)*
+*Defined in [src/entities/SecurityToken/SecurityToken.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/SecurityToken.ts#L77)*
 
 Unserialize string to a Security Token object representation
 

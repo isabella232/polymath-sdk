@@ -18,6 +18,6 @@ Parameters of the [getDistribution](../classes/entities.securitytoken.dividends.
 
 • **dividendIndex**: *number*
 
-*Defined in [src/entities/SecurityToken/Dividends.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/SecurityToken/Dividends.ts#L27)*
+*Defined in [src/entities/SecurityToken/Dividends.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Dividends.ts#L27)*
 
 dividend distribution representation

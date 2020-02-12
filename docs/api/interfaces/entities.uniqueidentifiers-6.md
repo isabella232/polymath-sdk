@@ -20,7 +20,7 @@ Properties that uniquely identify an STO
 
 • **address**: *string*
 
-*Defined in [src/entities/Sto.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Sto.ts#L26)*
+*Defined in [src/entities/Sto.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Sto.ts#L26)*
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 • **securityTokenId**: *string*
 
-*Defined in [src/entities/Sto.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Sto.ts#L24)*
+*Defined in [src/entities/Sto.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Sto.ts#L24)*
 
 ___
 
@@ -36,4 +36,4 @@ ___
 
 • **stoType**: *StoType*
 
-*Defined in [src/entities/Sto.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Sto.ts#L25)*
+*Defined in [src/entities/Sto.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Sto.ts#L25)*

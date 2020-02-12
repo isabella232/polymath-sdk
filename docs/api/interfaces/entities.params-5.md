@@ -24,7 +24,7 @@ Constructor parameters
 
 • **balance**: *BigNumber*
 
-*Defined in [src/entities/Shareholder.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L40)*
+*Defined in [src/entities/Shareholder.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L40)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 • **canBuyFromSto**: *boolean*
 
-*Defined in [src/entities/Shareholder.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L39)*
+*Defined in [src/entities/Shareholder.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L39)*
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 • **canReceiveAfter**: *Date*
 
-*Defined in [src/entities/Shareholder.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L36)*
+*Defined in [src/entities/Shareholder.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L36)*
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 • **canSendAfter**: *Date*
 
-*Defined in [src/entities/Shareholder.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L35)*
+*Defined in [src/entities/Shareholder.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L35)*
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 • **isAccredited**: *boolean*
 
-*Defined in [src/entities/Shareholder.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L38)*
+*Defined in [src/entities/Shareholder.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L38)*
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 • **kycExpiry**: *Date*
 
-*Defined in [src/entities/Shareholder.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L37)*
+*Defined in [src/entities/Shareholder.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L37)*
 
 ___
 
@@ -72,4 +72,4 @@ ___
 
 • **securityTokenSymbol**: *string*
 
-*Defined in [src/entities/Shareholder.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/Shareholder.ts#L34)*
+*Defined in [src/entities/Shareholder.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L34)*

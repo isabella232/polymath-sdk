@@ -19,7 +19,7 @@ Properties that uniquely identify a Dividend Distribution
 
 • **index**: *number*
 
-*Defined in [src/entities/DividendDistribution.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L25)*
+*Defined in [src/entities/DividendDistribution.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/DividendDistribution.ts#L25)*
 
 ordered index of the distribution
 
@@ -29,6 +29,6 @@ ___
 
 • **securityTokenId**: *string*
 
-*Defined in [src/entities/DividendDistribution.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/ce52226/src/entities/DividendDistribution.ts#L21)*
+*Defined in [src/entities/DividendDistribution.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/DividendDistribution.ts#L21)*
 
 security token UUID
