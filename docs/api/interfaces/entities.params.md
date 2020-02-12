@@ -19,7 +19,7 @@ Constructor parameters
 
 • **percentage**: *number*
 
-*Defined in [src/entities/TaxWithholding.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/TaxWithholding.ts#L38)*
+*Defined in [src/entities/TaxWithholding.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/TaxWithholding.ts#L38)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **securityTokenSymbol**: *string*
 
-*Defined in [src/entities/TaxWithholding.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/TaxWithholding.ts#L37)*
+*Defined in [src/entities/TaxWithholding.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/TaxWithholding.ts#L37)*

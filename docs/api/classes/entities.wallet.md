@@ -36,7 +36,7 @@ Used to manage a wallet
 
 \+ **new Wallet**(`params`: [Params](../interfaces/entities.params-3.md), `context`: [Context](_context_.context.md)): *[Wallet](entities.wallet.md)*
 
-*Defined in [src/entities/Wallet.ts:76](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Wallet.ts#L76)*
+*Defined in [src/entities/Wallet.ts:76](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Wallet.ts#L76)*
 
 Create a wallet entity
 
@@ -55,7 +55,7 @@ Name | Type |
 
 • **address**: *string*
 
-*Defined in [src/entities/Wallet.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Wallet.ts#L74)*
+*Defined in [src/entities/Wallet.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Wallet.ts#L74)*
 
 wallet address
 
@@ -65,7 +65,7 @@ ___
 
 • **context**: *[Context](_context_.context.md)*
 
-*Defined in [src/entities/Wallet.ts:76](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Wallet.ts#L76)*
+*Defined in [src/entities/Wallet.ts:76](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Wallet.ts#L76)*
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 *Overrides [Entity](entities.entity.md).[uid](entities.entity.md#abstract-uid)*
 
-*Defined in [src/entities/Wallet.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Wallet.ts#L69)*
+*Defined in [src/entities/Wallet.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Wallet.ts#L69)*
 
 unique generated wallet id
 
@@ -87,7 +87,7 @@ unique generated wallet id
 
 *Overrides [Entity](entities.entity.md).[_refresh](entities.entity.md#abstract-_refresh)*
 
-*Defined in [src/entities/Wallet.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Wallet.ts#L108)*
+*Defined in [src/entities/Wallet.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Wallet.ts#L108)*
 
 Hydrate the entity
 
@@ -105,7 +105,7 @@ ___
 
 ▸ **getErc20Balance**(`args`: object): *Promise‹BigNumber›*
 
-*Defined in [src/entities/Wallet.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Wallet.ts#L137)*
+*Defined in [src/entities/Wallet.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Wallet.ts#L137)*
 
 Retrieve the ERC20 balance of this particular wallet address
 
@@ -123,7 +123,7 @@ ___
 
 ▸ **getEthBalance**(): *Promise‹BigNumber›*
 
-*Defined in [src/entities/Wallet.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Wallet.ts#L127)*
+*Defined in [src/entities/Wallet.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Wallet.ts#L127)*
 
 Retrieve the ETH balance of this particular wallet address
 
@@ -135,7 +135,7 @@ ___
 
 ▸ **getPolyBalance**(): *Promise‹BigNumber›*
 
-*Defined in [src/entities/Wallet.ts:119](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Wallet.ts#L119)*
+*Defined in [src/entities/Wallet.ts:119](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Wallet.ts#L119)*
 
 Retrieve the POLY balance of this particular wallet address
 
@@ -149,7 +149,7 @@ ___
 
 *Overrides [Entity](entities.entity.md).[toPojo](entities.entity.md#abstract-topojo)*
 
-*Defined in [src/entities/Wallet.ts:96](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Wallet.ts#L96)*
+*Defined in [src/entities/Wallet.ts:96](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Wallet.ts#L96)*
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
@@ -161,7 +161,7 @@ ___
 
 ▸ **generateId**(`__namedParameters`: object): *string*
 
-*Defined in [src/entities/Wallet.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Wallet.ts#L42)*
+*Defined in [src/entities/Wallet.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Wallet.ts#L42)*
 
 Generate the Wallet's UUID from its identifying properties
 
@@ -179,7 +179,7 @@ ___
 
 ▸ **unserialize**(`serialized`: string): *[UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-5.md)*
 
-*Defined in [src/entities/Wallet.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Wallet.ts#L53)*
+*Defined in [src/entities/Wallet.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Wallet.ts#L53)*
 
 Unserialize a serialized entity
 

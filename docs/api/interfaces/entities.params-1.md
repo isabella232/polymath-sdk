@@ -19,7 +19,7 @@ Constructor parameters
 
 • **balance**: *BigNumber*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Erc20TokenBalance.ts#L34)*
+*Defined in [src/entities/Erc20TokenBalance.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Erc20TokenBalance.ts#L34)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **tokenSymbol**: *string | null*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Erc20TokenBalance.ts#L33)*
+*Defined in [src/entities/Erc20TokenBalance.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Erc20TokenBalance.ts#L33)*

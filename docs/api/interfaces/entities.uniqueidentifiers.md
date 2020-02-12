@@ -19,7 +19,7 @@ Properties that uniquely identify a Tax Withholding percentage
 
 • **securityTokenId**: *string*
 
-*Defined in [src/entities/TaxWithholding.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/TaxWithholding.ts#L15)*
+*Defined in [src/entities/TaxWithholding.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/TaxWithholding.ts#L15)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **shareholderAddress**: *string*
 
-*Defined in [src/entities/TaxWithholding.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/TaxWithholding.ts#L16)*
+*Defined in [src/entities/TaxWithholding.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/TaxWithholding.ts#L16)*

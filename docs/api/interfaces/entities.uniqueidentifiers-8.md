@@ -18,4 +18,4 @@ Properties that uniquely identify a Security Token Reservation
 
 • **symbol**: *string*
 
-*Defined in [src/entities/SecurityTokenReservation.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityTokenReservation.ts#L17)*
+*Defined in [src/entities/SecurityTokenReservation.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityTokenReservation.ts#L17)*

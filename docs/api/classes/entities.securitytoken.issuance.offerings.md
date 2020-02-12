@@ -34,7 +34,7 @@ Namespace that handles all Offering related functionality
 
 *Inherited from [SubModule](entities.securitytoken.submodule.md).[constructor](entities.securitytoken.submodule.md#constructor)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/SubModule.ts#L15)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/SubModule.ts#L15)*
 
 Create a new SubModule instance
 
@@ -55,7 +55,7 @@ Name | Type |
 
 *Inherited from [SubModule](entities.securitytoken.submodule.md).[context](entities.securitytoken.submodule.md#protected-context)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/SubModule.ts#L15)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/SubModule.ts#L15)*
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 *Inherited from [SubModule](entities.securitytoken.submodule.md).[securityToken](entities.securitytoken.submodule.md#protected-securitytoken)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/SubModule.ts#L13)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/SubModule.ts#L13)*
 
 ## Methods
 
@@ -73,7 +73,7 @@ ___
 
 ▸ **getSto**(`args`: [GetStoParams](../interfaces/entities.securitytoken.issuance.getstoparams.md) | string): *Promise‹any›*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:228](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Issuance/Offerings.ts#L228)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:228](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Issuance/Offerings.ts#L228)*
 
 Retrieve an STO by type and address or UUID
 
@@ -91,7 +91,7 @@ ___
 
 ▸ **getStos**(`opts`: object): *Promise‹[SimpleSto](entities.simplesto.md) | [TieredSto](entities.tieredsto.md)[]›*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:265](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Issuance/Offerings.ts#L265)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:265](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Issuance/Offerings.ts#L265)*
 
 Retrieve all STOs attached to a security token
 
@@ -111,7 +111,7 @@ ___
 
 ▸ **launchSimpleSto**(`args`: object): *Promise‹[TransactionQueue](entities.transactionqueue.md)‹LaunchSimpleStoProcedureArgs, [SimpleSto](entities.simplesto.md)››*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:173](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Issuance/Offerings.ts#L173)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:173](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Issuance/Offerings.ts#L173)*
 
 Launch a Simple STO
 
@@ -129,7 +129,7 @@ ___
 
 ▸ **launchTieredSto**(`args`: LaunchTieredStoParams): *Promise‹any›*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:208](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Issuance/Offerings.ts#L208)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:208](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Issuance/Offerings.ts#L208)*
 
 Launch a Tiered STO
 

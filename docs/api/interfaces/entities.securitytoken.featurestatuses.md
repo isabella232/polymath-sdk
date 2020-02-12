@@ -22,7 +22,7 @@ Current status (enabled/disabled) of all Security Token Features
 
 • **[Feature.Dividends]**: *boolean*
 
-*Defined in [src/entities/SecurityToken/Features.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Features.ts#L35)*
+*Defined in [src/entities/SecurityToken/Features.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Features.ts#L35)*
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 • **[Feature.PercentageOwnershipRestrictions]**: *boolean*
 
-*Defined in [src/entities/SecurityToken/Features.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Features.ts#L37)*
+*Defined in [src/entities/SecurityToken/Features.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Features.ts#L37)*
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 • **[Feature.Permissions]**: *boolean*
 
-*Defined in [src/entities/SecurityToken/Features.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Features.ts#L33)*
+*Defined in [src/entities/SecurityToken/Features.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Features.ts#L33)*
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 • **[Feature.ShareholderCountRestrictions]**: *boolean*
 
-*Defined in [src/entities/SecurityToken/Features.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Features.ts#L36)*
+*Defined in [src/entities/SecurityToken/Features.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Features.ts#L36)*
 
 ___
 
@@ -54,4 +54,4 @@ ___
 
 • **[Feature.Shareholders]**: *boolean*
 
-*Defined in [src/entities/SecurityToken/Features.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Features.ts#L34)*
+*Defined in [src/entities/SecurityToken/Features.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Features.ts#L34)*

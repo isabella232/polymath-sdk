@@ -35,7 +35,7 @@ Namespace that handles all Controller related functionality
 
 *Inherited from [SubModule](entities.securitytoken.submodule.md).[constructor](entities.securitytoken.submodule.md#constructor)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/SubModule.ts#L15)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/SubModule.ts#L15)*
 
 Create a new SubModule instance
 
@@ -56,7 +56,7 @@ Name | Type |
 
 *Inherited from [SubModule](entities.securitytoken.submodule.md).[context](entities.securitytoken.submodule.md#protected-context)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/SubModule.ts#L15)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/SubModule.ts#L15)*
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 *Inherited from [SubModule](entities.securitytoken.submodule.md).[securityToken](entities.securitytoken.submodule.md#protected-securitytoken)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/SubModule.ts#L13)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/SubModule.ts#L13)*
 
 ## Methods
 
@@ -74,7 +74,7 @@ ___
 
 ▸ **disable**(`args?`: undefined | object): *Promise‹[TransactionQueue](entities.transactionqueue.md)‹DisableControllerProcedureArgs, void››*
 
-*Defined in [src/entities/SecurityToken/Controller.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Controller.ts#L38)*
+*Defined in [src/entities/SecurityToken/Controller.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Controller.ts#L38)*
 
 Permanently disable controller functionality
 
@@ -92,7 +92,7 @@ ___
 
 ▸ **modifyController**(`args`: object): *Promise‹[TransactionQueue](entities.transactionqueue.md)‹SetControllerProcedureArgs, void››*
 
-*Defined in [src/entities/SecurityToken/Controller.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Controller.ts#L25)*
+*Defined in [src/entities/SecurityToken/Controller.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Controller.ts#L25)*
 
 Set the address of the Security Token's Controller. The controller may perform forced transfers
 
@@ -110,7 +110,7 @@ ___
 
 ▸ **redeem**(`args`: object): *Promise‹[TransactionQueue](entities.transactionqueue.md)‹ControllerRedeemProcedureArgs, void››*
 
-*Defined in [src/entities/SecurityToken/Controller.ts:82](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Controller.ts#L82)*
+*Defined in [src/entities/SecurityToken/Controller.ts:82](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Controller.ts#L82)*
 
 Redeem (burn) an amount of tokens from a token holder. Only the Security Token's controller can call this
 This operation is subject to transfer restrictions and the amount is limited by the token holder's balance.
@@ -130,7 +130,7 @@ ___
 
 ▸ **signDisableAck**(): *Promise‹[TransactionQueue](entities.transactionqueue.md)‹SignDisableControllerAckProcedureArgs, void››*
 
-*Defined in [src/entities/SecurityToken/Controller.ts:100](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Controller.ts#L100)*
+*Defined in [src/entities/SecurityToken/Controller.ts:100](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Controller.ts#L100)*
 
 Generate a signature string that can be used to permanently disable the Security Token's controller functionality
 
@@ -144,7 +144,7 @@ ___
 
 ▸ **transfer**(`args`: object): *Promise‹[TransactionQueue](entities.transactionqueue.md)‹ControllerTransferProcedureArgs, void››*
 
-*Defined in [src/entities/SecurityToken/Controller.ts:54](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityToken/Controller.ts#L54)*
+*Defined in [src/entities/SecurityToken/Controller.ts:54](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityToken/Controller.ts#L54)*
 
 Perform a forced transfer of tokens from one address to another. You must be the
 Security Token's controller to do this

@@ -36,7 +36,7 @@ Procedure that issues tokens to the specified addresses. KYC data for those addr
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/procedures/Procedure.ts#L45)*
+*Defined in [src/procedures/Procedure.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/procedures/Procedure.ts#L45)*
 
 **Parameters:**
 
@@ -55,7 +55,7 @@ Name | Type |
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/procedures/Procedure.ts#L39)*
+*Defined in [src/procedures/Procedure.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/procedures/Procedure.ts#L39)*
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/procedures/Procedure.ts#L41)*
+*Defined in [src/procedures/Procedure.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/procedures/Procedure.ts#L41)*
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/procedures/IssueTokens.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/procedures/IssueTokens.ts#L41)*
+*Defined in [src/procedures/IssueTokens.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/procedures/IssueTokens.ts#L41)*
 
 ## Methods
 
@@ -85,7 +85,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:96](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/procedures/Procedure.ts#L96)*
+*Defined in [src/procedures/Procedure.ts:96](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/procedures/Procedure.ts#L96)*
 
 Appends a Procedure into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -114,7 +114,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:184](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/procedures/Procedure.ts#L184)*
+*Defined in [src/procedures/Procedure.ts:184](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/procedures/Procedure.ts#L184)*
 
 Appends a signature request into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -141,7 +141,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:142](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/procedures/Procedure.ts#L142)*
+*Defined in [src/procedures/Procedure.ts:142](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/procedures/Procedure.ts#L142)*
 
 Appends a method or future method into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -173,7 +173,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/procedures/Procedure.ts#L57)*
+*Defined in [src/procedures/Procedure.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/procedures/Procedure.ts#L57)*
 
 Mandatory method that builds a list of transactions that will be
 run
@@ -188,7 +188,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/procedures/IssueTokens.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/procedures/IssueTokens.ts#L52)*
+*Defined in [src/procedures/IssueTokens.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/procedures/IssueTokens.ts#L52)*
 
 Issue the specified amounts to the corresponding addresses
 If KYC data is provided, transfer restrictions will not be checked before submitting the issuing transaction

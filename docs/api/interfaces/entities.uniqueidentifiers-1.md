@@ -20,7 +20,7 @@ Properties that uniquely identify an Investment
 
 • **index**: *number*
 
-*Defined in [src/entities/Investment.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Investment.ts#L18)*
+*Defined in [src/entities/Investment.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Investment.ts#L18)*
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 • **securityTokenId**: *string*
 
-*Defined in [src/entities/Investment.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Investment.ts#L16)*
+*Defined in [src/entities/Investment.ts:16](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Investment.ts#L16)*
 
 ___
 
@@ -36,4 +36,4 @@ ___
 
 • **stoId**: *string*
 
-*Defined in [src/entities/Investment.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Investment.ts#L17)*
+*Defined in [src/entities/Investment.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Investment.ts#L17)*

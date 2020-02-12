@@ -41,7 +41,7 @@ Used to manage a Shareholder
 
 \+ **new Shareholder**(`params`: [Params](../interfaces/entities.params-5.md) & [UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-2.md)): *[Shareholder](entities.shareholder.md)*
 
-*Defined in [src/entities/Shareholder.ts:117](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L117)*
+*Defined in [src/entities/Shareholder.ts:117](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L117)*
 
 Create a new Shareholder instance
 
@@ -59,7 +59,7 @@ Name | Type |
 
 • **address**: *string*
 
-*Defined in [src/entities/Shareholder.ts:117](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L117)*
+*Defined in [src/entities/Shareholder.ts:117](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L117)*
 
 wallet address
 
@@ -69,7 +69,7 @@ ___
 
 • **balance**: *BigNumber*
 
-*Defined in [src/entities/Shareholder.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L112)*
+*Defined in [src/entities/Shareholder.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L112)*
 
 total Security Token balance of the Shareholder
 
@@ -79,7 +79,7 @@ ___
 
 • **canBuyFromSto**: *boolean*
 
-*Defined in [src/entities/Shareholder.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L107)*
+*Defined in [src/entities/Shareholder.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L107)*
 
 whether the Shareholder can purchase from an STO or not
 
@@ -89,7 +89,7 @@ ___
 
 • **canReceiveAfter**: *Date*
 
-*Defined in [src/entities/Shareholder.ts:92](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L92)*
+*Defined in [src/entities/Shareholder.ts:92](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L92)*
 
 date after which a Shareholder can transfer tokens to their address
 
@@ -99,7 +99,7 @@ ___
 
 • **canSendAfter**: *Date*
 
-*Defined in [src/entities/Shareholder.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L87)*
+*Defined in [src/entities/Shareholder.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L87)*
 
 date after which a Shareholder can transfer tokens from their address
 
@@ -109,7 +109,7 @@ ___
 
 • **isAccredited**: *boolean*
 
-*Defined in [src/entities/Shareholder.ts:102](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L102)*
+*Defined in [src/entities/Shareholder.ts:102](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L102)*
 
 whether the Shareholder is accredited or not
 
@@ -119,7 +119,7 @@ ___
 
 • **kycExpiry**: *Date*
 
-*Defined in [src/entities/Shareholder.ts:97](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L97)*
+*Defined in [src/entities/Shareholder.ts:97](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L97)*
 
 date when the Shareholder's KYC will expire
 
@@ -129,7 +129,7 @@ ___
 
 • **securityTokenId**: *string*
 
-*Defined in [src/entities/Shareholder.ts:82](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L82)*
+*Defined in [src/entities/Shareholder.ts:82](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L82)*
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 • **securityTokenSymbol**: *string*
 
-*Defined in [src/entities/Shareholder.ts:80](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L80)*
+*Defined in [src/entities/Shareholder.ts:80](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L80)*
 
 ___
 
@@ -147,7 +147,7 @@ ___
 
 *Overrides [Entity](entities.entity.md).[uid](entities.entity.md#abstract-uid)*
 
-*Defined in [src/entities/Shareholder.ts:78](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L78)*
+*Defined in [src/entities/Shareholder.ts:78](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L78)*
 
 unique generated id for a Shareholder
 
@@ -159,7 +159,7 @@ unique generated id for a Shareholder
 
 *Overrides [Entity](entities.entity.md).[_refresh](entities.entity.md#abstract-_refresh)*
 
-*Defined in [src/entities/Shareholder.ts:200](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L200)*
+*Defined in [src/entities/Shareholder.ts:200](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L200)*
 
 Hydrate the entity
 
@@ -177,7 +177,7 @@ ___
 
 ▸ **isRevoked**(): *boolean*
 
-*Defined in [src/entities/Shareholder.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L155)*
+*Defined in [src/entities/Shareholder.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L155)*
 
 Checks if this Shareholder's KYC has been manually revoked
 
@@ -191,7 +191,7 @@ ___
 
 *Overrides [Entity](entities.entity.md).[toPojo](entities.entity.md#abstract-topojo)*
 
-*Defined in [src/entities/Shareholder.ts:169](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L169)*
+*Defined in [src/entities/Shareholder.ts:169](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L169)*
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
@@ -203,7 +203,7 @@ ___
 
 ▸ **generateId**(`__namedParameters`: object): *string*
 
-*Defined in [src/entities/Shareholder.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L50)*
+*Defined in [src/entities/Shareholder.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L50)*
 
 Generate the Shareholder's UUID from its identifying properties
 
@@ -221,7 +221,7 @@ ___
 
 ▸ **unserialize**(`serialized`: string): *[UniqueIdentifiers](../interfaces/entities.uniqueidentifiers-2.md)*
 
-*Defined in [src/entities/Shareholder.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/Shareholder.ts#L62)*
+*Defined in [src/entities/Shareholder.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/Shareholder.ts#L62)*
 
 Unserialize a serialized Shareholder entity
 

@@ -21,7 +21,7 @@ Constructor parameters
 
 • **expiry**: *Date*
 
-*Defined in [src/entities/SecurityTokenReservation.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityTokenReservation.ts#L36)*
+*Defined in [src/entities/SecurityTokenReservation.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityTokenReservation.ts#L36)*
 
 expiry date for the ticker reservation
 
@@ -31,7 +31,7 @@ ___
 
 • **ownerAddress**: *string*
 
-*Defined in [src/entities/SecurityTokenReservation.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityTokenReservation.ts#L38)*
+*Defined in [src/entities/SecurityTokenReservation.ts:38](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityTokenReservation.ts#L38)*
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 • **reservedAt**: *Date*
 
-*Defined in [src/entities/SecurityTokenReservation.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityTokenReservation.ts#L37)*
+*Defined in [src/entities/SecurityTokenReservation.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityTokenReservation.ts#L37)*
 
 ___
 
@@ -47,4 +47,4 @@ ___
 
 • **securityTokenAddress**? : *undefined | string*
 
-*Defined in [src/entities/SecurityTokenReservation.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/73ecb26/src/entities/SecurityTokenReservation.ts#L39)*
+*Defined in [src/entities/SecurityTokenReservation.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/1abe1ae/src/entities/SecurityTokenReservation.ts#L39)*
