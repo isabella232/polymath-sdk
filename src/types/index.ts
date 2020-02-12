@@ -7,7 +7,7 @@ import {
   TransactionReceiptWithDecodedLogs,
 } from '@polymathnetwork/contract-wrappers';
 import { isPlainObject } from 'lodash';
-import { PostTransactionResolver } from '../base/PostTransactionResolver';
+import { PostTransactionResolver } from '../PostTransactionResolver';
 
 /*
  * External Types

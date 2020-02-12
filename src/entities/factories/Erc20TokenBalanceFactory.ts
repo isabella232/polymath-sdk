@@ -4,7 +4,7 @@
  */
 
 import { Factory } from './Factory';
-import { Context } from '../../base/Context';
+import { Context } from '../../Context';
 import { Erc20TokenBalance, Params, UniqueIdentifiers } from '../Erc20TokenBalance';
 
 /**

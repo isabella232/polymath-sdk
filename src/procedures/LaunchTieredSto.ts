@@ -19,7 +19,7 @@ import {
   LaunchTieredStoProcedureArgs,
   StoType,
 } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 import { TransferErc20 } from './TransferErc20';
 import { findEvents, isValidAddress } from '../utils';
 import { SecurityToken, TieredSto } from '../entities';

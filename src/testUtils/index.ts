@@ -2,7 +2,7 @@ import {
   PolyResponse,
   TransactionReceiptWithDecodedLogs,
 } from '@polymathnetwork/contract-wrappers';
-import { PostTransactionResolver } from '../base/PostTransactionResolver';
+import { PostTransactionResolver } from '../PostTransactionResolver';
 import { TransactionSpec } from '../types';
 
 const originalWindow = {

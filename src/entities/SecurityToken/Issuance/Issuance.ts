@@ -8,9 +8,9 @@ import { FreezeIssuance, IssueTokens, SignFreezeIssuanceAck } from '../../../pro
 import { ErrorCode, IssuanceDataEntry } from '../../../types';
 import { Offerings } from './Offerings';
 import { SecurityToken } from '../SecurityToken';
-import { Context } from '../../../base/Context';
+import { Context } from '../../../Context';
 
-import { PolymathError } from '../../../base/PolymathError';
+import { PolymathError } from '../../../PolymathError';
 
 /**
  * Namespace that handles all Issuance related functionality

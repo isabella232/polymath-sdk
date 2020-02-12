@@ -6,7 +6,7 @@
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
 import { ErrorCode } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 
 /**
  * Properties that uniquely identify a Tax Withholding percentage

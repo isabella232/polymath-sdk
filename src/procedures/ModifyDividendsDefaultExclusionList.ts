@@ -13,7 +13,7 @@ import {
   PolyTransactionTag,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 
 const CHUNK_SIZE = 200;
 

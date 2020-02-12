@@ -10,14 +10,14 @@ import {
 import { SubModule } from '../SubModule';
 import { Restrictions } from './Restrictions';
 import { SecurityToken } from '../SecurityToken';
-import { Context } from '../../../base/Context';
+import { Context } from '../../../Context';
 import {
   SignTransferData,
   TransferSecurityTokens,
   ToggleFreezeTransfers,
 } from '../../../procedures';
 import { ShareholderDataEntry, Omit, TransferStatusCode, ErrorCode } from '../../../types';
-import { PolymathError } from '../../../base/PolymathError';
+import { PolymathError } from '../../../PolymathError';
 
 /**
  * Namespace that handles all Transfer related functionality

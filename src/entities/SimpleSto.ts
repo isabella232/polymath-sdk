@@ -13,7 +13,7 @@ import {
 } from '@polymathnetwork/contract-wrappers';
 import { serialize } from '../utils';
 import { Sto, UniqueIdentifiers, Params as StoParams } from './Sto';
-import { Context } from '../base/Context';
+import { Context } from '../Context';
 import { InvestInSimpleSto } from '../procedures';
 import { Investment } from './Investment';
 

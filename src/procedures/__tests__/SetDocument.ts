@@ -1,8 +1,8 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { SetDocument } from '../../procedures/SetDocument';
 import { Procedure } from '../../procedures/Procedure';
@@ -12,8 +12,8 @@ import {
   ErrorCode,
   SetDocumentProcedureArgs,
 } from '../../types';
-import { PolymathError } from '../../base/PolymathError';
-import { Wallet } from '../../base/Wallet';
+import { PolymathError } from '../../PolymathError';
+import { Wallet } from '../../Wallet';
 
 const params: SetDocumentProcedureArgs = {
   symbol: 'TEST1',

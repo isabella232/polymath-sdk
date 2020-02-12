@@ -19,9 +19,9 @@ import {
   PostTransactionResolverArray,
 } from '../types';
 import { TransactionQueue } from '../entities/TransactionQueue';
-import { Context } from '../base/Context';
-import { PostTransactionResolver } from '../base/PostTransactionResolver';
-import { PolymathError } from '../base/PolymathError';
+import { Context } from '../Context';
+import { PostTransactionResolver } from '../PostTransactionResolver';
+import { PolymathError } from '../PolymathError';
 
 export interface ProcedureClass<Args = any, ReturnType extends any = any> {
   new (args: Args, context: Context): Procedure<Args, ReturnType>;

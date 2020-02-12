@@ -2,17 +2,17 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as dividendFactoryModule from '../../entities/factories/DividendDistributionFactory';
 import * as pushDividendPaymentModule from '../../procedures/PushDividendPayment';
 import { PushDividendPayment } from '../../procedures/PushDividendPayment';
 import { Procedure } from '../../procedures/Procedure';
 import { ProcedureType, ErrorCode, PolyTransactionTag } from '../../types';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import { mockFactories } from '../../testUtils/mockFactories';
-import { Factories } from '../../base/Context';
+import { Factories } from '../../Context';
 import { SecurityToken, DividendDistribution } from '../../entities';
 
 const params = {

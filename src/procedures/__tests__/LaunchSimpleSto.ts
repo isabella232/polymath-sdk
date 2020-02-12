@@ -9,7 +9,7 @@ import {
 } from '@polymathnetwork/contract-wrappers';
 import { LaunchSimpleSto } from '../LaunchSimpleSto';
 import { Procedure } from '../Procedure';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import {
   ErrorCode,
   LaunchSimpleStoProcedureArgs,
@@ -20,11 +20,11 @@ import {
 } from '../../types';
 import * as simpleStoFactoryModule from '../../entities/factories/SimpleStoFactory';
 import * as utilsModule from '../../utils';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { Wallet } from '../../base/Wallet';
+import { Wallet } from '../../Wallet';
 import { TransferErc20 } from '..';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { SimpleSto, SecurityToken } from '../../entities';

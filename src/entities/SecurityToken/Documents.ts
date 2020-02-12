@@ -4,7 +4,7 @@
  */
 
 import { SubModule } from './SubModule';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 import { SetDocument } from '../../procedures/SetDocument';
 import { RemoveDocument } from '../../procedures/RemoveDocument';

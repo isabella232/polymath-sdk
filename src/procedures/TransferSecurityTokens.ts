@@ -11,9 +11,9 @@ import {
   ProcedureType,
   PolyTransactionTag,
 } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 import { SecurityToken, Shareholder } from '../entities';
-import { Factories } from '../base/Context';
+import { Factories } from '../Context';
 
 /**
  * @hidden

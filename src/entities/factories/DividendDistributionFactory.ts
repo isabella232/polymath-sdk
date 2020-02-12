@@ -5,11 +5,11 @@
 
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import { Factory } from './Factory';
-import { Context } from '../../base/Context';
+import { Context } from '../../Context';
 import { DividendDistribution, Params, UniqueIdentifiers } from '../DividendDistribution';
 import { ErrorCode } from '../../types';
 import { SecurityToken } from '../SecurityToken';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import { Checkpoint } from '../Checkpoint';
 
 /**

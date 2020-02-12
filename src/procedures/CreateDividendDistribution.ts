@@ -17,7 +17,7 @@ import {
   ErrorCode,
 } from '../types';
 import { ApproveErc20 } from './ApproveErc20';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 import { findEvents } from '../utils';
 import { SecurityToken, DividendDistribution } from '../entities';
 

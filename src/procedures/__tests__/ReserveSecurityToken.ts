@@ -8,13 +8,13 @@ import {
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { spy, restore } from 'sinon';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
 import * as approvalModule from '../ApproveErc20';
 import { ReserveSecurityToken } from '../../procedures/ReserveSecurityToken';
 import { Procedure } from '../../procedures/Procedure';
-import { Wallet } from '../../base/Wallet';
-import { PolymathError } from '../../base/PolymathError';
+import { Wallet } from '../../Wallet';
+import { PolymathError } from '../../PolymathError';
 import {
   ErrorCode,
   PolyTransactionTag,

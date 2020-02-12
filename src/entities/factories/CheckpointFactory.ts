@@ -4,10 +4,10 @@
  */
 
 import { Factory } from './Factory';
-import { Context } from '../../base/Context';
+import { Context } from '../../Context';
 import { Checkpoint, Params, UniqueIdentifiers } from '../Checkpoint';
 import { SecurityToken } from '../SecurityToken';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 import { DividendDistribution } from '../DividendDistribution';
 

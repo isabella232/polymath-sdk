@@ -1,4 +1,4 @@
-import { Factories } from '~/base/Context';
+import { Factories } from '~/Context';
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import * as securityTokenFactoryModule from '../entities/factories/SecurityTokenFactory';
 import * as simpleStoFactoryModule from '../entities/factories/SimpleStoFactory';

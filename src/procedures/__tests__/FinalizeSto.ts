@@ -6,7 +6,7 @@ import { BigNumber, ContractVersion } from '@polymathnetwork/contract-wrappers';
 import { TransferStatusCode } from '@polymathnetwork/contract-wrappers';
 import { FinalizeSto } from '../FinalizeSto';
 import { Procedure } from '../Procedure';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import {
   ErrorCode,
   FinalizeStoProcedureArgs,
@@ -17,12 +17,12 @@ import {
 import * as finalizeStoModule from '../FinalizeSto';
 import * as simpleStoFactoryModule from '../../entities/factories/SimpleStoFactory';
 import * as tieredStoFactoryModule from '../../entities/factories/TieredStoFactory';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
-import { Factories } from '../../base/Context';
+import { Factories } from '../../Context';
 import { SimpleSto, SecurityToken, TieredSto } from '../../entities';
 
 const simpleParams: FinalizeStoProcedureArgs = {

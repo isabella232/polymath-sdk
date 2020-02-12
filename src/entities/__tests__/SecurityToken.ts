@@ -1,6 +1,6 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SecurityToken } from '../SecurityToken';
-import { Context } from '../../base/Context';
+import { Context } from '../../Context';
 import { Version } from '~/types';
 
 const params1 = {

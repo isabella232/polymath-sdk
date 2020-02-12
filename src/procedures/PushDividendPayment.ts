@@ -13,8 +13,8 @@ import {
   PolyTransactionTag,
   ErrorCode,
 } from '../types';
-import { Factories } from '../base/Context';
-import { PolymathError } from '../base/PolymathError';
+import { Factories } from '../Context';
+import { PolymathError } from '../PolymathError';
 import { DividendDistribution, SecurityToken } from '../entities';
 
 const CHUNK_SIZE = 100;

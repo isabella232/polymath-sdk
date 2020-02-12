@@ -10,14 +10,14 @@ import { Procedure } from '../../procedures/Procedure';
 import { ErrorCode, PolyTransactionTag, ProcedureType, RevokeKycProcedureArgs } from '../../types';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
 import * as shareholdersEntityModule from '../../entities/SecurityToken/Shareholders';
 import * as securityTokenEntityModule from '../../entities/SecurityToken/SecurityToken';
 import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import { Shareholder } from '../../entities';
 
 const testAddress = '0x6666666666666666666666666666666666666666';

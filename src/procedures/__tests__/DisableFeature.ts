@@ -3,15 +3,15 @@ import { ImportMock, MockManager } from 'ts-mock-imports';
 import { restore, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import {
   DisableFeatureProcedureArgs,
   ErrorCode,
   PolyTransactionTag,
   ProcedureType,
 } from '../../types';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { DisableFeature } from '~/procedures';
 

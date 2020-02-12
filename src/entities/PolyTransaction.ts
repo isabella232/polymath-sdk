@@ -7,10 +7,7 @@ import { mapValues, isPlainObject, pickBy } from 'lodash';
 import { EventEmitter } from 'events';
 import v4 from 'uuid/v4';
 import { TransactionReceiptWithDecodedLogs } from '@polymathnetwork/contract-wrappers';
-import {
-  PostTransactionResolver,
-  isPostTransactionResolver,
-} from '../base/PostTransactionResolver';
+import { PostTransactionResolver, isPostTransactionResolver } from '../PostTransactionResolver';
 import {
   TransactionSpec,
   ErrorCode,
@@ -18,7 +15,7 @@ import {
   PolyTransactionTag,
   PostTransactionResolverArray,
 } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 import { Entity } from './Entity';
 import { TransactionQueue } from './TransactionQueue';
 import { serialize } from '../utils';

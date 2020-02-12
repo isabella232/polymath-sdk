@@ -12,12 +12,12 @@ import {
   USDTieredSTOEvents,
 } from '@polymathnetwork/contract-wrappers';
 import { Factory } from './Factory';
-import { Context } from '../../base/Context';
+import { Context } from '../../Context';
 import { StoType, ErrorCode } from '../../types';
 import { Investment, Params, UniqueIdentifiers } from '../Investment';
 import { Sto } from '../Sto';
 import { SecurityToken } from '../SecurityToken';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 
 const { weiToValue } = conversionUtils;
 

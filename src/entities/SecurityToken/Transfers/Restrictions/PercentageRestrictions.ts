@@ -16,7 +16,7 @@ import {
 } from '../../../../types';
 import { ModifyMaxHolderPercentage, ModifyPercentageExemptions } from '../../../../procedures';
 import { SubModule } from '../../SubModule';
-import { PolymathError } from '../../../../base/PolymathError';
+import { PolymathError } from '../../../../PolymathError';
 import { TransactionQueue } from '../../../TransactionQueue';
 
 interface PercentageWhitelistParams {

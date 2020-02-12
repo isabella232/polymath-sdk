@@ -11,7 +11,7 @@ import {
   EnableCountTransferManagerProcedureArgs,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 
 /**
  * Procedure that enables Count Restrictions on a Security Token. This allows setting a number of maximum token holders. Any token transfer that would result in the amount of token holders to exceed this maximum will fail

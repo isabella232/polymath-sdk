@@ -7,8 +7,8 @@ import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { unserialize } from '../utils';
 import { StoType, isStoType, Currency, ErrorCode, StoRole } from '../types';
-import { PolymathError } from '../base/PolymathError';
-import { Context } from '../base/Context';
+import { PolymathError } from '../PolymathError';
+import { Context } from '../Context';
 import {
   TogglePauseSto,
   AssignStoRole,

@@ -15,9 +15,9 @@ import {
 } from '../types';
 import { Entity } from './Entity';
 import { PolyTransaction } from './PolyTransaction';
-import { isPostTransactionResolver } from '../base/PostTransactionResolver';
+import { isPostTransactionResolver } from '../PostTransactionResolver';
 import { serialize } from '../utils';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 
 enum Events {
   StatusChange = 'StatusChange',

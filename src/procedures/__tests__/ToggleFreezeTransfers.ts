@@ -5,21 +5,21 @@ import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ToggleFreezeTransfers } from '../../procedures/ToggleFreezeTransfers';
 import { Procedure } from '../../procedures/Procedure';
 import * as toggleFreezeTransferModule from '../../procedures/ToggleFreezeTransfers';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import {
   ErrorCode,
   ToggleFreezeTransfersProcedureArgs,
   PolyTransactionTag,
   ProcedureType,
 } from '../../types';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
-import { Wallet } from '../../base/Wallet';
-import { Factories } from '../../base/Context';
+import { Wallet } from '../../Wallet';
+import { Factories } from '../../Context';
 
 const params: ToggleFreezeTransfersProcedureArgs = {
   symbol: 'TEST',

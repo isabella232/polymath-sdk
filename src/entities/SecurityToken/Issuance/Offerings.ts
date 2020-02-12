@@ -17,7 +17,7 @@ import {
 } from '../../../types';
 import { LaunchSimpleSto, LaunchTieredSto } from '../../../procedures';
 import { SimpleSto, TieredSto, Sto } from '../..';
-import { PolymathError } from '../../../base/PolymathError';
+import { PolymathError } from '../../../PolymathError';
 import { TransactionQueue } from '../../TransactionQueue';
 
 interface LaunchTieredStoParams {

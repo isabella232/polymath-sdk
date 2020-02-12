@@ -12,7 +12,7 @@ import { IssueTokens } from '../IssueTokens';
 import { Procedure } from '../Procedure';
 import * as shareholdersEntityModule from '../../entities/SecurityToken/Shareholders';
 import * as securityTokenEntityModule from '../../entities/SecurityToken/SecurityToken';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import {
   ErrorCode,
   IssueTokensProcedureArgs,
@@ -21,14 +21,14 @@ import {
 } from '../../types';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { ModifyShareholderData } from '..';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { Shareholder } from '../../entities';
-import { Factories } from '../../base/Context';
+import { Factories } from '../../Context';
 
 const securityTokenId = 'ST ID';
 const testAddress = '0x6666666666666666666666666666666666666666';

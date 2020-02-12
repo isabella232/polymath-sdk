@@ -11,7 +11,7 @@ import {
   ErrorCode,
   ModifyMaxHolderPercentageProcedureArgs,
 } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 
 /**
  * Procedure that modifies the maximum percentage that an individual token holder can hold

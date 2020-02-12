@@ -10,7 +10,7 @@ import {
   FreezeIssuanceProcedureArgs,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 
 /**
  * Procedure that permanently freezes issuance of a Security Token. This requires the Security Token's owner to send signed data in acknowledgement

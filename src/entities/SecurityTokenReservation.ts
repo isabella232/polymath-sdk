@@ -5,9 +5,9 @@
 
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
-import { Context } from '../base/Context';
+import { Context } from '../Context';
 import { CreateSecurityToken, TransferReservationOwnership } from '../procedures';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
 
 /**

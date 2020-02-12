@@ -3,14 +3,14 @@ import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy } from 'sinon';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
-import { Wallet } from '../../base/Wallet';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
+import { Wallet } from '../../Wallet';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { ControllerTransfer } from '../../procedures/ControllerTransfer';
 import * as controllerTransferModule from '../../procedures/ControllerTransfer';
 import { Procedure } from '../../procedures/Procedure';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import {
   ControllerTransferProcedureArgs,
   ErrorCode,
@@ -19,7 +19,7 @@ import {
 } from '../../types';
 import { mockFactories } from '../../testUtils/mockFactories';
 import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
-import { Factories } from '../../base/Context';
+import { Factories } from '../../Context';
 import { SecurityToken, Shareholder } from '../../entities';
 
 const params: ControllerTransferProcedureArgs = {

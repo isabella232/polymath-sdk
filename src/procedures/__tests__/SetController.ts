@@ -1,14 +1,14 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { SetController } from '../../procedures/SetController';
 import { Procedure } from '~/procedures/Procedure';
 import { ProcedureType, PolyTransactionTag, ErrorCode } from '~/types';
-import { PolymathError } from '../../base/PolymathError';
-import { Wallet } from '../../base/Wallet';
+import { PolymathError } from '~/PolymathError';
+import { Wallet } from '../../Wallet';
 
 const params = {
   symbol: 'TEST1',

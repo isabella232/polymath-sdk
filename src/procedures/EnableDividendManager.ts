@@ -11,7 +11,7 @@ import {
   PolyTransactionTag,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 
 /**
  * Procedure that enables Dividends on a Security Token

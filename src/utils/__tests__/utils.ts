@@ -1,5 +1,5 @@
 import { checkStringLength, serialize, unserialize } from '../index';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
 
 describe('serialize and unserialize', () => {

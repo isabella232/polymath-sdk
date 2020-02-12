@@ -5,7 +5,7 @@
 
 import { ModuleName, isCappedSTO_3_1_0 } from '@polymathnetwork/contract-wrappers';
 import { Factory } from './Factory';
-import { Context } from '../../base/Context';
+import { Context } from '../../Context';
 import { Currency } from '../../types';
 import { SimpleSto, Params, UniqueIdentifiers } from '../SimpleSto';
 import { SecurityToken } from '../SecurityToken';

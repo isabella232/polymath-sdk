@@ -13,7 +13,7 @@ import {
   ModifyDividendsDefaultExclusionList,
 } from '../../procedures';
 import { Checkpoint } from '../Checkpoint';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import { DividendDistribution } from '../DividendDistribution';
 import { TaxWithholding } from '../TaxWithholding';
 

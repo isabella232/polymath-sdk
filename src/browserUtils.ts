@@ -1,7 +1,7 @@
 import { Web3Wrapper, Provider } from '@polymathnetwork/contract-wrappers';
 import { PolymathError } from './PolymathError';
-import { ErrorCode } from '../types';
-import { delay } from '../utils';
+import { ErrorCode } from './types';
+import { delay } from './utils';
 
 export enum BrowserSupport {
   NoMetamask = 'NoMetamask',

@@ -6,9 +6,9 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 import { ErrorCode } from '../types';
-import { Context } from '../base/Context';
+import { Context } from '../Context';
 
 /**
  * Properties that uniquely identify a Wallet

@@ -11,7 +11,7 @@ import {
   ErrorCode,
   ModifyMaxHolderCountProcedureArgs,
 } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 
 /**
  * Procedure that modifies the maximum amount of holders for the security token

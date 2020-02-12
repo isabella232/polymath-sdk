@@ -17,7 +17,7 @@ import {
   PolyTransactionTag,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 import { SecurityTokenReservation } from '../entities';
 import { findEvents } from '../utils';
 

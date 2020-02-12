@@ -4,7 +4,7 @@ import { restore, spy } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ToggleAllowBeneficialInvestments } from '../ToggleAllowBeneficialInvestments';
 import { Procedure } from '../Procedure';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import {
   ErrorCode,
   ToggleAllowBeneficialInvestmentsProcedureArgs,
@@ -15,11 +15,11 @@ import {
 import * as toggleAllowBeneficalInvestmentsModule from '../ToggleAllowBeneficialInvestments';
 import * as simpleStoFactoryModule from '../../entities/factories/SimpleStoFactory';
 import * as tieredStoFactoryModule from '../../entities/factories/TieredStoFactory';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
-import { Factories } from '../../base/Context';
+import { Factories } from '../../Context';
 import { SimpleSto, SecurityToken, TieredSto } from '../../entities';
 
 const tieredParams: ToggleAllowBeneficialInvestmentsProcedureArgs = {

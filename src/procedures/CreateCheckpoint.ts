@@ -11,10 +11,10 @@ import {
   PolyTransactionTag,
   ErrorCode,
 } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 import { findEvents } from '../utils';
 import { SecurityToken, Checkpoint } from '../entities';
-import { Factories } from '../base/Context';
+import { Factories } from '../Context';
 
 /**
  * @hidden

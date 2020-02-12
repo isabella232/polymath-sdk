@@ -6,7 +6,7 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
 import { ApproveErc20ProcedureArgs, ErrorCode, ProcedureType, PolyTransactionTag } from '../types';
-import { PolymathError } from '../base/PolymathError';
+import { PolymathError } from '../PolymathError';
 
 /**
  * Procedure to approve spending funds on an ERC20 token. If no token address is specified, it defaults to POLY

@@ -4,7 +4,7 @@
  */
 
 import { SecurityToken } from './SecurityToken';
-import { Context } from '../../base/Context';
+import { Context } from '../../Context';
 
 /**
  * Represents a namespace inside the Security Token that handles a set of related functionality

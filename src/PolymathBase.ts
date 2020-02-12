@@ -42,8 +42,8 @@ import {
   SecurityTokenRole,
   ShareholderBalance,
   DividendShareholderStatus,
-} from '../types';
-import { ZERO_ADDRESS } from '../utils/constants';
+} from './types';
+import { ZERO_ADDRESS } from './utils/constants';
 
 /**
  * Arguments for [[getModuleAddressesByName]]

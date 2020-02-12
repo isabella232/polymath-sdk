@@ -10,7 +10,7 @@ import {
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { LaunchTieredSto } from '../../procedures/LaunchTieredSto';
 import { Procedure } from '../Procedure';
-import { PolymathError } from '../../base/PolymathError';
+import { PolymathError } from '../../PolymathError';
 import {
   ErrorCode,
   LaunchTieredStoProcedureArgs,
@@ -20,11 +20,11 @@ import {
 } from '../../types';
 import * as tieredStoFactoryModule from '../../entities/factories/TieredStoFactory';
 import * as utilsModule from '../../utils';
-import * as contextModule from '../../base/Context';
-import * as wrappersModule from '../../base/PolymathBase';
+import * as contextModule from '../../Context';
+import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { Wallet } from '../../base/Wallet';
+import { Wallet } from '../../Wallet';
 import { TransferErc20 } from '../../procedures';
 import { mockFactories } from '../../testUtils/mockFactories';
 import { SecurityToken, TieredSto } from '../../entities';

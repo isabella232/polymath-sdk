@@ -1,4 +1,4 @@
-import { ErrorCode } from '../types';
+import { ErrorCode } from './types';
 
 export const ErrorMessagesPerCode: {
   [errorCode: string]: string;
