@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -174,20 +174,31 @@ describe('SetDocument', () => {
 
       target = new SetDocument(params, contextMock.getMockInstance());
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const setDocumentArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+      securityTokenMock.mock('setDocument', Promise.resolve('SetDocument'));
+      const { setDocument } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(setDocument).returns(setDocumentArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(setDocumentArgsSpy.getCall(0).args[0]).toEqual({
+        name: params.name,
+        uri: params.uri,
+        documentHash: params.documentHash,
+      });
+      expect(setDocumentArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().setDocument, {
             tag: PolyTransactionTag.SetDocument,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
   });
 });

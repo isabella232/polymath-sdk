@@ -1,10 +1,11 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import { stub, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SecurityTokenEvents } from '@polymathnetwork/contract-wrappers';
+import sinon from 'sinon';
 import { CreateCheckpoint } from '../../procedures/CreateCheckpoint';
 import * as createCheckpointModule from '../../procedures/CreateCheckpoint';
 import { Procedure } from '../../procedures/Procedure';
@@ -88,19 +89,28 @@ describe('CreateCheckpoint', () => {
 
   describe('createCheckpoint', () => {
     test('should add a transaction to the queue to create a new checkpoint', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const createCheckpointArgsStub = sinon.stub();
+      createCheckpointArgsStub.returns([{}]);
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('createCheckpoint', Promise.resolve('CreateCheckpoint'));
+      const { createCheckpoint } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(createCheckpoint).returns(createCheckpointArgsStub);
 
       // Real call
       await target.prepareTransactions();
+
       // Verifications
+      expect(createCheckpointArgsStub.getCall(0).args[0]).toEqual({});
+      expect(createCheckpointArgsStub.callCount).toEqual(1);
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().createCheckpoint)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.CreateCheckpoint);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateCheckpoint
+      );
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if corresponding checkpoint event is not fired', async () => {

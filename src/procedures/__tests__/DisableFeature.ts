@@ -1,8 +1,9 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy } from 'sinon';
+import { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ModuleName } from '@polymathnetwork/contract-wrappers';
+import sinon from 'sinon';
 import { PolymathError } from '../../PolymathError';
 import {
   DisableFeatureProcedureArgs,
@@ -64,21 +65,29 @@ describe('DisableFeature', () => {
 
   describe('DisableFeature', () => {
     test('should add the transaction to the queue to disable a feature (archiving the module)', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const archiveModuleArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('archiveModule', Promise.resolve('ArchiveModule'));
+      const { archiveModule } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(archiveModule).returns(archiveModuleArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(archiveModuleArgsSpy.getCall(0).args[0]).toEqual({
+        moduleAddress,
+      });
+      expect(archiveModuleArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().archiveModule, {
             tag: PolyTransactionTag.DisableFeature,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TogglePauseSto } from '../TogglePauseSto';
 import { Procedure } from '../Procedure';
@@ -101,18 +101,24 @@ describe('TogglePauseSto', () => {
 
   describe('TogglePauseSto', () => {
     test('should add the transaction to the queue to pause a capped sto', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const pauseArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       simpleStoMock.mock('pause', Promise.resolve('Pause'));
+      const { pause } = simpleStoMock.getMockInstance();
+      addTransactionStub.withArgs(pause).returns(pauseArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
-      // Verifications\
+      // Verifications
+      expect(pauseArgsSpy.getCall(0).args[0]).toEqual({});
+      expect(pauseArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(simpleStoMock.getMockInstance().pause)
+        addTransactionStub.getCall(0).calledWith(simpleStoMock.getMockInstance().pause)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.PauseSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.PauseSto);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add the transaction to the queue to unpause a capped sto', async () => {
@@ -124,36 +130,48 @@ describe('TogglePauseSto', () => {
         contextMock.getMockInstance()
       );
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const unpauseArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       simpleStoMock.mock('unpause', Promise.resolve('Unpause'));
+      const { unpause } = simpleStoMock.getMockInstance();
+      addTransactionStub.withArgs(unpause).returns(unpauseArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
-      // Verifications\
+      // Verifications
+      expect(unpauseArgsSpy.getCall(0).args[0]).toEqual({});
+      expect(unpauseArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(simpleStoMock.getMockInstance().unpause)
+        addTransactionStub.getCall(0).calledWith(simpleStoMock.getMockInstance().unpause)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.UnpauseSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.UnpauseSto);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add the transaction to the queue to pause a tiered sto', async () => {
       moduleWrapperFactoryMock.mock('getModuleInstance', tieredStoMock.getMockInstance());
       target = new TogglePauseSto(tieredParams, contextMock.getMockInstance());
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const pauseArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredStoMock.mock('pause', Promise.resolve('Pause'));
+      const { pause } = tieredStoMock.getMockInstance();
+      addTransactionStub.withArgs(pause).returns(pauseArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(pauseArgsSpy.getCall(0).args[0]).toEqual({});
+      expect(pauseArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(tieredStoMock.getMockInstance().pause)
+        addTransactionStub.getCall(0).calledWith(tieredStoMock.getMockInstance().pause)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.PauseSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.PauseSto);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add the transaction to the queue to unpause a tiered sto', async () => {
@@ -166,18 +184,24 @@ describe('TogglePauseSto', () => {
         contextMock.getMockInstance()
       );
 
-      const addTransactionSpy = spy(target, 'addTransaction');
-      tieredStoMock.mock('pause', Promise.resolve('Unpause'));
+      const unpauseArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+      tieredStoMock.mock('unpause', Promise.resolve('Unpause'));
+      const { unpause } = tieredStoMock.getMockInstance();
+      addTransactionStub.withArgs(unpause).returns(unpauseArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(unpauseArgsSpy.getCall(0).args[0]).toEqual({});
+      expect(unpauseArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(tieredStoMock.getMockInstance().unpause)
+        addTransactionStub.getCall(0).calledWith(tieredStoMock.getMockInstance().unpause)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.UnpauseSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.UnpauseSto);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if there is an invalid sto address', async () => {

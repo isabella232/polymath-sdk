@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ToggleAllowBeneficialInvestments } from '../ToggleAllowBeneficialInvestments';
 import { Procedure } from '../Procedure';
@@ -103,50 +103,70 @@ describe('ToggleAllowBeneficialInvestments', () => {
 
   describe('ToggleAllowBeneficialInvestments', () => {
     test('should add the transaction to the queue to toggle allowed beneficial investments in a simple sto', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const changeAllowBeneficialInvestmentsArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       simpleStoMock.mock(
         'changeAllowBeneficialInvestments',
         Promise.resolve('ChangeAllowBeneficialInvestments')
       );
+      const { changeAllowBeneficialInvestments } = simpleStoMock.getMockInstance();
+      addTransactionStub
+        .withArgs(changeAllowBeneficialInvestments)
+        .returns(changeAllowBeneficialInvestmentsArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(changeAllowBeneficialInvestmentsArgsSpy.getCall(0).args[0]).toEqual({
+        allowBeneficialInvestments: simpleParams.allowBeneficialInvestments,
+      });
+      expect(changeAllowBeneficialInvestmentsArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(simpleStoMock.getMockInstance().changeAllowBeneficialInvestments)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.ChangeAllowBeneficialInvestments
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add the transaction to the queue to toggle beneficial investments in a tiered sto', async () => {
       moduleWrapperFactoryMock.mock('getModuleInstance', tieredStoMock.getMockInstance());
       target = new ToggleAllowBeneficialInvestments(tieredParams, contextMock.getMockInstance());
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const changeAllowBeneficialInvestmentsArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredStoMock.mock(
         'changeAllowBeneficialInvestments',
         Promise.resolve('ChangeAllowBeneficialInvestments')
       );
+      const { changeAllowBeneficialInvestments } = tieredStoMock.getMockInstance();
+      addTransactionStub
+        .withArgs(changeAllowBeneficialInvestments)
+        .returns(changeAllowBeneficialInvestmentsArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(changeAllowBeneficialInvestmentsArgsSpy.getCall(0).args[0]).toEqual({
+        allowBeneficialInvestments: tieredParams.allowBeneficialInvestments,
+      });
+      expect(changeAllowBeneficialInvestmentsArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredStoMock.getMockInstance().changeAllowBeneficialInvestments)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.ChangeAllowBeneficialInvestments
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if there is an invalid sto address', async () => {

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy } from 'sinon';
+import sinon, { stub, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { BigNumber, ContractVersion } from '@polymathnetwork/contract-wrappers';
 import { TransferStatusCode } from '@polymathnetwork/contract-wrappers';
@@ -151,18 +151,24 @@ describe('FinalizeSto', () => {
 
   describe('FinalizeSto', () => {
     test('should add the transaction to the queue to finalize a simple sto with version 3_1_0', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const finalizeArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       simpleSto_3_1_0_Mock.mock('finalize', Promise.resolve('Finalize'));
+      const { finalize } = simpleSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(finalize).returns(finalizeArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(finalizeArgsSpy.getCall(0).args[0]).toEqual({});
+      expect(finalizeArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(simpleSto_3_1_0_Mock.getMockInstance().finalize)
+        addTransactionStub.getCall(0).calledWith(simpleSto_3_1_0_Mock.getMockInstance().finalize)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.FinalizeSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.FinalizeSto);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add the transaction to the queue to finalize a tiered sto', async () => {
@@ -170,18 +176,24 @@ describe('FinalizeSto', () => {
 
       moduleWrapperFactoryMock.mock('getModuleInstance', tieredStoMock.getMockInstance());
 
-      const addTransactionSpy = spy(target, 'addTransaction');
-      tieredStoMock.mock('finalize', Promise.resolve('Finalize'));
+      const finalizeArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+      simpleSto_3_1_0_Mock.mock('finalize', Promise.resolve('Finalize'));
+      const { finalize } = tieredStoMock.getMockInstance();
+      addTransactionStub.withArgs(finalize).returns(finalizeArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(finalizeArgsSpy.getCall(0).args[0]).toEqual({});
+      expect(finalizeArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(tieredStoMock.getMockInstance().finalize)
+        addTransactionStub.getCall(0).calledWith(tieredStoMock.getMockInstance().finalize)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.FinalizeSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.FinalizeSto);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw an error if the simple sto has not been launched or is archived', async () => {

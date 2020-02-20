@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { spy, stub, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -102,30 +102,47 @@ describe('DisableController', () => {
     });
 
     test('should add a transaction to the queue to disable controller of the security token, without passing in a signature', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
-      const addSignatureRequestSpy = spy(target, 'addSignatureRequest');
-      securityTokenMock.mock('signDisableControllerAck', randomSignature);
+      const disableControllerArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('disableController', 'DisableController');
+      const { disableController } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(disableController).returns(disableControllerArgsSpy);
+
+      const addSignatureRequestArgsStub = sinon.stub();
+      addSignatureRequestArgsStub.returns(Promise.resolve(randomSignature));
+      const addSignatureRequestStub = stub(target, 'addSignatureRequest');
+
+      securityTokenMock.mock('signDisableControllerAck', randomSignature);
+      addSignatureRequestStub
+        .withArgs(securityTokenMock.getMockInstance().signDisableControllerAck)
+        .returns(addSignatureRequestArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(disableControllerArgsSpy.getCall(0).args[0]).toEqual({
+        signature: randomSignature,
+      });
+      expect(disableControllerArgsSpy.callCount).toEqual(1);
+      expect(addSignatureRequestArgsStub.getCall(0).args[0]).toEqual({});
+      expect(addSignatureRequestArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().disableController, {
             tag: PolyTransactionTag.DisableController,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
 
       expect(
-        addSignatureRequestSpy
+        addSignatureRequestStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().signDisableControllerAck)
       ).toEqual(true);
-      expect(addSignatureRequestSpy.callCount).toEqual(1);
+      expect(addSignatureRequestStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to disable controller of the security token, passing in your own hex signature', async () => {
@@ -133,21 +150,28 @@ describe('DisableController', () => {
         { ...params, signature: randomSignature },
         contextMock.getMockInstance()
       );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const disableControllerArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('disableController', 'DisableController');
+      const { disableController } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(disableController).returns(disableControllerArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(disableControllerArgsSpy.getCall(0).args[0]).toEqual({
+        signature: randomSignature,
+      });
+      expect(disableControllerArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().disableController, {
             tag: PolyTransactionTag.DisableController,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
   });
 });

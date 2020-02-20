@@ -1,8 +1,9 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy } from 'sinon';
+import { stub } from 'sinon';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import sinon from 'sinon';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import { Wallet } from '../../Wallet';
@@ -77,22 +78,34 @@ describe('ControllerTransfer', () => {
 
   describe('ControllerTransfer', () => {
     test('should add a transaction to the queue to execute a controller transfer', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const controllerTransferArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('controllerTransfer', Promise.resolve('ControllerTransfer'));
+      const { controllerTransfer } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(controllerTransfer).returns(controllerTransferArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(controllerTransferArgsSpy.getCall(0).args[0]).toEqual({
+        from: params.from,
+        to: params.to,
+        value: params.amount,
+        data: '',
+        operatorData: '',
+      });
+      expect(controllerTransferArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().controllerTransfer)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.ControllerTransfer
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {

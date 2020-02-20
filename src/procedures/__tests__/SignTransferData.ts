@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import { Factories } from '../../Context';
@@ -128,19 +128,45 @@ describe('SignTransferData', () => {
     });
 
     test('should add a signature request to the queue to sign whitelist data', async () => {
-      const addSignatureRequestSpy = spy(target, 'addSignatureRequest');
+      const addSignatureRequestArgsStub = sinon.stub();
+      const randomSignature = 'Random sign tx data signature ack';
+      addSignatureRequestArgsStub.returns(Promise.resolve(randomSignature));
+      const addSignatureRequestStub = stub(target, 'addSignatureRequest');
       securityTokenMock.mock('signTransferData', Promise.resolve('SignTransferData'));
+      addSignatureRequestStub
+        .withArgs(securityTokenMock.getMockInstance().signTransferData)
+        .returns(addSignatureRequestArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addSignatureRequestArgsStub.getCall(0).args[0]).toEqual({
+        investorsData: [
+          {
+            investorAddress: params.kycData[0].address,
+            expiryTime: params.kycData[0].kycExpiry,
+            canReceiveAfter: params.kycData[0].canReceiveAfter,
+            canSendAfter: params.kycData[0].canSendAfter,
+          },
+          {
+            investorAddress: params.kycData[1].address,
+            expiryTime: params.kycData[1].kycExpiry,
+            canReceiveAfter: params.kycData[1].canReceiveAfter,
+            canSendAfter: params.kycData[1].canSendAfter,
+          },
+        ],
+        validFrom: params.validFrom,
+        validTo: params.validTo,
+      });
+      expect(addSignatureRequestArgsStub.callCount).toEqual(1);
+
       expect(
-        addSignatureRequestSpy
+        addSignatureRequestStub
           .getCall(0)
-          .calledWith(securityTokenMock.getMockInstance().signTransferData)
+          .calledWithExactly(securityTokenMock.getMockInstance().signTransferData)
       ).toEqual(true);
-      expect(addSignatureRequestSpy.callCount).toEqual(1);
+      expect(addSignatureRequestStub.callCount).toEqual(1);
     });
   });
 });

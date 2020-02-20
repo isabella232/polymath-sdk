@@ -1,9 +1,10 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import {
   BigNumber,
+  ModuleName,
   SecurityTokenEvents,
   TransactionReceiptWithDecodedLogs,
 } from '@polymathnetwork/contract-wrappers';
@@ -124,75 +125,152 @@ describe('LaunchSimpleSto', () => {
 
   describe('LaunchSimpleSto', () => {
     test('should add a transaction to the queue to launch a capped sto with cost in usd', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const addModuleWithLabelArgsStub = sinon.stub();
+      addModuleWithLabelArgsStub.returns([{}]);
+
+      const addTransactionStub = stub(target, 'addTransaction');
+
       securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const { addModuleWithLabel } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(addModuleWithLabel).returns(addModuleWithLabelArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addModuleWithLabelArgsStub.getCall(0).args[0]).toEqual({
+        moduleName: ModuleName.CappedSTO,
+        address: moduleFactoryAddress,
+        archived: false,
+        maxCost: costInPoly,
+        data: {
+          cap: params.tokensOnSale,
+          endTime: params.endDate,
+          fundRaiseType: params.currency,
+          fundsReceiver: params.raisedFundsWallet,
+          rate: params.rate,
+          startTime: params.startDate,
+          treasuryWallet: params.unsoldTokensWallet,
+        },
+      });
+      expect(addModuleWithLabelArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+      expect(addTransactionStub.getCall(0).lastArg.fees).toEqual({
         usd: costInUsd,
         poly: costInPoly,
       });
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test("should transfer POLY to the security token if the token's balance doesn't cover the launch fee", async () => {
-      const addProcedureSpy = spy(target, 'addProcedure');
-      const addTransactionSpy = spy(target, 'addTransaction');
-      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const transferErc20ArgsSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(TransferErc20).returns(transferErc20ArgsSpy);
+
+      const addModuleWithLabelArgsStub = sinon.stub();
+      addModuleWithLabelArgsStub.returns([{}]);
+
+      const addTransactionStub = stub(target, 'addTransaction');
+      const currentBalance = Promise.resolve(new BigNumber(1));
       polyTokenMock
         .mock('balanceOf', Promise.resolve(new BigNumber(20)))
         .withArgs({ owner: securityTokenAddress })
-        .returns(Promise.resolve(new BigNumber(1)));
+        .returns(currentBalance);
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const { addModuleWithLabel } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(addModuleWithLabel).returns(addModuleWithLabelArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(transferErc20ArgsSpy.getCall(0).args[0]).toEqual({
+        amount: costInPoly.minus(await currentBalance),
+        receiver: securityTokenAddress,
+      });
+      expect(transferErc20ArgsSpy.callCount).toBe(1);
+      expect(addProcedureStub.getCall(0).calledWithExactly(TransferErc20)).toEqual(true);
+
+      expect(addModuleWithLabelArgsStub.getCall(0).args[0]).toEqual({
+        moduleName: ModuleName.CappedSTO,
+        address: moduleFactoryAddress,
+        archived: false,
+        maxCost: costInPoly,
+        data: {
+          cap: params.tokensOnSale,
+          endTime: params.endDate,
+          fundRaiseType: params.currency,
+          fundsReceiver: params.raisedFundsWallet,
+          rate: params.rate,
+          startTime: params.startDate,
+          treasuryWallet: params.unsoldTokensWallet,
+        },
+      });
+      expect(addModuleWithLabelArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+      expect(addTransactionStub.getCall(0).lastArg.fees).toEqual({
         usd: costInUsd,
         poly: costInPoly,
       });
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20));
-      expect(addProcedureSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
+      expect(addTransactionStub.callCount).toEqual(1);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to launch a capped sto with cost in poly', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const addModuleWithLabelArgsStub = sinon.stub();
+      addModuleWithLabelArgsStub.returns([{}]);
 
+      const addTransactionStub = stub(target, 'addTransaction');
       moduleFactoryMock.mock('isCostInPoly', Promise.resolve(true));
+
       securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const { addModuleWithLabel } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(addModuleWithLabel).returns(addModuleWithLabelArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addModuleWithLabelArgsStub.getCall(0).args[0]).toEqual({
+        moduleName: ModuleName.CappedSTO,
+        address: moduleFactoryAddress,
+        archived: false,
+        maxCost: costInPoly,
+        data: {
+          cap: params.tokensOnSale,
+          endTime: params.endDate,
+          fundRaiseType: params.currency,
+          fundsReceiver: params.raisedFundsWallet,
+          rate: params.rate,
+          startTime: params.startDate,
+          treasuryWallet: params.unsoldTokensWallet,
+        },
+      });
+      expect(addModuleWithLabelArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+      expect(addTransactionStub.getCall(0).lastArg.fees).toEqual({
         usd: null,
         poly: costInPoly,
       });
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableCappedSto);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if corresponding capped sto event is not fired', async () => {

@@ -1,6 +1,7 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { stub, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import { ModuleName } from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
@@ -56,21 +57,31 @@ describe('EnableGeneralTransferManager', () => {
 
   describe('EnableGeneralTransferManager', () => {
     test('should add a transaction to the queue to enable general transfer manager', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const addModuleWithLabelArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const { addModuleWithLabel } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(addModuleWithLabel).returns(addModuleWithLabelArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addModuleWithLabelArgsSpy.getCall(0).args[0]).toEqual({
+        moduleName: ModuleName.GeneralTransferManager,
+        address: moduleFactoryAddress,
+        archived: false,
+      });
+      expect(addModuleWithLabelArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(securityTokenMock.getMockInstance().addModuleWithLabel, {
             tag: PolyTransactionTag.EnableGeneralTransferManager,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {

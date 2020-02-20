@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Procedure } from '../Procedure';
@@ -112,17 +112,27 @@ describe('TransferErc20', () => {
 
   describe('TransferErc20', () => {
     test('should add a transaction to the queue to transfer an erc20 token with specified token address to a specified receiving address', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const transferArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       erc20Mock.mock('transfer', Promise.resolve('Transfer'));
+      const { transfer } = erc20Mock.getMockInstance();
+      addTransactionStub.withArgs(transfer).returns(transferArgsSpy);
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
-      expect(addTransactionSpy.getCall(0).calledWith(erc20Mock.getMockInstance().transfer)).toEqual(
-        true
-      );
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.TransferErc20);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(transferArgsSpy.getCall(0).args[0]).toEqual({
+        to: params.receiver,
+        value: params.amount,
+      });
+      expect(transferArgsSpy.callCount).toEqual(1);
+
+      expect(
+        addTransactionStub.getCall(0).calledWith(erc20Mock.getMockInstance().transfer)
+      ).toEqual(true);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.TransferErc20);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to transfer poly as the parameters do not include token address', async () => {
@@ -132,18 +142,27 @@ describe('TransferErc20', () => {
       );
       polyTokenMock.mock('balanceOf', Promise.resolve(new BigNumber(20)));
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const transferArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       polyTokenMock.mock('transfer', Promise.resolve('Transfer'));
+      const { transfer } = polyTokenMock.getMockInstance();
+      addTransactionStub.withArgs(transfer).returns(transferArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(transferArgsSpy.getCall(0).args[0]).toEqual({
+        to: params.receiver,
+        value: params.amount,
+      });
+      expect(transferArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(polyTokenMock.getMockInstance().transfer)
+        addTransactionStub.getCall(0).calledWith(polyTokenMock.getMockInstance().transfer)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.TransferErc20);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.TransferErc20);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if supplied address does not correspond to a valid erc20 token', async () => {
@@ -173,25 +192,48 @@ describe('TransferErc20', () => {
     });
 
     test('should add an extra transaction to get POLY from the faucet if the balance is insufficient, specifically on testnet', async () => {
+      const balanceOfPoly = new BigNumber(2);
       wrappersMock.mock('isTestnet', Promise.resolve(true));
       erc20Mock.mock('address', Promise.resolve(polyTokenAddress));
-      erc20Mock.mock('balanceOf', Promise.resolve(new BigNumber(2)));
+      erc20Mock.mock('balanceOf', Promise.resolve(balanceOfPoly));
+
+      const transferArgsSpy = sinon.spy();
+      const getPolyTokensArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+
       erc20Mock.mock('transfer', Promise.resolve('Transfer'));
       wrappersMock.mock('getPolyTokens', Promise.resolve('GetPolyTokens'));
-      const addTransactionSpy = spy(target, 'addTransaction');
+
+      const { transfer } = erc20Mock.getMockInstance();
+      addTransactionStub.withArgs(transfer).returns(transferArgsSpy);
+      const { getPolyTokens } = wrappersMock.getMockInstance();
+      addTransactionStub.withArgs(getPolyTokens).returns(getPolyTokensArgsSpy);
+
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(transferArgsSpy.getCall(0).args[0]).toEqual({
+        to: params.receiver,
+        value: params.amount,
+      });
+      expect(transferArgsSpy.callCount).toEqual(1);
+
+      expect(getPolyTokensArgsSpy.getCall(0).args[0]).toEqual({
+        address: currentWallet,
+        amount: params.amount.minus(balanceOfPoly),
+      });
+      expect(getPolyTokensArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(wrappersMock.getMockInstance().getPolyTokens)
+        addTransactionStub.getCall(0).calledWith(wrappersMock.getMockInstance().getPolyTokens)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.GetTokens);
-      expect(addTransactionSpy.getCall(1).calledWith(erc20Mock.getMockInstance().transfer)).toEqual(
-        true
-      );
-      expect(addTransactionSpy.getCall(1).lastArg.tag).toEqual(PolyTransactionTag.TransferErc20);
-      expect(addTransactionSpy.callCount).toEqual(2);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.GetTokens);
+      expect(
+        addTransactionStub.getCall(1).calledWith(erc20Mock.getMockInstance().transfer)
+      ).toEqual(true);
+      expect(addTransactionStub.getCall(1).lastArg.tag).toEqual(PolyTransactionTag.TransferErc20);
+      expect(addTransactionStub.callCount).toEqual(2);
     });
 
     test('should throw error if there are not enough funds to make an erc20 transfer', async () => {

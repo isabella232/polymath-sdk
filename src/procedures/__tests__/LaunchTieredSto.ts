@@ -1,11 +1,13 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { SinonStub, spy, restore } from 'sinon';
+import sinon, { SinonStub, spy, restore, stub } from 'sinon';
 import {
   BigNumber,
   TransactionReceiptWithDecodedLogs,
   FundRaiseType as Currency,
   SecurityTokenEvents,
+  ModuleName,
+  FundRaiseType,
 } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { LaunchTieredSto } from '../../procedures/LaunchTieredSto';
@@ -57,7 +59,7 @@ const securityTokenAddress = '0x9999999999999999999999999999999999999999';
 const polyTokenAddress = '0x5555555555555555555555555555555555555555';
 const moduleFactoryAddress = '0x4444444444444444444444444444444444444444';
 const costInPoly = new BigNumber(5);
-const costIn = new BigNumber(6);
+const costInUsd = new BigNumber(6);
 
 describe('LaunchTieredSto', () => {
   let target: LaunchTieredSto;
@@ -98,7 +100,7 @@ describe('LaunchTieredSto', () => {
     moduleFactoryMock = ImportMock.mockClass(contractWrappersModule, 'ModuleFactory_3_0_0');
     moduleFactoryMock.mock('setupCostInPoly', Promise.resolve(costInPoly));
     moduleFactoryMock.mock('isCostInPoly', Promise.resolve(false));
-    moduleFactoryMock.mock('setupCost', Promise.resolve(costIn));
+    moduleFactoryMock.mock('setupCost', Promise.resolve(costInUsd));
 
     tokenFactoryMock.mock(
       'getSecurityTokenInstanceFromTicker',
@@ -137,74 +139,182 @@ describe('LaunchTieredSto', () => {
 
   describe('LaunchTieredSto', () => {
     test('should add the transaction to the queue to launch usd tiered sto', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const addModuleWithLabelArgsStub = sinon.stub();
+      addModuleWithLabelArgsStub.returns([{}]);
+
+      const addTransactionStub = stub(target, 'addTransaction');
+
       securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const { addModuleWithLabel } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(addModuleWithLabel).returns(addModuleWithLabelArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addModuleWithLabelArgsStub.getCall(0).args[0]).toEqual({
+        moduleName: ModuleName.UsdTieredSTO,
+        address: moduleFactoryAddress,
+        archived: false,
+        maxCost: costInPoly,
+        data: {
+          customOracleAddresses: [
+            '0x0000000000000000000000000000000000000000',
+            '0x0000000000000000000000000000000000000000',
+          ],
+          denominatedCurrency: params.customCurrency!.currencySymbol,
+          endTime: params.endDate,
+          fundRaiseTypes: [FundRaiseType.StableCoin],
+          startTime: params.startDate,
+          treasuryWallet: params.unsoldTokensWallet,
+          minimumInvestmentUSD: params.minimumInvestment,
+          nonAccreditedLimitUSD: params.nonAccreditedInvestmentLimit,
+          ratePerTier: [new BigNumber(1)],
+          ratePerTierDiscountPoly: [new BigNumber(0)],
+          stableTokens: params.stableCoinAddresses,
+          tokensPerTierDiscountPoly: [new BigNumber(0)],
+          tokensPerTierTotal: [new BigNumber(1)],
+          wallet: params.raisedFundsWallet,
+        },
+      });
+      expect(addModuleWithLabelArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
-        usd: costIn,
+      expect(addTransactionStub.getCall(0).lastArg.fees).toEqual({
+        usd: costInUsd,
         poly: costInPoly,
       });
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableTieredSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableTieredSto);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test("should transfer POLY to the security token if the token's balance doesn't cover the launch fee", async () => {
-      const addProcedureSpy = spy(target, 'addProcedure');
-      const addTransactionSpy = spy(target, 'addTransaction');
-      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const transferErc20ArgsSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(TransferErc20).returns(transferErc20ArgsSpy);
+
+      const addModuleWithLabelArgsStub = sinon.stub();
+      addModuleWithLabelArgsStub.returns([{}]);
+
+      const addTransactionStub = stub(target, 'addTransaction');
+      const currentBalance = Promise.resolve(new BigNumber(1));
       polyTokenMock
         .mock('balanceOf', Promise.resolve(new BigNumber(20)))
         .withArgs({ owner: securityTokenAddress })
-        .returns(Promise.resolve(new BigNumber(1)));
+        .returns(currentBalance);
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const { addModuleWithLabel } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(addModuleWithLabel).returns(addModuleWithLabelArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(transferErc20ArgsSpy.getCall(0).args[0]).toEqual({
+        amount: costInPoly.minus(await currentBalance),
+        receiver: securityTokenAddress,
+      });
+      expect(transferErc20ArgsSpy.callCount).toBe(1);
+      expect(addProcedureStub.getCall(0).calledWithExactly(TransferErc20)).toEqual(true);
+
+      expect(addModuleWithLabelArgsStub.getCall(0).args[0]).toEqual({
+        moduleName: ModuleName.UsdTieredSTO,
+        address: moduleFactoryAddress,
+        archived: false,
+        maxCost: costInPoly,
+        data: {
+          customOracleAddresses: [
+            '0x0000000000000000000000000000000000000000',
+            '0x0000000000000000000000000000000000000000',
+          ],
+          denominatedCurrency: params.customCurrency!.currencySymbol,
+          endTime: params.endDate,
+          fundRaiseTypes: [FundRaiseType.StableCoin],
+          startTime: params.startDate,
+          treasuryWallet: params.unsoldTokensWallet,
+          minimumInvestmentUSD: params.minimumInvestment,
+          nonAccreditedLimitUSD: params.nonAccreditedInvestmentLimit,
+          ratePerTier: [new BigNumber(1)],
+          ratePerTierDiscountPoly: [new BigNumber(0)],
+          stableTokens: params.stableCoinAddresses,
+          tokensPerTierDiscountPoly: [new BigNumber(0)],
+          tokensPerTierTotal: [new BigNumber(1)],
+          wallet: params.raisedFundsWallet,
+        },
+      });
+      expect(addModuleWithLabelArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
-        usd: costIn,
+      expect(addTransactionStub.getCall(0).lastArg.fees).toEqual({
+        usd: costInUsd,
         poly: costInPoly,
       });
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableTieredSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWith(TransferErc20));
-      expect(addProcedureSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableTieredSto);
+      expect(addTransactionStub.callCount).toEqual(1);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
 
     test('should add the transaction to the queue to launch usd tiered sto with cost in poly', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
-      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const addModuleWithLabelArgsStub = sinon.stub();
+      addModuleWithLabelArgsStub.returns([{}]);
+
+      const addTransactionStub = stub(target, 'addTransaction');
       moduleFactoryMock.mock('isCostInPoly', Promise.resolve(true));
+
+      securityTokenMock.mock('addModuleWithLabel', Promise.resolve('AddModuleWithLabel'));
+      const { addModuleWithLabel } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(addModuleWithLabel).returns(addModuleWithLabelArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addModuleWithLabelArgsStub.getCall(0).args[0]).toEqual({
+        moduleName: ModuleName.UsdTieredSTO,
+        address: moduleFactoryAddress,
+        archived: false,
+        maxCost: costInPoly,
+        data: {
+          customOracleAddresses: [
+            '0x0000000000000000000000000000000000000000',
+            '0x0000000000000000000000000000000000000000',
+          ],
+          denominatedCurrency: params.customCurrency!.currencySymbol,
+          endTime: params.endDate,
+          fundRaiseTypes: [FundRaiseType.StableCoin],
+          startTime: params.startDate,
+          treasuryWallet: params.unsoldTokensWallet,
+          minimumInvestmentUSD: params.minimumInvestment,
+          nonAccreditedLimitUSD: params.nonAccreditedInvestmentLimit,
+          ratePerTier: [new BigNumber(1)],
+          ratePerTierDiscountPoly: [new BigNumber(0)],
+          stableTokens: params.stableCoinAddresses,
+          tokensPerTierDiscountPoly: [new BigNumber(0)],
+          tokensPerTierTotal: [new BigNumber(1)],
+          wallet: params.raisedFundsWallet,
+        },
+      });
+      expect(addModuleWithLabelArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().addModuleWithLabel)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+      expect(addTransactionStub.getCall(0).lastArg.fees).toEqual({
         usd: null,
         poly: costInPoly,
       });
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableTieredSto);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.EnableTieredSto);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if corresponding usd tiered sto event is not fired', async () => {

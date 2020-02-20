@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -120,22 +120,30 @@ describe('TransferOwnership', () => {
     });
 
     test('should add a transaction to the queue to transfer ownership of the security token', async () => {
+      const transferOwnershipArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('transferOwnership', Promise.resolve('TransferOwnership'));
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const { transferOwnership } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(transferOwnership).returns(transferOwnershipArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(transferOwnershipArgsSpy.getCall(0).args[0]).toEqual({
+        newOwner: params.newOwner,
+      });
+      expect(transferOwnershipArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().transferOwnership)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.TransferOwnership
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should successfully refresh the security token', async () => {

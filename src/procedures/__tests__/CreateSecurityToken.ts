@@ -2,8 +2,9 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import { spy, restore } from 'sinon';
+import { spy, stub, restore } from 'sinon';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
+import sinon from 'sinon';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as approvalModule from '../ApproveErc20';
@@ -151,44 +152,121 @@ describe('CreateSecurityToken', () => {
     });
 
     test('should add the transaction to the queue to create the security token and approve erc20 transfer', async () => {
-      const addProcedureSpy = spy(target, 'addProcedure');
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const approveErc20ArgsSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(ApproveErc20).returns(approveErc20ArgsSpy);
+
+      const generateNewSecurityTokenArgsStub = sinon.stub();
+      generateNewSecurityTokenArgsStub.returns([{}]);
+
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenRegistryMock.mock(
         'generateNewSecurityToken',
         Promise.resolve('GenerateNewSecurityToken')
       );
+      const { generateNewSecurityToken } = securityTokenRegistryMock.getMockInstance();
+      addTransactionStub
+        .withArgs(generateNewSecurityToken)
+        .returns(generateNewSecurityTokenArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(approveErc20ArgsSpy.getCall(0).args[0]).toEqual({
+        amount: costInPoly,
+        spender: params.address,
+      });
+      expect(approveErc20ArgsSpy.callCount).toBe(1);
+
+      expect(generateNewSecurityTokenArgsStub.getCall(0).args[0]).toEqual({
+        name: params.name,
+        ticker: params.symbol,
+        tokenDetails: '',
+        divisible: params.divisible,
+        protocolVersion: '0',
+        treasuryWallet: params.owner,
+      });
+      expect(generateNewSecurityTokenArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenRegistryMock.getMockInstance().generateNewSecurityToken)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+      expect(addTransactionStub.getCall(0).lastArg.fees).toEqual({
         usd: costInUsd,
         poly: costInPoly,
       });
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.CreateSecurityToken
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
-      expect(addProcedureSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
+      expect(addProcedureStub.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
 
     test('should add the transaction to the queue to create the security token with a treasury wallet', async () => {
+      const customTreasuryWallet = '0x5555555555555555555555555555555555555555';
       target = new CreateSecurityToken(
         {
           ...params,
-          treasuryWallet: '0x5', // Extra argument of treasuryWallet
+          treasuryWallet: customTreasuryWallet, // Extra argument of treasuryWallet
         },
         contextMock.getMockInstance()
       );
+      const approveErc20ArgsSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(ApproveErc20).returns(approveErc20ArgsSpy);
+
+      const generateNewSecurityTokenArgsStub = sinon.stub();
+      generateNewSecurityTokenArgsStub.returns([{}]);
+
+      const addTransactionStub = stub(target, 'addTransaction');
+      securityTokenRegistryMock.mock(
+        'generateNewSecurityToken',
+        Promise.resolve('GenerateNewSecurityToken')
+      );
+      const { generateNewSecurityToken } = securityTokenRegistryMock.getMockInstance();
+      addTransactionStub
+        .withArgs(generateNewSecurityToken)
+        .returns(generateNewSecurityTokenArgsStub);
+
       // Real call
       await target.prepareTransactions();
+
+      // Verifications
+      expect(approveErc20ArgsSpy.getCall(0).args[0]).toEqual({
+        amount: costInPoly,
+        spender: params.address,
+      });
+      expect(approveErc20ArgsSpy.callCount).toBe(1);
+
+      expect(generateNewSecurityTokenArgsStub.getCall(0).args[0]).toEqual({
+        name: params.name,
+        ticker: params.symbol,
+        tokenDetails: '',
+        divisible: params.divisible,
+        protocolVersion: '0',
+        treasuryWallet: customTreasuryWallet,
+      });
+      expect(generateNewSecurityTokenArgsStub.callCount).toEqual(1);
+
+      expect(
+        addTransactionStub
+          .getCall(0)
+          .calledWith(securityTokenRegistryMock.getMockInstance().generateNewSecurityToken)
+      ).toEqual(true);
+      expect(addTransactionStub.getCall(0).lastArg.fees).toEqual({
+        usd: costInUsd,
+        poly: costInPoly,
+      });
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
+        PolyTransactionTag.CreateSecurityToken
+      );
+      expect(addTransactionStub.callCount).toEqual(1);
+      expect(addProcedureStub.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
   });
 });
