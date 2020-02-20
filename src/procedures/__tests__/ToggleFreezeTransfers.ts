@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ToggleFreezeTransfers } from '../../procedures/ToggleFreezeTransfers';
 import { Procedure } from '../../procedures/Procedure';
@@ -153,16 +153,26 @@ describe('ToggleFreezeTransfers', () => {
     });
 
     test('should add a transaction to the queue to freeze transfers', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const freezeTransfersArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('freezeTransfers', Promise.resolve('FreezeTransfers'));
+      const { freezeTransfers } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(freezeTransfers).returns(freezeTransfersArgsSpy);
 
+      // Real call
       await target.prepareTransactions();
 
+      // Verifications
+      expect(freezeTransfersArgsSpy.getCall(0).args[0]).toEqual({});
+      expect(freezeTransfersArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(securityTokenMock.getMockInstance().freezeTransfers)
+        addTransactionStub
+          .getCall(0)
+          .calledWith(securityTokenMock.getMockInstance().freezeTransfers)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.FreezeTransfers);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.FreezeTransfers);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to unfreeze transfers', async () => {
@@ -172,20 +182,28 @@ describe('ToggleFreezeTransfers', () => {
       );
 
       securityTokenMock.mock('transfersFrozen', Promise.resolve(true));
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const unfreezeTransfersArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenMock.mock('unfreezeTransfers', Promise.resolve('UnfreezeTransfers'));
+      const { unfreezeTransfers } = securityTokenMock.getMockInstance();
+      addTransactionStub.withArgs(unfreezeTransfers).returns(unfreezeTransfersArgsSpy);
 
+      // Real call
       await target.prepareTransactions();
 
+      // Verifications
+      expect(unfreezeTransfersArgsSpy.getCall(0).args[0]).toEqual({});
+      expect(unfreezeTransfersArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().unfreezeTransfers)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.UnfreezeTransfers
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should successfully resolve toggle freeze transfers', async () => {

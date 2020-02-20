@@ -1,8 +1,9 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import { restore, stub } from 'sinon';
 import { BigNumber, TransferStatusCode } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import sinon from 'sinon';
 import { TransferSecurityTokens } from '../../procedures/TransferSecurityTokens';
 import { Procedure } from '../../procedures/Procedure';
 import * as transferSecurityTokensModule from '../../procedures/TransferSecurityTokens';
@@ -90,10 +91,8 @@ describe('TransferSecurityTokens', () => {
   });
 
   test('should add a transaction to the queue to execute a transfer security token using a different sender address', async () => {
-    target = new TransferSecurityTokens(
-      { ...params, from: '0x1FB52cef867d95E69d398Fe9F6486fAF92C7ED7F' },
-      contextMock.getMockInstance()
-    );
+    const from = '0x1FB52cef867d95E69d398Fe9F6486fAF92C7ED7F';
+    target = new TransferSecurityTokens({ ...params, from }, contextMock.getMockInstance());
     contextMock.set(
       'currentWallet',
       new Wallet({ address: () => Promise.resolve('0x0e6b236a504fce78527497e46dc90c0a6fdc9495') })
@@ -106,20 +105,31 @@ describe('TransferSecurityTokens', () => {
       })
     );
 
-    const addTransactionSpy = spy(target, 'addTransaction');
+    const transferFromWithDataArgsSpy = sinon.spy();
+    const addTransactionStub = stub(target, 'addTransaction');
     securityTokenMock.mock('transferFromWithData', Promise.resolve('TransferFromWithData'));
+    const { transferFromWithData } = securityTokenMock.getMockInstance();
+    addTransactionStub.withArgs(transferFromWithData).returns(transferFromWithDataArgsSpy);
 
     await target.prepareTransactions();
 
+    expect(transferFromWithDataArgsSpy.getCall(0).args[0]).toEqual({
+      from,
+      to: params.to,
+      value: params.amount,
+      data: '',
+    });
+    expect(transferFromWithDataArgsSpy.callCount).toEqual(1);
+
     expect(
-      addTransactionSpy
+      addTransactionStub
         .getCall(0)
         .calledWith(securityTokenMock.getMockInstance().transferFromWithData)
     ).toEqual(true);
-    expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+    expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
       PolyTransactionTag.TransferSecurityTokens
     );
-    expect(addTransactionSpy.callCount).toEqual(1);
+    expect(addTransactionStub.callCount).toEqual(1);
   });
 
   test('should throw error if canTransferFrom method returns status code different than success', async () => {

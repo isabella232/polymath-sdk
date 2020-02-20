@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, spy } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { InvestInSimpleSto } from '../InvestInSimpleSto';
@@ -150,38 +150,65 @@ describe('InvestInSimpleSto', () => {
         beneficialInvestmentsAllowed: false,
         fundraiseCurrencies: [Currency.POLY],
       });
-      const addTransactionSpy = spy(target, 'addTransaction');
-      const addProcedureSpy = spy(target, 'addProcedure');
+      const approveErc20ArgsSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(ApproveErc20).returns(approveErc20ArgsSpy);
+
+      const buyTokensWithPolySpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       simpleStoMock.mock('buyTokensWithPoly', Promise.resolve('BuyTokensWithPoly'));
+      const { buyTokensWithPoly } = simpleStoMock.getMockInstance();
+      addTransactionStub.withArgs(buyTokensWithPoly).returns(buyTokensWithPolySpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(approveErc20ArgsSpy.getCall(0).args[0]).toEqual({
+        amount: simpleParams.amount,
+        spender: simpleParams.stoAddress,
+      });
+      expect(approveErc20ArgsSpy.callCount).toBe(1);
+
+      expect(buyTokensWithPolySpy.getCall(0).args[0]).toEqual({
+        investedPOLY: simpleParams.amount,
+      });
+      expect(buyTokensWithPolySpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(simpleStoMock.getMockInstance().buyTokensWithPoly)
+        addTransactionStub.getCall(0).calledWith(simpleStoMock.getMockInstance().buyTokensWithPoly)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.BuyTokensWithPoly
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
-      expect(addProcedureSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
+      expect(addProcedureStub.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to invest in a simple sto', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const buyTokensArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+
       simpleStoMock.mock('buyTokens', Promise.resolve('BuyTokens'));
+      const { buyTokens } = simpleStoMock.getMockInstance();
+      addTransactionStub.withArgs(buyTokens).returns(buyTokensArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(buyTokensArgsSpy.getCall(0).args[0]).toEqual({
+        value: simpleParams.amount,
+        beneficiary: currentWalletAddress,
+      });
+      expect(buyTokensArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(simpleStoMock.getMockInstance().buyTokens)
+        addTransactionStub.getCall(0).calledWith(simpleStoMock.getMockInstance().buyTokens)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.BuyTokens);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.BuyTokens);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to invest in a simple sto on the behalf of a beneficiary', async () => {
@@ -189,18 +216,28 @@ describe('InvestInSimpleSto', () => {
         { ...simpleParams, beneficiary: beneficiaryAddress },
         contextMock.getMockInstance()
       );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const buyTokensArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+
       simpleStoMock.mock('buyTokens', Promise.resolve('BuyTokens'));
+      const { buyTokens } = simpleStoMock.getMockInstance();
+      addTransactionStub.withArgs(buyTokens).returns(buyTokensArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(buyTokensArgsSpy.getCall(0).args[0]).toEqual({
+        value: simpleParams.amount,
+        beneficiary: beneficiaryAddress,
+      });
+      expect(buyTokensArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(simpleStoMock.getMockInstance().buyTokens)
+        addTransactionStub.getCall(0).calledWith(simpleStoMock.getMockInstance().buyTokens)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.BuyTokens);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.BuyTokens);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw an error as a non eth currency sto does not support investing on behalf of another party', async () => {

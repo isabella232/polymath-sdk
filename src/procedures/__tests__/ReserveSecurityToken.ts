@@ -6,7 +6,7 @@ import {
   conversionUtils,
 } from '@polymathnetwork/contract-wrappers';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -183,56 +183,96 @@ describe('ReserveSecurityToken', () => {
     });
 
     test('should add a transaction to the queue to reserve the security token, specifying an owner address', async () => {
-      const addProcedureSpy = spy(target, 'addProcedure');
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const approveErc20ArgsSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(ApproveErc20).returns(approveErc20ArgsSpy);
+
+      const registerNewTickerArgsStub = sinon.stub();
+      registerNewTickerArgsStub.returns([{}]);
+
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenRegistryMock.mock('registerNewTicker', Promise.resolve('RegisterNewTicker'));
+      const { registerNewTicker } = securityTokenRegistryMock.getMockInstance();
+      addTransactionStub.withArgs(registerNewTicker).returns(registerNewTickerArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(registerNewTickerArgsStub.getCall(0).args[0]).toEqual({
+        ticker: params.symbol,
+        owner: params.owner,
+      });
+      expect(registerNewTickerArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenRegistryMock.getMockInstance().registerNewTicker)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+      expect(addTransactionStub.getCall(0).lastArg.fees).toEqual({
         usd: costInUsd,
         poly: costInPoly,
       });
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.ReserveSecurityToken
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
-      expect(addProcedureSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
+
+      expect(approveErc20ArgsSpy.getCall(0).args[0]).toEqual({
+        amount: costInPoly,
+        spender: securityTokenRegistryAddress,
+      });
+      expect(approveErc20ArgsSpy.callCount).toBe(1);
+      expect(addProcedureStub.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to reserve the security token using the current wallet address as the owner address', async () => {
       target = new ReserveSecurityToken({ symbol: params.symbol }, contextMock.getMockInstance());
-      const addProcedureSpy = spy(target, 'addProcedure');
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const approveErc20ArgsSpy = sinon.spy();
+      const addProcedureStub = stub(target, 'addProcedure');
+      addProcedureStub.withArgs(ApproveErc20).returns(approveErc20ArgsSpy);
+
+      const registerNewTickerArgsStub = sinon.stub();
+      registerNewTickerArgsStub.returns([{}]);
+
+      const addTransactionStub = stub(target, 'addTransaction');
       securityTokenRegistryMock.mock('registerNewTicker', Promise.resolve('RegisterNewTicker'));
+      const { registerNewTicker } = securityTokenRegistryMock.getMockInstance();
+      addTransactionStub.withArgs(registerNewTicker).returns(registerNewTickerArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(registerNewTickerArgsStub.getCall(0).args[0]).toEqual({
+        ticker: params.symbol,
+        owner: currentWalletAddress,
+      });
+      expect(registerNewTickerArgsStub.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(securityTokenRegistryMock.getMockInstance().registerNewTicker)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.fees).toEqual({
+      expect(addTransactionStub.getCall(0).lastArg.fees).toEqual({
         usd: costInUsd,
         poly: costInPoly,
       });
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.ReserveSecurityToken
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
-      expect(addProcedureSpy.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
-      expect(addProcedureSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
+
+      expect(approveErc20ArgsSpy.getCall(0).args[0]).toEqual({
+        amount: costInPoly,
+        spender: securityTokenRegistryAddress,
+      });
+      expect(approveErc20ArgsSpy.callCount).toBe(1);
+      expect(addProcedureStub.getCall(0).calledWithExactly(ApproveErc20)).toEqual(true);
+      expect(addProcedureStub.callCount).toEqual(1);
     });
   });
 });

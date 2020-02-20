@@ -1,5 +1,5 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -64,21 +64,29 @@ describe('ModifyMaxHolderCount', () => {
 
   describe('ModifyMaxHolderCount', () => {
     test('should add a transaction to the queue to modify max holder count', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const changeHolderCountArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       countTransferMock.mock('changeHolderCount', Promise.resolve('ChangeHolderCount'));
+      const { changeHolderCount } = countTransferMock.getMockInstance();
+      addTransactionStub.withArgs(changeHolderCount).returns(changeHolderCountArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(changeHolderCountArgsSpy.getCall(0).args[0]).toEqual({
+        maxHolderCount: params.maxHolderCount,
+      });
+      expect(changeHolderCountArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWithExactly(countTransferMock.getMockInstance().changeHolderCount, {
             tag: PolyTransactionTag.ChangeHolderCount,
           })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should throw if there is no valid security token supplied', async () => {
