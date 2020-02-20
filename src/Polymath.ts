@@ -295,19 +295,21 @@ export class Polymath {
       walletAddress = await currentWallet.address();
     }
 
-    const [ownedTickers, delegatedAddresses] = await Promise.all([
-      contractWrappers.securityTokenRegistry.getTickersByOwner({ owner: walletAddress }),
+    const [ownedTokens, delegatedTokens] = await Promise.all([
+      contractWrappers.securityTokenRegistry.getTokensByOwner({ owner: walletAddress }),
       contractWrappers.securityTokenRegistry.getTokensByDelegate(walletAddress),
     ]);
 
-    const delegateTickers = await P.map(delegatedAddresses, async address => {
+    const allTokens = union(ownedTokens, delegatedTokens);
+
+    const allTickers = await P.map(allTokens, async address => {
       const details = await contractWrappers.securityTokenRegistry.getSecurityTokenData({
         securityTokenAddress: address,
       });
       return details.ticker;
     });
 
-    return union(ownedTickers, delegateTickers);
+    return allTickers;
   };
 
   /**
