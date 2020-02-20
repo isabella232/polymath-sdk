@@ -68,10 +68,9 @@
           "FunctionExpression": true
         }
       }
-    ],
-    "tsdoc/syntax": "warn"
+    ]
   },
-  "plugins": ["@typescript-eslint", "eslint-plugin-tsdoc"],
+  "plugins": ["@typescript-eslint"],
   "parserOptions": {
     "sourceType": "module"
   }
