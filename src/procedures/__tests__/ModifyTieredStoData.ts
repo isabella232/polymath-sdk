@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { restore, SinonStub, spy } from 'sinon';
+import sinon, { restore, SinonStub, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { BigNumber, ContractVersion, FundRaiseType } from '@polymathnetwork/contract-wrappers';
 import * as modifyTieredStoDataModule from '../ModifyTieredStoData';
@@ -188,50 +188,64 @@ describe('ModifyTieredStoData', () => {
 
   describe('ModifyTieredStoData', () => {
     test('should add a transaction to the queue to modify times', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          startDate: new Date(2031, 1),
-          endDate: new Date(2041, 1),
-        },
-        contextMock.getMockInstance()
-      );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyTimesParams = {
+        ...tieredParams,
+        startDate: new Date(2031, 1),
+        endDate: new Date(2041, 1),
+      };
+      target = new ModifyTieredStoData(modifyTimesParams, contextMock.getMockInstance());
+      const modifyTimesArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyTimes', Promise.resolve('ModifyTimes'));
+      const { modifyTimes } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyTimes).returns(modifyTimesArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyTimesArgsSpy.getCall(0).args[0]).toEqual({
+        startTime: modifyTimesParams.startDate,
+        endTime: modifyTimesParams.endDate,
+      });
+
+      expect(modifyTimesArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy.getCall(0).calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyTimes)
+        addTransactionStub.getCall(0).calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyTimes)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyTimes);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyTimes);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify fund raise currency to ETH', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          currencies: [Currency.ETH],
-        },
-        contextMock.getMockInstance()
-      );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyFundingDataParams = {
+        ...tieredParams,
+        currencies: [Currency.ETH],
+      };
+      target = new ModifyTieredStoData(modifyFundingDataParams, contextMock.getMockInstance());
+
+      const modifyFundingArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyFunding', Promise.resolve('ModifyFunding'));
+      const { modifyFunding } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyFunding).returns(modifyFundingArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyFundingArgsSpy.getCall(0).args[0]).toEqual({
+        fundRaiseTypes: [FundRaiseType.ETH],
+      });
+      expect(modifyFundingArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyFunding)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyFunding);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyFunding);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify fund raise currency to POLY', async () => {
@@ -242,20 +256,28 @@ describe('ModifyTieredStoData', () => {
         },
         contextMock.getMockInstance()
       );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyFundingArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyFunding', Promise.resolve('ModifyFunding'));
+      const { modifyFunding } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyFunding).returns(modifyFundingArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyFundingArgsSpy.getCall(0).args[0]).toEqual({
+        fundRaiseTypes: [FundRaiseType.POLY],
+      });
+      expect(modifyFundingArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyFunding)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyFunding);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyFunding);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify fund raise currency in stable coin', async () => {
@@ -270,405 +292,588 @@ describe('ModifyTieredStoData', () => {
         ...tieredStoObject,
         fundraiseCurrencies: [FundRaiseType.POLY, FundRaiseType.ETH],
       });
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyFundingArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyFunding', Promise.resolve('ModifyFunding'));
+      const { modifyFunding } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyFunding).returns(modifyFundingArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyFundingArgsSpy.getCall(0).args[0]).toEqual({
+        fundRaiseTypes: [FundRaiseType.StableCoin],
+      });
+      expect(modifyFundingArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyFunding)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyFunding);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyFunding);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify times with a V3.0.0 wrapper', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          startDate: new Date(2031, 1),
-          endDate: new Date(2041, 1),
-          customCurrency: undefined,
-        },
-        contextMock.getMockInstance()
-      );
+      const modifyTimesParams = {
+        ...tieredParams,
+        startDate: new Date(2031, 1),
+        endDate: new Date(2041, 1),
+        customCurrency: undefined,
+      };
+      target = new ModifyTieredStoData(modifyTimesParams, contextMock.getMockInstance());
       moduleWrapperFactoryMock.mock('getModuleInstance', tieredSto_3_0_0_Mock.getMockInstance());
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyTimesArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_0_0_Mock.mock('modifyTimes', Promise.resolve('ModifyTimes'));
+      const { modifyTimes } = tieredSto_3_0_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyTimes).returns(modifyTimesArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyTimesArgsSpy.getCall(0).args[0]).toEqual({
+        startTime: modifyTimesParams.startDate,
+        endTime: modifyTimesParams.endDate,
+      });
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(tieredSto_3_0_0_Mock.getMockInstance().modifyTimes)
+        addTransactionStub.getCall(0).calledWith(tieredSto_3_0_0_Mock.getMockInstance().modifyTimes)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyTimes);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyTimes);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify all custom currency information', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          customCurrency: {
-            currencySymbol: 'CAD',
-            ethOracleAddress: '0x0123456789012345678901234567890123456789',
-            polyOracleAddress: '0x1123456789012345678901234567890123456789',
-          },
+      const modifyOraclesParams = {
+        ...tieredParams,
+        customCurrency: {
+          currencySymbol: 'CAD',
+          ethOracleAddress: '0x0123456789012345678901234567890123456789',
+          polyOracleAddress: '0x1123456789012345678901234567890123456789',
         },
-        contextMock.getMockInstance()
-      );
+      };
+      target = new ModifyTieredStoData(modifyOraclesParams, contextMock.getMockInstance());
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyOraclesArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyOracles', Promise.resolve('ModifyOracles'));
+      const { modifyOracles } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyOracles).returns(modifyOraclesArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyOraclesArgsSpy.getCall(0).args[0]).toEqual({
+        customOracleAddresses: [
+          modifyOraclesParams.customCurrency.ethOracleAddress,
+          modifyOraclesParams.customCurrency.polyOracleAddress,
+        ],
+        denominatedCurrencySymbol: modifyOraclesParams.customCurrency.currencySymbol,
+      });
+
+      expect(modifyOraclesArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyOracles)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify the custom currency symbol only', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          customCurrency: {
-            currencySymbol: 'THISONE',
-            ethOracleAddress: undefined,
-            polyOracleAddress: undefined,
-          },
+      const modifyOraclesParams = {
+        ...tieredParams,
+        customCurrency: {
+          currencySymbol: 'CAD',
+          ethOracleAddress: undefined,
+          polyOracleAddress: undefined,
         },
-        contextMock.getMockInstance()
-      );
+      };
+      target = new ModifyTieredStoData(modifyOraclesParams, contextMock.getMockInstance());
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyOraclesArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyOracles', Promise.resolve('ModifyOracles'));
+      const { modifyOracles } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyOracles).returns(modifyOraclesArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyOraclesArgsSpy.getCall(0).args[0]).toEqual({
+        customOracleAddresses: [polyTokenAddress, polyTokenAddress],
+        denominatedCurrencySymbol: modifyOraclesParams.customCurrency.currencySymbol,
+      });
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyOracles)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify eth oracle address only', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          customCurrency: {
-            currencySymbol: undefined,
-            ethOracleAddress: '0x0123456789012345678901234567890123456789',
-            polyOracleAddress: undefined,
-          },
+      const modifyOraclesParams = {
+        ...tieredParams,
+        customCurrency: {
+          currencySymbol: undefined,
+          ethOracleAddress: '0x0123456789012345678901234567890123456789',
+          polyOracleAddress: undefined,
         },
-        contextMock.getMockInstance()
-      );
+      };
+      target = new ModifyTieredStoData(modifyOraclesParams, contextMock.getMockInstance());
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyOraclesArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyOracles', Promise.resolve('ModifyOracles'));
+      const { modifyOracles } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyOracles).returns(modifyOraclesArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyOraclesArgsSpy.getCall(0).args[0]).toEqual({
+        customOracleAddresses: [
+          modifyOraclesParams.customCurrency.ethOracleAddress,
+          polyTokenAddress,
+        ],
+        denominatedCurrencySymbol: customCurrency.currencySymbol,
+      });
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyOracles)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify poly oracle address only', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          customCurrency: {
-            currencySymbol: undefined,
-            ethOracleAddress: undefined,
-            polyOracleAddress: '0x1123456789012345678901234567890123456789',
-          },
+      const modifyOraclesParams = {
+        ...tieredParams,
+        customCurrency: {
+          currencySymbol: undefined,
+          ethOracleAddress: undefined,
+          polyOracleAddress: '0x1123456789012345678901234567890123456789',
         },
-        contextMock.getMockInstance()
-      );
+      };
+      target = new ModifyTieredStoData(modifyOraclesParams, contextMock.getMockInstance());
 
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyOraclesArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyOracles', Promise.resolve('ModifyOracles'));
+      const { modifyOracles } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyOracles).returns(modifyOraclesArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyOraclesArgsSpy.getCall(0).args[0]).toEqual({
+        customOracleAddresses: [
+          polyTokenAddress,
+          modifyOraclesParams.customCurrency.polyOracleAddress,
+        ],
+        denominatedCurrencySymbol: customCurrency.currencySymbol,
+      });
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyOracles)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify investment limits', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          nonAccreditedInvestmentLimit: new BigNumber(123),
-          minimumInvestment: new BigNumber(123),
-        },
-        contextMock.getMockInstance()
-      );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyLimitsParams = {
+        ...tieredParams,
+        nonAccreditedInvestmentLimit: new BigNumber(123),
+        minimumInvestment: new BigNumber(123),
+      };
+      target = new ModifyTieredStoData(modifyLimitsParams, contextMock.getMockInstance());
+
+      const modifyLimitsArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyLimits', Promise.resolve('ModifyLimits'));
+      const { modifyLimits } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyLimits).returns(modifyLimitsArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyLimitsArgsSpy.getCall(0).args[0]).toEqual({
+        minimumInvestmentUSD: modifyLimitsParams.minimumInvestment,
+        nonAccreditedLimitUSD: modifyLimitsParams.nonAccreditedInvestmentLimit,
+      });
+      expect(modifyLimitsArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyLimits)
+        addTransactionStub
+          .getCall(0)
+          .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyLimits)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyLimits);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyLimits);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify the minimum investment amount only', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          nonAccreditedInvestmentLimit: undefined,
-          minimumInvestment: new BigNumber(123),
-        },
-        contextMock.getMockInstance()
-      );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyLimitsParams = {
+        ...tieredParams,
+        nonAccreditedInvestmentLimit: undefined,
+        minimumInvestment: new BigNumber(123),
+      };
+      target = new ModifyTieredStoData(modifyLimitsParams, contextMock.getMockInstance());
+
+      const modifyLimitsArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyLimits', Promise.resolve('ModifyLimits'));
+      const { modifyLimits } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyLimits).returns(modifyLimitsArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyLimitsArgsSpy.getCall(0).args[0]).toEqual({
+        minimumInvestmentUSD: modifyLimitsParams.minimumInvestment,
+        nonAccreditedLimitUSD: tieredParams.nonAccreditedInvestmentLimit,
+      });
+      expect(modifyLimitsArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyLimits)
+        addTransactionStub
+          .getCall(0)
+          .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyLimits)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyLimits);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyLimits);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify the investment limit for non accredited investors only', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          nonAccreditedInvestmentLimit: new BigNumber(123),
-          minimumInvestment: undefined,
-        },
-        contextMock.getMockInstance()
-      );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyLimitsParams = {
+        ...tieredParams,
+        nonAccreditedInvestmentLimit: new BigNumber(123),
+        minimumInvestment: undefined,
+      };
+      target = new ModifyTieredStoData(modifyLimitsParams, contextMock.getMockInstance());
+
+      const modifyLimitsArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyLimits', Promise.resolve('ModifyLimits'));
+      const { modifyLimits } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyLimits).returns(modifyLimitsArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyLimitsArgsSpy.getCall(0).args[0]).toEqual({
+        minimumInvestmentUSD: tieredParams.minimumInvestment,
+        nonAccreditedLimitUSD: modifyLimitsParams.nonAccreditedInvestmentLimit,
+      });
+      expect(modifyLimitsArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy.getCall(0).calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyLimits)
+        addTransactionStub
+          .getCall(0)
+          .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyLimits)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyLimits);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyLimits);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify raisedFundsWallet', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          raisedFundsWallet: '0x0123456789012345678901234567890123456789',
-        },
-        contextMock.getMockInstance()
-      );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyAddressParams = {
+        ...tieredParams,
+        raisedFundsWallet: '0x0123456789012345678901234567890123456789',
+      };
+      target = new ModifyTieredStoData(modifyAddressParams, contextMock.getMockInstance());
+
+      const modifyAddressesArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       tieredSto_3_1_0_Mock.mock('modifyAddresses', Promise.resolve('ModifyAddresses'));
+      const { modifyAddresses } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyAddresses).returns(modifyAddressesArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyAddressesArgsSpy.getCall(0).args[0]).toEqual({
+        stableTokens: tieredParams.stableCoinAddresses,
+        treasuryWallet,
+        wallet: modifyAddressParams.raisedFundsWallet,
+      });
+      expect(modifyAddressesArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyAddresses)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyAddresses);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyAddresses);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify unsoldTokensWallet', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          unsoldTokensWallet: '0x0123456789012345678901234567890123456789',
-        },
-        contextMock.getMockInstance()
-      );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyAddressParams = {
+        ...tieredParams,
+        unsoldTokensWallet: '0x0123456789012345678901234567890123456789',
+      };
+      target = new ModifyTieredStoData(modifyAddressParams, contextMock.getMockInstance());
+
+      const modifyAddressesArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+
       tieredSto_3_1_0_Mock.mock('modifyAddresses', Promise.resolve('ModifyAddresses'));
+      const { modifyAddresses } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyAddresses).returns(modifyAddressesArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyAddressesArgsSpy.getCall(0).args[0]).toEqual({
+        stableTokens: tieredParams.stableCoinAddresses,
+        treasuryWallet: modifyAddressParams.unsoldTokensWallet,
+        wallet: raisedFundsWallet,
+      });
+      expect(modifyAddressesArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyAddresses)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyAddresses);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyAddresses);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify addresses without a stable coin address', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          raisedFundsWallet: '0x0123456789012345678901234567890123456789',
-          unsoldTokensWallet: '0x1123456789012345678901234567890123456789',
-          stableCoinAddresses: undefined,
-        },
-        contextMock.getMockInstance()
-      );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyAddressParams = {
+        ...tieredParams,
+        raisedFundsWallet: '0x0123456789012345678901234567890123456789',
+        unsoldTokensWallet: '0x1123456789012345678901234567890123456789',
+        stableCoinAddresses: undefined,
+      };
+      target = new ModifyTieredStoData(modifyAddressParams, contextMock.getMockInstance());
+
+      const modifyAddressesArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+
       tieredSto_3_1_0_Mock.mock('modifyAddresses', Promise.resolve('ModifyAddresses'));
+      const { modifyAddresses } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyAddresses).returns(modifyAddressesArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyAddressesArgsSpy.getCall(0).args[0]).toEqual({
+        stableTokens: tieredParams.stableCoinAddresses,
+        treasuryWallet: modifyAddressParams.unsoldTokensWallet,
+        wallet: modifyAddressParams.raisedFundsWallet,
+      });
+      expect(modifyAddressesArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyAddresses)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyAddresses);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyAddresses);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to the queue to modify tiers', async () => {
-      target = new ModifyTieredStoData(
-        {
-          ...tieredParams,
-          tiers: [
-            {
-              tokensOnSale: new BigNumber(123),
-              price: new BigNumber(123),
-              tokensWithDiscount: new BigNumber(10),
-              discountedPrice: new BigNumber(20),
-            },
-          ],
-        },
-        contextMock.getMockInstance()
-      );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyTiersParams = {
+        ...tieredParams,
+        tiers: [
+          {
+            tokensOnSale: new BigNumber(123),
+            price: new BigNumber(123),
+            tokensWithDiscount: new BigNumber(10),
+            discountedPrice: new BigNumber(20),
+          },
+        ],
+      };
+      target = new ModifyTieredStoData(modifyTiersParams, contextMock.getMockInstance());
+
+      const modifyTiersArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+
       tieredSto_3_1_0_Mock.mock('modifyTiers', Promise.resolve('ModifyTiers'));
+      const { modifyTiers } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyTiers).returns(modifyTiersArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyTiersArgsSpy.getCall(0).args[0]).toEqual({
+        ratePerTier: [modifyTiersParams.tiers[0].price],
+        ratePerTierDiscountPoly: [modifyTiersParams.tiers[0].discountedPrice],
+        tokensPerTierDiscountPoly: [modifyTiersParams.tiers[0].tokensWithDiscount],
+        tokensPerTierTotal: [modifyTiersParams.tiers[0].tokensOnSale],
+      });
+      expect(modifyTiersArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy.getCall(0).calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyTiers)
+        addTransactionStub.getCall(0).calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyTiers)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyTiers);
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyTiers);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add 6 transactions to the queue to modify all sto data', async () => {
-      target = new ModifyTieredStoData(
-        {
-          symbol: 'TEST1',
-          stoAddress: '0x5555555555555555555555555555555555555555',
-          startDate: new Date(2035, 1),
-          endDate: new Date(2045, 1),
-          raisedFundsWallet: '0x1111111111111111111111111111111111111111',
-          unsoldTokensWallet: '0x2222222222222222222222222222222222222222',
-          tiers: [
-            {
-              tokensOnSale: new BigNumber(123),
-              price: new BigNumber(123),
-            },
-          ],
-          nonAccreditedInvestmentLimit: new BigNumber(123),
-          minimumInvestment: new BigNumber(113),
-          currencies: [Currency.ETH, Currency.StableCoin],
-          stableCoinAddresses: ['0x7777777777777777777777777777777777777777'],
-          customCurrency: {
-            currencySymbol: 'CAD',
-            ethOracleAddress: '0x6666666666666666666666666666666666666666',
-            polyOracleAddress: '0x9999999999999999999999999999999999999999',
+      const modifyAllStoDataParams = {
+        symbol: 'TEST1',
+        stoAddress: '0x5555555555555555555555555555555555555555',
+        startDate: new Date(2035, 1),
+        endDate: new Date(2045, 1),
+        raisedFundsWallet: '0x1111111111111111111111111111111111111111',
+        unsoldTokensWallet: '0x2222222222222222222222222222222222222222',
+        tiers: [
+          {
+            tokensOnSale: new BigNumber(123),
+            price: new BigNumber(123),
           },
+        ],
+        nonAccreditedInvestmentLimit: new BigNumber(123),
+        minimumInvestment: new BigNumber(113),
+        currencies: [Currency.ETH, Currency.StableCoin],
+        stableCoinAddresses: ['0x7777777777777777777777777777777777777777'],
+        customCurrency: {
+          currencySymbol: 'CAD',
+          ethOracleAddress: '0x6666666666666666666666666666666666666666',
+          polyOracleAddress: '0x9999999999999999999999999999999999999999',
         },
-        contextMock.getMockInstance()
-      );
-      const addTransactionSpy = spy(target, 'addTransaction');
+      };
+      target = new ModifyTieredStoData(modifyAllStoDataParams, contextMock.getMockInstance());
+
+      const modifyTimesArgsSpy = sinon.spy();
+      const modifyTiersArgsSpy = sinon.spy();
+      const modifyFundingArgsSpy = sinon.spy();
+      const modifyOraclesArgsSpy = sinon.spy();
+      const modifyLimitsArgsSpy = sinon.spy();
+      const modifyAddressesArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+
       tieredSto_3_1_0_Mock.mock('modifyTimes', Promise.resolve('ModifyTimes'));
+      const { modifyTimes } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyTimes).returns(modifyTimesArgsSpy);
+
       tieredSto_3_1_0_Mock.mock('modifyTiers', Promise.resolve('ModifyTiers'));
+      const { modifyTiers } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyTiers).returns(modifyTiersArgsSpy);
+
       tieredSto_3_1_0_Mock.mock('modifyFunding', Promise.resolve('ModifyFunding'));
+      const { modifyFunding } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyFunding).returns(modifyFundingArgsSpy);
+
       tieredSto_3_1_0_Mock.mock('modifyOracles', Promise.resolve('ModifyOracles'));
+      const { modifyOracles } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyOracles).returns(modifyOraclesArgsSpy);
+
       tieredSto_3_1_0_Mock.mock('modifyLimits', Promise.resolve('ModifyLimits'));
+      const { modifyLimits } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyLimits).returns(modifyLimitsArgsSpy);
+
       tieredSto_3_1_0_Mock.mock('modifyAddresses', Promise.resolve('ModifyAddresses'));
+      const { modifyAddresses } = tieredSto_3_1_0_Mock.getMockInstance();
+      addTransactionStub.withArgs(modifyAddresses).returns(modifyAddressesArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(modifyTimesArgsSpy.getCall(0).args[0]).toEqual({
+        startTime: modifyAllStoDataParams.startDate,
+        endTime: modifyAllStoDataParams.endDate,
+      });
+      expect(modifyTimesArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy.getCall(0).calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyTimes)
+        addTransactionStub.getCall(0).calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyTimes)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyTimes);
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.ModifyTimes);
+
+      expect(modifyFundingArgsSpy.getCall(0).args[0]).toEqual({
+        fundRaiseTypes: [FundRaiseType.ETH, FundRaiseType.StableCoin],
+      });
+      expect(modifyFundingArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(1)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyFunding)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(1).lastArg.tag).toEqual(PolyTransactionTag.ModifyFunding);
+      expect(addTransactionStub.getCall(1).lastArg.tag).toEqual(PolyTransactionTag.ModifyFunding);
+
+      expect(modifyOraclesArgsSpy.getCall(0).args[0]).toEqual({
+        customOracleAddresses: [
+          modifyAllStoDataParams.customCurrency.ethOracleAddress,
+          modifyAllStoDataParams.customCurrency.polyOracleAddress,
+        ],
+        denominatedCurrencySymbol: modifyAllStoDataParams.customCurrency.currencySymbol,
+      });
+      expect(modifyOraclesArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(2)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyOracles)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(2).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
+      expect(addTransactionStub.getCall(2).lastArg.tag).toEqual(PolyTransactionTag.ModifyOracles);
+
+      expect(modifyTiersArgsSpy.getCall(0).args[0]).toEqual({
+        ratePerTier: [modifyAllStoDataParams.tiers[0].price],
+        ratePerTierDiscountPoly: [],
+        tokensPerTierDiscountPoly: [],
+        tokensPerTierTotal: [modifyAllStoDataParams.tiers[0].tokensOnSale],
+      });
+      expect(modifyTiersArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy.getCall(3).calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyTiers)
+        addTransactionStub.getCall(3).calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyTiers)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(3).lastArg.tag).toEqual(PolyTransactionTag.ModifyTiers);
+      expect(addTransactionStub.getCall(3).lastArg.tag).toEqual(PolyTransactionTag.ModifyTiers);
+
+      expect(modifyLimitsArgsSpy.getCall(0).args[0]).toEqual({
+        minimumInvestmentUSD: modifyAllStoDataParams.minimumInvestment,
+        nonAccreditedLimitUSD: modifyAllStoDataParams.nonAccreditedInvestmentLimit,
+      });
+      expect(modifyLimitsArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy.getCall(4).calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyLimits)
+        addTransactionStub
+          .getCall(4)
+          .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyLimits)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(4).lastArg.tag).toEqual(PolyTransactionTag.ModifyLimits);
+      expect(addTransactionStub.getCall(4).lastArg.tag).toEqual(PolyTransactionTag.ModifyLimits);
+
+      expect(modifyAddressesArgsSpy.getCall(0).args[0]).toEqual({
+        stableTokens: modifyAllStoDataParams.stableCoinAddresses,
+        treasuryWallet: modifyAllStoDataParams.unsoldTokensWallet,
+        wallet: modifyAllStoDataParams.raisedFundsWallet,
+      });
+      expect(modifyAddressesArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(5)
           .calledWith(tieredSto_3_1_0_Mock.getMockInstance().modifyAddresses)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(5).lastArg.tag).toEqual(PolyTransactionTag.ModifyAddresses);
-      expect(addTransactionSpy.callCount).toEqual(6);
+      expect(addTransactionStub.getCall(5).lastArg.tag).toEqual(PolyTransactionTag.ModifyAddresses);
+
+      expect(addTransactionStub.callCount).toEqual(6);
     });
 
     test('should throw an error if custom currencies are used with 3_0_0 wrapper', async () => {

@@ -1,9 +1,9 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager, StaticMockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { stub, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
-import { GeneralTransferManager_3_0_0 } from '@polymathnetwork/contract-wrappers';
+import { FlagsType, GeneralTransferManager_3_0_0 } from '@polymathnetwork/contract-wrappers';
 import { cloneDeep } from 'lodash';
 import { ModifyShareholderData } from '../../procedures/ModifyShareholderData';
 import { Procedure } from '../../procedures/Procedure';
@@ -142,26 +142,74 @@ describe('ModifyShareholderData', () => {
 
   describe('ModifyShareholderData', () => {
     test('should add a transaction to the queue to modify the shareholders kyc data and flags', async () => {
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const modifyKYCDataMultiArgsStub = sinon.stub();
+      modifyKYCDataMultiArgsStub.returns([{}]);
+
+      const modifyInvestorFlagMultiArgsStub = sinon.stub();
+      modifyInvestorFlagMultiArgsStub.returns([{}]);
+
+      const addTransactionStub = stub(target, 'addTransaction');
+
       gtmMock.mock('modifyKYCDataMulti', Promise.resolve('ModifyKYCDataMulti'));
       gtmMock.mock('modifyInvestorFlagMulti', Promise.resolve('ModifyInvestorFlagMulti'));
 
+      const { modifyKYCDataMulti } = gtmMock.getMockInstance();
+      addTransactionStub.withArgs(modifyKYCDataMulti).returns(modifyKYCDataMultiArgsStub);
+      const { modifyInvestorFlagMulti } = gtmMock.getMockInstance();
+      addTransactionStub.withArgs(modifyInvestorFlagMulti).returns(modifyInvestorFlagMultiArgsStub);
+
       // Real call
       await target.prepareTransactions();
+
       // Verifications
-      expect(addTransactionSpy.getCall(0).calledWith(gtmMockInstance.modifyKYCDataMulti)).toEqual(
+      expect(modifyKYCDataMultiArgsStub.getCall(0).args[0]).toEqual({
+        investors: [params.shareholderData[0].address, params.shareholderData[1].address],
+        canReceiveAfter: [
+          params.shareholderData[0].canReceiveAfter,
+          params.shareholderData[1].canReceiveAfter,
+        ],
+        canSendAfter: [
+          params.shareholderData[0].canSendAfter,
+          params.shareholderData[1].canSendAfter,
+        ],
+        expiryTime: [params.shareholderData[0].kycExpiry, params.shareholderData[1].kycExpiry],
+      });
+      expect(modifyKYCDataMultiArgsStub.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).calledWith(gtmMockInstance.modifyKYCDataMulti)).toEqual(
         true
       );
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.ModifyKycDataMulti
       );
+
+      expect(modifyInvestorFlagMultiArgsStub.getCall(0).args[0]).toEqual({
+        investors: [
+          params.shareholderData[0].address,
+          params.shareholderData[0].address,
+          params.shareholderData[1].address,
+          params.shareholderData[1].address,
+        ],
+        flag: [
+          FlagsType.IsAccredited,
+          FlagsType.CanNotBuyFromSto,
+          FlagsType.IsAccredited,
+          FlagsType.CanNotBuyFromSto,
+        ],
+        value: [
+          params.shareholderData[0].isAccredited,
+          oldShareholdersData[0].canBuyFromSto,
+          params.shareholderData[1].isAccredited,
+          oldShareholdersData[1].canBuyFromSto,
+        ],
+      });
+      expect(modifyInvestorFlagMultiArgsStub.callCount).toEqual(1);
       expect(
-        addTransactionSpy.getCall(1).calledWith(gtmMockInstance.modifyInvestorFlagMulti)
+        addTransactionStub.getCall(1).calledWith(gtmMockInstance.modifyInvestorFlagMulti)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(1).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(1).lastArg.tag).toEqual(
         PolyTransactionTag.ModifyInvestorFlagMulti
       );
-      expect(addTransactionSpy.callCount).toEqual(2);
+      expect(addTransactionStub.callCount).toEqual(2);
     });
 
     test('should return an array of the shareholders which have been modified', async () => {
@@ -247,19 +295,40 @@ describe('ModifyShareholderData', () => {
       paramsWithoutFlagsChange.shareholderData[0].canBuyFromSto = false;
       paramsWithoutFlagsChange.shareholderData[1].canBuyFromSto = false;
       target = new ModifyShareholderData(paramsWithoutFlagsChange, contextMock.getMockInstance());
-      const addTransactionSpy = spy(target, 'addTransaction');
+
+      const modifyKYCDataMultiArgsStub = sinon.stub();
+      modifyKYCDataMultiArgsStub.returns([{}]);
+      const addTransactionStub = stub(target, 'addTransaction');
+
       gtmMock.mock('modifyKYCDataMulti', Promise.resolve('ModifyKYCDataMulti'));
+
+      const { modifyKYCDataMulti } = gtmMock.getMockInstance();
+      addTransactionStub.withArgs(modifyKYCDataMulti).returns(modifyKYCDataMultiArgsStub);
 
       // Real call
       await target.prepareTransactions();
+
       // Verifications
-      expect(addTransactionSpy.getCall(0).calledWith(gtmMockInstance.modifyKYCDataMulti)).toEqual(
+      expect(modifyKYCDataMultiArgsStub.getCall(0).args[0]).toEqual({
+        investors: [params.shareholderData[0].address, params.shareholderData[1].address],
+        canReceiveAfter: [
+          params.shareholderData[0].canReceiveAfter,
+          params.shareholderData[1].canReceiveAfter,
+        ],
+        canSendAfter: [
+          params.shareholderData[0].canSendAfter,
+          params.shareholderData[1].canSendAfter,
+        ],
+        expiryTime: [params.shareholderData[0].kycExpiry, params.shareholderData[1].kycExpiry],
+      });
+      expect(modifyKYCDataMultiArgsStub.callCount).toEqual(1);
+      expect(addTransactionStub.getCall(0).calledWith(gtmMockInstance.modifyKYCDataMulti)).toEqual(
         true
       );
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.ModifyKycDataMulti
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should return the newly created checkpoint without changing flags', async () => {

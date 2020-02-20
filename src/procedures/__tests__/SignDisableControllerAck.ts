@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import { Factories } from '../../Context';
@@ -73,22 +73,31 @@ describe('SignDisableControllerAck', () => {
     });
 
     test('should add a signature request to the queue to sign confirmation for disabling the controller functionality', async () => {
-      const addSignatureRequestSpy = spy(target, 'addSignatureRequest');
+      const addSignatureRequestArgsStub = sinon.stub();
+      const randomSignature = 'Random disable controller signature ack';
+      addSignatureRequestArgsStub.returns(Promise.resolve(randomSignature));
+      const addSignatureRequestStub = stub(target, 'addSignatureRequest');
       securityTokenMock.mock(
         'signDisableControllerAck',
         Promise.resolve('SignDisableControllerAck')
       );
+      addSignatureRequestStub
+        .withArgs(securityTokenMock.getMockInstance().signDisableControllerAck)
+        .returns(addSignatureRequestArgsStub);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addSignatureRequestArgsStub.getCall(0).args[0]).toEqual({});
+      expect(addSignatureRequestArgsStub.callCount).toEqual(1);
+
       expect(
-        addSignatureRequestSpy
+        addSignatureRequestStub
           .getCall(0)
           .calledWith(securityTokenMock.getMockInstance().signDisableControllerAck)
       ).toEqual(true);
-      expect(addSignatureRequestSpy.callCount).toEqual(1);
+      expect(addSignatureRequestStub.callCount).toEqual(1);
     });
   });
 });

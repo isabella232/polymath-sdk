@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { stub, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -100,21 +100,31 @@ describe('ModifyDividendsDefaultExclusionList', () => {
         Promise.resolve([erc20DividendsMock.getMockInstance()])
       );
 
+      const setDefaultExcludedArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+
       erc20DividendsMock.mock('setDefaultExcluded', Promise.resolve('SetDefaultExcluded'));
+      const { setDefaultExcluded } = erc20DividendsMock.getMockInstance();
+      addTransactionStub.withArgs(setDefaultExcluded).returns(setDefaultExcludedArgsSpy);
 
-      const addTransactionSpy = spy(target, 'addTransaction');
-
+      // Real Call
       await target.prepareTransactions();
 
+      // Verifications
+      expect(setDefaultExcludedArgsSpy.getCall(0).args[0]).toEqual({
+        excluded: params.shareholderAddresses,
+      });
+      expect(setDefaultExcludedArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(erc20DividendsMock.getMockInstance().setDefaultExcluded)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.SetDefaultExcluded
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
   });
 });

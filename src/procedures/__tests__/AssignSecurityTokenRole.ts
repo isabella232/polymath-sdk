@@ -1,8 +1,9 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import { stub, spy, restore } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { ModuleName, Perm } from '@polymathnetwork/contract-wrappers';
+import sinon from 'sinon';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
@@ -28,6 +29,7 @@ const params = {
 };
 
 const moduleAddress = '0x9999999999999999999999999999999999999999';
+const modulePermission = Perm.Operator;
 
 describe('AssignSecurityTokenRole', () => {
   let target: AssignSecurityTokenRole;
@@ -73,7 +75,7 @@ describe('AssignSecurityTokenRole', () => {
 
     wrappersMock.mock('roleToPermission', {
       moduleName: ModuleName.PercentageTransferManager,
-      permission: Perm.Operator,
+      permission: modulePermission,
     });
     wrappersMock.mock('getModuleAddressesByName', [moduleAddress]);
 
@@ -109,25 +111,48 @@ describe('AssignSecurityTokenRole', () => {
 
     test('should add transactions to the queue for add delegate and change permissions with a new delegate address', async () => {
       gpmMock.mock('getAllDelegates', Promise.resolve([]));
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const addDelegateArgsSpy = sinon.spy();
+      const changePermissionArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
+
       gpmMock.mock('addDelegate', Promise.resolve('AddDelegate'));
       gpmMock.mock('changePermission', Promise.resolve('ChangePermission'));
+      const { addDelegate } = gpmMock.getMockInstance();
+      const { changePermission } = gpmMock.getMockInstance();
+      addTransactionStub.withArgs(addDelegate).returns(addDelegateArgsSpy);
+      addTransactionStub.withArgs(changePermission).returns(changePermissionArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(addDelegateArgsSpy.getCall(0).args[0]).toEqual({
+        delegate: params.delegateAddress,
+        details: params.description,
+      });
+      expect(addDelegateArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy.getCall(0).calledWithExactly(gpmMock.getMockInstance().addDelegate, {
+        addTransactionStub.getCall(0).calledWithExactly(gpmMock.getMockInstance().addDelegate, {
           tag: PolyTransactionTag.AddDelegate,
         })
       ).toEqual(true);
+
+      expect(changePermissionArgsSpy.getCall(0).args[0]).toEqual({
+        delegate: params.delegateAddress,
+        module: moduleAddress,
+        perm: modulePermission,
+        valid: params.assign,
+      });
+      expect(changePermissionArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy.getCall(1).calledWithExactly(gpmMock.getMockInstance().changePermission, {
-          tag: PolyTransactionTag.ChangePermission,
-        })
+        addTransactionStub
+          .getCall(1)
+          .calledWithExactly(gpmMock.getMockInstance().changePermission, {
+            tag: PolyTransactionTag.ChangePermission,
+          })
       ).toEqual(true);
-      expect(addTransactionSpy.callCount).toEqual(2);
+
+      expect(addTransactionStub.callCount).toEqual(2);
     });
 
     test('should throw if there is no valid security token being provided', async () => {

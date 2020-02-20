@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
@@ -18,7 +18,7 @@ import { SecurityToken, DividendDistribution } from '../../entities';
 const params = {
   symbol: 'TEST1',
   dividendIndex: 0,
-  shareholderAddresses: ['0x01'],
+  shareholderAddresses: ['0x01', '0x02'],
 };
 
 describe('PushDividendPayment', () => {
@@ -112,26 +112,36 @@ describe('PushDividendPayment', () => {
         Promise.resolve([erc20DividendsMock.getMockInstance()])
       );
 
+      const pushDividendPaymentToAddressesArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       erc20DividendsMock.mock(
         'pushDividendPaymentToAddresses',
         Promise.resolve('PushDividendPaymentToAddresses')
       );
-
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const { pushDividendPaymentToAddresses } = erc20DividendsMock.getMockInstance();
+      addTransactionStub
+        .withArgs(pushDividendPaymentToAddresses)
+        .returns(pushDividendPaymentToAddressesArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(pushDividendPaymentToAddressesArgsSpy.getCall(0).args[0]).toEqual({
+        dividendIndex: params.dividendIndex,
+        payees: params.shareholderAddresses,
+      });
+      expect(pushDividendPaymentToAddressesArgsSpy.callCount).toEqual(1);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(erc20DividendsMock.getMockInstance().pushDividendPaymentToAddresses)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.PushDividendPayment
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should add a transaction to push a dividend payment with undefined shareholderAddresses parameter', async () => {
@@ -164,26 +174,56 @@ describe('PushDividendPayment', () => {
         Promise.resolve([erc20DividendsMock.getMockInstance()])
       );
 
+      const pushDividendPaymentToAddressesArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       erc20DividendsMock.mock(
         'pushDividendPaymentToAddresses',
         Promise.resolve('PushDividendPaymentToAddresses')
       );
-
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const { pushDividendPaymentToAddresses } = erc20DividendsMock.getMockInstance();
+      addTransactionStub
+        .withArgs(pushDividendPaymentToAddresses)
+        .returns(pushDividendPaymentToAddressesArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
-      // Verifications
+      // Verifications (105 addresses to be submitted in 2 transactions)
+      expect(pushDividendPaymentToAddressesArgsSpy.getCall(0).args[0]).toEqual({
+        dividendIndex: params.dividendIndex,
+        payees: shareholders
+          .map(shareholder => {
+            return shareholder.address;
+          })
+          .slice(0, 100),
+      });
+      expect(pushDividendPaymentToAddressesArgsSpy.getCall(1).args[0]).toEqual({
+        dividendIndex: params.dividendIndex,
+        payees: shareholders
+          .map(shareholder => {
+            return shareholder.address;
+          })
+          .slice(100, 105),
+      });
+      expect(pushDividendPaymentToAddressesArgsSpy.callCount).toEqual(2);
+
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(erc20DividendsMock.getMockInstance().pushDividendPaymentToAddresses)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.PushDividendPayment
       );
-      expect(addTransactionSpy.callCount).toEqual(2);
+      expect(
+        addTransactionStub
+          .getCall(1)
+          .calledWith(erc20DividendsMock.getMockInstance().pushDividendPaymentToAddresses)
+      ).toEqual(true);
+      expect(addTransactionStub.getCall(1).lastArg.tag).toEqual(
+        PolyTransactionTag.PushDividendPayment
+      );
+      expect(addTransactionStub.callCount).toEqual(2);
     });
 
     test('should refresh the dividend distribution for which payments were pushed', async () => {

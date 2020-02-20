@@ -1,7 +1,8 @@
 /* eslint-disable import/no-duplicates */
 import { ImportMock, MockManager } from 'ts-mock-imports';
-import { spy, restore } from 'sinon';
+import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
+import { FundRaiseType } from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
@@ -192,23 +193,29 @@ describe('PullDividendPayment', () => {
         })
       );
 
+      const pullDividendPaymentArgsSpy = sinon.spy();
+      const addTransactionStub = stub(target, 'addTransaction');
       erc20DividendsMock.mock('pullDividendPayment', Promise.resolve('PullDividendPayment'));
-
-      const addTransactionSpy = spy(target, 'addTransaction');
+      const { pullDividendPayment } = erc20DividendsMock.getMockInstance();
+      addTransactionStub.withArgs(pullDividendPayment).returns(pullDividendPaymentArgsSpy);
 
       // Real call
       await target.prepareTransactions();
 
       // Verifications
+      expect(pullDividendPaymentArgsSpy.getCall(0).args[0]).toEqual({
+        dividendIndex: params.dividendIndex,
+      });
+      expect(pullDividendPaymentArgsSpy.callCount).toEqual(1);
       expect(
-        addTransactionSpy
+        addTransactionStub
           .getCall(0)
           .calledWith(erc20DividendsMock.getMockInstance().pullDividendPayment)
       ).toEqual(true);
-      expect(addTransactionSpy.getCall(0).lastArg.tag).toEqual(
+      expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(
         PolyTransactionTag.PullDividendPayment
       );
-      expect(addTransactionSpy.callCount).toEqual(1);
+      expect(addTransactionStub.callCount).toEqual(1);
     });
 
     test('should refresh the dividend distribution for which payments were pulled', async () => {
