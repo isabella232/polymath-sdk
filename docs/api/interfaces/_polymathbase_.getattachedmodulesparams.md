@@ -19,7 +19,7 @@ Arguments for [getAttachedModules](../classes/_polymathbase_.polymathbase.md#get
 
 • **moduleName**: *ModuleName*
 
-*Defined in [src/PolymathBase.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/PolymathBase.ts#L83)*
+*Defined in [src/PolymathBase.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L83)*
 
 name of the module
 
@@ -29,6 +29,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/PolymathBase.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/PolymathBase.ts#L79)*
+*Defined in [src/PolymathBase.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L79)*
 
 Security Token symbol

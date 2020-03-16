@@ -14,12 +14,12 @@ import {
   PolyTransactionTag,
   ProcedureType,
 } from '../../types';
-import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
+import * as tokenholderFactoryModule from '../../entities/factories/TokenholderFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
-import { Shareholder } from '../../entities';
+import { Tokenholder } from '../../entities';
 import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
 import { Wallet } from '../../Wallet';
 import { Factories } from '../../Context';
@@ -36,7 +36,7 @@ describe('TransferSecurityTokens', () => {
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
-  let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
+  let tokenholderFactoryMock: MockManager<tokenholderFactoryModule.TokenholderFactory>;
   let factoriesMockedSetup: Factories;
 
   beforeEach(() => {
@@ -54,9 +54,9 @@ describe('TransferSecurityTokens', () => {
       securityTokenMock.getMockInstance()
     );
 
-    shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
+    tokenholderFactoryMock = ImportMock.mockClass(tokenholderFactoryModule, 'TokenholderFactory');
     factoriesMockedSetup = mockFactories();
-    factoriesMockedSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
+    factoriesMockedSetup.tokenholderFactory = tokenholderFactoryMock.getMockInstance();
     contextMock.set('factories', factoriesMockedSetup);
 
     // Instantiate TransferSecurityTokens
@@ -157,9 +157,9 @@ describe('TransferSecurityTokens', () => {
     );
   });
 
-  test('should successfully refresh the corresponding balance of each shareholder involved', async () => {
+  test('should successfully refresh the corresponding balance of each tokenholder involved', async () => {
     const from = '0x1FB52cef867d95E69d398Fe9F6486fAF92C7ED7F';
-    const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve());
+    const refreshStub = tokenholderFactoryMock.mock('refresh', Promise.resolve());
     const securityTokenId = SecurityToken.generateId({ symbol: params.symbol });
     const resolverValue = await transferSecurityTokensModule.createTransferSecurityTokensResolver(
       factoriesMockedSetup,
@@ -169,7 +169,7 @@ describe('TransferSecurityTokens', () => {
     )();
     expect(
       refreshStub.getCall(0).calledWithExactly(
-        Shareholder.generateId({
+        Tokenholder.generateId({
           securityTokenId,
           address: from,
         })
@@ -177,7 +177,7 @@ describe('TransferSecurityTokens', () => {
     ).toEqual(true);
     expect(
       refreshStub.getCall(1).calledWithExactly(
-        Shareholder.generateId({
+        Tokenholder.generateId({
           securityTokenId,
           address: params.to,
         })

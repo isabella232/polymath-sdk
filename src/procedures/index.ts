@@ -26,7 +26,7 @@ export { SetDocument } from './SetDocument';
 export { RemoveDocument } from './RemoveDocument';
 export { LaunchSimpleSto } from './LaunchSimpleSto';
 export { LaunchTieredSto } from './LaunchTieredSto';
-export { ModifyShareholderData } from './ModifyShareholderData';
+export { ModifyTokenholderData } from './ModifyTokenholderData';
 export { RevokeKyc } from './RevokeKyc';
 export { IssueTokens } from './IssueTokens';
 export { FinalizeSto } from './FinalizeSto';

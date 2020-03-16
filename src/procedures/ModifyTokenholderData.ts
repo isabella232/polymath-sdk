@@ -10,28 +10,28 @@ import {
   ProcedureType,
   PolyTransactionTag,
   ErrorCode,
-  ModifyShareholderDataProcedureArgs,
+  ModifyTokenholderDataProcedureArgs,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-import { Shareholder, SecurityToken } from '../entities';
+import { Tokenholder, SecurityToken } from '../entities';
 
 const { dateToBigNumber } = conversionUtils;
 
 /**
- * Procedure that modifies data for a list of (potential) shareholders. The data that can be modified is:
+ * Procedure that modifies data for a list of (potential) tokenholders. The data that can be modified is:
  *
  * - KYC data (sale/buy lockup dates and KYC expiry)
- * - Whether the shareholder is accredited
- * - Whether the shareholder can buy from an STO
+ * - Whether the tokenholder is accredited
+ * - Whether the tokenholder can buy from an STO
  */
-export class ModifyShareholderData extends Procedure<
-  ModifyShareholderDataProcedureArgs,
-  Shareholder[]
+export class ModifyTokenholderData extends Procedure<
+  ModifyTokenholderDataProcedureArgs,
+  Tokenholder[]
 > {
-  public type = ProcedureType.ModifyShareholderData;
+  public type = ProcedureType.ModifyTokenholderData;
 
   /**
-   * Update shareholder data for a subset of addresses
+   * Update tokenholder data for a subset of addresses
    *
    * Note that this procedure will fail if:
    * - You're trying to set the dates to 0 (there is a special "RevokeKyc" procedure for that)
@@ -39,18 +39,18 @@ export class ModifyShareholderData extends Procedure<
    * - There is no difference between the "new" data and the data already present in the contract
    */
   public async prepareTransactions() {
-    const { symbol, shareholderData } = this.args;
+    const { symbol, tokenholderData } = this.args;
     const { contractWrappers, factories } = this.context;
 
     if (
-      shareholderData.some(({ canReceiveAfter, canSendAfter, kycExpiry }) =>
+      tokenholderData.some(({ canReceiveAfter, canSendAfter, kycExpiry }) =>
         [canReceiveAfter, canSendAfter, kycExpiry].some(date => date.getTime() === 0)
       )
     ) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
         message:
-          "Cannot set dates to epoch. If you're trying to revoke a shareholder's KYC, use .revokeKyc()",
+          "Cannot set dates to epoch. If you're trying to revoke a tokenholder's KYC, use .revokeKyc()",
       });
     }
 
@@ -67,7 +67,7 @@ export class ModifyShareholderData extends Procedure<
       SecurityToken.generateId({ symbol })
     );
 
-    const shareholders = await securityToken.shareholders.getShareholders();
+    const tokenholders = await securityToken.tokenholders.getTokenholders();
 
     const gtmModule = (await contractWrappers.getAttachedModules(
       {
@@ -93,7 +93,7 @@ export class ModifyShareholderData extends Procedure<
     const flag: FlagsType[] = [];
     const value: boolean[] = [];
 
-    shareholderData.forEach(
+    tokenholderData.forEach(
       ({
         address,
         canSendAfter: sendDate,
@@ -102,15 +102,15 @@ export class ModifyShareholderData extends Procedure<
         isAccredited,
         canBuyFromSto,
       }) => {
-        const thisShareholder = shareholders.find(
-          ({ address: shareholderAddress }) => shareholderAddress === address
+        const thisTokenholder = tokenholders.find(
+          ({ address: tokenholderAddress }) => tokenholderAddress === address
         );
 
         if (
-          !thisShareholder ||
-          !dateToBigNumber(thisShareholder.canSendAfter).eq(dateToBigNumber(sendDate)) ||
-          !dateToBigNumber(thisShareholder.canReceiveAfter).eq(dateToBigNumber(receiveDate)) ||
-          !dateToBigNumber(thisShareholder.kycExpiry).eq(dateToBigNumber(kycExpiry))
+          !thisTokenholder ||
+          !dateToBigNumber(thisTokenholder.canSendAfter).eq(dateToBigNumber(sendDate)) ||
+          !dateToBigNumber(thisTokenholder.canReceiveAfter).eq(dateToBigNumber(receiveDate)) ||
+          !dateToBigNumber(thisTokenholder.kycExpiry).eq(dateToBigNumber(kycExpiry))
         ) {
           investors.push(address);
           canSendAfter.push(sendDate);
@@ -119,15 +119,15 @@ export class ModifyShareholderData extends Procedure<
         }
 
         // Only update flags that will actually change
-        // one shareholder entry per modified flag
-        // we will sometimes have the same shareholder twice in the array
-        if (!thisShareholder || thisShareholder.isAccredited !== isAccredited) {
+        // one tokenholder entry per modified flag
+        // we will sometimes have the same tokenholder twice in the array
+        if (!thisTokenholder || thisTokenholder.isAccredited !== isAccredited) {
           investorsForFlags.push(address);
           flag.push(FlagsType.IsAccredited);
           value.push(isAccredited);
         }
 
-        if (!thisShareholder || thisShareholder.canBuyFromSto !== canBuyFromSto) {
+        if (!thisTokenholder || thisTokenholder.canBuyFromSto !== canBuyFromSto) {
           investorsForFlags.push(address);
           flag.push(FlagsType.CanNotBuyFromSto);
           value.push(!canBuyFromSto); // negated since the contract flag represents the opposite
@@ -137,42 +137,42 @@ export class ModifyShareholderData extends Procedure<
 
     const uniqueInvestorsForFlags = uniq(investorsForFlags);
 
-    const allAffectedShareholders = uniq([...investors, ...uniqueInvestorsForFlags]);
+    const allAffectedTokenholders = uniq([...investors, ...uniqueInvestorsForFlags]);
 
     const securityTokenId = SecurityToken.generateId({ symbol });
 
-    let newShareholders;
+    let newTokenholders;
 
     if (investors.length > 0) {
-      [newShareholders] = await this.addTransaction<
+      [newTokenholders] = await this.addTransaction<
         TransactionParams.GeneralTransferManager.ModifyKYCDataMulti,
-        [Shareholder[]]
+        [Tokenholder[]]
       >(gtmModule.modifyKYCDataMulti, {
         tag: PolyTransactionTag.ModifyKycDataMulti,
         resolvers: [
           async () => {
-            const refreshingShareholders = investors.map(investor => {
-              return factories.shareholderFactory.refresh(
-                Shareholder.generateId({
+            const refreshingTokenholders = investors.map(investor => {
+              return factories.tokenholderFactory.refresh(
+                Tokenholder.generateId({
                   securityTokenId,
                   address: investor,
                 })
               );
             });
 
-            await Promise.all(refreshingShareholders);
+            await Promise.all(refreshingTokenholders);
 
             if (investorsForFlags.length === 0) {
-              const fetchingShareholders = allAffectedShareholders.map(shareholder => {
-                return factories.shareholderFactory.fetch(
-                  Shareholder.generateId({
+              const fetchingTokenholders = allAffectedTokenholders.map(tokenholder => {
+                return factories.tokenholderFactory.fetch(
+                  Tokenholder.generateId({
                     securityTokenId,
-                    address: shareholder,
+                    address: tokenholder,
                   })
                 );
               });
 
-              return Promise.all(fetchingShareholders);
+              return Promise.all(fetchingTokenholders);
             }
 
             return [];
@@ -187,35 +187,35 @@ export class ModifyShareholderData extends Procedure<
     }
 
     if (investorsForFlags.length > 0) {
-      [newShareholders] = await this.addTransaction<
+      [newTokenholders] = await this.addTransaction<
         TransactionParams.GeneralTransferManager.ModifyInvestorFlagMulti,
-        [Shareholder[]]
+        [Tokenholder[]]
       >(gtmModule.modifyInvestorFlagMulti, {
         tag: PolyTransactionTag.ModifyInvestorFlagMulti,
         resolvers: [
           async () => {
             // Only consider one occurence of each investor address
-            const refreshingShareholders = uniqueInvestorsForFlags.map(investor => {
-              return factories.shareholderFactory.refresh(
-                Shareholder.generateId({
+            const refreshingTokenholders = uniqueInvestorsForFlags.map(investor => {
+              return factories.tokenholderFactory.refresh(
+                Tokenholder.generateId({
                   securityTokenId,
                   address: investor,
                 })
               );
             });
 
-            await Promise.all(refreshingShareholders);
+            await Promise.all(refreshingTokenholders);
 
-            const fetchingShareholders = allAffectedShareholders.map(shareholder => {
-              return factories.shareholderFactory.fetch(
-                Shareholder.generateId({
+            const fetchingTokenholders = allAffectedTokenholders.map(tokenholder => {
+              return factories.tokenholderFactory.fetch(
+                Tokenholder.generateId({
                   securityTokenId,
-                  address: shareholder,
+                  address: tokenholder,
                 })
               );
             });
 
-            return Promise.all(fetchingShareholders);
+            return Promise.all(fetchingTokenholders);
           },
         ],
       })({
@@ -225,13 +225,13 @@ export class ModifyShareholderData extends Procedure<
       });
     }
 
-    if (!newShareholders) {
+    if (!newTokenholders) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: 'Modify shareholder data failed: Nothing to modify',
+        message: 'Modify tokenholder data failed: Nothing to modify',
       });
     }
 
-    return newShareholders;
+    return newTokenholders;
   }
 }

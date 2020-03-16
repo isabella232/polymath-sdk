@@ -26,7 +26,7 @@ const testAddress2 = '0x9999999999999999999999999999999999999999';
 
 const params: UpdateDividendsTaxWithholdingListProcedureArgs = {
   symbol: 'Test1',
-  shareholderAddresses: [testAddress, testAddress2],
+  tokenholderAddresses: [testAddress, testAddress2],
   percentages: [10, 15],
 };
 
@@ -127,7 +127,7 @@ describe('UpdateDividendsTaxWithholdingList', () => {
 
       // Verifications
       expect(setWithholdingArgsSpy.getCall(0).args[0]).toEqual({
-        investors: params.shareholderAddresses,
+        investors: params.tokenholderAddresses,
         withholding: params.percentages.map(percentage => {
           return new BigNumber(percentage);
         }),
@@ -154,14 +154,14 @@ describe('UpdateDividendsTaxWithholdingList', () => {
           factoriesMockedSetup,
           params.symbol,
           params.percentages,
-          params.shareholderAddresses
+          params.tokenholderAddresses
         )();
 
       expect(
         updateStub.getCall(0).calledWithExactly(
           TaxWithholding.generateId({
             securityTokenId,
-            shareholderAddress: params.shareholderAddresses[0],
+            tokenholderAddress: params.tokenholderAddresses[0],
           }),
           { percentage: params.percentages[0] }
         )
@@ -171,7 +171,7 @@ describe('UpdateDividendsTaxWithholdingList', () => {
         updateStub.getCall(1).calledWithExactly(
           TaxWithholding.generateId({
             securityTokenId,
-            shareholderAddress: params.shareholderAddresses[1],
+            tokenholderAddress: params.tokenholderAddresses[1],
           }),
           { percentage: params.percentages[1] }
         )

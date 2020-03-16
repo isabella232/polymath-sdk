@@ -16,4 +16,4 @@
 
 • **address**: *string*
 
-*Defined in [src/Polymath.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/Polymath.ts#L45)*
+*Defined in [src/Polymath.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Polymath.ts#L45)*

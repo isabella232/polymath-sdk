@@ -21,7 +21,7 @@
 
 *Overrides [FindEventParams](_utils_index_.findeventparams.md).[eventName](_utils_index_.findeventparams.md#eventname)*
 
-*Defined in [src/utils/index.ts:200](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/utils/index.ts#L200)*
+*Defined in [src/utils/index.ts:200](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L200)*
 
 ___
 
@@ -31,4 +31,4 @@ ___
 
 *Inherited from [FindEventParams](_utils_index_.findeventparams.md).[logs](_utils_index_.findeventparams.md#logs)*
 
-*Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/utils/index.ts#L127)*
+*Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L127)*

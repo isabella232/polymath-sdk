@@ -12,4 +12,4 @@
 
 • **StatusChange**: = "StatusChange"
 
-*Defined in [src/entities/PolyTransaction.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/PolyTransaction.ts#L19)*
+*Defined in [src/entities/PolyTransaction.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/PolyTransaction.ts#L19)*

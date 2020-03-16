@@ -1,4 +1,4 @@
-# @polymathnetwork/sdk - v2.0.1-beta.120
+# @polymathnetwork/sdk - v2.0.1-beta.123
 
 # Getting Started
 

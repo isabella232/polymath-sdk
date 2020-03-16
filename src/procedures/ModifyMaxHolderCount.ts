@@ -18,7 +18,7 @@ export class ModifyMaxHolderCount extends Procedure<ModifyMaxHolderCountProcedur
    * Sets the maximum amount of holders for the security token
    *
    * Note that this procedure will fail if the security token symbol doesn't exist
-   * Note that this procedure will fail if the security token has disabled the ShareholderCountRestrictions feature
+   * Note that this procedure will fail if the security token has disabled the TokenholderCountRestrictions feature
    */
   public async prepareTransactions() {
     const { symbol, maxHolderCount } = this.args;
@@ -41,7 +41,7 @@ export class ModifyMaxHolderCount extends Procedure<ModifyMaxHolderCountProcedur
     if (!countTransferManagerModule) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: 'You must enable the ShareholderCountRestrictions Feature',
+        message: 'You must enable the TokenholderCountRestrictions Feature',
       });
     }
 

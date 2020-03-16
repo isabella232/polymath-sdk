@@ -8,7 +8,7 @@ import { PolymathError } from '../PolymathError';
  */
 export interface UniqueIdentifiers {
   securityTokenId: string;
-  shareholderAddress: string;
+  tokenholderAddress: string;
 }
 
 /**
@@ -16,11 +16,11 @@ export interface UniqueIdentifiers {
  * Check if a value is of type [[UniqueIdentifiers]]
  */
 function isUniqueIdentifiers(identifiers: any): identifiers is UniqueIdentifiers {
-  const { securityTokenId, shareholderAddress, checkpointIndex } = identifiers;
+  const { securityTokenId, tokenholderAddress, checkpointIndex } = identifiers;
 
   return (
     typeof securityTokenId === 'string' &&
-    typeof shareholderAddress === 'string' &&
+    typeof tokenholderAddress === 'string' &&
     typeof checkpointIndex === 'number'
   );
 }
@@ -34,16 +34,16 @@ export interface Params {
 }
 
 /**
- * Represents the percentage that should be withheld from a Shareholder's dividend payment for tax purposes
+ * Represents the percentage that should be withheld from a Tokenholder's dividend payment for tax purposes
  */
 export class TaxWithholding extends Entity<Params> {
   /**
    * Generate the Tax Withholding's UUID from its identifying properties
    */
-  public static generateId({ securityTokenId, shareholderAddress }: UniqueIdentifiers) {
+  public static generateId({ securityTokenId, tokenholderAddress }: UniqueIdentifiers) {
     return serialize('taxWithholding', {
       securityTokenId,
-      shareholderAddress,
+      tokenholderAddress,
     });
   }
 
@@ -74,7 +74,7 @@ export class TaxWithholding extends Entity<Params> {
 
   public securityTokenId: string;
 
-  public shareholderAddress: string;
+  public tokenholderAddress: string;
 
   /**
    * percentage of tax to be withheld (0 to 1)
@@ -87,15 +87,15 @@ export class TaxWithholding extends Entity<Params> {
   constructor(params: Params & UniqueIdentifiers) {
     super();
 
-    const { securityTokenId, securityTokenSymbol, shareholderAddress, percentage } = params;
+    const { securityTokenId, securityTokenSymbol, tokenholderAddress, percentage } = params;
 
     this.securityTokenId = securityTokenId;
     this.securityTokenSymbol = securityTokenSymbol;
-    this.shareholderAddress = shareholderAddress;
+    this.tokenholderAddress = tokenholderAddress;
     this.percentage = percentage;
     this.uid = TaxWithholding.generateId({
       securityTokenId,
-      shareholderAddress,
+      tokenholderAddress,
     });
   }
 
@@ -103,13 +103,13 @@ export class TaxWithholding extends Entity<Params> {
    * Convert entity to a POJO (Plain Old Javascript Object)
    */
   public toPojo() {
-    const { uid, securityTokenId, securityTokenSymbol, shareholderAddress, percentage } = this;
+    const { uid, securityTokenId, securityTokenSymbol, tokenholderAddress, percentage } = this;
 
     return {
       uid,
       securityTokenId,
       securityTokenSymbol,
-      shareholderAddress,
+      tokenholderAddress,
       percentage,
     };
   }

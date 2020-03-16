@@ -4,7 +4,7 @@ Procedure that revokes KYC for a list of investors
 
 ## Hierarchy
 
-* Procedure‹[RevokeKycProcedureArgs](../interfaces/_types_index_.revokekycprocedureargs.md), [Shareholder](_entities_shareholder_.shareholder.md)[]›
+* Procedure‹[RevokeKycProcedureArgs](../interfaces/_types_index_.revokekycprocedureargs.md), [Tokenholder](_entities_tokenholder_.tokenholder.md)[]›
 
   ↳ **RevokeKyc**
 
@@ -36,7 +36,7 @@ Procedure that revokes KYC for a list of investors
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L40)*
+*Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L40)*
 
 **Parameters:**
 
@@ -55,7 +55,7 @@ Name | Type |
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L34)*
+*Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L34)*
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L36)*
+*Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L36)*
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/procedures/RevokeKyc.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/RevokeKyc.ts#L12)*
+*Defined in [src/procedures/RevokeKyc.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/RevokeKyc.ts#L12)*
 
 ## Methods
 
@@ -85,7 +85,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L91)*
+*Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L91)*
 
 Appends a Procedure into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -114,7 +114,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L179)*
+*Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L179)*
 
 Appends a signature request into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -141,7 +141,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L137)*
+*Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L137)*
 
 Appends a method or future method into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -182,7 +182,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L52)*
+*Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L52)*
 
 Mandatory method that builds a list of transactions that will be
 run
@@ -193,18 +193,18 @@ ___
 
 ###  prepareTransactions
 
-▸ **prepareTransactions**(): *Promise‹PostTransactionResolver‹[Shareholder](_entities_shareholder_.shareholder.md)[], TransactionReceiptWithDecodedLogs››*
+▸ **prepareTransactions**(): *Promise‹PostTransactionResolver‹[Tokenholder](_entities_tokenholder_.tokenholder.md)[], TransactionReceiptWithDecodedLogs››*
 
 *Overrides void*
 
-*Defined in [src/procedures/RevokeKyc.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/RevokeKyc.ts#L23)*
+*Defined in [src/procedures/RevokeKyc.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/RevokeKyc.ts#L23)*
 
-Sets all KYC dates for a shareholder to epoch. This effectively makes them unable to send or receive Security Tokens
+Sets all KYC dates for a tokenholder to epoch. This effectively makes them unable to send or receive Security Tokens
 
 Note that this procedure will fail if:
-- The shareholder address array is empty
+- The tokenholder address array is empty
 - The Security Token doesn't exist
 - KYC is already revoked for at least one of the addresses in the list
-- Shareholders Feature isn't enabled
+- Tokenholders Feature isn't enabled
 
-**Returns:** *Promise‹PostTransactionResolver‹[Shareholder](_entities_shareholder_.shareholder.md)[], TransactionReceiptWithDecodedLogs››*
+**Returns:** *Promise‹PostTransactionResolver‹[Tokenholder](_entities_tokenholder_.tokenholder.md)[], TransactionReceiptWithDecodedLogs››*

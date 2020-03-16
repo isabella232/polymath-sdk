@@ -12,7 +12,7 @@ Internal representation of a Checkpoint
 
 * [createdAt](_polymathbase_.basecheckpoint.md#createdat)
 * [index](_polymathbase_.basecheckpoint.md#index)
-* [shareholderBalances](_polymathbase_.basecheckpoint.md#shareholderbalances)
+* [tokenholderBalances](_polymathbase_.basecheckpoint.md#tokenholderbalances)
 * [totalSupply](_polymathbase_.basecheckpoint.md#totalsupply)
 
 ## Properties
@@ -21,7 +21,7 @@ Internal representation of a Checkpoint
 
 • **createdAt**: *Date*
 
-*Defined in [src/PolymathBase.ts:271](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/PolymathBase.ts#L271)*
+*Defined in [src/PolymathBase.ts:271](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L271)*
 
 date at which the Checkpoint was created
 
@@ -31,19 +31,19 @@ ___
 
 • **index**: *number*
 
-*Defined in [src/PolymathBase.ts:259](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/PolymathBase.ts#L259)*
+*Defined in [src/PolymathBase.ts:259](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L259)*
 
 index of the Checkpoint
 
 ___
 
-###  shareholderBalances
+###  tokenholderBalances
 
-• **shareholderBalances**: *[ShareholderBalance](_types_index_.shareholderbalance.md)[]*
+• **tokenholderBalances**: *[TokenholderBalance](_types_index_.tokenholderbalance.md)[]*
 
-*Defined in [src/PolymathBase.ts:267](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/PolymathBase.ts#L267)*
+*Defined in [src/PolymathBase.ts:267](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L267)*
 
-shareholder balances at the Checkpoint
+tokenholder balances at the Checkpoint
 
 ___
 
@@ -51,6 +51,6 @@ ___
 
 • **totalSupply**: *BigNumber*
 
-*Defined in [src/PolymathBase.ts:263](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/PolymathBase.ts#L263)*
+*Defined in [src/PolymathBase.ts:263](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L263)*
 
 total supply of the Security Token at the Checkpoint

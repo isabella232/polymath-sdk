@@ -22,7 +22,7 @@ export const createReclaimFundsResolver = (
 };
 
 /**
- * Procedure that allows the issuer to reclaim dividends after they expire without being claimed by shareholders
+ * Procedure that allows the issuer to reclaim dividends after they expire without being claimed by tokenholders
  */
 export class ReclaimFunds extends Procedure<ReclaimFundsProcedureArgs> {
   public type = ProcedureType.ReclaimFunds;

@@ -16,4 +16,4 @@
 
 • **storageWalletAddress**: *string*
 
-*Defined in [src/entities/SecurityToken/Features.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/Features.ts#L41)*
+*Defined in [src/entities/SecurityToken/Features.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Features.ts#L41)*

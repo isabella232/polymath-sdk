@@ -4,12 +4,12 @@ import { Context } from '../../Context';
 import { SecurityToken } from '../SecurityToken';
 import { PolymathError } from '../../PolymathError';
 import { ErrorCode } from '../../types';
-import { Shareholder, Params, UniqueIdentifiers } from '../Shareholder';
+import { Tokenholder, Params, UniqueIdentifiers } from '../Tokenholder';
 
 /**
- * Factory generates information for a Shareholder entity
+ * Factory generates information for a Tokenholder entity
  */
-export class ShareholderFactory extends Factory<Shareholder, Params, UniqueIdentifiers> {
+export class TokenholderFactory extends Factory<Tokenholder, Params, UniqueIdentifiers> {
   /**
    * @hidden
    */
@@ -17,7 +17,7 @@ export class ShareholderFactory extends Factory<Shareholder, Params, UniqueIdent
     const {
       context: { contractWrappers },
     } = this;
-    const { securityTokenId, address } = Shareholder.unserialize(uid);
+    const { securityTokenId, address } = Tokenholder.unserialize(uid);
     const { symbol } = SecurityToken.unserialize(securityTokenId);
 
     let securityToken;
@@ -61,9 +61,9 @@ export class ShareholderFactory extends Factory<Shareholder, Params, UniqueIdent
   };
 
   /**
-   * Create an instance of the Shareholder Factory
+   * Create an instance of the Tokenholder Factory
    */
   constructor(context: Context) {
-    super(Shareholder, context);
+    super(Tokenholder, context);
   }
 }

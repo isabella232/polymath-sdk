@@ -18,6 +18,6 @@ Options for [getModuleAddressesByName](../classes/_polymathbase_.polymathbase.md
 
 • **unarchived**: *boolean*
 
-*Defined in [src/PolymathBase.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/PolymathBase.ts#L69)*
+*Defined in [src/PolymathBase.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L69)*
 
 whether to include unarchived modules in the search

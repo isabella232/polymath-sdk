@@ -5,24 +5,24 @@ import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import { TransactionReceiptWithDecodedLogs } from 'ethereum-protocol';
 import { FlagsType, GeneralTransferManager_3_0_0 } from '@polymathnetwork/contract-wrappers';
 import { cloneDeep } from 'lodash';
-import { ModifyShareholderData } from '../../procedures/ModifyShareholderData';
-import { Procedure } from '../../procedures/Procedure';
+import { ModifyTokenholderData } from '../../procedures/ModifyTokenholderData';
+import { Procedure } from '../Procedure';
 import { ErrorCode, PolyTransactionTag, ProcedureType } from '../../types';
-import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
+import * as tokenholderFactoryModule from '../../entities/factories/TokenholderFactory';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
-import * as shareholdersEntityModule from '../../entities/SecurityToken/Shareholders';
+import * as tokenholdersEntityModule from '../../entities/SecurityToken/Tokenholders';
 import * as securityTokenEntityModule from '../../entities/SecurityToken/SecurityToken';
 import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
 import { PolymathError } from '../../PolymathError';
-import { Shareholder } from '../../entities';
+import { Tokenholder } from '../../entities';
 
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
-const oldShareholdersData = [
+const oldTokenholdersData = [
   {
     address: testAddress,
     canSendAfter: new Date(1980, 1),
@@ -44,7 +44,7 @@ const params = {
   symbol: 'TEST1',
   name: 'Test Token 1',
   owner: '0x3',
-  shareholderData: [
+  tokenholderData: [
     {
       address: testAddress,
       canSendAfter: new Date(2030, 1),
@@ -64,8 +64,8 @@ const params = {
   ],
 };
 
-describe('ModifyShareholderData', () => {
-  let target: ModifyShareholderData;
+describe('ModifyTokenholderData', () => {
+  let target: ModifyTokenholderData;
 
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
 
@@ -73,10 +73,10 @@ describe('ModifyShareholderData', () => {
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   // Mock factories
-  let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
+  let tokenholderFactoryMock: MockManager<tokenholderFactoryModule.TokenholderFactory>;
   let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
 
-  let shareholdersEntityMock: MockManager<shareholdersEntityModule.Shareholders>;
+  let tokenholdersEntityMock: MockManager<tokenholdersEntityModule.Tokenholders>;
   let securityTokenEntityStaticMock: StaticMockManager<securityTokenEntityModule.SecurityToken>;
   let securityTokenEntityMock: MockManager<securityTokenEntityModule.SecurityToken>;
 
@@ -86,7 +86,7 @@ describe('ModifyShareholderData', () => {
   const securityTokenId = 'ST ID';
 
   beforeEach(() => {
-    // Mock the context, wrappers, and tokenFactory to test ModifyShareholderData
+    // Mock the context, wrappers, and tokenFactory to test ModifyTokenholderData
     contextMock = ImportMock.mockClass(contextModule, 'Context');
     wrappersMock = ImportMock.mockClass(wrappersModule, 'PolymathBase');
     tokenFactoryMock = ImportMock.mockClass(tokenFactoryModule, 'MockedTokenFactoryModule');
@@ -98,16 +98,16 @@ describe('ModifyShareholderData', () => {
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
-    shareholdersEntityMock = ImportMock.mockClass(shareholdersEntityModule, 'Shareholders');
+    tokenholdersEntityMock = ImportMock.mockClass(tokenholdersEntityModule, 'Tokenholders');
     securityTokenEntityMock = ImportMock.mockClass(securityTokenEntityModule, 'SecurityToken');
-    shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
+    tokenholderFactoryMock = ImportMock.mockClass(tokenholderFactoryModule, 'TokenholderFactory');
     securityTokenFactoryMock = ImportMock.mockClass(
       securityTokenFactoryModule,
       'SecurityTokenFactory'
     );
 
-    shareholdersEntityMock.mock('getShareholders', oldShareholdersData);
-    securityTokenEntityMock.set('shareholders', shareholdersEntityMock.getMockInstance());
+    tokenholdersEntityMock.mock('getTokenholders', oldTokenholdersData);
+    securityTokenEntityMock.set('tokenholders', tokenholdersEntityMock.getMockInstance());
     securityTokenEntityMock.set('uid', securityTokenId);
 
     securityTokenEntityStaticMock = ImportMock.mockStaticClass(
@@ -118,7 +118,7 @@ describe('ModifyShareholderData', () => {
     securityTokenFactoryMock.mock('fetch', securityTokenEntityMock.getMockInstance());
 
     const factoryMockSetup = mockFactories();
-    factoryMockSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
+    factoryMockSetup.tokenholderFactory = tokenholderFactoryMock.getMockInstance();
     factoryMockSetup.securityTokenFactory = securityTokenFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
 
@@ -126,22 +126,22 @@ describe('ModifyShareholderData', () => {
     gtmMockInstance = gtmMock.getMockInstance();
     wrappersMock.mock('getAttachedModules', Promise.resolve([gtmMockInstance]));
 
-    // Instantiate ModifyShareholderData
-    target = new ModifyShareholderData(params, contextMock.getMockInstance());
+    // Instantiate ModifyTokenholderData
+    target = new ModifyTokenholderData(params, contextMock.getMockInstance());
   });
   afterEach(() => {
     restore();
   });
 
   describe('Types', () => {
-    test('should extend procedure and have ModifyShareholderData type', async () => {
+    test('should extend procedure and have ModifyTokenholderData type', async () => {
       expect(target instanceof Procedure).toBe(true);
-      expect(target.type).toBe(ProcedureType.ModifyShareholderData);
+      expect(target.type).toBe(ProcedureType.ModifyTokenholderData);
     });
   });
 
-  describe('ModifyShareholderData', () => {
-    test('should add a transaction to the queue to modify the shareholders kyc data and flags', async () => {
+  describe('ModifyTokenholderData', () => {
+    test('should add a transaction to the queue to modify the tokenholders kyc data and flags', async () => {
       const modifyKYCDataMultiArgsStub = sinon.stub();
       modifyKYCDataMultiArgsStub.returns([{}]);
 
@@ -163,16 +163,16 @@ describe('ModifyShareholderData', () => {
 
       // Verifications
       expect(modifyKYCDataMultiArgsStub.getCall(0).args[0]).toEqual({
-        investors: [params.shareholderData[0].address, params.shareholderData[1].address],
+        investors: [params.tokenholderData[0].address, params.tokenholderData[1].address],
         canReceiveAfter: [
-          params.shareholderData[0].canReceiveAfter,
-          params.shareholderData[1].canReceiveAfter,
+          params.tokenholderData[0].canReceiveAfter,
+          params.tokenholderData[1].canReceiveAfter,
         ],
         canSendAfter: [
-          params.shareholderData[0].canSendAfter,
-          params.shareholderData[1].canSendAfter,
+          params.tokenholderData[0].canSendAfter,
+          params.tokenholderData[1].canSendAfter,
         ],
-        expiryTime: [params.shareholderData[0].kycExpiry, params.shareholderData[1].kycExpiry],
+        expiryTime: [params.tokenholderData[0].kycExpiry, params.tokenholderData[1].kycExpiry],
       });
       expect(modifyKYCDataMultiArgsStub.callCount).toEqual(1);
       expect(addTransactionStub.getCall(0).calledWith(gtmMockInstance.modifyKYCDataMulti)).toEqual(
@@ -184,10 +184,10 @@ describe('ModifyShareholderData', () => {
 
       expect(modifyInvestorFlagMultiArgsStub.getCall(0).args[0]).toEqual({
         investors: [
-          params.shareholderData[0].address,
-          params.shareholderData[0].address,
-          params.shareholderData[1].address,
-          params.shareholderData[1].address,
+          params.tokenholderData[0].address,
+          params.tokenholderData[0].address,
+          params.tokenholderData[1].address,
+          params.tokenholderData[1].address,
         ],
         flag: [
           FlagsType.IsAccredited,
@@ -196,10 +196,10 @@ describe('ModifyShareholderData', () => {
           FlagsType.CanNotBuyFromSto,
         ],
         value: [
-          params.shareholderData[0].isAccredited,
-          oldShareholdersData[0].canBuyFromSto,
-          params.shareholderData[1].isAccredited,
-          oldShareholdersData[1].canBuyFromSto,
+          params.tokenholderData[0].isAccredited,
+          oldTokenholdersData[0].canBuyFromSto,
+          params.tokenholderData[1].isAccredited,
+          oldTokenholdersData[1].canBuyFromSto,
         ],
       });
       expect(modifyInvestorFlagMultiArgsStub.callCount).toEqual(1);
@@ -212,36 +212,36 @@ describe('ModifyShareholderData', () => {
       expect(addTransactionStub.callCount).toEqual(2);
     });
 
-    test('should return an array of the shareholders which have been modified', async () => {
-      const shareholderObject = {
+    test('should return an array of the tokenholders which have been modified', async () => {
+      const tokenholderObject = {
         securityTokenId: params.symbol,
         address: testAddress,
       };
-      const fetchStub = shareholderFactoryMock.mock('fetch', Promise.resolve(shareholderObject));
+      const fetchStub = tokenholderFactoryMock.mock('fetch', Promise.resolve(tokenholderObject));
 
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      expect(resolver.result).toEqual([shareholderObject, shareholderObject]);
+      expect(resolver.result).toEqual([tokenholderObject, tokenholderObject]);
       // Verification for fetch
       expect(
         fetchStub.getCall(0).calledWithExactly(
-          Shareholder.generateId({
+          Tokenholder.generateId({
             securityTokenId: SecurityToken.generateId({
               symbol: params.symbol,
             }),
-            address: params.shareholderData[0].address,
+            address: params.tokenholderData[0].address,
           })
         )
       ).toEqual(true);
 
       expect(
         fetchStub.getCall(1).calledWithExactly(
-          Shareholder.generateId({
+          Tokenholder.generateId({
             securityTokenId: SecurityToken.generateId({
               symbol: params.symbol,
             }),
-            address: params.shareholderData[1].address,
+            address: params.tokenholderData[1].address,
           })
         )
       ).toEqual(true);
@@ -275,26 +275,26 @@ describe('ModifyShareholderData', () => {
       );
     });
 
-    test('should throw if modifying share holder fails, as old shareholder data is same as the new shareholder data', async () => {
-      target = new ModifyShareholderData(
-        { ...params, shareholderData: oldShareholdersData },
+    test('should throw if modifying share holder fails, as old tokenholder data is same as the new tokenholder data', async () => {
+      target = new ModifyTokenholderData(
+        { ...params, tokenholderData: oldTokenholdersData },
         contextMock.getMockInstance()
       );
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: 'Modify shareholder data failed: Nothing to modify',
+          message: 'Modify tokenholder data failed: Nothing to modify',
         })
       );
     });
 
-    test('should add a transaction to the queue to modify shareholder data without changing flags', async () => {
+    test('should add a transaction to the queue to modify tokenholder data without changing flags', async () => {
       const paramsWithoutFlagsChange = cloneDeep(params);
-      paramsWithoutFlagsChange.shareholderData[0].isAccredited = false;
-      paramsWithoutFlagsChange.shareholderData[1].isAccredited = false;
-      paramsWithoutFlagsChange.shareholderData[0].canBuyFromSto = false;
-      paramsWithoutFlagsChange.shareholderData[1].canBuyFromSto = false;
-      target = new ModifyShareholderData(paramsWithoutFlagsChange, contextMock.getMockInstance());
+      paramsWithoutFlagsChange.tokenholderData[0].isAccredited = false;
+      paramsWithoutFlagsChange.tokenholderData[1].isAccredited = false;
+      paramsWithoutFlagsChange.tokenholderData[0].canBuyFromSto = false;
+      paramsWithoutFlagsChange.tokenholderData[1].canBuyFromSto = false;
+      target = new ModifyTokenholderData(paramsWithoutFlagsChange, contextMock.getMockInstance());
 
       const modifyKYCDataMultiArgsStub = sinon.stub();
       modifyKYCDataMultiArgsStub.returns([{}]);
@@ -310,16 +310,16 @@ describe('ModifyShareholderData', () => {
 
       // Verifications
       expect(modifyKYCDataMultiArgsStub.getCall(0).args[0]).toEqual({
-        investors: [params.shareholderData[0].address, params.shareholderData[1].address],
+        investors: [params.tokenholderData[0].address, params.tokenholderData[1].address],
         canReceiveAfter: [
-          params.shareholderData[0].canReceiveAfter,
-          params.shareholderData[1].canReceiveAfter,
+          params.tokenholderData[0].canReceiveAfter,
+          params.tokenholderData[1].canReceiveAfter,
         ],
         canSendAfter: [
-          params.shareholderData[0].canSendAfter,
-          params.shareholderData[1].canSendAfter,
+          params.tokenholderData[0].canSendAfter,
+          params.tokenholderData[1].canSendAfter,
         ],
-        expiryTime: [params.shareholderData[0].kycExpiry, params.shareholderData[1].kycExpiry],
+        expiryTime: [params.tokenholderData[0].kycExpiry, params.tokenholderData[1].kycExpiry],
       });
       expect(modifyKYCDataMultiArgsStub.callCount).toEqual(1);
       expect(addTransactionStub.getCall(0).calledWith(gtmMockInstance.modifyKYCDataMulti)).toEqual(
@@ -332,35 +332,35 @@ describe('ModifyShareholderData', () => {
     });
 
     test('should return the newly created checkpoint without changing flags', async () => {
-      const shareholderObject = {
+      const tokenholderObject = {
         securityTokenId: () => params.symbol,
         address: () => testAddress,
       };
-      const fetchStub = shareholderFactoryMock.mock('fetch', Promise.resolve(shareholderObject));
+      const fetchStub = tokenholderFactoryMock.mock('fetch', Promise.resolve(tokenholderObject));
 
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      expect(resolver.result).toEqual([shareholderObject, shareholderObject]);
+      expect(resolver.result).toEqual([tokenholderObject, tokenholderObject]);
       // Verification for fetch
       expect(
         fetchStub.getCall(0).calledWithExactly(
-          Shareholder.generateId({
+          Tokenholder.generateId({
             securityTokenId: SecurityToken.generateId({
               symbol: params.symbol,
             }),
-            address: params.shareholderData[0].address,
+            address: params.tokenholderData[0].address,
           })
         )
       ).toEqual(true);
 
       expect(
         fetchStub.getCall(1).calledWithExactly(
-          Shareholder.generateId({
+          Tokenholder.generateId({
             securityTokenId: SecurityToken.generateId({
               symbol: params.symbol,
             }),
-            address: params.shareholderData[1].address,
+            address: params.tokenholderData[1].address,
           })
         )
       ).toEqual(true);
@@ -370,13 +370,13 @@ describe('ModifyShareholderData', () => {
 
     test('should throw if there is an invalid epoch time used', async () => {
       const invalidParams = cloneDeep(params);
-      invalidParams.shareholderData[0].kycExpiry = new Date(0);
-      target = new ModifyShareholderData(invalidParams, contextMock.getMockInstance());
+      invalidParams.tokenholderData[0].kycExpiry = new Date(0);
+      target = new ModifyTokenholderData(invalidParams, contextMock.getMockInstance());
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
           message:
-            "Cannot set dates to epoch. If you're trying to revoke a shareholder's KYC, use .revokeKyc()",
+            "Cannot set dates to epoch. If you're trying to revoke a tokenholder's KYC, use .revokeKyc()",
         })
       );
     });

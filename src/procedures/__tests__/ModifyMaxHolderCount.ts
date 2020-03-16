@@ -103,12 +103,12 @@ describe('ModifyMaxHolderCount', () => {
       );
     });
 
-    test('should throw if the shareholder count restrictions feature is not enabled', async () => {
+    test('should throw if the tokenholder count restrictions feature is not enabled', async () => {
       wrappersMock.mock('getAttachedModules', Promise.resolve([]));
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: 'You must enable the ShareholderCountRestrictions Feature',
+          message: 'You must enable the TokenholderCountRestrictions Feature',
         })
       );
     });

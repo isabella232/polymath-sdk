@@ -19,9 +19,9 @@ import {
   ProcedureType,
 } from '../../types';
 import { mockFactories } from '../../testUtils/mockFactories';
-import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
+import * as tokenholderFactoryModule from '../../entities/factories/TokenholderFactory';
 import { Factories } from '../../Context';
-import { SecurityToken, Shareholder } from '../../entities';
+import { SecurityToken, Tokenholder } from '../../entities';
 
 const params: ControllerTransferProcedureArgs = {
   symbol: 'TEST1',
@@ -39,7 +39,7 @@ describe('ControllerTransfer', () => {
 
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
-  let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
+  let tokenholderFactoryMock: MockManager<tokenholderFactoryModule.TokenholderFactory>;
   let factoriesMockedSetup: Factories;
 
   beforeEach(() => {
@@ -60,9 +60,9 @@ describe('ControllerTransfer', () => {
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
-    shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
+    tokenholderFactoryMock = ImportMock.mockClass(tokenholderFactoryModule, 'TokenholderFactory');
     factoriesMockedSetup = mockFactories();
-    factoriesMockedSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
+    factoriesMockedSetup.tokenholderFactory = tokenholderFactoryMock.getMockInstance();
     contextMock.set('factories', factoriesMockedSetup);
 
     // Instantiate ControllerTransfer
@@ -182,7 +182,7 @@ describe('ControllerTransfer', () => {
   });
 
   test('should successfully resolve controller transfer', async () => {
-    const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve());
+    const refreshStub = tokenholderFactoryMock.mock('refresh', Promise.resolve());
     const securityTokenId = SecurityToken.generateId({ symbol: params.symbol });
     const resolverValue = await controllerTransferModule.createControllerTransferResolver(
       factoriesMockedSetup,
@@ -192,7 +192,7 @@ describe('ControllerTransfer', () => {
     )();
     expect(
       refreshStub.getCall(0).calledWithExactly(
-        Shareholder.generateId({
+        Tokenholder.generateId({
           securityTokenId,
           address: params.from,
         })
@@ -200,7 +200,7 @@ describe('ControllerTransfer', () => {
     ).toEqual(true);
     expect(
       refreshStub.getCall(1).calledWithExactly(
-        Shareholder.generateId({
+        Tokenholder.generateId({
           securityTokenId,
           address: params.to,
         })

@@ -9,7 +9,7 @@ import {
 import { PolymathError } from '../PolymathError';
 
 /**
- * Procedure that enables Shareholders (specifically the KYC whitelist) on a Security Token. This comes enabled by default
+ * Procedure that enables Tokenholders (specifically the KYC whitelist) on a Security Token. This comes enabled by default
  */
 export class EnableGeneralTransferManager extends Procedure<
   EnableGeneralTransferManagerProcedureArgs
@@ -17,7 +17,7 @@ export class EnableGeneralTransferManager extends Procedure<
   public type = ProcedureType.EnableGeneralTransferManager;
 
   /**
-   * Enable Shareholders on the Security Token
+   * Enable Tokenholders on the Security Token
    */
   public async prepareTransactions() {
     const { symbol } = this.args;

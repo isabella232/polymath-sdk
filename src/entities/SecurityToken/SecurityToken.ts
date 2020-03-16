@@ -3,7 +3,7 @@ import { Context } from '../../Context';
 import { Entity } from '../Entity';
 import { serialize, unserialize as unserializeUtil } from '../../utils';
 import { Features } from './Features';
-import { Shareholders } from './Shareholders';
+import { Tokenholders } from './Tokenholders';
 import { Dividends } from './Dividends';
 import { Issuance } from './Issuance';
 import { Permissions } from './Permissions';
@@ -136,7 +136,7 @@ export class SecurityToken extends Entity<Params> {
 
   public features: Features;
 
-  public shareholders: Shareholders;
+  public tokenholders: Tokenholders;
 
   public dividends: Dividends;
 
@@ -183,7 +183,7 @@ export class SecurityToken extends Entity<Params> {
     this.treasuryWallet = treasuryWallet;
     this.uid = SecurityToken.generateId({ symbol });
     this.features = new Features(this, context);
-    this.shareholders = new Shareholders(this, context);
+    this.tokenholders = new Tokenholders(this, context);
     this.dividends = new Dividends(this, context);
     this.issuance = new Issuance(this, context);
     this.permissions = new Permissions(this, context);

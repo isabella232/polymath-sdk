@@ -40,8 +40,8 @@ import { PolymathError } from './PolymathError';
 import {
   ErrorCode,
   SecurityTokenRole,
-  ShareholderBalance,
-  DividendShareholderStatus,
+  TokenholderBalance,
+  DividendTokenholderStatus,
 } from './types';
 import { ZERO_ADDRESS } from './utils/constants';
 
@@ -262,9 +262,9 @@ export interface BaseCheckpoint {
    */
   totalSupply: BigNumber;
   /**
-   * shareholder balances at the Checkpoint
+   * tokenholder balances at the Checkpoint
    */
-  shareholderBalances: ShareholderBalance[];
+  tokenholderBalances: TokenholderBalance[];
   /**
    * date at which the Checkpoint was created
    */
@@ -328,9 +328,9 @@ export interface BaseDividend {
    */
   currency: string | null;
   /**
-   * dividend Shareholders
+   * dividend Tokenholders
    */
-  shareholders: DividendShareholderStatus[];
+  tokenholders: DividendTokenholderStatus[];
 }
 
 /**
@@ -755,24 +755,24 @@ export class PolymathBase extends PolymathAPI {
     securityToken: SecurityToken;
   }): Promise<BaseCheckpoint> => {
     const totalSupply = await securityToken.totalSupplyAt({ checkpointId });
-    const shareholderAddresses = await securityToken.getInvestorsAt({ checkpointId });
+    const tokenholderAddresses = await securityToken.getInvestorsAt({ checkpointId });
 
-    const shareholderBalances = await P.map(shareholderAddresses, async shareholderAddress => {
+    const tokenholderBalances = await P.map(tokenholderAddresses, async tokenholderAddress => {
       const balance = await securityToken.balanceOfAt({
         checkpointId,
-        investor: shareholderAddress,
+        investor: tokenholderAddress,
       });
 
       return {
         balance,
-        address: shareholderAddress,
+        address: tokenholderAddress,
       };
     });
 
     return {
       index: checkpointId,
       totalSupply,
-      shareholderBalances,
+      tokenholderBalances,
       createdAt: time,
     };
   };
@@ -800,7 +800,7 @@ export class PolymathBase extends PolymathAPI {
 
     const dividendProgressList = await dividendsModule.getDividendProgress({ dividendIndex });
 
-    const shareholders = dividendProgressList.map(
+    const tokenholders = dividendProgressList.map(
       ({ investor, claimed, excluded, withheld, amount, balance }) => ({
         address: investor,
         paymentReceived: claimed,
@@ -839,7 +839,7 @@ export class PolymathBase extends PolymathAPI {
       totalWithheldWithdrawn,
       name,
       currency: symbol,
-      shareholders,
+      tokenholders,
     };
   };
 
@@ -924,13 +924,13 @@ export class PolymathBase extends PolymathAPI {
     let moduleName: ModuleName;
     let permission: Perm;
 
-    if (role === SecurityTokenRole.ShareholdersAdministrator) {
+    if (role === SecurityTokenRole.TokenholdersAdministrator) {
       moduleName = ModuleName.GeneralTransferManager;
       permission = Perm.Admin;
     } else if (role === SecurityTokenRole.PermissionsAdministrator) {
       moduleName = ModuleName.GeneralPermissionManager;
       permission = Perm.Admin;
-    } else if (role === SecurityTokenRole.ShareholderCountRestrictionsAdministrator) {
+    } else if (role === SecurityTokenRole.TokenholderCountRestrictionsAdministrator) {
       moduleName = ModuleName.CountTransferManager;
       permission = Perm.Admin;
     } else if (role === SecurityTokenRole.PercentageOwnershipRestrictionsAdministrator) {

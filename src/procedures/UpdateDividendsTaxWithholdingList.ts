@@ -28,7 +28,7 @@ export const updateDividendsTaxWithholdingListResolver = (
       return factories.taxWithholdingFactory.update(
         TaxWithholding.generateId({
           securityTokenId: SecurityToken.generateId({ symbol }),
-          shareholderAddress: address,
+          tokenholderAddress: address,
         }),
         { percentage: percentageChunk[addressIndex] }
       );
@@ -45,14 +45,14 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
   public type = ProcedureType.UpdateDividendsTaxWithholdingList;
 
   /**
-   * Modify tax withholding percentage for shareholders
+   * Modify tax withholding percentage for tokenholders
    *
    * Note that this procedure will fail if:
    * - The Security Token doesn't exist
    * - The Dividends Feature hasn't been enabled
    */
   public async prepareTransactions() {
-    const { symbol, shareholderAddresses: investors, percentages } = this.args;
+    const { symbol, tokenholderAddresses: investors, percentages } = this.args;
     const { contractWrappers, factories } = this.context;
 
     try {
@@ -75,10 +75,10 @@ export class UpdateDividendsTaxWithholdingList extends Procedure<
       });
     }
 
-    const shareholderAddressChunks = chunk(investors, CHUNK_SIZE);
+    const tokenholderAddressChunks = chunk(investors, CHUNK_SIZE);
     const percentageChunks = chunk(percentages, CHUNK_SIZE);
 
-    await P.each(shareholderAddressChunks, async (addresses, chunkIndex) => {
+    await P.each(tokenholderAddressChunks, async (addresses, chunkIndex) => {
       const percentageChunk = percentageChunks[chunkIndex];
       await this.addTransaction(dividendsModule!.setWithholding, {
         tag: PolyTransactionTag.SetErc20TaxWithholding,

@@ -18,19 +18,19 @@ export { Currency };
 export { Version };
 
 /**
- * Status of a Shareholder in regards to a Dividend Distribution
+ * Status of a Tokenholder in regards to a Dividend Distribution
  */
-export interface DividendShareholderStatus {
+export interface DividendTokenholderStatus {
   /**
-   * wallet address of the Shareholder
+   * wallet address of the Tokenholder
    */
   address: string;
   /**
-   * whether the Shareholder has received payment
+   * whether the Tokenholder has received payment
    */
   paymentReceived: boolean;
   /**
-   * whether the Shareholder is excluded from the Dividend distribution
+   * whether the Tokenholder is excluded from the Dividend distribution
    */
   excluded: boolean;
   /**
@@ -38,11 +38,11 @@ export interface DividendShareholderStatus {
    */
   withheldTax: BigNumber;
   /**
-   * the amount of tokens the Shareholder has received as Dividend payment
+   * the amount of tokens the Tokenholder has received as Dividend payment
    */
   amountReceived: BigNumber;
   /**
-   * the balance of the Shareholder
+   * the balance of the Tokenholder
    */
   balance: BigNumber;
 }
@@ -60,15 +60,15 @@ export function isStoType(type: any): type is StoType {
 }
 
 /**
- * Properties denoting a Shareholder's Tax Withholding Percentage
+ * Properties denoting a Tokenholder's Tax Withholding Percentage
  */
 export interface TaxWithholdingEntry {
   /**
-   * wallet address of the Shareholder
+   * wallet address of the Tokenholder
    */
   address: string;
   /**
-   * percentage of the Shareholder's Dividend payments that will be withheld for tax
+   * percentage of the Tokenholder's Dividend payments that will be withheld for tax
    */
   percentage: number;
 }
@@ -86,9 +86,9 @@ export interface IssuanceDataEntry {
    */
   amount: BigNumber;
   /**
-   * KYC data for the Shareholder
+   * KYC data for the Tokenholder
    */
-  shareholderData?: Omit<ShareholderDataEntry, 'address'>;
+  tokenholderData?: Omit<TokenholderDataEntry, 'address'>;
 }
 
 /**
@@ -116,15 +116,15 @@ export enum ErrorCode {
 }
 
 /**
- * Balance in Security Tokens of a specific Shareholder
+ * Balance in Security Tokens of a specific Tokenholder
  */
-export interface ShareholderBalance {
+export interface TokenholderBalance {
   /**
-   * wallet address of the Shareholder
+   * wallet address of the Tokenholder
    */
   address: string;
   /**
-   * amount of Security Tokens the Shareholder possesses
+   * amount of Security Tokens the Tokenholder possesses
    */
   balance: BigNumber;
 }
@@ -166,7 +166,7 @@ export enum ProcedureType {
   SetDocument = 'SetDocument',
   RemoveDocument = 'RemoveDocument',
   DisableController = 'DisableController',
-  ModifyShareholderData = 'ModifyShareholderData',
+  ModifyTokenholderData = 'ModifyTokenholderData',
   RevokeKyc = 'RevokeKyc',
   IssueTokens = 'IssueTokens',
   ToggleAllowPreIssuing = 'ToggleAllowPreIssuing',
@@ -373,9 +373,9 @@ export interface PushDividendPaymentProcedureArgs {
   symbol: string;
   dividendIndex: number;
   /**
-   * list of addresses of the Shareholders that will receive payment
+   * list of addresses of the Tokenholders that will receive payment
    */
-  shareholderAddresses?: string[];
+  tokenholderAddresses?: string[];
 }
 
 /**
@@ -836,9 +836,9 @@ export interface UpdateDividendsTaxWithholdingListProcedureArgs {
    */
   symbol: string;
   /**
-   * list of addresses of the Shareholders for which to update the tax withholding percentages
+   * list of addresses of the Tokenholders for which to update the tax withholding percentages
    */
-  shareholderAddresses: string[];
+  tokenholderAddresses: string[];
   /**
    * list of percentages to update
    */
@@ -871,7 +871,7 @@ export interface ModifyDividendsDefaultExclusionListProcedureArgs {
    * list of addresses to conform the new default exclusion list.
    * Addresses in this list will not be considered for Dividend Distribution payments
    */
-  shareholderAddresses: string[];
+  tokenholderAddresses: string[];
 }
 
 /**
@@ -1121,47 +1121,47 @@ export interface TransferReservationOwnershipProcedureArgs {
 }
 
 /**
- * A Shareholder's KYC data
+ * A Tokenholder's KYC data
  */
-export interface ShareholderDataEntry {
+export interface TokenholderDataEntry {
   /**
-   * shareholder wallet address to whitelist
+   * tokenholder wallet address to whitelist
    */
   address: string;
   /**
-   * date from which the shareholder can transfer tokens
+   * date from which the tokenholder can transfer tokens
    */
   canSendAfter: Date;
   /**
-   * date from which the shareholder can receive tokens
+   * date from which the tokenholder can receive tokens
    */
   canReceiveAfter: Date;
   /**
-   * date at which the shareholder's KYC expires
+   * date at which the tokenholder's KYC expires
    */
   kycExpiry: Date;
   /**
-   * whether the shareholder is accredited
+   * whether the tokenholder is accredited
    */
   isAccredited: boolean;
   /**
-   * whether the shareholder is allowed to purchase tokens in an STO
+   * whether the tokenholder is allowed to purchase tokens in an STO
    */
   canBuyFromSto: boolean;
 }
 
 /**
- * Arguments for the [[ModifyShareholderData]] Procedure
+ * Arguments for the [[ModifyTokenholderData]] Procedure
  */
-export interface ModifyShareholderDataProcedureArgs {
+export interface ModifyTokenholderDataProcedureArgs {
   /**
    * symbol of the Security Token
    */
   symbol: string;
   /**
-   * shareholder KYC data that will be added/modified
+   * tokenholder KYC data that will be added/modified
    */
-  shareholderData: ShareholderDataEntry[];
+  tokenholderData: TokenholderDataEntry[];
 }
 
 /**
@@ -1173,9 +1173,9 @@ export interface RevokeKycProcedureArgs {
    */
   symbol: string;
   /**
-   * list of Shareholders addresses for which KYC will be revoked
+   * list of Tokenholders addresses for which KYC will be revoked
    */
-  shareholderAddresses: string[];
+  tokenholderAddresses: string[];
 }
 
 /**
@@ -1201,17 +1201,17 @@ export interface ModifyMaxHolderPercentageProcedureArgs {
    */
   symbol: string;
   /**
-   * maximum percentage of total tokens a single Shareholder can hold
+   * maximum percentage of total tokens a single Tokenholder can hold
    */
   maxHolderPercentage: BigNumber;
 }
 
 /**
- * Entry that represents whether a Shareholder is exempted from Percentage Restrictions
+ * Entry that represents whether a Tokenholder is exempted from Percentage Restrictions
  */
 export interface PercentageWhitelistEntry {
   /**
-   * Shareholder wallet address
+   * Tokenholder wallet address
    */
   address: string;
   /**
@@ -1229,7 +1229,7 @@ export interface ModifyPercentageExemptionsProcedureArgs {
    */
   symbol: string;
   /**
-   * list of Shareholders to add/remove to/from the whitelist
+   * list of Tokenholders to add/remove to/from the whitelist
    */
   whitelistEntries?: PercentageWhitelistEntry[];
   /**
@@ -1290,7 +1290,7 @@ export interface SignTransferDataProcedureArgs {
   /**
    * KYC data to sign
    */
-  kycData: Omit<Omit<ShareholderDataEntry, 'isAccredited'>, 'canBuyFromSto'>[];
+  kycData: Omit<Omit<TokenholderDataEntry, 'isAccredited'>, 'canBuyFromSto'>[];
   /**
    * date from which the signature is valid
    */
@@ -1352,7 +1352,7 @@ export interface ProcedureArguments {
   [ProcedureType.SetController]: SetControllerProcedureArgs;
   [ProcedureType.AssignSecurityTokenRole]: AssignSecurityTokenRoleProcedureArgs;
   [ProcedureType.AssignStoRole]: AssignStoRoleProcedureArgs;
-  [ProcedureType.ModifyShareholderData]: ModifyShareholderDataProcedureArgs;
+  [ProcedureType.ModifyTokenholderData]: ModifyTokenholderDataProcedureArgs;
   [ProcedureType.RevokeKyc]: RevokeKycProcedureArgs;
   [ProcedureType.IssueTokens]: IssueTokensProcedureArgs;
   [ProcedureType.ToggleAllowPreIssuing]: ToggleAllowPreIssuingProcedureArgs;
@@ -1447,9 +1447,9 @@ export enum TransactionSpeed {
 
 export enum Feature {
   Permissions = 'Permissions',
-  Shareholders = 'Shareholders',
+  Tokenholders = 'Tokenholders',
   Dividends = 'Dividends',
-  ShareholderCountRestrictions = 'ShareholderCountRestrictions',
+  TokenholderCountRestrictions = 'TokenholderCountRestrictions',
   PercentageOwnershipRestrictions = 'PercentageOwnershipRestrictions',
 }
 
@@ -1457,8 +1457,8 @@ export enum SecurityTokenRole {
   PermissionsAdministrator = 'PermissionsAdministrator',
   DividendsOperator = 'DividendsOperator',
   DividendsAdministrator = 'DividendsAdministrator',
-  ShareholdersAdministrator = 'ShareholdersAdministrator',
-  ShareholderCountRestrictionsAdministrator = 'ShareholderCountRestrictionsAdministrator',
+  TokenholdersAdministrator = 'TokenholdersAdministrator',
+  TokenholderCountRestrictionsAdministrator = 'TokenholderCountRestrictionsAdministrator',
   PercentageOwnershipRestrictionsAdministrator = 'PercentageOwnershipRestrictionsAdministrator',
 }
 

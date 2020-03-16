@@ -20,7 +20,7 @@
 
 • **FundsLocked**: = "FundsLocked"
 
-*Defined in [src/types/index.ts:1476](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1476)*
+*Defined in [src/types/index.ts:1476](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1476)*
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 • **InsufficientAllowance**: = "InsufficientAllowance"
 
-*Defined in [src/types/index.ts:1474](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1474)*
+*Defined in [src/types/index.ts:1474](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1474)*
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 • **InsufficientBalance**: = "InsufficientBalance"
 
-*Defined in [src/types/index.ts:1473](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1473)*
+*Defined in [src/types/index.ts:1473](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1473)*
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 • **InvalidOperator**: = "InvalidOperator"
 
-*Defined in [src/types/index.ts:1479](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1479)*
+*Defined in [src/types/index.ts:1479](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1479)*
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 • **InvalidReceiver**: = "InvalidReceiver"
 
-*Defined in [src/types/index.ts:1478](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1478)*
+*Defined in [src/types/index.ts:1478](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1478)*
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 • **InvalidSender**: = "InvalidSender"
 
-*Defined in [src/types/index.ts:1477](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1477)*
+*Defined in [src/types/index.ts:1477](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1477)*
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 • **TransferFailure**: = "TransferFailure"
 
-*Defined in [src/types/index.ts:1471](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1471)*
+*Defined in [src/types/index.ts:1471](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1471)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 • **TransferSuccess**: = "TransferSuccess"
 
-*Defined in [src/types/index.ts:1472](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1472)*
+*Defined in [src/types/index.ts:1472](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1472)*
 
 ___
 
@@ -84,4 +84,4 @@ ___
 
 • **TransfersHalted**: = "TransfersHalted"
 
-*Defined in [src/types/index.ts:1475](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L1475)*
+*Defined in [src/types/index.ts:1475](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1475)*

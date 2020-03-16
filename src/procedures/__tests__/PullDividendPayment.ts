@@ -2,7 +2,6 @@
 import { ImportMock, MockManager } from 'ts-mock-imports';
 import sinon, { restore, stub } from 'sinon';
 import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
-import { FundRaiseType } from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
@@ -99,7 +98,7 @@ describe('PullDividendPayment', () => {
       );
     });
 
-    test('should throw if the owner address is not a shareholder', async () => {
+    test('should throw if the owner address is not a tokenholder', async () => {
       contextMock.set(
         'currentWallet',
         new Wallet({ address: () => Promise.resolve(addresses[3]) })
@@ -113,7 +112,7 @@ describe('PullDividendPayment', () => {
       wrappersMock.mock(
         'getDividend',
         Promise.resolve({
-          shareholders: [{ address: addresses[0], paymentReceived: false, excluded: false }],
+          tokenholders: [{ address: addresses[0], paymentReceived: false, excluded: false }],
         })
       );
 
@@ -123,12 +122,12 @@ describe('PullDividendPayment', () => {
           code: ErrorCode.ProcedureValidationError,
           message: `Current wallet ${
             addresses[3]
-          } cannot receive dividend payments. Reason: not a shareholder`,
+          } cannot receive dividend payments. Reason: not a tokenholder`,
         })
       );
     });
 
-    test('should throw if a shareholder already received payment', async () => {
+    test('should throw if a tokenholder already received payment', async () => {
       wrappersMock.mock(
         'getAttachedModules',
         Promise.resolve([erc20DividendsMock.getMockInstance()])
@@ -137,7 +136,7 @@ describe('PullDividendPayment', () => {
       wrappersMock.mock(
         'getDividend',
         Promise.resolve({
-          shareholders: [{ address: addresses[0], paymentReceived: true, excluded: false }],
+          tokenholders: [{ address: addresses[0], paymentReceived: true, excluded: false }],
         })
       );
 
@@ -152,7 +151,7 @@ describe('PullDividendPayment', () => {
       );
     });
 
-    test('should throw if a shareholder is in the exclusion list', async () => {
+    test('should throw if a tokenholder is in the exclusion list', async () => {
       wrappersMock.mock(
         'getAttachedModules',
         Promise.resolve([erc20DividendsMock.getMockInstance()])
@@ -161,7 +160,7 @@ describe('PullDividendPayment', () => {
       wrappersMock.mock(
         'getDividend',
         Promise.resolve({
-          shareholders: [{ address: addresses[0], paymentReceived: false, excluded: true }],
+          tokenholders: [{ address: addresses[0], paymentReceived: false, excluded: true }],
         })
       );
 
@@ -185,7 +184,7 @@ describe('PullDividendPayment', () => {
       wrappersMock.mock(
         'getDividend',
         Promise.resolve({
-          shareholders: [
+          tokenholders: [
             { address: addresses[0], paymentReceived: false, excluded: false },
             { address: addresses[1], paymentReceived: false, excluded: false },
             { address: addresses[2], paymentReceived: true, excluded: false },

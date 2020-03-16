@@ -27,7 +27,7 @@ export const createPullDividendPaymentResolver = (
 };
 
 /**
- * Procedure that allows a shareholder to pull their dividend payments from a Dividend Distribution
+ * Procedure that allows a tokenholder to pull their dividend payments from a Dividend Distribution
  */
 export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureArgs> {
   public type = ProcedureType.PullDividendPayment;
@@ -37,7 +37,7 @@ export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureA
    *
    * Note this procedure will fail if:
    * - The Dividends Feature is not enabled
-   * - The current wallet address is not a shareholder
+   * - The current wallet address is not a tokenholder
    * - The current wallet address has already received payment for this Dividend Distribution
    * - The current wallet address is on the exclusion list
    */
@@ -73,27 +73,27 @@ export class PullDividendPayment extends Procedure<PullDividendPaymentProcedureA
       dividendIndex,
       dividendsModule,
     });
-    const { shareholders: shareholderStatuses } = dividend;
+    const { tokenholders: tokenholderStatuses } = dividend;
 
-    const thisShareholderAddress = await currentWallet.address();
-    const thisShareholder = shareholderStatuses.find(
-      ({ address }) => address === thisShareholderAddress
+    const thisTokenholderAddress = await currentWallet.address();
+    const thisTokenholder = tokenholderStatuses.find(
+      ({ address }) => address === thisTokenholderAddress
     );
 
     let reason: string = '';
 
-    if (!thisShareholder) {
-      reason = 'not a shareholder';
-    } else if (thisShareholder.paymentReceived) {
+    if (!thisTokenholder) {
+      reason = 'not a tokenholder';
+    } else if (thisTokenholder.paymentReceived) {
       reason = 'already received payment';
-    } else if (thisShareholder.excluded) {
+    } else if (thisTokenholder.excluded) {
       reason = 'address belongs to exclusion list';
     }
 
     if (reason) {
       throw new PolymathError({
         code: ErrorCode.ProcedureValidationError,
-        message: `Current wallet ${thisShareholderAddress} cannot receive dividend payments. Reason: ${reason}`,
+        message: `Current wallet ${thisTokenholderAddress} cannot receive dividend payments. Reason: ${reason}`,
       });
     }
 

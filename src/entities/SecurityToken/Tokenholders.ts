@@ -2,14 +2,14 @@ import {
   ModuleName,
   SecurityToken as SecurityTokenWrapper,
 } from '@polymathnetwork/contract-wrappers';
-import { ShareholderDataEntry, ErrorCode } from '../../types';
-import { ModifyShareholderData, CreateCheckpoint, RevokeKyc } from '../../procedures';
+import { TokenholderDataEntry, ErrorCode } from '../../types';
+import { ModifyTokenholderData, CreateCheckpoint, RevokeKyc } from '../../procedures';
 import { SubModule } from './SubModule';
 import { Checkpoint } from '../Checkpoint';
 import { PolymathError } from '../../PolymathError';
 import { BaseCheckpoint } from '../../PolymathBase';
 import { DividendDistribution } from '../DividendDistribution';
-import { Shareholder } from '../Shareholder';
+import { Tokenholder } from '../Tokenholder';
 
 /**
  * Parameters for [[getCheckpoint]]
@@ -19,17 +19,17 @@ export interface GetCheckpointParams {
 }
 
 /**
- * Namespace that handles all Shareholder related functionality
+ * Namespace that handles all Tokenholder related functionality
  */
-export class Shareholders extends SubModule {
+export class Tokenholders extends SubModule {
   /**
    * Add/modify investor data. For an investor to be able to hold, sell or purchase tokens, his address (and other KYC data)
    * must be added/modified via this method
    *
-   * @param args.shareholderData - array of shareholder data to add/modify
+   * @param args.tokenholderData - array of tokenholder data to add/modify
    */
-  public modifyData = async (args: { shareholderData: ShareholderDataEntry[] }) => {
-    const procedure = new ModifyShareholderData(
+  public modifyData = async (args: { tokenholderData: TokenholderDataEntry[] }) => {
+    const procedure = new ModifyTokenholderData(
       {
         symbol: this.securityToken.symbol,
         ...args,
@@ -40,9 +40,9 @@ export class Shareholders extends SubModule {
   };
 
   /**
-   * Revoke KYC for a group of shareholder addresses. Supplied addresses must have valid KYC
+   * Revoke KYC for a group of tokenholder addresses. Supplied addresses must have valid KYC
    */
-  public revokeKyc = async (args: { shareholderAddresses: string[] }) => {
+  public revokeKyc = async (args: { tokenholderAddresses: string[] }) => {
     const procedure = new RevokeKyc(
       {
         symbol: this.securityToken.symbol,
@@ -54,7 +54,7 @@ export class Shareholders extends SubModule {
   };
 
   /**
-   * Create a snapshot of the balances of every shareholder at the current date
+   * Create a snapshot of the balances of every tokenholder at the current date
    */
   public createCheckpoint = async () => {
     const { context, securityToken } = this;
@@ -150,9 +150,9 @@ export class Shareholders extends SubModule {
   };
 
   /**
-   * Get data for all shareholders associated to the Security Token
+   * Get data for all tokenholders associated to the Security Token
    */
-  public getShareholders = async () => {
+  public getTokenholders = async () => {
     const { contractWrappers, factories } = this.context;
 
     const { symbol: securityTokenSymbol, uid: securityTokenId } = this.securityToken;
@@ -183,7 +183,7 @@ export class Shareholders extends SubModule {
       generalTransferManager.getAllInvestorFlags(),
     ]);
 
-    const shareholders = [];
+    const tokenholders = [];
 
     const balances = await Promise.all(
       allKycData.map(({ investor }) => securityToken.balanceOf({ owner: investor }))
@@ -194,8 +194,8 @@ export class Shareholders extends SubModule {
       const { isAccredited, canNotBuyFromSTO } = allFlags[i];
       const balance = balances[i];
 
-      const shareholder = factories.shareholderFactory.create(
-        Shareholder.generateId({ securityTokenId, address }),
+      const tokenholder = factories.tokenholderFactory.create(
+        Tokenholder.generateId({ securityTokenId, address }),
         {
           balance,
           canSendAfter,
@@ -207,12 +207,12 @@ export class Shareholders extends SubModule {
         }
       );
 
-      if (!shareholder.isRevoked() || shareholder.balance.isGreaterThan(0)) {
-        shareholders.push(shareholder);
+      if (!tokenholder.isRevoked() || tokenholder.balance.isGreaterThan(0)) {
+        tokenholders.push(tokenholder);
       }
     }
 
-    return shareholders;
+    return tokenholders;
   };
 
   /**
