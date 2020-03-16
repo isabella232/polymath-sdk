@@ -17,9 +17,9 @@ export class Permissions extends SubModule {
    * | Feature                         | Roles                                           |
    * |---------------------------------|-------------------------------------------------|
    * | Permissions                     | Permissions Administrator                       |
-   * | Shareholders                    | Shareholders Administrator                      |
+   * | Tokenholders                    | Tokenholders Administrator                      |
    * | Dividends                       | Dividends Administrator, Dividends Operator     |
-   * | ShareholderCountRestrictions    | Shareholder Count Restrictions Administrator    |
+   * | TokenholderCountRestrictions    | Tokenholder Count Restrictions Administrator    |
    * | PercentageOwnershipRestrictions | Percentage Ownership Restrictions Administrator |
    */
   public getAvailableRoles = async () => {
@@ -278,13 +278,13 @@ export class Permissions extends SubModule {
 
   public rolesPerFeature = {
     [Feature.Permissions]: [SecurityTokenRole.PermissionsAdministrator],
-    [Feature.Shareholders]: [SecurityTokenRole.ShareholdersAdministrator],
+    [Feature.Tokenholders]: [SecurityTokenRole.TokenholdersAdministrator],
     [Feature.Dividends]: [
       SecurityTokenRole.DividendsAdministrator,
       SecurityTokenRole.DividendsOperator,
     ],
-    [Feature.ShareholderCountRestrictions]: [
-      SecurityTokenRole.ShareholderCountRestrictionsAdministrator,
+    [Feature.TokenholderCountRestrictions]: [
+      SecurityTokenRole.TokenholderCountRestrictionsAdministrator,
     ],
     [Feature.PercentageOwnershipRestrictions]: [
       SecurityTokenRole.PercentageOwnershipRestrictionsAdministrator,

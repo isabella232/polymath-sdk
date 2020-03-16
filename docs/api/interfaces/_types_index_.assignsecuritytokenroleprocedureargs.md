@@ -22,7 +22,7 @@ Arguments for the [AssignSecurityTokenRole](../enums/_types_index_.proceduretype
 
 • **assign**: *boolean*
 
-*Defined in [src/types/index.ts:896](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L896)*
+*Defined in [src/types/index.ts:896](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L896)*
 
 whether to assign or revoke the role
 
@@ -32,7 +32,7 @@ ___
 
 • **delegateAddress**: *string*
 
-*Defined in [src/types/index.ts:888](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L888)*
+*Defined in [src/types/index.ts:888](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L888)*
 
 wallet address of the delegate
 
@@ -42,7 +42,7 @@ ___
 
 • **description**: *string*
 
-*Defined in [src/types/index.ts:900](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L900)*
+*Defined in [src/types/index.ts:900](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L900)*
 
 description of the delegate (i.e. "company accountant")
 
@@ -52,7 +52,7 @@ ___
 
 • **role**: *[SecurityTokenRole](../enums/_types_index_.securitytokenrole.md)*
 
-*Defined in [src/types/index.ts:892](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L892)*
+*Defined in [src/types/index.ts:892](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L892)*
 
 role to assign/revoke to/from the delegate
 
@@ -62,6 +62,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:884](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L884)*
+*Defined in [src/types/index.ts:884](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L884)*
 
 the symbol of the Security Token

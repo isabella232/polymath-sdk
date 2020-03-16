@@ -16,7 +16,7 @@ import { Wallet } from '../../Wallet';
 
 const params = {
   symbol: 'TEST',
-  shareholderAddresses: ['0x01'],
+  tokenholderAddresses: ['0x01'],
 };
 
 describe('ModifyDividendsDefaultExclusionList', () => {
@@ -112,7 +112,7 @@ describe('ModifyDividendsDefaultExclusionList', () => {
 
       // Verifications
       expect(setDefaultExcludedArgsSpy.getCall(0).args[0]).toEqual({
-        excluded: params.shareholderAddresses,
+        excluded: params.tokenholderAddresses,
       });
       expect(setDefaultExcludedArgsSpy.callCount).toEqual(1);
 

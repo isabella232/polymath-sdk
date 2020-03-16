@@ -1,65 +1,65 @@
-# Class: ModifyShareholderData
+# Class: ModifyTokenholderData
 
-Procedure that modifies data for a list of (potential) shareholders. The data that can be modified is:
+Procedure that modifies data for a list of (potential) tokenholders. The data that can be modified is:
 
 - KYC data (sale/buy lockup dates and KYC expiry)
-- Whether the shareholder is accredited
-- Whether the shareholder can buy from an STO
+- Whether the tokenholder is accredited
+- Whether the tokenholder can buy from an STO
 
 ## Hierarchy
 
-* Procedure‹[ModifyShareholderDataProcedureArgs](../interfaces/_types_index_.modifyshareholderdataprocedureargs.md), [Shareholder](_entities_shareholder_.shareholder.md)[]›
+* Procedure‹[ModifyTokenholderDataProcedureArgs](../interfaces/_types_index_.modifytokenholderdataprocedureargs.md), [Tokenholder](_entities_tokenholder_.tokenholder.md)[]›
 
-  ↳ **ModifyShareholderData**
+  ↳ **ModifyTokenholderData**
 
 ## Index
 
 ### Constructors
 
-* [constructor](_procedures_modifyshareholderdata_.modifyshareholderdata.md#constructor)
+* [constructor](_procedures_modifytokenholderdata_.modifytokenholderdata.md#constructor)
 
 ### Properties
 
-* [args](_procedures_modifyshareholderdata_.modifyshareholderdata.md#protected-args)
-* [context](_procedures_modifyshareholderdata_.modifyshareholderdata.md#protected-context)
-* [type](_procedures_modifyshareholderdata_.modifyshareholderdata.md#type)
+* [args](_procedures_modifytokenholderdata_.modifytokenholderdata.md#protected-args)
+* [context](_procedures_modifytokenholderdata_.modifytokenholderdata.md#protected-context)
+* [type](_procedures_modifytokenholderdata_.modifytokenholderdata.md#type)
 
 ### Methods
 
-* [addProcedure](_procedures_modifyshareholderdata_.modifyshareholderdata.md#addprocedure)
-* [addSignatureRequest](_procedures_modifyshareholderdata_.modifyshareholderdata.md#addsignaturerequest)
-* [addTransaction](_procedures_modifyshareholderdata_.modifyshareholderdata.md#addtransaction)
-* [prepare](_procedures_modifyshareholderdata_.modifyshareholderdata.md#prepare)
-* [prepareTransactions](_procedures_modifyshareholderdata_.modifyshareholderdata.md#preparetransactions)
+* [addProcedure](_procedures_modifytokenholderdata_.modifytokenholderdata.md#addprocedure)
+* [addSignatureRequest](_procedures_modifytokenholderdata_.modifytokenholderdata.md#addsignaturerequest)
+* [addTransaction](_procedures_modifytokenholderdata_.modifytokenholderdata.md#addtransaction)
+* [prepare](_procedures_modifytokenholderdata_.modifytokenholderdata.md#prepare)
+* [prepareTransactions](_procedures_modifytokenholderdata_.modifytokenholderdata.md#preparetransactions)
 
 ## Constructors
 
 ###  constructor
 
-\+ **new ModifyShareholderData**(`args`: [ModifyShareholderDataProcedureArgs](../interfaces/_types_index_.modifyshareholderdataprocedureargs.md), `context`: [Context](_context_.context.md)): *[ModifyShareholderData](_procedures_modifyshareholderdata_.modifyshareholderdata.md)*
+\+ **new ModifyTokenholderData**(`args`: [ModifyTokenholderDataProcedureArgs](../interfaces/_types_index_.modifytokenholderdataprocedureargs.md), `context`: [Context](_context_.context.md)): *[ModifyTokenholderData](_procedures_modifytokenholderdata_.modifytokenholderdata.md)*
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L40)*
+*Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L40)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`args` | [ModifyShareholderDataProcedureArgs](../interfaces/_types_index_.modifyshareholderdataprocedureargs.md) |
+`args` | [ModifyTokenholderDataProcedureArgs](../interfaces/_types_index_.modifytokenholderdataprocedureargs.md) |
 `context` | [Context](_context_.context.md) |
 
-**Returns:** *[ModifyShareholderData](_procedures_modifyshareholderdata_.modifyshareholderdata.md)*
+**Returns:** *[ModifyTokenholderData](_procedures_modifytokenholderdata_.modifytokenholderdata.md)*
 
 ## Properties
 
 ### `Protected` args
 
-• **args**: *[ModifyShareholderDataProcedureArgs](../interfaces/_types_index_.modifyshareholderdataprocedureargs.md)*
+• **args**: *[ModifyTokenholderDataProcedureArgs](../interfaces/_types_index_.modifytokenholderdataprocedureargs.md)*
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L34)*
+*Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L34)*
 
 ___
 
@@ -69,17 +69,17 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L36)*
+*Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L36)*
 
 ___
 
 ###  type
 
-• **type**: *[ProcedureType](../enums/_types_index_.proceduretype.md)* =  ProcedureType.ModifyShareholderData
+• **type**: *[ProcedureType](../enums/_types_index_.proceduretype.md)* =  ProcedureType.ModifyTokenholderData
 
 *Overrides void*
 
-*Defined in [src/procedures/ModifyShareholderData.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/ModifyShareholderData.ts#L31)*
+Defined in src/procedures/ModifyTokenholderData.ts:31
 
 ## Methods
 
@@ -89,7 +89,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L91)*
+*Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L91)*
 
 Appends a Procedure into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -118,7 +118,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L179)*
+*Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L179)*
 
 Appends a signature request into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -145,7 +145,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L137)*
+*Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L137)*
 
 Appends a method or future method into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -186,7 +186,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/Procedure.ts#L52)*
+*Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L52)*
 
 Mandatory method that builds a list of transactions that will be
 run
@@ -197,17 +197,17 @@ ___
 
 ###  prepareTransactions
 
-▸ **prepareTransactions**(): *Promise‹PostTransactionResolver‹[Shareholder](_entities_shareholder_.shareholder.md)[], TransactionReceiptWithDecodedLogs››*
+▸ **prepareTransactions**(): *Promise‹PostTransactionResolver‹[Tokenholder](_entities_tokenholder_.tokenholder.md)[], TransactionReceiptWithDecodedLogs››*
 
 *Overrides void*
 
-*Defined in [src/procedures/ModifyShareholderData.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/procedures/ModifyShareholderData.ts#L41)*
+Defined in src/procedures/ModifyTokenholderData.ts:41
 
-Update shareholder data for a subset of addresses
+Update tokenholder data for a subset of addresses
 
 Note that this procedure will fail if:
 - You're trying to set the dates to 0 (there is a special "RevokeKyc" procedure for that)
 - The Security Token doesn't exist
 - There is no difference between the "new" data and the data already present in the contract
 
-**Returns:** *Promise‹PostTransactionResolver‹[Shareholder](_entities_shareholder_.shareholder.md)[], TransactionReceiptWithDecodedLogs››*
+**Returns:** *Promise‹PostTransactionResolver‹[Tokenholder](_entities_tokenholder_.tokenholder.md)[], TransactionReceiptWithDecodedLogs››*

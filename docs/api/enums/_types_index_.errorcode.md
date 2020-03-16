@@ -31,7 +31,7 @@ Specifies possible types of errors in the SDK
 
 • **FatalError**: = "FatalError"
 
-*Defined in [src/types/index.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L108)*
+*Defined in [src/types/index.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L108)*
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 • **FeatureNotEnabled**: = "FeatureNotEnabled"
 
-*Defined in [src/types/index.ts:99](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L99)*
+*Defined in [src/types/index.ts:99](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L99)*
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 • **FetcherValidationError**: = "FetcherValidationError"
 
-*Defined in [src/types/index.ts:105](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L105)*
+*Defined in [src/types/index.ts:105](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L105)*
 
 ___
 
@@ -55,7 +55,7 @@ ___
 
 • **IncompatibleBrowser**: = "IncompatibleBrowser"
 
-*Defined in [src/types/index.ts:98](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L98)*
+*Defined in [src/types/index.ts:98](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L98)*
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 • **IncorrectVersion**: = "IncorrectVersion"
 
-*Defined in [src/types/index.ts:115](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L115)*
+*Defined in [src/types/index.ts:115](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L115)*
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 • **InexistentModule**: = "InexistentModule"
 
-*Defined in [src/types/index.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L114)*
+*Defined in [src/types/index.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L114)*
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 • **InsufficientBalance**: = "InsufficientBalance"
 
-*Defined in [src/types/index.ts:113](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L113)*
+*Defined in [src/types/index.ts:113](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L113)*
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 • **InvalidAddress**: = "InvalidAddress"
 
-*Defined in [src/types/index.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L112)*
+*Defined in [src/types/index.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L112)*
 
 ___
 
@@ -95,7 +95,7 @@ ___
 
 • **InvalidUuid**: = "InvalidUuid"
 
-*Defined in [src/types/index.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L111)*
+*Defined in [src/types/index.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L111)*
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 • **MetamaskNotInstalled**: = "MetamaskNotInstalled"
 
-*Defined in [src/types/index.ts:101](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L101)*
+*Defined in [src/types/index.ts:101](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L101)*
 
 ___
 
@@ -111,7 +111,7 @@ ___
 
 • **NonBrowserEnvironment**: = "NonBrowserEnvironment"
 
-*Defined in [src/types/index.ts:100](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L100)*
+*Defined in [src/types/index.ts:100](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L100)*
 
 ___
 
@@ -119,7 +119,7 @@ ___
 
 • **ProcedureValidationError**: = "ProcedureValidationError"
 
-*Defined in [src/types/index.ts:104](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L104)*
+*Defined in [src/types/index.ts:104](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L104)*
 
 ___
 
@@ -127,7 +127,7 @@ ___
 
 • **TransactionRejectedByUser**: = "TransactionRejectedByUser"
 
-*Defined in [src/types/index.ts:106](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L106)*
+*Defined in [src/types/index.ts:106](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L106)*
 
 ___
 
@@ -135,7 +135,7 @@ ___
 
 • **TransactionReverted**: = "TransactionReverted"
 
-*Defined in [src/types/index.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L107)*
+*Defined in [src/types/index.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L107)*
 
 ___
 
@@ -143,7 +143,7 @@ ___
 
 • **UnexpectedEventLogs**: = "UnexpectedEventLogs"
 
-*Defined in [src/types/index.ts:110](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L110)*
+*Defined in [src/types/index.ts:110](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L110)*
 
 ___
 
@@ -151,7 +151,7 @@ ___
 
 • **UnexpectedReturnData**: = "UnexpectedReturnData"
 
-*Defined in [src/types/index.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L109)*
+*Defined in [src/types/index.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L109)*
 
 ___
 
@@ -159,7 +159,7 @@ ___
 
 • **UserDeniedAccess**: = "UserDeniedAccess"
 
-*Defined in [src/types/index.ts:102](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L102)*
+*Defined in [src/types/index.ts:102](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L102)*
 
 ___
 
@@ -167,4 +167,4 @@ ___
 
 • **WalletIsLocked**: = "WalletIsLocked"
 
-*Defined in [src/types/index.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/types/index.ts#L103)*
+*Defined in [src/types/index.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L103)*

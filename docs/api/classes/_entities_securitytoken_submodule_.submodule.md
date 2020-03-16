@@ -8,7 +8,7 @@ Represents a namespace inside the Security Token that handles a set of related f
 
   ↳ [Features](_entities_securitytoken_features_.features.md)
 
-  ↳ [Shareholders](_entities_securitytoken_shareholders_.shareholders.md)
+  ↳ [Tokenholders](_entities_securitytoken_tokenholders_.tokenholders.md)
 
   ↳ [Dividends](_entities_securitytoken_dividends_.dividends.md)
 
@@ -47,7 +47,7 @@ Represents a namespace inside the Security Token that handles a set of related f
 
 \+ **new SubModule**(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)): *[SubModule](_entities_securitytoken_submodule_.submodule.md)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L10)*
 
 Create a new SubModule instance
 
@@ -66,7 +66,7 @@ Name | Type |
 
 • **context**: *[Context](_context_.context.md)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L10)*
 
 ___
 
@@ -74,4 +74,4 @@ ___
 
 • **securityToken**: *[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/SecurityToken/SubModule.ts#L8)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L8)*

@@ -1,7 +1,7 @@
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
-import { DividendShareholderStatus, ErrorCode } from '../types';
+import { DividendTokenholderStatus, ErrorCode } from '../types';
 import { PushDividendPayment, WithdrawTaxes, PullDividendPayment } from '../procedures';
 import { Context } from '../Context';
 import { PolymathError } from '../PolymathError';
@@ -69,7 +69,7 @@ export interface Params {
   reclaimed: boolean;
   totalWithheld: BigNumber;
   totalWithheldWithdrawn: BigNumber;
-  shareholders: DividendShareholderStatus[];
+  tokenholders: DividendTokenholderStatus[];
   name: string;
   /**
    * symbol of the currency in which this dividend distribution is being paid
@@ -137,7 +137,7 @@ export class DividendDistribution extends Entity<Params> {
 
   public totalWithheldWithdrawn: BigNumber;
 
-  public shareholders: DividendShareholderStatus[];
+  public tokenholders: DividendTokenholderStatus[];
 
   public name: string;
 
@@ -165,7 +165,7 @@ export class DividendDistribution extends Entity<Params> {
       reclaimed,
       totalWithheld,
       totalWithheldWithdrawn,
-      shareholders,
+      tokenholders,
       name,
       currency,
     } = params;
@@ -184,7 +184,7 @@ export class DividendDistribution extends Entity<Params> {
     this.totalWithheld = totalWithheld;
     this.totalWithheldWithdrawn = totalWithheldWithdrawn;
     this.name = name;
-    this.shareholders = shareholders;
+    this.tokenholders = tokenholders;
     this.currency = currency;
     this.context = context;
 
@@ -258,7 +258,7 @@ export class DividendDistribution extends Entity<Params> {
       reclaimed,
       totalWithheld,
       totalWithheldWithdrawn,
-      shareholders,
+      tokenholders,
       name,
       currency,
     } = this;
@@ -278,7 +278,7 @@ export class DividendDistribution extends Entity<Params> {
       reclaimed,
       totalWithheld,
       totalWithheldWithdrawn,
-      shareholders,
+      tokenholders,
       name,
       currency,
     };
@@ -300,7 +300,7 @@ export class DividendDistribution extends Entity<Params> {
       reclaimed,
       totalWithheld,
       totalWithheldWithdrawn,
-      shareholders,
+      tokenholders,
       name,
       currency,
     } = params;
@@ -349,8 +349,8 @@ export class DividendDistribution extends Entity<Params> {
       this.totalWithheldWithdrawn = totalWithheldWithdrawn;
     }
 
-    if (shareholders) {
-      this.shareholders = shareholders;
+    if (tokenholders) {
+      this.tokenholders = tokenholders;
     }
 
     if (name) {

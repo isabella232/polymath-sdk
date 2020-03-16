@@ -19,7 +19,7 @@ export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, Uniqu
         contractWrappers: { tokenFactory, getAttachedModules },
       },
     } = this;
-    const { securityTokenId, shareholderAddress } = TaxWithholding.unserialize(uid);
+    const { securityTokenId, tokenholderAddress } = TaxWithholding.unserialize(uid);
     const { symbol } = SecurityToken.unserialize(securityTokenId);
 
     let securityToken;
@@ -51,19 +51,19 @@ export class TaxWithholdingFactory extends Factory<TaxWithholding, Params, Uniqu
       checkpointId: checkpointIndex.toNumber(),
     });
 
-    const thisShareholder = checkpointData.find(({ investor }) => investor === shareholderAddress);
+    const thisTokenholder = checkpointData.find(({ investor }) => investor === tokenholderAddress);
 
-    if (!thisShareholder) {
+    if (!thisTokenholder) {
       throw new PolymathError({
         code: ErrorCode.FetcherValidationError,
-        message: `There is no shareholder with address ${shareholderAddress}`,
+        message: `There is no tokenholder with address ${tokenholderAddress}`,
       });
     }
 
-    const { withheld } = thisShareholder;
+    const { withheld } = thisTokenholder;
 
     return {
-      shareholderAddress,
+      tokenholderAddress,
       percentage: withheld.toNumber(),
       securityTokenSymbol: symbol,
       securityTokenId,

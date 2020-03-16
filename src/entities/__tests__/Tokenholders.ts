@@ -3,8 +3,8 @@ import { ImportMock, MockManager } from 'ts-mock-imports';
 import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import * as contextModule from '../../Context';
 import * as createCheckpointProcedure from '../../procedures/CreateCheckpoint';
-import { Shareholders } from '../../entities/SecurityToken/Shareholders';
-import { SubModule } from '../../entities/SecurityToken/SubModule';
+import { Tokenholders } from '../SecurityToken/Tokenholders';
+import { SubModule } from '../SecurityToken/SubModule';
 import { SecurityToken } from '../SecurityToken';
 import { Version } from '../../types';
 
@@ -21,20 +21,20 @@ const params1 = {
   treasuryWallet: '0x3',
 };
 
-describe('Shareholders', () => {
-  let target: Shareholders;
+describe('Tokenholders', () => {
+  let target: Tokenholders;
   let createCheckpointMock: MockManager<createCheckpointProcedure.CreateCheckpoint>;
 
   beforeAll(() => {
     // Generate the mock for CreateCheckpoint
     createCheckpointMock = ImportMock.mockClass(createCheckpointProcedure, 'CreateCheckpoint');
 
-    // Generate a mock for context, and a security token to instantiate Shareholders
+    // Generate a mock for context, and a security token to instantiate Tokenholders
     const contextMock = ImportMock.mockClass(contextModule, 'Context');
     const st1 = new SecurityToken(params1, contextMock.getMockInstance());
 
-    // Instantiate Shareholders
-    target = new Shareholders(st1, contextMock.getMockInstance());
+    // Instantiate Tokenholders
+    target = new Tokenholders(st1, contextMock.getMockInstance());
   });
 
   describe('Types', () => {

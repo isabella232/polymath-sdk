@@ -11,5 +11,5 @@ export { SimpleSto } from './SimpleSto';
 export { TieredSto } from './TieredSto';
 export { Investment } from './Investment';
 export { Sto } from './Sto';
-export { Shareholder } from './Shareholder';
+export { Tokenholder } from './Tokenholder';
 export { Wallet } from './Wallet';

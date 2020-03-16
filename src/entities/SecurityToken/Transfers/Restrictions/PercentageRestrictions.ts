@@ -117,9 +117,9 @@ export class PercentageRestrictions extends SubModule {
   };
 
   /**
-   * Modify the maximum percentage of the total supply that a single shareholder can own at a given time
+   * Modify the maximum percentage of the total supply that a single tokenholder can own at a given time
    *
-   * @param args.maxHolderPercentage - limit to the percentage a shareholder can own (i.e. `new BigNumber(55.75)` for 55.75%)
+   * @param args.maxHolderPercentage - limit to the percentage a tokenholder can own (i.e. `new BigNumber(55.75)` for 55.75%)
    */
   public modifyMaxHolderPercentage = async (args: { maxHolderPercentage: BigNumber }) => {
     const procedure = new ModifyMaxHolderPercentage(
@@ -133,7 +133,7 @@ export class PercentageRestrictions extends SubModule {
   };
 
   /**
-   * Retrieve the maximum percentage of the total supply that a single shareholder can own
+   * Retrieve the maximum percentage of the total supply that a single tokenholder can own
    * Can be modified with `modifyMaxHolderPercentage`
    */
   public getMaxHolderPercentage = async () => {

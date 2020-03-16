@@ -31,20 +31,20 @@ export const createPushDividendPaymentResolver = (
 };
 
 /**
- * Procedure that forwards a Dividend Distribution's payments to shareholders
+ * Procedure that forwards a Dividend Distribution's payments to tokenholders
  */
 export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureArgs> {
   public type = ProcedureType.PushDividendPayment;
 
   /**
-   * Push dividends to provided shareholder addresses
+   * Push dividends to provided tokenholder addresses
    *
    * Note that this procedure will fail if:
    * - The Security Token doesn't exist
    * - The Dividends Feature hasn't been enabled
    */
   public async prepareTransactions() {
-    const { symbol, dividendIndex, shareholderAddresses } = this.args;
+    const { symbol, dividendIndex, tokenholderAddresses } = this.args;
     const { contractWrappers, factories } = this.context;
 
     try {
@@ -75,26 +75,26 @@ export class PushDividendPayment extends Procedure<PushDividendPaymentProcedureA
       dividendIndex,
       dividendsModule,
     });
-    let { shareholders: shareholderStatuses } = dividend;
+    let { tokenholders: tokenholderStatuses } = dividend;
 
-    if (shareholderAddresses) {
-      shareholderStatuses = shareholderStatuses.filter(
-        status => !!shareholderAddresses.find(address => address === status.address)
+    if (tokenholderAddresses) {
+      tokenholderStatuses = tokenholderStatuses.filter(
+        status => !!tokenholderAddresses.find(address => address === status.address)
       );
     }
 
-    const unpaidShareholders = shareholderStatuses
+    const unpaidTokenholders = tokenholderStatuses
       .filter(status => !status.paymentReceived)
       .map(status => status.address);
 
-    const shareholderAddressChunks = chunk(unpaidShareholders, CHUNK_SIZE);
+    const tokenholderAddressChunks = chunk(unpaidTokenholders, CHUNK_SIZE);
 
-    await P.each(shareholderAddressChunks, async (addresses, index) => {
+    await P.each(tokenholderAddressChunks, async (addresses, index) => {
       await this.addTransaction(dividendsModule!.pushDividendPaymentToAddresses, {
         tag: PolyTransactionTag.PushDividendPayment,
         // Only add resolver to the last transaction
         resolvers:
-          index < shareholderAddressChunks.length - 1
+          index < tokenholderAddressChunks.length - 1
             ? undefined
             : [createPushDividendPaymentResolver(factories, symbol, index)],
       })({

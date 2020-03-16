@@ -10,7 +10,7 @@ import * as contractWrappersModule from '@polymathnetwork/contract-wrappers';
 import * as issueTokensModule from '../IssueTokens';
 import { IssueTokens } from '../IssueTokens';
 import { Procedure } from '../Procedure';
-import * as shareholdersEntityModule from '../../entities/SecurityToken/Shareholders';
+import * as tokenholdersEntityModule from '../../entities/SecurityToken/Tokenholders';
 import * as securityTokenEntityModule from '../../entities/SecurityToken/SecurityToken';
 import { PolymathError } from '../../PolymathError';
 import {
@@ -20,14 +20,14 @@ import {
   ProcedureType,
 } from '../../types';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
-import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
+import * as tokenholderFactoryModule from '../../entities/factories/TokenholderFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import * as moduleWrapperFactoryModule from '../../testUtils/MockedModuleWrapperFactoryModule';
-import { ModifyShareholderData } from '..';
+import { ModifyTokenholderData } from '..';
 import { mockFactories } from '../../testUtils/mockFactories';
-import { Shareholder } from '../../entities';
+import { Tokenholder } from '../../entities';
 import { Factories } from '../../Context';
 
 const securityTokenId = 'ST ID';
@@ -40,7 +40,7 @@ const params: IssueTokensProcedureArgs = {
     {
       address: testAddress3,
       amount: new BigNumber(1),
-      shareholderData: {
+      tokenholderData: {
         canSendAfter: new Date(2030, 1),
         canReceiveAfter: new Date(1980, 1),
         kycExpiry: new Date(2035, 1),
@@ -71,11 +71,11 @@ describe('IssueTokens', () => {
     securityTokenFactoryModule,
     'SecurityTokenFactory'
   );
-  const shareholderFactoryMock = ImportMock.mockClass(
-    shareholderFactoryModule,
-    'ShareholderFactory'
+  const tokenholderFactoryMock = ImportMock.mockClass(
+    tokenholderFactoryModule,
+    'TokenholderFactory'
   );
-  let shareholdersEntityMock: MockManager<shareholdersEntityModule.Shareholders>;
+  let tokenholdersEntityMock: MockManager<tokenholdersEntityModule.Tokenholders>;
 
   let securityTokenEntityMock: MockManager<securityTokenEntityModule.SecurityToken>;
   let securityTokenEntityStaticMock: StaticMockManager<securityTokenEntityModule.SecurityToken>;
@@ -90,7 +90,7 @@ describe('IssueTokens', () => {
       'MockedModuleWrapperFactoryModule'
     );
 
-    shareholdersEntityMock = ImportMock.mockClass(shareholdersEntityModule, 'Shareholders');
+    tokenholdersEntityMock = ImportMock.mockClass(tokenholdersEntityModule, 'Tokenholders');
 
     securityTokenEntityMock = ImportMock.mockClass(securityTokenEntityModule, 'SecurityToken');
     securityTokenEntityStaticMock = ImportMock.mockStaticClass(
@@ -131,13 +131,13 @@ describe('IssueTokens', () => {
         isAccredited: true,
       },
     ];
-    shareholdersEntityMock.mock('getShareholders', shareHolders);
-    securityTokenEntityMock.set('shareholders', shareholdersEntityMock.getMockInstance());
+    tokenholdersEntityMock.mock('getTokenholders', shareHolders);
+    securityTokenEntityMock.set('tokenholders', tokenholdersEntityMock.getMockInstance());
     securityTokenEntityMock.set('uid', securityTokenId);
     securityTokenEntityStaticMock.mock('generateId', 'id');
     securityTokenFactoryMock.mock('fetch', securityTokenEntityMock.getMockInstance());
     factoryMockSetup.securityTokenFactory = securityTokenFactoryMock.getMockInstance();
-    factoryMockSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
+    factoryMockSetup.tokenholderFactory = tokenholderFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
 
     // Instantiate IssueTokens
@@ -155,10 +155,10 @@ describe('IssueTokens', () => {
   });
 
   describe('MintTokens', () => {
-    test('should add the transaction to the queue to issue tokens and add a procedure to modify shareholder data', async () => {
-      const modifyShareholderDataSpy = sinon.spy();
+    test('should add the transaction to the queue to issue tokens and add a procedure to modify tokenholder data', async () => {
+      const modifyTokenholderDataSpy = sinon.spy();
       const addProcedureStub = stub(target, 'addProcedure');
-      addProcedureStub.withArgs(ModifyShareholderData).returns(modifyShareholderDataSpy);
+      addProcedureStub.withArgs(ModifyTokenholderData).returns(modifyTokenholderDataSpy);
 
       const issueMultiArgsStub = sinon.stub();
       issueMultiArgsStub.returns([{}]);
@@ -173,20 +173,20 @@ describe('IssueTokens', () => {
       await target.prepareTransactions();
 
       // Verifications
-      expect(modifyShareholderDataSpy.getCall(0).args[0]).toEqual({
+      expect(modifyTokenholderDataSpy.getCall(0).args[0]).toEqual({
         symbol: params.symbol,
-        shareholderData: [
+        tokenholderData: [
           {
             address: params.issuanceData[0].address,
-            canBuyFromSto: params.issuanceData[0].shareholderData!.canBuyFromSto,
-            canReceiveAfter: params.issuanceData[0].shareholderData!.canReceiveAfter,
-            canSendAfter: params.issuanceData[0].shareholderData!.canSendAfter,
-            isAccredited: params.issuanceData[0].shareholderData!.isAccredited,
-            kycExpiry: params.issuanceData[0].shareholderData!.kycExpiry,
+            canBuyFromSto: params.issuanceData[0].tokenholderData!.canBuyFromSto,
+            canReceiveAfter: params.issuanceData[0].tokenholderData!.canReceiveAfter,
+            canSendAfter: params.issuanceData[0].tokenholderData!.canSendAfter,
+            isAccredited: params.issuanceData[0].tokenholderData!.isAccredited,
+            kycExpiry: params.issuanceData[0].tokenholderData!.kycExpiry,
           },
         ],
       });
-      expect(modifyShareholderDataSpy.callCount).toBe(1);
+      expect(modifyTokenholderDataSpy.callCount).toBe(1);
 
       expect(issueMultiArgsStub.getCall(0).args[0]).toEqual({
         investors: [testAddress3, testAddress],
@@ -199,26 +199,26 @@ describe('IssueTokens', () => {
       ).toEqual(true);
       expect(addTransactionStub.getCall(0).lastArg.tag).toEqual(PolyTransactionTag.IssueMulti);
       expect(addTransactionStub.callCount).toEqual(1);
-      expect(addProcedureStub.getCall(0).calledWithExactly(ModifyShareholderData)).toEqual(true);
+      expect(addProcedureStub.getCall(0).calledWithExactly(ModifyTokenholderData)).toEqual(true);
       expect(addProcedureStub.callCount).toEqual(1);
     });
 
-    test('should return an array of the shareholders for whom tokens were issued', async () => {
-      const shareholderObject = {
+    test('should return an array of the tokenholders for whom tokens were issued', async () => {
+      const tokenholderObject = {
         securityTokenId: params.symbol,
         address: testAddress,
       };
-      const fetchStub = shareholderFactoryMock.mock('fetch', Promise.resolve(shareholderObject));
+      const fetchStub = tokenholderFactoryMock.mock('fetch', Promise.resolve(tokenholderObject));
 
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      expect(resolver.result).toEqual([shareholderObject, shareholderObject]);
+      expect(resolver.result).toEqual([tokenholderObject, tokenholderObject]);
 
       // Verification for fetch
       expect(
         fetchStub.getCall(0).calledWithExactly(
-          Shareholder.generateId({
+          Tokenholder.generateId({
             securityTokenId,
             address: testAddress3,
           })
@@ -226,7 +226,7 @@ describe('IssueTokens', () => {
       ).toEqual(true);
       expect(
         fetchStub.getCall(1).calledWithExactly(
-          Shareholder.generateId({
+          Tokenholder.generateId({
             securityTokenId,
             address: testAddress,
           })

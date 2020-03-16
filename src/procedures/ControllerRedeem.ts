@@ -7,7 +7,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
-import { SecurityToken, Shareholder } from '../entities';
+import { SecurityToken, Tokenholder } from '../entities';
 import { Factories } from '../Context';
 
 /**
@@ -23,13 +23,13 @@ export const createRefreshSecurityTokenResolver = (
 /**
  * @hidden
  */
-export const createRefreshShareholdersResolver = (
+export const createRefreshTokenholdersResolver = (
   factories: Factories,
   symbol: string,
   from: string
 ) => async () => {
-  return factories.shareholderFactory.refresh(
-    Shareholder.generateId({
+  return factories.tokenholderFactory.refresh(
+    Tokenholder.generateId({
       securityTokenId: SecurityToken.generateId({ symbol }),
       address: from,
     })
@@ -105,7 +105,7 @@ export class ControllerRedeem extends Procedure<ControllerRedeemProcedureArgs> {
     await this.addTransaction(securityToken.controllerRedeem, {
       tag: PolyTransactionTag.ControllerRedeem,
       resolvers: [
-        createRefreshShareholdersResolver(factories, symbol, from),
+        createRefreshTokenholdersResolver(factories, symbol, from),
         createRefreshSecurityTokenResolver(factories, symbol),
       ],
     })({ from, value: amount, data, operatorData: reason });

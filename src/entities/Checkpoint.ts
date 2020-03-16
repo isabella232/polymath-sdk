@@ -2,7 +2,7 @@ import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { Entity } from './Entity';
 import { serialize, unserialize } from '../utils';
 import { DividendDistribution } from './DividendDistribution';
-import { ShareholderBalance, ErrorCode } from '../types';
+import { TokenholderBalance, ErrorCode } from '../types';
 import { PolymathError } from '../PolymathError';
 
 /**
@@ -41,15 +41,15 @@ export interface Params {
    */
   securityTokenSymbol: string;
   /**
-   * shareholder balances at this specific Checkpoint
+   * tokenholder balances at this specific Checkpoint
    */
-  shareholderBalances: ShareholderBalance[];
+  tokenholderBalances: TokenholderBalance[];
   totalSupply: BigNumber;
   createdAt: Date;
 }
 
 /**
- * Represents a snapshot of the Security Token's supply and Shareholder balances at a certain point in time
+ * Represents a snapshot of the Security Token's supply and Tokenholder balances at a certain point in time
  */
 export class Checkpoint extends Entity<Params> {
   /**
@@ -97,9 +97,9 @@ export class Checkpoint extends Entity<Params> {
   public index: number;
 
   /**
-   * shareholder balances at this specific checkpoint
+   * tokenholder balances at this specific checkpoint
    */
-  public shareholderBalances: ShareholderBalance[];
+  public tokenholderBalances: TokenholderBalance[];
 
   public totalSupply: BigNumber;
 
@@ -116,7 +116,7 @@ export class Checkpoint extends Entity<Params> {
       securityTokenSymbol,
       securityTokenId,
       index,
-      shareholderBalances,
+      tokenholderBalances,
       totalSupply,
       createdAt,
     } = params;
@@ -125,7 +125,7 @@ export class Checkpoint extends Entity<Params> {
     this.securityTokenSymbol = securityTokenSymbol;
     this.securityTokenId = securityTokenId;
     this.index = index;
-    this.shareholderBalances = shareholderBalances;
+    this.tokenholderBalances = tokenholderBalances;
     this.totalSupply = totalSupply;
     this.createdAt = createdAt;
     this.uid = Checkpoint.generateId({ securityTokenId, index });
@@ -141,7 +141,7 @@ export class Checkpoint extends Entity<Params> {
       securityTokenSymbol,
       securityTokenId,
       index,
-      shareholderBalances,
+      tokenholderBalances,
       totalSupply,
       createdAt,
     } = this;
@@ -152,7 +152,7 @@ export class Checkpoint extends Entity<Params> {
       securityTokenSymbol,
       securityTokenId,
       index,
-      shareholderBalances,
+      tokenholderBalances,
       totalSupply,
       createdAt,
     };
@@ -165,7 +165,7 @@ export class Checkpoint extends Entity<Params> {
     const {
       dividendDistributions,
       securityTokenSymbol,
-      shareholderBalances,
+      tokenholderBalances,
       totalSupply,
       createdAt,
     } = params;
@@ -178,8 +178,8 @@ export class Checkpoint extends Entity<Params> {
       this.securityTokenSymbol = securityTokenSymbol;
     }
 
-    if (shareholderBalances) {
-      this.shareholderBalances = shareholderBalances;
+    if (tokenholderBalances) {
+      this.tokenholderBalances = tokenholderBalances;
     }
 
     if (totalSupply) {

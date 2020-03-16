@@ -26,22 +26,22 @@ import { EnableCountTransferManager } from '../../procedures/EnableCountTransfer
  */
 export interface FeatureStatuses {
   [Feature.Permissions]: boolean;
-  [Feature.Shareholders]: boolean;
+  [Feature.Tokenholders]: boolean;
   [Feature.Dividends]: boolean;
-  [Feature.ShareholderCountRestrictions]: boolean;
+  [Feature.TokenholderCountRestrictions]: boolean;
   [Feature.PercentageOwnershipRestrictions]: boolean;
 }
 
 type EnableOpts =
   | EnableErc20DividendsOpts
-  | EnableShareholderCountRestrictionsOpts
+  | EnableTokenholderCountRestrictionsOpts
   | EnablePercentageOwnershipRestrictionsOpts;
 
 export interface EnableErc20DividendsOpts {
   storageWalletAddress: string;
 }
 
-export interface EnableShareholderCountRestrictionsOpts {
+export interface EnableTokenholderCountRestrictionsOpts {
   maxHolderCount: number;
 }
 
@@ -54,15 +54,15 @@ export interface Enable {
   (args: { feature: Feature.Permissions }): Promise<
     TransactionQueue<EnableGeneralPermissionManagerProcedureArgs>
   >;
-  (args: { feature: Feature.Shareholders }): Promise<
+  (args: { feature: Feature.Tokenholders }): Promise<
     TransactionQueue<EnableGeneralTransferManagerProcedureArgs>
   >;
   (args: { feature: Feature.Dividends }, opts: EnableErc20DividendsOpts): Promise<
     TransactionQueue<EnableDividendManagerProcedureArgs>
   >;
   (
-    args: { feature: Feature.ShareholderCountRestrictions },
-    opts: EnableShareholderCountRestrictionsOpts
+    args: { feature: Feature.TokenholderCountRestrictions },
+    opts: EnableTokenholderCountRestrictionsOpts
   ): Promise<TransactionQueue<EnableCountTransferManagerProcedureArgs>>;
   (
     args: { feature: Feature.PercentageOwnershipRestrictions },
@@ -79,9 +79,9 @@ export class Features extends SubModule {
    */
   public list: Feature[] = [
     Feature.Permissions,
-    Feature.Shareholders,
+    Feature.Tokenholders,
     Feature.Dividends,
-    Feature.ShareholderCountRestrictions,
+    Feature.TokenholderCountRestrictions,
     Feature.PercentageOwnershipRestrictions,
   ];
 
@@ -113,7 +113,7 @@ export class Features extends SubModule {
 
     const [
       permissionsEnabled,
-      shareholdersEnabled,
+      tokenholdersEnabled,
       dividendsEnabled,
       countTransferManagerEnabled,
       percentageTransferManagerEnabled,
@@ -121,9 +121,9 @@ export class Features extends SubModule {
 
     const result: FeatureStatuses = {
       [Feature.Permissions]: permissionsEnabled,
-      [Feature.Shareholders]: shareholdersEnabled,
+      [Feature.Tokenholders]: tokenholdersEnabled,
       [Feature.Dividends]: dividendsEnabled,
-      [Feature.ShareholderCountRestrictions]: countTransferManagerEnabled,
+      [Feature.TokenholderCountRestrictions]: countTransferManagerEnabled,
       [Feature.PercentageOwnershipRestrictions]: percentageTransferManagerEnabled,
     };
 
@@ -163,7 +163,7 @@ export class Features extends SubModule {
         );
         break;
       }
-      case Feature.Shareholders: {
+      case Feature.Tokenholders: {
         procedure = new EnableGeneralTransferManager(
           {
             symbol,
@@ -180,9 +180,9 @@ export class Features extends SubModule {
         );
         break;
       }
-      case Feature.ShareholderCountRestrictions: {
+      case Feature.TokenholderCountRestrictions: {
         procedure = new EnableCountTransferManager(
-          { symbol, ...(opts as EnableShareholderCountRestrictionsOpts) },
+          { symbol, ...(opts as EnableTokenholderCountRestrictionsOpts) },
           this.context
         );
         break;
@@ -243,13 +243,13 @@ export class Features extends SubModule {
       case Feature.Permissions:
         moduleName = ModuleName.GeneralPermissionManager;
         break;
-      case Feature.Shareholders:
+      case Feature.Tokenholders:
         moduleName = ModuleName.GeneralTransferManager;
         break;
       case Feature.Dividends:
         moduleName = ModuleName.ERC20DividendCheckpoint;
         break;
-      case Feature.ShareholderCountRestrictions:
+      case Feature.TokenholderCountRestrictions:
         moduleName = ModuleName.CountTransferManager;
         break;
       case Feature.PercentageOwnershipRestrictions:

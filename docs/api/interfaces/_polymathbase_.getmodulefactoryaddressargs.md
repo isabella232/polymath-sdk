@@ -19,7 +19,7 @@ Arguments for [getModuleFactoryAddress](../classes/_polymathbase_.polymathbase.m
 
 • **moduleName**: *ModuleName*
 
-*Defined in [src/PolymathBase.ts:245](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/PolymathBase.ts#L245)*
+*Defined in [src/PolymathBase.ts:245](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L245)*
 
 name of Security Token module
 
@@ -29,6 +29,6 @@ ___
 
 • **tokenAddress**: *string*
 
-*Defined in [src/PolymathBase.ts:249](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/PolymathBase.ts#L249)*
+*Defined in [src/PolymathBase.ts:249](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L249)*
 
 ethereum address of Module Factory

@@ -7,7 +7,7 @@ import * as dividendDistributionFactoryModule from '../entities/factories/Divide
 import * as erc20TokenBalanceFactoryModule from '../entities/factories/Erc20TokenBalanceFactory';
 import * as investmentFactoryModule from '../entities/factories/InvestmentFactory';
 import * as securityTokenReservationModule from '../entities/factories/SecurityTokenReservationFactory';
-import * as shareholderFactoryModule from '../entities/factories/ShareholderFactory';
+import * as tokenholderFactoryModule from '../entities/factories/TokenholderFactory';
 import * as tieredStoFactoryModule from '../entities/factories/TieredStoFactory';
 import * as taxWithholdingFactoryModule from '../entities/factories/TaxWithholdingFactory';
 
@@ -24,7 +24,7 @@ let investmentFactoryMock: MockManager<investmentFactoryModule.InvestmentFactory
 let securityTokenReservationFactoryMock: MockManager<
   securityTokenReservationModule.SecurityTokenReservationFactory
 >;
-let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
+let tokenholderFactoryMock: MockManager<tokenholderFactoryModule.TokenholderFactory>;
 let tieredStoFactoryMock: MockManager<tieredStoFactoryModule.TieredStoFactory>;
 let taxWithholdingFactoryMock: MockManager<taxWithholdingFactoryModule.TaxWithholdingFactory>;
 
@@ -51,7 +51,7 @@ export const mockFactories = (): Factories => {
     securityTokenReservationModule,
     'SecurityTokenReservationFactory'
   );
-  shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
+  tokenholderFactoryMock = ImportMock.mockClass(tokenholderFactoryModule, 'TokenholderFactory');
   tieredStoFactoryMock = ImportMock.mockClass(tieredStoFactoryModule, 'TieredStoFactory');
   taxWithholdingFactoryMock = ImportMock.mockClass(
     taxWithholdingFactoryModule,
@@ -67,7 +67,7 @@ export const mockFactories = (): Factories => {
     tieredStoFactory: tieredStoFactoryMock.getMockInstance(),
     dividendDistributionFactory: dividendDistributionFactoryMock.getMockInstance(),
     checkpointFactory: checkpointFactoryMock.getMockInstance(),
-    shareholderFactory: shareholderFactoryMock.getMockInstance(),
+    tokenholderFactory: tokenholderFactoryMock.getMockInstance(),
     taxWithholdingFactory: taxWithholdingFactoryMock.getMockInstance(),
   };
 };

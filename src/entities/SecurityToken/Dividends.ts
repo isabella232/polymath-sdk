@@ -34,8 +34,8 @@ export class Dividends extends SubModule {
    * @param args.expiryDate - date up to which dividends can be paid/collected
    * @param args.amount - amount to be distributed
    * @param args.name - human readable name of the distribution
-   * @param args.excludedAddresses - shareholder addresses that will be excluded from the distribution (optional)
-   * @param args.taxWithholdings - array that specifies how much to withhold from each shareholder for tax purposes
+   * @param args.excludedAddresses - tokenholder addresses that will be excluded from the distribution (optional)
+   * @param args.taxWithholdings - array that specifies how much to withhold from each tokenholder for tax purposes
    */
   public createPolyDistribution = async (args: {
     checkpointId: string;
@@ -73,8 +73,8 @@ export class Dividends extends SubModule {
    * @param args.erc20Address - address of the ERC20 token that will be used as currency
    * @param args.amount - amount to be distributed
    * @param args.name - human readable name of the distribution
-   * @param args.excludedAddresses - shareholder addresses that will be excluded from the distribution (optional)
-   * @param args.taxWithholdings - array that specifies how much to withhold from each shareholder for tax purposes
+   * @param args.excludedAddresses - tokenholder addresses that will be excluded from the distribution (optional)
+   * @param args.taxWithholdings - array that specifies how much to withhold from each tokenholder for tax purposes
    */
   public createErc20Distribution = async (args: {
     checkpointId: string;
@@ -104,21 +104,21 @@ export class Dividends extends SubModule {
   /**
    * Set default tax withtholding list for a type of dividends
    *
-   * @param args.taxWithholdings - array that specifies how much to withhold from each shareholder for tax purposes
+   * @param args.taxWithholdings - array that specifies how much to withhold from each tokenholder for tax purposes
    */
   public modifyTaxWithholdingList = async (args: { taxWithholdings: TaxWithholdingEntry[] }) => {
     const { taxWithholdings, ...rest } = args;
     const { symbol } = this.securityToken;
-    const shareholderAddresses: string[] = [];
+    const tokenholderAddresses: string[] = [];
     const percentages: number[] = [];
     taxWithholdings.forEach(({ address, percentage }) => {
-      shareholderAddresses.push(address);
+      tokenholderAddresses.push(address);
       percentages.push(percentage);
     });
     const procedure = new UpdateDividendsTaxWithholdingList(
       {
         symbol,
-        shareholderAddresses,
+        tokenholderAddresses,
         percentages,
         ...rest,
       },
@@ -147,15 +147,15 @@ export class Dividends extends SubModule {
   /**
    * Set default exclusion list for a type of dividends. Addresses on this list won't be considered for dividend distribution. This operation overrides the previous default exclusion list
    *
-   * @param args.shareholderAddresses - array of shareholder addresses to be excluded from dividends
+   * @param args.tokenholderAddresses - array of tokenholder addresses to be excluded from dividends
    */
-  public modifyDefaultExclusionList = async (args: { shareholderAddresses: string[] }) => {
-    const { shareholderAddresses, ...rest } = args;
+  public modifyDefaultExclusionList = async (args: { tokenholderAddresses: string[] }) => {
+    const { tokenholderAddresses, ...rest } = args;
     const { symbol } = this.securityToken;
     const procedure = new ModifyDividendsDefaultExclusionList(
       {
         symbol,
-        shareholderAddresses,
+        tokenholderAddresses,
         ...rest,
       },
       this.context
@@ -205,7 +205,7 @@ export class Dividends extends SubModule {
     return checkpointData.map(({ investor, withheld }) =>
       factories.taxWithholdingFactory.create(
         TaxWithholding.generateId({
-          shareholderAddress: investor,
+          tokenholderAddress: investor,
           securityTokenId,
         }),
         {

@@ -11,11 +11,11 @@ import {
   PolyTransactionTag,
   ErrorCode,
   IssueTokensProcedureArgs,
-  ShareholderDataEntry,
+  TokenholderDataEntry,
 } from '../types';
 import { PolymathError } from '../PolymathError';
-import { Shareholder, SecurityToken } from '../entities';
-import { ModifyShareholderData } from './ModifyShareholderData';
+import { Tokenholder, SecurityToken } from '../entities';
+import { ModifyTokenholderData } from './ModifyTokenholderData';
 import { Factories } from '../Context';
 import { ZERO_ADDRESS } from '../utils/constants';
 
@@ -32,7 +32,7 @@ export const createRefreshSecurityTokenFactoryResolver = (
 /**
  * Procedure that issues tokens to the specified addresses. KYC data for those addresses must already exist or otherwise be provided in this procedure
  */
-export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder[]> {
+export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Tokenholder[]> {
   public type = ProcedureType.IssueTokens;
 
   /**
@@ -63,24 +63,24 @@ export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder
 
     const investors: string[] = [];
     const values: BigNumber[] = [];
-    const updatedShareholderData: ShareholderDataEntry[] = [];
+    const updatedTokenholderData: TokenholderDataEntry[] = [];
 
-    issuanceData.forEach(({ address, amount, shareholderData }) => {
+    issuanceData.forEach(({ address, amount, tokenholderData }) => {
       investors.push(address);
       values.push(amount);
 
-      if (shareholderData) {
-        updatedShareholderData.push({
+      if (tokenholderData) {
+        updatedTokenholderData.push({
           address,
-          ...shareholderData,
+          ...tokenholderData,
         });
       }
     });
 
-    if (updatedShareholderData.length > 0) {
-      await this.addProcedure(ModifyShareholderData)({
+    if (updatedTokenholderData.length > 0) {
+      await this.addProcedure(ModifyTokenholderData)({
         symbol,
-        shareholderData: updatedShareholderData,
+        tokenholderData: updatedTokenholderData,
       });
     } else {
       const invalidAddresses: string[] = [];
@@ -114,27 +114,27 @@ export class IssueTokens extends Procedure<IssueTokensProcedureArgs, Shareholder
 
     const { uid: securityTokenId } = securityTokenEntity;
 
-    const [newShareholders] = await this.addTransaction<
+    const [newTokenholders] = await this.addTransaction<
       TransactionParams.SecurityToken.IssueMulti,
-      [Shareholder[], void]
+      [Tokenholder[], void]
     >(securityToken.issueMulti, {
       tag: PolyTransactionTag.IssueMulti,
       resolvers: [
         async () => {
-          const fetchingShareholders = investors.map(address => {
-            return factories.shareholderFactory.fetch(
-              Shareholder.generateId({
+          const fetchingTokenholders = investors.map(address => {
+            return factories.tokenholderFactory.fetch(
+              Tokenholder.generateId({
                 securityTokenId,
                 address,
               })
             );
           });
-          return Promise.all(fetchingShareholders);
+          return Promise.all(fetchingTokenholders);
         },
         createRefreshSecurityTokenFactoryResolver(factories, securityTokenId),
       ],
     })({ investors, values });
 
-    return newShareholders;
+    return newTokenholders;
   }
 }

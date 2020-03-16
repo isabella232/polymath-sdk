@@ -18,7 +18,7 @@ import { SecurityToken, DividendDistribution } from '../../entities';
 const params = {
   symbol: 'TEST1',
   dividendIndex: 0,
-  shareholderAddresses: ['0x01', '0x02'],
+  tokenholderAddresses: ['0x01', '0x02'],
 };
 
 describe('PushDividendPayment', () => {
@@ -99,7 +99,7 @@ describe('PushDividendPayment', () => {
       wrappersMock.mock(
         'getDividend',
         Promise.resolve({
-          shareholders: [
+          tokenholders: [
             { address: '0x01', paymentReceived: false },
             { address: '0x02', paymentReceived: false },
             { address: '0x03', paymentReceived: true },
@@ -129,7 +129,7 @@ describe('PushDividendPayment', () => {
       // Verifications
       expect(pushDividendPaymentToAddressesArgsSpy.getCall(0).args[0]).toEqual({
         dividendIndex: params.dividendIndex,
-        payees: params.shareholderAddresses,
+        payees: params.tokenholderAddresses,
       });
       expect(pushDividendPaymentToAddressesArgsSpy.callCount).toEqual(1);
 
@@ -144,19 +144,19 @@ describe('PushDividendPayment', () => {
       expect(addTransactionStub.callCount).toEqual(1);
     });
 
-    test('should add a transaction to push a dividend payment with undefined shareholderAddresses parameter', async () => {
-      // Instantiate PushDividendPayment with undefined shareholder address and ERC20 dividend type
+    test('should add a transaction to push a dividend payment with undefined tokenholderAddresses parameter', async () => {
+      // Instantiate PushDividendPayment with undefined tokenholder address and ERC20 dividend type
       target = new PushDividendPayment(
         {
           ...params,
-          shareholderAddresses: undefined,
+          tokenholderAddresses: undefined,
         },
         contextMock.getMockInstance()
       );
 
-      const shareholders = [];
+      const tokenholders = [];
       for (let i = 0; i < 105; i++) {
-        shareholders.push({
+        tokenholders.push({
           address: `0x${Math.floor(Math.random() * 999 + 1)}`,
           paymentReceived: false,
         });
@@ -165,7 +165,7 @@ describe('PushDividendPayment', () => {
       wrappersMock.mock(
         'getDividend',
         Promise.resolve({
-          shareholders,
+          tokenholders,
         })
       );
 
@@ -191,17 +191,17 @@ describe('PushDividendPayment', () => {
       // Verifications (105 addresses to be submitted in 2 transactions)
       expect(pushDividendPaymentToAddressesArgsSpy.getCall(0).args[0]).toEqual({
         dividendIndex: params.dividendIndex,
-        payees: shareholders
-          .map(shareholder => {
-            return shareholder.address;
+        payees: tokenholders
+          .map(tokenholder => {
+            return tokenholder.address;
           })
           .slice(0, 100),
       });
       expect(pushDividendPaymentToAddressesArgsSpy.getCall(1).args[0]).toEqual({
         dividendIndex: params.dividendIndex,
-        payees: shareholders
-          .map(shareholder => {
-            return shareholder.address;
+        payees: tokenholders
+          .map(tokenholder => {
+            return tokenholder.address;
           })
           .slice(100, 105),
       });

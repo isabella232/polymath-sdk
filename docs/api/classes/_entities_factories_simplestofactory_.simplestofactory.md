@@ -36,7 +36,7 @@ Factory generates information for a simple sto entity
 
 *Overrides [Factory](_entities_factories_factory_.factory.md).[constructor](_entities_factories_factory_.factory.md#constructor)*
 
-*Defined in [src/entities/factories/SimpleStoFactory.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/factories/SimpleStoFactory.ts#L79)*
+*Defined in [src/entities/factories/SimpleStoFactory.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/SimpleStoFactory.ts#L79)*
 
 Create an instance of the simple sto factory
 
@@ -56,7 +56,7 @@ Name | Type |
 
 *Inherited from [Factory](_entities_factories_factory_.factory.md).[Entity](_entities_factories_factory_.factory.md#entity)*
 
-*Defined in [src/entities/factories/Factory.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/factories/Factory.ts#L37)*
+*Defined in [src/entities/factories/Factory.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/Factory.ts#L37)*
 
 entity class that this Factory is in charge of generating and caching
 
@@ -68,7 +68,7 @@ ___
 
 *Inherited from [Factory](_entities_factories_factory_.factory.md).[cache](_entities_factories_factory_.factory.md#cache)*
 
-*Defined in [src/entities/factories/Factory.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/factories/Factory.ts#L28)*
+*Defined in [src/entities/factories/Factory.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/Factory.ts#L28)*
 
 #### Type declaration:
 
@@ -82,7 +82,7 @@ ___
 
 *Inherited from [Factory](_entities_factories_factory_.factory.md).[context](_entities_factories_factory_.factory.md#context)*
 
-*Defined in [src/entities/factories/Factory.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/factories/Factory.ts#L32)*
+*Defined in [src/entities/factories/Factory.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/Factory.ts#L32)*
 
 ## Methods
 
@@ -92,7 +92,7 @@ ___
 
 *Inherited from [Factory](_entities_factories_factory_.factory.md).[create](_entities_factories_factory_.factory.md#create)*
 
-*Defined in [src/entities/factories/Factory.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/factories/Factory.ts#L87)*
+*Defined in [src/entities/factories/Factory.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/Factory.ts#L87)*
 
 Get an entity from the cache. Creates it if it isn't cached, updates it if it is
 
@@ -113,7 +113,7 @@ ___
 
 *Inherited from [Factory](_entities_factories_factory_.factory.md).[fetch](_entities_factories_factory_.factory.md#fetch)*
 
-*Defined in [src/entities/factories/Factory.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/factories/Factory.ts#L57)*
+*Defined in [src/entities/factories/Factory.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/Factory.ts#L57)*
 
 Get an entity from the cache. Fetches the necessary data to create it if it isn't cached, refreshes it if it is
 
@@ -133,7 +133,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/entities/factories/SimpleStoFactory.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/factories/SimpleStoFactory.ts#L12)*
+*Defined in [src/entities/factories/SimpleStoFactory.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/SimpleStoFactory.ts#L12)*
 
 **Parameters:**
 
@@ -151,7 +151,7 @@ ___
 
 *Inherited from [Factory](_entities_factories_factory_.factory.md).[refresh](_entities_factories_factory_.factory.md#refresh)*
 
-*Defined in [src/entities/factories/Factory.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/factories/Factory.ts#L108)*
+*Defined in [src/entities/factories/Factory.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/Factory.ts#L108)*
 
 Fetch the data for an entity and updates its properties
 
@@ -171,7 +171,7 @@ ___
 
 *Inherited from [Factory](_entities_factories_factory_.factory.md).[update](_entities_factories_factory_.factory.md#update)*
 
-*Defined in [src/entities/factories/Factory.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/factories/Factory.ts#L126)*
+*Defined in [src/entities/factories/Factory.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/Factory.ts#L126)*
 
 Update an entity's properties in place
 

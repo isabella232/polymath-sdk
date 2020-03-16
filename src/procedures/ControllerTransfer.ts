@@ -7,7 +7,7 @@ import {
 } from '../types';
 import { PolymathError } from '../PolymathError';
 import { isValidAddress } from '../utils';
-import { SecurityToken, Shareholder } from '../entities';
+import { SecurityToken, Tokenholder } from '../entities';
 import { Factories } from '../Context';
 
 /**
@@ -19,15 +19,15 @@ export const createControllerTransferResolver = (
   from: string,
   to: string
 ) => async () => {
-  const refreshingFrom = factories.shareholderFactory.refresh(
-    Shareholder.generateId({
+  const refreshingFrom = factories.tokenholderFactory.refresh(
+    Tokenholder.generateId({
       securityTokenId: SecurityToken.generateId({ symbol }),
       address: from,
     })
   );
 
-  const refreshingTo = factories.shareholderFactory.refresh(
-    Shareholder.generateId({
+  const refreshingTo = factories.tokenholderFactory.refresh(
+    Tokenholder.generateId({
       securityTokenId: SecurityToken.generateId({ symbol }),
       address: to,
     })

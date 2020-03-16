@@ -13,7 +13,7 @@ import { PolymathError } from '../PolymathError';
 const CHUNK_SIZE = 200;
 
 /**
- * Procedure that modifies the list of shareholders which are excluded from receiving dividend payments
+ * Procedure that modifies the list of tokenholders which are excluded from receiving dividend payments
  */
 export class ModifyDividendsDefaultExclusionList extends Procedure<
   ModifyDividendsDefaultExclusionListProcedureArgs
@@ -26,7 +26,7 @@ export class ModifyDividendsDefaultExclusionList extends Procedure<
    * Note that this procedure will fail if the Dividends Feature is not enabled
    */
   public async prepareTransactions() {
-    const { symbol, shareholderAddresses: investors } = this.args;
+    const { symbol, tokenholderAddresses: investors } = this.args;
     const { contractWrappers } = this.context;
 
     try {
@@ -50,9 +50,9 @@ export class ModifyDividendsDefaultExclusionList extends Procedure<
       });
     }
 
-    const shareholderAddressChunks = chunk(investors, CHUNK_SIZE);
+    const tokenholderAddressChunks = chunk(investors, CHUNK_SIZE);
 
-    await P.each(shareholderAddressChunks, async addresses => {
+    await P.each(tokenholderAddressChunks, async addresses => {
       await this.addTransaction(dividendsModule!.setDefaultExcluded, {
         tag: PolyTransactionTag.SetDefaultExcluded,
       })({

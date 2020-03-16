@@ -19,10 +19,10 @@ import {
   ProcedureType,
 } from '../../types';
 import { mockFactories } from '../../testUtils/mockFactories';
-import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
+import * as tokenholderFactoryModule from '../../entities/factories/TokenholderFactory';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import { Factories } from '../../Context';
-import { SecurityToken, Shareholder } from '../../entities';
+import { SecurityToken, Tokenholder } from '../../entities';
 
 const params: ControllerRedeemProcedureArgs = {
   symbol: 'TEST1',
@@ -39,7 +39,7 @@ describe('ControllerRedeem', () => {
 
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   let securityTokenMock: MockManager<contractWrappersModule.SecurityToken_3_0_0>;
-  let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
+  let tokenholderFactoryMock: MockManager<tokenholderFactoryModule.TokenholderFactory>;
   let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
   let factoriesMockedSetup: Factories;
 
@@ -61,13 +61,13 @@ describe('ControllerRedeem', () => {
 
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
-    shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
+    tokenholderFactoryMock = ImportMock.mockClass(tokenholderFactoryModule, 'TokenholderFactory');
     securityTokenFactoryMock = ImportMock.mockClass(
       securityTokenFactoryModule,
       'SecurityTokenFactory'
     );
     factoriesMockedSetup = mockFactories();
-    factoriesMockedSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
+    factoriesMockedSetup.tokenholderFactory = tokenholderFactoryMock.getMockInstance();
     factoriesMockedSetup.securityTokenFactory = securityTokenFactoryMock.getMockInstance();
     contextMock.set('factories', factoriesMockedSetup);
 
@@ -169,16 +169,16 @@ describe('ControllerRedeem', () => {
   });
 
   test('should successfully resolve controller redeem', async () => {
-    const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve());
+    const refreshStub = tokenholderFactoryMock.mock('refresh', Promise.resolve());
     const securityTokenId = SecurityToken.generateId({ symbol: params.symbol });
-    const resolverValue = await controllerRedeemModule.createRefreshShareholdersResolver(
+    const resolverValue = await controllerRedeemModule.createRefreshTokenholdersResolver(
       factoriesMockedSetup,
       params.symbol,
       params.from
     )();
     expect(
       refreshStub.getCall(0).calledWithExactly(
-        Shareholder.generateId({
+        Tokenholder.generateId({
           securityTokenId,
           address: params.from,
         })

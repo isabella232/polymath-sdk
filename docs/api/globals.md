@@ -1,4 +1,4 @@
-# @polymathnetwork/sdk - v2.0.1-beta.120
+# @polymathnetwork/sdk - v2.0.1-beta.123
 
 ## Index
 
@@ -26,8 +26,8 @@
 * ["entities/SecurityToken/Issuance/index"](modules/_entities_securitytoken_issuance_index_.md)
 * ["entities/SecurityToken/Permissions"](modules/_entities_securitytoken_permissions_.md)
 * ["entities/SecurityToken/SecurityToken"](modules/_entities_securitytoken_securitytoken_.md)
-* ["entities/SecurityToken/Shareholders"](modules/_entities_securitytoken_shareholders_.md)
 * ["entities/SecurityToken/SubModule"](modules/_entities_securitytoken_submodule_.md)
+* ["entities/SecurityToken/Tokenholders"](modules/_entities_securitytoken_tokenholders_.md)
 * ["entities/SecurityToken/Transfers/Restrictions/CountRestrictions"](modules/_entities_securitytoken_transfers_restrictions_countrestrictions_.md)
 * ["entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions"](modules/_entities_securitytoken_transfers_restrictions_percentagerestrictions_.md)
 * ["entities/SecurityToken/Transfers/Restrictions/Restrictions"](modules/_entities_securitytoken_transfers_restrictions_restrictions_.md)
@@ -36,11 +36,11 @@
 * ["entities/SecurityToken/Transfers/index"](modules/_entities_securitytoken_transfers_index_.md)
 * ["entities/SecurityToken/index"](modules/_entities_securitytoken_index_.md)
 * ["entities/SecurityTokenReservation"](modules/_entities_securitytokenreservation_.md)
-* ["entities/Shareholder"](modules/_entities_shareholder_.md)
 * ["entities/SimpleSto"](modules/_entities_simplesto_.md)
 * ["entities/Sto"](modules/_entities_sto_.md)
 * ["entities/TaxWithholding"](modules/_entities_taxwithholding_.md)
 * ["entities/TieredSto"](modules/_entities_tieredsto_.md)
+* ["entities/Tokenholder"](modules/_entities_tokenholder_.md)
 * ["entities/TransactionQueue"](modules/_entities_transactionqueue_.md)
 * ["entities/Wallet"](modules/_entities_wallet_.md)
 * ["entities/factories/CheckpointFactory"](modules/_entities_factories_checkpointfactory_.md)
@@ -50,10 +50,10 @@
 * ["entities/factories/InvestmentFactory"](modules/_entities_factories_investmentfactory_.md)
 * ["entities/factories/SecurityTokenFactory"](modules/_entities_factories_securitytokenfactory_.md)
 * ["entities/factories/SecurityTokenReservationFactory"](modules/_entities_factories_securitytokenreservationfactory_.md)
-* ["entities/factories/ShareholderFactory"](modules/_entities_factories_shareholderfactory_.md)
 * ["entities/factories/SimpleStoFactory"](modules/_entities_factories_simplestofactory_.md)
 * ["entities/factories/TaxWithholdingFactory"](modules/_entities_factories_taxwithholdingfactory_.md)
 * ["entities/factories/TieredStoFactory"](modules/_entities_factories_tieredstofactory_.md)
+* ["entities/factories/TokenholderFactory"](modules/_entities_factories_tokenholderfactory_.md)
 * ["entities/factories/WalletFactory"](modules/_entities_factories_walletfactory_.md)
 * ["entities/factories/index"](modules/_entities_factories_index_.md)
 * ["entities/index"](modules/_entities_index_.md)
@@ -84,8 +84,8 @@
 * ["procedures/ModifyMaxHolderCount"](modules/_procedures_modifymaxholdercount_.md)
 * ["procedures/ModifyMaxHolderPercentage"](modules/_procedures_modifymaxholderpercentage_.md)
 * ["procedures/ModifyPercentageExemptions"](modules/_procedures_modifypercentageexemptions_.md)
-* ["procedures/ModifyShareholderData"](modules/_procedures_modifyshareholderdata_.md)
 * ["procedures/ModifyTieredStoData"](modules/_procedures_modifytieredstodata_.md)
+* ["procedures/ModifyTokenholderData"](modules/_procedures_modifytokenholderdata_.md)
 * ["procedures/Procedure"](modules/_procedures_procedure_.md)
 * ["procedures/PullDividendPayment"](modules/_procedures_pulldividendpayment_.md)
 * ["procedures/PushDividendPayment"](modules/_procedures_pushdividendpayment_.md)

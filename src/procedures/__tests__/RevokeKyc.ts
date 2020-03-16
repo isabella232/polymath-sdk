@@ -8,17 +8,17 @@ import { cloneDeep } from 'lodash';
 import { RevokeKyc } from '../../procedures/RevokeKyc';
 import { Procedure } from '../../procedures/Procedure';
 import { ErrorCode, PolyTransactionTag, ProcedureType, RevokeKycProcedureArgs } from '../../types';
-import * as shareholderFactoryModule from '../../entities/factories/ShareholderFactory';
+import * as tokenholderFactoryModule from '../../entities/factories/TokenholderFactory';
 import * as securityTokenFactoryModule from '../../entities/factories/SecurityTokenFactory';
 import * as contextModule from '../../Context';
 import * as wrappersModule from '../../PolymathBase';
 import * as tokenFactoryModule from '../../testUtils/MockedTokenFactoryModule';
 import { mockFactories } from '../../testUtils/mockFactories';
-import * as shareholdersEntityModule from '../../entities/SecurityToken/Shareholders';
+import * as tokenholdersEntityModule from '../../entities/SecurityToken/Tokenholders';
 import * as securityTokenEntityModule from '../../entities/SecurityToken/SecurityToken';
 import { SecurityToken } from '../../entities/SecurityToken/SecurityToken';
 import { PolymathError } from '../../PolymathError';
-import { Shareholder } from '../../entities';
+import { Tokenholder } from '../../entities';
 
 const testAddress = '0x6666666666666666666666666666666666666666';
 const testAddress2 = '0x9999999999999999999999999999999999999999';
@@ -27,11 +27,11 @@ const zeroDate = new Date(0);
 
 const params: RevokeKycProcedureArgs = {
   symbol: 'TEST1',
-  shareholderAddresses: [testAddress, testAddress2],
+  tokenholderAddresses: [testAddress, testAddress2],
 };
 
-const oldShareholdersData: Shareholder[] = [
-  new Shareholder({
+const oldTokenholdersData: Tokenholder[] = [
+  new Tokenholder({
     address: testAddress,
     canSendAfter: new Date(1980, 1),
     canReceiveAfter: new Date(1980, 1),
@@ -42,7 +42,7 @@ const oldShareholdersData: Shareholder[] = [
     securityTokenSymbol: params.symbol,
     balance: new BigNumber(1),
   }),
-  new Shareholder({
+  new Tokenholder({
     address: testAddress2,
     canSendAfter: new Date(1980, 1),
     canReceiveAfter: new Date(1980, 1),
@@ -64,10 +64,10 @@ describe('RevokeKyc', () => {
   let wrappersMock: MockManager<wrappersModule.PolymathBase>;
   let tokenFactoryMock: MockManager<tokenFactoryModule.MockedTokenFactoryModule>;
   // Mock factories
-  let shareholderFactoryMock: MockManager<shareholderFactoryModule.ShareholderFactory>;
+  let tokenholderFactoryMock: MockManager<tokenholderFactoryModule.TokenholderFactory>;
   let securityTokenFactoryMock: MockManager<securityTokenFactoryModule.SecurityTokenFactory>;
 
-  let shareholdersEntityMock: MockManager<shareholdersEntityModule.Shareholders>;
+  let tokenholdersEntityMock: MockManager<tokenholdersEntityModule.Tokenholders>;
   let securityTokenEntityStaticMock: StaticMockManager<securityTokenEntityModule.SecurityToken>;
   let securityTokenEntityMock: MockManager<securityTokenEntityModule.SecurityToken>;
 
@@ -87,16 +87,16 @@ describe('RevokeKyc', () => {
     contextMock.set('contractWrappers', wrappersMock.getMockInstance());
     wrappersMock.set('tokenFactory', tokenFactoryMock.getMockInstance());
 
-    shareholdersEntityMock = ImportMock.mockClass(shareholdersEntityModule, 'Shareholders');
+    tokenholdersEntityMock = ImportMock.mockClass(tokenholdersEntityModule, 'Tokenholders');
     securityTokenEntityMock = ImportMock.mockClass(securityTokenEntityModule, 'SecurityToken');
-    shareholderFactoryMock = ImportMock.mockClass(shareholderFactoryModule, 'ShareholderFactory');
+    tokenholderFactoryMock = ImportMock.mockClass(tokenholderFactoryModule, 'TokenholderFactory');
     securityTokenFactoryMock = ImportMock.mockClass(
       securityTokenFactoryModule,
       'SecurityTokenFactory'
     );
 
-    shareholdersEntityMock.mock('getShareholders', oldShareholdersData);
-    securityTokenEntityMock.set('shareholders', shareholdersEntityMock.getMockInstance());
+    tokenholdersEntityMock.mock('getTokenholders', oldTokenholdersData);
+    securityTokenEntityMock.set('tokenholders', tokenholdersEntityMock.getMockInstance());
 
     securityTokenEntityStaticMock = ImportMock.mockStaticClass(
       securityTokenEntityModule,
@@ -106,7 +106,7 @@ describe('RevokeKyc', () => {
     securityTokenFactoryMock.mock('fetch', securityTokenEntityMock.getMockInstance());
 
     const factoryMockSetup = mockFactories();
-    factoryMockSetup.shareholderFactory = shareholderFactoryMock.getMockInstance();
+    factoryMockSetup.tokenholderFactory = tokenholderFactoryMock.getMockInstance();
     factoryMockSetup.securityTokenFactory = securityTokenFactoryMock.getMockInstance();
     contextMock.set('factories', factoryMockSetup);
 
@@ -129,7 +129,7 @@ describe('RevokeKyc', () => {
   });
 
   describe('RevokeKyc', () => {
-    test('should add a transaction to the queue to revoke kyc for specified shareholders', async () => {
+    test('should add a transaction to the queue to revoke kyc for specified tokenholders', async () => {
       const modifyKYCDataMultiArgsStub = sinon.stub();
       modifyKYCDataMultiArgsStub.returns([{}]);
       const addTransactionStub = stub(target, 'addTransaction');
@@ -142,7 +142,7 @@ describe('RevokeKyc', () => {
 
       // Verifications
       expect(modifyKYCDataMultiArgsStub.getCall(0).args[0]).toEqual({
-        investors: [oldShareholdersData[0].address, oldShareholdersData[1].address],
+        investors: [oldTokenholdersData[0].address, oldTokenholdersData[1].address],
         canReceiveAfter: [zeroDate, zeroDate],
         canSendAfter: [zeroDate, zeroDate],
         expiryTime: [zeroDate, zeroDate],
@@ -158,21 +158,21 @@ describe('RevokeKyc', () => {
       expect(addTransactionStub.callCount).toEqual(1);
     });
 
-    test('should return an array of the shareholders which have been modified', async () => {
-      const shareholderObject = {
+    test('should return an array of the tokenholders which have been modified', async () => {
+      const tokenholderObject = {
         securityTokenId: params.symbol,
         address: testAddress,
       };
-      const fetchStub = shareholderFactoryMock.mock('fetch', Promise.resolve(shareholderObject));
-      const refreshStub = shareholderFactoryMock.mock('refresh', Promise.resolve());
+      const fetchStub = tokenholderFactoryMock.mock('fetch', Promise.resolve(tokenholderObject));
+      const refreshStub = tokenholderFactoryMock.mock('refresh', Promise.resolve());
       const securityTokenId = SecurityToken.generateId({
         symbol: params.symbol,
       });
-      const shareholderId1 = Shareholder.generateId({
+      const tokenholderId1 = Tokenholder.generateId({
         securityTokenId,
         address: testAddress,
       });
-      const shareholderId2 = Shareholder.generateId({
+      const tokenholderId2 = Tokenholder.generateId({
         securityTokenId,
         address: testAddress2,
       });
@@ -180,15 +180,15 @@ describe('RevokeKyc', () => {
       // Real call
       const resolver = await target.prepareTransactions();
       await resolver.run({} as TransactionReceiptWithDecodedLogs);
-      expect(resolver.result).toEqual([shareholderObject, shareholderObject]);
+      expect(resolver.result).toEqual([tokenholderObject, tokenholderObject]);
 
       // Verifications
-      expect(fetchStub.getCall(0).calledWithExactly(shareholderId1)).toEqual(true);
-      expect(fetchStub.getCall(1).calledWithExactly(shareholderId2)).toEqual(true);
+      expect(fetchStub.getCall(0).calledWithExactly(tokenholderId1)).toEqual(true);
+      expect(fetchStub.getCall(1).calledWithExactly(tokenholderId2)).toEqual(true);
       expect(fetchStub.callCount).toBe(2);
 
-      expect(refreshStub.getCall(0).calledWithExactly(shareholderId1)).toEqual(true);
-      expect(refreshStub.getCall(1).calledWithExactly(shareholderId2)).toEqual(true);
+      expect(refreshStub.getCall(0).calledWithExactly(tokenholderId1)).toEqual(true);
+      expect(refreshStub.getCall(1).calledWithExactly(tokenholderId2)).toEqual(true);
       expect(refreshStub.callCount).toBe(2);
     });
 
@@ -218,32 +218,32 @@ describe('RevokeKyc', () => {
       );
     });
 
-    test('should throw if the array of shareholder addresses passed in is empty', async () => {
+    test('should throw if the array of tokenholder addresses passed in is empty', async () => {
       target = new RevokeKyc(
-        { symbol: params.symbol, shareholderAddresses: [] },
+        { symbol: params.symbol, tokenholderAddresses: [] },
         contextMock.getMockInstance()
       );
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: 'You must provide at least one shareholder address to revoke KYC for',
+          message: 'You must provide at least one tokenholder address to revoke KYC for',
         })
       );
     });
 
-    test('should throw if any shareholder addresses passed in were already revoked', async () => {
-      const oldShareholdersRevoked = cloneDeep(oldShareholdersData);
-      oldShareholdersRevoked[0].kycExpiry = zeroDate;
-      oldShareholdersRevoked[0].canSendAfter = zeroDate;
-      oldShareholdersRevoked[0].canReceiveAfter = zeroDate;
-      oldShareholdersRevoked[1].kycExpiry = zeroDate;
-      oldShareholdersRevoked[1].canSendAfter = zeroDate;
-      oldShareholdersRevoked[1].canReceiveAfter = zeroDate;
-      shareholdersEntityMock.mock('getShareholders', oldShareholdersRevoked);
+    test('should throw if any tokenholder addresses passed in were already revoked', async () => {
+      const oldTokenholdersRevoked = cloneDeep(oldTokenholdersData);
+      oldTokenholdersRevoked[0].kycExpiry = zeroDate;
+      oldTokenholdersRevoked[0].canSendAfter = zeroDate;
+      oldTokenholdersRevoked[0].canReceiveAfter = zeroDate;
+      oldTokenholdersRevoked[1].kycExpiry = zeroDate;
+      oldTokenholdersRevoked[1].canSendAfter = zeroDate;
+      oldTokenholdersRevoked[1].canReceiveAfter = zeroDate;
+      tokenholdersEntityMock.mock('getTokenholders', oldTokenholdersRevoked);
       await expect(target.prepareTransactions()).rejects.toThrow(
         new PolymathError({
           code: ErrorCode.ProcedureValidationError,
-          message: `"${params.shareholderAddresses.join(', ')}" already revoked`,
+          message: `"${params.tokenholderAddresses.join(', ')}" already revoked`,
         })
       );
     });

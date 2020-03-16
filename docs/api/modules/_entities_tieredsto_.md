@@ -21,4 +21,4 @@
 
 • **weiToValue**: *weiToValue*
 
-*Defined in [src/entities/TieredSto.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/ade5412/src/entities/TieredSto.ts#L19)*
+*Defined in [src/entities/TieredSto.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/TieredSto.ts#L19)*
