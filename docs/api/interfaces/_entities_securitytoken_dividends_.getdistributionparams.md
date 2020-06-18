@@ -1,4 +1,4 @@
-# Interface: GetDistributionParams
+# GetDistributionParams
 
 Parameters of the [getDistribution](../classes/_entities_securitytoken_dividends_.dividends.md#getdistribution) function
 
@@ -14,10 +14,11 @@ Parameters of the [getDistribution](../classes/_entities_securitytoken_dividends
 
 ## Properties
 
-###  dividendIndex
+### dividendIndex
 
-• **dividendIndex**: *number*
+• **dividendIndex**: _number_
 
-*Defined in [src/entities/SecurityToken/Dividends.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L22)*
+_Defined in_ [_src/entities/SecurityToken/Dividends.ts:22_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Dividends.ts#L22)
 
 dividend distribution representation
+

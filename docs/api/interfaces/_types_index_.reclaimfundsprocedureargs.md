@@ -1,4 +1,4 @@
-# Interface: ReclaimFundsProcedureArgs
+# ReclaimFundsProcedureArgs
 
 Arguments for the [ReclaimFunds](../enums/_types_index_.proceduretype.md#reclaimfunds) Procedure
 
@@ -15,18 +15,17 @@ Arguments for the [ReclaimFunds](../enums/_types_index_.proceduretype.md#reclaim
 
 ## Properties
 
-###  dividendIndex
+### dividendIndex
 
-• **dividendIndex**: *number*
+• **dividendIndex**: _number_
 
-*Defined in [src/types/index.ts:802](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L802)*
+_Defined in_ [_src/types/index.ts:802_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L802)
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:801](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L801)*
+_Defined in_ [_src/types/index.ts:801_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L801)
 
 symbol of the Security Token
+

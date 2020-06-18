@@ -1,4 +1,4 @@
-# Interface: TransactionSpec <**Args, Value, Receipt, FutureValue**>
+# TransactionSpec
 
 Schema of a specific transaction
 
@@ -6,11 +6,11 @@ Schema of a specific transaction
 
 ▪ **Args**
 
-▪ **Value**: *any[]*
+▪ **Value**: _any\[\]_
 
-▪ **Receipt**: *any*
+▪ **Receipt**: _any_
 
-▪ **FutureValue**: *any*
+▪ **FutureValue**: _any_
 
 ## Hierarchy
 
@@ -27,32 +27,27 @@ Schema of a specific transaction
 
 ## Properties
 
-###  args
+### args
 
-• **args**: *[MapMaybeResolver](../modules/_types_index_.md#mapmayberesolver)‹Args›*
+• **args**: [_MapMaybeResolver_](../external-modules/_types_index_.md#mapmayberesolver)_‹Args›_
 
-*Defined in [src/types/index.ts:1562](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1562)*
+_Defined in_ [_src/types/index.ts:1562_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1562)
 
-___
+### method
 
-###  method
+• **method**: [_LowLevelMethod_](../external-modules/_types_index_.md#lowlevelmethod)_‹Args› \|_ [_SignatureRequest_](../external-modules/_types_index_.md#signaturerequest)_‹Args› \|_ [_FutureLowLevelMethod_](_types_index_.futurelowlevelmethod.md)_‹FutureValue, Args›_
 
-• **method**: *[LowLevelMethod](../modules/_types_index_.md#lowlevelmethod)‹Args› | [SignatureRequest](../modules/_types_index_.md#signaturerequest)‹Args› | [FutureLowLevelMethod](_types_index_.futurelowlevelmethod.md)‹FutureValue, Args›*
-
-*Defined in [src/types/index.ts:1561](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1561)*
-
-___
+_Defined in_ [_src/types/index.ts:1561_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1561)
 
 ### `Optional` postTransactionResolvers
 
-• **postTransactionResolvers**? : *[PostTransactionResolverArray](../modules/_types_index_.md#posttransactionresolverarray)‹Value, Receipt›*
+• **postTransactionResolvers**? : [_PostTransactionResolverArray_](../external-modules/_types_index_.md#posttransactionresolverarray)_‹Value, Receipt›_
 
-*Defined in [src/types/index.ts:1563](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1563)*
-
-___
+_Defined in_ [_src/types/index.ts:1563_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1563)
 
 ### `Optional` tag
 
-• **tag**? : *[PolyTransactionTag](../enums/_types_index_.polytransactiontag.md)*
+• **tag**? : [_PolyTransactionTag_](../enums/_types_index_.polytransactiontag.md)
 
-*Defined in [src/types/index.ts:1564](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1564)*
+_Defined in_ [_src/types/index.ts:1564_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1564)
+

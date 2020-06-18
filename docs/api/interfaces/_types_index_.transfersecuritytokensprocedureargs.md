@@ -1,4 +1,4 @@
-# Interface: TransferSecurityTokensProcedureArgs
+# TransferSecurityTokensProcedureArgs
 
 Arguments for the [TransferSecurityTokens](../enums/_types_index_.proceduretype.md#transfersecuritytokens) Procedure
 
@@ -18,50 +18,43 @@ Arguments for the [TransferSecurityTokens](../enums/_types_index_.proceduretype.
 
 ## Properties
 
-###  amount
+### amount
 
-• **amount**: *BigNumber*
+• **amount**: _BigNumber_
 
-*Defined in [src/types/index.ts:1257](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1257)*
+_Defined in_ [_src/types/index.ts:1257_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1257)
 
 amount of tokens being transferred
 
-___
-
 ### `Optional` data
 
-• **data**? : *undefined | string*
+• **data**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:1261](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1261)*
+_Defined in_ [_src/types/index.ts:1261_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1261)
 
-signed KYC data that will be considered (and applied to the Security Token) when checking for transfer restrictions
-
-___
+signed KYC data that will be considered \(and applied to the Security Token\) when checking for transfer restrictions
 
 ### `Optional` from
 
-• **from**? : *undefined | string*
+• **from**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:1265](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1265)*
+_Defined in_ [_src/types/index.ts:1265_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1265)
 
 wallet address sending Security Tokens. Defaults to the current wallet
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:1249](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1249)*
+_Defined in_ [_src/types/index.ts:1249_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1249)
 
 symbol of the Security Token
 
-___
+### to
 
-###  to
+• **to**: _string_
 
-• **to**: *string*
-
-*Defined in [src/types/index.ts:1253](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1253)*
+_Defined in_ [_src/types/index.ts:1253_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1253)
 
 wallet address receiving Security Tokens
+

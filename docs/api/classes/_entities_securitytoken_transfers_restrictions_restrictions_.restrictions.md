@@ -1,4 +1,4 @@
-# Class: Restrictions
+# Restrictions
 
 Namespace that handles all Transfer Restriction related functionality
 
@@ -23,57 +23,52 @@ Namespace that handles all Transfer Restriction related functionality
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new Restrictions**(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)): *[Restrictions](_entities_securitytoken_transfers_restrictions_restrictions_.restrictions.md)*
++ **new Restrictions**\(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)\): [_Restrictions_](_entities_securitytoken_transfers_restrictions_restrictions_.restrictions.md)
 
-*Overrides [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)*
+_Overrides_ [_SubModule_](_entities_securitytoken_submodule_.submodule.md)_._[_constructor_](_entities_securitytoken_submodule_.submodule.md#constructor)
 
-*Defined in [src/entities/SecurityToken/Transfers/Restrictions/Restrictions.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Restrictions/Restrictions.ts#L13)*
+_Defined in_ [_src/entities/SecurityToken/Transfers/Restrictions/Restrictions.ts:13_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Transfers/Restrictions/Restrictions.ts#L13)
 
 Create a new Restrictions instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`securityToken` | [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md) |
-`context` | [Context](_context_.context.md) |
+| Name | Type |
+| :--- | :--- |
+| `securityToken` | [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md) |
+| `context` | [Context](_context_.context.md) |
 
-**Returns:** *[Restrictions](_entities_securitytoken_transfers_restrictions_restrictions_.restrictions.md)*
+**Returns:** [_Restrictions_](_entities_securitytoken_transfers_restrictions_restrictions_.restrictions.md)
 
 ## Properties
 
 ### `Protected` context
 
-• **context**: *[Context](_context_.context.md)*
+• **context**: [_Context_](_context_.context.md)
 
-*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)*
+_Inherited from_ [_SubModule_](_entities_securitytoken_submodule_.submodule.md)_._[_context_](_entities_securitytoken_submodule_.submodule.md#protected-context)
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L10)*
+_Defined in_ [_src/entities/SecurityToken/SubModule.ts:10_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L10)
 
-___
+### count
 
-###  count
+• **count**: [_CountRestrictions_](_entities_securitytoken_transfers_restrictions_countrestrictions_.countrestrictions.md)
 
-• **count**: *[CountRestrictions](_entities_securitytoken_transfers_restrictions_countrestrictions_.countrestrictions.md)*
+_Defined in_ [_src/entities/SecurityToken/Transfers/Restrictions/Restrictions.ts:11_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Transfers/Restrictions/Restrictions.ts#L11)
 
-*Defined in [src/entities/SecurityToken/Transfers/Restrictions/Restrictions.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Restrictions/Restrictions.ts#L11)*
+### percentage
 
-___
+• **percentage**: [_PercentageRestrictions_](_entities_securitytoken_transfers_restrictions_percentagerestrictions_.percentagerestrictions.md)
 
-###  percentage
-
-• **percentage**: *[PercentageRestrictions](_entities_securitytoken_transfers_restrictions_percentagerestrictions_.percentagerestrictions.md)*
-
-*Defined in [src/entities/SecurityToken/Transfers/Restrictions/Restrictions.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Restrictions/Restrictions.ts#L13)*
-
-___
+_Defined in_ [_src/entities/SecurityToken/Transfers/Restrictions/Restrictions.ts:13_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Transfers/Restrictions/Restrictions.ts#L13)
 
 ### `Protected` securityToken
 
-• **securityToken**: *[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)*
+• **securityToken**: [_SecurityToken_](_entities_securitytoken_securitytoken_.securitytoken.md)
 
-*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)*
+_Inherited from_ [_SubModule_](_entities_securitytoken_submodule_.submodule.md)_._[_securityToken_](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L8)*
+_Defined in_ [_src/entities/SecurityToken/SubModule.ts:8_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L8)
+

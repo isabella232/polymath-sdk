@@ -1,7 +1,6 @@
-# Class: AssignSecurityTokenRole <**ReturnType**>
+# AssignSecurityTokenRole
 
-Procedure that assigns a Security Token Role to a delegate address.
-Roles grant said delegate permissions over certain Security Token Features
+Procedure that assigns a Security Token Role to a delegate address. Roles grant said delegate permissions over certain Security Token Features
 
 ## Type parameters
 
@@ -35,94 +34,86 @@ Roles grant said delegate permissions over certain Security Token Features
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new AssignSecurityTokenRole**(`args`: [AssignSecurityTokenRoleProcedureArgs](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md), `context`: [Context](_context_.context.md)): *[AssignSecurityTokenRole](_procedures_assignsecuritytokenrole_.assignsecuritytokenrole.md)*
++ **new AssignSecurityTokenRole**\(`args`: [AssignSecurityTokenRoleProcedureArgs](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md), `context`: [Context](_context_.context.md)\): [_AssignSecurityTokenRole_](_procedures_assignsecuritytokenrole_.assignsecuritytokenrole.md)
 
-*Inherited from void*
+_Inherited from void_
 
-*Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L40)*
+_Defined in_ [_src/procedures/Procedure.ts:40_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L40)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`args` | [AssignSecurityTokenRoleProcedureArgs](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md) |
-`context` | [Context](_context_.context.md) |
+| Name | Type |
+| :--- | :--- |
+| `args` | [AssignSecurityTokenRoleProcedureArgs](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md) |
+| `context` | [Context](_context_.context.md) |
 
-**Returns:** *[AssignSecurityTokenRole](_procedures_assignsecuritytokenrole_.assignsecuritytokenrole.md)*
+**Returns:** [_AssignSecurityTokenRole_](_procedures_assignsecuritytokenrole_.assignsecuritytokenrole.md)
 
 ## Properties
 
 ### `Protected` args
 
-• **args**: *[AssignSecurityTokenRoleProcedureArgs](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md)*
+• **args**: [_AssignSecurityTokenRoleProcedureArgs_](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md)
 
-*Inherited from void*
+_Inherited from void_
 
-*Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L34)*
-
-___
+_Defined in_ [_src/procedures/Procedure.ts:34_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L34)
 
 ### `Protected` context
 
-• **context**: *[Context](_context_.context.md)*
+• **context**: [_Context_](_context_.context.md)
 
-*Inherited from void*
+_Inherited from void_
 
-*Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L36)*
+_Defined in_ [_src/procedures/Procedure.ts:36_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L36)
 
-___
+### type
 
-###  type
+• **type**: [_ProcedureType_](../enums/_types_index_.proceduretype.md) = ProcedureType.AssignSecurityTokenRole
 
-• **type**: *[ProcedureType](../enums/_types_index_.proceduretype.md)* =  ProcedureType.AssignSecurityTokenRole
+_Overrides void_
 
-*Overrides void*
-
-*Defined in [src/procedures/AssignSecurityTokenRole.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/AssignSecurityTokenRole.ts#L17)*
+_Defined in_ [_src/procedures/AssignSecurityTokenRole.ts:17_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/AssignSecurityTokenRole.ts#L17)
 
 ## Methods
 
-###  addProcedure
+### addProcedure
 
-▸ **addProcedure**<**A**, **R**>(`Proc`: [ProcedureClass](../interfaces/_procedures_procedure_.procedureclass.md)‹A, R›): *(Anonymous function)*
+▸ **addProcedure**&lt;**A**, **R**&gt;\(`Proc`: [ProcedureClass](../interfaces/_procedures_procedure_.procedureclass.md)‹A, R›\): _\(Anonymous function\)_
 
-*Inherited from void*
+_Inherited from void_
 
-*Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L91)*
+_Defined in_ [_src/procedures/Procedure.ts:91_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L91)
 
-Appends a Procedure into the TransactionQueue's queue. This defines
-what will be run by the TransactionQueue when it is started.
+Appends a Procedure into the TransactionQueue's queue. This defines what will be run by the TransactionQueue when it is started.
 
 **Type parameters:**
 
 ▪ **A**
 
-▪ **R**: *any*
+▪ **R**: _any_
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`Proc` | [ProcedureClass](../interfaces/_procedures_procedure_.procedureclass.md)‹A, R› | A Procedure that will be run in the Procedure's TransactionQueue  |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `Proc` | [ProcedureClass](../interfaces/_procedures_procedure_.procedureclass.md)‹A, R› | A Procedure that will be run in the Procedure's TransactionQueue |
 
-**Returns:** *(Anonymous function)*
+**Returns:** _\(Anonymous function\)_
 
 whichever value is returned by the Procedure
 
-___
+### addSignatureRequest
 
-###  addSignatureRequest
+▸ **addSignatureRequest**&lt;**A**&gt;\(`request`: [SignatureRequest](../external-modules/_types_index_.md#signaturerequest)‹A›\): _\(Anonymous function\)_
 
-▸ **addSignatureRequest**<**A**>(`request`: [SignatureRequest](../modules/_types_index_.md#signaturerequest)‹A›): *(Anonymous function)*
+_Inherited from void_
 
-*Inherited from void*
+_Defined in_ [_src/procedures/Procedure.ts:179_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L179)
 
-*Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L179)*
-
-Appends a signature request into the TransactionQueue's queue. This defines
-what will be run by the TransactionQueue when it is started.
+Appends a signature request into the TransactionQueue's queue. This defines what will be run by the TransactionQueue when it is started.
 
 **Type parameters:**
 
@@ -130,86 +121,78 @@ what will be run by the TransactionQueue when it is started.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`request` | [SignatureRequest](../modules/_types_index_.md#signaturerequest)‹A› | A signature request that will be run in the Procedure's TransactionQueue  |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `request` | [SignatureRequest](../external-modules/_types_index_.md#signaturerequest)‹A› | A signature request that will be run in the Procedure's TransactionQueue |
 
-**Returns:** *(Anonymous function)*
+**Returns:** _\(Anonymous function\)_
 
 a PostTransactionResolver that resolves to the signed data
 
-___
+### addTransaction
 
-###  addTransaction
+▸ **addTransaction**&lt;**A**, **R**, **V**&gt;\(`method`: [LowLevelMethod](../external-modules/_types_index_.md#lowlevelmethod)‹A› \| [FutureLowLevelMethod](../interfaces/_types_index_.futurelowlevelmethod.md)‹V, A›, `__namedParameters`: object\): _\(Anonymous function\)_
 
-▸ **addTransaction**<**A**, **R**, **V**>(`method`: [LowLevelMethod](../modules/_types_index_.md#lowlevelmethod)‹A› | [FutureLowLevelMethod](../interfaces/_types_index_.futurelowlevelmethod.md)‹V, A›, `__namedParameters`: object): *(Anonymous function)*
+_Inherited from void_
 
-*Inherited from void*
+_Defined in_ [_src/procedures/Procedure.ts:137_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L137)
 
-*Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L137)*
-
-Appends a method or future method into the TransactionQueue's queue. This defines
-what will be run by the TransactionQueue when it is started.
+Appends a method or future method into the TransactionQueue's queue. This defines what will be run by the TransactionQueue when it is started.
 
 **Type parameters:**
 
 ▪ **A**
 
-▪ **R**: *any[]*
+▪ **R**: _any\[\]_
 
-▪ **V**: *any*
+▪ **V**: _any_
 
 **Parameters:**
 
-▪ **method**: *[LowLevelMethod](../modules/_types_index_.md#lowlevelmethod)‹A› | [FutureLowLevelMethod](../interfaces/_types_index_.futurelowlevelmethod.md)‹V, A›*
+▪ **method**: [_LowLevelMethod_](../external-modules/_types_index_.md#lowlevelmethod)_‹A› \|_ [_FutureLowLevelMethod_](../interfaces/_types_index_.futurelowlevelmethod.md)_‹V, A›_
 
-A method (or future method) that will be run in the Procedure's TransactionQueue.
-A future method is a transaction that doesn't exist at prepare time
-(for example a transaction on a module that hasn't been attached but will be by the time the previous transactions are run)
+A method \(or future method\) that will be run in the Procedure's TransactionQueue. A future method is a transaction that doesn't exist at prepare time \(for example a transaction on a module that hasn't been attached but will be by the time the previous transactions are run\)
 
-▪`Default value`  **__namedParameters**: *object*=  {}
+▪`Default value` **\_\_namedParameters**: _object_= {}
 
-Name | Type | Default |
------- | ------ | ------ |
-`fees` | undefined &#124; [Fees](../interfaces/_types_index_.fees.md) | - |
-`resolvers` | object |  ([] as unknown) as ResolverArray<R> |
-`tag` | undefined &#124; [Any](../enums/_types_index_.polytransactiontag.md#any) &#124; [GetTokens](../enums/_types_index_.polytransactiontag.md#gettokens) &#124; [ApproveErc20](../enums/_types_index_.polytransactiontag.md#approveerc20) &#124; [TransferErc20](../enums/_types_index_.polytransactiontag.md#transfererc20) &#124; [ReserveSecurityToken](../enums/_types_index_.polytransactiontag.md#reservesecuritytoken) &#124; [CreateSecurityToken](../enums/_types_index_.polytransactiontag.md#createsecuritytoken) &#124; [CreateCheckpoint](../enums/_types_index_.polytransactiontag.md#createcheckpoint) &#124; [CreateErc20DividendDistribution](../enums/_types_index_.polytransactiontag.md#createerc20dividenddistribution) &#124; [SetErc20TaxWithholding](../enums/_types_index_.polytransactiontag.md#seterc20taxwithholding) &#124; [SetEtherTaxWithholding](../enums/_types_index_.polytransactiontag.md#setethertaxwithholding) &#124; [SetDefaultExcluded](../enums/_types_index_.polytransactiontag.md#setdefaultexcluded) &#124; [EnableDividends](../enums/_types_index_.polytransactiontag.md#enabledividends) &#124; [EnableCappedSto](../enums/_types_index_.polytransactiontag.md#enablecappedsto) &#124; [EnableTieredSto](../enums/_types_index_.polytransactiontag.md#enabletieredsto) &#124; [EnableGeneralPermissionManager](../enums/_types_index_.polytransactiontag.md#enablegeneralpermissionmanager) &#124; [EnableGeneralTransferManager](../enums/_types_index_.polytransactiontag.md#enablegeneraltransfermanager) &#124; [EnableCountTransferManager](../enums/_types_index_.polytransactiontag.md#enablecounttransfermanager) &#124; [EnablePercentageTransferManager](../enums/_types_index_.polytransactiontag.md#enablepercentagetransfermanager) &#124; [DisableController](../enums/_types_index_.polytransactiontag.md#disablecontroller) &#124; [FreezeIssuance](../enums/_types_index_.polytransactiontag.md#freezeissuance) &#124; [DisableFeature](../enums/_types_index_.polytransactiontag.md#disablefeature) &#124; [ReclaimDividendFunds](../enums/_types_index_.polytransactiontag.md#reclaimdividendfunds) &#124; [WithdrawTaxWithholdings](../enums/_types_index_.polytransactiontag.md#withdrawtaxwithholdings) &#124; [PushDividendPayment](../enums/_types_index_.polytransactiontag.md#pushdividendpayment) &#124; [PullDividendPayment](../enums/_types_index_.polytransactiontag.md#pulldividendpayment) &#124; [SetDividendsWallet](../enums/_types_index_.polytransactiontag.md#setdividendswallet) &#124; [AddDelegate](../enums/_types_index_.polytransactiontag.md#adddelegate) &#124; [ChangePermission](../enums/_types_index_.polytransactiontag.md#changepermission) &#124; [ControllerTransfer](../enums/_types_index_.polytransactiontag.md#controllertransfer) &#124; [ControllerRedeem](../enums/_types_index_.polytransactiontag.md#controllerredeem) &#124; [PauseSto](../enums/_types_index_.polytransactiontag.md#pausesto) &#124; [UnpauseSto](../enums/_types_index_.polytransactiontag.md#unpausesto) &#124; [FinalizeSto](../enums/_types_index_.polytransactiontag.md#finalizesto) &#124; [SetController](../enums/_types_index_.polytransactiontag.md#setcontroller) &#124; [SetDocument](../enums/_types_index_.polytransactiontag.md#setdocument) &#124; [RemoveDocument](../enums/_types_index_.polytransactiontag.md#removedocument) &#124; [ModifyKycDataMulti](../enums/_types_index_.polytransactiontag.md#modifykycdatamulti) &#124; [ModifyInvestorFlagMulti](../enums/_types_index_.polytransactiontag.md#modifyinvestorflagmulti) &#124; [IssueMulti](../enums/_types_index_.polytransactiontag.md#issuemulti) &#124; [AllowPreMinting](../enums/_types_index_.polytransactiontag.md#allowpreminting) &#124; [RevokePreMinting](../enums/_types_index_.polytransactiontag.md#revokepreminting) &#124; [ChangeAllowBeneficialInvestments](../enums/_types_index_.polytransactiontag.md#changeallowbeneficialinvestments) &#124; [ModifyTimes](../enums/_types_index_.polytransactiontag.md#modifytimes) &#124; [ModifyFunding](../enums/_types_index_.polytransactiontag.md#modifyfunding) &#124; [ModifyAddresses](../enums/_types_index_.polytransactiontag.md#modifyaddresses) &#124; [ModifyTiers](../enums/_types_index_.polytransactiontag.md#modifytiers) &#124; [ModifyLimits](../enums/_types_index_.polytransactiontag.md#modifylimits) &#124; [ModifyOracles](../enums/_types_index_.polytransactiontag.md#modifyoracles) &#124; [BuyWithScRateLimited](../enums/_types_index_.polytransactiontag.md#buywithscratelimited) &#124; [BuyWithPolyRateLimited](../enums/_types_index_.polytransactiontag.md#buywithpolyratelimited) &#124; [BuyWithEthRateLimited](../enums/_types_index_.polytransactiontag.md#buywithethratelimited) &#124; [BuyTokens](../enums/_types_index_.polytransactiontag.md#buytokens) &#124; [BuyTokensWithPoly](../enums/_types_index_.polytransactiontag.md#buytokenswithpoly) &#124; [ChangeHolderCount](../enums/_types_index_.polytransactiontag.md#changeholdercount) &#124; [ChangeHolderPercentage](../enums/_types_index_.polytransactiontag.md#changeholderpercentage) &#124; [ModifyWhitelistMulti](../enums/_types_index_.polytransactiontag.md#modifywhitelistmulti) &#124; [SetAllowPrimaryIssuance](../enums/_types_index_.polytransactiontag.md#setallowprimaryissuance) &#124; [TransferSecurityTokens](../enums/_types_index_.polytransactiontag.md#transfersecuritytokens) &#124; [UnfreezeTransfers](../enums/_types_index_.polytransactiontag.md#unfreezetransfers) &#124; [FreezeTransfers](../enums/_types_index_.polytransactiontag.md#freezetransfers) &#124; [Signature](../enums/_types_index_.polytransactiontag.md#signature) &#124; [TransferReservationOwnership](../enums/_types_index_.polytransactiontag.md#transferreservationownership) &#124; [TransferOwnership](../enums/_types_index_.polytransactiontag.md#transferownership) | - |
+| Name | Type | Default |
+| :--- | :--- | :--- |
+| `fees` | undefined \| [Fees](../interfaces/_types_index_.fees.md) | - |
+| `resolvers` | object | \(\[\] as unknown\) as ResolverArray |
+| `tag` | undefined \| [Any](../enums/_types_index_.polytransactiontag.md#any) \| [GetTokens](../enums/_types_index_.polytransactiontag.md#gettokens) \| [ApproveErc20](../enums/_types_index_.polytransactiontag.md#approveerc20) \| [TransferErc20](../enums/_types_index_.polytransactiontag.md#transfererc20) \| [ReserveSecurityToken](../enums/_types_index_.polytransactiontag.md#reservesecuritytoken) \| [CreateSecurityToken](../enums/_types_index_.polytransactiontag.md#createsecuritytoken) \| [CreateCheckpoint](../enums/_types_index_.polytransactiontag.md#createcheckpoint) \| [CreateErc20DividendDistribution](../enums/_types_index_.polytransactiontag.md#createerc20dividenddistribution) \| [SetErc20TaxWithholding](../enums/_types_index_.polytransactiontag.md#seterc20taxwithholding) \| [SetEtherTaxWithholding](../enums/_types_index_.polytransactiontag.md#setethertaxwithholding) \| [SetDefaultExcluded](../enums/_types_index_.polytransactiontag.md#setdefaultexcluded) \| [EnableDividends](../enums/_types_index_.polytransactiontag.md#enabledividends) \| [EnableCappedSto](../enums/_types_index_.polytransactiontag.md#enablecappedsto) \| [EnableTieredSto](../enums/_types_index_.polytransactiontag.md#enabletieredsto) \| [EnableGeneralPermissionManager](../enums/_types_index_.polytransactiontag.md#enablegeneralpermissionmanager) \| [EnableGeneralTransferManager](../enums/_types_index_.polytransactiontag.md#enablegeneraltransfermanager) \| [EnableCountTransferManager](../enums/_types_index_.polytransactiontag.md#enablecounttransfermanager) \| [EnablePercentageTransferManager](../enums/_types_index_.polytransactiontag.md#enablepercentagetransfermanager) \| [DisableController](../enums/_types_index_.polytransactiontag.md#disablecontroller) \| [FreezeIssuance](../enums/_types_index_.polytransactiontag.md#freezeissuance) \| [DisableFeature](../enums/_types_index_.polytransactiontag.md#disablefeature) \| [ReclaimDividendFunds](../enums/_types_index_.polytransactiontag.md#reclaimdividendfunds) \| [WithdrawTaxWithholdings](../enums/_types_index_.polytransactiontag.md#withdrawtaxwithholdings) \| [PushDividendPayment](../enums/_types_index_.polytransactiontag.md#pushdividendpayment) \| [PullDividendPayment](../enums/_types_index_.polytransactiontag.md#pulldividendpayment) \| [SetDividendsWallet](../enums/_types_index_.polytransactiontag.md#setdividendswallet) \| [AddDelegate](../enums/_types_index_.polytransactiontag.md#adddelegate) \| [ChangePermission](../enums/_types_index_.polytransactiontag.md#changepermission) \| [ControllerTransfer](../enums/_types_index_.polytransactiontag.md#controllertransfer) \| [ControllerRedeem](../enums/_types_index_.polytransactiontag.md#controllerredeem) \| [PauseSto](../enums/_types_index_.polytransactiontag.md#pausesto) \| [UnpauseSto](../enums/_types_index_.polytransactiontag.md#unpausesto) \| [FinalizeSto](../enums/_types_index_.polytransactiontag.md#finalizesto) \| [SetController](../enums/_types_index_.polytransactiontag.md#setcontroller) \| [SetDocument](../enums/_types_index_.polytransactiontag.md#setdocument) \| [RemoveDocument](../enums/_types_index_.polytransactiontag.md#removedocument) \| [ModifyKycDataMulti](../enums/_types_index_.polytransactiontag.md#modifykycdatamulti) \| [ModifyInvestorFlagMulti](../enums/_types_index_.polytransactiontag.md#modifyinvestorflagmulti) \| [IssueMulti](../enums/_types_index_.polytransactiontag.md#issuemulti) \| [AllowPreMinting](../enums/_types_index_.polytransactiontag.md#allowpreminting) \| [RevokePreMinting](../enums/_types_index_.polytransactiontag.md#revokepreminting) \| [ChangeAllowBeneficialInvestments](../enums/_types_index_.polytransactiontag.md#changeallowbeneficialinvestments) \| [ModifyTimes](../enums/_types_index_.polytransactiontag.md#modifytimes) \| [ModifyFunding](../enums/_types_index_.polytransactiontag.md#modifyfunding) \| [ModifyAddresses](../enums/_types_index_.polytransactiontag.md#modifyaddresses) \| [ModifyTiers](../enums/_types_index_.polytransactiontag.md#modifytiers) \| [ModifyLimits](../enums/_types_index_.polytransactiontag.md#modifylimits) \| [ModifyOracles](../enums/_types_index_.polytransactiontag.md#modifyoracles) \| [BuyWithScRateLimited](../enums/_types_index_.polytransactiontag.md#buywithscratelimited) \| [BuyWithPolyRateLimited](../enums/_types_index_.polytransactiontag.md#buywithpolyratelimited) \| [BuyWithEthRateLimited](../enums/_types_index_.polytransactiontag.md#buywithethratelimited) \| [BuyTokens](../enums/_types_index_.polytransactiontag.md#buytokens) \| [BuyTokensWithPoly](../enums/_types_index_.polytransactiontag.md#buytokenswithpoly) \| [ChangeHolderCount](../enums/_types_index_.polytransactiontag.md#changeholdercount) \| [ChangeHolderPercentage](../enums/_types_index_.polytransactiontag.md#changeholderpercentage) \| [ModifyWhitelistMulti](../enums/_types_index_.polytransactiontag.md#modifywhitelistmulti) \| [SetAllowPrimaryIssuance](../enums/_types_index_.polytransactiontag.md#setallowprimaryissuance) \| [TransferSecurityTokens](../enums/_types_index_.polytransactiontag.md#transfersecuritytokens) \| [UnfreezeTransfers](../enums/_types_index_.polytransactiontag.md#unfreezetransfers) \| [FreezeTransfers](../enums/_types_index_.polytransactiontag.md#freezetransfers) \| [Signature](../enums/_types_index_.polytransactiontag.md#signature) \| [TransferReservationOwnership](../enums/_types_index_.polytransactiontag.md#transferreservationownership) \| [TransferOwnership](../enums/_types_index_.polytransactiontag.md#transferownership) | - |
 
-**Returns:** *(Anonymous function)*
+**Returns:** _\(Anonymous function\)_
 
 a PostTransactionResolver that resolves to the value returned by the resolver function, or undefined if no resolver function was passed
 
-___
+### prepare
 
-###  prepare
+▸ **prepare**\(\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹Args, ReturnType››_
 
-▸ **prepare**(): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹Args, ReturnType››*
+_Inherited from void_
 
-*Inherited from void*
+_Defined in_ [_src/procedures/Procedure.ts:52_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L52)
 
-*Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L52)*
+Mandatory method that builds a list of transactions that will be run
 
-Mandatory method that builds a list of transactions that will be
-run
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹Args, ReturnType››_
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹Args, ReturnType››*
+### prepareTransactions
 
-___
+▸ **prepareTransactions**\(\): _Promise‹void›_
 
-###  prepareTransactions
+_Overrides void_
 
-▸ **prepareTransactions**(): *Promise‹void›*
+_Defined in_ [_src/procedures/AssignSecurityTokenRole.ts:28_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/AssignSecurityTokenRole.ts#L28)
 
-*Overrides void*
-
-*Defined in [src/procedures/AssignSecurityTokenRole.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/AssignSecurityTokenRole.ts#L28)*
-
-- If the delegate does not exist, the delegate address will be added
-- The specified Role will be assigned/revoked to/from the delegate
+* If the delegate does not exist, the delegate address will be added
+* The specified Role will be assigned/revoked to/from the delegate
 
 Note this procedure will fail if:
-- You attempt to assign a Role related to a Feature that hasn't been enabled
-- The Permissions Feature hasn't been enabled on the Security Token
-- You attempt to assign/revoke a Role that has already been assigned/revoked
 
-**Returns:** *Promise‹void›*
+* You attempt to assign a Role related to a Feature that hasn't been enabled
+* The Permissions Feature hasn't been enabled on the Security Token
+* You attempt to assign/revoke a Role that has already been assigned/revoked
+
+**Returns:** _Promise‹void›_
+

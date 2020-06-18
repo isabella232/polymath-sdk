@@ -1,4 +1,4 @@
-# Interface: Tier
+# Tier
 
 ## Hierarchy
 
@@ -17,60 +17,51 @@
 
 ## Properties
 
-###  discountedPrice
+### discountedPrice
 
-• **discountedPrice**: *BigNumber*
+• **discountedPrice**: _BigNumber_
 
-*Defined in [src/entities/TieredSto.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/TieredSto.ts#L47)*
+_Defined in_ [_src/entities/TieredSto.ts:47_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/TieredSto.ts#L47)
 
 discounted price at which tokens will be sold
 
-___
+### price
 
-###  price
+• **price**: _BigNumber_
 
-• **price**: *BigNumber*
-
-*Defined in [src/entities/TieredSto.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/TieredSto.ts#L35)*
+_Defined in_ [_src/entities/TieredSto.ts:35_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/TieredSto.ts#L35)
 
 price at which tokens will be sold within the tier
 
-___
+### tokensOnSale
 
-###  tokensOnSale
+• **tokensOnSale**: _BigNumber_
 
-• **tokensOnSale**: *BigNumber*
-
-*Defined in [src/entities/TieredSto.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/TieredSto.ts#L27)*
+_Defined in_ [_src/entities/TieredSto.ts:27_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/TieredSto.ts#L27)
 
 total number of tokens that are available in the tier
 
-___
+### tokensSold
 
-###  tokensSold
+• **tokensSold**: _BigNumber_
 
-• **tokensSold**: *BigNumber*
-
-*Defined in [src/entities/TieredSto.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/TieredSto.ts#L31)*
+_Defined in_ [_src/entities/TieredSto.ts:31_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/TieredSto.ts#L31)
 
 total number of tokens that have been sold
 
-___
+### tokensSoldAtDiscount
 
-###  tokensSoldAtDiscount
+• **tokensSoldAtDiscount**: _BigNumber_
 
-• **tokensSoldAtDiscount**: *BigNumber*
-
-*Defined in [src/entities/TieredSto.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/TieredSto.ts#L43)*
+_Defined in_ [_src/entities/TieredSto.ts:43_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/TieredSto.ts#L43)
 
 total number of tokens that have been sold at a discount
 
-___
+### tokensWithDiscount
 
-###  tokensWithDiscount
+• **tokensWithDiscount**: _BigNumber_
 
-• **tokensWithDiscount**: *BigNumber*
-
-*Defined in [src/entities/TieredSto.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/TieredSto.ts#L39)*
+_Defined in_ [_src/entities/TieredSto.ts:39_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/TieredSto.ts#L39)
 
 total number of tokens that are available to be sold at a discount when paid in POLY
+

@@ -1,4 +1,4 @@
-# Interface: Params
+# Params
 
 Constructor parameters
 
@@ -20,56 +20,45 @@ Constructor parameters
 
 ## Properties
 
-###  balance
+### balance
 
-• **balance**: *BigNumber*
+• **balance**: _BigNumber_
 
-*Defined in [src/entities/Tokenholder.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L35)*
+Defined in src/entities/Tokenholder.ts:35
 
-___
+### canBuyFromSto
 
-###  canBuyFromSto
+• **canBuyFromSto**: _boolean_
 
-• **canBuyFromSto**: *boolean*
+Defined in src/entities/Tokenholder.ts:34
 
-*Defined in [src/entities/Tokenholder.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L34)*
+### canReceiveAfter
 
-___
+• **canReceiveAfter**: _Date_
 
-###  canReceiveAfter
+Defined in src/entities/Tokenholder.ts:31
 
-• **canReceiveAfter**: *Date*
+### canSendAfter
 
-*Defined in [src/entities/Tokenholder.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L31)*
+• **canSendAfter**: _Date_
 
-___
+Defined in src/entities/Tokenholder.ts:30
 
-###  canSendAfter
+### isAccredited
 
-• **canSendAfter**: *Date*
+• **isAccredited**: _boolean_
 
-*Defined in [src/entities/Tokenholder.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L30)*
+Defined in src/entities/Tokenholder.ts:33
 
-___
+### kycExpiry
 
-###  isAccredited
+• **kycExpiry**: _Date_
 
-• **isAccredited**: *boolean*
+Defined in src/entities/Tokenholder.ts:32
 
-*Defined in [src/entities/Tokenholder.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L33)*
+### securityTokenSymbol
 
-___
+• **securityTokenSymbol**: _string_
 
-###  kycExpiry
+Defined in src/entities/Tokenholder.ts:29
 
-• **kycExpiry**: *Date*
-
-*Defined in [src/entities/Tokenholder.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L32)*
-
-___
-
-###  securityTokenSymbol
-
-• **securityTokenSymbol**: *string*
-
-*Defined in [src/entities/Tokenholder.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L29)*

@@ -1,4 +1,4 @@
-# Interface: Factories
+# Factories
 
 ## Hierarchy
 
@@ -21,80 +21,63 @@
 
 ## Properties
 
-###  checkpointFactory
+### checkpointFactory
 
-• **checkpointFactory**: *CheckpointFactory*
+• **checkpointFactory**: _CheckpointFactory_
 
-*Defined in [src/Context.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Context.ts#L28)*
+_Defined in_ [_src/Context.ts:28_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Context.ts#L28)
 
-___
+### dividendDistributionFactory
 
-###  dividendDistributionFactory
+• **dividendDistributionFactory**: _DividendDistributionFactory_
 
-• **dividendDistributionFactory**: *DividendDistributionFactory*
+_Defined in_ [_src/Context.ts:27_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Context.ts#L27)
 
-*Defined in [src/Context.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Context.ts#L27)*
+### erc20TokenBalanceFactory
 
-___
+• **erc20TokenBalanceFactory**: [_Erc20TokenBalanceFactory_](../classes/_entities_factories_erc20tokenbalancefactory_.erc20tokenbalancefactory.md)
 
-###  erc20TokenBalanceFactory
+_Defined in_ [_src/Context.ts:23_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Context.ts#L23)
 
-• **erc20TokenBalanceFactory**: *[Erc20TokenBalanceFactory](../classes/_entities_factories_erc20tokenbalancefactory_.erc20tokenbalancefactory.md)*
+### investmentFactory
 
-*Defined in [src/Context.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Context.ts#L23)*
+• **investmentFactory**: [_InvestmentFactory_](../classes/_entities_factories_investmentfactory_.investmentfactory.md)
 
-___
+_Defined in_ [_src/Context.ts:24_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Context.ts#L24)
 
-###  investmentFactory
+### securityTokenFactory
 
-• **investmentFactory**: *[InvestmentFactory](../classes/_entities_factories_investmentfactory_.investmentfactory.md)*
+• **securityTokenFactory**: _SecurityTokenFactory_
 
-*Defined in [src/Context.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Context.ts#L24)*
+_Defined in_ [_src/Context.ts:21_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Context.ts#L21)
 
-___
+### securityTokenReservationFactory
 
-###  securityTokenFactory
+• **securityTokenReservationFactory**: _SecurityTokenReservationFactory_
 
-• **securityTokenFactory**: *SecurityTokenFactory*
+_Defined in_ [_src/Context.ts:22_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Context.ts#L22)
 
-*Defined in [src/Context.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Context.ts#L21)*
+### simpleStoFactory
 
-___
+• **simpleStoFactory**: [_SimpleStoFactory_](../classes/_entities_factories_simplestofactory_.simplestofactory.md)
 
-###  securityTokenReservationFactory
+_Defined in_ [_src/Context.ts:25_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Context.ts#L25)
 
-• **securityTokenReservationFactory**: *SecurityTokenReservationFactory*
+### taxWithholdingFactory
 
-*Defined in [src/Context.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Context.ts#L22)*
+• **taxWithholdingFactory**: [_TaxWithholdingFactory_](../classes/_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md)
 
-___
+_Defined in_ [_src/Context.ts:30_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Context.ts#L30)
 
-###  simpleStoFactory
+### tieredStoFactory
 
-• **simpleStoFactory**: *[SimpleStoFactory](../classes/_entities_factories_simplestofactory_.simplestofactory.md)*
+• **tieredStoFactory**: [_TieredStoFactory_](../classes/_entities_factories_tieredstofactory_.tieredstofactory.md)
 
-*Defined in [src/Context.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Context.ts#L25)*
+_Defined in_ [_src/Context.ts:26_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Context.ts#L26)
 
-___
+### tokenholderFactory
 
-###  taxWithholdingFactory
+• **tokenholderFactory**: [_TokenholderFactory_](../classes/_entities_factories_tokenholderfactory_.tokenholderfactory.md)
 
-• **taxWithholdingFactory**: *[TaxWithholdingFactory](../classes/_entities_factories_taxwithholdingfactory_.taxwithholdingfactory.md)*
+_Defined in_ [_src/Context.ts:29_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Context.ts#L29)
 
-*Defined in [src/Context.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Context.ts#L30)*
-
-___
-
-###  tieredStoFactory
-
-• **tieredStoFactory**: *[TieredStoFactory](../classes/_entities_factories_tieredstofactory_.tieredstofactory.md)*
-
-*Defined in [src/Context.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Context.ts#L26)*
-
-___
-
-###  tokenholderFactory
-
-• **tokenholderFactory**: *[TokenholderFactory](../classes/_entities_factories_tokenholderfactory_.tokenholderfactory.md)*
-
-*Defined in [src/Context.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Context.ts#L29)*

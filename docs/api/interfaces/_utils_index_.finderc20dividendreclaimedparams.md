@@ -1,4 +1,4 @@
-# Interface: FindErc20DividendReclaimedParams
+# FindErc20DividendReclaimedParams
 
 ## Hierarchy
 
@@ -15,20 +15,19 @@
 
 ## Properties
 
-###  eventName
+### eventName
 
-• **eventName**: *ERC20DividendCheckpointEvents.ERC20DividendReclaimed*
+• **eventName**: _ERC20DividendCheckpointEvents.ERC20DividendReclaimed_
 
-*Overrides [FindEventParams](_utils_index_.findeventparams.md).[eventName](_utils_index_.findeventparams.md#eventname)*
+_Overrides_ [_FindEventParams_](_utils_index_.findeventparams.md)_._[_eventName_](_utils_index_.findeventparams.md#eventname)
 
-*Defined in [src/utils/index.ts:192](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L192)*
+_Defined in_ [_src/utils/index.ts:192_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L192)
 
-___
+### logs
 
-###  logs
+• **logs**: _LogEntry \| LogWithDecodedArgs‹DecodedLogArgs›\[\]_
 
-• **logs**: *LogEntry | LogWithDecodedArgs‹DecodedLogArgs›[]*
+_Inherited from_ [_FindEventParams_](_utils_index_.findeventparams.md)_._[_logs_](_utils_index_.findeventparams.md#logs)
 
-*Inherited from [FindEventParams](_utils_index_.findeventparams.md).[logs](_utils_index_.findeventparams.md#logs)*
+_Defined in_ [_src/utils/index.ts:127_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L127)
 
-*Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L127)*

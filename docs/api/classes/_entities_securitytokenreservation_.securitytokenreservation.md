@@ -1,4 +1,4 @@
-# Class: SecurityTokenReservation
+# SecurityTokenReservation
 
 Class used to manage all the Security Token Reservation functionality
 
@@ -26,7 +26,7 @@ Class used to manage all the Security Token Reservation functionality
 
 ### Methods
 
-* [_refresh](_entities_securitytokenreservation_.securitytokenreservation.md#_refresh)
+* [\_refresh](_entities_securitytokenreservation_.securitytokenreservation.md#_refresh)
 * [createSecurityToken](_entities_securitytokenreservation_.securitytokenreservation.md#createsecuritytoken)
 * [isLaunched](_entities_securitytokenreservation_.securitytokenreservation.md#islaunched)
 * [toPojo](_entities_securitytokenreservation_.securitytokenreservation.md#topojo)
@@ -36,224 +36,196 @@ Class used to manage all the Security Token Reservation functionality
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new SecurityTokenReservation**(`params`: [Params](../interfaces/_entities_securitytokenreservation_.params.md) & [UniqueIdentifiers](../interfaces/_entities_securitytokenreservation_.uniqueidentifiers.md), `context`: [Context](_context_.context.md)): *[SecurityTokenReservation](_entities_securitytokenreservation_.securitytokenreservation.md)*
++ **new SecurityTokenReservation**\(`params`: [Params](../interfaces/_entities_securitytokenreservation_.params.md) & [UniqueIdentifiers](../interfaces/_entities_securitytokenreservation_.uniqueidentifiers.md), `context`: [Context](_context_.context.md)\): [_SecurityTokenReservation_](_entities_securitytokenreservation_.securitytokenreservation.md)
 
-*Defined in [src/entities/SecurityTokenReservation.ts:92](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L92)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:92_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L92)
 
 Create a new SecurityTokenReservation instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [Params](../interfaces/_entities_securitytokenreservation_.params.md) & [UniqueIdentifiers](../interfaces/_entities_securitytokenreservation_.uniqueidentifiers.md) |
-`context` | [Context](_context_.context.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [Params](../interfaces/_entities_securitytokenreservation_.params.md) & [UniqueIdentifiers](../interfaces/_entities_securitytokenreservation_.uniqueidentifiers.md) |
+| `context` | [Context](_context_.context.md) |
 
-**Returns:** *[SecurityTokenReservation](_entities_securitytokenreservation_.securitytokenreservation.md)*
+**Returns:** [_SecurityTokenReservation_](_entities_securitytokenreservation_.securitytokenreservation.md)
 
 ## Properties
 
 ### `Protected` context
 
-• **context**: *[Context](_context_.context.md)*
+• **context**: [_Context_](_context_.context.md)
 
-*Defined in [src/entities/SecurityTokenReservation.ts:92](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L92)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:92_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L92)
 
-___
+### expiry
 
-###  expiry
+• **expiry**: _Date_
 
-• **expiry**: *Date*
-
-*Defined in [src/entities/SecurityTokenReservation.ts:75](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L75)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:75_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L75)
 
 Date at which this reservation expires
 
-___
+### ownerAddress
 
-###  ownerAddress
+• **ownerAddress**: _string_
 
-• **ownerAddress**: *string*
-
-*Defined in [src/entities/SecurityTokenReservation.ts:85](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L85)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:85_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L85)
 
 Address of the owner of the reservation
 
-___
+### reservedAt
 
-###  reservedAt
+• **reservedAt**: _Date_
 
-• **reservedAt**: *Date*
-
-*Defined in [src/entities/SecurityTokenReservation.ts:80](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L80)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:80_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L80)
 
 Date when the Security Token was reserved
 
-___
-
 ### `Optional` securityTokenAddress
 
-• **securityTokenAddress**? : *undefined | string*
+• **securityTokenAddress**? : _undefined \| string_
 
-*Defined in [src/entities/SecurityTokenReservation.ts:90](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L90)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:90_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L90)
 
 Address of the Security Token if it has already been launched, undefined if not
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:70_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L70)
 
-*Defined in [src/entities/SecurityTokenReservation.ts:70](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L70)*
+### uid
 
-___
+• **uid**: _string_
 
-###  uid
+_Overrides_ [_Entity_](_entities_entity_.entity.md)_._[_uid_](_entities_entity_.entity.md#abstract-uid)
 
-• **uid**: *string*
-
-*Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)*
-
-*Defined in [src/entities/SecurityTokenReservation.ts:68](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L68)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:68_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L68)
 
 ## Methods
 
-###  _refresh
+### \_refresh
 
-▸ **_refresh**(`params`: Partial‹[Params](../interfaces/_entities_securitytokenreservation_.params.md)›): *void*
+▸ **\_refresh**\(`params`: Partial‹[Params](../interfaces/_entities_securitytokenreservation_.params.md)›\): _void_
 
-*Overrides [Entity](_entities_entity_.entity.md).[_refresh](_entities_entity_.entity.md#abstract-_refresh)*
+_Overrides_ [_Entity_](_entities_entity_.entity.md)_._[_\_refresh_](_entities_entity_.entity.md#abstract-_refresh)
 
-*Defined in [src/entities/SecurityTokenReservation.ts:167](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L167)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:167_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L167)
 
 Hydrate the entity
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | Partial‹[Params](../interfaces/_entities_securitytokenreservation_.params.md)› |
+| Name | Type |
+| :--- | :--- |
+| `params` | Partial‹[Params](../interfaces/_entities_securitytokenreservation_.params.md)› |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+### createSecurityToken
 
-###  createSecurityToken
+▸ **createSecurityToken**\(`args`: object\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_CreateSecurityTokenProcedureArgs_](../interfaces/_types_index_.createsecuritytokenprocedureargs.md)_,_ [_SecurityToken_](_entities_securitytoken_securitytoken_.securitytoken.md)_››_
 
-▸ **createSecurityToken**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateSecurityTokenProcedureArgs](../interfaces/_types_index_.createsecuritytokenprocedureargs.md), [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)››*
-
-*Defined in [src/entities/SecurityTokenReservation.ts:119](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L119)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:119_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L119)
 
 Creates a security token with the reserved symbol
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`detailsUrl?` | undefined &#124; string |
-`divisible` | boolean |
-`name` | string |
-`treasuryWallet?` | undefined &#124; string |
+| Name | Type |
+| :--- | :--- |
+| `detailsUrl?` | undefined \| string |
+| `divisible` | boolean |
+| `name` | string |
+| `treasuryWallet?` | undefined \| string |
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateSecurityTokenProcedureArgs](../interfaces/_types_index_.createsecuritytokenprocedureargs.md), [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)››*
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_CreateSecurityTokenProcedureArgs_](../interfaces/_types_index_.createsecuritytokenprocedureargs.md)_,_ [_SecurityToken_](_entities_securitytoken_securitytoken_.securitytoken.md)_››_
 
-___
+### isLaunched
 
-###  isLaunched
+▸ **isLaunched**\(\): _Promise‹boolean›_
 
-▸ **isLaunched**(): *Promise‹boolean›*
-
-*Defined in [src/entities/SecurityTokenReservation.ts:138](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L138)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:138_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L138)
 
 Returns true if the Security Token associated to this reservation has already been launched
 
-**Returns:** *Promise‹boolean›*
+**Returns:** _Promise‹boolean›_
 
-___
+### toPojo
 
-###  toPojo
+▸ **toPojo**\(\): _object_
 
-▸ **toPojo**(): *object*
+_Overrides_ [_Entity_](_entities_entity_.entity.md)_._[_toPojo_](_entities_entity_.entity.md#abstract-topojo)
 
-*Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:158_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L158)
 
-*Defined in [src/entities/SecurityTokenReservation.ts:158](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L158)*
+Convert entity to a POJO \(Plain Old Javascript Object\)
 
-Convert entity to a POJO (Plain Old Javascript Object)
+**Returns:** _object_
 
-**Returns:** *object*
+* **expiry**: _Date_
+* **ownerAddress**: _string_
+* **reservedAt**: _Date_
+* **securityTokenAddress**: _undefined \| string_
+* **symbol**: _string_
+* **uid**: _string_
 
-* **expiry**: *Date*
+### transferOwnership
 
-* **ownerAddress**: *string*
+▸ **transferOwnership**\(`args`: object\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_TransferReservationOwnershipProcedureArgs_](../interfaces/_types_index_.transferreservationownershipprocedureargs.md)_, void››_
 
-* **reservedAt**: *Date*
-
-* **securityTokenAddress**: *undefined | string*
-
-* **symbol**: *string*
-
-* **uid**: *string*
-
-___
-
-###  transferOwnership
-
-▸ **transferOwnership**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[TransferReservationOwnershipProcedureArgs](../interfaces/_types_index_.transferreservationownershipprocedureargs.md), void››*
-
-*Defined in [src/entities/SecurityTokenReservation.ts:147](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L147)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:147_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L147)
 
 Transfer the ownership of the ticker
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`newOwner` | string |
+| Name | Type |
+| :--- | :--- |
+| `newOwner` | string |
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[TransferReservationOwnershipProcedureArgs](../interfaces/_types_index_.transferreservationownershipprocedureargs.md), void››*
-
-___
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_TransferReservationOwnershipProcedureArgs_](../interfaces/_types_index_.transferreservationownershipprocedureargs.md)_, void››_
 
 ### `Static` generateId
 
-▸ **generateId**(`__namedParameters`: object): *string*
+▸ **generateId**\(`__namedParameters`: object\): _string_
 
-*Defined in [src/entities/SecurityTokenReservation.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L44)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:44_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L44)
 
 Generate the Security Token Reservation's UUID from its identifying properties
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`symbol` | string |
+| Name | Type |
+| :--- | :--- |
+| `symbol` | string |
 
-**Returns:** *string*
-
-___
+**Returns:** _string_
 
 ### `Static` unserialize
 
-▸ **unserialize**(`serialized`: string): *[UniqueIdentifiers](../interfaces/_entities_securitytokenreservation_.uniqueidentifiers.md)*
+▸ **unserialize**\(`serialized`: string\): [_UniqueIdentifiers_](../interfaces/_entities_securitytokenreservation_.uniqueidentifiers.md)
 
-*Defined in [src/entities/SecurityTokenReservation.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L55)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:55_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L55)
 
 Unserialize string to a Security Token Reservation object representation
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`serialized` | string |
+| Name | Type |
+| :--- | :--- |
+| `serialized` | string |
 
-**Returns:** *[UniqueIdentifiers](../interfaces/_entities_securitytokenreservation_.uniqueidentifiers.md)*
+**Returns:** [_UniqueIdentifiers_](../interfaces/_entities_securitytokenreservation_.uniqueidentifiers.md)
+

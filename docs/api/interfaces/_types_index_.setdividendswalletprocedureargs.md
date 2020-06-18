@@ -1,4 +1,4 @@
-# Interface: SetDividendsWalletProcedureArgs
+# SetDividendsWalletProcedureArgs
 
 Arguments for the [SetDividendsWallet](../enums/_types_index_.proceduretype.md#setdividendswallet) Procedure
 
@@ -15,20 +15,19 @@ Arguments for the [SetDividendsWallet](../enums/_types_index_.proceduretype.md#s
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *string*
+• **address**: _string_
 
-*Defined in [src/types/index.ts:859](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L859)*
+_Defined in_ [_src/types/index.ts:859_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L859)
 
 wallet address
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:855](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L855)*
+_Defined in_ [_src/types/index.ts:855_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L855)
 
 the symbol of the Security Token
+

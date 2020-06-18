@@ -1,4 +1,4 @@
-# Interface: ControllerTransferProcedureArgs
+# ControllerTransferProcedureArgs
 
 Arguments for the [ControllerTransfer](../enums/_types_index_.proceduretype.md#controllertransfer) Procedure
 
@@ -19,60 +19,51 @@ Arguments for the [ControllerTransfer](../enums/_types_index_.proceduretype.md#c
 
 ## Properties
 
-###  amount
+### amount
 
-• **amount**: *BigNumber*
+• **amount**: _BigNumber_
 
-*Defined in [src/types/index.ts:949](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L949)*
+_Defined in_ [_src/types/index.ts:949_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L949)
 
 amount of tokens being forcefully transferred
 
-___
-
 ### `Optional` data
 
-• **data**? : *undefined | string*
+• **data**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:953](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L953)*
+_Defined in_ [_src/types/index.ts:953_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L953)
 
 extra KYC transfer data
 
-___
+### from
 
-###  from
+• **from**: _string_
 
-• **from**: *string*
-
-*Defined in [src/types/index.ts:937](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L937)*
+_Defined in_ [_src/types/index.ts:937_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L937)
 
 sender's wallet address
 
-___
-
 ### `Optional` log
 
-• **log**? : *undefined | string*
+• **log**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:957](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L957)*
+_Defined in_ [_src/types/index.ts:957_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L957)
 
 extra log information
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:945](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L945)*
+_Defined in_ [_src/types/index.ts:945_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L945)
 
 symbol of the Security Token
 
-___
+### to
 
-###  to
+• **to**: _string_
 
-• **to**: *string*
-
-*Defined in [src/types/index.ts:941](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L941)*
+_Defined in_ [_src/types/index.ts:941_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L941)
 
 receiver's wallet address
+

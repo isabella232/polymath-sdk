@@ -1,4 +1,4 @@
-# Interface: CreateDividendDistributionProcedureArgs
+# CreateDividendDistributionProcedureArgs
 
 Arguments for the [CreateDividendDistribution](../enums/_types_index_.proceduretype.md#createdividenddistribution) Procedure
 
@@ -22,90 +22,75 @@ Arguments for the [CreateDividendDistribution](../enums/_types_index_.proceduret
 
 ## Properties
 
-###  amount
+### amount
 
-• **amount**: *BigNumber*
+• **amount**: _BigNumber_
 
-*Defined in [src/types/index.ts:347](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L347)*
+_Defined in_ [_src/types/index.ts:347_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L347)
 
 amount to be distributed as dividends
 
-___
+### checkpointIndex
 
-###  checkpointIndex
+• **checkpointIndex**: _number_
 
-• **checkpointIndex**: *number*
-
-*Defined in [src/types/index.ts:351](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L351)*
+_Defined in_ [_src/types/index.ts:351_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L351)
 
 index of the Checkpoint in which the Dividend Distribution will be based
 
-___
+### erc20Address
 
-###  erc20Address
+• **erc20Address**: _string_
 
-• **erc20Address**: *string*
-
-*Defined in [src/types/index.ts:343](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L343)*
+_Defined in_ [_src/types/index.ts:343_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L343)
 
 address of the ERC20 token
 
-___
-
 ### `Optional` excludedAddresses
 
-• **excludedAddresses**? : *string[]*
+• **excludedAddresses**? : _string\[\]_
 
-*Defined in [src/types/index.ts:359](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L359)*
+_Defined in_ [_src/types/index.ts:359_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L359)
 
 list of addresses that will be excluded from receiving payment
 
-___
+### expiryDate
 
-###  expiryDate
+• **expiryDate**: _Date_
 
-• **expiryDate**: *Date*
-
-*Defined in [src/types/index.ts:339](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L339)*
+_Defined in_ [_src/types/index.ts:339_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L339)
 
 date on which the Dividend will expire
 
-___
+### maturityDate
 
-###  maturityDate
+• **maturityDate**: _Date_
 
-• **maturityDate**: *Date*
-
-*Defined in [src/types/index.ts:335](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L335)*
+_Defined in_ [_src/types/index.ts:335_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L335)
 
 date from which Dividend payments can be pushed/claimed
 
-___
+### name
 
-###  name
+• **name**: _string_
 
-• **name**: *string*
-
-*Defined in [src/types/index.ts:355](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L355)*
+_Defined in_ [_src/types/index.ts:355_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L355)
 
 name of the distribution
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:331](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L331)*
+_Defined in_ [_src/types/index.ts:331_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L331)
 
 symbol of the Security Token
 
-___
-
 ### `Optional` taxWithholdings
 
-• **taxWithholdings**? : *[TaxWithholdingEntry](_types_index_.taxwithholdingentry.md)[]*
+• **taxWithholdings**? : [_TaxWithholdingEntry_](_types_index_.taxwithholdingentry.md)_\[\]_
 
-*Defined in [src/types/index.ts:363](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L363)*
+_Defined in_ [_src/types/index.ts:363_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L363)
 
 tax withholding list for the Dividend Distribution
+

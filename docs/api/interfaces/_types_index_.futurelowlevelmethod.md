@@ -1,7 +1,6 @@
-# Interface: FutureLowLevelMethod <**T, U**>
+# FutureLowLevelMethod
 
-Represents a contract method that doesn't exist yet but will exist
-once a certain post transaction resolver is resolved
+Represents a contract method that doesn't exist yet but will exist once a certain post transaction resolver is resolved
 
 ## Type parameters
 
@@ -26,30 +25,29 @@ type of the arguments object that the future method will accept
 
 ## Properties
 
-###  futureMethod
+### futureMethod
 
-• **futureMethod**: *function*
+• **futureMethod**: _function_
 
-*Defined in [src/types/index.ts:1519](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1519)*
+_Defined in_ [_src/types/index.ts:1519_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1519)
 
 function that returns a low level method
 
 #### Type declaration:
 
-▸ (`resolvedValue`: T): *Promise‹[LowLevelMethod](../modules/_types_index_.md#lowlevelmethod)‹U››*
+▸ \(`resolvedValue`: T\): _Promise‹_[_LowLevelMethod_](../external-modules/_types_index_.md#lowlevelmethod)_‹U››_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`resolvedValue` | T |
+| Name | Type |
+| :--- | :--- |
+| `resolvedValue` | T |
 
-___
+### futureValue
 
-###  futureValue
+• **futureValue**: _PostTransactionResolver‹T›_
 
-• **futureValue**: *PostTransactionResolver‹T›*
-
-*Defined in [src/types/index.ts:1523](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1523)*
+_Defined in_ [_src/types/index.ts:1523_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1523)
 
 post transaction resolver that resolves into the value that is passed to the future method
+

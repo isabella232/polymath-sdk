@@ -1,4 +1,4 @@
-# Interface: SignFreezeIssuanceAckProcedureArgs
+# SignFreezeIssuanceAckProcedureArgs
 
 Arguments for the [SignFreezeIssuanceAck](../enums/_types_index_.proceduretype.md#signfreezeissuanceack) Procedure
 
@@ -14,10 +14,11 @@ Arguments for the [SignFreezeIssuanceAck](../enums/_types_index_.proceduretype.m
 
 ## Properties
 
-###  symbol
+### symbol
 
-• **symbol**: *string*
+• **symbol**: _string_
 
-*Defined in [src/types/index.ts:1321](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1321)*
+_Defined in_ [_src/types/index.ts:1321_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1321)
 
 symbol of the Security Token
+

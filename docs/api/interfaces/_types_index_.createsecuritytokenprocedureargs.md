@@ -1,4 +1,4 @@
-# Interface: CreateSecurityTokenProcedureArgs
+# CreateSecurityTokenProcedureArgs
 
 Arguments for the [CreateSecurityToken](../enums/_types_index_.proceduretype.md#createsecuritytoken) Procedure
 
@@ -20,48 +20,41 @@ Arguments for the [CreateSecurityToken](../enums/_types_index_.proceduretype.md#
 
 ### `Optional` detailsUrl
 
-• **detailsUrl**? : *undefined | string*
+• **detailsUrl**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:407](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L407)*
+_Defined in_ [_src/types/index.ts:407_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L407)
 
 url where Security Token details can be found
 
-___
+### divisible
 
-###  divisible
+• **divisible**: _boolean_
 
-• **divisible**: *boolean*
-
-*Defined in [src/types/index.ts:411](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L411)*
+_Defined in_ [_src/types/index.ts:411_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L411)
 
 whether or not the Security Token is divisible
 
-___
+### name
 
-###  name
+• **name**: _string_
 
-• **name**: *string*
-
-*Defined in [src/types/index.ts:399](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L399)*
+_Defined in_ [_src/types/index.ts:399_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L399)
 
 name of the Security Token
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:403](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L403)*
+_Defined in_ [_src/types/index.ts:403_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L403)
 
 symbol of the Security Token
 
-___
-
 ### `Optional` treasuryWallet
 
-• **treasuryWallet**? : *undefined | string*
+• **treasuryWallet**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:415](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L415)*
+_Defined in_ [_src/types/index.ts:415_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L415)
 
 the Treasury Wallet address
+

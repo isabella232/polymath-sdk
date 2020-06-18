@@ -1,4 +1,4 @@
-# Interface: EnableTokenholderCountRestrictionsOpts
+# EnableTokenholderCountRestrictionsOpts
 
 ## Hierarchy
 
@@ -12,8 +12,9 @@
 
 ## Properties
 
-###  maxHolderCount
+### maxHolderCount
 
-• **maxHolderCount**: *number*
+• **maxHolderCount**: _number_
 
-*Defined in [src/entities/SecurityToken/Features.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Features.ts#L45)*
+_Defined in_ [_src/entities/SecurityToken/Features.ts:45_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Features.ts#L45)
+

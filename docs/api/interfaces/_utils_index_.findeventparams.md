@@ -1,4 +1,4 @@
-# Interface: FindEventParams
+# FindEventParams
 
 ## Hierarchy
 
@@ -55,16 +55,15 @@
 
 ## Properties
 
-###  eventName
+### eventName
 
-• **eventName**: *ContractEvents*
+• **eventName**: _ContractEvents_
 
-*Defined in [src/utils/index.ts:128](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L128)*
+_Defined in_ [_src/utils/index.ts:128_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L128)
 
-___
+### logs
 
-###  logs
+• **logs**: _LogEntry \| LogWithDecodedArgs‹DecodedLogArgs›\[\]_
 
-• **logs**: *LogEntry | LogWithDecodedArgs‹DecodedLogArgs›[]*
+_Defined in_ [_src/utils/index.ts:127_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L127)
 
-*Defined in [src/utils/index.ts:127](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L127)*

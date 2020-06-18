@@ -1,4 +1,4 @@
-# Interface: AssignStoRoleProcedureArgs
+# AssignStoRoleProcedureArgs
 
 Arguments for the [AssignStoRole](../enums/_types_index_.proceduretype.md#assignstorole) Procedure
 
@@ -19,58 +19,49 @@ Arguments for the [AssignStoRole](../enums/_types_index_.proceduretype.md#assign
 
 ## Properties
 
-###  assign
+### assign
 
-• **assign**: *boolean*
+• **assign**: _boolean_
 
-*Defined in [src/types/index.ts:923](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L923)*
+_Defined in_ [_src/types/index.ts:923_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L923)
 
 whether to assign or revoke the role
 
-___
+### delegateAddress
 
-###  delegateAddress
+• **delegateAddress**: _string_
 
-• **delegateAddress**: *string*
-
-*Defined in [src/types/index.ts:914](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L914)*
+_Defined in_ [_src/types/index.ts:914_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L914)
 
 wallet address of the delegate
 
-___
-
 ### `Optional` description
 
-• **description**? : *undefined | string*
+• **description**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:927](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L927)*
+_Defined in_ [_src/types/index.ts:927_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L927)
 
-description of the delegate (i.e. "company lawyer")
+description of the delegate \(i.e. "company lawyer"\)
 
-___
+### role
 
-###  role
+• **role**: [_StoRole_](../enums/_types_index_.storole.md)
 
-• **role**: *[StoRole](../enums/_types_index_.storole.md)*
-
-*Defined in [src/types/index.ts:919](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L919)*
+_Defined in_ [_src/types/index.ts:919_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L919)
 
 role to assign/revoke to/from the delegate
 
-___
+### stoAddress
 
-###  stoAddress
+• **stoAddress**: _string_
 
-• **stoAddress**: *string*
+_Defined in_ [_src/types/index.ts:915_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L915)
 
-*Defined in [src/types/index.ts:915](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L915)*
+### symbol
 
-___
+• **symbol**: _string_
 
-###  symbol
-
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:910](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L910)*
+_Defined in_ [_src/types/index.ts:910_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L910)
 
 symbol of the Security Token
+

@@ -1,4 +1,4 @@
-# Interface: GetCheckpointParams
+# GetCheckpointParams
 
 Parameters for [getCheckpoint](../classes/_polymathbase_.polymathbase.md#getcheckpoint)
 
@@ -14,8 +14,9 @@ Parameters for [getCheckpoint](../classes/_polymathbase_.polymathbase.md#getchec
 
 ## Properties
 
-###  checkpointIndex
+### checkpointIndex
 
-• **checkpointIndex**: *number*
+• **checkpointIndex**: _number_
 
-*Defined in [src/entities/SecurityToken/Tokenholders.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Tokenholders.ts#L18)*
+Defined in src/entities/SecurityToken/Tokenholders.ts:18
+

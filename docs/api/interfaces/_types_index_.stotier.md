@@ -1,7 +1,6 @@
-# Interface: StoTier
+# StoTier
 
-Represents a tier of investment in a Tiered STO.
-Different tiers can sell different Security Token amounts at different prices, and apply discounts when purchasing with POLY
+Represents a tier of investment in a Tiered STO. Different tiers can sell different Security Token amounts at different prices, and apply discounts when purchasing with POLY
 
 ## Hierarchy
 
@@ -20,39 +19,33 @@ Different tiers can sell different Security Token amounts at different prices, a
 
 ### `Optional` discountedPrice
 
-• **discountedPrice**? : *BigNumber*
+• **discountedPrice**? : _BigNumber_
 
-*Defined in [src/types/index.ts:717](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L717)*
+_Defined in_ [_src/types/index.ts:717_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L717)
 
 Price of tokens sold at a discount
 
-___
+### price
 
-###  price
+• **price**: _BigNumber_
 
-• **price**: *BigNumber*
-
-*Defined in [src/types/index.ts:708](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L708)*
+_Defined in_ [_src/types/index.ts:708_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L708)
 
 Price of each token in this tier
 
-___
+### tokensOnSale
 
-###  tokensOnSale
+• **tokensOnSale**: _BigNumber_
 
-• **tokensOnSale**: *BigNumber*
-
-*Defined in [src/types/index.ts:704](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L704)*
+_Defined in_ [_src/types/index.ts:704_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L704)
 
 Amount of tokens to sell in this tier
 
-___
-
 ### `Optional` tokensWithDiscount
 
-• **tokensWithDiscount**? : *BigNumber*
+• **tokensWithDiscount**? : _BigNumber_
 
-*Defined in [src/types/index.ts:713](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L713)*
+_Defined in_ [_src/types/index.ts:713_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L713)
 
-Amount of tokens to sell at a discount if paid in POLY.
-Must be less than the amount of tokens on sale
+Amount of tokens to sell at a discount if paid in POLY. Must be less than the amount of tokens on sale
+

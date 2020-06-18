@@ -1,4 +1,4 @@
-# Interface: EntityClass <**T, U**>
+# EntityClass
 
 Represents an entity
 
@@ -25,53 +25,52 @@ Represents an entity
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new EntityClass**(`params`: T & U, `context`: [Context](../classes/_context_.context.md)): *[Entity](../classes/_entities_entity_.entity.md)‹T›*
++ **new EntityClass**\(`params`: T & U, `context`: [Context](../classes/_context_.context.md)\): [_Entity_](../classes/_entities_entity_.entity.md)_‹T›_
 
-*Defined in [src/entities/factories/Factory.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/factories/Factory.ts#L8)*
+_Defined in_ [_src/entities/factories/Factory.ts:8_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/Factory.ts#L8)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | T & U |
-`context` | [Context](../classes/_context_.context.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | T & U |
+| `context` | [Context](../classes/_context_.context.md) |
 
-**Returns:** *[Entity](../classes/_entities_entity_.entity.md)‹T›*
+**Returns:** [_Entity_](../classes/_entities_entity_.entity.md)_‹T›_
 
 ## Methods
 
-###  generateId
+### generateId
 
-▸ **generateId**(`identifiers`: U): *string*
+▸ **generateId**\(`identifiers`: U\): _string_
 
-*Defined in [src/entities/factories/Factory.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/factories/Factory.ts#L19)*
+_Defined in_ [_src/entities/factories/Factory.ts:19_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/Factory.ts#L19)
 
 generate a unique identifier for an entity
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`identifiers` | U |
+| Name | Type |
+| :--- | :--- |
+| `identifiers` | U |
 
-**Returns:** *string*
+**Returns:** _string_
 
-___
+### unserialize
 
-###  unserialize
+▸ **unserialize**\(`uid`: string\): _U_
 
-▸ **unserialize**(`uid`: string): *U*
-
-*Defined in [src/entities/factories/Factory.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/factories/Factory.ts#L14)*
+_Defined in_ [_src/entities/factories/Factory.ts:14_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/Factory.ts#L14)
 
 unserialize serialized entity information
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`uid` | string |
+| Name | Type |
+| :--- | :--- |
+| `uid` | string |
 
-**Returns:** *U*
+**Returns:** _U_
+

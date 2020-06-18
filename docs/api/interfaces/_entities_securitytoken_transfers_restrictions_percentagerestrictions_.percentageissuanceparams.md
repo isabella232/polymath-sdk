@@ -1,4 +1,4 @@
-# Interface: PercentageIssuanceParams
+# PercentageIssuanceParams
 
 ## Hierarchy
 
@@ -12,8 +12,9 @@
 
 ## Properties
 
-###  allowPrimaryIssuance
+### allowPrimaryIssuance
 
-• **allowPrimaryIssuance**: *boolean*
+• **allowPrimaryIssuance**: _boolean_
 
-*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L22)*
+_Defined in_ [_src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:22_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L22)
+

@@ -1,4 +1,4 @@
-# Interface: UniqueIdentifiers
+# UniqueIdentifiers
 
 Properties that uniquely identify an STO
 
@@ -16,24 +16,21 @@ Properties that uniquely identify an STO
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *string*
+• **address**: _string_
 
-*Defined in [src/entities/Sto.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Sto.ts#L21)*
+_Defined in_ [_src/entities/Sto.ts:21_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Sto.ts#L21)
 
-___
+### securityTokenId
 
-###  securityTokenId
+• **securityTokenId**: _string_
 
-• **securityTokenId**: *string*
+_Defined in_ [_src/entities/Sto.ts:19_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Sto.ts#L19)
 
-*Defined in [src/entities/Sto.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Sto.ts#L19)*
+### stoType
 
-___
+• **stoType**: [_StoType_](../enums/_types_index_.stotype.md)
 
-###  stoType
+_Defined in_ [_src/entities/Sto.ts:20_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Sto.ts#L20)
 
-• **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
-
-*Defined in [src/entities/Sto.ts:20](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Sto.ts#L20)*

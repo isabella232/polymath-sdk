@@ -1,4 +1,4 @@
-# Interface: UniqueIdentifiers
+# UniqueIdentifiers
 
 Properties that uniquely identify a Security Token Reservation
 
@@ -14,8 +14,9 @@ Properties that uniquely identify a Security Token Reservation
 
 ## Properties
 
-###  symbol
+### symbol
 
-• **symbol**: *string*
+• **symbol**: _string_
 
-*Defined in [src/entities/SecurityTokenReservation.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityTokenReservation.ts#L12)*
+_Defined in_ [_src/entities/SecurityTokenReservation.ts:12_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityTokenReservation.ts#L12)
+

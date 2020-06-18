@@ -1,4 +1,4 @@
-# Interface: BaseDividend
+# BaseDividend
 
 Internal representation of a Dividend Distribution
 
@@ -27,140 +27,115 @@ Internal representation of a Dividend Distribution
 
 ## Properties
 
-###  amount
+### amount
 
-• **amount**: *BigNumber*
+• **amount**: _BigNumber_
 
-*Defined in [src/PolymathBase.ts:301](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L301)*
+_Defined in_ [_src/PolymathBase.ts:301_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L301)
 
 amount of tokens provided in the Dividend
 
-___
+### checkpointId
 
-###  checkpointId
+• **checkpointId**: _number_
 
-• **checkpointId**: *number*
-
-*Defined in [src/PolymathBase.ts:285](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L285)*
+_Defined in_ [_src/PolymathBase.ts:285_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L285)
 
 checkpoint UUID to which this Dividend Distribution is associated
 
-___
+### claimedAmount
 
-###  claimedAmount
+• **claimedAmount**: _BigNumber_
 
-• **claimedAmount**: *BigNumber*
-
-*Defined in [src/PolymathBase.ts:305](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L305)*
+_Defined in_ [_src/PolymathBase.ts:305_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L305)
 
 amount of tokens paid so far
 
-___
+### created
 
-###  created
+• **created**: _Date_
 
-• **created**: *Date*
-
-*Defined in [src/PolymathBase.ts:289](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L289)*
+_Defined in_ [_src/PolymathBase.ts:289_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L289)
 
 date at which the Dividend was created
 
-___
+### currency
 
-###  currency
+• **currency**: _string \| null_
 
-• **currency**: *string | null*
-
-*Defined in [src/PolymathBase.ts:329](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L329)*
+_Defined in_ [_src/PolymathBase.ts:329_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L329)
 
 symbol of the currency in which Dividends are being distributed
 
-___
+### expiry
 
-###  expiry
+• **expiry**: _Date_
 
-• **expiry**: *Date*
-
-*Defined in [src/PolymathBase.ts:297](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L297)*
+_Defined in_ [_src/PolymathBase.ts:297_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L297)
 
 date at which the Dividend will expire
 
-___
+### index
 
-###  index
+• **index**: _number_
 
-• **index**: *number*
-
-*Defined in [src/PolymathBase.ts:281](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L281)*
+_Defined in_ [_src/PolymathBase.ts:281_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L281)
 
 index of the dividend
 
-___
+### maturity
 
-###  maturity
+• **maturity**: _Date_
 
-• **maturity**: *Date*
-
-*Defined in [src/PolymathBase.ts:293](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L293)*
+_Defined in_ [_src/PolymathBase.ts:293_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L293)
 
 date from which payments can be distributed
 
-___
+### name
 
-###  name
+• **name**: _string_
 
-• **name**: *string*
-
-*Defined in [src/PolymathBase.ts:325](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L325)*
+_Defined in_ [_src/PolymathBase.ts:325_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L325)
 
 name of the Dividend
 
-___
+### reclaimed
 
-###  reclaimed
+• **reclaimed**: _boolean_
 
-• **reclaimed**: *boolean*
-
-*Defined in [src/PolymathBase.ts:313](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L313)*
+_Defined in_ [_src/PolymathBase.ts:313_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L313)
 
 whether expired payments have been reclaimed
 
-___
+### tokenholders
 
-###  tokenholders
+• **tokenholders**: [_DividendTokenholderStatus_](_types_index_.dividendtokenholderstatus.md)_\[\]_
 
-• **tokenholders**: *[DividendTokenholderStatus](_types_index_.dividendtokenholderstatus.md)[]*
-
-*Defined in [src/PolymathBase.ts:333](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L333)*
+_Defined in_ [_src/PolymathBase.ts:333_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L333)
 
 dividend Tokenholders
 
-___
+### totalSupply
 
-###  totalSupply
+• **totalSupply**: _BigNumber_
 
-• **totalSupply**: *BigNumber*
-
-*Defined in [src/PolymathBase.ts:309](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L309)*
+_Defined in_ [_src/PolymathBase.ts:309_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L309)
 
 total supply of the Security Token
 
-___
+### totalWithheld
 
-###  totalWithheld
+• **totalWithheld**: _BigNumber_
 
-• **totalWithheld**: *BigNumber*
-
-*Defined in [src/PolymathBase.ts:317](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L317)*
+_Defined in_ [_src/PolymathBase.ts:317_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L317)
 
 total amount of tokens withheld as tax so far
 
-___
+### totalWithheldWithdrawn
 
-###  totalWithheldWithdrawn
+• **totalWithheldWithdrawn**: _BigNumber_
 
-• **totalWithheldWithdrawn**: *BigNumber*
-
-*Defined in [src/PolymathBase.ts:321](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L321)*
+_Defined in_ [_src/PolymathBase.ts:321_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L321)
 
 total amount of withheld taxes already withdrawn from the storage wallet
+

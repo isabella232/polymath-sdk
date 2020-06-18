@@ -1,4 +1,4 @@
-# Class: PolymathBase
+# PolymathBase
 
 Class that wraps the polymathnetwork/contract-wrappers library to add utility functions
 
@@ -48,58 +48,53 @@ Class that wraps the polymathnetwork/contract-wrappers library to add utility fu
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new PolymathBase**(`params`: ApiConstructorParams): *[PolymathBase](_polymathbase_.polymathbase.md)*
++ **new PolymathBase**\(`params`: ApiConstructorParams\): [_PolymathBase_](_polymathbase_.polymathbase.md)
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:79
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:79
 
 Instantiates a new PolymathAPI instance.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | ApiConstructorParams |
+| Name | Type |
+| :--- | :--- |
+| `params` | ApiConstructorParams |
 
-**Returns:** *[PolymathBase](_polymathbase_.polymathbase.md)*
+**Returns:** [_PolymathBase_](_polymathbase_.polymathbase.md)
 
 An instance of the PolymathAPI class.
 
 ## Properties
 
-###  contractFactory
+### contractFactory
 
-• **contractFactory**: *ContractFactory*
+• **contractFactory**: _ContractFactory_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:79
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:79
 
-___
+### featureRegistry
 
-###  featureRegistry
+• **featureRegistry**: _FeatureRegistryWrapper_
 
-• **featureRegistry**: *FeatureRegistryWrapper*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:62
 
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:62
+An instance of the FeatureRegistryWrapper class containing methods for interacting with FeatureRegistry smart contract.
 
-An instance of the FeatureRegistryWrapper class containing methods
-for interacting with FeatureRegistry smart contract.
+### getAccount
 
-___
+• **getAccount**: _function_
 
-###  getAccount
+_Inherited from void_
 
-• **getAccount**: *function*
-
-*Inherited from void*
-
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:95
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:95
 
 Get the account currently used by PolymathAPI
 
@@ -107,17 +102,15 @@ Get the account currently used by PolymathAPI
 
 #### Type declaration:
 
-▸ (): *Promise‹string›*
+▸ \(\): _Promise‹string›_
 
-___
+### getBalance
 
-###  getBalance
+• **getBalance**: _function_
 
-• **getBalance**: *function*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:100
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:100
 
 Get the ETH balance
 
@@ -125,23 +118,21 @@ Get the ETH balance
 
 #### Type declaration:
 
-▸ (`params`: GetBalanceParams): *Promise‹BigNumber›*
+▸ \(`params`: GetBalanceParams\): _Promise‹BigNumber›_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | GetBalanceParams |
+| Name | Type |
+| :--- | :--- |
+| `params` | GetBalanceParams |
 
-___
+### getERC20TokenWrapper
 
-###  getERC20TokenWrapper
+• **getERC20TokenWrapper**: _function_
 
-• **getERC20TokenWrapper**: *function*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:90
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:90
 
 Get a wrapped token from an address
 
@@ -149,374 +140,328 @@ Get a wrapped token from an address
 
 #### Type declaration:
 
-▸ (`params`: GetERC20WrapperParams): *Promise‹ERC20›*
+▸ \(`params`: GetERC20WrapperParams\): _Promise‹ERC20›_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | GetERC20WrapperParams |
+| Name | Type |
+| :--- | :--- |
+| `params` | GetERC20WrapperParams |
 
-___
+### getPolyTokens
 
-###  getPolyTokens
+• **getPolyTokens**: _function_
 
-• **getPolyTokens**: *function*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:85
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:85
 
 #### Type declaration:
 
-▸ (`params`: GetTokensParams): *Promise‹PolyResponse›*
+▸ \(`params`: GetTokensParams\): _Promise‹PolyResponse›_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | GetTokensParams |
+| Name | Type |
+| :--- | :--- |
+| `params` | GetTokensParams |
 
-___
+### isTestnet
 
-###  isTestnet
+• **isTestnet**: _function_
 
-• **isTestnet**: *function*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:104
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:104
 
 Is it Testnet network?
 
 #### Type declaration:
 
-▸ (): *Promise‹boolean›*
+▸ \(\): _Promise‹boolean›_
 
-___
+### moduleFactory
 
-###  moduleFactory
+• **moduleFactory**: _ModuleWrapperFactory_
 
-• **moduleFactory**: *ModuleWrapperFactory*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:72
 
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:72
+An instance of the ModuleWrapperFactory class to get different module wrapper instances to interact with SecurityToken smart contracts
 
-An instance of the ModuleWrapperFactory class to get
-different module wrapper instances to interact with SecurityToken smart contracts
+### moduleRegistry
 
-___
+• **moduleRegistry**: _ModuleRegistryWrapper_
 
-###  moduleRegistry
+_Inherited from void_
 
-• **moduleRegistry**: *ModuleRegistryWrapper*
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:57
 
-*Inherited from void*
+An instance of the ModuleRegistryWrapper class containing methods for interacting with ModuleRegistry smart contract.
 
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:57
+### polyToken
 
-An instance of the ModuleRegistryWrapper class containing methods
-for interacting with ModuleRegistry smart contract.
+• **polyToken**: _PolyTokenWrapper_
 
-___
+_Inherited from void_
 
-###  polyToken
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:52
 
-• **polyToken**: *PolyTokenWrapper*
+An instance of the PolyTokenWrapper class containing methods for interacting with PolyToken smart contract.
 
-*Inherited from void*
+### polyTokenFaucet
 
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:52
+• **polyTokenFaucet**: _PolyTokenFaucetWrapper_
 
-An instance of the PolyTokenWrapper class containing methods
-for interacting with PolyToken smart contract.
+_Inherited from void_
 
-___
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:77
 
-###  polyTokenFaucet
+An instance of the PolyTokenFaucetWrapper class containing methods for interacting with PolyTokenFaucet smart contract.
 
-• **polyTokenFaucet**: *PolyTokenFaucetWrapper*
+### polymathRegistry
 
-*Inherited from void*
+• **polymathRegistry**: _PolymathRegistryWrapper_
 
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:77
+_Inherited from void_
 
-An instance of the PolyTokenFaucetWrapper class containing methods
-for interacting with PolyTokenFaucet smart contract.
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:42
 
-___
+An instance of the PolymathRegistryWrapper class containing methods for interacting with PolymathRegistry smart contract.
 
-###  polymathRegistry
+### securityTokenRegistry
 
-• **polymathRegistry**: *PolymathRegistryWrapper*
+• **securityTokenRegistry**: _SecurityTokenRegistryWrapper_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:42
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:47
 
-An instance of the PolymathRegistryWrapper class containing methods
-for interacting with PolymathRegistry smart contract.
+An instance of the SecurityTokenRegistryWrapper class containing methods for interacting with SecurityTokenRegistry smart contract.
 
-___
+### tokenFactory
 
-###  securityTokenRegistry
+• **tokenFactory**: _TokenWrapperFactory_
 
-• **securityTokenRegistry**: *SecurityTokenRegistryWrapper*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:67
 
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:47
+An instance of the TokenWrapperFactory class to get TokenWrapper instances to interact with SecurityToken or ERC20 smart contracts
 
-An instance of the SecurityTokenRegistryWrapper class containing methods
-for interacting with SecurityTokenRegistry smart contract.
+### web3Wrapper
 
-___
+• **web3Wrapper**: _Web3Wrapper_
 
-###  tokenFactory
+_Inherited from void_
 
-• **tokenFactory**: *TokenWrapperFactory*
-
-*Inherited from void*
-
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:67
-
-An instance of the TokenWrapperFactory class to get
-TokenWrapper instances to interact with SecurityToken or ERC20 smart contracts
-
-___
-
-###  web3Wrapper
-
-• **web3Wrapper**: *Web3Wrapper*
-
-*Inherited from void*
-
-Defined in node_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:78
+Defined in node\_modules/@polymathnetwork/contract-wrappers/lib/PolymathAPI.d.ts:78
 
 ## Methods
 
-###  getAllDividends
+### getAllDividends
 
-▸ **getAllDividends**(`__namedParameters`: object): *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)[]›*
+▸ **getAllDividends**\(`__namedParameters`: object\): _Promise‹_[_BaseDividend_](../interfaces/_polymathbase_.basedividend.md)_\[\]›_
 
-*Defined in [src/PolymathBase.ts:888](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L888)*
+_Defined in_ [_src/PolymathBase.ts:888_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L888)
 
 Auxiliary function to fetch all dividend distributions
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type | Description |
------- | ------ | ------ |
-`checkpointId` | undefined &#124; number | checkpoint UUID |
-`securityTokenSymbol` | string | symbol of the Security Token |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `checkpointId` | undefined \| number | checkpoint UUID |
+| `securityTokenSymbol` | string | symbol of the Security Token |
 
-**Returns:** *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)[]›*
+**Returns:** _Promise‹_[_BaseDividend_](../interfaces/_polymathbase_.basedividend.md)_\[\]›_
 
-___
+### getAttachedModules
 
-###  getAttachedModules
+▸ **getAttachedModules**\(`__namedParameters`: object, `opts?`: [GetAttachedModulesOpts](../interfaces/_polymathbase_.getattachedmodulesopts.md)\): _Promise‹any\[\]›_
 
-▸ **getAttachedModules**(`__namedParameters`: object, `opts?`: [GetAttachedModulesOpts](../interfaces/_polymathbase_.getattachedmodulesopts.md)): *Promise‹any[]›*
-
-*Defined in [src/PolymathBase.ts:523](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L523)*
+_Defined in_ [_src/PolymathBase.ts:523_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L523)
 
 Fetch all Modules of a certain type attached to a Security Token
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type | Description |
------- | ------ | ------ |
-`moduleName` | ModuleName | name of the Module |
-`symbol` | string | symbol of the Security Token |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `moduleName` | ModuleName | name of the Module |
+| `symbol` | string | symbol of the Security Token |
 
-▪`Optional`  **opts**: *[GetAttachedModulesOpts](../interfaces/_polymathbase_.getattachedmodulesopts.md)*
+▪`Optional` **opts**: [_GetAttachedModulesOpts_](../interfaces/_polymathbase_.getattachedmodulesopts.md)
 
-**Returns:** *Promise‹any[]›*
+**Returns:** _Promise‹any\[\]›_
 
-___
+### getCheckpoint
 
-###  getCheckpoint
+▸ **getCheckpoint**\(`__namedParameters`: object\): _Promise‹_[_BaseCheckpoint_](../interfaces/_polymathbase_.basecheckpoint.md)_›_
 
-▸ **getCheckpoint**(`__namedParameters`: object): *Promise‹[BaseCheckpoint](../interfaces/_polymathbase_.basecheckpoint.md)›*
-
-*Defined in [src/PolymathBase.ts:697](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L697)*
+_Defined in_ [_src/PolymathBase.ts:697_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L697)
 
 Get data associated to a Checkpoint
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type | Description |
------- | ------ | ------ |
-`checkpointId` | number | checkpoint UUID |
-`securityToken` | SecurityToken_3_0_0 | instance of the Security Token |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `checkpointId` | number | checkpoint UUID |
+| `securityToken` | SecurityToken\_3\_0\_0 | instance of the Security Token |
 
-**Returns:** *Promise‹[BaseCheckpoint](../interfaces/_polymathbase_.basecheckpoint.md)›*
+**Returns:** _Promise‹_[_BaseCheckpoint_](../interfaces/_polymathbase_.basecheckpoint.md)_›_
 
-___
+### getCheckpoints
 
-###  getCheckpoints
+▸ **getCheckpoints**\(`__namedParameters`: object\): _Promise‹_[_BaseCheckpoint_](../interfaces/_polymathbase_.basecheckpoint.md)_\[\]›_
 
-▸ **getCheckpoints**(`__namedParameters`: object): *Promise‹[BaseCheckpoint](../interfaces/_polymathbase_.basecheckpoint.md)[]›*
-
-*Defined in [src/PolymathBase.ts:722](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L722)*
+_Defined in_ [_src/PolymathBase.ts:722_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L722)
 
 Get all Checkpoints of a Security Token
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type | Description |
------- | ------ | ------ |
-`securityToken` | SecurityToken_3_0_0 | instance of the Security Token |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `securityToken` | SecurityToken\_3\_0\_0 | instance of the Security Token |
 
-**Returns:** *Promise‹[BaseCheckpoint](../interfaces/_polymathbase_.basecheckpoint.md)[]›*
+**Returns:** _Promise‹_[_BaseCheckpoint_](../interfaces/_polymathbase_.basecheckpoint.md)_\[\]›_
 
-___
+### getDividend
 
-###  getDividend
+▸ **getDividend**\(`__namedParameters`: object\): _Promise‹_[_BaseDividend_](../interfaces/_polymathbase_.basedividend.md)_›_
 
-▸ **getDividend**(`__namedParameters`: object): *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)›*
-
-*Defined in [src/PolymathBase.ts:783](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L783)*
+_Defined in_ [_src/PolymathBase.ts:783_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L783)
 
 Get data associated to a specific Dividend Distribution
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type | Description |
------- | ------ | ------ |
-`dividendIndex` | number | index of the Dividend |
-`dividendsModule` | ERC20DividendCheckpoint_3_0_0 | - |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `dividendIndex` | number | index of the Dividend |
+| `dividendsModule` | ERC20DividendCheckpoint\_3\_0\_0 | - |
 
-**Returns:** *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)›*
+**Returns:** _Promise‹_[_BaseDividend_](../interfaces/_polymathbase_.basedividend.md)_›_
 
-___
+### getDividends
 
-###  getDividends
+▸ **getDividends**\(`__namedParameters`: object\): _Promise‹_[_BaseDividend_](../interfaces/_polymathbase_.basedividend.md)_\[\]›_
 
-▸ **getDividends**(`__namedParameters`: object): *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)[]›*
-
-*Defined in [src/PolymathBase.ts:868](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L868)*
+_Defined in_ [_src/PolymathBase.ts:868_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L868)
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`dividendsModule` | ERC20DividendCheckpoint_3_0_0 |
+| Name | Type |
+| :--- | :--- |
+| `dividendsModule` | ERC20DividendCheckpoint\_3\_0\_0 |
 
-**Returns:** *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)[]›*
+**Returns:** _Promise‹_[_BaseDividend_](../interfaces/_polymathbase_.basedividend.md)_\[\]›_
 
-___
+### getDividendsByCheckpoint
 
-###  getDividendsByCheckpoint
+▸ **getDividendsByCheckpoint**\(`__namedParameters`: object\): _Promise‹_[_BaseDividend_](../interfaces/_polymathbase_.basedividend.md)_\[\]›_
 
-▸ **getDividendsByCheckpoint**(`__namedParameters`: object): *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)[]›*
-
-*Defined in [src/PolymathBase.ts:849](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L849)*
+_Defined in_ [_src/PolymathBase.ts:849_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L849)
 
 Fetch list of all Dividends at a certain Checkpoint
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type | Description |
------- | ------ | ------ |
-`checkpointId` | number | checkpoint UUID |
-`dividendsModule` | ERC20DividendCheckpoint_3_0_0 | - |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `checkpointId` | number | checkpoint UUID |
+| `dividendsModule` | ERC20DividendCheckpoint\_3\_0\_0 | - |
 
-**Returns:** *Promise‹[BaseDividend](../interfaces/_polymathbase_.basedividend.md)[]›*
+**Returns:** _Promise‹_[_BaseDividend_](../interfaces/_polymathbase_.basedividend.md)_\[\]›_
 
-___
+### getModuleAddressesByName
 
-###  getModuleAddressesByName
+▸ **getModuleAddressesByName**\(`__namedParameters`: object, `opts?`: [GetModuleAddressesByNameOpts](../interfaces/_polymathbase_.getmoduleaddressesbynameopts.md)\): _Promise‹string\[\]›_
 
-▸ **getModuleAddressesByName**(`__namedParameters`: object, `opts?`: [GetModuleAddressesByNameOpts](../interfaces/_polymathbase_.getmoduleaddressesbynameopts.md)): *Promise‹string[]›*
-
-*Defined in [src/PolymathBase.ts:485](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L485)*
+_Defined in_ [_src/PolymathBase.ts:485_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L485)
 
 Fetch addresses of all Modules of a certain type attached to a Security Token
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type | Description |
------- | ------ | ------ |
-`moduleName` | ModuleName | name of the Module |
-`symbol` | string | symbol of the Security Token |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `moduleName` | ModuleName | name of the Module |
+| `symbol` | string | symbol of the Security Token |
 
-▪`Optional`  **opts**: *[GetModuleAddressesByNameOpts](../interfaces/_polymathbase_.getmoduleaddressesbynameopts.md)*
+▪`Optional` **opts**: [_GetModuleAddressesByNameOpts_](../interfaces/_polymathbase_.getmoduleaddressesbynameopts.md)
 
-**Returns:** *Promise‹string[]›*
+**Returns:** _Promise‹string\[\]›_
 
-___
+### getModuleFactoryAddress
 
-###  getModuleFactoryAddress
+▸ **getModuleFactoryAddress**\(`__namedParameters`: object\): _Promise‹string›_
 
-▸ **getModuleFactoryAddress**(`__namedParameters`: object): *Promise‹string›*
-
-*Defined in [src/PolymathBase.ts:362](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L362)*
+_Defined in_ [_src/PolymathBase.ts:362_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L362)
 
 Fetch the address of a specified Module Factory
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type | Description |
------- | ------ | ------ |
-`moduleName` | ModuleName | name of the Module corresponding to the Module Factory |
-`tokenAddress` | string | address of the Security Token |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `moduleName` | ModuleName | name of the Module corresponding to the Module Factory |
+| `tokenAddress` | string | address of the Security Token |
 
-**Returns:** *Promise‹string›*
+**Returns:** _Promise‹string›_
 
-___
+### getTreasuryWallet
 
-###  getTreasuryWallet
+▸ **getTreasuryWallet**\(`__namedParameters`: object\): _Promise‹string›_
 
-▸ **getTreasuryWallet**(`__namedParameters`: object): *Promise‹string›*
-
-*Defined in [src/PolymathBase.ts:425](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L425)*
+_Defined in_ [_src/PolymathBase.ts:425_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L425)
 
 Fetch a Module's Treasury Wallet
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`module` | GeneralPermissionManager_3_0_0 &#124; GeneralPermissionManager_3_1_0 &#124; CountTransferManager_3_0_0 &#124; GeneralTransferManager_3_0_0 &#124; GeneralTransferManager_3_1_0 &#124; ManualApprovalTransferManager_3_0_0 &#124; PercentageTransferManager_3_0_0 &#124; VolumeRestrictionTransferManager_3_0_0 &#124; BlacklistTransferManager_3_0_0 &#124; LockUpTransferManager_3_0_0 &#124; RestrictedPartialSaleTransferManager_3_1_0 &#124; CappedSTO_3_0_0 &#124; CappedSTO_3_1_0 &#124; USDTieredSTO_3_0_0 &#124; USDTieredSTO_3_1_0 &#124; ERC20DividendCheckpoint_3_0_0 &#124; VestingEscrowWallet_3_0_0 &#124; VestingEscrowWallet_3_1_0 &#124; EtherDividendCheckpoint_3_0_0 |
+| Name | Type |
+| :--- | :--- |
+| `module` | GeneralPermissionManager\_3\_0\_0 \| GeneralPermissionManager\_3\_1\_0 \| CountTransferManager\_3\_0\_0 \| GeneralTransferManager\_3\_0\_0 \| GeneralTransferManager\_3\_1\_0 \| ManualApprovalTransferManager\_3\_0\_0 \| PercentageTransferManager\_3\_0\_0 \| VolumeRestrictionTransferManager\_3\_0\_0 \| BlacklistTransferManager\_3\_0\_0 \| LockUpTransferManager\_3\_0\_0 \| RestrictedPartialSaleTransferManager\_3\_1\_0 \| CappedSTO\_3\_0\_0 \| CappedSTO\_3\_1\_0 \| USDTieredSTO\_3\_0\_0 \| USDTieredSTO\_3\_1\_0 \| ERC20DividendCheckpoint\_3\_0\_0 \| VestingEscrowWallet\_3\_0\_0 \| VestingEscrowWallet\_3\_1\_0 \| EtherDividendCheckpoint\_3\_0\_0 |
 
-**Returns:** *Promise‹string›*
+**Returns:** _Promise‹string›_
 
-___
+### roleToPermission
 
-###  roleToPermission
+▸ **roleToPermission**\(`__namedParameters`: object\): _Promise‹object›_
 
-▸ **roleToPermission**(`__namedParameters`: object): *Promise‹object›*
-
-*Defined in [src/PolymathBase.ts:923](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L923)*
+_Defined in_ [_src/PolymathBase.ts:923_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L923)
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
+| Name | Type |
+| :--- | :--- |
+| `role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
 
-**Returns:** *Promise‹object›*
+**Returns:** _Promise‹object›_
+

@@ -1,4 +1,4 @@
-# Interface: FindEvents
+# FindEvents
 
 ## Hierarchy
 
@@ -6,254 +6,255 @@
 
 ## Callable
 
-▸ (`params`: [FindTickerRegisteredParams](_utils_index_.findtickerregisteredparams.md)): *LogWithDecodedArgs‹SecurityTokenRegistryRegisterTickerEventArgs›[]*
+▸ \(`params`: [FindTickerRegisteredParams](_utils_index_.findtickerregisteredparams.md)\): _LogWithDecodedArgs‹SecurityTokenRegistryRegisterTickerEventArgs›\[\]_
 
-*Defined in [src/utils/index.ts:215](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L215)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`params` | [FindTickerRegisteredParams](_utils_index_.findtickerregisteredparams.md) |
-
-**Returns:** *LogWithDecodedArgs‹SecurityTokenRegistryRegisterTickerEventArgs›[]*
-
-▸ (`params`: [FindNewSecurityTokenParams](_utils_index_.findnewsecuritytokenparams.md)): *LogWithDecodedArgs‹SecurityTokenRegistryNewSecurityTokenEventArgs›[]*
-
-*Defined in [src/utils/index.ts:218](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L218)*
+_Defined in_ [_src/utils/index.ts:215_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L215)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [FindNewSecurityTokenParams](_utils_index_.findnewsecuritytokenparams.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindTickerRegisteredParams](_utils_index_.findtickerregisteredparams.md) |
 
-**Returns:** *LogWithDecodedArgs‹SecurityTokenRegistryNewSecurityTokenEventArgs›[]*
+**Returns:** _LogWithDecodedArgs‹SecurityTokenRegistryRegisterTickerEventArgs›\[\]_
 
-▸ (`params`: [FindModuleAddedParams](_utils_index_.findmoduleaddedparams.md)): *LogWithDecodedArgs‹SecurityTokenModuleAddedEventArgs›[]*
+▸ \(`params`: [FindNewSecurityTokenParams](_utils_index_.findnewsecuritytokenparams.md)\): _LogWithDecodedArgs‹SecurityTokenRegistryNewSecurityTokenEventArgs›\[\]_
 
-*Defined in [src/utils/index.ts:221](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L221)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`params` | [FindModuleAddedParams](_utils_index_.findmoduleaddedparams.md) |
-
-**Returns:** *LogWithDecodedArgs‹SecurityTokenModuleAddedEventArgs›[]*
-
-▸ (`params`: [FindCheckpointCreatedParams](_utils_index_.findcheckpointcreatedparams.md)): *LogWithDecodedArgs‹SecurityTokenCheckpointCreatedEventArgs›[]*
-
-*Defined in [src/utils/index.ts:222](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L222)*
+_Defined in_ [_src/utils/index.ts:218_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L218)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [FindCheckpointCreatedParams](_utils_index_.findcheckpointcreatedparams.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindNewSecurityTokenParams](_utils_index_.findnewsecuritytokenparams.md) |
 
-**Returns:** *LogWithDecodedArgs‹SecurityTokenCheckpointCreatedEventArgs›[]*
+**Returns:** _LogWithDecodedArgs‹SecurityTokenRegistryNewSecurityTokenEventArgs›\[\]_
 
-▸ (`params`: [FindControllerTransferParams](_utils_index_.findcontrollertransferparams.md)): *LogWithDecodedArgs‹SecurityTokenControllerTransferEventArgs›[]*
+▸ \(`params`: [FindModuleAddedParams](_utils_index_.findmoduleaddedparams.md)\): _LogWithDecodedArgs‹SecurityTokenModuleAddedEventArgs›\[\]_
 
-*Defined in [src/utils/index.ts:225](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L225)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`params` | [FindControllerTransferParams](_utils_index_.findcontrollertransferparams.md) |
-
-**Returns:** *LogWithDecodedArgs‹SecurityTokenControllerTransferEventArgs›[]*
-
-▸ (`params`: [FindErc20DividendDepositedParams](_utils_index_.finderc20dividenddepositedparams.md)): *LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendDepositedEventArgs›[]*
-
-*Defined in [src/utils/index.ts:228](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L228)*
+_Defined in_ [_src/utils/index.ts:221_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L221)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [FindErc20DividendDepositedParams](_utils_index_.finderc20dividenddepositedparams.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindModuleAddedParams](_utils_index_.findmoduleaddedparams.md) |
 
-**Returns:** *LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendDepositedEventArgs›[]*
+**Returns:** _LogWithDecodedArgs‹SecurityTokenModuleAddedEventArgs›\[\]_
 
-▸ (`params`: [FindEtherDividendDepositedParams](_utils_index_.findetherdividenddepositedparams.md)): *LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendDepositedEventArgs›[]*
+▸ \(`params`: [FindCheckpointCreatedParams](_utils_index_.findcheckpointcreatedparams.md)\): _LogWithDecodedArgs‹SecurityTokenCheckpointCreatedEventArgs›\[\]_
 
-*Defined in [src/utils/index.ts:231](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L231)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`params` | [FindEtherDividendDepositedParams](_utils_index_.findetherdividenddepositedparams.md) |
-
-**Returns:** *LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendDepositedEventArgs›[]*
-
-▸ (`params`: [FindModifyKycDataParams](_utils_index_.findmodifykycdataparams.md)): *LogWithDecodedArgs‹GeneralTransferManagerModifyKYCDataEventArgs›[]*
-
-*Defined in [src/utils/index.ts:234](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L234)*
+_Defined in_ [_src/utils/index.ts:222_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L222)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [FindModifyKycDataParams](_utils_index_.findmodifykycdataparams.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindCheckpointCreatedParams](_utils_index_.findcheckpointcreatedparams.md) |
 
-**Returns:** *LogWithDecodedArgs‹GeneralTransferManagerModifyKYCDataEventArgs›[]*
+**Returns:** _LogWithDecodedArgs‹SecurityTokenCheckpointCreatedEventArgs›\[\]_
 
-▸ (`params`: [FindModifyInvestorFlagParams](_utils_index_.findmodifyinvestorflagparams.md)): *LogWithDecodedArgs‹GeneralTransferManagerModifyInvestorFlagEventArgs›[]*
+▸ \(`params`: [FindControllerTransferParams](_utils_index_.findcontrollertransferparams.md)\): _LogWithDecodedArgs‹SecurityTokenControllerTransferEventArgs›\[\]_
 
-*Defined in [src/utils/index.ts:237](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L237)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`params` | [FindModifyInvestorFlagParams](_utils_index_.findmodifyinvestorflagparams.md) |
-
-**Returns:** *LogWithDecodedArgs‹GeneralTransferManagerModifyInvestorFlagEventArgs›[]*
-
-▸ (`params`: [FindCappedStoPauseParams](_utils_index_.findcappedstopauseparams.md)): *LogWithDecodedArgs‹CappedSTOPauseEventArgs›[]*
-
-*Defined in [src/utils/index.ts:240](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L240)*
+_Defined in_ [_src/utils/index.ts:225_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L225)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [FindCappedStoPauseParams](_utils_index_.findcappedstopauseparams.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindControllerTransferParams](_utils_index_.findcontrollertransferparams.md) |
 
-**Returns:** *LogWithDecodedArgs‹CappedSTOPauseEventArgs›[]*
+**Returns:** _LogWithDecodedArgs‹SecurityTokenControllerTransferEventArgs›\[\]_
 
-▸ (`params`: [FindCappedStoPreMintAllowedParams](_utils_index_.findcappedstopremintallowedparams.md)): *LogWithDecodedArgs‹CappedSTOAllowPreMintFlagEventArgs›[]*
+▸ \(`params`: [FindErc20DividendDepositedParams](_utils_index_.finderc20dividenddepositedparams.md)\): _LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendDepositedEventArgs›\[\]_
 
-*Defined in [src/utils/index.ts:241](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L241)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`params` | [FindCappedStoPreMintAllowedParams](_utils_index_.findcappedstopremintallowedparams.md) |
-
-**Returns:** *LogWithDecodedArgs‹CappedSTOAllowPreMintFlagEventArgs›[]*
-
-▸ (`params`: [FindTieredStoPauseParams](_utils_index_.findtieredstopauseparams.md)): *LogWithDecodedArgs‹USDTieredSTOPauseEventArgs›[]*
-
-*Defined in [src/utils/index.ts:244](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L244)*
+_Defined in_ [_src/utils/index.ts:228_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L228)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [FindTieredStoPauseParams](_utils_index_.findtieredstopauseparams.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindErc20DividendDepositedParams](_utils_index_.finderc20dividenddepositedparams.md) |
 
-**Returns:** *LogWithDecodedArgs‹USDTieredSTOPauseEventArgs›[]*
+**Returns:** _LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendDepositedEventArgs›\[\]_
 
-▸ (`params`: [FindTieredStoPreMintAllowedParams](_utils_index_.findtieredstopremintallowedparams.md)): *LogWithDecodedArgs‹USDTieredSTOAllowPreMintFlagEventArgs›[]*
+▸ \(`params`: [FindEtherDividendDepositedParams](_utils_index_.findetherdividenddepositedparams.md)\): _LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendDepositedEventArgs›\[\]_
 
-*Defined in [src/utils/index.ts:245](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L245)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`params` | [FindTieredStoPreMintAllowedParams](_utils_index_.findtieredstopremintallowedparams.md) |
-
-**Returns:** *LogWithDecodedArgs‹USDTieredSTOAllowPreMintFlagEventArgs›[]*
-
-▸ (`params`: [FindErc20DividendClaimedParams](_utils_index_.finderc20dividendclaimedparams.md)): *LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendClaimedEventArgs›[]*
-
-*Defined in [src/utils/index.ts:248](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L248)*
+_Defined in_ [_src/utils/index.ts:231_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L231)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [FindErc20DividendClaimedParams](_utils_index_.finderc20dividendclaimedparams.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindEtherDividendDepositedParams](_utils_index_.findetherdividenddepositedparams.md) |
 
-**Returns:** *LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendClaimedEventArgs›[]*
+**Returns:** _LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendDepositedEventArgs›\[\]_
 
-▸ (`params`: [FindEthDividendClaimedParams](_utils_index_.findethdividendclaimedparams.md)): *LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendClaimedEventArgs›[]*
+▸ \(`params`: [FindModifyKycDataParams](_utils_index_.findmodifykycdataparams.md)\): _LogWithDecodedArgs‹GeneralTransferManagerModifyKYCDataEventArgs›\[\]_
 
-*Defined in [src/utils/index.ts:251](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L251)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`params` | [FindEthDividendClaimedParams](_utils_index_.findethdividendclaimedparams.md) |
-
-**Returns:** *LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendClaimedEventArgs›[]*
-
-▸ (`params`: [FindErc20DividendReclaimedParams](_utils_index_.finderc20dividendreclaimedparams.md)): *LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendReclaimedEventArgs›[]*
-
-*Defined in [src/utils/index.ts:254](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L254)*
+_Defined in_ [_src/utils/index.ts:234_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L234)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [FindErc20DividendReclaimedParams](_utils_index_.finderc20dividendreclaimedparams.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindModifyKycDataParams](_utils_index_.findmodifykycdataparams.md) |
 
-**Returns:** *LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendReclaimedEventArgs›[]*
+**Returns:** _LogWithDecodedArgs‹GeneralTransferManagerModifyKYCDataEventArgs›\[\]_
 
-▸ (`params`: [FindEthDividendReclaimedParams](_utils_index_.findethdividendreclaimedparams.md)): *LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendReclaimedEventArgs›[]*
+▸ \(`params`: [FindModifyInvestorFlagParams](_utils_index_.findmodifyinvestorflagparams.md)\): _LogWithDecodedArgs‹GeneralTransferManagerModifyInvestorFlagEventArgs›\[\]_
 
-*Defined in [src/utils/index.ts:257](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L257)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`params` | [FindEthDividendReclaimedParams](_utils_index_.findethdividendreclaimedparams.md) |
-
-**Returns:** *LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendReclaimedEventArgs›[]*
-
-▸ (`params`: [FindErc20SetWalletParams](_utils_index_.finderc20setwalletparams.md)): *LogWithDecodedArgs‹ERC20DividendCheckpointSetWalletEventArgs›[]*
-
-*Defined in [src/utils/index.ts:260](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L260)*
+_Defined in_ [_src/utils/index.ts:237_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L237)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [FindErc20SetWalletParams](_utils_index_.finderc20setwalletparams.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindModifyInvestorFlagParams](_utils_index_.findmodifyinvestorflagparams.md) |
 
-**Returns:** *LogWithDecodedArgs‹ERC20DividendCheckpointSetWalletEventArgs›[]*
+**Returns:** _LogWithDecodedArgs‹GeneralTransferManagerModifyInvestorFlagEventArgs›\[\]_
 
-▸ (`params`: [FindEthSetWalletParams](_utils_index_.findethsetwalletparams.md)): *LogWithDecodedArgs‹EtherDividendCheckpointSetWalletEventArgs›[]*
+▸ \(`params`: [FindCappedStoPauseParams](_utils_index_.findcappedstopauseparams.md)\): _LogWithDecodedArgs‹CappedSTOPauseEventArgs›\[\]_
 
-*Defined in [src/utils/index.ts:263](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L263)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`params` | [FindEthSetWalletParams](_utils_index_.findethsetwalletparams.md) |
-
-**Returns:** *LogWithDecodedArgs‹EtherDividendCheckpointSetWalletEventArgs›[]*
-
-▸ (`params`: [FindErc20SetWithholdingParams](_utils_index_.finderc20setwithholdingparams.md)): *LogWithDecodedArgs‹ERC20DividendCheckpointSetWithholdingEventArgs›[]*
-
-*Defined in [src/utils/index.ts:264](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L264)*
+_Defined in_ [_src/utils/index.ts:240_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L240)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [FindErc20SetWithholdingParams](_utils_index_.finderc20setwithholdingparams.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindCappedStoPauseParams](_utils_index_.findcappedstopauseparams.md) |
 
-**Returns:** *LogWithDecodedArgs‹ERC20DividendCheckpointSetWithholdingEventArgs›[]*
+**Returns:** _LogWithDecodedArgs‹CappedSTOPauseEventArgs›\[\]_
 
-▸ (`params`: [FindEthSetWithholdingParams](_utils_index_.findethsetwithholdingparams.md)): *LogWithDecodedArgs‹EtherDividendCheckpointSetWithholdingEventArgs›[]*
+▸ \(`params`: [FindCappedStoPreMintAllowedParams](_utils_index_.findcappedstopremintallowedparams.md)\): _LogWithDecodedArgs‹CappedSTOAllowPreMintFlagEventArgs›\[\]_
 
-*Defined in [src/utils/index.ts:267](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/utils/index.ts#L267)*
+_Defined in_ [_src/utils/index.ts:241_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L241)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [FindEthSetWithholdingParams](_utils_index_.findethsetwithholdingparams.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindCappedStoPreMintAllowedParams](_utils_index_.findcappedstopremintallowedparams.md) |
 
-**Returns:** *LogWithDecodedArgs‹EtherDividendCheckpointSetWithholdingEventArgs›[]*
+**Returns:** _LogWithDecodedArgs‹CappedSTOAllowPreMintFlagEventArgs›\[\]_
+
+▸ \(`params`: [FindTieredStoPauseParams](_utils_index_.findtieredstopauseparams.md)\): _LogWithDecodedArgs‹USDTieredSTOPauseEventArgs›\[\]_
+
+_Defined in_ [_src/utils/index.ts:244_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L244)
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindTieredStoPauseParams](_utils_index_.findtieredstopauseparams.md) |
+
+**Returns:** _LogWithDecodedArgs‹USDTieredSTOPauseEventArgs›\[\]_
+
+▸ \(`params`: [FindTieredStoPreMintAllowedParams](_utils_index_.findtieredstopremintallowedparams.md)\): _LogWithDecodedArgs‹USDTieredSTOAllowPreMintFlagEventArgs›\[\]_
+
+_Defined in_ [_src/utils/index.ts:245_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L245)
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindTieredStoPreMintAllowedParams](_utils_index_.findtieredstopremintallowedparams.md) |
+
+**Returns:** _LogWithDecodedArgs‹USDTieredSTOAllowPreMintFlagEventArgs›\[\]_
+
+▸ \(`params`: [FindErc20DividendClaimedParams](_utils_index_.finderc20dividendclaimedparams.md)\): _LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendClaimedEventArgs›\[\]_
+
+_Defined in_ [_src/utils/index.ts:248_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L248)
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindErc20DividendClaimedParams](_utils_index_.finderc20dividendclaimedparams.md) |
+
+**Returns:** _LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendClaimedEventArgs›\[\]_
+
+▸ \(`params`: [FindEthDividendClaimedParams](_utils_index_.findethdividendclaimedparams.md)\): _LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendClaimedEventArgs›\[\]_
+
+_Defined in_ [_src/utils/index.ts:251_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L251)
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindEthDividendClaimedParams](_utils_index_.findethdividendclaimedparams.md) |
+
+**Returns:** _LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendClaimedEventArgs›\[\]_
+
+▸ \(`params`: [FindErc20DividendReclaimedParams](_utils_index_.finderc20dividendreclaimedparams.md)\): _LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendReclaimedEventArgs›\[\]_
+
+_Defined in_ [_src/utils/index.ts:254_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L254)
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindErc20DividendReclaimedParams](_utils_index_.finderc20dividendreclaimedparams.md) |
+
+**Returns:** _LogWithDecodedArgs‹ERC20DividendCheckpointERC20DividendReclaimedEventArgs›\[\]_
+
+▸ \(`params`: [FindEthDividendReclaimedParams](_utils_index_.findethdividendreclaimedparams.md)\): _LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendReclaimedEventArgs›\[\]_
+
+_Defined in_ [_src/utils/index.ts:257_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L257)
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindEthDividendReclaimedParams](_utils_index_.findethdividendreclaimedparams.md) |
+
+**Returns:** _LogWithDecodedArgs‹EtherDividendCheckpointEtherDividendReclaimedEventArgs›\[\]_
+
+▸ \(`params`: [FindErc20SetWalletParams](_utils_index_.finderc20setwalletparams.md)\): _LogWithDecodedArgs‹ERC20DividendCheckpointSetWalletEventArgs›\[\]_
+
+_Defined in_ [_src/utils/index.ts:260_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L260)
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindErc20SetWalletParams](_utils_index_.finderc20setwalletparams.md) |
+
+**Returns:** _LogWithDecodedArgs‹ERC20DividendCheckpointSetWalletEventArgs›\[\]_
+
+▸ \(`params`: [FindEthSetWalletParams](_utils_index_.findethsetwalletparams.md)\): _LogWithDecodedArgs‹EtherDividendCheckpointSetWalletEventArgs›\[\]_
+
+_Defined in_ [_src/utils/index.ts:263_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L263)
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindEthSetWalletParams](_utils_index_.findethsetwalletparams.md) |
+
+**Returns:** _LogWithDecodedArgs‹EtherDividendCheckpointSetWalletEventArgs›\[\]_
+
+▸ \(`params`: [FindErc20SetWithholdingParams](_utils_index_.finderc20setwithholdingparams.md)\): _LogWithDecodedArgs‹ERC20DividendCheckpointSetWithholdingEventArgs›\[\]_
+
+_Defined in_ [_src/utils/index.ts:264_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L264)
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindErc20SetWithholdingParams](_utils_index_.finderc20setwithholdingparams.md) |
+
+**Returns:** _LogWithDecodedArgs‹ERC20DividendCheckpointSetWithholdingEventArgs›\[\]_
+
+▸ \(`params`: [FindEthSetWithholdingParams](_utils_index_.findethsetwithholdingparams.md)\): _LogWithDecodedArgs‹EtherDividendCheckpointSetWithholdingEventArgs›\[\]_
+
+_Defined in_ [_src/utils/index.ts:267_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/utils/index.ts#L267)
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `params` | [FindEthSetWithholdingParams](_utils_index_.findethsetwithholdingparams.md) |
+
+**Returns:** _LogWithDecodedArgs‹EtherDividendCheckpointSetWithholdingEventArgs›\[\]_
+

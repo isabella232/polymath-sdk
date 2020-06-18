@@ -1,4 +1,4 @@
-# Interface: GetAttachedModulesParams
+# GetAttachedModulesParams
 
 Arguments for [getAttachedModules](../classes/_polymathbase_.polymathbase.md#getattachedmodules)
 
@@ -15,20 +15,19 @@ Arguments for [getAttachedModules](../classes/_polymathbase_.polymathbase.md#get
 
 ## Properties
 
-###  moduleName
+### moduleName
 
-• **moduleName**: *ModuleName*
+• **moduleName**: _ModuleName_
 
-*Defined in [src/PolymathBase.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L83)*
+_Defined in_ [_src/PolymathBase.ts:83_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L83)
 
 name of the module
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/PolymathBase.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L79)*
+_Defined in_ [_src/PolymathBase.ts:79_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L79)
 
 Security Token symbol
+

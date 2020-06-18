@@ -1,4 +1,4 @@
-# Interface: SignTransferDataProcedureArgs
+# SignTransferDataProcedureArgs
 
 Arguments for the [SignTransferData](../enums/_types_index_.proceduretype.md#signtransferdata) Procedure
 
@@ -17,40 +17,35 @@ Arguments for the [SignTransferData](../enums/_types_index_.proceduretype.md#sig
 
 ## Properties
 
-###  kycData
+### kycData
 
-• **kycData**: *[Omit](../modules/_types_index_.md#omit)‹[Omit](../modules/_types_index_.md#omit)‹[TokenholderDataEntry](_types_index_.tokenholderdataentry.md), "isAccredited"›, "canBuyFromSto"›[]*
+• **kycData**: [_Omit_](../external-modules/_types_index_.md#omit)_‹_[_Omit_](../external-modules/_types_index_.md#omit)_‹_[_TokenholderDataEntry_](_types_index_.tokenholderdataentry.md)_, "isAccredited"›, "canBuyFromSto"›\[\]_
 
-*Defined in [src/types/index.ts:1293](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1293)*
+_Defined in_ [_src/types/index.ts:1293_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1293)
 
 KYC data to sign
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:1289](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1289)*
+_Defined in_ [_src/types/index.ts:1289_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1289)
 
 symbol of the Security Token
 
-___
+### validFrom
 
-###  validFrom
+• **validFrom**: _Date_
 
-• **validFrom**: *Date*
-
-*Defined in [src/types/index.ts:1297](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1297)*
+_Defined in_ [_src/types/index.ts:1297_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1297)
 
 date from which the signature is valid
 
-___
+### validTo
 
-###  validTo
+• **validTo**: _Date_
 
-• **validTo**: *Date*
-
-*Defined in [src/types/index.ts:1301](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1301)*
+_Defined in_ [_src/types/index.ts:1301_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1301)
 
 date until which the signature is valid
+

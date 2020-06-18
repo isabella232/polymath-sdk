@@ -1,4 +1,4 @@
-# Interface: InjectedWeb3
+# InjectedWeb3
 
 ## Hierarchy
 
@@ -13,16 +13,15 @@
 
 ## Properties
 
-###  currentProvider
+### currentProvider
 
-• **currentProvider**: *Provider*
+• **currentProvider**: _Provider_
 
-*Defined in [src/browserUtils.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/browserUtils.ts#L26)*
+_Defined in_ [_src/browserUtils.ts:26_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/browserUtils.ts#L26)
 
-___
+### version
 
-###  version
+• **version**: [_Web3VersionAPI_](_browserutils_.web3versionapi.md)
 
-• **version**: *[Web3VersionAPI](_browserutils_.web3versionapi.md)*
+_Defined in_ [_src/browserUtils.ts:27_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/browserUtils.ts#L27)
 
-*Defined in [src/browserUtils.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/browserUtils.ts#L27)*

@@ -1,4 +1,4 @@
-# Interface: UniqueIdentifiers
+# UniqueIdentifiers
 
 Properties that uniquely identify a Wallet
 
@@ -16,8 +16,9 @@ Properties that uniquely identify a Wallet
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *string*
+• **address**: _string_
 
-*Defined in [src/entities/Wallet.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Wallet.ts#L12)*
+_Defined in_ [_src/entities/Wallet.ts:12_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Wallet.ts#L12)
+

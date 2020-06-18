@@ -1,4 +1,4 @@
-# Interface: Document
+# Document
 
 Represents a single Document attached to a Security Token
 
@@ -17,38 +17,33 @@ Represents a single Document attached to a Security Token
 
 ## Properties
 
-###  documentHash
+### documentHash
 
-• **documentHash**: *string*
+• **documentHash**: _string_
 
-*Defined in [src/entities/SecurityToken/Documents.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Documents.ts#L22)*
+_Defined in_ [_src/entities/SecurityToken/Documents.ts:22_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Documents.ts#L22)
 
 hash of the document's contents
 
-___
+### documentUri
 
-###  documentUri
+• **documentUri**: _string_
 
-• **documentUri**: *string*
-
-*Defined in [src/entities/SecurityToken/Documents.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Documents.ts#L18)*
+_Defined in_ [_src/entities/SecurityToken/Documents.ts:18_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Documents.ts#L18)
 
 off-chain uri of the document from where it is accessible to investors/advisors to read
 
-___
+### name
 
-###  name
+• **name**: _string_
 
-• **name**: *string*
-
-*Defined in [src/entities/SecurityToken/Documents.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Documents.ts#L14)*
+_Defined in_ [_src/entities/SecurityToken/Documents.ts:14_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Documents.ts#L14)
 
 name of the document. It should always be unique
 
-___
+### updatedAt
 
-###  updatedAt
+• **updatedAt**: _Date_
 
-• **updatedAt**: *Date*
+_Defined in_ [_src/entities/SecurityToken/Documents.ts:23_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Documents.ts#L23)
 
-*Defined in [src/entities/SecurityToken/Documents.ts:23](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Documents.ts#L23)*

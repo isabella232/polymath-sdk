@@ -1,4 +1,4 @@
-# Interface: EnablePercentageOwnershipRestrictionsOpts
+# EnablePercentageOwnershipRestrictionsOpts
 
 ## Hierarchy
 
@@ -15,14 +15,13 @@
 
 ### `Optional` allowPrimaryIssuance
 
-• **allowPrimaryIssuance**? : *undefined | false | true*
+• **allowPrimaryIssuance**? : _undefined \| false \| true_
 
-*Defined in [src/entities/SecurityToken/Features.ts:50](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Features.ts#L50)*
+_Defined in_ [_src/entities/SecurityToken/Features.ts:50_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Features.ts#L50)
 
-___
+### maxHolderPercentage
 
-###  maxHolderPercentage
+• **maxHolderPercentage**: _BigNumber_
 
-• **maxHolderPercentage**: *BigNumber*
+_Defined in_ [_src/entities/SecurityToken/Features.ts:49_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Features.ts#L49)
 
-*Defined in [src/entities/SecurityToken/Features.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Features.ts#L49)*

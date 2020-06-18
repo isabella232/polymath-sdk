@@ -1,4 +1,4 @@
-# Class: Tokenholders
+# Tokenholders
 
 Namespace that handles all Tokenholder related functionality
 
@@ -32,160 +32,144 @@ Namespace that handles all Tokenholder related functionality
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new Tokenholders**(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)): *[Tokenholders](_entities_securitytoken_tokenholders_.tokenholders.md)*
++ **new Tokenholders**\(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)\): [_Tokenholders_](_entities_securitytoken_tokenholders_.tokenholders.md)
 
-*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)*
+_Inherited from_ [_SubModule_](_entities_securitytoken_submodule_.submodule.md)_._[_constructor_](_entities_securitytoken_submodule_.submodule.md#constructor)
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L10)*
+_Defined in_ [_src/entities/SecurityToken/SubModule.ts:10_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L10)
 
 Create a new SubModule instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`securityToken` | [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md) |
-`context` | [Context](_context_.context.md) |
+| Name | Type |
+| :--- | :--- |
+| `securityToken` | [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md) |
+| `context` | [Context](_context_.context.md) |
 
-**Returns:** *[Tokenholders](_entities_securitytoken_tokenholders_.tokenholders.md)*
+**Returns:** [_Tokenholders_](_entities_securitytoken_tokenholders_.tokenholders.md)
 
 ## Properties
 
 ### `Protected` context
 
-• **context**: *[Context](_context_.context.md)*
+• **context**: [_Context_](_context_.context.md)
 
-*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)*
+_Inherited from_ [_SubModule_](_entities_securitytoken_submodule_.submodule.md)_._[_context_](_entities_securitytoken_submodule_.submodule.md#protected-context)
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L10)*
-
-___
+_Defined in_ [_src/entities/SecurityToken/SubModule.ts:10_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L10)
 
 ### `Protected` securityToken
 
-• **securityToken**: *[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)*
+• **securityToken**: [_SecurityToken_](_entities_securitytoken_securitytoken_.securitytoken.md)
 
-*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)*
+_Inherited from_ [_SubModule_](_entities_securitytoken_submodule_.submodule.md)_._[_securityToken_](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L8)*
+_Defined in_ [_src/entities/SecurityToken/SubModule.ts:8_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L8)
 
 ## Methods
 
-###  allTimeInvestorCount
+### allTimeInvestorCount
 
-▸ **allTimeInvestorCount**(): *Promise‹number›*
+▸ **allTimeInvestorCount**\(\): _Promise‹number›_
 
-*Defined in [src/entities/SecurityToken/Tokenholders.ts:221](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Tokenholders.ts#L221)*
+Defined in src/entities/SecurityToken/Tokenholders.ts:221
 
 Retrieve the amount of wallets that ever held tokens or have any KYC data
 
-**Returns:** *Promise‹number›*
+**Returns:** _Promise‹number›_
 
-___
+### createCheckpoint
 
-###  createCheckpoint
+▸ **createCheckpoint**\(\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_CreateCheckpointProcedureArgs_](../interfaces/_types_index_.createcheckpointprocedureargs.md)_,_ [_Checkpoint_](_entities_checkpoint_.checkpoint.md)_››_
 
-▸ **createCheckpoint**(): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateCheckpointProcedureArgs](../interfaces/_types_index_.createcheckpointprocedureargs.md), [Checkpoint](_entities_checkpoint_.checkpoint.md)››*
-
-*Defined in [src/entities/SecurityToken/Tokenholders.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Tokenholders.ts#L59)*
+Defined in src/entities/SecurityToken/Tokenholders.ts:59
 
 Create a snapshot of the balances of every tokenholder at the current date
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateCheckpointProcedureArgs](../interfaces/_types_index_.createcheckpointprocedureargs.md), [Checkpoint](_entities_checkpoint_.checkpoint.md)››*
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_CreateCheckpointProcedureArgs_](../interfaces/_types_index_.createcheckpointprocedureargs.md)_,_ [_Checkpoint_](_entities_checkpoint_.checkpoint.md)_››_
 
-___
+### getCheckpoint
 
-###  getCheckpoint
+▸ **getCheckpoint**\(`args`: [GetCheckpointParams](../interfaces/_entities_securitytoken_tokenholders_.getcheckpointparams.md) \| string\): _Promise‹_[_Checkpoint_](_entities_checkpoint_.checkpoint.md)_›_
 
-▸ **getCheckpoint**(`args`: [GetCheckpointParams](../interfaces/_entities_securitytoken_tokenholders_.getcheckpointparams.md) | string): *Promise‹[Checkpoint](_entities_checkpoint_.checkpoint.md)›*
-
-*Defined in [src/entities/SecurityToken/Tokenholders.ts:133](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Tokenholders.ts#L133)*
+Defined in src/entities/SecurityToken/Tokenholders.ts:133
 
 Retrieve a checkpoint from the security token by index or UUID
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`args` | [GetCheckpointParams](../interfaces/_entities_securitytoken_tokenholders_.getcheckpointparams.md) &#124; string | checkpoint uuid or object containing its index  |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `args` | [GetCheckpointParams](../interfaces/_entities_securitytoken_tokenholders_.getcheckpointparams.md) \| string | checkpoint uuid or object containing its index |
 
-**Returns:** *Promise‹[Checkpoint](_entities_checkpoint_.checkpoint.md)›*
+**Returns:** _Promise‹_[_Checkpoint_](_entities_checkpoint_.checkpoint.md)_›_
 
-___
+### getCheckpoints
 
-###  getCheckpoints
+▸ **getCheckpoints**\(\): _Promise‹_[_Checkpoint_](_entities_checkpoint_.checkpoint.md)_\[\]›_
 
-▸ **getCheckpoints**(): *Promise‹[Checkpoint](_entities_checkpoint_.checkpoint.md)[]›*
-
-*Defined in [src/entities/SecurityToken/Tokenholders.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Tokenholders.ts#L74)*
+Defined in src/entities/SecurityToken/Tokenholders.ts:74
 
 Retrieve list of checkpoints and their corresponding dividend distributions of every type
 
-**Returns:** *Promise‹[Checkpoint](_entities_checkpoint_.checkpoint.md)[]›*
+**Returns:** _Promise‹_[_Checkpoint_](_entities_checkpoint_.checkpoint.md)_\[\]›_
 
-___
+### getTokenholders
 
-###  getTokenholders
+▸ **getTokenholders**\(\): _Promise‹_[_Tokenholder_](_entities_tokenholder_.tokenholder.md)_\[\]›_
 
-▸ **getTokenholders**(): *Promise‹[Tokenholder](_entities_tokenholder_.tokenholder.md)[]›*
-
-*Defined in [src/entities/SecurityToken/Tokenholders.ts:155](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Tokenholders.ts#L155)*
+Defined in src/entities/SecurityToken/Tokenholders.ts:155
 
 Get data for all tokenholders associated to the Security Token
 
-**Returns:** *Promise‹[Tokenholder](_entities_tokenholder_.tokenholder.md)[]›*
+**Returns:** _Promise‹_[_Tokenholder_](_entities_tokenholder_.tokenholder.md)_\[\]›_
 
-___
+### holderCount
 
-###  holderCount
+▸ **holderCount**\(\): _Promise‹number›_
 
-▸ **holderCount**(): *Promise‹number›*
-
-*Defined in [src/entities/SecurityToken/Tokenholders.ts:247](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Tokenholders.ts#L247)*
+Defined in src/entities/SecurityToken/Tokenholders.ts:247
 
 Retrieve the amount of wallets that currently hold tokens
 
-**Returns:** *Promise‹number›*
+**Returns:** _Promise‹number›_
 
-___
+### modifyData
 
-###  modifyData
+▸ **modifyData**\(`args`: object\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_ModifyTokenholderDataProcedureArgs_](../interfaces/_types_index_.modifytokenholderdataprocedureargs.md)_,_ [_Tokenholder_](_entities_tokenholder_.tokenholder.md)_\[\]››_
 
-▸ **modifyData**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ModifyTokenholderDataProcedureArgs](../interfaces/_types_index_.modifytokenholderdataprocedureargs.md), [Tokenholder](_entities_tokenholder_.tokenholder.md)[]››*
+Defined in src/entities/SecurityToken/Tokenholders.ts:31
 
-*Defined in [src/entities/SecurityToken/Tokenholders.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Tokenholders.ts#L31)*
-
-Add/modify investor data. For an investor to be able to hold, sell or purchase tokens, his address (and other KYC data)
-must be added/modified via this method
+Add/modify investor data. For an investor to be able to hold, sell or purchase tokens, his address \(and other KYC data\) must be added/modified via this method
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`tokenholderData` | [TokenholderDataEntry](../interfaces/_types_index_.tokenholderdataentry.md)[] |
+| Name | Type |
+| :--- | :--- |
+| `tokenholderData` | [TokenholderDataEntry](../interfaces/_types_index_.tokenholderdataentry.md)\[\] |
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ModifyTokenholderDataProcedureArgs](../interfaces/_types_index_.modifytokenholderdataprocedureargs.md), [Tokenholder](_entities_tokenholder_.tokenholder.md)[]››*
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_ModifyTokenholderDataProcedureArgs_](../interfaces/_types_index_.modifytokenholderdataprocedureargs.md)_,_ [_Tokenholder_](_entities_tokenholder_.tokenholder.md)_\[\]››_
 
-___
+### revokeKyc
 
-###  revokeKyc
+▸ **revokeKyc**\(`args`: object\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_RevokeKycProcedureArgs_](../interfaces/_types_index_.revokekycprocedureargs.md)_,_ [_Tokenholder_](_entities_tokenholder_.tokenholder.md)_\[\]››_
 
-▸ **revokeKyc**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[RevokeKycProcedureArgs](../interfaces/_types_index_.revokekycprocedureargs.md), [Tokenholder](_entities_tokenholder_.tokenholder.md)[]››*
-
-*Defined in [src/entities/SecurityToken/Tokenholders.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Tokenholders.ts#L45)*
+Defined in src/entities/SecurityToken/Tokenholders.ts:45
 
 Revoke KYC for a group of tokenholder addresses. Supplied addresses must have valid KYC
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`tokenholderAddresses` | string[] |
+| Name | Type |
+| :--- | :--- |
+| `tokenholderAddresses` | string\[\] |
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[RevokeKycProcedureArgs](../interfaces/_types_index_.revokekycprocedureargs.md), [Tokenholder](_entities_tokenholder_.tokenholder.md)[]››*
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_RevokeKycProcedureArgs_](../interfaces/_types_index_.revokekycprocedureargs.md)_,_ [_Tokenholder_](_entities_tokenholder_.tokenholder.md)_\[\]››_
+

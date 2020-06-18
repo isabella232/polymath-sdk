@@ -1,4 +1,4 @@
-# Enumeration: SecurityTokenRole
+# SecurityTokenRole
 
 ## Index
 
@@ -13,48 +13,39 @@
 
 ## Enumeration members
 
-###  DividendsAdministrator
+### DividendsAdministrator
 
 • **DividendsAdministrator**: = "DividendsAdministrator"
 
-*Defined in [src/types/index.ts:1459](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1459)*
+_Defined in_ [_src/types/index.ts:1459_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1459)
 
-___
-
-###  DividendsOperator
+### DividendsOperator
 
 • **DividendsOperator**: = "DividendsOperator"
 
-*Defined in [src/types/index.ts:1458](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1458)*
+_Defined in_ [_src/types/index.ts:1458_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1458)
 
-___
-
-###  PercentageOwnershipRestrictionsAdministrator
+### PercentageOwnershipRestrictionsAdministrator
 
 • **PercentageOwnershipRestrictionsAdministrator**: = "PercentageOwnershipRestrictionsAdministrator"
 
-*Defined in [src/types/index.ts:1462](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1462)*
+_Defined in_ [_src/types/index.ts:1462_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1462)
 
-___
-
-###  PermissionsAdministrator
+### PermissionsAdministrator
 
 • **PermissionsAdministrator**: = "PermissionsAdministrator"
 
-*Defined in [src/types/index.ts:1457](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1457)*
+_Defined in_ [_src/types/index.ts:1457_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1457)
 
-___
-
-###  TokenholderCountRestrictionsAdministrator
+### TokenholderCountRestrictionsAdministrator
 
 • **TokenholderCountRestrictionsAdministrator**: = "TokenholderCountRestrictionsAdministrator"
 
-*Defined in [src/types/index.ts:1461](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1461)*
+_Defined in_ [_src/types/index.ts:1461_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1461)
 
-___
-
-###  TokenholdersAdministrator
+### TokenholdersAdministrator
 
 • **TokenholdersAdministrator**: = "TokenholdersAdministrator"
 
-*Defined in [src/types/index.ts:1460](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1460)*
+_Defined in_ [_src/types/index.ts:1460_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1460)
+

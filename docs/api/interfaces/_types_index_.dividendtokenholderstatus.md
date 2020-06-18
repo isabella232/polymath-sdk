@@ -1,4 +1,4 @@
-# Interface: DividendTokenholderStatus
+# DividendTokenholderStatus
 
 Status of a Tokenholder in regards to a Dividend Distribution
 
@@ -19,60 +19,51 @@ Status of a Tokenholder in regards to a Dividend Distribution
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *string*
+• **address**: _string_
 
-*Defined in [src/types/index.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L27)*
+_Defined in_ [_src/types/index.ts:27_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L27)
 
 wallet address of the Tokenholder
 
-___
+### amountReceived
 
-###  amountReceived
+• **amountReceived**: _BigNumber_
 
-• **amountReceived**: *BigNumber*
-
-*Defined in [src/types/index.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L43)*
+_Defined in_ [_src/types/index.ts:43_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L43)
 
 the amount of tokens the Tokenholder has received as Dividend payment
 
-___
+### balance
 
-###  balance
+• **balance**: _BigNumber_
 
-• **balance**: *BigNumber*
-
-*Defined in [src/types/index.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L47)*
+_Defined in_ [_src/types/index.ts:47_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L47)
 
 the balance of the Tokenholder
 
-___
+### excluded
 
-###  excluded
+• **excluded**: _boolean_
 
-• **excluded**: *boolean*
-
-*Defined in [src/types/index.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L35)*
+_Defined in_ [_src/types/index.ts:35_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L35)
 
 whether the Tokenholder is excluded from the Dividend distribution
 
-___
+### paymentReceived
 
-###  paymentReceived
+• **paymentReceived**: _boolean_
 
-• **paymentReceived**: *boolean*
-
-*Defined in [src/types/index.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L31)*
+_Defined in_ [_src/types/index.ts:31_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L31)
 
 whether the Tokenholder has received payment
 
-___
+### withheldTax
 
-###  withheldTax
+• **withheldTax**: _BigNumber_
 
-• **withheldTax**: *BigNumber*
-
-*Defined in [src/types/index.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L39)*
+_Defined in_ [_src/types/index.ts:39_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L39)
 
 amount of tokens withheld for tax purposes
+

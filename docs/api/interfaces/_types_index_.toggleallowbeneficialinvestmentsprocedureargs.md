@@ -1,4 +1,4 @@
-# Interface: ToggleAllowBeneficialInvestmentsProcedureArgs
+# ToggleAllowBeneficialInvestmentsProcedureArgs
 
 Arguments for the [ToggleAllowBeneficialInvestments](../enums/_types_index_.proceduretype.md#toggleallowbeneficialinvestments) Procedure
 
@@ -17,40 +17,35 @@ Arguments for the [ToggleAllowBeneficialInvestments](../enums/_types_index_.proc
 
 ## Properties
 
-###  allowBeneficialInvestments
+### allowBeneficialInvestments
 
-• **allowBeneficialInvestments**: *boolean*
+• **allowBeneficialInvestments**: _boolean_
 
-*Defined in [src/types/index.ts:598](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L598)*
+_Defined in_ [_src/types/index.ts:598_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L598)
 
 whether the STO allows investing on behalf of a beneficiary
 
-___
+### stoAddress
 
-###  stoAddress
+• **stoAddress**: _string_
 
-• **stoAddress**: *string*
-
-*Defined in [src/types/index.ts:590](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L590)*
+_Defined in_ [_src/types/index.ts:590_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L590)
 
 address of the STO
 
-___
+### stoType
 
-###  stoType
+• **stoType**: [_StoType_](../enums/_types_index_.stotype.md)
 
-• **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
+_Defined in_ [_src/types/index.ts:594_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L594)
 
-*Defined in [src/types/index.ts:594](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L594)*
+type of the STO \(Simple, Tiered, etc\)
 
-type of the STO (Simple, Tiered, etc)
+### symbol
 
-___
+• **symbol**: _string_
 
-###  symbol
-
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:586](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L586)*
+_Defined in_ [_src/types/index.ts:586_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L586)
 
 symbol of the Security Token
+

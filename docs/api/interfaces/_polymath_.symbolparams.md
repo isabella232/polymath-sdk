@@ -1,4 +1,4 @@
-# Interface: SymbolParams
+# SymbolParams
 
 ## Hierarchy
 
@@ -12,8 +12,9 @@
 
 ## Properties
 
-###  symbol
+### symbol
 
-• **symbol**: *string*
+• **symbol**: _string_
 
-*Defined in [src/Polymath.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Polymath.ts#L41)*
+_Defined in_ [_src/Polymath.ts:41_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Polymath.ts#L41)
+

@@ -1,4 +1,4 @@
-# Class: Dividends
+# Dividends
 
 Namespace that handles all Dividend related functionality
 
@@ -33,216 +33,199 @@ Namespace that handles all Dividend related functionality
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new Dividends**(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)): *[Dividends](_entities_securitytoken_dividends_.dividends.md)*
++ **new Dividends**\(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)\): [_Dividends_](_entities_securitytoken_dividends_.dividends.md)
 
-*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)*
+_Inherited from_ [_SubModule_](_entities_securitytoken_submodule_.submodule.md)_._[_constructor_](_entities_securitytoken_submodule_.submodule.md#constructor)
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L10)*
+_Defined in_ [_src/entities/SecurityToken/SubModule.ts:10_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L10)
 
 Create a new SubModule instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`securityToken` | [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md) |
-`context` | [Context](_context_.context.md) |
+| Name | Type |
+| :--- | :--- |
+| `securityToken` | [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md) |
+| `context` | [Context](_context_.context.md) |
 
-**Returns:** *[Dividends](_entities_securitytoken_dividends_.dividends.md)*
+**Returns:** [_Dividends_](_entities_securitytoken_dividends_.dividends.md)
 
 ## Properties
 
 ### `Protected` context
 
-• **context**: *[Context](_context_.context.md)*
+• **context**: [_Context_](_context_.context.md)
 
-*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)*
+_Inherited from_ [_SubModule_](_entities_securitytoken_submodule_.submodule.md)_._[_context_](_entities_securitytoken_submodule_.submodule.md#protected-context)
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L10)*
-
-___
+_Defined in_ [_src/entities/SecurityToken/SubModule.ts:10_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L10)
 
 ### `Protected` securityToken
 
-• **securityToken**: *[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)*
+• **securityToken**: [_SecurityToken_](_entities_securitytoken_securitytoken_.securitytoken.md)
 
-*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)*
+_Inherited from_ [_SubModule_](_entities_securitytoken_submodule_.submodule.md)_._[_securityToken_](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L8)*
+_Defined in_ [_src/entities/SecurityToken/SubModule.ts:8_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L8)
 
 ## Methods
 
-###  createErc20Distribution
+### createErc20Distribution
 
-▸ **createErc20Distribution**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateDividendDistributionProcedureArgs](../interfaces/_types_index_.createdividenddistributionprocedureargs.md), [DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)››*
+▸ **createErc20Distribution**\(`args`: object\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_CreateDividendDistributionProcedureArgs_](../interfaces/_types_index_.createdividenddistributionprocedureargs.md)_,_ [_DividendDistribution_](_entities_dividenddistribution_.dividenddistribution.md)_››_
 
-*Defined in [src/entities/SecurityToken/Dividends.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L79)*
+_Defined in_ [_src/entities/SecurityToken/Dividends.ts:79_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Dividends.ts#L79)
 
 Distribute dividends in a specified ERC20 token
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`amount` | BigNumber |
-`checkpointId` | string |
-`erc20Address` | string |
-`excludedAddresses?` | string[] |
-`expiryDate` | Date |
-`maturityDate` | Date |
-`name` | string |
-`taxWithholdings?` | [TaxWithholdingEntry](../interfaces/_types_index_.taxwithholdingentry.md)[] |
+| Name | Type |
+| :--- | :--- |
+| `amount` | BigNumber |
+| `checkpointId` | string |
+| `erc20Address` | string |
+| `excludedAddresses?` | string\[\] |
+| `expiryDate` | Date |
+| `maturityDate` | Date |
+| `name` | string |
+| `taxWithholdings?` | [TaxWithholdingEntry](../interfaces/_types_index_.taxwithholdingentry.md)\[\] |
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateDividendDistributionProcedureArgs](../interfaces/_types_index_.createdividenddistributionprocedureargs.md), [DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)››*
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_CreateDividendDistributionProcedureArgs_](../interfaces/_types_index_.createdividenddistributionprocedureargs.md)_,_ [_DividendDistribution_](_entities_dividenddistribution_.dividenddistribution.md)_››_
 
-___
+### createPolyDistribution
 
-###  createPolyDistribution
+▸ **createPolyDistribution**\(`args`: object\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_CreateDividendDistributionProcedureArgs_](../interfaces/_types_index_.createdividenddistributionprocedureargs.md)_,_ [_DividendDistribution_](_entities_dividenddistribution_.dividenddistribution.md)_››_
 
-▸ **createPolyDistribution**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateDividendDistributionProcedureArgs](../interfaces/_types_index_.createdividenddistributionprocedureargs.md), [DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)››*
-
-*Defined in [src/entities/SecurityToken/Dividends.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L40)*
+_Defined in_ [_src/entities/SecurityToken/Dividends.ts:40_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Dividends.ts#L40)
 
 Distribute dividends in POLY
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`amount` | BigNumber |
-`checkpointId` | string |
-`excludedAddresses?` | string[] |
-`expiryDate` | Date |
-`maturityDate` | Date |
-`name` | string |
-`taxWithholdings?` | [TaxWithholdingEntry](../interfaces/_types_index_.taxwithholdingentry.md)[] |
+| Name | Type |
+| :--- | :--- |
+| `amount` | BigNumber |
+| `checkpointId` | string |
+| `excludedAddresses?` | string\[\] |
+| `expiryDate` | Date |
+| `maturityDate` | Date |
+| `name` | string |
+| `taxWithholdings?` | [TaxWithholdingEntry](../interfaces/_types_index_.taxwithholdingentry.md)\[\] |
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateDividendDistributionProcedureArgs](../interfaces/_types_index_.createdividenddistributionprocedureargs.md), [DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)››*
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_CreateDividendDistributionProcedureArgs_](../interfaces/_types_index_.createdividenddistributionprocedureargs.md)_,_ [_DividendDistribution_](_entities_dividenddistribution_.dividenddistribution.md)_››_
 
-___
+### getDefaultExclusionList
 
-###  getDefaultExclusionList
+▸ **getDefaultExclusionList**\(\): _Promise‹string\[\]›_
 
-▸ **getDefaultExclusionList**(): *Promise‹string[]›*
-
-*Defined in [src/entities/SecurityToken/Dividends.ts:278](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L278)*
+_Defined in_ [_src/entities/SecurityToken/Dividends.ts:278_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Dividends.ts#L278)
 
 Retrieve the list of addresses which are excluded from receiving dividend payments by default
 
-**Returns:** *Promise‹string[]›*
+**Returns:** _Promise‹string\[\]›_
 
-___
+### getDistribution
 
-###  getDistribution
+▸ **getDistribution**\(`args`: [GetDistributionParams](../interfaces/_entities_securitytoken_dividends_.getdistributionparams.md) \| string\): _Promise‹_[_DividendDistribution_](_entities_dividenddistribution_.dividenddistribution.md)_›_
 
-▸ **getDistribution**(`args`: [GetDistributionParams](../interfaces/_entities_securitytoken_dividends_.getdistributionparams.md) | string): *Promise‹[DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)›*
-
-*Defined in [src/entities/SecurityToken/Dividends.ts:254](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L254)*
+_Defined in_ [_src/entities/SecurityToken/Dividends.ts:254_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Dividends.ts#L254)
 
 Retrieve a particular dividend distribution by type and index or UUID
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`args` | [GetDistributionParams](../interfaces/_entities_securitytoken_dividends_.getdistributionparams.md) &#124; string | dividend uuid or object containing its index  |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `args` | [GetDistributionParams](../interfaces/_entities_securitytoken_dividends_.getdistributionparams.md) \| string | dividend uuid or object containing its index |
 
-**Returns:** *Promise‹[DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)›*
+**Returns:** _Promise‹_[_DividendDistribution_](_entities_dividenddistribution_.dividenddistribution.md)_›_
 
-___
+### getDistributions
 
-###  getDistributions
+▸ **getDistributions**\(`args`: object\): _Promise‹_[_DividendDistribution_](_entities_dividenddistribution_.dividenddistribution.md)_\[\]›_
 
-▸ **getDistributions**(`args`: object): *Promise‹[DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)[]›*
-
-*Defined in [src/entities/SecurityToken/Dividends.ts:222](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L222)*
+_Defined in_ [_src/entities/SecurityToken/Dividends.ts:222_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Dividends.ts#L222)
 
 Retrieve all dividend distributions at a certain checkpoint
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`checkpointId` | string |
+| Name | Type |
+| :--- | :--- |
+| `checkpointId` | string |
 
-**Returns:** *Promise‹[DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)[]›*
+**Returns:** _Promise‹_[_DividendDistribution_](_entities_dividenddistribution_.dividenddistribution.md)_\[\]›_
 
-___
+### getTaxWithholdingList
 
-###  getTaxWithholdingList
+▸ **getTaxWithholdingList**\(\): _Promise‹_[_TaxWithholding_](_entities_taxwithholding_.taxwithholding.md)_\[\]›_
 
-▸ **getTaxWithholdingList**(): *Promise‹[TaxWithholding](_entities_taxwithholding_.taxwithholding.md)[]›*
-
-*Defined in [src/entities/SecurityToken/Dividends.ts:169](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L169)*
+_Defined in_ [_src/entities/SecurityToken/Dividends.ts:169_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Dividends.ts#L169)
 
 Retrieve a list of investor addresses and their corresponding tax withholding percentages
 
-**Returns:** *Promise‹[TaxWithholding](_entities_taxwithholding_.taxwithholding.md)[]›*
+**Returns:** _Promise‹_[_TaxWithholding_](_entities_taxwithholding_.taxwithholding.md)_\[\]›_
 
-___
+### modifyDefaultExclusionList
 
-###  modifyDefaultExclusionList
+▸ **modifyDefaultExclusionList**\(`args`: object\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_ModifyDividendsDefaultExclusionListProcedureArgs_](../interfaces/_types_index_.modifydividendsdefaultexclusionlistprocedureargs.md)_, void››_
 
-▸ **modifyDefaultExclusionList**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ModifyDividendsDefaultExclusionListProcedureArgs](../interfaces/_types_index_.modifydividendsdefaultexclusionlistprocedureargs.md), void››*
-
-*Defined in [src/entities/SecurityToken/Dividends.ts:152](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L152)*
+_Defined in_ [_src/entities/SecurityToken/Dividends.ts:152_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Dividends.ts#L152)
 
 Set default exclusion list for a type of dividends. Addresses on this list won't be considered for dividend distribution. This operation overrides the previous default exclusion list
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`tokenholderAddresses` | string[] |
+| Name | Type |
+| :--- | :--- |
+| `tokenholderAddresses` | string\[\] |
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ModifyDividendsDefaultExclusionListProcedureArgs](../interfaces/_types_index_.modifydividendsdefaultexclusionlistprocedureargs.md), void››*
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_ModifyDividendsDefaultExclusionListProcedureArgs_](../interfaces/_types_index_.modifydividendsdefaultexclusionlistprocedureargs.md)_, void››_
 
-___
+### modifyStorageWallet
 
-###  modifyStorageWallet
+▸ **modifyStorageWallet**\(`args`: object\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_SetDividendsWalletProcedureArgs_](../interfaces/_types_index_.setdividendswalletprocedureargs.md)_, void››_
 
-▸ **modifyStorageWallet**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[SetDividendsWalletProcedureArgs](../interfaces/_types_index_.setdividendswalletprocedureargs.md), void››*
-
-*Defined in [src/entities/SecurityToken/Dividends.ts:135](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L135)*
+_Defined in_ [_src/entities/SecurityToken/Dividends.ts:135_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Dividends.ts#L135)
 
 Change dividends storage wallet address
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`address` | string |
+| Name | Type |
+| :--- | :--- |
+| `address` | string |
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[SetDividendsWalletProcedureArgs](../interfaces/_types_index_.setdividendswalletprocedureargs.md), void››*
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_SetDividendsWalletProcedureArgs_](../interfaces/_types_index_.setdividendswalletprocedureargs.md)_, void››_
 
-___
+### modifyTaxWithholdingList
 
-###  modifyTaxWithholdingList
+▸ **modifyTaxWithholdingList**\(`args`: object\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_UpdateDividendsTaxWithholdingListProcedureArgs_](../interfaces/_types_index_.updatedividendstaxwithholdinglistprocedureargs.md)_, void››_
 
-▸ **modifyTaxWithholdingList**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[UpdateDividendsTaxWithholdingListProcedureArgs](../interfaces/_types_index_.updatedividendstaxwithholdinglistprocedureargs.md), void››*
-
-*Defined in [src/entities/SecurityToken/Dividends.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L109)*
+_Defined in_ [_src/entities/SecurityToken/Dividends.ts:109_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Dividends.ts#L109)
 
 Set default tax withtholding list for a type of dividends
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`taxWithholdings` | [TaxWithholdingEntry](../interfaces/_types_index_.taxwithholdingentry.md)[] |
+| Name | Type |
+| :--- | :--- |
+| `taxWithholdings` | [TaxWithholdingEntry](../interfaces/_types_index_.taxwithholdingentry.md)\[\] |
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[UpdateDividendsTaxWithholdingListProcedureArgs](../interfaces/_types_index_.updatedividendstaxwithholdinglistprocedureargs.md), void››*
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_UpdateDividendsTaxWithholdingListProcedureArgs_](../interfaces/_types_index_.updatedividendstaxwithholdinglistprocedureargs.md)_, void››_
+

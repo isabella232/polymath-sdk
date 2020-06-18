@@ -1,4 +1,4 @@
-# Interface: UniqueIdentifiers
+# UniqueIdentifiers
 
 Properties that uniquely identify an Investment
 
@@ -16,24 +16,21 @@ Properties that uniquely identify an Investment
 
 ## Properties
 
-###  index
+### index
 
-• **index**: *number*
+• **index**: _number_
 
-*Defined in [src/entities/Investment.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L13)*
+_Defined in_ [_src/entities/Investment.ts:13_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L13)
 
-___
+### securityTokenId
 
-###  securityTokenId
+• **securityTokenId**: _string_
 
-• **securityTokenId**: *string*
+_Defined in_ [_src/entities/Investment.ts:11_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L11)
 
-*Defined in [src/entities/Investment.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L11)*
+### stoId
 
-___
+• **stoId**: _string_
 
-###  stoId
+_Defined in_ [_src/entities/Investment.ts:12_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L12)
 
-• **stoId**: *string*
-
-*Defined in [src/entities/Investment.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L12)*

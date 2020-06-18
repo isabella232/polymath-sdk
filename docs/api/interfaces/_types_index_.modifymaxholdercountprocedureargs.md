@@ -1,4 +1,4 @@
-# Interface: ModifyMaxHolderCountProcedureArgs
+# ModifyMaxHolderCountProcedureArgs
 
 Arguments for the [ModifyMaxHolderCount](../enums/_types_index_.proceduretype.md#modifymaxholdercount) Procedure
 
@@ -15,20 +15,19 @@ Arguments for the [ModifyMaxHolderCount](../enums/_types_index_.proceduretype.md
 
 ## Properties
 
-###  maxHolderCount
+### maxHolderCount
 
-• **maxHolderCount**: *number*
+• **maxHolderCount**: _number_
 
-*Defined in [src/types/index.ts:1192](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1192)*
+_Defined in_ [_src/types/index.ts:1192_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1192)
 
 maximum number of simultaneous token holders
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:1188](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1188)*
+_Defined in_ [_src/types/index.ts:1188_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1188)
 
 symbol of the Security Token
+

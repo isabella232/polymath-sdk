@@ -1,4 +1,4 @@
-# Interface: IssuanceDataEntry
+# IssuanceDataEntry
 
 Specifies how many tokens to issue and who to issue them to
 
@@ -16,30 +16,27 @@ Specifies how many tokens to issue and who to issue them to
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *string*
+• **address**: _string_
 
-*Defined in [src/types/index.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L83)*
+_Defined in_ [_src/types/index.ts:83_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L83)
 
 wallet address where Tokens will be received
 
-___
+### amount
 
-###  amount
+• **amount**: _BigNumber_
 
-• **amount**: *BigNumber*
-
-*Defined in [src/types/index.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L87)*
+_Defined in_ [_src/types/index.ts:87_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L87)
 
 amount of tokens to be issued
 
-___
-
 ### `Optional` tokenholderData
 
-• **tokenholderData**? : *[Omit](../modules/_types_index_.md#omit)‹[TokenholderDataEntry](_types_index_.tokenholderdataentry.md), "address"›*
+• **tokenholderData**? : [_Omit_](../external-modules/_types_index_.md#omit)_‹_[_TokenholderDataEntry_](_types_index_.tokenholderdataentry.md)_, "address"›_
 
-*Defined in [src/types/index.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L91)*
+_Defined in_ [_src/types/index.ts:91_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L91)
 
 KYC data for the Tokenholder
+

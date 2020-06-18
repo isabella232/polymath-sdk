@@ -1,4 +1,4 @@
-# Interface: DisableFeatureProcedureArgs
+# DisableFeatureProcedureArgs
 
 Arguments for the [DisableFeature](../enums/_types_index_.proceduretype.md#disablefeature) Procedure
 
@@ -15,20 +15,19 @@ Arguments for the [DisableFeature](../enums/_types_index_.proceduretype.md#disab
 
 ## Properties
 
-###  moduleName
+### moduleName
 
-• **moduleName**: *ModuleName*
+• **moduleName**: _ModuleName_
 
-*Defined in [src/types/index.ts:496](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L496)*
+_Defined in_ [_src/types/index.ts:496_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L496)
 
 name of the Module that will be disabled
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:492](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L492)*
+_Defined in_ [_src/types/index.ts:492_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L492)
 
 symbol of the Security Token
+

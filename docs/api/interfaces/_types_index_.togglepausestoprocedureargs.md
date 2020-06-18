@@ -1,4 +1,4 @@
-# Interface: TogglePauseStoProcedureArgs
+# TogglePauseStoProcedureArgs
 
 Arguments for the [TogglePauseSto](../enums/_types_index_.proceduretype.md#togglepausesto) Procedure
 
@@ -17,38 +17,33 @@ Arguments for the [TogglePauseSto](../enums/_types_index_.proceduretype.md#toggl
 
 ## Properties
 
-###  pause
+### pause
 
-• **pause**: *boolean*
+• **pause**: _boolean_
 
-*Defined in [src/types/index.ts:1002](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1002)*
+_Defined in_ [_src/types/index.ts:1002_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1002)
 
 true if pausing the STO, false if un-pausing it
 
-___
+### stoAddress
 
-###  stoAddress
+• **stoAddress**: _string_
 
-• **stoAddress**: *string*
+_Defined in_ [_src/types/index.ts:994_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L994)
 
-*Defined in [src/types/index.ts:994](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L994)*
+### stoType
 
-___
+• **stoType**: [_StoType_](../enums/_types_index_.stotype.md)
 
-###  stoType
+_Defined in_ [_src/types/index.ts:998_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L998)
 
-• **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
+type of the STO \(Simple, Tiered, etc\)
 
-*Defined in [src/types/index.ts:998](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L998)*
+### symbol
 
-type of the STO (Simple, Tiered, etc)
+• **symbol**: _string_
 
-___
-
-###  symbol
-
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:993](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L993)*
+_Defined in_ [_src/types/index.ts:993_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L993)
 
 symbol of the Security Token
+

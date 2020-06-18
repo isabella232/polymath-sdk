@@ -1,4 +1,4 @@
-# Interface: PullDividendPaymentProcedureArgs
+# PullDividendPaymentProcedureArgs
 
 Arguments for the [PullDividendPayment](../enums/_types_index_.proceduretype.md#pulldividendpayment) Procedure
 
@@ -15,18 +15,17 @@ Arguments for the [PullDividendPayment](../enums/_types_index_.proceduretype.md#
 
 ## Properties
 
-###  dividendIndex
+### dividendIndex
 
-• **dividendIndex**: *number*
+• **dividendIndex**: _number_
 
-*Defined in [src/types/index.ts:389](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L389)*
+_Defined in_ [_src/types/index.ts:389_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L389)
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:388](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L388)*
+_Defined in_ [_src/types/index.ts:388_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L388)
 
 symbol of the security token
+

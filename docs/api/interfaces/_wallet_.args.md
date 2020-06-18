@@ -1,4 +1,4 @@
-# Interface: Args
+# Args
 
 ## Hierarchy
 
@@ -12,12 +12,13 @@
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *function*
+• **address**: _function_
 
-*Defined in [src/Wallet.ts:2](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Wallet.ts#L2)*
+_Defined in_ [_src/Wallet.ts:2_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Wallet.ts#L2)
 
 #### Type declaration:
 
-▸ (): *Promise‹string›*
+▸ \(\): _Promise‹string›_
+

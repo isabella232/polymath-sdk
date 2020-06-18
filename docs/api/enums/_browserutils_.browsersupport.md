@@ -1,4 +1,4 @@
-# Enumeration: BrowserSupport
+# BrowserSupport
 
 ## Index
 
@@ -11,32 +11,27 @@
 
 ## Enumeration members
 
-###  MetamaskLegacy
+### MetamaskLegacy
 
 • **MetamaskLegacy**: = "MetamaskLegacy"
 
-*Defined in [src/browserUtils.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/browserUtils.ts#L8)*
+_Defined in_ [_src/browserUtils.ts:8_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/browserUtils.ts#L8)
 
-___
-
-###  MetamaskModern
+### MetamaskModern
 
 • **MetamaskModern**: = "MetamaskModern"
 
-*Defined in [src/browserUtils.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/browserUtils.ts#L9)*
+_Defined in_ [_src/browserUtils.ts:9_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/browserUtils.ts#L9)
 
-___
-
-###  NoMetamask
+### NoMetamask
 
 • **NoMetamask**: = "NoMetamask"
 
-*Defined in [src/browserUtils.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/browserUtils.ts#L7)*
+_Defined in_ [_src/browserUtils.ts:7_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/browserUtils.ts#L7)
 
-___
-
-###  None
+### None
 
 • **None**: = "None"
 
-*Defined in [src/browserUtils.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/browserUtils.ts#L10)*
+_Defined in_ [_src/browserUtils.ts:10_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/browserUtils.ts#L10)
+

@@ -1,4 +1,4 @@
-# Interface: SignDisableControllerAckProcedureArgs
+# SignDisableControllerAckProcedureArgs
 
 Arguments for the [SignDisableControllerAck](../enums/_types_index_.proceduretype.md#signdisablecontrollerack) Procedure
 
@@ -14,10 +14,11 @@ Arguments for the [SignDisableControllerAck](../enums/_types_index_.proceduretyp
 
 ## Properties
 
-###  symbol
+### symbol
 
-• **symbol**: *string*
+• **symbol**: _string_
 
-*Defined in [src/types/index.ts:1311](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1311)*
+_Defined in_ [_src/types/index.ts:1311_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1311)
 
 symbol of the Security Token
+

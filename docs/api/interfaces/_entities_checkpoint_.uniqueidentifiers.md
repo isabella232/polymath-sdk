@@ -1,4 +1,4 @@
-# Interface: UniqueIdentifiers
+# UniqueIdentifiers
 
 Properties that uniquely identify a Checkpoint
 
@@ -15,20 +15,19 @@ Properties that uniquely identify a Checkpoint
 
 ## Properties
 
-###  index
+### index
 
-• **index**: *number*
+• **index**: _number_
 
-*Defined in [src/entities/Checkpoint.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Checkpoint.ts#L19)*
+_Defined in_ [_src/entities/Checkpoint.ts:19_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Checkpoint.ts#L19)
 
 numerical index of the checkpoint. The higher the index, the more recent the checkpoint
 
-___
+### securityTokenId
 
-###  securityTokenId
+• **securityTokenId**: _string_
 
-• **securityTokenId**: *string*
-
-*Defined in [src/entities/Checkpoint.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Checkpoint.ts#L15)*
+_Defined in_ [_src/entities/Checkpoint.ts:15_](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Checkpoint.ts#L15)
 
 security token UUID
+
