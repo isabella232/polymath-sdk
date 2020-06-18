@@ -39,7 +39,7 @@ Namespace that handles all Dividend related functionality
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L10)*
 
 Create a new SubModule instance
 
@@ -60,7 +60,7 @@ Name | Type |
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L10)*
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L8)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L8)*
 
 ## Methods
 
@@ -78,7 +78,7 @@ ___
 
 ▸ **createErc20Distribution**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateDividendDistributionProcedureArgs](../interfaces/_types_index_.createdividenddistributionprocedureargs.md), [DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)››*
 
-*Defined in [src/entities/SecurityToken/Dividends.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L79)*
+*Defined in [src/entities/SecurityToken/Dividends.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Dividends.ts#L79)*
 
 Distribute dividends in a specified ERC20 token
 
@@ -105,7 +105,7 @@ ___
 
 ▸ **createPolyDistribution**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[CreateDividendDistributionProcedureArgs](../interfaces/_types_index_.createdividenddistributionprocedureargs.md), [DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)››*
 
-*Defined in [src/entities/SecurityToken/Dividends.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L40)*
+*Defined in [src/entities/SecurityToken/Dividends.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Dividends.ts#L40)*
 
 Distribute dividends in POLY
 
@@ -131,7 +131,7 @@ ___
 
 ▸ **getDefaultExclusionList**(): *Promise‹string[]›*
 
-*Defined in [src/entities/SecurityToken/Dividends.ts:278](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L278)*
+*Defined in [src/entities/SecurityToken/Dividends.ts:278](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Dividends.ts#L278)*
 
 Retrieve the list of addresses which are excluded from receiving dividend payments by default
 
@@ -143,7 +143,7 @@ ___
 
 ▸ **getDistribution**(`args`: [GetDistributionParams](../interfaces/_entities_securitytoken_dividends_.getdistributionparams.md) | string): *Promise‹[DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)›*
 
-*Defined in [src/entities/SecurityToken/Dividends.ts:254](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L254)*
+*Defined in [src/entities/SecurityToken/Dividends.ts:254](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Dividends.ts#L254)*
 
 Retrieve a particular dividend distribution by type and index or UUID
 
@@ -161,7 +161,7 @@ ___
 
 ▸ **getDistributions**(`args`: object): *Promise‹[DividendDistribution](_entities_dividenddistribution_.dividenddistribution.md)[]›*
 
-*Defined in [src/entities/SecurityToken/Dividends.ts:222](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L222)*
+*Defined in [src/entities/SecurityToken/Dividends.ts:222](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Dividends.ts#L222)*
 
 Retrieve all dividend distributions at a certain checkpoint
 
@@ -181,7 +181,7 @@ ___
 
 ▸ **getTaxWithholdingList**(): *Promise‹[TaxWithholding](_entities_taxwithholding_.taxwithholding.md)[]›*
 
-*Defined in [src/entities/SecurityToken/Dividends.ts:169](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L169)*
+*Defined in [src/entities/SecurityToken/Dividends.ts:169](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Dividends.ts#L169)*
 
 Retrieve a list of investor addresses and their corresponding tax withholding percentages
 
@@ -193,7 +193,7 @@ ___
 
 ▸ **modifyDefaultExclusionList**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ModifyDividendsDefaultExclusionListProcedureArgs](../interfaces/_types_index_.modifydividendsdefaultexclusionlistprocedureargs.md), void››*
 
-*Defined in [src/entities/SecurityToken/Dividends.ts:152](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L152)*
+*Defined in [src/entities/SecurityToken/Dividends.ts:152](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Dividends.ts#L152)*
 
 Set default exclusion list for a type of dividends. Addresses on this list won't be considered for dividend distribution. This operation overrides the previous default exclusion list
 
@@ -213,7 +213,7 @@ ___
 
 ▸ **modifyStorageWallet**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[SetDividendsWalletProcedureArgs](../interfaces/_types_index_.setdividendswalletprocedureargs.md), void››*
 
-*Defined in [src/entities/SecurityToken/Dividends.ts:135](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L135)*
+*Defined in [src/entities/SecurityToken/Dividends.ts:135](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Dividends.ts#L135)*
 
 Change dividends storage wallet address
 
@@ -233,7 +233,7 @@ ___
 
 ▸ **modifyTaxWithholdingList**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[UpdateDividendsTaxWithholdingListProcedureArgs](../interfaces/_types_index_.updatedividendstaxwithholdinglistprocedureargs.md), void››*
 
-*Defined in [src/entities/SecurityToken/Dividends.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Dividends.ts#L109)*
+*Defined in [src/entities/SecurityToken/Dividends.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Dividends.ts#L109)*
 
 Set default tax withtholding list for a type of dividends
 

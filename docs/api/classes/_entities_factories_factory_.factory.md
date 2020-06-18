@@ -55,7 +55,7 @@ as well as fetching/refreshing the internal Security Token cache
 
 \+ **new Factory**(`eClass`: [EntityClass](../interfaces/_entities_factories_factory_.entityclass.md)‹T, U›, `context`: [Context](_context_.context.md)): *[Factory](_entities_factories_factory_.factory.md)*
 
-*Defined in [src/entities/factories/Factory.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/factories/Factory.ts#L42)*
+*Defined in [src/entities/factories/Factory.ts:42](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/factories/Factory.ts#L42)*
 
 Create a factory that can generate an entity
 
@@ -74,7 +74,7 @@ Name | Type |
 
 • **Entity**: *[EntityClass](../interfaces/_entities_factories_factory_.entityclass.md)‹T, U›*
 
-*Defined in [src/entities/factories/Factory.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/factories/Factory.ts#L37)*
+*Defined in [src/entities/factories/Factory.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/factories/Factory.ts#L37)*
 
 entity class that this Factory is in charge of generating and caching
 
@@ -84,7 +84,7 @@ ___
 
 • **cache**: *object*
 
-*Defined in [src/entities/factories/Factory.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/factories/Factory.ts#L28)*
+*Defined in [src/entities/factories/Factory.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/factories/Factory.ts#L28)*
 
 #### Type declaration:
 
@@ -96,7 +96,7 @@ ___
 
 • **context**: *[Context](_context_.context.md)*
 
-*Defined in [src/entities/factories/Factory.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/factories/Factory.ts#L32)*
+*Defined in [src/entities/factories/Factory.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/factories/Factory.ts#L32)*
 
 ## Methods
 
@@ -104,7 +104,7 @@ ___
 
 ▸ **create**(`uid`: string, `params`: T): *EntityType*
 
-*Defined in [src/entities/factories/Factory.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/factories/Factory.ts#L87)*
+*Defined in [src/entities/factories/Factory.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/factories/Factory.ts#L87)*
 
 Get an entity from the cache. Creates it if it isn't cached, updates it if it is
 
@@ -123,7 +123,7 @@ ___
 
 ▸ **fetch**(`uid`: string): *Promise‹EntityType›*
 
-*Defined in [src/entities/factories/Factory.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/factories/Factory.ts#L57)*
+*Defined in [src/entities/factories/Factory.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/factories/Factory.ts#L57)*
 
 Get an entity from the cache. Fetches the necessary data to create it if it isn't cached, refreshes it if it is
 
@@ -141,7 +141,7 @@ ___
 
 ▸ **refresh**(`uid`: string): *Promise‹void›*
 
-*Defined in [src/entities/factories/Factory.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/factories/Factory.ts#L108)*
+*Defined in [src/entities/factories/Factory.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/factories/Factory.ts#L108)*
 
 Fetch the data for an entity and updates its properties
 
@@ -159,7 +159,7 @@ ___
 
 ▸ **update**(`uid`: string, `params`: Partial‹T›): *Promise‹void›*
 
-*Defined in [src/entities/factories/Factory.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/factories/Factory.ts#L126)*
+*Defined in [src/entities/factories/Factory.ts:126](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/factories/Factory.ts#L126)*
 
 Update an entity's properties in place
 

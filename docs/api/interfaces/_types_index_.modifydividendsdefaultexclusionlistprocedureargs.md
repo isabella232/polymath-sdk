@@ -19,7 +19,7 @@ Arguments for the [ModifyDividendsDefaultExclusionList](../enums/_types_index_.p
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:869](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L869)*
+*Defined in [src/types/index.ts:869](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L869)*
 
 the symbol of the Security Token
 
@@ -29,7 +29,7 @@ ___
 
 • **tokenholderAddresses**: *string[]*
 
-*Defined in [src/types/index.ts:874](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L874)*
+*Defined in [src/types/index.ts:874](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L874)*
 
 list of addresses to conform the new default exclusion list.
 Addresses in this list will not be considered for Dividend Distribution payments

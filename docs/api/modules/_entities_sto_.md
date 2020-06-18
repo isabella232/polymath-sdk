@@ -21,7 +21,7 @@
 
 ▸ **isUniqueIdentifiers**(`identifiers`: any): *identifiers is UniqueIdentifiers*
 
-*Defined in [src/entities/Sto.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Sto.ts#L27)*
+*Defined in [src/entities/Sto.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L27)*
 
 Check if the provided value is of type [UniqueIdentifiers](../interfaces/_entities_sto_.uniqueidentifiers.md)
 

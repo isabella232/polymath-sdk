@@ -23,7 +23,7 @@ Status of a Tokenholder in regards to a Dividend Distribution
 
 • **address**: *string*
 
-*Defined in [src/types/index.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L27)*
+*Defined in [src/types/index.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L27)*
 
 wallet address of the Tokenholder
 
@@ -33,7 +33,7 @@ ___
 
 • **amountReceived**: *BigNumber*
 
-*Defined in [src/types/index.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L43)*
+*Defined in [src/types/index.ts:43](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L43)*
 
 the amount of tokens the Tokenholder has received as Dividend payment
 
@@ -43,7 +43,7 @@ ___
 
 • **balance**: *BigNumber*
 
-*Defined in [src/types/index.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L47)*
+*Defined in [src/types/index.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L47)*
 
 the balance of the Tokenholder
 
@@ -53,7 +53,7 @@ ___
 
 • **excluded**: *boolean*
 
-*Defined in [src/types/index.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L35)*
+*Defined in [src/types/index.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L35)*
 
 whether the Tokenholder is excluded from the Dividend distribution
 
@@ -63,7 +63,7 @@ ___
 
 • **paymentReceived**: *boolean*
 
-*Defined in [src/types/index.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L31)*
+*Defined in [src/types/index.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L31)*
 
 whether the Tokenholder has received payment
 
@@ -73,6 +73,6 @@ ___
 
 • **withheldTax**: *BigNumber*
 
-*Defined in [src/types/index.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L39)*
+*Defined in [src/types/index.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L39)*
 
 amount of tokens withheld for tax purposes

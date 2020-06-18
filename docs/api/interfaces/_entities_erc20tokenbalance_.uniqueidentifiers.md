@@ -19,7 +19,7 @@ Properties that uniquely identify an ERC20 token balance
 
 • **tokenAddress**: *string*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Erc20TokenBalance.ts#L11)*
+*Defined in [src/entities/Erc20TokenBalance.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Erc20TokenBalance.ts#L11)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **walletAddress**: *string*
 
-*Defined in [src/entities/Erc20TokenBalance.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Erc20TokenBalance.ts#L12)*
+*Defined in [src/entities/Erc20TokenBalance.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Erc20TokenBalance.ts#L12)*

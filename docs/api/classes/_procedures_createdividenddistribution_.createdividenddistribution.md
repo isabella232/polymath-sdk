@@ -37,7 +37,7 @@ The funds to be distributed as dividends will come from the current user's walle
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L40)*
+*Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/procedures/Procedure.ts#L40)*
 
 **Parameters:**
 
@@ -56,7 +56,7 @@ Name | Type |
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L34)*
+*Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/procedures/Procedure.ts#L34)*
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L36)*
+*Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/procedures/Procedure.ts#L36)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/procedures/CreateDividendDistribution.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/CreateDividendDistribution.ts#L27)*
+*Defined in [src/procedures/CreateDividendDistribution.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/procedures/CreateDividendDistribution.ts#L27)*
 
 ## Methods
 
@@ -86,7 +86,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L91)*
+*Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/procedures/Procedure.ts#L91)*
 
 Appends a Procedure into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -115,7 +115,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L179)*
+*Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/procedures/Procedure.ts#L179)*
 
 Appends a signature request into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -142,7 +142,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L137)*
+*Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/procedures/Procedure.ts#L137)*
 
 Appends a method or future method into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -183,7 +183,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L52)*
+*Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/procedures/Procedure.ts#L52)*
 
 Mandatory method that builds a list of transactions that will be
 run
@@ -198,7 +198,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/procedures/CreateDividendDistribution.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/CreateDividendDistribution.ts#L37)*
+*Defined in [src/procedures/CreateDividendDistribution.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/procedures/CreateDividendDistribution.ts#L37)*
 
 - Approve spend of the amount that will be distributed
 - Create a Dividend Distribution for said amount

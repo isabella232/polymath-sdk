@@ -21,7 +21,7 @@ Arguments for the [SignTransferData](../enums/_types_index_.proceduretype.md#sig
 
 • **kycData**: *[Omit](../modules/_types_index_.md#omit)‹[Omit](../modules/_types_index_.md#omit)‹[TokenholderDataEntry](_types_index_.tokenholderdataentry.md), "isAccredited"›, "canBuyFromSto"›[]*
 
-*Defined in [src/types/index.ts:1293](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1293)*
+*Defined in [src/types/index.ts:1293](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1293)*
 
 KYC data to sign
 
@@ -31,7 +31,7 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:1289](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1289)*
+*Defined in [src/types/index.ts:1289](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1289)*
 
 symbol of the Security Token
 
@@ -41,7 +41,7 @@ ___
 
 • **validFrom**: *Date*
 
-*Defined in [src/types/index.ts:1297](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1297)*
+*Defined in [src/types/index.ts:1297](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1297)*
 
 date from which the signature is valid
 
@@ -51,6 +51,6 @@ ___
 
 • **validTo**: *Date*
 
-*Defined in [src/types/index.ts:1301](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1301)*
+*Defined in [src/types/index.ts:1301](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1301)*
 
 date until which the signature is valid

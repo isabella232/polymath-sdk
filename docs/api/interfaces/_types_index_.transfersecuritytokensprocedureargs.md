@@ -22,7 +22,7 @@ Arguments for the [TransferSecurityTokens](../enums/_types_index_.proceduretype.
 
 • **amount**: *BigNumber*
 
-*Defined in [src/types/index.ts:1257](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1257)*
+*Defined in [src/types/index.ts:1257](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1257)*
 
 amount of tokens being transferred
 
@@ -32,7 +32,7 @@ ___
 
 • **data**? : *undefined | string*
 
-*Defined in [src/types/index.ts:1261](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1261)*
+*Defined in [src/types/index.ts:1261](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1261)*
 
 signed KYC data that will be considered (and applied to the Security Token) when checking for transfer restrictions
 
@@ -42,7 +42,7 @@ ___
 
 • **from**? : *undefined | string*
 
-*Defined in [src/types/index.ts:1265](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1265)*
+*Defined in [src/types/index.ts:1265](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1265)*
 
 wallet address sending Security Tokens. Defaults to the current wallet
 
@@ -52,7 +52,7 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:1249](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1249)*
+*Defined in [src/types/index.ts:1249](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1249)*
 
 symbol of the Security Token
 
@@ -62,6 +62,6 @@ ___
 
 • **to**: *string*
 
-*Defined in [src/types/index.ts:1253](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1253)*
+*Defined in [src/types/index.ts:1253](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1253)*
 
 wallet address receiving Security Tokens

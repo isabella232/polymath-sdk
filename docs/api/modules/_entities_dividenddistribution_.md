@@ -21,7 +21,7 @@
 
 ▸ **isUniqueIdentifiers**(`identifiers`: any): *identifiers is UniqueIdentifiers*
 
-*Defined in [src/entities/DividendDistribution.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L26)*
+*Defined in [src/entities/DividendDistribution.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/DividendDistribution.ts#L26)*
 
 Check if the provided value is of type [UniqueIdentifiers](../interfaces/_entities_dividenddistribution_.uniqueidentifiers.md)
 

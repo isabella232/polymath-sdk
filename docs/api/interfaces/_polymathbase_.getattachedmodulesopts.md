@@ -18,6 +18,6 @@ Options for [getAttachedModules](../classes/_polymathbase_.polymathbase.md#getat
 
 • **unarchived**: *boolean*
 
-*Defined in [src/PolymathBase.ts:93](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L93)*
+*Defined in [src/PolymathBase.ts:93](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/PolymathBase.ts#L93)*
 
 whether to include unarchived modules in the search

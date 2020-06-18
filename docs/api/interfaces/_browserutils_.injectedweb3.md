@@ -17,7 +17,7 @@
 
 • **currentProvider**: *Provider*
 
-*Defined in [src/browserUtils.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/browserUtils.ts#L26)*
+*Defined in [src/browserUtils.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L26)*
 
 ___
 
@@ -25,4 +25,4 @@ ___
 
 • **version**: *[Web3VersionAPI](_browserutils_.web3versionapi.md)*
 
-*Defined in [src/browserUtils.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/browserUtils.ts#L27)*
+*Defined in [src/browserUtils.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L27)*

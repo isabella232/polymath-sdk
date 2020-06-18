@@ -34,7 +34,7 @@ Namespace that handles all Percentage Restriction related functionality
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L10)*
 
 Create a new SubModule instance
 
@@ -55,7 +55,7 @@ Name | Type |
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L10)*
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L8)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L8)*
 
 ## Methods
 
@@ -73,7 +73,7 @@ ___
 
 ▸ **getExemptions**(): *Promise‹object›*
 
-*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:66](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L66)*
+*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:66](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L66)*
 
 Retrieve all exemptions that currently apply to percentage restrictions. That includes the whitelist and whether primary issuance (minting) is allowed to bypass percentage ownership restrictions
 
@@ -87,7 +87,7 @@ ___
 
 ▸ **getMaxHolderPercentage**(): *Promise‹BigNumber›*
 
-*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:139](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L139)*
+*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:139](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L139)*
 
 Retrieve the maximum percentage of the total supply that a single tokenholder can own
 Can be modified with `modifyMaxHolderPercentage`
@@ -100,7 +100,7 @@ ___
 
 ▸ **modifyExemptions**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ModifyPercentageExemptionsProcedureArgs](../interfaces/_types_index_.modifypercentageexemptionsprocedureargs.md), void››*
 
-*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L47)*
+*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L47)*
 
 Modify the conditions for exemption from percentage ownership restrictions. There are two (independent) methods of exemption:
 
@@ -124,7 +124,7 @@ ___
 
 ▸ **modifyMaxHolderPercentage**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ModifyMaxHolderPercentageProcedureArgs](../interfaces/_types_index_.modifymaxholderpercentageprocedureargs.md), void››*
 
-*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:124](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L124)*
+*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:124](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L124)*
 
 Modify the maximum percentage of the total supply that a single tokenholder can own at a given time
 

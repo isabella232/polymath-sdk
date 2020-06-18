@@ -23,7 +23,7 @@
 
 • **amount**: *BigNumber*
 
-*Defined in [src/types/index.ts:628](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L628)*
+*Defined in [src/types/index.ts:628](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L628)*
 
 amount to invest
 
@@ -33,7 +33,7 @@ ___
 
 • **beneficiary**? : *undefined | string*
 
-*Defined in [src/types/index.ts:641](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L641)*
+*Defined in [src/types/index.ts:641](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L641)*
 
 if specified, the investment will be made on behalf of this address
 
@@ -43,7 +43,7 @@ ___
 
 • **currency**: *Currency*
 
-*Defined in [src/types/index.ts:632](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L632)*
+*Defined in [src/types/index.ts:632](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L632)*
 
 currency type in which the investment is being made
 
@@ -53,7 +53,7 @@ ___
 
 • **minTokens**? : *BigNumber*
 
-*Defined in [src/types/index.ts:637](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L637)*
+*Defined in [src/types/index.ts:637](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L637)*
 
 minimum amount of Security Tokens that should be bought.
 If, because of price fluctuations, a lower amount is being bought, the transaction will revert
@@ -64,7 +64,7 @@ ___
 
 • **stoAddress**: *string*
 
-*Defined in [src/types/index.ts:624](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L624)*
+*Defined in [src/types/index.ts:624](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L624)*
 
 address of the STO
 
@@ -74,6 +74,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:620](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L620)*
+*Defined in [src/types/index.ts:620](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L620)*
 
 symbol of the Security Token

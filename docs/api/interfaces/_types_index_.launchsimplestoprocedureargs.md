@@ -26,7 +26,7 @@ Arguments for the [LaunchSimpleSto](../enums/_types_index_.proceduretype.md#laun
 
 • **allowPreIssuing**? : *undefined | false | true*
 
-*Defined in [src/types/index.ts:539](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L539)*
+*Defined in [src/types/index.ts:539](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L539)*
 
 whether the total amount of Security Tokens that will be sold should be issued at the time the STO starts.
 Otherwise, they will be issued on each purchase. Defaults to false
@@ -37,7 +37,7 @@ ___
 
 • **currency**: *Currency.ETH | Currency.POLY*
 
-*Defined in [src/types/index.ts:526](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L526)*
+*Defined in [src/types/index.ts:526](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L526)*
 
 currency for the Simple STO fund raise
 
@@ -47,7 +47,7 @@ ___
 
 • **endDate**: *Date*
 
-*Defined in [src/types/index.ts:514](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L514)*
+*Defined in [src/types/index.ts:514](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L514)*
 
 end date of the STO
 
@@ -57,7 +57,7 @@ ___
 
 • **raisedFundsWallet**: *string*
 
-*Defined in [src/types/index.ts:530](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L530)*
+*Defined in [src/types/index.ts:530](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L530)*
 
 wallet to which raised funds will be sent
 
@@ -67,7 +67,7 @@ ___
 
 • **rate**: *BigNumber*
 
-*Defined in [src/types/index.ts:522](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L522)*
+*Defined in [src/types/index.ts:522](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L522)*
 
 amount of tokens sold per unit of currency
 
@@ -77,7 +77,7 @@ ___
 
 • **startDate**: *Date*
 
-*Defined in [src/types/index.ts:510](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L510)*
+*Defined in [src/types/index.ts:510](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L510)*
 
 start date of the STO
 
@@ -87,7 +87,7 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:506](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L506)*
+*Defined in [src/types/index.ts:506](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L506)*
 
 symbol of the Security Token
 
@@ -97,7 +97,7 @@ ___
 
 • **tokensOnSale**: *BigNumber*
 
-*Defined in [src/types/index.ts:518](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L518)*
+*Defined in [src/types/index.ts:518](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L518)*
 
 number of tokens that will be sold
 
@@ -107,6 +107,6 @@ ___
 
 • **unsoldTokensWallet**: *string*
 
-*Defined in [src/types/index.ts:534](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L534)*
+*Defined in [src/types/index.ts:534](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L534)*
 
 wallet to which unsold tokens will be sent if the STO expires

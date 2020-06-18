@@ -13,7 +13,7 @@
 
 • **Simple**: = "Simple"
 
-*Defined in [src/types/index.ts:51](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L51)*
+*Defined in [src/types/index.ts:51](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L51)*
 
 ___
 
@@ -21,4 +21,4 @@ ___
 
 • **Tiered**: = "Tiered"
 
-*Defined in [src/types/index.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L52)*
+*Defined in [src/types/index.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L52)*

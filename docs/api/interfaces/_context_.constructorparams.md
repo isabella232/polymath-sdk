@@ -16,4 +16,4 @@
 
 • **contractWrappers**: *[PolymathBase](../classes/_polymathbase_.polymathbase.md)*
 
-*Defined in [src/Context.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Context.ts#L17)*
+*Defined in [src/Context.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Context.ts#L17)*

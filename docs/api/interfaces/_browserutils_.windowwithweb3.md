@@ -423,7 +423,7 @@ ___
 
 *Inherited from [ExtendedWindow](_browserutils_.extendedwindow.md).[ethereum](_browserutils_.extendedwindow.md#optional-ethereum)*
 
-*Defined in [src/browserUtils.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/browserUtils.ts#L31)*
+*Defined in [src/browserUtils.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L31)*
 
 ___
 
@@ -2373,7 +2373,7 @@ ___
 
 *Overrides [ExtendedWindow](_browserutils_.extendedwindow.md).[web3](_browserutils_.extendedwindow.md#optional-web3)*
 
-*Defined in [src/browserUtils.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/browserUtils.ts#L39)*
+*Defined in [src/browserUtils.ts:39](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L39)*
 
 ___
 

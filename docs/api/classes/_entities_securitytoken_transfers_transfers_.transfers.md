@@ -38,7 +38,7 @@ Namespace that handles all Transfer related functionality
 
 *Overrides [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)*
 
-*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Transfers.ts#L21)*
+*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Transfers.ts#L21)*
 
 Create a new Transfers instance
 
@@ -59,7 +59,7 @@ Name | Type |
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L10)*
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 • **restrictions**: *[Restrictions](_entities_securitytoken_transfers_restrictions_restrictions_.restrictions.md)*
 
-*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Transfers.ts#L21)*
+*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Transfers.ts#L21)*
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L8)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L8)*
 
 ## Methods
 
@@ -85,7 +85,7 @@ ___
 
 ▸ **canTransfer**(`args`: object): *Promise‹object›*
 
-*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:130](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Transfers.ts#L130)*
+*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:130](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Transfers.ts#L130)*
 
 Validate if a transfer of Security Tokens can be performed. This takes all present transfer restrictions into account
 
@@ -108,7 +108,7 @@ ___
 
 ▸ **freeze**(): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleFreezeTransfersProcedureArgs](../interfaces/_types_index_.togglefreezetransfersprocedureargs.md), void››*
 
-*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Transfers.ts#L114)*
+*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Transfers.ts#L114)*
 
 Freeze transfers of the security token
 
@@ -120,7 +120,7 @@ ___
 
 ▸ **frozen**(): *Promise‹boolean›*
 
-*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:89](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Transfers.ts#L89)*
+*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:89](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Transfers.ts#L89)*
 
 Retrieve whether the transfer of tokens is frozen or not
 Can be modified with `freeze` and `unfreeze`
@@ -133,7 +133,7 @@ ___
 
 ▸ **getStatusCode**(`statusCode`: RawTransferStatusCode): *[TransferStatusCode](../enums/_types_index_.transferstatuscode.md)*
 
-*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:168](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Transfers.ts#L168)*
+*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:168](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Transfers.ts#L168)*
 
 **Parameters:**
 
@@ -149,7 +149,7 @@ ___
 
 ▸ **signKycData**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[SignTransferDataProcedureArgs](../interfaces/_types_index_.signtransferdataprocedureargs.md), void››*
 
-*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Transfers.ts#L47)*
+*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:47](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Transfers.ts#L47)*
 
 Generate a signature string based on dynamic KYC data. This data can be used to:
 
@@ -179,7 +179,7 @@ ___
 
 ▸ **transfer**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[TransferSecurityTokensProcedureArgs](../interfaces/_types_index_.transfersecuritytokensprocedureargs.md), void››*
 
-*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Transfers.ts#L72)*
+*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Transfers.ts#L72)*
 
 Transfer an amount of Security Tokens to a specified address
 
@@ -202,7 +202,7 @@ ___
 
 ▸ **unfreeze**(): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ToggleFreezeTransfersProcedureArgs](../interfaces/_types_index_.togglefreezetransfersprocedureargs.md), void››*
 
-*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:201](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Transfers.ts#L201)*
+*Defined in [src/entities/SecurityToken/Transfers/Transfers.ts:201](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Transfers.ts#L201)*
 
 Unfreeze transfers of the security token
 

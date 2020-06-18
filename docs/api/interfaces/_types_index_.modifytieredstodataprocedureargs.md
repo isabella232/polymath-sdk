@@ -21,7 +21,7 @@ Arguments for the [ModifyTieredStoData](../enums/_types_index_.proceduretype.md#
 
 • **stoAddress**: *string*
 
-*Defined in [src/types/index.ts:609](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L609)*
+*Defined in [src/types/index.ts:609](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L609)*
 
 address of the STO
 
@@ -31,6 +31,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:613](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L613)*
+*Defined in [src/types/index.ts:613](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L613)*
 
 symbol of the Security Token

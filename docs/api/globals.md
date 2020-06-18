@@ -1,4 +1,4 @@
-# @polymathnetwork/sdk - v2.0.1-beta.126
+# @polymathnetwork/sdk - v3.0.0
 
 ## Index
 

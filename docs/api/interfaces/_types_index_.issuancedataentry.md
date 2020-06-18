@@ -20,7 +20,7 @@ Specifies how many tokens to issue and who to issue them to
 
 • **address**: *string*
 
-*Defined in [src/types/index.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L83)*
+*Defined in [src/types/index.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L83)*
 
 wallet address where Tokens will be received
 
@@ -30,7 +30,7 @@ ___
 
 • **amount**: *BigNumber*
 
-*Defined in [src/types/index.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L87)*
+*Defined in [src/types/index.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L87)*
 
 amount of tokens to be issued
 
@@ -40,6 +40,6 @@ ___
 
 • **tokenholderData**? : *[Omit](../modules/_types_index_.md#omit)‹[TokenholderDataEntry](_types_index_.tokenholderdataentry.md), "address"›*
 
-*Defined in [src/types/index.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L91)*
+*Defined in [src/types/index.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L91)*
 
 KYC data for the Tokenholder
