@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/PolymathNetwork/polymath-sdk/badge.svg?branch=beta)](https://coveralls.io/github/PolymathNetwork/polymath-sdk?branch=beta)
+[![Coverage Status](https://coveralls.io/repos/github/PolymathNetwork/polymath-sdk/badge.svg?branch=master)](https://coveralls.io/github/PolymathNetwork/polymath-sdk?branch=master)
 
 # Polymath SDK
 
