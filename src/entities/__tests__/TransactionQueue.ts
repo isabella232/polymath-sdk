@@ -1,18 +1,24 @@
-import { TransactionQueueStatus, isPojo } from '~/types';
-import { MockedContract, getMockTransactionSpec } from '~/testUtils';
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
+import { TransactionQueueStatus, isPojo, Fees } from '../../types';
+import { MockedContract, getMockTransactionSpec } from '../../testUtils';
 import { TransactionQueue } from '../TransactionQueue';
 
 describe('TransactionQueue', () => {
-  let testContract: MockedContract<any>;
+  let testContract: MockedContract;
+  let testFees: Fees;
 
   beforeEach(() => {
     testContract = new MockedContract();
+    testFees = {
+      usd: new BigNumber(0),
+      poly: new BigNumber(0),
+    };
   });
 
   describe('constructor', () => {
     test('initializes properly', () => {
       const transaction = getMockTransactionSpec(testContract.fakeTxOne, []);
-      const transactionQueue = new TransactionQueue([transaction]);
+      const transactionQueue = new TransactionQueue([transaction], testFees, null, {});
       expect(transactionQueue).toBeInstanceOf(TransactionQueue);
       expect(transactionQueue.run()).toBeInstanceOf(Promise);
     });
@@ -24,7 +30,7 @@ describe('TransactionQueue', () => {
 
       const tx1 = getMockTransactionSpec(contract.fakeTxOne, []);
       const tx2 = getMockTransactionSpec(contract.fakeTxTwo, []);
-      const transactionQueue = new TransactionQueue([tx1, tx2]);
+      const transactionQueue = new TransactionQueue([tx1, tx2], testFees, null, {});
 
       const polyTx1 = transactionQueue.transactions[0];
       const polyTx2 = transactionQueue.transactions[1];
@@ -34,7 +40,7 @@ describe('TransactionQueue', () => {
       transactionQueue.onTransactionStatusChange(spyListener);
       transactionQueue.run();
 
-      contract.fakeTxOnePromiEvent.resolve();
+      contract.fakeTxOnePolyResponse.resolve();
       await polyTx1.promise;
       const tx1Matcher = expect.objectContaining({ uid: polyTx1.uid });
       const tx2Matcher = expect.objectContaining({ uid: polyTx2.uid });
@@ -44,7 +50,7 @@ describe('TransactionQueue', () => {
 
       expect(spyListener).toHaveBeenLastCalledWith(tx1Matcher, queueMatcher);
 
-      contract.fakeTxTwoPromiEvent.resolve();
+      contract.fakeTxTwoPolyResponse.resolve();
 
       await polyTx2.promise;
       expect(spyListener).toHaveBeenLastCalledWith(tx2Matcher, queueMatcher);
@@ -53,11 +59,9 @@ describe('TransactionQueue', () => {
 
   describe('#toPojo', () => {
     test('returns a plain object representing the entity', () => {
-      const txOne = getMockTransactionSpec(testContract.fakeTxOne, [
-        'stringOne',
-      ]);
+      const txOne = getMockTransactionSpec(testContract.fakeTxOne, ['stringOne']);
 
-      const transactionQueue = new TransactionQueue([txOne]);
+      const transactionQueue = new TransactionQueue([txOne], testFees, null, {});
 
       expect(isPojo(transactionQueue.toPojo())).toBeTruthy();
     });
@@ -65,27 +69,22 @@ describe('TransactionQueue', () => {
 
   describe('#run', () => {
     test('runs the queue sequentially and resolves when done', async () => {
-      const txOne = getMockTransactionSpec(testContract.fakeTxOne, [
-        'stringOne',
-      ]);
-      const txTwo = getMockTransactionSpec(testContract.fakeTxTwo, [
-        'stringTwo',
-      ]);
-      const transactionQueue = new TransactionQueue([txOne, txTwo]);
+      const txOne = getMockTransactionSpec(testContract.fakeTxOne, ['stringOne']);
+      const txTwo = getMockTransactionSpec(testContract.fakeTxTwo, ['stringTwo']);
+      const transactionQueue = new TransactionQueue([txOne, txTwo], testFees, null, {});
       const t1Promise = transactionQueue.transactions[0].promise;
       const t2Promise = transactionQueue.transactions[1].promise;
 
       transactionQueue.transactions[0].promise.then(() => {
-        expect(txOne.method).toHaveBeenCalled();
-        expect(txTwo.method).not.toHaveBeenCalled();
+        expect(testContract.fakeTxOneSpy).toHaveBeenCalled();
+        expect(testContract.fakeTxTwoSpy).not.toHaveBeenCalled();
       });
       transactionQueue.transactions[1].promise.then(() => {
-        expect(txTwo.method).toHaveBeenCalled();
+        expect(testContract.fakeTxTwoSpy).toHaveBeenCalled();
       });
 
-      transactionQueue.run();
+      await transactionQueue.run();
 
-      await transactionQueue.promise;
       await Promise.all([t1Promise, t2Promise]);
     });
 
@@ -94,44 +93,32 @@ describe('TransactionQueue', () => {
       const txOne = getMockTransactionSpec(contract.fakeTxOne, ['stringOne']);
       const txTwo = getMockTransactionSpec(contract.fakeTxTwo, ['stringTwo']);
 
-      const transactionQueue = new TransactionQueue([txOne, txTwo]);
+      const transactionQueue = new TransactionQueue([txOne, txTwo], testFees, null, {});
 
-      expect(transactionQueue.status).toEqual(
-        TransactionQueueStatus.Idle
-      );
-      transactionQueue.run();
-      expect(transactionQueue.status).toEqual(
-        TransactionQueueStatus.Running
-      );
-      contract.fakeTxOnePromiEvent.resolve();
+      expect(transactionQueue.status).toEqual(TransactionQueueStatus.Idle);
+      const promise = transactionQueue.run();
+      expect(transactionQueue.status).toEqual(TransactionQueueStatus.Running);
+      contract.fakeTxOnePolyResponse.resolve();
       await transactionQueue.transactions[0].promise;
-      expect(transactionQueue.status).toEqual(
-        TransactionQueueStatus.Running
-      );
-      contract.fakeTxTwoPromiEvent.resolve();
+      expect(transactionQueue.status).toEqual(TransactionQueueStatus.Running);
+      contract.fakeTxTwoPolyResponse.resolve();
       await transactionQueue.transactions[1].promise;
 
-      expect(transactionQueue.status).toEqual(
-        TransactionQueueStatus.Running
-      );
+      expect(transactionQueue.status).toEqual(TransactionQueueStatus.Running);
 
-      await transactionQueue.promise;
+      await promise;
 
-      expect(transactionQueue.status).toEqual(
-        TransactionQueueStatus.Succeeded
-      );
+      expect(transactionQueue.status).toEqual(TransactionQueueStatus.Succeeded);
     });
   });
 
   test('sets error and status as failed if any transaction fails', async () => {
-    const contract = new MockedContract({ autoResolve: false });
+    const contract = new MockedContract({ autoResolve: true });
     const failureTx = getMockTransactionSpec(contract.failureTx, []);
-    const transactionQueue = new TransactionQueue([failureTx]);
+    const transactionQueue = new TransactionQueue([failureTx], testFees, null, {});
 
     await expect(transactionQueue.run()).rejects.toEqual(expect.any(Error));
 
-    expect(transactionQueue.status).toEqual(
-      TransactionQueueStatus.Failed
-    );
+    expect(transactionQueue.status).toEqual(TransactionQueueStatus.Failed);
   });
 });

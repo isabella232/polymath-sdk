@@ -1,16 +1,16 @@
 interface Args {
-  address: string;
+  address: () => Promise<string>;
 }
 
-// TODO @RafaelVidaurre: Implement caching strategies and dedupe-ing transactions
+/**
+ * @hidden
+ * Internal representation of an Ethereum wallet
+ */
 export class Wallet {
-  public address: string;
+  public address: () => Promise<string>;
 
+  // eslint-disable-next-line require-jsdoc
   constructor({ address }: Args) {
     this.address = address;
-  }
-
-  public toString() {
-    return this.address;
   }
 }

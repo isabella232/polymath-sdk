@@ -13,4 +13,6 @@ jobs:
       script:
         - yarn
         - yarn build:ci
+        - yarn test
+        - yarn coveralls
         - yarn semantic-release

@@ -1,47 +1,116 @@
+import {
+  SecurityTokenRegistryEvents,
+  conversionUtils,
+  FeeType,
+  TransactionParams,
+} from '@polymathnetwork/contract-wrappers';
 import { Procedure } from './Procedure';
-import { Approve } from './Approve';
+import { ApproveErc20 } from './ApproveErc20';
 import {
   ReserveSecurityTokenProcedureArgs,
-  ProcedureTypes,
-  PolyTransactionTags,
-  ErrorCodes,
-} from '~/types';
+  ProcedureType,
+  PolyTransactionTag,
+  ErrorCode,
+} from '../types';
 import { PolymathError } from '../PolymathError';
+import { SecurityTokenReservation } from '../entities';
+import { findEvents } from '../utils';
 
+const { bigNumberToDate } = conversionUtils;
+
+/**
+ * Procedure that reserves a token ticker (symbol) to be used later on to launch a Security Token
+ *
+ * ***Note if the Reservation expires and the corresponding Security Token hasn't been launched yet, another issuer can reserve the same ticker***
+ */
 export class ReserveSecurityToken extends Procedure<
-  ReserveSecurityTokenProcedureArgs
+  ReserveSecurityTokenProcedureArgs,
+  SecurityTokenReservation
 > {
-  public type = ProcedureTypes.ReserveSecurityToken;
+  public type = ProcedureType.ReserveSecurityToken;
+
+  /**
+   * Reserve a new ticker
+   *
+   * Note that this procedure will fail if ticker has already been registered
+   */
   public async prepareTransactions() {
-    const { symbol, name, owner } = this.args;
-    const { securityTokenRegistry, currentWallet } = this.context;
+    const { args, context, addProcedure, addTransaction } = this;
+    const { symbol, owner } = args;
+    const {
+      contractWrappers: { securityTokenRegistry },
+      currentWallet,
+      factories: { securityTokenReservationFactory },
+    } = context;
 
     let ownerAddress: string;
 
     if (owner) {
       ownerAddress = owner;
-    } else if (currentWallet) {
-      ({ address: ownerAddress } = currentWallet);
     } else {
+      ownerAddress = await currentWallet.address();
+    }
+
+    const isAvailable = await securityTokenRegistry.tickerAvailable({
+      ticker: symbol,
+    });
+
+    if (!isAvailable) {
       throw new PolymathError({
-        message:
-          "No default account set. You must pass the owner's address as a parameter",
-        code: ErrorCodes.ProcedureValidationError,
+        message: `Ticker ${symbol} has already been registered`,
+        code: ErrorCode.ProcedureValidationError,
       });
     }
 
-    // TODO @RafaelVidaurre: See if ticker is not already registered
-
-    const fee = await securityTokenRegistry.getTickerRegistrationFee();
-
-    await this.addTransaction(Approve)({
-      amount: fee,
-      spender: securityTokenRegistry.address,
-      owner: ownerAddress,
+    const [usdFee, polyFee] = await securityTokenRegistry.getFees({
+      feeType: FeeType.TickerRegFee,
+    });
+    await addProcedure(ApproveErc20)({
+      amount: polyFee,
+      spender: await securityTokenRegistry.address(),
     });
 
-    await this.addTransaction(securityTokenRegistry.registerTicker, {
-      tag: PolyTransactionTags.ReserveSecurityToken,
-    })({ owner: ownerAddress, ticker: symbol, tokenName: name });
+    const [reservation] = await addTransaction<
+      TransactionParams.SecurityTokenRegistry.RegisterNewTicker,
+      [SecurityTokenReservation]
+    >(securityTokenRegistry.registerNewTicker, {
+      tag: PolyTransactionTag.ReserveSecurityToken,
+      fees: {
+        poly: polyFee,
+        usd: usdFee,
+      },
+      resolvers: [
+        async receipt => {
+          const { logs } = receipt;
+
+          const [event] = findEvents({
+            logs,
+            eventName: SecurityTokenRegistryEvents.RegisterTicker,
+          });
+
+          if (event) {
+            const { args: eventArgs } = event;
+
+            const { _ticker, _expiryDate, _owner, _registrationDate } = eventArgs;
+
+            return securityTokenReservationFactory.create(
+              SecurityTokenReservation.generateId({ symbol: _ticker }),
+              {
+                expiry: bigNumberToDate(_expiryDate),
+                reservedAt: bigNumberToDate(_registrationDate),
+                ownerAddress: _owner,
+              }
+            );
+          }
+          throw new PolymathError({
+            code: ErrorCode.UnexpectedEventLogs,
+            message:
+              "The Security Token was successfully reserved but the corresponding event wasn't fired. Please report this issue to the Polymath team.",
+          });
+        },
+      ],
+    })({ owner: ownerAddress, ticker: symbol });
+
+    return reservation;
   }
 }

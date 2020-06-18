@@ -19,9 +19,10 @@
     "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,
-    "emitDeclarationOnly": true,
+    "resolveJsonModule": true,
     "jsx": "react",
-    "lib": ["es2017", "dom"]
+    "lib": ["es2017", "dom"],
+    "typeRoots": ["./node_modules/@types", "./src/typings"]
   },
-  "exclude": ["config", "dist", "node_modules"]
+  "exclude": ["config", "dist", "node_modules", "test.ts"]
 }

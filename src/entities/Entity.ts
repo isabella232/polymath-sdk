@@ -1,19 +1,10 @@
-import { Polymath } from '~/Polymath';
-
-export abstract class Entity {
+/**
+ * Represents an object or resource in the Polymath Ecosystem with its own set of properties and functionality
+ */
+export abstract class Entity<Params> {
   public abstract uid: string;
-  protected polyClient: Polymath;
-
-  constructor(polyClient?: Polymath, requiresPolyClient = true) {
-    if (requiresPolyClient && !polyClient) {
-      throw new Error(
-        'Entity class should always be initialized through the Polymath client'
-      );
-    }
-
-    // Force typing to simplify external usage
-    this.polyClient = polyClient as Polymath;
-  }
 
   public abstract toPojo(): any;
+
+  public abstract _refresh(params: Partial<Params>): void;
 }

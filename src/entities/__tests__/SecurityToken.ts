@@ -1,19 +1,35 @@
+import { BigNumber } from '@polymathnetwork/contract-wrappers';
 import { SecurityToken } from '../SecurityToken';
-import { Polymath } from '~/Polymath';
+import { Context } from '../../Context';
+import { Version } from '~/types';
 
 const params1 = {
   symbol: 'TEST1',
   name: 'Test Token 1',
   address: '0x1',
+  owner: '0x3',
+  tokenDetails: 'details',
+  version: Version.V3_1_0,
+  granularity: 3,
+  totalSupply: new BigNumber(1000),
+  currentCheckpoint: 2,
+  treasuryWallet: '0x3',
 };
 
 const params2 = {
   symbol: 'TEST2',
   name: 'Test Token 2',
   address: '0x2',
+  owner: '0x4',
+  tokenDetails: 'details2',
+  version: Version.V3_1_0,
+  granularity: 3,
+  totalSupply: new BigNumber(1000),
+  currentCheckpoint: 2,
+  treasuryWallet: '0x3',
 };
 
-const polyClient = {} as Polymath;
+const context = {} as Context;
 
 describe('SecurityToken', () => {
   let st1: SecurityToken = {} as SecurityToken;
@@ -21,9 +37,9 @@ describe('SecurityToken', () => {
   let st1Copy: SecurityToken = {} as SecurityToken;
 
   beforeEach(() => {
-    st1 = new SecurityToken(params1, polyClient);
-    st2 = new SecurityToken(params2, polyClient);
-    st1Copy = new SecurityToken(params1, polyClient);
+    st1 = new SecurityToken(params1, context);
+    st2 = new SecurityToken(params2, context);
+    st1Copy = new SecurityToken(params1, context);
   });
 
   describe('constructor', () => {
@@ -40,15 +56,5 @@ describe('SecurityToken', () => {
     test('generates different uids for two instances with differen addresses', () => {
       expect(st1.uid).not.toBe(st2.uid);
     });
-
-    test('throws if polyClient is not passed', () => {
-      expect(() => {
-        const st = new SecurityToken(params1);
-      }).toThrow();
-    });
-  });
-
-  describe('methods', () => {
-    describe('createCheckpoint', () => {});
   });
 });

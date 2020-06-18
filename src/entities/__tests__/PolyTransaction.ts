@@ -1,8 +1,8 @@
-import { PolyTransaction } from '~/entities/PolyTransaction';
-import { TransactionQueue } from '~/entities/TransactionQueue';
-import { PolyTransactionTags, TransactionStatus, isPojo } from '~/types';
-import { MockedContract, getMockTransactionSpec } from '~/testUtils';
-import { delay } from '~/utils';
+import { PolyTransaction } from '../PolyTransaction';
+import { TransactionQueue } from '../TransactionQueue';
+import { PolyTransactionTag, TransactionStatus, isPojo } from '../../types';
+import { MockedContract, getMockTransactionSpec } from '../../testUtils';
+import { delay } from '../../utils';
 
 describe('PolyTransaction', () => {
   describe('.constructor', () => {
@@ -11,10 +11,7 @@ describe('PolyTransaction', () => {
         method: jest.fn(),
         args: { a: 'argA' },
       };
-      const polyTransaction = new PolyTransaction(
-        transaction,
-        {} as TransactionQueue
-      );
+      const polyTransaction = new PolyTransaction(transaction, {} as TransactionQueue);
       expect(polyTransaction).toBeInstanceOf(PolyTransaction);
     });
 
@@ -24,15 +21,9 @@ describe('PolyTransaction', () => {
         args: { a: 'argA' },
       };
 
-      const polyTransaction = new PolyTransaction(
-        transaction,
-        {} as TransactionQueue
-      );
+      const polyTransaction = new PolyTransaction(transaction, {} as TransactionQueue);
 
-      expect(polyTransaction).toHaveProperty(
-        'tag',
-        PolyTransactionTags.Any
-      );
+      expect(polyTransaction).toHaveProperty('tag', PolyTransactionTag.Any);
     });
 
     test('starts as Idle', () => {
@@ -40,10 +31,7 @@ describe('PolyTransaction', () => {
         method: jest.fn(),
         args: { a: 'argA' },
       };
-      const polyTransaction = new PolyTransaction(
-        transaction,
-        {} as TransactionQueue
-      );
+      const polyTransaction = new PolyTransaction(transaction, {} as TransactionQueue);
       expect(polyTransaction.status).toEqual(TransactionStatus.Idle);
     });
   });
@@ -61,12 +49,15 @@ describe('PolyTransaction', () => {
 
     await polyTransaction.run();
 
-    expect(transaction.method).toHaveBeenCalledWith({ a: 'argA' });
+    await expect(testContract.fakeTxOneSpy).toHaveBeenCalledWith({ a: 'argA' });
   });
 
   describe('#onStatusChange', () => {
     test("calls the listener with the transaction everytime the transaction's status changes", async () => {
-      const testContract = new MockedContract({ autoResolve: false });
+      const testContract = new MockedContract({
+        autoResolve: false,
+        txHashes: ['0x1'],
+      });
       const transaction = getMockTransactionSpec(testContract.fakeTxOne, {});
       const polyTransaction = new PolyTransaction(transaction, {
         uid: 'tqid0',
@@ -82,22 +73,17 @@ describe('PolyTransaction', () => {
 
       await delay(1);
 
-      testContract.fakeTxOnePromiEvent.eventEmitter.emit(
-        'transactionHash',
-        '0x1234'
-      );
-
       expect(listenerSpy).toHaveBeenLastCalledWith(polyTransaction);
-      expect(polyTransaction.txHash).toEqual('0x1234');
+      expect(polyTransaction.txHash).toEqual('0x1');
 
-      testContract.fakeTxOnePromiEvent.resolve();
+      testContract.fakeTxOnePolyResponse.resolve();
       await runPromise;
 
       expect(polyTransaction.status).toEqual(TransactionStatus.Succeeded);
     });
 
     test('correctly handles errors', async () => {
-      const testContract = new MockedContract({ autoResolve: false });
+      const testContract = new MockedContract({ autoResolve: true });
       const transaction = getMockTransactionSpec(testContract.failureTx, {});
       const polyTransaction = new PolyTransaction(transaction, {
         uid: 'tqid0',

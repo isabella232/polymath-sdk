@@ -1,7 +1,6 @@
 module.exports = {
   repositoryUrl: 'https://github.com/PolymathNetwork/polymath-sdk.git',
   branches: [
-    '+([1-9])?(.{+([1-9]),x}).x',
     'master',
     'next',
     'next-major',
@@ -9,12 +8,8 @@ module.exports = {
       name: 'beta',
       prerelease: true,
     },
-    {
-      name: 'alpha',
-      prerelease: true,
-    },
   ],
-  /**
+  /*
    * In this order the **prepare** step of @semantic-release/npm will run first
    * followed by @semantic-release/git:
    *  - Update the package.json version and create the npm package tarball

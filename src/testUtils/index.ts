@@ -1,6 +1,9 @@
-import Web3PromiEvent from 'web3-core-promievent';
-import { GenericContract } from '~/LowLevel/types';
-import { PostTransactionResolver } from '~/PostTransactionResolver';
+import {
+  PolyResponse,
+  TransactionReceiptWithDecodedLogs,
+} from '@polymathnetwork/contract-wrappers';
+import { PostTransactionResolver } from '../PostTransactionResolver';
+import { TransactionSpec } from '../types';
 
 const originalWindow = {
   ...window,
@@ -30,6 +33,10 @@ interface MockEthereumBrowserArgs {
   };
 }
 
+/* eslint-disable no-global-assign */
+/**
+ * @hidden
+ */
 export function mockEthereumBrowser({
   support = 'modern',
   options = {
@@ -68,55 +75,193 @@ export function mockEthereumBrowser({
     },
   };
 }
+/* eslint-enable no-global-assign */
 
+/**
+ * @hidden
+ */
+class MockPolyResponse extends PolyResponse {
+  public resolve: () => void;
 
-export class MockedContract<T extends GenericContract> {
-  public autoResolve: boolean;
-  public errorMsg?: string;
-  public fakeTxOnePromiEvent = new Web3PromiEvent();
-  public fakeTxTwoPromiEvent = new Web3PromiEvent();
-  public failureTxPromiEvent = new Web3PromiEvent();
+  public reject: (err: any) => void;
 
-  public fakeTxOne = jest.fn(async () => {
-    return () => {
-      if (this.autoResolve) {
-        this.fakeTxOnePromiEvent.resolve();
-      }
-      return this.fakeTxOnePromiEvent.eventEmitter;
+  // eslint-disable-next-line require-jsdoc
+  constructor(args: { txHash: string }) {
+    const { txHash } = args;
+    const values = {
+      from: 'from',
+      to: 'to',
+      status: '0',
+      cumulativeGasUsed: 0,
+      gasUsed: 0,
+      contractAddress: 'contractAddress',
+      logs: [],
+      logIndex: null,
+      transactionIndex: 1,
+      transactionHash: txHash,
+      blockHash: 'blockHash',
+      blockNumber: 1,
+      address: 'address',
+      data: 'data',
+      topics: ['topic1'],
     };
-  });
-  public fakeTxTwo = jest.fn(async () => {
-    return () => {
-      if (this.autoResolve) {
-        this.fakeTxTwoPromiEvent.resolve();
-      }
-      return this.fakeTxTwoPromiEvent.eventEmitter;
-    };
-  });
 
-  public failureTx = jest.fn(async () => {
-    return () => {
-      const err = this.errorMsg || 'Test error';
-      this.failureTxPromiEvent.reject(new Error(err));
-      return this.failureTxPromiEvent.eventEmitter;
-    };
-  });
+    super(txHash, Promise.resolve(values));
 
-  constructor({
-    autoResolve = true,
-    errorMsg,
-  }: { autoResolve?: boolean; errorMsg?: string } = {}) {
-    this.autoResolve = autoResolve;
-    this.errorMsg = errorMsg;
+    this.resolve = () => {};
+    this.reject = () => {};
+
+    const promise = new Promise<typeof values>((resolve, reject) => {
+      this.resolve = () => resolve(values);
+      this.reject = err => reject(err);
+    });
+
+    this.receiptAsync = promise;
   }
 }
 
+/**
+ * @hidden
+ */
+export class MockedContract {
+  public autoResolve: boolean;
+
+  public errorMsg?: string;
+
+  public fakeTxOnePolyResponse: MockPolyResponse;
+
+  public fakeTxTwoPolyResponse: MockPolyResponse;
+
+  public failureTxPolyResponse: MockPolyResponse;
+
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  public fakeTxOneSpy = jest.fn(async (_args: any) => {
+    if (this.autoResolve) {
+      this.fakeTxOnePolyResponse.resolve();
+    }
+
+    return this.fakeTxOnePolyResponse;
+  });
+
+  public fakeTxTwoSpy = jest.fn(async (_args: any) => {
+    if (this.autoResolve) {
+      this.fakeTxTwoPolyResponse.resolve();
+    }
+
+    return this.fakeTxTwoPolyResponse;
+  });
+  /* eslint-enable @typescript-eslint/no-unused-vars */
+
+  public fakeTxOne = (args: any) => this.fakeTxOneSpy(args);
+
+  public fakeTxTwo = (args: any) => this.fakeTxTwoSpy(args);
+
+  public failureTx = jest.fn(async () => {
+    if (this.autoResolve) {
+      this.failureTxPolyResponse.reject(new Error(this.errorMsg || 'Test Error'));
+    }
+
+    return this.failureTxPolyResponse;
+  });
+
+  // eslint-disable-next-line require-jsdoc
+  constructor({
+    autoResolve = true,
+    errorMsg,
+    txHashes = [],
+  }: {
+    autoResolve?: boolean;
+    errorMsg?: string;
+    txHashes?: [] | [string] | [string, string] | [string, string, string];
+  } = {}) {
+    this.autoResolve = autoResolve;
+    this.errorMsg = errorMsg;
+
+    this.fakeTxOnePolyResponse = new MockPolyResponse({
+      txHash: txHashes[0] || '0x1',
+    });
+    this.fakeTxTwoPolyResponse = new MockPolyResponse({
+      txHash: txHashes[1] || '0x2',
+    });
+    this.failureTxPolyResponse = new MockPolyResponse({
+      txHash: txHashes[2] || '0x3',
+    });
+  }
+}
+
+/**
+ * @hidden
+ */
 export const getMockTransactionSpec = (
   method: (args: any) => Promise<any>,
   args: any,
-  resolver = async () => {}
-) => ({
+  resolvers = []
+): TransactionSpec<any, any[], string | TransactionReceiptWithDecodedLogs> => ({
   method,
   args,
-  postTransactionResolver: new PostTransactionResolver(resolver),
+  postTransactionResolvers: resolvers.map(resolver => new PostTransactionResolver(resolver)),
 });
+
+/**
+ * @hidden
+ */
+export async function getMockedPolyResponse(): Promise<PolyResponse> {
+  return new PolyResponse(
+    'TxHash',
+    Promise.resolve({
+      from: 'from',
+      to: 'to',
+      status: '0',
+      cumulativeGasUsed: 0,
+      gasUsed: 0,
+      contractAddress: 'contractAddress',
+      logs: [],
+      logIndex: null,
+      transactionIndex: 1,
+      transactionHash: 'transactionHash',
+      blockHash: 'blockHash',
+      blockNumber: 1,
+      address: 'address',
+      data: 'data',
+      topics: ['topic1'],
+    })
+  );
+}
+
+/**
+ * @hidden
+ */
+export class MockedCallMethod {
+  // eslint-disable-next-line require-jsdoc
+  public callAsync(): Promise<any> {
+    // eslint-disable-line
+    return Promise.resolve();
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  public getABIEncodedTransactionData(): string {
+    return '';
+  }
+}
+
+/**
+ * @hidden
+ */
+export class MockedSendMethod extends MockedCallMethod {
+  // eslint-disable-next-line require-jsdoc
+  public sendTransactionAsync(): Promise<any> {
+    // eslint-disable-line
+    return Promise.resolve();
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  public estimateGasAsync(): Promise<any> {
+    // eslint-disable-line
+    return Promise.resolve();
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  public getABIEncodedTransactionData(): string {
+    return '';
+  }
+}
