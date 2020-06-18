@@ -7,6 +7,7 @@ A Javascript SDK for interacting with the Polymath network for the browser and N
 # Supported Polymath Protocol versions
 
 - 3.0
+- 3.1
 
 # Usage
 
@@ -65,4 +66,6 @@ const myTokenReservation = await polyClient.getSecurityTokenReservation({
 });
 ```
 
-**To be continued...**
+# Documentation
+
+https://developers.polymath.network/developers/
