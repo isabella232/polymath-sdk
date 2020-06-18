@@ -19,7 +19,7 @@ Properties denoting a Tokenholder's Tax Withholding Percentage
 
 • **address**: *string*
 
-*Defined in [src/types/index.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L69)*
+*Defined in [src/types/index.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L69)*
 
 wallet address of the Tokenholder
 
@@ -29,6 +29,6 @@ ___
 
 • **percentage**: *number*
 
-*Defined in [src/types/index.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L73)*
+*Defined in [src/types/index.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L73)*
 
 percentage of the Tokenholder's Dividend payments that will be withheld for tax

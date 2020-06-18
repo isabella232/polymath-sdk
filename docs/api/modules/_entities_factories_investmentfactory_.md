@@ -16,4 +16,4 @@
 
 • **weiToValue**: *weiToValue*
 
-*Defined in [src/entities/factories/InvestmentFactory.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/factories/InvestmentFactory.ts#L17)*
+*Defined in [src/entities/factories/InvestmentFactory.ts:17](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/factories/InvestmentFactory.ts#L17)*

@@ -19,7 +19,7 @@ Properties that uniquely identify a Tokenholder of a specific Security Token
 
 • **address**: *string*
 
-Defined in src/entities/Tokenholder.ts:12
+*Defined in [src/entities/Tokenholder.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L12)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **securityTokenId**: *string*
 
-Defined in src/entities/Tokenholder.ts:11
+*Defined in [src/entities/Tokenholder.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L11)*

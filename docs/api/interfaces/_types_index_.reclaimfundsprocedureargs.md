@@ -19,7 +19,7 @@ Arguments for the [ReclaimFunds](../enums/_types_index_.proceduretype.md#reclaim
 
 • **dividendIndex**: *number*
 
-*Defined in [src/types/index.ts:802](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L802)*
+*Defined in [src/types/index.ts:802](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L802)*
 
 ___
 
@@ -27,6 +27,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:801](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L801)*
+*Defined in [src/types/index.ts:801](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L801)*
 
 symbol of the Security Token

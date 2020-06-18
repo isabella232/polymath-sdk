@@ -18,6 +18,6 @@ Arguments for the [CreateCheckpoint](../enums/_types_index_.proceduretype.md#cre
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:321](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L321)*
+*Defined in [src/types/index.ts:321](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L321)*
 
 symbol of the Security Token

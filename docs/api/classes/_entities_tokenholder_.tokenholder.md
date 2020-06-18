@@ -41,7 +41,7 @@ Used to manage a Tokenholder
 
 \+ **new Tokenholder**(`params`: [Params](../interfaces/_entities_tokenholder_.params.md) & [UniqueIdentifiers](../interfaces/_entities_tokenholder_.uniqueidentifiers.md)): *[Tokenholder](_entities_tokenholder_.tokenholder.md)*
 
-Defined in src/entities/Tokenholder.ts:112
+*Defined in [src/entities/Tokenholder.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L112)*
 
 Create a new Tokenholder instance
 
@@ -59,7 +59,7 @@ Name | Type |
 
 • **address**: *string*
 
-Defined in src/entities/Tokenholder.ts:112
+*Defined in [src/entities/Tokenholder.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L112)*
 
 wallet address
 
@@ -69,7 +69,7 @@ ___
 
 • **balance**: *BigNumber*
 
-Defined in src/entities/Tokenholder.ts:107
+*Defined in [src/entities/Tokenholder.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L107)*
 
 total Security Token balance of the Tokenholder
 
@@ -79,7 +79,7 @@ ___
 
 • **canBuyFromSto**: *boolean*
 
-Defined in src/entities/Tokenholder.ts:102
+*Defined in [src/entities/Tokenholder.ts:102](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L102)*
 
 whether the Tokenholder can purchase from an STO or not
 
@@ -89,7 +89,7 @@ ___
 
 • **canReceiveAfter**: *Date*
 
-Defined in src/entities/Tokenholder.ts:87
+*Defined in [src/entities/Tokenholder.ts:87](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L87)*
 
 date after which a Tokenholder can transfer tokens to their address
 
@@ -99,7 +99,7 @@ ___
 
 • **canSendAfter**: *Date*
 
-Defined in src/entities/Tokenholder.ts:82
+*Defined in [src/entities/Tokenholder.ts:82](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L82)*
 
 date after which a Tokenholder can transfer tokens from their address
 
@@ -109,7 +109,7 @@ ___
 
 • **isAccredited**: *boolean*
 
-Defined in src/entities/Tokenholder.ts:97
+*Defined in [src/entities/Tokenholder.ts:97](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L97)*
 
 whether the Tokenholder is accredited or not
 
@@ -119,7 +119,7 @@ ___
 
 • **kycExpiry**: *Date*
 
-Defined in src/entities/Tokenholder.ts:92
+*Defined in [src/entities/Tokenholder.ts:92](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L92)*
 
 date when the Tokenholder's KYC will expire
 
@@ -129,7 +129,7 @@ ___
 
 • **securityTokenId**: *string*
 
-Defined in src/entities/Tokenholder.ts:77
+*Defined in [src/entities/Tokenholder.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L77)*
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 • **securityTokenSymbol**: *string*
 
-Defined in src/entities/Tokenholder.ts:75
+*Defined in [src/entities/Tokenholder.ts:75](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L75)*
 
 ___
 
@@ -147,7 +147,7 @@ ___
 
 *Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)*
 
-Defined in src/entities/Tokenholder.ts:73
+*Defined in [src/entities/Tokenholder.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L73)*
 
 unique generated id for a Tokenholder
 
@@ -159,7 +159,7 @@ unique generated id for a Tokenholder
 
 *Overrides [Entity](_entities_entity_.entity.md).[_refresh](_entities_entity_.entity.md#abstract-_refresh)*
 
-Defined in src/entities/Tokenholder.ts:195
+*Defined in [src/entities/Tokenholder.ts:195](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L195)*
 
 Hydrate the entity
 
@@ -177,7 +177,7 @@ ___
 
 ▸ **isRevoked**(): *boolean*
 
-Defined in src/entities/Tokenholder.ts:150
+*Defined in [src/entities/Tokenholder.ts:150](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L150)*
 
 Checks if this Tokenholder's KYC has been manually revoked
 
@@ -191,7 +191,7 @@ ___
 
 *Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)*
 
-Defined in src/entities/Tokenholder.ts:164
+*Defined in [src/entities/Tokenholder.ts:164](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L164)*
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
@@ -223,7 +223,7 @@ ___
 
 ▸ **generateId**(`__namedParameters`: object): *string*
 
-Defined in src/entities/Tokenholder.ts:45
+*Defined in [src/entities/Tokenholder.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L45)*
 
 Generate the Tokenholder's UUID from its identifying properties
 
@@ -244,7 +244,7 @@ ___
 
 ▸ **unserialize**(`serialized`: string): *[UniqueIdentifiers](../interfaces/_entities_tokenholder_.uniqueidentifiers.md)*
 
-Defined in src/entities/Tokenholder.ts:57
+*Defined in [src/entities/Tokenholder.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L57)*
 
 Unserialize a serialized Tokenholder entity
 

@@ -19,7 +19,7 @@ Arguments for [getModuleAddressesByName](../classes/_polymathbase_.polymathbase.
 
 • **moduleName**: *ModuleName*
 
-*Defined in [src/PolymathBase.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L59)*
+*Defined in [src/PolymathBase.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L59)*
 
 the name of the Security Token module
 
@@ -29,6 +29,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/PolymathBase.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/PolymathBase.ts#L55)*
+*Defined in [src/PolymathBase.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/PolymathBase.ts#L55)*
 
 Security Token symbol

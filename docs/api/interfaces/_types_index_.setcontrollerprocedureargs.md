@@ -19,7 +19,7 @@ Arguments for the [SetController](../enums/_types_index_.proceduretype.md#setcon
 
 • **controller**: *string*
 
-*Defined in [src/types/index.ts:1031](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1031)*
+*Defined in [src/types/index.ts:1031](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1031)*
 
 wallet address to be set as the Security Token's controller
 
@@ -29,6 +29,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:1027](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1027)*
+*Defined in [src/types/index.ts:1027](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1027)*
 
 the symbol of the Security Token

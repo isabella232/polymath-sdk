@@ -34,7 +34,7 @@ Namespace that handles all Offering related functionality
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L10)*
 
 Create a new SubModule instance
 
@@ -55,7 +55,7 @@ Name | Type |
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L10)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L10)*
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 *Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)*
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/SubModule.ts#L8)*
+*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/SubModule.ts#L8)*
 
 ## Methods
 
@@ -73,7 +73,7 @@ ___
 
 ▸ **getSto**(`args`: [GetStoParams](../interfaces/_entities_securitytoken_issuance_offerings_.getstoparams.md) | string): *Promise‹any›*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:223](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Issuance/Offerings.ts#L223)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:223](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Issuance/Offerings.ts#L223)*
 
 Retrieve an STO by type and address or UUID
 
@@ -91,7 +91,7 @@ ___
 
 ▸ **getStos**(`opts`: object): *Promise‹[SimpleSto](_entities_simplesto_.simplesto.md) | [TieredSto](_entities_tieredsto_.tieredsto.md)[]›*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:260](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Issuance/Offerings.ts#L260)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:260](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Issuance/Offerings.ts#L260)*
 
 Retrieve all STOs attached to a security token
 
@@ -113,7 +113,7 @@ ___
 
 ▸ **launchSimpleSto**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[LaunchSimpleStoProcedureArgs](../interfaces/_types_index_.launchsimplestoprocedureargs.md), [SimpleSto](_entities_simplesto_.simplesto.md)››*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:168](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Issuance/Offerings.ts#L168)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:168](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Issuance/Offerings.ts#L168)*
 
 Launch a Simple STO
 
@@ -140,7 +140,7 @@ ___
 
 ▸ **launchTieredSto**(`args`: [LaunchTieredStoParams](../interfaces/_entities_securitytoken_issuance_offerings_.launchtieredstoparams.md)): *Promise‹any›*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:203](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Issuance/Offerings.ts#L203)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:203](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Issuance/Offerings.ts#L203)*
 
 Launch a Tiered STO
 

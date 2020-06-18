@@ -20,7 +20,7 @@ Arguments for the [PushDividendPayment](../enums/_types_index_.proceduretype.md#
 
 • **dividendIndex**: *number*
 
-*Defined in [src/types/index.ts:374](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L374)*
+*Defined in [src/types/index.ts:374](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L374)*
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:373](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L373)*
+*Defined in [src/types/index.ts:373](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L373)*
 
 symbol of the security token
 
@@ -38,6 +38,6 @@ ___
 
 • **tokenholderAddresses**? : *string[]*
 
-*Defined in [src/types/index.ts:378](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L378)*
+*Defined in [src/types/index.ts:378](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L378)*
 
 list of addresses of the Tokenholders that will receive payment

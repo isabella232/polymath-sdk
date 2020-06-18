@@ -31,7 +31,7 @@ Dividend Distribution constructor parameters
 
 • **amount**: *BigNumber*
 
-*Defined in [src/entities/DividendDistribution.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L57)*
+*Defined in [src/entities/DividendDistribution.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L57)*
 
 dividend amount
 
@@ -41,7 +41,7 @@ ___
 
 • **checkpointId**: *string*
 
-*Defined in [src/entities/DividendDistribution.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L41)*
+*Defined in [src/entities/DividendDistribution.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L41)*
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 • **claimedAmount**: *BigNumber*
 
-*Defined in [src/entities/DividendDistribution.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L61)*
+*Defined in [src/entities/DividendDistribution.ts:61](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L61)*
 
 amount of dividend claimed so far
 
@@ -59,7 +59,7 @@ ___
 
 • **created**: *Date*
 
-*Defined in [src/entities/DividendDistribution.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L45)*
+*Defined in [src/entities/DividendDistribution.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L45)*
 
 date at which the dividend was created
 
@@ -69,7 +69,7 @@ ___
 
 • **currency**: *string | null*
 
-*Defined in [src/entities/DividendDistribution.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L77)*
+*Defined in [src/entities/DividendDistribution.ts:77](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L77)*
 
 symbol of the currency in which this dividend distribution is being paid
 
@@ -79,7 +79,7 @@ ___
 
 • **expiry**: *Date*
 
-*Defined in [src/entities/DividendDistribution.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L53)*
+*Defined in [src/entities/DividendDistribution.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L53)*
 
 date until which dividend can be claimed
 
@@ -89,7 +89,7 @@ ___
 
 • **maturity**: *Date*
 
-*Defined in [src/entities/DividendDistribution.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L49)*
+*Defined in [src/entities/DividendDistribution.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L49)*
 
 date after which dividend can be claimed
 
@@ -99,7 +99,7 @@ ___
 
 • **name**: *string*
 
-*Defined in [src/entities/DividendDistribution.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L73)*
+*Defined in [src/entities/DividendDistribution.ts:73](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L73)*
 
 ___
 
@@ -107,7 +107,7 @@ ___
 
 • **reclaimed**: *boolean*
 
-*Defined in [src/entities/DividendDistribution.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L69)*
+*Defined in [src/entities/DividendDistribution.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L69)*
 
 true if expiry has passed and issuer has reclaimed remaining dividend
 
@@ -117,7 +117,7 @@ ___
 
 • **securityTokenSymbol**: *string*
 
-*Defined in [src/entities/DividendDistribution.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L40)*
+*Defined in [src/entities/DividendDistribution.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L40)*
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 • **tokenholders**: *[DividendTokenholderStatus](_types_index_.dividendtokenholderstatus.md)[]*
 
-*Defined in [src/entities/DividendDistribution.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L72)*
+*Defined in [src/entities/DividendDistribution.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L72)*
 
 ___
 
@@ -133,7 +133,7 @@ ___
 
 • **totalSupply**: *BigNumber*
 
-*Defined in [src/entities/DividendDistribution.ts:65](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L65)*
+*Defined in [src/entities/DividendDistribution.ts:65](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L65)*
 
 total supply at the associated checkpoint
 
@@ -143,7 +143,7 @@ ___
 
 • **totalWithheld**: *BigNumber*
 
-*Defined in [src/entities/DividendDistribution.ts:70](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L70)*
+*Defined in [src/entities/DividendDistribution.ts:70](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L70)*
 
 ___
 
@@ -151,4 +151,4 @@ ___
 
 • **totalWithheldWithdrawn**: *BigNumber*
 
-*Defined in [src/entities/DividendDistribution.ts:71](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/DividendDistribution.ts#L71)*
+*Defined in [src/entities/DividendDistribution.ts:71](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/DividendDistribution.ts#L71)*

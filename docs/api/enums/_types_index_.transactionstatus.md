@@ -17,7 +17,7 @@
 
 • **Failed**: = "Failed"
 
-*Defined in [src/types/index.ts:1385](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1385)*
+*Defined in [src/types/index.ts:1385](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1385)*
 
 ___
 
@@ -25,7 +25,7 @@ ___
 
 • **Idle**: = "Idle"
 
-*Defined in [src/types/index.ts:1380](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1380)*
+*Defined in [src/types/index.ts:1380](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1380)*
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • **Rejected**: = "Rejected"
 
-*Defined in [src/types/index.ts:1383](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1383)*
+*Defined in [src/types/index.ts:1383](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1383)*
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 • **Running**: = "Running"
 
-*Defined in [src/types/index.ts:1382](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1382)*
+*Defined in [src/types/index.ts:1382](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1382)*
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 • **Succeeded**: = "Succeeded"
 
-*Defined in [src/types/index.ts:1384](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1384)*
+*Defined in [src/types/index.ts:1384](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1384)*
 
 ___
 
@@ -57,4 +57,4 @@ ___
 
 • **Unapproved**: = "Unapproved"
 
-*Defined in [src/types/index.ts:1381](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1381)*
+*Defined in [src/types/index.ts:1381](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1381)*

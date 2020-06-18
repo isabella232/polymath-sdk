@@ -16,4 +16,4 @@
 
 • **CHUNK_SIZE**: *200* = 200
 
-*Defined in [src/procedures/ModifyDividendsDefaultExclusionList.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/ModifyDividendsDefaultExclusionList.ts#L13)*
+*Defined in [src/procedures/ModifyDividendsDefaultExclusionList.ts:13](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/ModifyDividendsDefaultExclusionList.ts#L13)*

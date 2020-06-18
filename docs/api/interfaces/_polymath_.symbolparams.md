@@ -16,4 +16,4 @@
 
 • **symbol**: *string*
 
-*Defined in [src/Polymath.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/Polymath.ts#L41)*
+*Defined in [src/Polymath.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/Polymath.ts#L41)*

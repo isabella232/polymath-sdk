@@ -19,7 +19,7 @@
 
 • **currencies**: *[EthAndStableCoin](../modules/_entities_securitytoken_issuance_offerings_.md#ethandstablecoin) | [PolyAndStableCoin](../modules/_entities_securitytoken_issuance_offerings_.md#polyandstablecoin) | [AllCurrencies](../modules/_entities_securitytoken_issuance_offerings_.md#allcurrencies)*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Issuance/Offerings.ts#L62)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Issuance/Offerings.ts#L62)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **stableCoinAddresses**: *string[]*
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:63](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Issuance/Offerings.ts#L63)*
+*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:63](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Issuance/Offerings.ts#L63)*

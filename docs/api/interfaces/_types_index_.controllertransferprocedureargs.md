@@ -23,7 +23,7 @@ Arguments for the [ControllerTransfer](../enums/_types_index_.proceduretype.md#c
 
 • **amount**: *BigNumber*
 
-*Defined in [src/types/index.ts:949](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L949)*
+*Defined in [src/types/index.ts:949](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L949)*
 
 amount of tokens being forcefully transferred
 
@@ -33,7 +33,7 @@ ___
 
 • **data**? : *undefined | string*
 
-*Defined in [src/types/index.ts:953](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L953)*
+*Defined in [src/types/index.ts:953](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L953)*
 
 extra KYC transfer data
 
@@ -43,7 +43,7 @@ ___
 
 • **from**: *string*
 
-*Defined in [src/types/index.ts:937](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L937)*
+*Defined in [src/types/index.ts:937](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L937)*
 
 sender's wallet address
 
@@ -53,7 +53,7 @@ ___
 
 • **log**? : *undefined | string*
 
-*Defined in [src/types/index.ts:957](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L957)*
+*Defined in [src/types/index.ts:957](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L957)*
 
 extra log information
 
@@ -63,7 +63,7 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:945](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L945)*
+*Defined in [src/types/index.ts:945](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L945)*
 
 symbol of the Security Token
 
@@ -73,6 +73,6 @@ ___
 
 • **to**: *string*
 
-*Defined in [src/types/index.ts:941](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L941)*
+*Defined in [src/types/index.ts:941](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L941)*
 
 receiver's wallet address
