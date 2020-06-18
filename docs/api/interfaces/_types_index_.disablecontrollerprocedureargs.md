@@ -1,4 +1,4 @@
-# Interface: DisableControllerProcedureArgs
+# DisableControllerProcedureArgs
 
 Arguments for the [DisableController](../enums/_types_index_.proceduretype.md#disablecontroller) Procedure
 
@@ -17,18 +17,17 @@ Arguments for the [DisableController](../enums/_types_index_.proceduretype.md#di
 
 ### `Optional` signature
 
-• **signature**? : *undefined | string*
+• **signature**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:1092](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1092)*
+_Defined in_ [_src/types/index.ts:1092_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1092)
 
 acknowledgement signature
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:1088](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1088)*
+_Defined in_ [_src/types/index.ts:1088_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1088)
 
 symbol of the Security Token
+

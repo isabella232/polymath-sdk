@@ -1,4 +1,4 @@
-# Interface: Params
+# Params
 
 Constructor parameters
 
@@ -15,16 +15,15 @@ Constructor parameters
 
 ## Properties
 
-###  balance
+### balance
 
-• **balance**: *BigNumber*
+• **balance**: _BigNumber_
 
-*Defined in [src/entities/Erc20TokenBalance.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Erc20TokenBalance.ts#L29)*
+_Defined in_ [_src/entities/Erc20TokenBalance.ts:29_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Erc20TokenBalance.ts#L29)
 
-___
+### tokenSymbol
 
-###  tokenSymbol
+• **tokenSymbol**: _string \| null_
 
-• **tokenSymbol**: *string | null*
+_Defined in_ [_src/entities/Erc20TokenBalance.ts:28_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Erc20TokenBalance.ts#L28)
 
-*Defined in [src/entities/Erc20TokenBalance.ts:28](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Erc20TokenBalance.ts#L28)*

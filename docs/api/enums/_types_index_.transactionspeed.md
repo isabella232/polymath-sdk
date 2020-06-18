@@ -1,4 +1,4 @@
-# Enumeration: TransactionSpeed
+# TransactionSpeed
 
 ## Index
 
@@ -11,32 +11,27 @@
 
 ## Enumeration members
 
-###  Fast
+### Fast
 
 • **Fast**: = "Fast"
 
-*Defined in [src/types/index.ts:1444](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1444)*
+_Defined in_ [_src/types/index.ts:1444_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1444)
 
-___
-
-###  Fastest
+### Fastest
 
 • **Fastest**: = "Fastest"
 
-*Defined in [src/types/index.ts:1445](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1445)*
+_Defined in_ [_src/types/index.ts:1445_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1445)
 
-___
-
-###  Medium
+### Medium
 
 • **Medium**: = "Medium"
 
-*Defined in [src/types/index.ts:1443](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1443)*
+_Defined in_ [_src/types/index.ts:1443_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1443)
 
-___
-
-###  Slow
+### Slow
 
 • **Slow**: = "Slow"
 
-*Defined in [src/types/index.ts:1442](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1442)*
+_Defined in_ [_src/types/index.ts:1442_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1442)
+

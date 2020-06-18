@@ -1,4 +1,4 @@
-# Class: PolymathError
+# PolymathError
 
 Wraps an error to give more information about it's type
 
@@ -24,67 +24,60 @@ Wraps an error to give more information about it's type
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new PolymathError**(`__namedParameters`: object): *[PolymathError](_polymatherror_.polymatherror.md)*
++ **new PolymathError**\(`__namedParameters`: object\): [_PolymathError_](_polymatherror_.polymatherror.md)
 
-*Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/PolymathError.ts#L24)*
+_Defined in_ [_src/PolymathError.ts:24_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/PolymathError.ts#L24)
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`code` | [ErrorCode](../enums/_types_index_.errorcode.md) |
-`message` | undefined &#124; string |
+| Name | Type |
+| :--- | :--- |
+| `code` | [ErrorCode](../enums/_types_index_.errorcode.md) |
+| `message` | undefined \| string |
 
-**Returns:** *[PolymathError](_polymatherror_.polymatherror.md)*
+**Returns:** [_PolymathError_](_polymatherror_.polymatherror.md)
 
 ## Properties
 
-###  code
+### code
 
-• **code**: *[ErrorCode](../enums/_types_index_.errorcode.md)*
+• **code**: [_ErrorCode_](../enums/_types_index_.errorcode.md)
 
-*Defined in [src/PolymathError.ts:24](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/PolymathError.ts#L24)*
+_Defined in_ [_src/PolymathError.ts:24_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/PolymathError.ts#L24)
 
-___
+### message
 
-###  message
+• **message**: _string_
 
-• **message**: *string*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.es5.d.ts:964
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:964
+### name
 
-___
+• **name**: _string_
 
-###  name
+_Inherited from void_
 
-• **name**: *string*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.es5.d.ts:963
-
-___
+Defined in node\_modules/typescript/lib/lib.es5.d.ts:963
 
 ### `Optional` stack
 
-• **stack**? : *undefined | string*
+• **stack**? : _undefined \| string_
 
-*Inherited from void*
+_Inherited from void_
 
-*Overrides void*
+_Overrides void_
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:965
-
-___
+Defined in node\_modules/typescript/lib/lib.es5.d.ts:965
 
 ### `Static` Error
 
-▪ **Error**: *ErrorConstructor*
+▪ **Error**: _ErrorConstructor_
 
-Defined in node_modules/typescript/lib/lib.es5.d.ts:974
+Defined in node\_modules/typescript/lib/lib.es5.d.ts:974
+

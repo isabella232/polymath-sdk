@@ -1,4 +1,4 @@
-# Interface: UpdateDividendsTaxWithholdingListProcedureArgs
+# UpdateDividendsTaxWithholdingListProcedureArgs
 
 Arguments for the [UpdateDividendsTaxWithholdingList](../enums/_types_index_.proceduretype.md#updatedividendstaxwithholdinglist) Procedure
 
@@ -16,30 +16,27 @@ Arguments for the [UpdateDividendsTaxWithholdingList](../enums/_types_index_.pro
 
 ## Properties
 
-###  percentages
+### percentages
 
-• **percentages**: *number[]*
+• **percentages**: _number\[\]_
 
-*Defined in [src/types/index.ts:845](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L845)*
+_Defined in_ [_src/types/index.ts:845_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L845)
 
 list of percentages to update
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:837](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L837)*
+_Defined in_ [_src/types/index.ts:837_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L837)
 
 the symbol of the Security Token
 
-___
+### tokenholderAddresses
 
-###  tokenholderAddresses
+• **tokenholderAddresses**: _string\[\]_
 
-• **tokenholderAddresses**: *string[]*
-
-*Defined in [src/types/index.ts:841](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L841)*
+_Defined in_ [_src/types/index.ts:841_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L841)
 
 list of addresses of the Tokenholders for which to update the tax withholding percentages
+

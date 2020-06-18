@@ -1,4 +1,4 @@
-# Class: PolyTransaction <**Args, Values**>
+# PolyTransaction
 
 Wrapper class for a Polymath Transaction
 
@@ -6,7 +6,7 @@ Wrapper class for a Polymath Transaction
 
 ▪ **Args**
 
-▪ **Values**: *any[]*
+▪ **Values**: _any\[\]_
 
 ## Hierarchy
 
@@ -34,7 +34,7 @@ Wrapper class for a Polymath Transaction
 
 ### Methods
 
-* [_refresh](_entities_polytransaction_.polytransaction.md#_refresh)
+* [\_refresh](_entities_polytransaction_.polytransaction.md#_refresh)
 * [onStatusChange](_entities_polytransaction_.polytransaction.md#onstatuschange)
 * [run](_entities_polytransaction_.polytransaction.md#run)
 * [toPojo](_entities_polytransaction_.polytransaction.md#topojo)
@@ -42,207 +42,177 @@ Wrapper class for a Polymath Transaction
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new PolyTransaction**(`transaction`: [TransactionSpec](../interfaces/_types_index_.transactionspec.md)‹Args, Values, TransactionReceiptWithDecodedLogs | string›, `transactionQueue`: [TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹any, any›): *[PolyTransaction](_entities_polytransaction_.polytransaction.md)*
++ **new PolyTransaction**\(`transaction`: [TransactionSpec](../interfaces/_types_index_.transactionspec.md)‹Args, Values, TransactionReceiptWithDecodedLogs \| string›, `transactionQueue`: [TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹any, any›\): [_PolyTransaction_](_entities_polytransaction_.polytransaction.md)
 
-*Defined in [src/entities/PolyTransaction.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L114)*
+_Defined in_ [_src/entities/PolyTransaction.ts:114_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L114)
 
 Creates a poly transaction
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`transaction` | [TransactionSpec](../interfaces/_types_index_.transactionspec.md)‹Args, Values, TransactionReceiptWithDecodedLogs &#124; string› |
-`transactionQueue` | [TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹any, any› |
+| Name | Type |
+| :--- | :--- |
+| `transaction` | [TransactionSpec](../interfaces/_types_index_.transactionspec.md)‹Args, Values, TransactionReceiptWithDecodedLogs \| string› |
+| `transactionQueue` | [TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹any, any› |
 
-**Returns:** *[PolyTransaction](_entities_polytransaction_.polytransaction.md)*
+**Returns:** [_PolyTransaction_](_entities_polytransaction_.polytransaction.md)
 
 ## Properties
 
-###  args
+### args
 
-• **args**: *TransactionSpec<Args, Values, TransactionReceiptWithDecodedLogs | string>["args"]*
+• **args**: _TransactionSpec\["args"\]_
 
-*Defined in [src/entities/PolyTransaction.ts:89](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L89)*
+_Defined in_ [_src/entities/PolyTransaction.ts:89_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L89)
 
 arguments with which the transaction will be called
 
-___
-
 ### `Optional` error
 
-• **error**? : *[PolymathError](_polymatherror_.polymatherror.md)*
+• **error**? : [_PolymathError_](_polymatherror_.polymatherror.md)
 
-*Defined in [src/entities/PolyTransaction.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L69)*
+_Defined in_ [_src/entities/PolyTransaction.ts:69_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L69)
 
-stores errors thrown while running the transaction (if any)
+stores errors thrown while running the transaction \(if any\)
 
-___
+### promise
 
-###  promise
+• **promise**: _Promise‹any›_
 
-• **promise**: *Promise‹any›*
-
-*Defined in [src/entities/PolyTransaction.ts:64](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L64)*
+_Defined in_ [_src/entities/PolyTransaction.ts:64_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L64)
 
 internal promise that resolves when the transaction has finished running
 
-___
-
 ### `Optional` receipt
 
-• **receipt**? : *TransactionReceiptWithDecodedLogs | string*
+• **receipt**? : _TransactionReceiptWithDecodedLogs \| string_
 
-*Defined in [src/entities/PolyTransaction.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L74)*
+_Defined in_ [_src/entities/PolyTransaction.ts:74_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L74)
 
-stores the transaction receipt (if successful)
+stores the transaction receipt \(if successful\)
 
-___
+### status
 
-###  status
+• **status**: [_TransactionStatus_](../enums/_types_index_.transactionstatus.md) = TransactionStatus.Idle
 
-• **status**: *[TransactionStatus](../enums/_types_index_.transactionstatus.md)* =  TransactionStatus.Idle
-
-*Defined in [src/entities/PolyTransaction.ts:54](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L54)*
+_Defined in_ [_src/entities/PolyTransaction.ts:54_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L54)
 
 current status of the transaction
 
-___
+### tag
 
-###  tag
+• **tag**: [_PolyTransactionTag_](../enums/_types_index_.polytransactiontag.md)
 
-• **tag**: *[PolyTransactionTag](../enums/_types_index_.polytransactiontag.md)*
-
-*Defined in [src/entities/PolyTransaction.ts:79](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L79)*
+_Defined in_ [_src/entities/PolyTransaction.ts:79_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L79)
 
 type of transaction represented by this instance for display purposes
 
-___
+### transactionQueue
 
-###  transactionQueue
+• **transactionQueue**: [_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)
 
-• **transactionQueue**: *[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)*
-
-*Defined in [src/entities/PolyTransaction.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L59)*
+_Defined in_ [_src/entities/PolyTransaction.ts:59_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L59)
 
 transaction queue to which this transaction belongs
 
-___
-
 ### `Optional` txHash
 
-• **txHash**? : *undefined | string*
+• **txHash**? : _undefined \| string_
 
-*Defined in [src/entities/PolyTransaction.ts:84](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L84)*
+_Defined in_ [_src/entities/PolyTransaction.ts:84_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L84)
 
-transaction hash (available after running)
+transaction hash \(available after running\)
 
-___
+### uid
 
-###  uid
+• **uid**: _string_
 
-• **uid**: *string*
+_Overrides_ [_Entity_](_entities_entity_.entity.md)_._[_uid_](_entities_entity_.entity.md#abstract-uid)
 
-*Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)*
-
-*Defined in [src/entities/PolyTransaction.ts:49](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L49)*
+_Defined in_ [_src/entities/PolyTransaction.ts:49_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L49)
 
 unique generated identifier of the poly transaction
 
 ## Methods
 
-###  _refresh
+### \_refresh
 
-▸ **_refresh**(): *void*
+▸ **\_refresh**\(\): _void_
 
-*Overrides [Entity](_entities_entity_.entity.md).[_refresh](_entities_entity_.entity.md#abstract-_refresh)*
+_Overrides_ [_Entity_](_entities_entity_.entity.md)_._[_\_refresh_](_entities_entity_.entity.md#abstract-_refresh)
 
-*Defined in [src/entities/PolyTransaction.ts:330](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L330)*
+_Defined in_ [_src/entities/PolyTransaction.ts:330_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L330)
 
 Hydrate the entity
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+### onStatusChange
 
-###  onStatusChange
+▸ **onStatusChange**\(`listener`: function\): _\(Anonymous function\)_
 
-▸ **onStatusChange**(`listener`: function): *(Anonymous function)*
-
-*Defined in [src/entities/PolyTransaction.ts:203](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L203)*
+_Defined in_ [_src/entities/PolyTransaction.ts:203_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L203)
 
 Subscribe to status changes
 
 **Parameters:**
 
-▪ **listener**: *function*
+▪ **listener**: _function_
 
 callback function that will be called whenever the status changes
 
-▸ (`transaction`: this): *void*
+▸ \(`transaction`: this\): _void_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`transaction` | this |
+| Name | Type |
+| :--- | :--- |
+| `transaction` | this |
 
-**Returns:** *(Anonymous function)*
+**Returns:** _\(Anonymous function\)_
 
 unsubscribe function
 
-___
+### run
 
-###  run
+▸ **run**\(\): _Promise‹void›_
 
-▸ **run**(): *Promise‹void›*
-
-*Defined in [src/entities/PolyTransaction.ts:171](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L171)*
+_Defined in_ [_src/entities/PolyTransaction.ts:171_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L171)
 
 Run the poly transaction and update the transaction status
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+### toPojo
 
-###  toPojo
+▸ **toPojo**\(\): _object_
 
-▸ **toPojo**(): *object*
+_Overrides_ [_Entity_](_entities_entity_.entity.md)_._[_toPojo_](_entities_entity_.entity.md#abstract-topojo)
 
-*Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)*
+_Defined in_ [_src/entities/PolyTransaction.ts:144_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L144)
 
-*Defined in [src/entities/PolyTransaction.ts:144](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L144)*
+Convert entity to a POJO \(Plain Old Javascript Object\)
 
-Convert entity to a POJO (Plain Old Javascript Object)
+**Returns:** _object_
 
-**Returns:** *object*
-
-* **args**: *any* =  filteredArgs as any
-
-* **error**: *undefined | [PolymathError](_polymatherror_.polymatherror.md)*
-
-* **receipt**: *undefined | string | TransactionReceiptWithDecodedLogs*
-
-* **status**: *[TransactionStatus](../enums/_types_index_.transactionstatus.md)*
-
-* **tag**: *[PolyTransactionTag](../enums/_types_index_.polytransactiontag.md)*
-
-* **transactionQueueUid**: *string*
-
-* **txHash**: *undefined | string*
-
-* **uid**: *string*
-
-___
+* **args**: _any_ = filteredArgs as any
+* **error**: _undefined \|_ [_PolymathError_](_polymatherror_.polymatherror.md)
+* **receipt**: _undefined \| string \| TransactionReceiptWithDecodedLogs_
+* **status**: [_TransactionStatus_](../enums/_types_index_.transactionstatus.md)
+* **tag**: [_PolyTransactionTag_](../enums/_types_index_.polytransactiontag.md)
+* **transactionQueueUid**: _string_
+* **txHash**: _undefined \| string_
+* **uid**: _string_
 
 ### `Static` generateId
 
-▸ **generateId**(): *string*
+▸ **generateId**\(\): _string_
 
-*Defined in [src/entities/PolyTransaction.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L40)*
+_Defined in_ [_src/entities/PolyTransaction.ts:40_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L40)
 
 Generate the Poly Transaction's UUID from its identifying properties
 
-**Returns:** *string*
+**Returns:** _string_
+

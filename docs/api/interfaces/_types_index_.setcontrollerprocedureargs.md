@@ -1,4 +1,4 @@
-# Interface: SetControllerProcedureArgs
+# SetControllerProcedureArgs
 
 Arguments for the [SetController](../enums/_types_index_.proceduretype.md#setcontroller) Procedure
 
@@ -15,20 +15,19 @@ Arguments for the [SetController](../enums/_types_index_.proceduretype.md#setcon
 
 ## Properties
 
-###  controller
+### controller
 
-• **controller**: *string*
+• **controller**: _string_
 
-*Defined in [src/types/index.ts:1031](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1031)*
+_Defined in_ [_src/types/index.ts:1031_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1031)
 
 wallet address to be set as the Security Token's controller
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:1027](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1027)*
+_Defined in_ [_src/types/index.ts:1027_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1027)
 
 the symbol of the Security Token
+

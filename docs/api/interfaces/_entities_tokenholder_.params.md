@@ -1,4 +1,4 @@
-# Interface: Params
+# Params
 
 Constructor parameters
 
@@ -20,56 +20,45 @@ Constructor parameters
 
 ## Properties
 
-###  balance
+### balance
 
-• **balance**: *BigNumber*
+• **balance**: _BigNumber_
 
-*Defined in [src/entities/Tokenholder.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L35)*
+_Defined in_ [_src/entities/Tokenholder.ts:35_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L35)
 
-___
+### canBuyFromSto
 
-###  canBuyFromSto
+• **canBuyFromSto**: _boolean_
 
-• **canBuyFromSto**: *boolean*
+_Defined in_ [_src/entities/Tokenholder.ts:34_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L34)
 
-*Defined in [src/entities/Tokenholder.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L34)*
+### canReceiveAfter
 
-___
+• **canReceiveAfter**: _Date_
 
-###  canReceiveAfter
+_Defined in_ [_src/entities/Tokenholder.ts:31_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L31)
 
-• **canReceiveAfter**: *Date*
+### canSendAfter
 
-*Defined in [src/entities/Tokenholder.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L31)*
+• **canSendAfter**: _Date_
 
-___
+_Defined in_ [_src/entities/Tokenholder.ts:30_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L30)
 
-###  canSendAfter
+### isAccredited
 
-• **canSendAfter**: *Date*
+• **isAccredited**: _boolean_
 
-*Defined in [src/entities/Tokenholder.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L30)*
+_Defined in_ [_src/entities/Tokenholder.ts:33_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L33)
 
-___
+### kycExpiry
 
-###  isAccredited
+• **kycExpiry**: _Date_
 
-• **isAccredited**: *boolean*
+_Defined in_ [_src/entities/Tokenholder.ts:32_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L32)
 
-*Defined in [src/entities/Tokenholder.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L33)*
+### securityTokenSymbol
 
-___
+• **securityTokenSymbol**: _string_
 
-###  kycExpiry
+_Defined in_ [_src/entities/Tokenholder.ts:29_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L29)
 
-• **kycExpiry**: *Date*
-
-*Defined in [src/entities/Tokenholder.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L32)*
-
-___
-
-###  securityTokenSymbol
-
-• **securityTokenSymbol**: *string*
-
-*Defined in [src/entities/Tokenholder.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L29)*

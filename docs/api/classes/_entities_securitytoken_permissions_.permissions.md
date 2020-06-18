@@ -1,4 +1,4 @@
-# Class: Permissions
+# Permissions
 
 Namespace that handles all Permissions related functionality
 
@@ -36,221 +36,203 @@ Namespace that handles all Permissions related functionality
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new Permissions**(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)): *[Permissions](_entities_securitytoken_permissions_.permissions.md)*
++ **new Permissions**\(`securityToken`: [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md), `context`: [Context](_context_.context.md)\): [_Permissions_](_entities_securitytoken_permissions_.permissions.md)
 
-*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[constructor](_entities_securitytoken_submodule_.submodule.md#constructor)*
+_Inherited from_ [_SubModule_](_entities_securitytoken_submodule_.submodule.md)_._[_constructor_](_entities_securitytoken_submodule_.submodule.md#constructor)
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L10)*
+_Defined in_ [_src/entities/SecurityToken/SubModule.ts:10_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L10)
 
 Create a new SubModule instance
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`securityToken` | [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md) |
-`context` | [Context](_context_.context.md) |
+| Name | Type |
+| :--- | :--- |
+| `securityToken` | [SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md) |
+| `context` | [Context](_context_.context.md) |
 
-**Returns:** *[Permissions](_entities_securitytoken_permissions_.permissions.md)*
+**Returns:** [_Permissions_](_entities_securitytoken_permissions_.permissions.md)
 
 ## Properties
 
 ### `Protected` context
 
-• **context**: *[Context](_context_.context.md)*
+• **context**: [_Context_](_context_.context.md)
 
-*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[context](_entities_securitytoken_submodule_.submodule.md#protected-context)*
+_Inherited from_ [_SubModule_](_entities_securitytoken_submodule_.submodule.md)_._[_context_](_entities_securitytoken_submodule_.submodule.md#protected-context)
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L10)*
-
-___
+_Defined in_ [_src/entities/SecurityToken/SubModule.ts:10_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L10)
 
 ### `Protected` securityToken
 
-• **securityToken**: *[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)*
+• **securityToken**: [_SecurityToken_](_entities_securitytoken_securitytoken_.securitytoken.md)
 
-*Inherited from [SubModule](_entities_securitytoken_submodule_.submodule.md).[securityToken](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)*
+_Inherited from_ [_SubModule_](_entities_securitytoken_submodule_.submodule.md)_._[_securityToken_](_entities_securitytoken_submodule_.submodule.md#protected-securitytoken)
 
-*Defined in [src/entities/SecurityToken/SubModule.ts:8](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L8)*
+_Defined in_ [_src/entities/SecurityToken/SubModule.ts:8_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SubModule.ts#L8)
 
 ## Methods
 
-###  assignRole
+### assignRole
 
-▸ **assignRole**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignSecurityTokenRoleProcedureArgs](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md), void››*
+▸ **assignRole**\(`args`: object\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_AssignSecurityTokenRoleProcedureArgs_](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md)_, void››_
 
-*Defined in [src/entities/SecurityToken/Permissions.ts:95](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L95)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:95_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L95)
 
 Assign a role on the Security Token to a delegate
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`delegateAddress` | string |
-`description` | string |
-`role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
+| Name | Type |
+| :--- | :--- |
+| `delegateAddress` | string |
+| `description` | string |
+| `role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignSecurityTokenRoleProcedureArgs](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md), void››*
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_AssignSecurityTokenRoleProcedureArgs_](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md)_, void››_
 
-___
+### getAllDelegates
 
-###  getAllDelegates
+▸ **getAllDelegates**\(\): _Promise‹object\[\]›_
 
-▸ **getAllDelegates**(): *Promise‹object[]›*
-
-*Defined in [src/entities/SecurityToken/Permissions.ts:242](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L242)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:242_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L242)
 
 Return a list of all delegates with their respective details and roles
 
-**Returns:** *Promise‹object[]›*
+**Returns:** _Promise‹object\[\]›_
 
-___
+### getAssignedRoles
 
-###  getAssignedRoles
+▸ **getAssignedRoles**\(`args`: object\): _Promise‹_[_SecurityTokenRole_](../enums/_types_index_.securitytokenrole.md)_\[\]›_
 
-▸ **getAssignedRoles**(`args`: object): *Promise‹[SecurityTokenRole](../enums/_types_index_.securitytokenrole.md)[]›*
-
-*Defined in [src/entities/SecurityToken/Permissions.ts:136](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L136)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:136_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L136)
 
 Return the list of roles assigned to a delegate address
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`delegateAddress` | string |
+| Name | Type |
+| :--- | :--- |
+| `delegateAddress` | string |
 
-**Returns:** *Promise‹[SecurityTokenRole](../enums/_types_index_.securitytokenrole.md)[]›*
+**Returns:** _Promise‹_[_SecurityTokenRole_](../enums/_types_index_.securitytokenrole.md)_\[\]›_
 
-___
+### getAvailableRoles
 
-###  getAvailableRoles
+▸ **getAvailableRoles**\(\): _Promise‹_[_SecurityTokenRole_](../enums/_types_index_.securitytokenrole.md)_\[\]›_
 
-▸ **getAvailableRoles**(): *Promise‹[SecurityTokenRole](../enums/_types_index_.securitytokenrole.md)[]›*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:25_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L25)
 
-*Defined in [src/entities/SecurityToken/Permissions.ts:25](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L25)*
+Get a list of all available roles. The returned roles depend on which features are enabled, as per:
 
-Get a list of all available roles.
-The returned roles depend on which features are enabled, as per:
-
-| Feature                         | Roles                                           |
-|---------------------------------|-------------------------------------------------|
-| Permissions                     | Permissions Administrator                       |
-| Tokenholders                    | Tokenholders Administrator                      |
-| Dividends                       | Dividends Administrator, Dividends Operator     |
-| TokenholderCountRestrictions    | Tokenholder Count Restrictions Administrator    |
+| Feature | Roles |
+| :--- | :--- |
+| Permissions | Permissions Administrator |
+| Tokenholders | Tokenholders Administrator |
+| Dividends | Dividends Administrator, Dividends Operator |
+| TokenholderCountRestrictions | Tokenholder Count Restrictions Administrator |
 | PercentageOwnershipRestrictions | Percentage Ownership Restrictions Administrator |
 
-**Returns:** *Promise‹[SecurityTokenRole](../enums/_types_index_.securitytokenrole.md)[]›*
+**Returns:** _Promise‹_[_SecurityTokenRole_](../enums/_types_index_.securitytokenrole.md)_\[\]›_
 
-___
+### getDelegatesForRole
 
-###  getDelegatesForRole
+▸ **getDelegatesForRole**\(`args`: object\): _Promise‹object\[\]›_
 
-▸ **getDelegatesForRole**(`args`: object): *Promise‹object[]›*
-
-*Defined in [src/entities/SecurityToken/Permissions.ts:184](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L184)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:184_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L184)
 
 Return the list of delegate addresses and details that hold a specific role
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
+| Name | Type |
+| :--- | :--- |
+| `role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
 
-**Returns:** *Promise‹object[]›*
+**Returns:** _Promise‹object\[\]›_
 
-___
+### getFeatureFromRole
 
-###  getFeatureFromRole
+▸ **getFeatureFromRole**\(`args`: object\): _Promise‹_[_Feature_](../enums/_types_index_.feature.md)_›_
 
-▸ **getFeatureFromRole**(`args`: object): *Promise‹[Feature](../enums/_types_index_.feature.md)›*
-
-*Defined in [src/entities/SecurityToken/Permissions.ts:65](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L65)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:65_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L65)
 
 Return which feature is associated with the supplied role
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
+| Name | Type |
+| :--- | :--- |
+| `role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
 
-**Returns:** *Promise‹[Feature](../enums/_types_index_.feature.md)›*
+**Returns:** _Promise‹_[_Feature_](../enums/_types_index_.feature.md)_›_
 
-___
+### isRoleAvailable
 
-###  isRoleAvailable
+▸ **isRoleAvailable**\(`args`: object\): _Promise‹boolean›_
 
-▸ **isRoleAvailable**(`args`: object): *Promise‹boolean›*
-
-*Defined in [src/entities/SecurityToken/Permissions.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L55)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:55_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L55)
 
 Return whether a certain role is available to be assigned to delegates
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
+| Name | Type |
+| :--- | :--- |
+| `role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
 
-**Returns:** *Promise‹boolean›*
+**Returns:** _Promise‹boolean›_
 
-___
+### revokeRole
 
-###  revokeRole
+▸ **revokeRole**\(`args`: object\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_AssignSecurityTokenRoleProcedureArgs_](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md)_, void››_
 
-▸ **revokeRole**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignSecurityTokenRoleProcedureArgs](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md), void››*
-
-*Defined in [src/entities/SecurityToken/Permissions.ts:117](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L117)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:117_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L117)
 
 Remove a role from a delegate
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`delegateAddress` | string |
-`role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
+| Name | Type |
+| :--- | :--- |
+| `delegateAddress` | string |
+| `role` | [SecurityTokenRole](../enums/_types_index_.securitytokenrole.md) |
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[AssignSecurityTokenRoleProcedureArgs](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md), void››*
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_AssignSecurityTokenRoleProcedureArgs_](../interfaces/_types_index_.assignsecuritytokenroleprocedureargs.md)_, void››_
 
 ## Object literals
 
-###  rolesPerFeature
+### rolesPerFeature
 
-### ▪ **rolesPerFeature**: *object*
+### ▪ **rolesPerFeature**: _object_
 
-*Defined in [src/entities/SecurityToken/Permissions.ts:279](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L279)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:279_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L279)
 
-###  __computed
+### \_\_computed
 
-• **__computed**: *[SecurityTokenRole](../enums/_types_index_.securitytokenrole.md)[]* =  [
-      SecurityTokenRole.PercentageOwnershipRestrictionsAdministrator,
-    ]
+• **\_\_computed**: [_SecurityTokenRole_](../enums/_types_index_.securitytokenrole.md)_\[\]_ = \[ SecurityTokenRole.PercentageOwnershipRestrictionsAdministrator, \]
 
-*Defined in [src/entities/SecurityToken/Permissions.ts:280](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L280)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:280_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L280)
 
-*Defined in [src/entities/SecurityToken/Permissions.ts:281](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L281)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:281_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L281)
 
-*Defined in [src/entities/SecurityToken/Permissions.ts:282](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L282)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:282_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L282)
 
-*Defined in [src/entities/SecurityToken/Permissions.ts:286](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L286)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:286_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L286)
 
-*Defined in [src/entities/SecurityToken/Permissions.ts:289](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L289)*
+_Defined in_ [_src/entities/SecurityToken/Permissions.ts:289_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Permissions.ts#L289)
+

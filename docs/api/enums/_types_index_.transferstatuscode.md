@@ -1,4 +1,4 @@
-# Enumeration: TransferStatusCode
+# TransferStatusCode
 
 ## Index
 
@@ -16,72 +16,57 @@
 
 ## Enumeration members
 
-###  FundsLocked
+### FundsLocked
 
 • **FundsLocked**: = "FundsLocked"
 
-*Defined in [src/types/index.ts:1476](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1476)*
+_Defined in_ [_src/types/index.ts:1476_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1476)
 
-___
-
-###  InsufficientAllowance
+### InsufficientAllowance
 
 • **InsufficientAllowance**: = "InsufficientAllowance"
 
-*Defined in [src/types/index.ts:1474](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1474)*
+_Defined in_ [_src/types/index.ts:1474_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1474)
 
-___
-
-###  InsufficientBalance
+### InsufficientBalance
 
 • **InsufficientBalance**: = "InsufficientBalance"
 
-*Defined in [src/types/index.ts:1473](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1473)*
+_Defined in_ [_src/types/index.ts:1473_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1473)
 
-___
-
-###  InvalidOperator
+### InvalidOperator
 
 • **InvalidOperator**: = "InvalidOperator"
 
-*Defined in [src/types/index.ts:1479](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1479)*
+_Defined in_ [_src/types/index.ts:1479_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1479)
 
-___
-
-###  InvalidReceiver
+### InvalidReceiver
 
 • **InvalidReceiver**: = "InvalidReceiver"
 
-*Defined in [src/types/index.ts:1478](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1478)*
+_Defined in_ [_src/types/index.ts:1478_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1478)
 
-___
-
-###  InvalidSender
+### InvalidSender
 
 • **InvalidSender**: = "InvalidSender"
 
-*Defined in [src/types/index.ts:1477](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1477)*
+_Defined in_ [_src/types/index.ts:1477_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1477)
 
-___
-
-###  TransferFailure
+### TransferFailure
 
 • **TransferFailure**: = "TransferFailure"
 
-*Defined in [src/types/index.ts:1471](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1471)*
+_Defined in_ [_src/types/index.ts:1471_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1471)
 
-___
-
-###  TransferSuccess
+### TransferSuccess
 
 • **TransferSuccess**: = "TransferSuccess"
 
-*Defined in [src/types/index.ts:1472](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1472)*
+_Defined in_ [_src/types/index.ts:1472_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1472)
 
-___
-
-###  TransfersHalted
+### TransfersHalted
 
 • **TransfersHalted**: = "TransfersHalted"
 
-*Defined in [src/types/index.ts:1475](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1475)*
+_Defined in_ [_src/types/index.ts:1475_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1475)
+

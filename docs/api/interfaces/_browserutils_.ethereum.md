@@ -1,4 +1,4 @@
-# Interface: Ethereum
+# Ethereum
 
 ## Hierarchy
 
@@ -10,7 +10,7 @@
 
 ### Properties
 
-* [_metamask](_browserutils_.ethereum.md#optional-_metamask)
+* [\_metamask](_browserutils_.ethereum.md#optional-_metamask)
 * [networkVersion](_browserutils_.ethereum.md#networkversion)
 
 ### Methods
@@ -20,45 +20,42 @@
 
 ## Properties
 
-### `Optional` _metamask
+### `Optional` \_metamask
 
-• **_metamask**? : *undefined | object*
+• **\_metamask**? : _undefined \| object_
 
-*Defined in [src/browserUtils.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L15)*
+_Defined in_ [_src/browserUtils.ts:15_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L15)
 
-___
+### networkVersion
 
-###  networkVersion
+• **networkVersion**: _string_
 
-• **networkVersion**: *string*
-
-*Defined in [src/browserUtils.ts:14](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L14)*
+_Defined in_ [_src/browserUtils.ts:14_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L14)
 
 ## Methods
 
-###  enable
+### enable
 
-▸ **enable**(): *Promise‹any›*
+▸ **enable**\(\): _Promise‹any›_
 
-*Defined in [src/browserUtils.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L18)*
+_Defined in_ [_src/browserUtils.ts:18_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L18)
 
-**Returns:** *Promise‹any›*
+**Returns:** _Promise‹any›_
 
-___
+### sendAsync
 
-###  sendAsync
+▸ **sendAsync**\(`payload`: JSONRPCRequestPayload, `callback`: JSONRPCErrorCallback\): _void_
 
-▸ **sendAsync**(`payload`: JSONRPCRequestPayload, `callback`: JSONRPCErrorCallback): *void*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/ethereum-types/lib/index.d.ts:13
+Defined in node\_modules/ethereum-types/lib/index.d.ts:13
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`payload` | JSONRPCRequestPayload |
-`callback` | JSONRPCErrorCallback |
+| Name | Type |
+| :--- | :--- |
+| `payload` | JSONRPCRequestPayload |
+| `callback` | JSONRPCErrorCallback |
 
-**Returns:** *void*
+**Returns:** _void_
+

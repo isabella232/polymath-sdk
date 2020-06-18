@@ -1,4 +1,4 @@
-# Interface: GetAttachedModulesOpts
+# GetAttachedModulesOpts
 
 Options for [getAttachedModules](../classes/_polymathbase_.polymathbase.md#getattachedmodules)
 
@@ -14,10 +14,11 @@ Options for [getAttachedModules](../classes/_polymathbase_.polymathbase.md#getat
 
 ## Properties
 
-###  unarchived
+### unarchived
 
-• **unarchived**: *boolean*
+• **unarchived**: _boolean_
 
-*Defined in [src/PolymathBase.ts:93](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/PolymathBase.ts#L93)*
+_Defined in_ [_src/PolymathBase.ts:93_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/PolymathBase.ts#L93)
 
 whether to include unarchived modules in the search
+

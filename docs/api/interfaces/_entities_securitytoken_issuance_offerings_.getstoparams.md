@@ -1,4 +1,4 @@
-# Interface: GetStoParams
+# GetStoParams
 
 Params for [getSto](../classes/_entities_securitytoken_issuance_offerings_.offerings.md#getsto)
 
@@ -15,16 +15,15 @@ Params for [getSto](../classes/_entities_securitytoken_issuance_offerings_.offer
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *string*
+• **address**: _string_
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L52)*
+_Defined in_ [_src/entities/SecurityToken/Issuance/Offerings.ts:52_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L52)
 
-___
+### stoType
 
-###  stoType
+• **stoType**: [_StoType_](../enums/_types_index_.stotype.md)
 
-• **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
+_Defined in_ [_src/entities/SecurityToken/Issuance/Offerings.ts:51_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L51)
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:51](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L51)*

@@ -1,4 +1,4 @@
-# Interface: Params
+# Params
 
 Security Token constructor parameters
 
@@ -22,83 +22,67 @@ Security Token constructor parameters
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *string*
+• **address**: _string_
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L44)*
+_Defined in_ [_src/entities/SecurityToken/SecurityToken.ts:44_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L44)
 
 address of the Security Token contract
 
-___
+### currentCheckpoint
 
-###  currentCheckpoint
+• **currentCheckpoint**: _number_
 
-• **currentCheckpoint**: *number*
-
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L59)*
+_Defined in_ [_src/entities/SecurityToken/SecurityToken.ts:59_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L59)
 
 index of the current checkpoint
 
-___
+### granularity
 
-###  granularity
+• **granularity**: _number_
 
-• **granularity**: *number*
+_Defined in_ [_src/entities/SecurityToken/SecurityToken.ts:54_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L54)
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:54](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L54)*
+### name
 
-___
+• **name**: _string_
 
-###  name
+_Defined in_ [_src/entities/SecurityToken/SecurityToken.ts:40_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L40)
 
-• **name**: *string*
+### owner
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L40)*
+• **owner**: _string_
 
-___
-
-###  owner
-
-• **owner**: *string*
-
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L48)*
+_Defined in_ [_src/entities/SecurityToken/SecurityToken.ts:48_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L48)
 
 address that owns the Security Token
 
-___
+### tokenDetails
 
-###  tokenDetails
+• **tokenDetails**: _string_
 
-• **tokenDetails**: *string*
-
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L52)*
+_Defined in_ [_src/entities/SecurityToken/SecurityToken.ts:52_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L52)
 
 URL pointing to off-chain data associated with the Security Token
 
-___
+### totalSupply
 
-###  totalSupply
+• **totalSupply**: _BigNumber_
 
-• **totalSupply**: *BigNumber*
+_Defined in_ [_src/entities/SecurityToken/SecurityToken.ts:55_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L55)
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:55](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L55)*
+### treasuryWallet
 
-___
+• **treasuryWallet**: _string_
 
-###  treasuryWallet
+_Defined in_ [_src/entities/SecurityToken/SecurityToken.ts:64_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L64)
 
-• **treasuryWallet**: *string*
+default treasury wallet used by some features. _**For example, if an STO reaches its end date \(or is finalized before that\), remaining unsold tokens get transferred to this wallet unless otherwise specified by the STO itself**_
 
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:64](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L64)*
+### version
 
-default treasury wallet used by some features.
-***For example, if an STO reaches its end date (or is finalized before that), remaining unsold tokens get transferred to this wallet unless otherwise specified by the STO itself***
+• **version**: _Version_
 
-___
+_Defined in_ [_src/entities/SecurityToken/SecurityToken.ts:53_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L53)
 
-###  version
-
-• **version**: *Version*
-
-*Defined in [src/entities/SecurityToken/SecurityToken.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/SecurityToken.ts#L53)*

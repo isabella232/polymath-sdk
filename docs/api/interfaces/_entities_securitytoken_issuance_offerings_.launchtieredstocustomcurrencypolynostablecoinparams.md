@@ -1,4 +1,4 @@
-# Interface: LaunchTieredStoCustomCurrencyPolyNoStableCoinParams
+# LaunchTieredStoCustomCurrencyPolyNoStableCoinParams
 
 ## Hierarchy
 
@@ -15,22 +15,20 @@
 
 ## Properties
 
-###  currencies
+### currencies
 
-• **currencies**: *[OnlyPoly](../modules/_entities_securitytoken_issuance_offerings_.md#onlypoly)*
+• **currencies**: [_OnlyPoly_](../external-modules/_entities_securitytoken_issuance_offerings_.md#onlypoly)
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:95](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L95)*
+_Defined in_ [_src/entities/SecurityToken/Issuance/Offerings.ts:95_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L95)
 
-___
+### customCurrency
 
-###  customCurrency
+• **customCurrency**: _object_
 
-• **customCurrency**: *object*
-
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:96](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L96)*
+_Defined in_ [_src/entities/SecurityToken/Issuance/Offerings.ts:96_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L96)
 
 #### Type declaration:
 
-* **currencySymbol**? : *undefined | string*
+* **currencySymbol**? : _undefined \| string_
+* **polyOracleAddress**: _string_
 
-* **polyOracleAddress**: *string*

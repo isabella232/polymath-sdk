@@ -1,4 +1,4 @@
-# Interface: ExtendedWindow
+# ExtendedWindow
 
 ## Hierarchy
 
@@ -256,3038 +256,2564 @@
 
 ## Properties
 
-###  Blob
+### Blob
 
-• **Blob**: *object*
+• **Blob**: _object_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16514
-
-#### Type declaration:
-
-* **new __type**(`blobParts?`: BlobPart[], `options?`: BlobPropertyBag): *Blob*
-
-* **prototype**: *Blob*
-
-___
-
-###  URL
-
-• **URL**: *object*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16515
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16514
 
 #### Type declaration:
 
-* **new __type**(`url`: string, `base?`: string | URL): *URL*
+* **new \_\_type**\(`blobParts?`: BlobPart\[\], `options?`: BlobPropertyBag\): _Blob_
+* **prototype**: _Blob_
 
-* **prototype**: *URL*
+### URL
 
-* **createObjectURL**(`object`: any): *string*
+• **URL**: _object_
 
-* **revokeObjectURL**(`url`: string): *void*
+_Inherited from void_
 
-___
-
-###  URLSearchParams
-
-• **URLSearchParams**: *object*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16516
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16515
 
 #### Type declaration:
 
-* **new __type**(`init?`: string[][] | Record‹string, string› | string | URLSearchParams): *URLSearchParams*
+* **new \_\_type**\(`url`: string, `base?`: string \| URL\): _URL_
+* **prototype**: _URL_
+* **createObjectURL**\(`object`: any\): _string_
+* **revokeObjectURL**\(`url`: string\): _void_
 
-* **prototype**: *URLSearchParams*
+### URLSearchParams
 
-___
+• **URLSearchParams**: _object_
 
-###  Window
+_Inherited from void_
 
-• **Window**: *object*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16644
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16516
 
 #### Type declaration:
 
-* **new __type**(): *Window*
+* **new \_\_type**\(`init?`: string\[\]\[\] \| Record‹string, string› \| string \| URLSearchParams\): _URLSearchParams_
+* **prototype**: _URLSearchParams_
 
-* **prototype**: *Window*
+### Window
 
-___
+• **Window**: _object_
 
-###  applicationCache
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16644
 
-• **applicationCache**: *ApplicationCache*
+#### Type declaration:
 
-*Inherited from void*
+* **new \_\_type**\(\): _Window_
+* **prototype**: _Window_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16517
+### applicationCache
 
-___
+• **applicationCache**: _ApplicationCache_
 
-###  caches
+_Inherited from void_
 
-• **caches**: *CacheStorage*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16517
 
-*Inherited from void*
+### caches
 
-*Overrides void*
+• **caches**: _CacheStorage_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16518
+_Inherited from void_
 
-___
+_Overrides void_
 
-###  clientInformation
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16518
 
-• **clientInformation**: *Navigator*
+### clientInformation
 
-*Inherited from void*
+• **clientInformation**: _Navigator_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16519
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16519
 
-###  closed
+### closed
 
-• **closed**: *boolean*
+• **closed**: _boolean_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16520
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16520
 
-___
+### console
 
-###  console
+• **console**: _Console_
 
-• **console**: *Console*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16655
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16655
+### crypto
 
-___
+• **crypto**: _Crypto_
 
-###  crypto
+_Inherited from void_
 
-• **crypto**: *Crypto*
+_Overrides void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16521
 
-*Overrides void*
+### customElements
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16521
+• **customElements**: _CustomElementRegistry_
 
-___
+_Inherited from void_
 
-###  customElements
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16522
 
-• **customElements**: *CustomElementRegistry*
+### defaultStatus
 
-*Inherited from void*
+• **defaultStatus**: _string_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16522
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16523
 
-###  defaultStatus
+### devicePixelRatio
 
-• **defaultStatus**: *string*
+• **devicePixelRatio**: _number_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16523
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16524
 
-___
+### doNotTrack
 
-###  devicePixelRatio
+• **doNotTrack**: _string_
 
-• **devicePixelRatio**: *number*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16525
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16524
+### document
 
-___
+• **document**: _Document_
 
-###  doNotTrack
+_Inherited from void_
 
-• **doNotTrack**: *string*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16525
-
-___
-
-###  document
-
-• **document**: *Document*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16526
-
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16526
 
 ### `Optional` ethereum
 
-• **ethereum**? : *[Ethereum](_browserutils_.ethereum.md)*
+• **ethereum**? : [_Ethereum_](_browserutils_.ethereum.md)
 
-*Defined in [src/browserUtils.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L31)*
+_Defined in_ [_src/browserUtils.ts:31_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L31)
 
-___
+### event
 
-###  event
+• **event**: _Event \| undefined_
 
-• **event**: *Event | undefined*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16527
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16527
+### external
 
-___
+• **external**: _External_
 
-###  external
+_Inherited from void_
 
-• **external**: *External*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16529
 
-*Inherited from void*
+**`deprecated`**
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16529
+### frameElement
 
-**`deprecated`** 
+• **frameElement**: _Element_
 
-___
+_Inherited from void_
 
-###  frameElement
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16530
 
-• **frameElement**: *Element*
+### frames
 
-*Inherited from void*
+• **frames**: _Window_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16530
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16531
 
-###  frames
+### history
 
-• **frames**: *Window*
+• **history**: _History_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16531
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16532
 
-___
+### indexedDB
 
-###  history
+• **indexedDB**: _IDBFactory_
 
-• **history**: *History*
+_Inherited from void_
 
-*Inherited from void*
+_Overrides void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16532
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:8824
 
-___
+### innerHeight
 
-###  indexedDB
+• **innerHeight**: _number_
 
-• **indexedDB**: *IDBFactory*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16533
 
-*Overrides void*
+### innerWidth
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:8824
+• **innerWidth**: _number_
 
-___
+_Inherited from void_
 
-###  innerHeight
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16534
 
-• **innerHeight**: *number*
+### isSecureContext
 
-*Inherited from void*
+• **isSecureContext**: _boolean_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16533
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16535
 
-###  innerWidth
+### length
 
-• **innerWidth**: *number*
+• **length**: _number_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16534
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16536
 
-___
+### localStorage
 
-###  isSecureContext
+• **localStorage**: _Storage_
 
-• **isSecureContext**: *boolean*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16701
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16535
+### location
 
-___
+• **location**: _Location_
 
-###  length
+_Inherited from void_
 
-• **length**: *number*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16537
 
-*Inherited from void*
+### locationbar
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16536
+• **locationbar**: _BarProp_
 
-___
+_Inherited from void_
 
-###  localStorage
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16538
 
-• **localStorage**: *Storage*
+### menubar
 
-*Inherited from void*
+• **menubar**: _BarProp_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16701
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16539
 
-###  location
+### msContentScript
 
-• **location**: *Location*
+• **msContentScript**: _ExtensionScriptApis_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16537
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16540
 
-___
+### name
 
-###  locationbar
+• **name**: _string_
 
-• **locationbar**: *BarProp*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16541
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16538
+### navigator
 
-___
+• **navigator**: _Navigator_
 
-###  menubar
+_Inherited from void_
 
-• **menubar**: *BarProp*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16542
 
-*Inherited from void*
+### offscreenBuffering
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16539
+• **offscreenBuffering**: _string \| boolean_
 
-___
+_Inherited from void_
 
-###  msContentScript
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16543
 
-• **msContentScript**: *ExtensionScriptApis*
+### onabort
 
-*Inherited from void*
+• **onabort**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16540
+_Inherited from void_
 
-___
-
-###  name
-
-• **name**: *string*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16541
-
-___
-
-###  navigator
-
-• **navigator**: *Navigator*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16542
-
-___
-
-###  offscreenBuffering
-
-• **offscreenBuffering**: *string | boolean*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16543
-
-___
-
-###  onabort
-
-• **onabort**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5387
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5387
 
 Fires when the user aborts the download.
 
 **`param`** The event.
 
-___
+### onafterprint
 
-###  onafterprint
+• **onafterprint**: _function \| null_
 
-• **onafterprint**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16678
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16678
+### onanimationcancel
 
-___
+• **onanimationcancel**: _function \| null_
 
-###  onanimationcancel
+_Inherited from void_
 
-• **onanimationcancel**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5388
 
-*Inherited from void*
+### onanimationend
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5388
+• **onanimationend**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onanimationend
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5389
 
-• **onanimationend**: *function | null*
+### onanimationiteration
 
-*Inherited from void*
+• **onanimationiteration**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5389
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5390
 
-###  onanimationiteration
+### onanimationstart
 
-• **onanimationiteration**: *function | null*
+• **onanimationstart**: _function \| null_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5390
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5391
 
-___
+### onauxclick
 
-###  onanimationstart
+• **onauxclick**: _function \| null_
 
-• **onanimationstart**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5392
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5391
+### onbeforeprint
 
-___
+• **onbeforeprint**: _function \| null_
 
-###  onauxclick
+_Inherited from void_
 
-• **onauxclick**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16679
 
-*Inherited from void*
+### onbeforeunload
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5392
+• **onbeforeunload**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onbeforeprint
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16680
 
-• **onbeforeprint**: *function | null*
+### onblur
 
-*Inherited from void*
+• **onblur**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16679
+_Inherited from void_
 
-___
-
-###  onbeforeunload
-
-• **onbeforeunload**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16680
-
-___
-
-###  onblur
-
-• **onblur**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5397
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5397
 
 Fires when the object loses the input focus.
 
 **`param`** The focus event.
 
-___
+### oncancel
 
-###  oncancel
+• **oncancel**: _function \| null_
 
-• **oncancel**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5398
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5398
+### oncanplay
 
-___
+• **oncanplay**: _function \| null_
 
-###  oncanplay
+_Inherited from void_
 
-• **oncanplay**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5403
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5403
 
 Occurs when playback is possible, but would require further buffering.
 
 **`param`** The event.
 
-___
+### oncanplaythrough
 
-###  oncanplaythrough
+• **oncanplaythrough**: _function \| null_
 
-• **oncanplaythrough**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5404
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5404
+### onchange
 
-___
+• **onchange**: _function \| null_
 
-###  onchange
+_Inherited from void_
 
-• **onchange**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5409
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5409
 
 Fires when the contents of the object or selection have changed.
 
 **`param`** The event.
 
-___
+### onclick
 
-###  onclick
+• **onclick**: _function \| null_
 
-• **onclick**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5414
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5414
 
 Fires when the user clicks the left mouse button on the object
 
 **`param`** The mouse event.
 
-___
+### onclose
 
-###  onclose
+• **onclose**: _function \| null_
 
-• **onclose**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5415
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5415
+### oncompassneedscalibration
 
-___
+• **oncompassneedscalibration**: _function \| null_
 
-###  oncompassneedscalibration
+_Inherited from void_
 
-• **oncompassneedscalibration**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16544
 
-*Inherited from void*
+### oncontextmenu
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16544
+• **oncontextmenu**: _function \| null_
 
-___
+_Inherited from void_
 
-###  oncontextmenu
-
-• **oncontextmenu**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5420
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5420
 
 Fires when the user clicks the right mouse button in the client area, opening the context menu.
 
 **`param`** The mouse event.
 
-___
+### oncuechange
 
-###  oncuechange
+• **oncuechange**: _function \| null_
 
-• **oncuechange**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5421
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5421
+### ondblclick
 
-___
+• **ondblclick**: _function \| null_
 
-###  ondblclick
+_Inherited from void_
 
-• **ondblclick**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5426
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5426
 
 Fires when the user double-clicks the object.
 
 **`param`** The mouse event.
 
-___
+### ondevicelight
 
-###  ondevicelight
+• **ondevicelight**: _function \| null_
 
-• **ondevicelight**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16545
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16545
+### ondevicemotion
 
-___
+• **ondevicemotion**: _function \| null_
 
-###  ondevicemotion
+_Inherited from void_
 
-• **ondevicemotion**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16546
 
-*Inherited from void*
+### ondeviceorientation
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16546
+• **ondeviceorientation**: _function \| null_
 
-___
+_Inherited from void_
 
-###  ondeviceorientation
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16547
 
-• **ondeviceorientation**: *function | null*
+### ondrag
 
-*Inherited from void*
+• **ondrag**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16547
+_Inherited from void_
 
-___
-
-###  ondrag
-
-• **ondrag**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5431
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5431
 
 Fires on the source object continuously during a drag operation.
 
 **`param`** The event.
 
-___
+### ondragend
 
-###  ondragend
+• **ondragend**: _function \| null_
 
-• **ondragend**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5436
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5436
 
 Fires on the source object when the user releases the mouse at the close of a drag operation.
 
 **`param`** The event.
 
-___
+### ondragenter
 
-###  ondragenter
+• **ondragenter**: _function \| null_
 
-• **ondragenter**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5441
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5441
 
 Fires on the target element when the user drags the object to a valid drop target.
 
 **`param`** The drag event.
 
-___
+### ondragexit
 
-###  ondragexit
+• **ondragexit**: _function \| null_
 
-• **ondragexit**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5442
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5442
+### ondragleave
 
-___
+• **ondragleave**: _function \| null_
 
-###  ondragleave
+_Inherited from void_
 
-• **ondragleave**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5447
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5447
 
 Fires on the target object when the user moves the mouse out of a valid drop target during a drag operation.
 
 **`param`** The drag event.
 
-___
+### ondragover
 
-###  ondragover
+• **ondragover**: _function \| null_
 
-• **ondragover**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5452
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5452
 
 Fires on the target element continuously while the user drags the object over a valid drop target.
 
 **`param`** The event.
 
-___
+### ondragstart
 
-###  ondragstart
+• **ondragstart**: _function \| null_
 
-• **ondragstart**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5457
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5457
 
 Fires on the source object when the user starts to drag a text selection or selected object.
 
 **`param`** The event.
 
-___
+### ondrop
 
-###  ondrop
+• **ondrop**: _function \| null_
 
-• **ondrop**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5458
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5458
+### ondurationchange
 
-___
+• **ondurationchange**: _function \| null_
 
-###  ondurationchange
+_Inherited from void_
 
-• **ondurationchange**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5463
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5463
 
 Occurs when the duration attribute is updated.
 
 **`param`** The event.
 
-___
+### onemptied
 
-###  onemptied
+• **onemptied**: _function \| null_
 
-• **onemptied**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5468
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5468
 
 Occurs when the media element is reset to its initial state.
 
 **`param`** The event.
 
-___
+### onended
 
-###  onended
+• **onended**: _function \| null_
 
-• **onended**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5473
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5473
 
 Occurs when the end of playback is reached.
 
 **`param`** The event
 
-___
+### onerror
 
-###  onerror
+• **onerror**: _ErrorEventHandler_
 
-• **onerror**: *ErrorEventHandler*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5478
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5478
 
 Fires when an error occurs during object loading.
 
 **`param`** The event.
 
-___
+### onfocus
 
-###  onfocus
+• **onfocus**: _function \| null_
 
-• **onfocus**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5483
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5483
 
 Fires when the object receives focus.
 
 **`param`** The event.
 
-___
+### ongotpointercapture
 
-###  ongotpointercapture
+• **ongotpointercapture**: _function \| null_
 
-• **ongotpointercapture**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5484
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5484
+### onhashchange
 
-___
+• **onhashchange**: _function \| null_
 
-###  onhashchange
+_Inherited from void_
 
-• **onhashchange**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16681
 
-*Inherited from void*
+### oninput
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16681
+• **oninput**: _function \| null_
 
-___
+_Inherited from void_
 
-###  oninput
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5485
 
-• **oninput**: *function | null*
+### oninvalid
 
-*Inherited from void*
+• **oninvalid**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5485
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5486
 
-###  oninvalid
+### onkeydown
 
-• **oninvalid**: *function | null*
+• **onkeydown**: _function \| null_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5486
-
-___
-
-###  onkeydown
-
-• **onkeydown**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5491
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5491
 
 Fires when the user presses a key.
 
 **`param`** The keyboard event
 
-___
+### onkeypress
 
-###  onkeypress
+• **onkeypress**: _function \| null_
 
-• **onkeypress**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5496
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5496
 
 Fires when the user presses an alphanumeric key.
 
 **`param`** The event.
 
-___
+### onkeyup
 
-###  onkeyup
+• **onkeyup**: _function \| null_
 
-• **onkeyup**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5501
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5501
 
 Fires when the user releases a key.
 
 **`param`** The keyboard event
 
-___
+### onlanguagechange
 
-###  onlanguagechange
+• **onlanguagechange**: _function \| null_
 
-• **onlanguagechange**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16682
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16682
+### onload
 
-___
+• **onload**: _function \| null_
 
-###  onload
+_Inherited from void_
 
-• **onload**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5506
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5506
 
 Fires immediately after the browser loads the object.
 
 **`param`** The event.
 
-___
+### onloadeddata
 
-###  onloadeddata
+• **onloadeddata**: _function \| null_
 
-• **onloadeddata**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5511
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5511
 
 Occurs when media data is loaded at the current playback position.
 
 **`param`** The event.
 
-___
+### onloadedmetadata
 
-###  onloadedmetadata
+• **onloadedmetadata**: _function \| null_
 
-• **onloadedmetadata**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5516
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5516
 
 Occurs when the duration and dimensions of the media have been determined.
 
 **`param`** The event.
 
-___
+### onloadend
 
-###  onloadend
+• **onloadend**: _function \| null_
 
-• **onloadend**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5517
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5517
+### onloadstart
 
-___
+• **onloadstart**: _function \| null_
 
-###  onloadstart
+_Inherited from void_
 
-• **onloadstart**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5522
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5522
 
 Occurs when Internet Explorer begins looking for media data.
 
 **`param`** The event.
 
-___
+### onlostpointercapture
 
-###  onlostpointercapture
+• **onlostpointercapture**: _function \| null_
 
-• **onlostpointercapture**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5523
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5523
+### onmessage
 
-___
+• **onmessage**: _function \| null_
 
-###  onmessage
+_Inherited from void_
 
-• **onmessage**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16683
 
-*Inherited from void*
+### onmessageerror
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16683
+• **onmessageerror**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onmessageerror
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16684
 
-• **onmessageerror**: *function | null*
+### onmousedown
 
-*Inherited from void*
+• **onmousedown**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16684
+_Inherited from void_
 
-___
-
-###  onmousedown
-
-• **onmousedown**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5528
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5528
 
 Fires when the user clicks the object with either mouse button.
 
 **`param`** The mouse event.
 
-___
+### onmouseenter
 
-###  onmouseenter
+• **onmouseenter**: _function \| null_
 
-• **onmouseenter**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5529
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5529
+### onmouseleave
 
-___
+• **onmouseleave**: _function \| null_
 
-###  onmouseleave
+_Inherited from void_
 
-• **onmouseleave**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5530
 
-*Inherited from void*
+### onmousemove
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5530
+• **onmousemove**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onmousemove
-
-• **onmousemove**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5535
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5535
 
 Fires when the user moves the mouse over the object.
 
 **`param`** The mouse event.
 
-___
+### onmouseout
 
-###  onmouseout
+• **onmouseout**: _function \| null_
 
-• **onmouseout**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5540
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5540
 
 Fires when the user moves the mouse pointer outside the boundaries of the object.
 
 **`param`** The mouse event.
 
-___
+### onmouseover
 
-###  onmouseover
+• **onmouseover**: _function \| null_
 
-• **onmouseover**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5545
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5545
 
 Fires when the user moves the mouse pointer into the object.
 
 **`param`** The mouse event.
 
-___
+### onmouseup
 
-###  onmouseup
+• **onmouseup**: _function \| null_
 
-• **onmouseup**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5550
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5550
 
 Fires when the user releases a mouse button while the mouse is over the object.
 
 **`param`** The mouse event.
 
-___
+### onmousewheel
 
-###  onmousewheel
+• **onmousewheel**: _function \| null_
 
-• **onmousewheel**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16548
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16548
+### onmsgesturechange
 
-___
+• **onmsgesturechange**: _function \| null_
 
-###  onmsgesturechange
+_Inherited from void_
 
-• **onmsgesturechange**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16549
 
-*Inherited from void*
+### onmsgesturedoubletap
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16549
+• **onmsgesturedoubletap**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onmsgesturedoubletap
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16550
 
-• **onmsgesturedoubletap**: *function | null*
+### onmsgestureend
 
-*Inherited from void*
+• **onmsgestureend**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16550
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16551
 
-###  onmsgestureend
+### onmsgesturehold
 
-• **onmsgestureend**: *function | null*
+• **onmsgesturehold**: _function \| null_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16551
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16552
 
-___
+### onmsgesturestart
 
-###  onmsgesturehold
+• **onmsgesturestart**: _function \| null_
 
-• **onmsgesturehold**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16553
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16552
+### onmsgesturetap
 
-___
+• **onmsgesturetap**: _function \| null_
 
-###  onmsgesturestart
+_Inherited from void_
 
-• **onmsgesturestart**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16554
 
-*Inherited from void*
+### onmsinertiastart
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16553
+• **onmsinertiastart**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onmsgesturetap
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16555
 
-• **onmsgesturetap**: *function | null*
+### onmspointercancel
 
-*Inherited from void*
+• **onmspointercancel**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16554
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16556
 
-###  onmsinertiastart
+### onmspointerdown
 
-• **onmsinertiastart**: *function | null*
+• **onmspointerdown**: _function \| null_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16555
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16557
 
-___
+### onmspointerenter
 
-###  onmspointercancel
+• **onmspointerenter**: _function \| null_
 
-• **onmspointercancel**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16558
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16556
+### onmspointerleave
 
-___
+• **onmspointerleave**: _function \| null_
 
-###  onmspointerdown
+_Inherited from void_
 
-• **onmspointerdown**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16559
 
-*Inherited from void*
+### onmspointermove
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16557
+• **onmspointermove**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onmspointerenter
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16560
 
-• **onmspointerenter**: *function | null*
+### onmspointerout
 
-*Inherited from void*
+• **onmspointerout**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16558
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16561
 
-###  onmspointerleave
+### onmspointerover
 
-• **onmspointerleave**: *function | null*
+• **onmspointerover**: _function \| null_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16559
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16562
 
-___
+### onmspointerup
 
-###  onmspointermove
+• **onmspointerup**: _function \| null_
 
-• **onmspointermove**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16563
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16560
+### onoffline
 
-___
+• **onoffline**: _function \| null_
 
-###  onmspointerout
+_Inherited from void_
 
-• **onmspointerout**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16685
 
-*Inherited from void*
+### ononline
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16561
+• **ononline**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onmspointerover
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16686
 
-• **onmspointerover**: *function | null*
+### onorientationchange
 
-*Inherited from void*
+• **onorientationchange**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16562
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16565
 
-###  onmspointerup
+**`deprecated`**
 
-• **onmspointerup**: *function | null*
+### onpagehide
 
-*Inherited from void*
+• **onpagehide**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16563
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16687
 
-###  onoffline
+### onpageshow
 
-• **onoffline**: *function | null*
+• **onpageshow**: _function \| null_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16685
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16688
 
-___
+### onpause
 
-###  ononline
+• **onpause**: _function \| null_
 
-• **ononline**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16686
-
-___
-
-###  onorientationchange
-
-• **onorientationchange**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16565
-
-**`deprecated`** 
-
-___
-
-###  onpagehide
-
-• **onpagehide**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16687
-
-___
-
-###  onpageshow
-
-• **onpageshow**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16688
-
-___
-
-###  onpause
-
-• **onpause**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5555
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5555
 
 Occurs when playback is paused.
 
 **`param`** The event.
 
-___
+### onplay
 
-###  onplay
+• **onplay**: _function \| null_
 
-• **onplay**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5560
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5560
 
 Occurs when the play method is requested.
 
 **`param`** The event.
 
-___
+### onplaying
 
-###  onplaying
+• **onplaying**: _function \| null_
 
-• **onplaying**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5565
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5565
 
 Occurs when the audio or video has started playing.
 
 **`param`** The event.
 
-___
+### onpointercancel
 
-###  onpointercancel
+• **onpointercancel**: _function \| null_
 
-• **onpointercancel**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5566
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5566
+### onpointerdown
 
-___
+• **onpointerdown**: _function \| null_
 
-###  onpointerdown
+_Inherited from void_
 
-• **onpointerdown**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5567
 
-*Inherited from void*
+### onpointerenter
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5567
+• **onpointerenter**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onpointerenter
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5568
 
-• **onpointerenter**: *function | null*
+### onpointerleave
 
-*Inherited from void*
+• **onpointerleave**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5568
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5569
 
-###  onpointerleave
+### onpointermove
 
-• **onpointerleave**: *function | null*
+• **onpointermove**: _function \| null_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5569
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5570
 
-___
+### onpointerout
 
-###  onpointermove
+• **onpointerout**: _function \| null_
 
-• **onpointermove**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5571
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5570
+### onpointerover
 
-___
+• **onpointerover**: _function \| null_
 
-###  onpointerout
+_Inherited from void_
 
-• **onpointerout**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5572
 
-*Inherited from void*
+### onpointerup
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5571
+• **onpointerup**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onpointerover
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5573
 
-• **onpointerover**: *function | null*
+### onpopstate
 
-*Inherited from void*
+• **onpopstate**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5572
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16689
 
-###  onpointerup
+### onprogress
 
-• **onpointerup**: *function | null*
+• **onprogress**: _function \| null_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5573
-
-___
-
-###  onpopstate
-
-• **onpopstate**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16689
-
-___
-
-###  onprogress
-
-• **onprogress**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5578
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5578
 
 Occurs to indicate progress while downloading media data.
 
 **`param`** The event.
 
-___
+### onratechange
 
-###  onratechange
+• **onratechange**: _function \| null_
 
-• **onratechange**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5583
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5583
 
 Occurs when the playback rate is increased or decreased.
 
 **`param`** The event.
 
-___
+### onreadystatechange
 
-###  onreadystatechange
+• **onreadystatechange**: _function \| null_
 
-• **onreadystatechange**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16566
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16566
+### onrejectionhandled
 
-___
+• **onrejectionhandled**: _function \| null_
 
-###  onrejectionhandled
+_Inherited from void_
 
-• **onrejectionhandled**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16690
 
-*Inherited from void*
+### onreset
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16690
+• **onreset**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onreset
-
-• **onreset**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5588
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5588
 
 Fires when the user resets a form.
 
 **`param`** The event.
 
-___
+### onresize
 
-###  onresize
+• **onresize**: _function \| null_
 
-• **onresize**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5589
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5589
+### onscroll
 
-___
+• **onscroll**: _function \| null_
 
-###  onscroll
+_Inherited from void_
 
-• **onscroll**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5594
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5594
 
 Fires when the user repositions the scroll box in the scroll bar on the object.
 
 **`param`** The event.
 
-___
+### onsecuritypolicyviolation
 
-###  onsecuritypolicyviolation
+• **onsecuritypolicyviolation**: _function \| null_
 
-• **onsecuritypolicyviolation**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5595
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5595
+### onseeked
 
-___
+• **onseeked**: _function \| null_
 
-###  onseeked
+_Inherited from void_
 
-• **onseeked**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5600
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5600
 
 Occurs when the seek operation ends.
 
 **`param`** The event.
 
-___
+### onseeking
 
-###  onseeking
+• **onseeking**: _function \| null_
 
-• **onseeking**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5605
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5605
 
 Occurs when the current playback position is moved.
 
 **`param`** The event.
 
-___
+### onselect
 
-###  onselect
+• **onselect**: _function \| null_
 
-• **onselect**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5610
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5610
 
 Fires when the current selection changes.
 
 **`param`** The event.
 
-___
+### onstalled
 
-###  onstalled
+• **onstalled**: _function \| null_
 
-• **onstalled**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5615
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5615
 
 Occurs when the download has stopped.
 
 **`param`** The event.
 
-___
+### onstorage
 
-###  onstorage
+• **onstorage**: _function \| null_
 
-• **onstorage**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16691
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16691
+### onsubmit
 
-___
+• **onsubmit**: _function \| null_
 
-###  onsubmit
+_Inherited from void_
 
-• **onsubmit**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5616
 
-*Inherited from void*
+### onsuspend
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5616
+• **onsuspend**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onsuspend
-
-• **onsuspend**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5621
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5621
 
 Occurs if the load operation has been intentionally halted.
 
 **`param`** The event.
 
-___
+### ontimeupdate
 
-###  ontimeupdate
+• **ontimeupdate**: _function \| null_
 
-• **ontimeupdate**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5626
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5626
 
 Occurs to indicate the current playback position.
 
 **`param`** The event.
 
-___
+### ontoggle
 
-###  ontoggle
+• **ontoggle**: _function \| null_
 
-• **ontoggle**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5627
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5627
+### ontouchcancel
 
-___
+• **ontouchcancel**: _function \| null_
 
-###  ontouchcancel
+_Inherited from void_
 
-• **ontouchcancel**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5628
 
-*Inherited from void*
+### ontouchend
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5628
+• **ontouchend**: _function \| null_
 
-___
+_Inherited from void_
 
-###  ontouchend
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5629
 
-• **ontouchend**: *function | null*
+### ontouchmove
 
-*Inherited from void*
+• **ontouchmove**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5629
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5630
 
-###  ontouchmove
+### ontouchstart
 
-• **ontouchmove**: *function | null*
+• **ontouchstart**: _function \| null_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5630
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5631
 
-___
+### ontransitioncancel
 
-###  ontouchstart
+• **ontransitioncancel**: _function \| null_
 
-• **ontouchstart**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5632
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5631
+### ontransitionend
 
-___
+• **ontransitionend**: _function \| null_
 
-###  ontransitioncancel
+_Inherited from void_
 
-• **ontransitioncancel**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5633
 
-*Inherited from void*
+### ontransitionrun
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5632
+• **ontransitionrun**: _function \| null_
 
-___
+_Inherited from void_
 
-###  ontransitionend
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5634
 
-• **ontransitionend**: *function | null*
+### ontransitionstart
 
-*Inherited from void*
+• **ontransitionstart**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5633
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5635
 
-###  ontransitionrun
+### onunhandledrejection
 
-• **ontransitionrun**: *function | null*
+• **onunhandledrejection**: _function \| null_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5634
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16692
 
-___
+### onunload
 
-###  ontransitionstart
+• **onunload**: _function \| null_
 
-• **ontransitionstart**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16693
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5635
+### onvolumechange
 
-___
+• **onvolumechange**: _function \| null_
 
-###  onunhandledrejection
+_Inherited from void_
 
-• **onunhandledrejection**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16692
-
-___
-
-###  onunload
-
-• **onunload**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16693
-
-___
-
-###  onvolumechange
-
-• **onvolumechange**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5640
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5640
 
 Occurs when the volume is changed, or playback is muted or unmuted.
 
 **`param`** The event.
 
-___
+### onvrdisplayactivate
 
-###  onvrdisplayactivate
+• **onvrdisplayactivate**: _function \| null_
 
-• **onvrdisplayactivate**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16567
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16567
+### onvrdisplayblur
 
-___
+• **onvrdisplayblur**: _function \| null_
 
-###  onvrdisplayblur
+_Inherited from void_
 
-• **onvrdisplayblur**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16568
 
-*Inherited from void*
+### onvrdisplayconnect
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16568
+• **onvrdisplayconnect**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onvrdisplayconnect
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16569
 
-• **onvrdisplayconnect**: *function | null*
+### onvrdisplaydeactivate
 
-*Inherited from void*
+• **onvrdisplaydeactivate**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16569
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16570
 
-###  onvrdisplaydeactivate
+### onvrdisplaydisconnect
 
-• **onvrdisplaydeactivate**: *function | null*
+• **onvrdisplaydisconnect**: _function \| null_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16570
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16571
 
-___
+### onvrdisplayfocus
 
-###  onvrdisplaydisconnect
+• **onvrdisplayfocus**: _function \| null_
 
-• **onvrdisplaydisconnect**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16572
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16571
+### onvrdisplaypointerrestricted
 
-___
+• **onvrdisplaypointerrestricted**: _function \| null_
 
-###  onvrdisplayfocus
+_Inherited from void_
 
-• **onvrdisplayfocus**: *function | null*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16573
 
-*Inherited from void*
+### onvrdisplaypointerunrestricted
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16572
+• **onvrdisplaypointerunrestricted**: _function \| null_
 
-___
+_Inherited from void_
 
-###  onvrdisplaypointerrestricted
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16574
 
-• **onvrdisplaypointerrestricted**: *function | null*
+### onvrdisplaypresentchange
 
-*Inherited from void*
+• **onvrdisplaypresentchange**: _function \| null_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16573
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16575
 
-###  onvrdisplaypointerunrestricted
+### onwaiting
 
-• **onvrdisplaypointerunrestricted**: *function | null*
+• **onwaiting**: _function \| null_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16574
-
-___
-
-###  onvrdisplaypresentchange
-
-• **onvrdisplaypresentchange**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16575
-
-___
-
-###  onwaiting
-
-• **onwaiting**: *function | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5645
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5645
 
 Occurs when playback stops because the next frame of a video resource is not available.
 
 **`param`** The event.
 
-___
+### onwheel
 
-###  onwheel
+• **onwheel**: _function \| null_
 
-• **onwheel**: *function | null*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5646
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5646
+### opener
 
-___
+• **opener**: _any_
 
-###  opener
+_Inherited from void_
 
-• **opener**: *any*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16576
 
-*Inherited from void*
+### orientation
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16576
+• **orientation**: _string \| number_
 
-___
+_Inherited from void_
 
-###  orientation
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16578
 
-• **orientation**: *string | number*
+**`deprecated`**
 
-*Inherited from void*
+### origin
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16578
+• **origin**: _string_
 
-**`deprecated`** 
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16708
 
-###  origin
+### outerHeight
 
-• **origin**: *string*
+• **outerHeight**: _number_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16708
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16579
 
-___
+### outerWidth
 
-###  outerHeight
+• **outerWidth**: _number_
 
-• **outerHeight**: *number*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16580
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16579
+### pageXOffset
 
-___
+• **pageXOffset**: _number_
 
-###  outerWidth
+_Inherited from void_
 
-• **outerWidth**: *number*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16581
 
-*Inherited from void*
+### pageYOffset
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16580
+• **pageYOffset**: _number_
 
-___
+_Inherited from void_
 
-###  pageXOffset
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16582
 
-• **pageXOffset**: *number*
+### parent
 
-*Inherited from void*
+• **parent**: _Window_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16581
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16583
 
-###  pageYOffset
+### performance
 
-• **pageYOffset**: *number*
+• **performance**: _Performance_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16582
+_Overrides void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16584
 
-###  parent
+### personalbar
 
-• **parent**: *Window*
+• **personalbar**: _BarProp_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16583
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16585
 
-___
+### screen
 
-###  performance
+• **screen**: _Screen_
 
-• **performance**: *Performance*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16586
 
-*Overrides void*
+### screenLeft
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16584
+• **screenLeft**: _number_
 
-___
+_Inherited from void_
 
-###  personalbar
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16587
 
-• **personalbar**: *BarProp*
+### screenTop
 
-*Inherited from void*
+• **screenTop**: _number_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16585
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16588
 
-###  screen
+### screenX
 
-• **screen**: *Screen*
+• **screenX**: _number_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16586
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16589
 
-___
+### screenY
 
-###  screenLeft
+• **screenY**: _number_
 
-• **screenLeft**: *number*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16590
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16587
+### scrollX
 
-___
+• **scrollX**: _number_
 
-###  screenTop
+_Inherited from void_
 
-• **screenTop**: *number*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16591
 
-*Inherited from void*
+### scrollY
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16588
+• **scrollY**: _number_
 
-___
+_Inherited from void_
 
-###  screenX
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16592
 
-• **screenX**: *number*
+### scrollbars
 
-*Inherited from void*
+• **scrollbars**: _BarProp_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16589
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16593
 
-###  screenY
+### self
 
-• **screenY**: *number*
+• **self**: _Window_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16590
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16594
 
-___
+### sessionStorage
 
-###  scrollX
+• **sessionStorage**: _Storage_
 
-• **scrollX**: *number*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16723
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16591
+### speechSynthesis
 
-___
+• **speechSynthesis**: _SpeechSynthesis_
 
-###  scrollY
+_Inherited from void_
 
-• **scrollY**: *number*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16595
 
-*Inherited from void*
+### status
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16592
+• **status**: _string_
 
-___
+_Inherited from void_
 
-###  scrollbars
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16596
 
-• **scrollbars**: *BarProp*
+### statusbar
 
-*Inherited from void*
+• **statusbar**: _BarProp_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16593
+_Inherited from void_
 
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16597
 
-###  self
+### styleMedia
 
-• **self**: *Window*
+• **styleMedia**: _StyleMedia_
 
-*Inherited from void*
+_Inherited from void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16594
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16598
 
-___
+### toolbar
 
-###  sessionStorage
+• **toolbar**: _BarProp_
 
-• **sessionStorage**: *Storage*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16599
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16723
+### top
 
-___
+• **top**: _Window_
 
-###  speechSynthesis
+_Inherited from void_
 
-• **speechSynthesis**: *SpeechSynthesis*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16595
-
-___
-
-###  status
-
-• **status**: *string*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16596
-
-___
-
-###  statusbar
-
-• **statusbar**: *BarProp*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16597
-
-___
-
-###  styleMedia
-
-• **styleMedia**: *StyleMedia*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16598
-
-___
-
-###  toolbar
-
-• **toolbar**: *BarProp*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16599
-
-___
-
-###  top
-
-• **top**: *Window*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16600
-
-___
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16600
 
 ### `Optional` web3
 
-• **web3**? : *[InjectedWeb3](_browserutils_.injectedweb3.md)*
+• **web3**? : [_InjectedWeb3_](_browserutils_.injectedweb3.md)
 
-*Defined in [src/browserUtils.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L32)*
+_Defined in_ [_src/browserUtils.ts:32_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L32)
 
-___
+### window
 
-###  window
+• **window**: _Window_
 
-• **window**: *Window*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16601
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16601
 
 ## Methods
 
-###  addEventListener
+### addEventListener
 
-▸ **addEventListener**<**K**>(`type`: K, `listener`: function, `options?`: boolean | AddEventListenerOptions): *void*
+▸ **addEventListener**&lt;**K**&gt;\(`type`: K, `listener`: function, `options?`: boolean \| AddEventListenerOptions\): _void_
 
-*Inherited from void*
+_Inherited from void_
 
-*Overrides void*
+_Overrides void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16638
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16638
 
 **Type parameters:**
 
-▪ **K**: *keyof WindowEventMap*
+▪ **K**: _keyof WindowEventMap_
 
 **Parameters:**
 
-▪ **type**: *K*
+▪ **type**: _K_
 
-▪ **listener**: *function*
+▪ **listener**: _function_
 
-▸ (`this`: Window, `ev`: WindowEventMap[K]): *any*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`this` | Window |
-`ev` | WindowEventMap[K] |
-
-▪`Optional`  **options**: *boolean | AddEventListenerOptions*
-
-**Returns:** *void*
-
-▸ **addEventListener**(`type`: string, `listener`: EventListenerOrEventListenerObject, `options?`: boolean | AddEventListenerOptions): *void*
-
-*Inherited from void*
-
-*Overrides void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16639
+▸ \(`this`: Window, `ev`: WindowEventMap\[K\]\): _any_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`listener` | EventListenerOrEventListenerObject |
-`options?` | boolean &#124; AddEventListenerOptions |
+| Name | Type |
+| :--- | :--- |
+| `this` | Window |
+| `ev` | WindowEventMap\[K\] |
 
-**Returns:** *void*
+▪`Optional` **options**: _boolean \| AddEventListenerOptions_
 
-___
+**Returns:** _void_
 
-###  alert
+▸ **addEventListener**\(`type`: string, `listener`: EventListenerOrEventListenerObject, `options?`: boolean \| AddEventListenerOptions\): _void_
 
-▸ **alert**(`message?`: any): *void*
+_Inherited from void_
 
-*Inherited from void*
+_Overrides void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16602
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`message?` | any |
-
-**Returns:** *void*
-
-___
-
-###  atob
-
-▸ **atob**(`encodedString`: string): *string*
-
-*Inherited from void*
-
-*Overrides void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16650
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16639
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`encodedString` | string |
+| Name | Type |
+| :--- | :--- |
+| `type` | string |
+| `listener` | EventListenerOrEventListenerObject |
+| `options?` | boolean \| AddEventListenerOptions |
 
-**Returns:** *string*
+**Returns:** _void_
 
-___
+### alert
 
-###  blur
+▸ **alert**\(`message?`: any\): _void_
 
-▸ **blur**(): *void*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16603
-
-**Returns:** *void*
-
-___
-
-###  btoa
-
-▸ **btoa**(`rawString`: string): *string*
-
-*Inherited from void*
-
-*Overrides void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16651
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16602
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`rawString` | string |
+| Name | Type |
+| :--- | :--- |
+| `message?` | any |
 
-**Returns:** *string*
+**Returns:** _void_
 
-___
+### atob
 
-###  cancelAnimationFrame
+▸ **atob**\(`encodedString`: string\): _string_
 
-▸ **cancelAnimationFrame**(`handle`: number): *void*
+_Inherited from void_
 
-*Inherited from void*
+_Overrides void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16604
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`handle` | number |
-
-**Returns:** *void*
-
-___
-
-###  captureEvents
-
-▸ **captureEvents**(): *void*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16606
-
-**`deprecated`** 
-
-**Returns:** *void*
-
-___
-
-###  clearInterval
-
-▸ **clearInterval**(`handle?`: undefined | number): *void*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16712
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16650
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`handle?` | undefined &#124; number |
+| Name | Type |
+| :--- | :--- |
+| `encodedString` | string |
 
-**Returns:** *void*
+**Returns:** _string_
 
-___
+### blur
 
-###  clearTimeout
+▸ **blur**\(\): _void_
 
-▸ **clearTimeout**(`handle?`: undefined | number): *void*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16603
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16713
+**Returns:** _void_
 
-**Parameters:**
+### btoa
 
-Name | Type |
------- | ------ |
-`handle?` | undefined &#124; number |
+▸ **btoa**\(`rawString`: string\): _string_
 
-**Returns:** *void*
+_Inherited from void_
 
-___
+_Overrides void_
 
-###  close
-
-▸ **close**(): *void*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16607
-
-**Returns:** *void*
-
-___
-
-###  confirm
-
-▸ **confirm**(`message?`: undefined | string): *boolean*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16608
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16651
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`message?` | undefined &#124; string |
+| Name | Type |
+| :--- | :--- |
+| `rawString` | string |
 
-**Returns:** *boolean*
+**Returns:** _string_
 
-___
+### cancelAnimationFrame
 
-###  createImageBitmap
+▸ **cancelAnimationFrame**\(`handle`: number\): _void_
 
-▸ **createImageBitmap**(`image`: ImageBitmapSource): *Promise‹ImageBitmap›*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16714
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16604
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`image` | ImageBitmapSource |
+| Name | Type |
+| :--- | :--- |
+| `handle` | number |
 
-**Returns:** *Promise‹ImageBitmap›*
+**Returns:** _void_
 
-▸ **createImageBitmap**(`image`: ImageBitmapSource, `sx`: number, `sy`: number, `sw`: number, `sh`: number): *Promise‹ImageBitmap›*
+### captureEvents
 
-*Inherited from void*
+▸ **captureEvents**\(\): _void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16715
+_Inherited from void_
 
-**Parameters:**
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16606
 
-Name | Type |
------- | ------ |
-`image` | ImageBitmapSource |
-`sx` | number |
-`sy` | number |
-`sw` | number |
-`sh` | number |
+**`deprecated`**
 
-**Returns:** *Promise‹ImageBitmap›*
+**Returns:** _void_
 
-___
+### clearInterval
 
-###  departFocus
+▸ **clearInterval**\(`handle?`: undefined \| number\): _void_
 
-▸ **departFocus**(`navigationReason`: NavigationReason, `origin`: FocusNavigationOrigin): *void*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16609
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16712
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`navigationReason` | NavigationReason |
-`origin` | FocusNavigationOrigin |
+| Name | Type |
+| :--- | :--- |
+| `handle?` | undefined \| number |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+### clearTimeout
 
-###  dispatchEvent
+▸ **clearTimeout**\(`handle?`: undefined \| number\): _void_
 
-▸ **dispatchEvent**(`event`: Event): *boolean*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5074
-
-Dispatches a synthetic event event to target and returns true
-if either event's cancelable attribute value is false or its preventDefault() method was not invoked, and false otherwise.
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16713
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`event` | Event |
+| Name | Type |
+| :--- | :--- |
+| `handle?` | undefined \| number |
 
-**Returns:** *boolean*
+**Returns:** _void_
 
-___
+### close
 
-###  fetch
+▸ **close**\(\): _void_
 
-▸ **fetch**(`input`: RequestInfo, `init?`: RequestInit): *Promise‹Response›*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16607
 
-*Overrides void*
+**Returns:** _void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:5654
+### confirm
 
-**Parameters:**
+▸ **confirm**\(`message?`: undefined \| string\): _boolean_
 
-Name | Type |
------- | ------ |
-`input` | RequestInfo |
-`init?` | RequestInit |
+_Inherited from void_
 
-**Returns:** *Promise‹Response›*
-
-___
-
-###  focus
-
-▸ **focus**(): *void*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16610
-
-**Returns:** *void*
-
-___
-
-###  getComputedStyle
-
-▸ **getComputedStyle**(`elt`: Element, `pseudoElt?`: string | null): *CSSStyleDeclaration*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16611
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16608
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`elt` | Element |
-`pseudoElt?` | string &#124; null |
+| Name | Type |
+| :--- | :--- |
+| `message?` | undefined \| string |
 
-**Returns:** *CSSStyleDeclaration*
+**Returns:** _boolean_
 
-___
+### createImageBitmap
 
-###  getMatchedCSSRules
+▸ **createImageBitmap**\(`image`: ImageBitmapSource\): _Promise‹ImageBitmap›_
 
-▸ **getMatchedCSSRules**(`elt`: Element, `pseudoElt?`: string | null): *CSSRuleList*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16612
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16714
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`elt` | Element |
-`pseudoElt?` | string &#124; null |
+| Name | Type |
+| :--- | :--- |
+| `image` | ImageBitmapSource |
 
-**Returns:** *CSSRuleList*
+**Returns:** _Promise‹ImageBitmap›_
 
-___
+▸ **createImageBitmap**\(`image`: ImageBitmapSource, `sx`: number, `sy`: number, `sw`: number, `sh`: number\): _Promise‹ImageBitmap›_
 
-###  getSelection
+_Inherited from void_
 
-▸ **getSelection**(): *Selection*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16613
-
-**Returns:** *Selection*
-
-___
-
-###  matchMedia
-
-▸ **matchMedia**(`query`: string): *MediaQueryList*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16614
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16715
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`query` | string |
+| Name | Type |
+| :--- | :--- |
+| `image` | ImageBitmapSource |
+| `sx` | number |
+| `sy` | number |
+| `sw` | number |
+| `sh` | number |
 
-**Returns:** *MediaQueryList*
+**Returns:** _Promise‹ImageBitmap›_
 
-___
+### departFocus
 
-###  moveBy
+▸ **departFocus**\(`navigationReason`: NavigationReason, `origin`: FocusNavigationOrigin\): _void_
 
-▸ **moveBy**(`x`: number, `y`: number): *void*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16615
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`x` | number |
-`y` | number |
-
-**Returns:** *void*
-
-___
-
-###  moveTo
-
-▸ **moveTo**(`x`: number, `y`: number): *void*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16616
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16609
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`x` | number |
-`y` | number |
+| Name | Type |
+| :--- | :--- |
+| `navigationReason` | NavigationReason |
+| `origin` | FocusNavigationOrigin |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+### dispatchEvent
 
-###  msWriteProfilerMark
+▸ **dispatchEvent**\(`event`: Event\): _boolean_
 
-▸ **msWriteProfilerMark**(`profilerMarkName`: string): *void*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5074
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16617
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`profilerMarkName` | string |
-
-**Returns:** *void*
-
-___
-
-###  open
-
-▸ **open**(`url?`: undefined | string, `target?`: undefined | string, `features?`: undefined | string, `replace?`: undefined | false | true): *Window | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16618
+Dispatches a synthetic event event to target and returns true if either event's cancelable attribute value is false or its preventDefault\(\) method was not invoked, and false otherwise.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`url?` | undefined &#124; string |
-`target?` | undefined &#124; string |
-`features?` | undefined &#124; string |
-`replace?` | undefined &#124; false &#124; true |
+| Name | Type |
+| :--- | :--- |
+| `event` | Event |
 
-**Returns:** *Window | null*
+**Returns:** _boolean_
 
-___
+### fetch
 
-###  postMessage
+▸ **fetch**\(`input`: RequestInfo, `init?`: RequestInit\): _Promise‹Response›_
 
-▸ **postMessage**(`message`: any, `targetOrigin`: string, `transfer?`: Transferable[]): *void*
+_Inherited from void_
 
-*Inherited from void*
+_Overrides void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16619
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:5654
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`message` | any |
-`targetOrigin` | string |
-`transfer?` | Transferable[] |
+| Name | Type |
+| :--- | :--- |
+| `input` | RequestInfo |
+| `init?` | RequestInit |
 
-**Returns:** *void*
+**Returns:** _Promise‹Response›_
 
-___
+### focus
 
-###  print
+▸ **focus**\(\): _void_
 
-▸ **print**(): *void*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16610
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16620
+**Returns:** _void_
 
-**Returns:** *void*
+### getComputedStyle
 
-___
+▸ **getComputedStyle**\(`elt`: Element, `pseudoElt?`: string \| null\): _CSSStyleDeclaration_
 
-###  prompt
+_Inherited from void_
 
-▸ **prompt**(`message?`: undefined | string, `_default?`: undefined | string): *string | null*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16621
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16611
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`message?` | undefined &#124; string |
-`_default?` | undefined &#124; string |
+| Name | Type |
+| :--- | :--- |
+| `elt` | Element |
+| `pseudoElt?` | string \| null |
 
-**Returns:** *string | null*
+**Returns:** _CSSStyleDeclaration_
 
-___
+### getMatchedCSSRules
 
-###  queueMicrotask
+▸ **getMatchedCSSRules**\(`elt`: Element, `pseudoElt?`: string \| null\): _CSSRuleList_
 
-▸ **queueMicrotask**(`callback`: Function): *void*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16717
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16612
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`callback` | Function |
+| Name | Type |
+| :--- | :--- |
+| `elt` | Element |
+| `pseudoElt?` | string \| null |
 
-**Returns:** *void*
+**Returns:** _CSSRuleList_
 
-___
+### getSelection
 
-###  releaseEvents
+▸ **getSelection**\(\): _Selection_
 
-▸ **releaseEvents**(): *void*
+_Inherited from void_
 
-*Inherited from void*
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16613
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16623
+**Returns:** _Selection_
 
-**`deprecated`** 
+### matchMedia
 
-**Returns:** *void*
+▸ **matchMedia**\(`query`: string\): _MediaQueryList_
 
-___
+_Inherited from void_
 
-###  removeEventListener
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16614
 
-▸ **removeEventListener**<**K**>(`type`: K, `listener`: function, `options?`: boolean | EventListenerOptions): *void*
+**Parameters:**
 
-*Inherited from void*
+| Name | Type |
+| :--- | :--- |
+| `query` | string |
 
-*Overrides void*
+**Returns:** _MediaQueryList_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16640
+### moveBy
+
+▸ **moveBy**\(`x`: number, `y`: number\): _void_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16615
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `x` | number |
+| `y` | number |
+
+**Returns:** _void_
+
+### moveTo
+
+▸ **moveTo**\(`x`: number, `y`: number\): _void_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16616
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `x` | number |
+| `y` | number |
+
+**Returns:** _void_
+
+### msWriteProfilerMark
+
+▸ **msWriteProfilerMark**\(`profilerMarkName`: string\): _void_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16617
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `profilerMarkName` | string |
+
+**Returns:** _void_
+
+### open
+
+▸ **open**\(`url?`: undefined \| string, `target?`: undefined \| string, `features?`: undefined \| string, `replace?`: undefined \| false \| true\): _Window \| null_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16618
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `url?` | undefined \| string |
+| `target?` | undefined \| string |
+| `features?` | undefined \| string |
+| `replace?` | undefined \| false \| true |
+
+**Returns:** _Window \| null_
+
+### postMessage
+
+▸ **postMessage**\(`message`: any, `targetOrigin`: string, `transfer?`: Transferable\[\]\): _void_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16619
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `message` | any |
+| `targetOrigin` | string |
+| `transfer?` | Transferable\[\] |
+
+**Returns:** _void_
+
+### print
+
+▸ **print**\(\): _void_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16620
+
+**Returns:** _void_
+
+### prompt
+
+▸ **prompt**\(`message?`: undefined \| string, `_default?`: undefined \| string\): _string \| null_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16621
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `message?` | undefined \| string |
+| `_default?` | undefined \| string |
+
+**Returns:** _string \| null_
+
+### queueMicrotask
+
+▸ **queueMicrotask**\(`callback`: Function\): _void_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16717
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `callback` | Function |
+
+**Returns:** _void_
+
+### releaseEvents
+
+▸ **releaseEvents**\(\): _void_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16623
+
+**`deprecated`**
+
+**Returns:** _void_
+
+### removeEventListener
+
+▸ **removeEventListener**&lt;**K**&gt;\(`type`: K, `listener`: function, `options?`: boolean \| EventListenerOptions\): _void_
+
+_Inherited from void_
+
+_Overrides void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16640
 
 **Type parameters:**
 
-▪ **K**: *keyof WindowEventMap*
+▪ **K**: _keyof WindowEventMap_
 
 **Parameters:**
 
-▪ **type**: *K*
+▪ **type**: _K_
 
-▪ **listener**: *function*
+▪ **listener**: _function_
 
-▸ (`this`: Window, `ev`: WindowEventMap[K]): *any*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`this` | Window |
-`ev` | WindowEventMap[K] |
-
-▪`Optional`  **options**: *boolean | EventListenerOptions*
-
-**Returns:** *void*
-
-▸ **removeEventListener**(`type`: string, `listener`: EventListenerOrEventListenerObject, `options?`: boolean | EventListenerOptions): *void*
-
-*Inherited from void*
-
-*Overrides void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16641
+▸ \(`this`: Window, `ev`: WindowEventMap\[K\]\): _any_
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`type` | string |
-`listener` | EventListenerOrEventListenerObject |
-`options?` | boolean &#124; EventListenerOptions |
+| Name | Type |
+| :--- | :--- |
+| `this` | Window |
+| `ev` | WindowEventMap\[K\] |
 
-**Returns:** *void*
+▪`Optional` **options**: _boolean \| EventListenerOptions_
 
-___
+**Returns:** _void_
 
-###  requestAnimationFrame
+▸ **removeEventListener**\(`type`: string, `listener`: EventListenerOrEventListenerObject, `options?`: boolean \| EventListenerOptions\): _void_
 
-▸ **requestAnimationFrame**(`callback`: FrameRequestCallback): *number*
+_Inherited from void_
 
-*Inherited from void*
+_Overrides void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16624
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`callback` | FrameRequestCallback |
-
-**Returns:** *number*
-
-___
-
-###  resizeBy
-
-▸ **resizeBy**(`x`: number, `y`: number): *void*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16625
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16641
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`x` | number |
-`y` | number |
+| Name | Type |
+| :--- | :--- |
+| `type` | string |
+| `listener` | EventListenerOrEventListenerObject |
+| `options?` | boolean \| EventListenerOptions |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+### requestAnimationFrame
 
-###  resizeTo
+▸ **requestAnimationFrame**\(`callback`: FrameRequestCallback\): _number_
 
-▸ **resizeTo**(`x`: number, `y`: number): *void*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16626
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`x` | number |
-`y` | number |
-
-**Returns:** *void*
-
-___
-
-###  scroll
-
-▸ **scroll**(`options?`: ScrollToOptions): *void*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16627
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16624
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options?` | ScrollToOptions |
+| Name | Type |
+| :--- | :--- |
+| `callback` | FrameRequestCallback |
 
-**Returns:** *void*
+**Returns:** _number_
 
-▸ **scroll**(`x`: number, `y`: number): *void*
+### resizeBy
 
-*Inherited from void*
+▸ **resizeBy**\(`x`: number, `y`: number\): _void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16628
+_Inherited from void_
 
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`x` | number |
-`y` | number |
-
-**Returns:** *void*
-
-___
-
-###  scrollBy
-
-▸ **scrollBy**(`options?`: ScrollToOptions): *void*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16629
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16625
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options?` | ScrollToOptions |
+| Name | Type |
+| :--- | :--- |
+| `x` | number |
+| `y` | number |
 
-**Returns:** *void*
+**Returns:** _void_
 
-▸ **scrollBy**(`x`: number, `y`: number): *void*
+### resizeTo
 
-*Inherited from void*
+▸ **resizeTo**\(`x`: number, `y`: number\): _void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16630
+_Inherited from void_
 
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`x` | number |
-`y` | number |
-
-**Returns:** *void*
-
-___
-
-###  scrollTo
-
-▸ **scrollTo**(`options?`: ScrollToOptions): *void*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16631
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16626
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options?` | ScrollToOptions |
+| Name | Type |
+| :--- | :--- |
+| `x` | number |
+| `y` | number |
 
-**Returns:** *void*
+**Returns:** _void_
 
-▸ **scrollTo**(`x`: number, `y`: number): *void*
+### scroll
 
-*Inherited from void*
+▸ **scroll**\(`options?`: ScrollToOptions\): _void_
 
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16632
+_Inherited from void_
 
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`x` | number |
-`y` | number |
-
-**Returns:** *void*
-
-___
-
-###  setInterval
-
-▸ **setInterval**(`handler`: TimerHandler, `timeout?`: undefined | number, ...`arguments`: any[]): *number*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16718
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16627
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`handler` | TimerHandler |
-`timeout?` | undefined &#124; number |
-`...arguments` | any[] |
+| Name | Type |
+| :--- | :--- |
+| `options?` | ScrollToOptions |
 
-**Returns:** *number*
+**Returns:** _void_
 
-___
+▸ **scroll**\(`x`: number, `y`: number\): _void_
 
-###  setTimeout
+_Inherited from void_
 
-▸ **setTimeout**(`handler`: TimerHandler, `timeout?`: undefined | number, ...`arguments`: any[]): *number*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16719
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16628
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`handler` | TimerHandler |
-`timeout?` | undefined &#124; number |
-`...arguments` | any[] |
+| Name | Type |
+| :--- | :--- |
+| `x` | number |
+| `y` | number |
 
-**Returns:** *number*
+**Returns:** _void_
 
-___
+### scrollBy
 
-###  stop
+▸ **scrollBy**\(`options?`: ScrollToOptions\): _void_
 
-▸ **stop**(): *void*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16633
-
-**Returns:** *void*
-
-___
-
-###  webkitCancelAnimationFrame
-
-▸ **webkitCancelAnimationFrame**(`handle`: number): *void*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16634
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16629
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`handle` | number |
+| Name | Type |
+| :--- | :--- |
+| `options?` | ScrollToOptions |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+▸ **scrollBy**\(`x`: number, `y`: number\): _void_
 
-###  webkitConvertPointFromNodeToPage
+_Inherited from void_
 
-▸ **webkitConvertPointFromNodeToPage**(`node`: Node, `pt`: WebKitPoint): *WebKitPoint*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16635
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16630
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`node` | Node |
-`pt` | WebKitPoint |
+| Name | Type |
+| :--- | :--- |
+| `x` | number |
+| `y` | number |
 
-**Returns:** *WebKitPoint*
+**Returns:** _void_
 
-___
+### scrollTo
 
-###  webkitConvertPointFromPageToNode
+▸ **scrollTo**\(`options?`: ScrollToOptions\): _void_
 
-▸ **webkitConvertPointFromPageToNode**(`node`: Node, `pt`: WebKitPoint): *WebKitPoint*
+_Inherited from void_
 
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16636
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16631
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`node` | Node |
-`pt` | WebKitPoint |
+| Name | Type |
+| :--- | :--- |
+| `options?` | ScrollToOptions |
 
-**Returns:** *WebKitPoint*
+**Returns:** _void_
 
-___
+▸ **scrollTo**\(`x`: number, `y`: number\): _void_
 
-###  webkitRequestAnimationFrame
+_Inherited from void_
 
-▸ **webkitRequestAnimationFrame**(`callback`: FrameRequestCallback): *number*
-
-*Inherited from void*
-
-Defined in node_modules/typescript/lib/lib.dom.d.ts:16637
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16632
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`callback` | FrameRequestCallback |
+| Name | Type |
+| :--- | :--- |
+| `x` | number |
+| `y` | number |
 
-**Returns:** *number*
+**Returns:** _void_
+
+### setInterval
+
+▸ **setInterval**\(`handler`: TimerHandler, `timeout?`: undefined \| number, ...`arguments`: any\[\]\): _number_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16718
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `handler` | TimerHandler |
+| `timeout?` | undefined \| number |
+| `...arguments` | any\[\] |
+
+**Returns:** _number_
+
+### setTimeout
+
+▸ **setTimeout**\(`handler`: TimerHandler, `timeout?`: undefined \| number, ...`arguments`: any\[\]\): _number_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16719
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `handler` | TimerHandler |
+| `timeout?` | undefined \| number |
+| `...arguments` | any\[\] |
+
+**Returns:** _number_
+
+### stop
+
+▸ **stop**\(\): _void_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16633
+
+**Returns:** _void_
+
+### webkitCancelAnimationFrame
+
+▸ **webkitCancelAnimationFrame**\(`handle`: number\): _void_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16634
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `handle` | number |
+
+**Returns:** _void_
+
+### webkitConvertPointFromNodeToPage
+
+▸ **webkitConvertPointFromNodeToPage**\(`node`: Node, `pt`: WebKitPoint\): _WebKitPoint_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16635
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `node` | Node |
+| `pt` | WebKitPoint |
+
+**Returns:** _WebKitPoint_
+
+### webkitConvertPointFromPageToNode
+
+▸ **webkitConvertPointFromPageToNode**\(`node`: Node, `pt`: WebKitPoint\): _WebKitPoint_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16636
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `node` | Node |
+| `pt` | WebKitPoint |
+
+**Returns:** _WebKitPoint_
+
+### webkitRequestAnimationFrame
+
+▸ **webkitRequestAnimationFrame**\(`callback`: FrameRequestCallback\): _number_
+
+_Inherited from void_
+
+Defined in node\_modules/typescript/lib/lib.dom.d.ts:16637
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `callback` | FrameRequestCallback |
+
+**Returns:** _number_
+

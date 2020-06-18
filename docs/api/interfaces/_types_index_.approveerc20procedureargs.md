@@ -1,4 +1,4 @@
-# Interface: ApproveErc20ProcedureArgs
+# ApproveErc20ProcedureArgs
 
 Arguments for the [ApproveErc20](../enums/_types_index_.proceduretype.md#approveerc20) Procedure
 
@@ -16,30 +16,27 @@ Arguments for the [ApproveErc20](../enums/_types_index_.proceduretype.md#approve
 
 ## Properties
 
-###  amount
+### amount
 
-• **amount**: *BigNumber*
+• **amount**: _BigNumber_
 
-*Defined in [src/types/index.ts:285](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L285)*
+_Defined in_ [_src/types/index.ts:285_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L285)
 
 amount of tokens to be approved
 
-___
+### spender
 
-###  spender
+• **spender**: _string_
 
-• **spender**: *string*
-
-*Defined in [src/types/index.ts:289](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L289)*
+_Defined in_ [_src/types/index.ts:289_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L289)
 
 the spender of the tokens being approved
 
-___
-
 ### `Optional` tokenAddress
 
-• **tokenAddress**? : *undefined | string*
+• **tokenAddress**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:293](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L293)*
+_Defined in_ [_src/types/index.ts:293_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L293)
 
-address of the ERC20 token (defaults to POLY)
+address of the ERC20 token \(defaults to POLY\)
+

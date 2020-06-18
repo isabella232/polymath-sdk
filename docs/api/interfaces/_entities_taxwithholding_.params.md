@@ -1,4 +1,4 @@
-# Interface: Params
+# Params
 
 Constructor parameters
 
@@ -15,16 +15,15 @@ Constructor parameters
 
 ## Properties
 
-###  percentage
+### percentage
 
-• **percentage**: *number*
+• **percentage**: _number_
 
-*Defined in [src/entities/TaxWithholding.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/TaxWithholding.ts#L33)*
+_Defined in_ [_src/entities/TaxWithholding.ts:33_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/TaxWithholding.ts#L33)
 
-___
+### securityTokenSymbol
 
-###  securityTokenSymbol
+• **securityTokenSymbol**: _string_
 
-• **securityTokenSymbol**: *string*
+_Defined in_ [_src/entities/TaxWithholding.ts:32_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/TaxWithholding.ts#L32)
 
-*Defined in [src/entities/TaxWithholding.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/TaxWithholding.ts#L32)*

@@ -1,4 +1,4 @@
-# Interface: LaunchTieredStoNoCustomCurrencyNoStableCoinParams
+# LaunchTieredStoNoCustomCurrencyNoStableCoinParams
 
 ## Hierarchy
 
@@ -14,8 +14,9 @@
 
 ## Properties
 
-###  currencies
+### currencies
 
-• **currencies**: *[OnlyEth](../modules/_entities_securitytoken_issuance_offerings_.md#onlyeth) | [OnlyPoly](../modules/_entities_securitytoken_issuance_offerings_.md#onlypoly) | [EthAndPoly](../modules/_entities_securitytoken_issuance_offerings_.md#ethandpoly)*
+• **currencies**: [_OnlyEth_](../external-modules/_entities_securitytoken_issuance_offerings_.md#onlyeth) _\|_ [_OnlyPoly_](../external-modules/_entities_securitytoken_issuance_offerings_.md#onlypoly) _\|_ [_EthAndPoly_](../external-modules/_entities_securitytoken_issuance_offerings_.md#ethandpoly)
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:57](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L57)*
+_Defined in_ [_src/entities/SecurityToken/Issuance/Offerings.ts:57_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L57)
+

@@ -1,4 +1,4 @@
-# Interface: PolymathNetworkNodeParams
+# PolymathNetworkNodeParams
 
 ## Hierarchy
 
@@ -19,34 +19,29 @@
 
 ### `Optional` polymathRegistryAddress
 
-• **polymathRegistryAddress**? : *undefined | string*
+• **polymathRegistryAddress**? : _undefined \| string_
 
-*Inherited from [PolymathNetworkParams](_polymath_.polymathnetworkparams.md).[polymathRegistryAddress](_polymath_.polymathnetworkparams.md#optional-polymathregistryaddress)*
+_Inherited from_ [_PolymathNetworkParams_](_polymath_.polymathnetworkparams.md)_._[_polymathRegistryAddress_](_polymath_.polymathnetworkparams.md#optional-polymathregistryaddress)
 
-*Defined in [src/Polymath.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L21)*
+_Defined in_ [_src/Polymath.ts:21_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L21)
 
-___
+### privateKey
 
-###  privateKey
+• **privateKey**: _string_
 
-• **privateKey**: *string*
+_Defined in_ [_src/Polymath.ts:27_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L27)
 
-*Defined in [src/Polymath.ts:27](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L27)*
+### providerUrl
 
-___
+• **providerUrl**: _string_
 
-###  providerUrl
-
-• **providerUrl**: *string*
-
-*Defined in [src/Polymath.ts:26](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L26)*
-
-___
+_Defined in_ [_src/Polymath.ts:26_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L26)
 
 ### `Optional` speed
 
-• **speed**? : *[TransactionSpeed](../enums/_types_index_.transactionspeed.md)*
+• **speed**? : [_TransactionSpeed_](../enums/_types_index_.transactionspeed.md)
 
-*Inherited from [PolymathNetworkParams](_polymath_.polymathnetworkparams.md).[speed](_polymath_.polymathnetworkparams.md#optional-speed)*
+_Inherited from_ [_PolymathNetworkParams_](_polymath_.polymathnetworkparams.md)_._[_speed_](_polymath_.polymathnetworkparams.md#optional-speed)
 
-*Defined in [src/Polymath.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L22)*
+_Defined in_ [_src/Polymath.ts:22_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L22)
+

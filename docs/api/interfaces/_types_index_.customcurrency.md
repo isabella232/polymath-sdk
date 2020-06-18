@@ -1,4 +1,4 @@
-# Interface: CustomCurrency
+# CustomCurrency
 
 Custom currency in which a Tiered STO can raise funds
 
@@ -16,30 +16,27 @@ Custom currency in which a Tiered STO can raise funds
 
 ## Properties
 
-###  currencySymbol
+### currencySymbol
 
-• **currencySymbol**: *string*
+• **currencySymbol**: _string_
 
-*Defined in [src/types/index.ts:727](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L727)*
+_Defined in_ [_src/types/index.ts:727_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L727)
 
-symbol of the custom currency (USD, CAD, EUR, etc. Default is USD)
+symbol of the custom currency \(USD, CAD, EUR, etc. Default is USD\)
 
-___
+### ethOracleAddress
 
-###  ethOracleAddress
+• **ethOracleAddress**: _string_
 
-• **ethOracleAddress**: *string*
-
-*Defined in [src/types/index.ts:731](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L731)*
+_Defined in_ [_src/types/index.ts:731_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L731)
 
 address of the oracle that states the price of ETH in the custom currency. Only required if raising funds in ETH
 
-___
+### polyOracleAddress
 
-###  polyOracleAddress
+• **polyOracleAddress**: _string_
 
-• **polyOracleAddress**: *string*
-
-*Defined in [src/types/index.ts:735](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L735)*
+_Defined in_ [_src/types/index.ts:735_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L735)
 
 address of the oracle that states the price of POLY in the custom currency. Only required if raising funds in POLY
+

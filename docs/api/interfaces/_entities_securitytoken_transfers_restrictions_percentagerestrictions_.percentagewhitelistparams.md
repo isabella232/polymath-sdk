@@ -1,4 +1,4 @@
-# Interface: PercentageWhitelistParams
+# PercentageWhitelistParams
 
 ## Hierarchy
 
@@ -12,8 +12,9 @@
 
 ## Properties
 
-###  whitelistEntries
+### whitelistEntries
 
-• **whitelistEntries**: *[PercentageWhitelistEntry](_types_index_.percentagewhitelistentry.md)[]*
+• **whitelistEntries**: [_PercentageWhitelistEntry_](_types_index_.percentagewhitelistentry.md)_\[\]_
 
-*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L18)*
+_Defined in_ [_src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:18_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L18)
+

@@ -1,4 +1,4 @@
-# Interface: FinalizeStoProcedureArgs
+# FinalizeStoProcedureArgs
 
 Arguments for the [FinalizeSto](../enums/_types_index_.proceduretype.md#finalizesto) Procedure
 
@@ -16,28 +16,25 @@ Arguments for the [FinalizeSto](../enums/_types_index_.proceduretype.md#finalize
 
 ## Properties
 
-###  stoAddress
+### stoAddress
 
-• **stoAddress**: *string*
+• **stoAddress**: _string_
 
-*Defined in [src/types/index.ts:1013](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1013)*
+_Defined in_ [_src/types/index.ts:1013_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1013)
 
-___
+### stoType
 
-###  stoType
+• **stoType**: [_StoType_](../enums/_types_index_.stotype.md)
 
-• **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
+_Defined in_ [_src/types/index.ts:1017_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1017)
 
-*Defined in [src/types/index.ts:1017](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1017)*
+type of the STO \(Simple, Tiered, etc\)
 
-type of the STO (Simple, Tiered, etc)
+### symbol
 
-___
+• **symbol**: _string_
 
-###  symbol
-
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:1012](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1012)*
+_Defined in_ [_src/types/index.ts:1012_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1012)
 
 symbol of the Security Token
+

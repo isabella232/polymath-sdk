@@ -1,4 +1,4 @@
-# Interface: FreezeIssuanceProcedureArgs
+# FreezeIssuanceProcedureArgs
 
 Arguments for the [FreezeIssuance](../enums/_types_index_.proceduretype.md#freezeissuance) Procedure
 
@@ -17,18 +17,17 @@ Arguments for the [FreezeIssuance](../enums/_types_index_.proceduretype.md#freez
 
 ### `Optional` signature
 
-• **signature**? : *undefined | string*
+• **signature**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:1078](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1078)*
+_Defined in_ [_src/types/index.ts:1078_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1078)
 
 acknowledgement signature
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:1074](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1074)*
+_Defined in_ [_src/types/index.ts:1074_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1074)
 
 symbol of the Security Token
+

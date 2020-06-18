@@ -1,4 +1,4 @@
-# Interface: ReserveSecurityTokenProcedureArgs
+# ReserveSecurityTokenProcedureArgs
 
 Arguments for the [ReserveSecurityToken](../enums/_types_index_.proceduretype.md#reservesecuritytoken) Procedure
 
@@ -17,18 +17,17 @@ Arguments for the [ReserveSecurityToken](../enums/_types_index_.proceduretype.md
 
 ### `Optional` owner
 
-• **owner**? : *undefined | string*
+• **owner**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:816](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L816)*
+_Defined in_ [_src/types/index.ts:816_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L816)
 
 if supplied, the reservation will be made on behalf of this address
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:812](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L812)*
+_Defined in_ [_src/types/index.ts:812_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L812)
 
 the symbol to be reserved
+

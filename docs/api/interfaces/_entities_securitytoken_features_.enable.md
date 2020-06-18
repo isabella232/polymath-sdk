@@ -1,4 +1,4 @@
-# Interface: Enable
+# Enable
 
 ## Hierarchy
 
@@ -6,78 +6,79 @@
 
 ## Callable
 
-▸ (`args`: object): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[EnableGeneralPermissionManagerProcedureArgs](_types_index_.enablegeneralpermissionmanagerprocedureargs.md)››*
+▸ \(`args`: object\): _Promise‹_[_TransactionQueue_](../classes/_entities_transactionqueue_.transactionqueue.md)_‹_[_EnableGeneralPermissionManagerProcedureArgs_](_types_index_.enablegeneralpermissionmanagerprocedureargs.md)_››_
 
-*Defined in [src/entities/SecurityToken/Features.ts:53](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Features.ts#L53)*
-
-**Parameters:**
-
-▪ **args**: *object*
-
-Name | Type |
------- | ------ |
-`feature` | [Permissions](../enums/_types_index_.feature.md#permissions) |
-
-**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[EnableGeneralPermissionManagerProcedureArgs](_types_index_.enablegeneralpermissionmanagerprocedureargs.md)››*
-
-▸ (`args`: object): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[EnableGeneralTransferManagerProcedureArgs](_types_index_.enablegeneraltransfermanagerprocedureargs.md)››*
-
-*Defined in [src/entities/SecurityToken/Features.ts:56](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Features.ts#L56)*
+_Defined in_ [_src/entities/SecurityToken/Features.ts:53_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Features.ts#L53)
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`feature` | [Tokenholders](../enums/_types_index_.feature.md#tokenholders) |
+| Name | Type |
+| :--- | :--- |
+| `feature` | [Permissions](../enums/_types_index_.feature.md#permissions) |
 
-**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[EnableGeneralTransferManagerProcedureArgs](_types_index_.enablegeneraltransfermanagerprocedureargs.md)››*
+**Returns:** _Promise‹_[_TransactionQueue_](../classes/_entities_transactionqueue_.transactionqueue.md)_‹_[_EnableGeneralPermissionManagerProcedureArgs_](_types_index_.enablegeneralpermissionmanagerprocedureargs.md)_››_
 
-▸ (`args`: object, `opts`: [EnableErc20DividendsOpts](_entities_securitytoken_features_.enableerc20dividendsopts.md)): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[EnableDividendManagerProcedureArgs](_types_index_.enabledividendmanagerprocedureargs.md)››*
+▸ \(`args`: object\): _Promise‹_[_TransactionQueue_](../classes/_entities_transactionqueue_.transactionqueue.md)_‹_[_EnableGeneralTransferManagerProcedureArgs_](_types_index_.enablegeneraltransfermanagerprocedureargs.md)_››_
 
-*Defined in [src/entities/SecurityToken/Features.ts:59](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Features.ts#L59)*
-
-**Parameters:**
-
-▪ **args**: *object*
-
-Name | Type |
------- | ------ |
-`feature` | [Dividends](../enums/_types_index_.feature.md#dividends) |
-
-▪ **opts**: *[EnableErc20DividendsOpts](_entities_securitytoken_features_.enableerc20dividendsopts.md)*
-
-**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[EnableDividendManagerProcedureArgs](_types_index_.enabledividendmanagerprocedureargs.md)››*
-
-▸ (`args`: object, `opts`: [EnableTokenholderCountRestrictionsOpts](_entities_securitytoken_features_.enabletokenholdercountrestrictionsopts.md)): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[EnableCountTransferManagerProcedureArgs](_types_index_.enablecounttransfermanagerprocedureargs.md)››*
-
-*Defined in [src/entities/SecurityToken/Features.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Features.ts#L62)*
+_Defined in_ [_src/entities/SecurityToken/Features.ts:56_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Features.ts#L56)
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`feature` | [TokenholderCountRestrictions](../enums/_types_index_.feature.md#tokenholdercountrestrictions) |
+| Name | Type |
+| :--- | :--- |
+| `feature` | [Tokenholders](../enums/_types_index_.feature.md#tokenholders) |
 
-▪ **opts**: *[EnableTokenholderCountRestrictionsOpts](_entities_securitytoken_features_.enabletokenholdercountrestrictionsopts.md)*
+**Returns:** _Promise‹_[_TransactionQueue_](../classes/_entities_transactionqueue_.transactionqueue.md)_‹_[_EnableGeneralTransferManagerProcedureArgs_](_types_index_.enablegeneraltransfermanagerprocedureargs.md)_››_
 
-**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[EnableCountTransferManagerProcedureArgs](_types_index_.enablecounttransfermanagerprocedureargs.md)››*
+▸ \(`args`: object, `opts`: [EnableErc20DividendsOpts](_entities_securitytoken_features_.enableerc20dividendsopts.md)\): _Promise‹_[_TransactionQueue_](../classes/_entities_transactionqueue_.transactionqueue.md)_‹_[_EnableDividendManagerProcedureArgs_](_types_index_.enabledividendmanagerprocedureargs.md)_››_
 
-▸ (`args`: object, `opts`: [EnablePercentageOwnershipRestrictionsOpts](_entities_securitytoken_features_.enablepercentageownershiprestrictionsopts.md)): *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[EnablePercentageTransferManagerProcedureArgs](_types_index_.enablepercentagetransfermanagerprocedureargs.md)››*
-
-*Defined in [src/entities/SecurityToken/Features.ts:66](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Features.ts#L66)*
+_Defined in_ [_src/entities/SecurityToken/Features.ts:59_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Features.ts#L59)
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`feature` | [PercentageOwnershipRestrictions](../enums/_types_index_.feature.md#percentageownershiprestrictions) |
+| Name | Type |
+| :--- | :--- |
+| `feature` | [Dividends](../enums/_types_index_.feature.md#dividends) |
 
-▪ **opts**: *[EnablePercentageOwnershipRestrictionsOpts](_entities_securitytoken_features_.enablepercentageownershiprestrictionsopts.md)*
+▪ **opts**: [_EnableErc20DividendsOpts_](_entities_securitytoken_features_.enableerc20dividendsopts.md)
 
-**Returns:** *Promise‹[TransactionQueue](../classes/_entities_transactionqueue_.transactionqueue.md)‹[EnablePercentageTransferManagerProcedureArgs](_types_index_.enablepercentagetransfermanagerprocedureargs.md)››*
+**Returns:** _Promise‹_[_TransactionQueue_](../classes/_entities_transactionqueue_.transactionqueue.md)_‹_[_EnableDividendManagerProcedureArgs_](_types_index_.enabledividendmanagerprocedureargs.md)_››_
+
+▸ \(`args`: object, `opts`: [EnableTokenholderCountRestrictionsOpts](_entities_securitytoken_features_.enabletokenholdercountrestrictionsopts.md)\): _Promise‹_[_TransactionQueue_](../classes/_entities_transactionqueue_.transactionqueue.md)_‹_[_EnableCountTransferManagerProcedureArgs_](_types_index_.enablecounttransfermanagerprocedureargs.md)_››_
+
+_Defined in_ [_src/entities/SecurityToken/Features.ts:62_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Features.ts#L62)
+
+**Parameters:**
+
+▪ **args**: _object_
+
+| Name | Type |
+| :--- | :--- |
+| `feature` | [TokenholderCountRestrictions](../enums/_types_index_.feature.md#tokenholdercountrestrictions) |
+
+▪ **opts**: [_EnableTokenholderCountRestrictionsOpts_](_entities_securitytoken_features_.enabletokenholdercountrestrictionsopts.md)
+
+**Returns:** _Promise‹_[_TransactionQueue_](../classes/_entities_transactionqueue_.transactionqueue.md)_‹_[_EnableCountTransferManagerProcedureArgs_](_types_index_.enablecounttransfermanagerprocedureargs.md)_››_
+
+▸ \(`args`: object, `opts`: [EnablePercentageOwnershipRestrictionsOpts](_entities_securitytoken_features_.enablepercentageownershiprestrictionsopts.md)\): _Promise‹_[_TransactionQueue_](../classes/_entities_transactionqueue_.transactionqueue.md)_‹_[_EnablePercentageTransferManagerProcedureArgs_](_types_index_.enablepercentagetransfermanagerprocedureargs.md)_››_
+
+_Defined in_ [_src/entities/SecurityToken/Features.ts:66_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Features.ts#L66)
+
+**Parameters:**
+
+▪ **args**: _object_
+
+| Name | Type |
+| :--- | :--- |
+| `feature` | [PercentageOwnershipRestrictions](../enums/_types_index_.feature.md#percentageownershiprestrictions) |
+
+▪ **opts**: [_EnablePercentageOwnershipRestrictionsOpts_](_entities_securitytoken_features_.enablepercentageownershiprestrictionsopts.md)
+
+**Returns:** _Promise‹_[_TransactionQueue_](../classes/_entities_transactionqueue_.transactionqueue.md)_‹_[_EnablePercentageTransferManagerProcedureArgs_](_types_index_.enablepercentagetransfermanagerprocedureargs.md)_››_
+

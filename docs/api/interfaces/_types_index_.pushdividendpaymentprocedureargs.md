@@ -1,4 +1,4 @@
-# Interface: PushDividendPaymentProcedureArgs
+# PushDividendPaymentProcedureArgs
 
 Arguments for the [PushDividendPayment](../enums/_types_index_.proceduretype.md#pushdividendpayment) Procedure
 
@@ -16,28 +16,25 @@ Arguments for the [PushDividendPayment](../enums/_types_index_.proceduretype.md#
 
 ## Properties
 
-###  dividendIndex
+### dividendIndex
 
-• **dividendIndex**: *number*
+• **dividendIndex**: _number_
 
-*Defined in [src/types/index.ts:374](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L374)*
+_Defined in_ [_src/types/index.ts:374_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L374)
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:373](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L373)*
+_Defined in_ [_src/types/index.ts:373_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L373)
 
 symbol of the security token
 
-___
-
 ### `Optional` tokenholderAddresses
 
-• **tokenholderAddresses**? : *string[]*
+• **tokenholderAddresses**? : _string\[\]_
 
-*Defined in [src/types/index.ts:378](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L378)*
+_Defined in_ [_src/types/index.ts:378_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L378)
 
 list of addresses of the Tokenholders that will receive payment
+

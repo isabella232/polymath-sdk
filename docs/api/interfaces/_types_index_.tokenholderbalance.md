@@ -1,4 +1,4 @@
-# Interface: TokenholderBalance
+# TokenholderBalance
 
 Balance in Security Tokens of a specific Tokenholder
 
@@ -15,20 +15,19 @@ Balance in Security Tokens of a specific Tokenholder
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *string*
+• **address**: _string_
 
-*Defined in [src/types/index.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L125)*
+_Defined in_ [_src/types/index.ts:125_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L125)
 
 wallet address of the Tokenholder
 
-___
+### balance
 
-###  balance
+• **balance**: _BigNumber_
 
-• **balance**: *BigNumber*
-
-*Defined in [src/types/index.ts:129](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L129)*
+_Defined in_ [_src/types/index.ts:129_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L129)
 
 amount of Security Tokens the Tokenholder possesses
+

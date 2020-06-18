@@ -1,4 +1,4 @@
-# Interface: Params
+# Params
 
 STO constructor parameters
 
@@ -31,140 +31,115 @@ STO constructor parameters
 
 ## Properties
 
-###  beneficialInvestmentsAllowed
+### beneficialInvestmentsAllowed
 
-• **beneficialInvestmentsAllowed**: *boolean*
+• **beneficialInvestmentsAllowed**: _boolean_
 
-*Defined in [src/entities/Sto.ts:92](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L92)*
+_Defined in_ [_src/entities/Sto.ts:92_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L92)
 
 whether or not investments can be made on behalf of a beneficiary in the sto
 
-___
+### capReached
 
-###  capReached
+• **capReached**: _boolean_
 
-• **capReached**: *boolean*
-
-*Defined in [src/entities/Sto.ts:80](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L80)*
+_Defined in_ [_src/entities/Sto.ts:80_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L80)
 
 whether or not the cap has been reached for the sto
 
-___
+### endDate
 
-###  endDate
+• **endDate**: _Date_
 
-• **endDate**: *Date*
-
-*Defined in [src/entities/Sto.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L48)*
+_Defined in_ [_src/entities/Sto.ts:48_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L48)
 
 expiry date of the sto
 
-___
+### fundraiseCurrencies
 
-###  fundraiseCurrencies
+• **fundraiseCurrencies**: _Currency\[\]_
 
-• **fundraiseCurrencies**: *Currency[]*
-
-*Defined in [src/entities/Sto.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L52)*
+_Defined in_ [_src/entities/Sto.ts:52_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L52)
 
 currencies that can be used to fundraise in this sto
 
-___
+### investorCount
 
-###  investorCount
+• **investorCount**: _number_
 
-• **investorCount**: *number*
-
-*Defined in [src/entities/Sto.ts:72](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L72)*
+_Defined in_ [_src/entities/Sto.ts:72_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L72)
 
 number of investors in the sto
 
-___
+### isFinalized
 
-###  isFinalized
+• **isFinalized**: _boolean_
 
-• **isFinalized**: *boolean*
-
-*Defined in [src/entities/Sto.ts:84](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L84)*
+_Defined in_ [_src/entities/Sto.ts:84_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L84)
 
 whether or not the sto has been finalized
 
-___
+### isPaused
 
-###  isPaused
+• **isPaused**: _boolean_
 
-• **isPaused**: *boolean*
-
-*Defined in [src/entities/Sto.ts:76](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L76)*
+_Defined in_ [_src/entities/Sto.ts:76_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L76)
 
 whether or not the sto is currently paused
 
-___
+### preIssueAllowed
 
-###  preIssueAllowed
+• **preIssueAllowed**: _boolean_
 
-• **preIssueAllowed**: *boolean*
-
-*Defined in [src/entities/Sto.ts:88](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L88)*
+_Defined in_ [_src/entities/Sto.ts:88_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L88)
 
 whether or not pre issuance is allowed for the sto
 
-___
+### raisedAmount
 
-###  raisedAmount
+• **raisedAmount**: _BigNumber_
 
-• **raisedAmount**: *BigNumber*
-
-*Defined in [src/entities/Sto.ts:64](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L64)*
+_Defined in_ [_src/entities/Sto.ts:64_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L64)
 
 funds that have been raised to this date
 
-___
+### raisedFundsWallet
 
-###  raisedFundsWallet
+• **raisedFundsWallet**: _string_
 
-• **raisedFundsWallet**: *string*
-
-*Defined in [src/entities/Sto.ts:56](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L56)*
+_Defined in_ [_src/entities/Sto.ts:56_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L56)
 
 wallet address where raised funds will be stored
 
-___
+### securityTokenSymbol
 
-###  securityTokenSymbol
+• **securityTokenSymbol**: _string_
 
-• **securityTokenSymbol**: *string*
-
-*Defined in [src/entities/Sto.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L40)*
+_Defined in_ [_src/entities/Sto.ts:40_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L40)
 
 symbol of security token
 
-___
+### soldTokensAmount
 
-###  soldTokensAmount
+• **soldTokensAmount**: _BigNumber_
 
-• **soldTokensAmount**: *BigNumber*
-
-*Defined in [src/entities/Sto.ts:68](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L68)*
+_Defined in_ [_src/entities/Sto.ts:68_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L68)
 
 amount of tokens that have been sold
 
-___
+### startDate
 
-###  startDate
+• **startDate**: _Date_
 
-• **startDate**: *Date*
-
-*Defined in [src/entities/Sto.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L44)*
+_Defined in_ [_src/entities/Sto.ts:44_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L44)
 
 start date of the sto
 
-___
+### unsoldTokensWallet
 
-###  unsoldTokensWallet
+• **unsoldTokensWallet**: _string_
 
-• **unsoldTokensWallet**: *string*
-
-*Defined in [src/entities/Sto.ts:60](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L60)*
+_Defined in_ [_src/entities/Sto.ts:60_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Sto.ts#L60)
 
 wallet address where unsold tokens will be returned to
+

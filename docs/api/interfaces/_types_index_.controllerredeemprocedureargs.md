@@ -1,4 +1,4 @@
-# Interface: ControllerRedeemProcedureArgs
+# ControllerRedeemProcedureArgs
 
 Arguments for the [ControllerRedeem](../enums/_types_index_.proceduretype.md#controllerredeem) Procedure
 
@@ -18,50 +18,43 @@ Arguments for the [ControllerRedeem](../enums/_types_index_.proceduretype.md#con
 
 ## Properties
 
-###  amount
+### amount
 
-• **amount**: *BigNumber*
+• **amount**: _BigNumber_
 
-*Defined in [src/types/index.ts:975](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L975)*
+_Defined in_ [_src/types/index.ts:975_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L975)
 
-amount of tokens being redeemed (burned)
-
-___
+amount of tokens being redeemed \(burned\)
 
 ### `Optional` data
 
-• **data**? : *undefined | string*
+• **data**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:979](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L979)*
+_Defined in_ [_src/types/index.ts:979_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L979)
 
 extra KYC transfer data
 
-___
+### from
 
-###  from
+• **from**: _string_
 
-• **from**: *string*
+_Defined in_ [_src/types/index.ts:967_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L967)
 
-*Defined in [src/types/index.ts:967](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L967)*
-
-wallet address from which tokens will be redeemed (burned)
-
-___
+wallet address from which tokens will be redeemed \(burned\)
 
 ### `Optional` reason
 
-• **reason**? : *undefined | string*
+• **reason**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:983](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L983)*
+_Defined in_ [_src/types/index.ts:983_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L983)
 
 reason why tokens are being redeemed
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:971](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L971)*
+_Defined in_ [_src/types/index.ts:971_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L971)
 
 symbol of the Security Token
+

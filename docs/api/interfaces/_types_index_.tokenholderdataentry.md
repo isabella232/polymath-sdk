@@ -1,4 +1,4 @@
-# Interface: TokenholderDataEntry
+# TokenholderDataEntry
 
 A Tokenholder's KYC data
 
@@ -19,60 +19,51 @@ A Tokenholder's KYC data
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *string*
+• **address**: _string_
 
-*Defined in [src/types/index.ts:1130](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1130)*
+_Defined in_ [_src/types/index.ts:1130_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1130)
 
 tokenholder wallet address to whitelist
 
-___
+### canBuyFromSto
 
-###  canBuyFromSto
+• **canBuyFromSto**: _boolean_
 
-• **canBuyFromSto**: *boolean*
-
-*Defined in [src/types/index.ts:1150](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1150)*
+_Defined in_ [_src/types/index.ts:1150_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1150)
 
 whether the tokenholder is allowed to purchase tokens in an STO
 
-___
+### canReceiveAfter
 
-###  canReceiveAfter
+• **canReceiveAfter**: _Date_
 
-• **canReceiveAfter**: *Date*
-
-*Defined in [src/types/index.ts:1138](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1138)*
+_Defined in_ [_src/types/index.ts:1138_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1138)
 
 date from which the tokenholder can receive tokens
 
-___
+### canSendAfter
 
-###  canSendAfter
+• **canSendAfter**: _Date_
 
-• **canSendAfter**: *Date*
-
-*Defined in [src/types/index.ts:1134](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1134)*
+_Defined in_ [_src/types/index.ts:1134_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1134)
 
 date from which the tokenholder can transfer tokens
 
-___
+### isAccredited
 
-###  isAccredited
+• **isAccredited**: _boolean_
 
-• **isAccredited**: *boolean*
-
-*Defined in [src/types/index.ts:1146](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1146)*
+_Defined in_ [_src/types/index.ts:1146_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1146)
 
 whether the tokenholder is accredited
 
-___
+### kycExpiry
 
-###  kycExpiry
+• **kycExpiry**: _Date_
 
-• **kycExpiry**: *Date*
-
-*Defined in [src/types/index.ts:1142](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1142)*
+_Defined in_ [_src/types/index.ts:1142_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1142)
 
 date at which the tokenholder's KYC expires
+

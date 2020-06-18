@@ -1,4 +1,4 @@
-# Interface: EnableCountTransferManagerProcedureArgs
+# EnableCountTransferManagerProcedureArgs
 
 Arguments for the [EnableCountTransferManager](../enums/_types_index_.proceduretype.md#enablecounttransfermanager) Procedure
 
@@ -15,20 +15,19 @@ Arguments for the [EnableCountTransferManager](../enums/_types_index_.proceduret
 
 ## Properties
 
-###  maxHolderCount
+### maxHolderCount
 
-• **maxHolderCount**: *number*
+• **maxHolderCount**: _number_
 
-*Defined in [src/types/index.ts:463](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L463)*
+_Defined in_ [_src/types/index.ts:463_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L463)
 
 maximum number of simultaneous token holders
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:459](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L459)*
+_Defined in_ [_src/types/index.ts:459_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L459)
 
 symbol of the Security Token
+

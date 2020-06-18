@@ -1,4 +1,4 @@
-# Enumeration: StoType
+# StoType
 
 ## Index
 
@@ -9,16 +9,15 @@
 
 ## Enumeration members
 
-###  Simple
+### Simple
 
 • **Simple**: = "Simple"
 
-*Defined in [src/types/index.ts:51](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L51)*
+_Defined in_ [_src/types/index.ts:51_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L51)
 
-___
-
-###  Tiered
+### Tiered
 
 • **Tiered**: = "Tiered"
 
-*Defined in [src/types/index.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L52)*
+_Defined in_ [_src/types/index.ts:52_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L52)
+

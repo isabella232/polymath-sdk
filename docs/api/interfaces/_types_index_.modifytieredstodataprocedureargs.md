@@ -1,4 +1,4 @@
-# Interface: ModifyTieredStoDataProcedureArgs
+# ModifyTieredStoDataProcedureArgs
 
 Arguments for the [ModifyTieredStoData](../enums/_types_index_.proceduretype.md#modifytieredstodata) Procedure
 
@@ -17,20 +17,19 @@ Arguments for the [ModifyTieredStoData](../enums/_types_index_.proceduretype.md#
 
 ## Properties
 
-###  stoAddress
+### stoAddress
 
-• **stoAddress**: *string*
+• **stoAddress**: _string_
 
-*Defined in [src/types/index.ts:609](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L609)*
+_Defined in_ [_src/types/index.ts:609_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L609)
 
 address of the STO
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:613](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L613)*
+_Defined in_ [_src/types/index.ts:613_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L613)
 
 symbol of the Security Token
+

@@ -1,4 +1,4 @@
-# Enumeration: Event
+# Event
 
 ## Index
 
@@ -8,8 +8,9 @@
 
 ## Enumeration members
 
-###  StatusChange
+### StatusChange
 
 • **StatusChange**: = "StatusChange"
 
-*Defined in [src/entities/PolyTransaction.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L19)*
+_Defined in_ [_src/entities/PolyTransaction.ts:19_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/PolyTransaction.ts#L19)
+

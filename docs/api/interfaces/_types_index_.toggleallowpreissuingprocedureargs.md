@@ -1,4 +1,4 @@
-# Interface: ToggleAllowPreIssuingProcedureArgs
+# ToggleAllowPreIssuingProcedureArgs
 
 Arguments for the [ToggleAllowPreIssuing](../enums/_types_index_.proceduretype.md#toggleallowpreissuing) Procedure
 
@@ -17,41 +17,35 @@ Arguments for the [ToggleAllowPreIssuing](../enums/_types_index_.proceduretype.m
 
 ## Properties
 
-###  allowPreIssuing
+### allowPreIssuing
 
-• **allowPreIssuing**: *boolean*
+• **allowPreIssuing**: _boolean_
 
-*Defined in [src/types/index.ts:576](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L576)*
+_Defined in_ [_src/types/index.ts:576_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L576)
 
-whether the total amount of Security Tokens that will be sold should be issued at the time the STO starts.
-Otherwise, they will be issued on each purchase. Defaults to false
+whether the total amount of Security Tokens that will be sold should be issued at the time the STO starts. Otherwise, they will be issued on each purchase. Defaults to false
 
-___
+### stoAddress
 
-###  stoAddress
+• **stoAddress**: _string_
 
-• **stoAddress**: *string*
-
-*Defined in [src/types/index.ts:567](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L567)*
+_Defined in_ [_src/types/index.ts:567_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L567)
 
 address of the STO
 
-___
+### stoType
 
-###  stoType
+• **stoType**: [_StoType_](../enums/_types_index_.stotype.md)
 
-• **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
+_Defined in_ [_src/types/index.ts:571_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L571)
 
-*Defined in [src/types/index.ts:571](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L571)*
+type of the STO \(Simple, Tiered, etc\)
 
-type of the STO (Simple, Tiered, etc)
+### symbol
 
-___
+• **symbol**: _string_
 
-###  symbol
-
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:563](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L563)*
+_Defined in_ [_src/types/index.ts:563_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L563)
 
 symbol of the Security Token
+

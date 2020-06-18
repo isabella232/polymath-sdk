@@ -1,4 +1,4 @@
-# Enumeration: StoRole
+# StoRole
 
 ## Index
 
@@ -9,16 +9,15 @@
 
 ## Enumeration members
 
-###  StoAdministrator
+### StoAdministrator
 
 • **StoAdministrator**: = "StoAdministrator"
 
-*Defined in [src/types/index.ts:1467](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1467)*
+_Defined in_ [_src/types/index.ts:1467_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1467)
 
-___
-
-###  StoOperator
+### StoOperator
 
 • **StoOperator**: = "StoOperator"
 
-*Defined in [src/types/index.ts:1466](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1466)*
+_Defined in_ [_src/types/index.ts:1466_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1466)
+

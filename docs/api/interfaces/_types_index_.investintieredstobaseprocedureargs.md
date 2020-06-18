@@ -1,4 +1,4 @@
-# Interface: InvestInTieredStoBaseProcedureArgs
+# InvestInTieredStoBaseProcedureArgs
 
 ## Hierarchy
 
@@ -19,61 +19,51 @@
 
 ## Properties
 
-###  amount
+### amount
 
-• **amount**: *BigNumber*
+• **amount**: _BigNumber_
 
-*Defined in [src/types/index.ts:628](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L628)*
+_Defined in_ [_src/types/index.ts:628_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L628)
 
 amount to invest
 
-___
-
 ### `Optional` beneficiary
 
-• **beneficiary**? : *undefined | string*
+• **beneficiary**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:641](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L641)*
+_Defined in_ [_src/types/index.ts:641_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L641)
 
 if specified, the investment will be made on behalf of this address
 
-___
+### currency
 
-###  currency
+• **currency**: _Currency_
 
-• **currency**: *Currency*
-
-*Defined in [src/types/index.ts:632](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L632)*
+_Defined in_ [_src/types/index.ts:632_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L632)
 
 currency type in which the investment is being made
 
-___
-
 ### `Optional` minTokens
 
-• **minTokens**? : *BigNumber*
+• **minTokens**? : _BigNumber_
 
-*Defined in [src/types/index.ts:637](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L637)*
+_Defined in_ [_src/types/index.ts:637_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L637)
 
-minimum amount of Security Tokens that should be bought.
-If, because of price fluctuations, a lower amount is being bought, the transaction will revert
+minimum amount of Security Tokens that should be bought. If, because of price fluctuations, a lower amount is being bought, the transaction will revert
 
-___
+### stoAddress
 
-###  stoAddress
+• **stoAddress**: _string_
 
-• **stoAddress**: *string*
-
-*Defined in [src/types/index.ts:624](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L624)*
+_Defined in_ [_src/types/index.ts:624_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L624)
 
 address of the STO
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:620](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L620)*
+_Defined in_ [_src/types/index.ts:620_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L620)
 
 symbol of the Security Token
+

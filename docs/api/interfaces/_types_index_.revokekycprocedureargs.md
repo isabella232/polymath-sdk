@@ -1,4 +1,4 @@
-# Interface: RevokeKycProcedureArgs
+# RevokeKycProcedureArgs
 
 Arguments for the [RevokeKyc](../enums/_types_index_.proceduretype.md#revokekyc) Procedure
 
@@ -15,20 +15,19 @@ Arguments for the [RevokeKyc](../enums/_types_index_.proceduretype.md#revokekyc)
 
 ## Properties
 
-###  symbol
+### symbol
 
-• **symbol**: *string*
+• **symbol**: _string_
 
-*Defined in [src/types/index.ts:1174](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1174)*
+_Defined in_ [_src/types/index.ts:1174_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1174)
 
 symbol of the Security Token
 
-___
+### tokenholderAddresses
 
-###  tokenholderAddresses
+• **tokenholderAddresses**: _string\[\]_
 
-• **tokenholderAddresses**: *string[]*
-
-*Defined in [src/types/index.ts:1178](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1178)*
+_Defined in_ [_src/types/index.ts:1178_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1178)
 
 list of Tokenholders addresses for which KYC will be revoked
+

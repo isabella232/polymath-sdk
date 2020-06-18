@@ -1,4 +1,4 @@
-# Interface: Connect
+# Connect
 
 ## Hierarchy
 
@@ -6,26 +6,27 @@
 
 ## Callable
 
-▸ (`params`: [PolymathNetworkParams](_polymath_.polymathnetworkparams.md)): *Promise‹[Polymath](../classes/_polymath_.polymath.md)›*
+▸ \(`params`: [PolymathNetworkParams](_polymath_.polymathnetworkparams.md)\): _Promise‹_[_Polymath_](../classes/_polymath_.polymath.md)_›_
 
-*Defined in [src/Polymath.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L35)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`params` | [PolymathNetworkParams](_polymath_.polymathnetworkparams.md) |
-
-**Returns:** *Promise‹[Polymath](../classes/_polymath_.polymath.md)›*
-
-▸ (`params`: [PolymathNetworkNodeParams](_polymath_.polymathnetworknodeparams.md)): *Promise‹[Polymath](../classes/_polymath_.polymath.md)›*
-
-*Defined in [src/Polymath.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L36)*
+_Defined in_ [_src/Polymath.ts:35_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L35)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [PolymathNetworkNodeParams](_polymath_.polymathnetworknodeparams.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [PolymathNetworkParams](_polymath_.polymathnetworkparams.md) |
 
-**Returns:** *Promise‹[Polymath](../classes/_polymath_.polymath.md)›*
+**Returns:** _Promise‹_[_Polymath_](../classes/_polymath_.polymath.md)_›_
+
+▸ \(`params`: [PolymathNetworkNodeParams](_polymath_.polymathnetworknodeparams.md)\): _Promise‹_[_Polymath_](../classes/_polymath_.polymath.md)_›_
+
+_Defined in_ [_src/Polymath.ts:36_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L36)
+
+**Parameters:**
+
+| Name | Type |
+| :--- | :--- |
+| `params` | [PolymathNetworkNodeParams](_polymath_.polymathnetworknodeparams.md) |
+
+**Returns:** _Promise‹_[_Polymath_](../classes/_polymath_.polymath.md)_›_
+

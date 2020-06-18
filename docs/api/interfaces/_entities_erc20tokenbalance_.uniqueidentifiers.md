@@ -1,4 +1,4 @@
-# Interface: UniqueIdentifiers
+# UniqueIdentifiers
 
 Properties that uniquely identify an ERC20 token balance
 
@@ -15,16 +15,15 @@ Properties that uniquely identify an ERC20 token balance
 
 ## Properties
 
-###  tokenAddress
+### tokenAddress
 
-• **tokenAddress**: *string*
+• **tokenAddress**: _string_
 
-*Defined in [src/entities/Erc20TokenBalance.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Erc20TokenBalance.ts#L11)*
+_Defined in_ [_src/entities/Erc20TokenBalance.ts:11_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Erc20TokenBalance.ts#L11)
 
-___
+### walletAddress
 
-###  walletAddress
+• **walletAddress**: _string_
 
-• **walletAddress**: *string*
+_Defined in_ [_src/entities/Erc20TokenBalance.ts:12_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Erc20TokenBalance.ts#L12)
 
-*Defined in [src/entities/Erc20TokenBalance.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Erc20TokenBalance.ts#L12)*

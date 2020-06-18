@@ -1,4 +1,4 @@
-# Interface: EnableDividendManagerProcedureArgs
+# EnableDividendManagerProcedureArgs
 
 Arguments for the [EnableDividendManager](../enums/_types_index_.proceduretype.md#enabledividendmanager) Procedure
 
@@ -15,20 +15,19 @@ Arguments for the [EnableDividendManager](../enums/_types_index_.proceduretype.m
 
 ## Properties
 
-###  storageWalletAddress
+### storageWalletAddress
 
-• **storageWalletAddress**: *string*
+• **storageWalletAddress**: _string_
 
-*Defined in [src/types/index.ts:429](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L429)*
+_Defined in_ [_src/types/index.ts:429_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L429)
 
 storage wallet where Dividends funds will be stored
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:425](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L425)*
+_Defined in_ [_src/types/index.ts:425_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L425)
 
 symbol of the Security Token
+

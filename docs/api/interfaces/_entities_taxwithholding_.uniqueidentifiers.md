@@ -1,4 +1,4 @@
-# Interface: UniqueIdentifiers
+# UniqueIdentifiers
 
 Properties that uniquely identify a Tax Withholding percentage
 
@@ -15,16 +15,15 @@ Properties that uniquely identify a Tax Withholding percentage
 
 ## Properties
 
-###  securityTokenId
+### securityTokenId
 
-• **securityTokenId**: *string*
+• **securityTokenId**: _string_
 
-*Defined in [src/entities/TaxWithholding.ts:10](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/TaxWithholding.ts#L10)*
+_Defined in_ [_src/entities/TaxWithholding.ts:10_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/TaxWithholding.ts#L10)
 
-___
+### tokenholderAddress
 
-###  tokenholderAddress
+• **tokenholderAddress**: _string_
 
-• **tokenholderAddress**: *string*
+_Defined in_ [_src/entities/TaxWithholding.ts:11_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/TaxWithholding.ts#L11)
 
-*Defined in [src/entities/TaxWithholding.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/TaxWithholding.ts#L11)*

@@ -1,4 +1,4 @@
-# Interface: EnableErc20DividendsOpts
+# EnableErc20DividendsOpts
 
 ## Hierarchy
 
@@ -12,8 +12,9 @@
 
 ## Properties
 
-###  storageWalletAddress
+### storageWalletAddress
 
-• **storageWalletAddress**: *string*
+• **storageWalletAddress**: _string_
 
-*Defined in [src/entities/SecurityToken/Features.ts:41](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Features.ts#L41)*
+_Defined in_ [_src/entities/SecurityToken/Features.ts:41_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Features.ts#L41)
+

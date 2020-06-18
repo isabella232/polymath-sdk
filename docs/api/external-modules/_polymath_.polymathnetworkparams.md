@@ -1,0 +1,31 @@
+# PolymathNetworkParams
+
+## Hierarchy
+
+* **PolymathNetworkParams**
+
+  ↳ [PolymathNetworkNodeParams](../interfaces/_polymath_.polymathnetworknodeparams.md)
+
+  ↳ [ConnectParams](../interfaces/_polymath_.connectparams.md)
+
+## Index
+
+### Properties
+
+* [polymathRegistryAddress](../interfaces/_polymath_.polymathnetworkparams.md#optional-polymathregistryaddress)
+* [speed](../interfaces/_polymath_.polymathnetworkparams.md#optional-speed)
+
+## Properties
+
+### `Optional` polymathRegistryAddress
+
+• **polymathRegistryAddress**? : _undefined \| string_
+
+_Defined in_ [_src/Polymath.ts:21_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L21)
+
+### `Optional` speed
+
+• **speed**? : [_TransactionSpeed_](../enums/_types_index_.transactionspeed.md)
+
+_Defined in_ [_src/Polymath.ts:22_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L22)
+

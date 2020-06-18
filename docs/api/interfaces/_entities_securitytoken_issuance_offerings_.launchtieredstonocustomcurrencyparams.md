@@ -1,4 +1,4 @@
-# Interface: LaunchTieredStoNoCustomCurrencyParams
+# LaunchTieredStoNoCustomCurrencyParams
 
 ## Hierarchy
 
@@ -15,16 +15,15 @@
 
 ## Properties
 
-###  currencies
+### currencies
 
-• **currencies**: *[EthAndStableCoin](../modules/_entities_securitytoken_issuance_offerings_.md#ethandstablecoin) | [PolyAndStableCoin](../modules/_entities_securitytoken_issuance_offerings_.md#polyandstablecoin) | [AllCurrencies](../modules/_entities_securitytoken_issuance_offerings_.md#allcurrencies)*
+• **currencies**: [_EthAndStableCoin_](../external-modules/_entities_securitytoken_issuance_offerings_.md#ethandstablecoin) _\|_ [_PolyAndStableCoin_](../external-modules/_entities_securitytoken_issuance_offerings_.md#polyandstablecoin) _\|_ [_AllCurrencies_](../external-modules/_entities_securitytoken_issuance_offerings_.md#allcurrencies)
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:62](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L62)*
+_Defined in_ [_src/entities/SecurityToken/Issuance/Offerings.ts:62_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L62)
 
-___
+### stableCoinAddresses
 
-###  stableCoinAddresses
+• **stableCoinAddresses**: _string\[\]_
 
-• **stableCoinAddresses**: *string[]*
+_Defined in_ [_src/entities/SecurityToken/Issuance/Offerings.ts:63_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L63)
 
-*Defined in [src/entities/SecurityToken/Issuance/Offerings.ts:63](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/SecurityToken/Issuance/Offerings.ts#L63)*

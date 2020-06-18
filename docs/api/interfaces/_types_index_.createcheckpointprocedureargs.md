@@ -1,4 +1,4 @@
-# Interface: CreateCheckpointProcedureArgs
+# CreateCheckpointProcedureArgs
 
 Arguments for the [CreateCheckpoint](../enums/_types_index_.proceduretype.md#createcheckpoint) Procedure
 
@@ -14,10 +14,11 @@ Arguments for the [CreateCheckpoint](../enums/_types_index_.proceduretype.md#cre
 
 ## Properties
 
-###  symbol
+### symbol
 
-• **symbol**: *string*
+• **symbol**: _string_
 
-*Defined in [src/types/index.ts:321](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L321)*
+_Defined in_ [_src/types/index.ts:321_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L321)
 
 symbol of the Security Token
+

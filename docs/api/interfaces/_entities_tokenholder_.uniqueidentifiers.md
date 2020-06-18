@@ -1,4 +1,4 @@
-# Interface: UniqueIdentifiers
+# UniqueIdentifiers
 
 Properties that uniquely identify a Tokenholder of a specific Security Token
 
@@ -15,16 +15,15 @@ Properties that uniquely identify a Tokenholder of a specific Security Token
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *string*
+• **address**: _string_
 
-*Defined in [src/entities/Tokenholder.ts:12](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L12)*
+_Defined in_ [_src/entities/Tokenholder.ts:12_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L12)
 
-___
+### securityTokenId
 
-###  securityTokenId
+• **securityTokenId**: _string_
 
-• **securityTokenId**: *string*
+_Defined in_ [_src/entities/Tokenholder.ts:11_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L11)
 
-*Defined in [src/entities/Tokenholder.ts:11](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Tokenholder.ts#L11)*

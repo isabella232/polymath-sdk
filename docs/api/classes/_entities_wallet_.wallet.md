@@ -1,4 +1,4 @@
-# Class: Wallet
+# Wallet
 
 Used to manage a wallet
 
@@ -22,7 +22,7 @@ Used to manage a wallet
 
 ### Methods
 
-* [_refresh](_entities_wallet_.wallet.md#_refresh)
+* [\_refresh](_entities_wallet_.wallet.md#_refresh)
 * [getErc20Balance](_entities_wallet_.wallet.md#geterc20balance)
 * [getEthBalance](_entities_wallet_.wallet.md#getethbalance)
 * [getPolyBalance](_entities_wallet_.wallet.md#getpolybalance)
@@ -32,169 +32,153 @@ Used to manage a wallet
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new Wallet**(`params`: [Params](../interfaces/_entities_wallet_.params.md), `context`: [Context](_context_.context.md)): *[Wallet](_entities_wallet_.wallet.md)*
++ **new Wallet**\(`params`: [Params](../interfaces/_entities_wallet_.params.md), `context`: [Context](_context_.context.md)\): [_Wallet_](_entities_wallet_.wallet.md)
 
-*Defined in [src/entities/Wallet.ts:71](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L71)*
+_Defined in_ [_src/entities/Wallet.ts:71_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L71)
 
 Create a wallet entity
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | [Params](../interfaces/_entities_wallet_.params.md) |
-`context` | [Context](_context_.context.md) |
+| Name | Type |
+| :--- | :--- |
+| `params` | [Params](../interfaces/_entities_wallet_.params.md) |
+| `context` | [Context](_context_.context.md) |
 
-**Returns:** *[Wallet](_entities_wallet_.wallet.md)*
+**Returns:** [_Wallet_](_entities_wallet_.wallet.md)
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *string*
+• **address**: _string_
 
-*Defined in [src/entities/Wallet.ts:69](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L69)*
+_Defined in_ [_src/entities/Wallet.ts:69_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L69)
 
 wallet address
 
-___
-
 ### `Protected` context
 
-• **context**: *[Context](_context_.context.md)*
+• **context**: [_Context_](_context_.context.md)
 
-*Defined in [src/entities/Wallet.ts:71](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L71)*
+_Defined in_ [_src/entities/Wallet.ts:71_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L71)
 
-___
+### uid
 
-###  uid
+• **uid**: _string_
 
-• **uid**: *string*
+_Overrides_ [_Entity_](_entities_entity_.entity.md)_._[_uid_](_entities_entity_.entity.md#abstract-uid)
 
-*Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)*
-
-*Defined in [src/entities/Wallet.ts:64](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L64)*
+_Defined in_ [_src/entities/Wallet.ts:64_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L64)
 
 unique generated wallet id
 
 ## Methods
 
-###  _refresh
+### \_refresh
 
-▸ **_refresh**(`params`: Partial‹[Params](../interfaces/_entities_wallet_.params.md)›): *void*
+▸ **\_refresh**\(`params`: Partial‹[Params](../interfaces/_entities_wallet_.params.md)›\): _void_
 
-*Overrides [Entity](_entities_entity_.entity.md).[_refresh](_entities_entity_.entity.md#abstract-_refresh)*
+_Overrides_ [_Entity_](_entities_entity_.entity.md)_._[_\_refresh_](_entities_entity_.entity.md#abstract-_refresh)
 
-*Defined in [src/entities/Wallet.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L103)*
+_Defined in_ [_src/entities/Wallet.ts:103_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L103)
 
 Hydrate the entity
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | Partial‹[Params](../interfaces/_entities_wallet_.params.md)› |
+| Name | Type |
+| :--- | :--- |
+| `params` | Partial‹[Params](../interfaces/_entities_wallet_.params.md)› |
 
-**Returns:** *void*
+**Returns:** _void_
 
-___
+### getErc20Balance
 
-###  getErc20Balance
+▸ **getErc20Balance**\(`args`: object\): _Promise‹BigNumber›_
 
-▸ **getErc20Balance**(`args`: object): *Promise‹BigNumber›*
-
-*Defined in [src/entities/Wallet.ts:132](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L132)*
+_Defined in_ [_src/entities/Wallet.ts:132_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L132)
 
 Retrieve the ERC20 balance of this particular wallet address
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`tokenAddress` | string |
+| Name | Type |
+| :--- | :--- |
+| `tokenAddress` | string |
 
-**Returns:** *Promise‹BigNumber›*
+**Returns:** _Promise‹BigNumber›_
 
-___
+### getEthBalance
 
-###  getEthBalance
+▸ **getEthBalance**\(\): _Promise‹BigNumber›_
 
-▸ **getEthBalance**(): *Promise‹BigNumber›*
-
-*Defined in [src/entities/Wallet.ts:122](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L122)*
+_Defined in_ [_src/entities/Wallet.ts:122_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L122)
 
 Retrieve the ETH balance of this particular wallet address
 
-**Returns:** *Promise‹BigNumber›*
+**Returns:** _Promise‹BigNumber›_
 
-___
+### getPolyBalance
 
-###  getPolyBalance
+▸ **getPolyBalance**\(\): _Promise‹BigNumber›_
 
-▸ **getPolyBalance**(): *Promise‹BigNumber›*
-
-*Defined in [src/entities/Wallet.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L114)*
+_Defined in_ [_src/entities/Wallet.ts:114_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L114)
 
 Retrieve the POLY balance of this particular wallet address
 
-**Returns:** *Promise‹BigNumber›*
+**Returns:** _Promise‹BigNumber›_
 
-___
+### toPojo
 
-###  toPojo
+▸ **toPojo**\(\): _object_
 
-▸ **toPojo**(): *object*
+_Overrides_ [_Entity_](_entities_entity_.entity.md)_._[_toPojo_](_entities_entity_.entity.md#abstract-topojo)
 
-*Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)*
+_Defined in_ [_src/entities/Wallet.ts:91_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L91)
 
-*Defined in [src/entities/Wallet.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L91)*
+Convert entity to a POJO \(Plain Old Javascript Object\)
 
-Convert entity to a POJO (Plain Old Javascript Object)
+**Returns:** _object_
 
-**Returns:** *object*
-
-* **address**: *string*
-
-* **uid**: *string*
-
-___
+* **address**: _string_
+* **uid**: _string_
 
 ### `Static` generateId
 
-▸ **generateId**(`__namedParameters`: object): *string*
+▸ **generateId**\(`__namedParameters`: object\): _string_
 
-*Defined in [src/entities/Wallet.ts:37](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L37)*
+_Defined in_ [_src/entities/Wallet.ts:37_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L37)
 
 Generate the Wallet's UUID from its identifying properties
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type |
------- | ------ |
-`address` | string |
+| Name | Type |
+| :--- | :--- |
+| `address` | string |
 
-**Returns:** *string*
-
-___
+**Returns:** _string_
 
 ### `Static` unserialize
 
-▸ **unserialize**(`serialized`: string): *[UniqueIdentifiers](../interfaces/_entities_wallet_.uniqueidentifiers.md)*
+▸ **unserialize**\(`serialized`: string\): [_UniqueIdentifiers_](../interfaces/_entities_wallet_.uniqueidentifiers.md)
 
-*Defined in [src/entities/Wallet.ts:48](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L48)*
+_Defined in_ [_src/entities/Wallet.ts:48_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Wallet.ts#L48)
 
 Unserialize a serialized entity
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`serialized` | string | string with entity information  |
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `serialized` | string | string with entity information |
 
-**Returns:** *[UniqueIdentifiers](../interfaces/_entities_wallet_.uniqueidentifiers.md)*
+**Returns:** [_UniqueIdentifiers_](../interfaces/_entities_wallet_.uniqueidentifiers.md)
+

@@ -1,4 +1,4 @@
-# Interface: Web3VersionAPI
+# Web3VersionAPI
 
 ## Hierarchy
 
@@ -14,6 +14,7 @@
 
 ### `Optional` network
 
-• **network**? : *undefined | string*
+• **network**? : _undefined \| string_
 
-*Defined in [src/browserUtils.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L22)*
+_Defined in_ [_src/browserUtils.ts:22_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/browserUtils.ts#L22)
+

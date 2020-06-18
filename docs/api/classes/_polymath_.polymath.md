@@ -1,4 +1,4 @@
-# Class: Polymath
+# Polymath
 
 Main entry point of the Polymath SDK
 
@@ -34,264 +34,233 @@ Main entry point of the Polymath SDK
 
 ### `Private` context
 
-• **context**: *[Context](_context_.context.md)* =  {} as Context
+• **context**: [_Context_](_context_.context.md) = {} as Context
 
-*Defined in [src/Polymath.ts:98](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L98)*
+_Defined in_ [_src/Polymath.ts:98_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L98)
 
-___
+### isConnected
 
-###  isConnected
+• **isConnected**: _boolean_ = false
 
-• **isConnected**: *boolean* = false
+_Defined in_ [_src/Polymath.ts:96_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L96)
 
-*Defined in [src/Polymath.ts:96](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L96)*
+### isUnsupported
 
-___
+• **isUnsupported**: _boolean_ = false
 
-###  isUnsupported
-
-• **isUnsupported**: *boolean* = false
-
-*Defined in [src/Polymath.ts:94](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L94)*
+_Defined in_ [_src/Polymath.ts:94_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L94)
 
 ## Methods
 
-###  connect
+### connect
 
-▸ **connect**(`__namedParameters`: object): *Promise‹this›*
+▸ **connect**\(`__namedParameters`: object\): _Promise‹this›_
 
-*Defined in [src/Polymath.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L103)*
+_Defined in_ [_src/Polymath.ts:103_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L103)
 
 Connects the client to an Ethereum node
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **\_\_namedParameters**: _object_
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`polymathRegistryAddress` | undefined &#124; string | - | address of a custom Polymath Registry contract. Defaults to the one deployed by Polymath |
-`privateKey` | undefined &#124; string | - | private key of the wallet that will sign transactions. If using Metamask, this parameter can be ignored |
-`providerUrl` | undefined &#124; string | - | URL of an Ethereum node. If using Metamask, this parameter can be ignored |
-`speed` | [TransactionSpeed](../enums/_types_index_.transactionspeed.md) |  TransactionSpeed.Fast | desired transaction speed. More gas is spent if a faster speed is chosen |
+| Name | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `polymathRegistryAddress` | undefined \| string | - | address of a custom Polymath Registry contract. Defaults to the one deployed by Polymath |
+| `privateKey` | undefined \| string | - | private key of the wallet that will sign transactions. If using Metamask, this parameter can be ignored |
+| `providerUrl` | undefined \| string | - | URL of an Ethereum node. If using Metamask, this parameter can be ignored |
+| `speed` | [TransactionSpeed](../enums/_types_index_.transactionspeed.md) | TransactionSpeed.Fast | desired transaction speed. More gas is spent if a faster speed is chosen |
 
-**Returns:** *Promise‹this›*
+**Returns:** _Promise‹this›_
 
-___
+### getCurrentAddress
 
-###  getCurrentAddress
+▸ **getCurrentAddress**\(\): _Promise‹string›_
 
-▸ **getCurrentAddress**(): *Promise‹string›*
-
-*Defined in [src/Polymath.ts:451](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L451)*
+_Defined in_ [_src/Polymath.ts:451_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L451)
 
 Returns the wallet address of the current user
 
-**Returns:** *Promise‹string›*
+**Returns:** _Promise‹string›_
 
-___
+### getLatestProtocolVersion
 
-###  getLatestProtocolVersion
+▸ **getLatestProtocolVersion**\(\): _Promise‹string›_
 
-▸ **getLatestProtocolVersion**(): *Promise‹string›*
-
-*Defined in [src/Polymath.ts:430](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L430)*
+_Defined in_ [_src/Polymath.ts:430_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L430)
 
 Get the current version of the Polymath Protocol
 
-**Returns:** *Promise‹string›*
+**Returns:** _Promise‹string›_
 
-version string (i.e. 3.0.0)
+version string \(i.e. 3.0.0\)
 
-___
+### getPolyTokenAddress
 
-###  getPolyTokenAddress
+▸ **getPolyTokenAddress**\(\): _Promise‹string›_
 
-▸ **getPolyTokenAddress**(): *Promise‹string›*
-
-*Defined in [src/Polymath.ts:442](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L442)*
+_Defined in_ [_src/Polymath.ts:442_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L442)
 
 Get the address of the POLY token
 
-**Returns:** *Promise‹string›*
+**Returns:** _Promise‹string›_
 
-___
+### getSecurityToken
 
-###  getSecurityToken
+▸ **getSecurityToken**\(`args`: object \| object \| string\): _Promise‹_[_SecurityToken_](_entities_securitytoken_securitytoken_.securitytoken.md)_›_
 
-▸ **getSecurityToken**(`args`: object | object | string): *Promise‹[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)›*
-
-*Defined in [src/Polymath.ts:320](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L320)*
+_Defined in_ [_src/Polymath.ts:320_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L320)
 
 Retrieve a security token by symbol, address or UUID
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`args` | object &#124; object &#124; string |
+| Name | Type |
+| :--- | :--- |
+| `args` | object \| object \| string |
 
-**Returns:** *Promise‹[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)›*
+**Returns:** _Promise‹_[_SecurityToken_](_entities_securitytoken_securitytoken_.securitytoken.md)_›_
 
-___
+### getSecurityTokenReservation
 
-###  getSecurityTokenReservation
+▸ **getSecurityTokenReservation**\(`args`: object \| string\): _Promise‹_[_SecurityTokenReservation_](_entities_securitytokenreservation_.securitytokenreservation.md)_›_
 
-▸ **getSecurityTokenReservation**(`args`: object | string): *Promise‹[SecurityTokenReservation](_entities_securitytokenreservation_.securitytokenreservation.md)›*
-
-*Defined in [src/Polymath.ts:220](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L220)*
+_Defined in_ [_src/Polymath.ts:220_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L220)
 
 Retrieve a Security Token Reservation by symbol or UUID
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`args` | object &#124; string |
+| Name | Type |
+| :--- | :--- |
+| `args` | object \| string |
 
-**Returns:** *Promise‹[SecurityTokenReservation](_entities_securitytokenreservation_.securitytokenreservation.md)›*
+**Returns:** _Promise‹_[_SecurityTokenReservation_](_entities_securitytokenreservation_.securitytokenreservation.md)_›_
 
-___
+### getSecurityTokenReservations
 
-###  getSecurityTokenReservations
+▸ **getSecurityTokenReservations**\(`args?`: undefined \| object\): _Promise‹_[_SecurityTokenReservation_](_entities_securitytokenreservation_.securitytokenreservation.md)_\[\]›_
 
-▸ **getSecurityTokenReservations**(`args?`: undefined | object): *Promise‹[SecurityTokenReservation](_entities_securitytokenreservation_.securitytokenreservation.md)[]›*
+_Defined in_ [_src/Polymath.ts:188_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L188)
 
-*Defined in [src/Polymath.ts:188](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L188)*
-
-Retrieve all Security Token Reservations currently owned by an issuer. This includes
-Security Tokens that have already been launched
+Retrieve all Security Token Reservations currently owned by an issuer. This includes Security Tokens that have already been launched
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`args?` | undefined &#124; object |
+| Name | Type |
+| :--- | :--- |
+| `args?` | undefined \| object |
 
-**Returns:** *Promise‹[SecurityTokenReservation](_entities_securitytokenreservation_.securitytokenreservation.md)[]›*
+**Returns:** _Promise‹_[_SecurityTokenReservation_](_entities_securitytokenreservation_.securitytokenreservation.md)_\[\]›_
 
-___
+### getSecurityTokenSymbols
 
-###  getSecurityTokenSymbols
+▸ **getSecurityTokenSymbols**\(`args?`: undefined \| object\): _Promise‹string\[\]›_
 
-▸ **getSecurityTokenSymbols**(`args?`: undefined | object): *Promise‹string[]›*
+_Defined in_ [_src/Polymath.ts:286_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L286)
 
-*Defined in [src/Polymath.ts:286](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L286)*
-
-Retrieve the symbols of all launched Security Tokens related to a wallet.
-This includes tokens owned by the wallet and tokens for which the wallet holds some role
+Retrieve the symbols of all launched Security Tokens related to a wallet. This includes tokens owned by the wallet and tokens for which the wallet holds some role
 
 **Includes** token symbols for tokens with version 2.0 or lower
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`args?` | undefined &#124; object |
+| Name | Type |
+| :--- | :--- |
+| `args?` | undefined \| object |
 
-**Returns:** *Promise‹string[]›*
+**Returns:** _Promise‹string\[\]›_
 
-___
+### getSecurityTokens
 
-###  getSecurityTokens
+▸ **getSecurityTokens**\(`args?`: undefined \| object\): _Promise‹_[_SecurityToken_](_entities_securitytoken_securitytoken_.securitytoken.md)_\[\]›_
 
-▸ **getSecurityTokens**(`args?`: undefined | object): *Promise‹[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)[]›*
+_Defined in_ [_src/Polymath.ts:244_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L244)
 
-*Defined in [src/Polymath.ts:244](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L244)*
-
-Retrieve all launched Security Tokens related to a wallet.
-This includes tokens owned by the wallet and tokens for which the wallet holds some role
+Retrieve all launched Security Tokens related to a wallet. This includes tokens owned by the wallet and tokens for which the wallet holds some role
 
 **Ignores** all tokens with version 2.0 or lower
 
-NOTE: This method is extremely slow if the wallet in question owns more than 20 tokens.
-If that is your case, use [getSecurityTokenSymbols](_polymath_.polymath.md#getsecuritytokensymbols)
+NOTE: This method is extremely slow if the wallet in question owns more than 20 tokens. If that is your case, use [getSecurityTokenSymbols](_polymath_.polymath.md#getsecuritytokensymbols)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`args?` | undefined &#124; object |
+| Name | Type |
+| :--- | :--- |
+| `args?` | undefined \| object |
 
-**Returns:** *Promise‹[SecurityToken](_entities_securitytoken_securitytoken_.securitytoken.md)[]›*
+**Returns:** _Promise‹_[_SecurityToken_](_entities_securitytoken_securitytoken_.securitytoken.md)_\[\]›_
 
-___
+### getWallet
 
-###  getWallet
+▸ **getWallet**\(`args`: object\): [_Wallet_](_entities_wallet_.wallet.md)
 
-▸ **getWallet**(`args`: object): *[Wallet](_entities_wallet_.wallet.md)*
-
-*Defined in [src/Polymath.ts:419](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L419)*
+_Defined in_ [_src/Polymath.ts:419_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L419)
 
 Retrieve a Wallet by address
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`address` | string |
+| Name | Type |
+| :--- | :--- |
+| `address` | string |
 
-**Returns:** *[Wallet](_entities_wallet_.wallet.md)*
+**Returns:** [_Wallet_](_entities_wallet_.wallet.md)
 
-___
+### isSymbolAvailable
 
-###  isSymbolAvailable
+▸ **isSymbolAvailable**\(`args`: object\): _Promise‹boolean›_
 
-▸ **isSymbolAvailable**(`args`: object): *Promise‹boolean›*
+_Defined in_ [_src/Polymath.ts:394_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L394)
 
-*Defined in [src/Polymath.ts:394](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L394)*
-
-Check if a token symbol (ticker) is available for reservation
+Check if a token symbol \(ticker\) is available for reservation
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`symbol` | string |
+| Name | Type |
+| :--- | :--- |
+| `symbol` | string |
 
-**Returns:** *Promise‹boolean›*
+**Returns:** _Promise‹boolean›_
 
-___
+### isValidErc20
 
-###  isValidErc20
+▸ **isValidErc20**\(`args`: object\): _Promise‹void›_
 
-▸ **isValidErc20**(`args`: object): *Promise‹void›*
-
-*Defined in [src/Polymath.ts:405](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L405)*
+_Defined in_ [_src/Polymath.ts:405_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L405)
 
 Check if a token follows the ERC20 standard
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`address` | string |
+| Name | Type |
+| :--- | :--- |
+| `address` | string |
 
-**Returns:** *Promise‹void›*
+**Returns:** _Promise‹void›_
 
-___
+### reserveSecurityToken
 
-###  reserveSecurityToken
+▸ **reserveSecurityToken**\(`args`: object\): _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_ReserveSecurityTokenProcedureArgs_](../interfaces/_types_index_.reservesecuritytokenprocedureargs.md)_,_ [_SecurityTokenReservation_](_entities_securitytokenreservation_.securitytokenreservation.md)_››_
 
-▸ **reserveSecurityToken**(`args`: object): *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ReserveSecurityTokenProcedureArgs](../interfaces/_types_index_.reservesecuritytokenprocedureargs.md), [SecurityTokenReservation](_entities_securitytokenreservation_.securitytokenreservation.md)››*
-
-*Defined in [src/Polymath.ts:176](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L176)*
+_Defined in_ [_src/Polymath.ts:176_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L176)
 
 Reserve a Security Token
 
 **Parameters:**
 
-▪ **args**: *object*
+▪ **args**: _object_
 
-Name | Type |
------- | ------ |
-`owner?` | undefined &#124; string |
-`symbol` | string |
+| Name | Type |
+| :--- | :--- |
+| `owner?` | undefined \| string |
+| `symbol` | string |
 
-**Returns:** *Promise‹[TransactionQueue](_entities_transactionqueue_.transactionqueue.md)‹[ReserveSecurityTokenProcedureArgs](../interfaces/_types_index_.reservesecuritytokenprocedureargs.md), [SecurityTokenReservation](_entities_securitytokenreservation_.securitytokenreservation.md)››*
+**Returns:** _Promise‹_[_TransactionQueue_](_entities_transactionqueue_.transactionqueue.md)_‹_[_ReserveSecurityTokenProcedureArgs_](../interfaces/_types_index_.reservesecuritytokenprocedureargs.md)_,_ [_SecurityTokenReservation_](_entities_securitytokenreservation_.securitytokenreservation.md)_››_
+

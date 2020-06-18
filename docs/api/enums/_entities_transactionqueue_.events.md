@@ -1,4 +1,4 @@
-# Enumeration: Events
+# Events
 
 ## Index
 
@@ -9,16 +9,15 @@
 
 ## Enumeration members
 
-###  StatusChange
+### StatusChange
 
 • **StatusChange**: = "StatusChange"
 
-*Defined in [src/entities/TransactionQueue.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/TransactionQueue.ts#L18)*
+_Defined in_ [_src/entities/TransactionQueue.ts:18_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/TransactionQueue.ts#L18)
 
-___
-
-###  TransactionStatusChange
+### TransactionStatusChange
 
 • **TransactionStatusChange**: = "TransactionStatusChange"
 
-*Defined in [src/entities/TransactionQueue.ts:19](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/TransactionQueue.ts#L19)*
+_Defined in_ [_src/entities/TransactionQueue.ts:19_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/TransactionQueue.ts#L19)
+

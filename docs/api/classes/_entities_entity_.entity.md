@@ -1,4 +1,4 @@
-# Class: Entity <**Params**>
+# Entity
 
 Represents an object or resource in the Polymath Ecosystem with its own set of properties and functionality
 
@@ -42,39 +42,38 @@ Represents an object or resource in the Polymath Ecosystem with its own set of p
 
 ### Methods
 
-* [_refresh](_entities_entity_.entity.md#abstract-_refresh)
+* [\_refresh](_entities_entity_.entity.md#abstract-_refresh)
 * [toPojo](_entities_entity_.entity.md#abstract-topojo)
 
 ## Properties
 
 ### `Abstract` uid
 
-• **uid**: *string*
+• **uid**: _string_
 
-*Defined in [src/entities/Entity.ts:5](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Entity.ts#L5)*
+_Defined in_ [_src/entities/Entity.ts:5_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Entity.ts#L5)
 
 ## Methods
 
-### `Abstract` _refresh
+### `Abstract` \_refresh
 
-▸ **_refresh**(`params`: Partial‹Params›): *void*
+▸ **\_refresh**\(`params`: Partial‹Params›\): _void_
 
-*Defined in [src/entities/Entity.ts:9](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Entity.ts#L9)*
+_Defined in_ [_src/entities/Entity.ts:9_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Entity.ts#L9)
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`params` | Partial‹Params› |
+| Name | Type |
+| :--- | :--- |
+| `params` | Partial‹Params› |
 
-**Returns:** *void*
-
-___
+**Returns:** _void_
 
 ### `Abstract` toPojo
 
-▸ **toPojo**(): *any*
+▸ **toPojo**\(\): _any_
 
-*Defined in [src/entities/Entity.ts:7](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Entity.ts#L7)*
+_Defined in_ [_src/entities/Entity.ts:7_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/entities/Entity.ts#L7)
 
-**Returns:** *any*
+**Returns:** _any_
+

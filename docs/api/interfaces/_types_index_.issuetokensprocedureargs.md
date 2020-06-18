@@ -1,4 +1,4 @@
-# Interface: IssueTokensProcedureArgs
+# IssueTokensProcedureArgs
 
 Arguments for the [IssueTokens](../enums/_types_index_.proceduretype.md#issuetokens) Procedure
 
@@ -15,20 +15,19 @@ Arguments for the [IssueTokens](../enums/_types_index_.proceduretype.md#issuetok
 
 ## Properties
 
-###  issuanceData
+### issuanceData
 
-• **issuanceData**: *[IssuanceDataEntry](_types_index_.issuancedataentry.md)[]*
+• **issuanceData**: [_IssuanceDataEntry_](_types_index_.issuancedataentry.md)_\[\]_
 
-*Defined in [src/types/index.ts:553](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L553)*
+_Defined in_ [_src/types/index.ts:553_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L553)
 
 array of entries that specify who to issue tokens to and the amounts
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:549](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L549)*
+_Defined in_ [_src/types/index.ts:549_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L549)
 
 symbol of the Security Token
+

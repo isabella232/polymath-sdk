@@ -1,4 +1,4 @@
-# Interface: InvestInSimpleStoProcedureArgs
+# InvestInSimpleStoProcedureArgs
 
 Arguments for the [InvestInSimpleSto](../enums/_types_index_.proceduretype.md#investinsimplesto) Procedure
 
@@ -17,40 +17,35 @@ Arguments for the [InvestInSimpleSto](../enums/_types_index_.proceduretype.md#in
 
 ## Properties
 
-###  amount
+### amount
 
-• **amount**: *BigNumber*
+• **amount**: _BigNumber_
 
-*Defined in [src/types/index.ts:680](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L680)*
+_Defined in_ [_src/types/index.ts:680_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L680)
 
 amount to invest
 
-___
-
 ### `Optional` beneficiary
 
-• **beneficiary**? : *undefined | string*
+• **beneficiary**? : _undefined \| string_
 
-*Defined in [src/types/index.ts:684](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L684)*
+_Defined in_ [_src/types/index.ts:684_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L684)
 
 if specified, the investment will be made on behalf of this address
 
-___
+### stoAddress
 
-###  stoAddress
+• **stoAddress**: _string_
 
-• **stoAddress**: *string*
-
-*Defined in [src/types/index.ts:676](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L676)*
+_Defined in_ [_src/types/index.ts:676_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L676)
 
 address of the STO
 
-___
+### symbol
 
-###  symbol
+• **symbol**: _string_
 
-• **symbol**: *string*
-
-*Defined in [src/types/index.ts:672](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L672)*
+_Defined in_ [_src/types/index.ts:672_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L672)
 
 symbol of the Security Token
+

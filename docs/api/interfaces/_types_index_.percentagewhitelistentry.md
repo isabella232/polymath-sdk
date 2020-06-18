@@ -1,4 +1,4 @@
-# Interface: PercentageWhitelistEntry
+# PercentageWhitelistEntry
 
 Entry that represents whether a Tokenholder is exempted from Percentage Restrictions
 
@@ -15,20 +15,19 @@ Entry that represents whether a Tokenholder is exempted from Percentage Restrict
 
 ## Properties
 
-###  address
+### address
 
-• **address**: *string*
+• **address**: _string_
 
-*Defined in [src/types/index.ts:1216](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1216)*
+_Defined in_ [_src/types/index.ts:1216_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1216)
 
 Tokenholder wallet address
 
-___
+### whitelisted
 
-###  whitelisted
+• **whitelisted**: _boolean_
 
-• **whitelisted**: *boolean*
-
-*Defined in [src/types/index.ts:1220](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1220)*
+_Defined in_ [_src/types/index.ts:1220_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L1220)
 
 whether the address is whitelisted or not
+

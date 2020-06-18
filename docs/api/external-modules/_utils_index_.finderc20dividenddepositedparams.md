@@ -1,0 +1,33 @@
+# FindErc20DividendDepositedParams
+
+## Hierarchy
+
+* [FindEventParams](../interfaces/_utils_index_.findeventparams.md)
+
+  ↳ **FindErc20DividendDepositedParams**
+
+## Index
+
+### Properties
+
+* [eventName](../interfaces/_utils_index_.finderc20dividenddepositedparams.md#eventname)
+* [logs](../interfaces/_utils_index_.finderc20dividenddepositedparams.md#logs)
+
+## Properties
+
+### eventName
+
+• **eventName**: _ERC20DividendCheckpointEvents.ERC20DividendDeposited_
+
+_Overrides_ [_FindEventParams_](../interfaces/_utils_index_.findeventparams.md)_._[_eventName_](../interfaces/_utils_index_.findeventparams.md#eventname)
+
+_Defined in_ [_src/utils/index.ts:152_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/utils/index.ts#L152)
+
+### logs
+
+• **logs**: _LogEntry \| LogWithDecodedArgs‹DecodedLogArgs›\[\]_
+
+_Inherited from_ [_FindEventParams_](../interfaces/_utils_index_.findeventparams.md)_._[_logs_](../interfaces/_utils_index_.findeventparams.md#logs)
+
+_Defined in_ [_src/utils/index.ts:127_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/utils/index.ts#L127)
+

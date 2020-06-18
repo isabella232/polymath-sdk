@@ -1,4 +1,4 @@
-# Interface: PolymathNetworkParams
+# PolymathNetworkParams
 
 ## Hierarchy
 
@@ -19,14 +19,13 @@
 
 ### `Optional` polymathRegistryAddress
 
-• **polymathRegistryAddress**? : *undefined | string*
+• **polymathRegistryAddress**? : _undefined \| string_
 
-*Defined in [src/Polymath.ts:21](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L21)*
-
-___
+_Defined in_ [_src/Polymath.ts:21_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L21)
 
 ### `Optional` speed
 
-• **speed**? : *[TransactionSpeed](../enums/_types_index_.transactionspeed.md)*
+• **speed**? : [_TransactionSpeed_](../enums/_types_index_.transactionspeed.md)
 
-*Defined in [src/Polymath.ts:22](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L22)*
+_Defined in_ [_src/Polymath.ts:22_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/Polymath.ts#L22)
+

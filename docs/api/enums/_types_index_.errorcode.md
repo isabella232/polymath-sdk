@@ -1,4 +1,4 @@
-# Enumeration: ErrorCode
+# ErrorCode
 
 Specifies possible types of errors in the SDK
 
@@ -27,144 +27,111 @@ Specifies possible types of errors in the SDK
 
 ## Enumeration members
 
-###  FatalError
+### FatalError
 
 • **FatalError**: = "FatalError"
 
-*Defined in [src/types/index.ts:108](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L108)*
+_Defined in_ [_src/types/index.ts:108_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L108)
 
-___
-
-###  FeatureNotEnabled
+### FeatureNotEnabled
 
 • **FeatureNotEnabled**: = "FeatureNotEnabled"
 
-*Defined in [src/types/index.ts:99](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L99)*
+_Defined in_ [_src/types/index.ts:99_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L99)
 
-___
-
-###  FetcherValidationError
+### FetcherValidationError
 
 • **FetcherValidationError**: = "FetcherValidationError"
 
-*Defined in [src/types/index.ts:105](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L105)*
+_Defined in_ [_src/types/index.ts:105_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L105)
 
-___
-
-###  IncompatibleBrowser
+### IncompatibleBrowser
 
 • **IncompatibleBrowser**: = "IncompatibleBrowser"
 
-*Defined in [src/types/index.ts:98](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L98)*
+_Defined in_ [_src/types/index.ts:98_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L98)
 
-___
-
-###  IncorrectVersion
+### IncorrectVersion
 
 • **IncorrectVersion**: = "IncorrectVersion"
 
-*Defined in [src/types/index.ts:115](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L115)*
+_Defined in_ [_src/types/index.ts:115_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L115)
 
-___
-
-###  InexistentModule
+### InexistentModule
 
 • **InexistentModule**: = "InexistentModule"
 
-*Defined in [src/types/index.ts:114](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L114)*
+_Defined in_ [_src/types/index.ts:114_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L114)
 
-___
-
-###  InsufficientBalance
+### InsufficientBalance
 
 • **InsufficientBalance**: = "InsufficientBalance"
 
-*Defined in [src/types/index.ts:113](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L113)*
+_Defined in_ [_src/types/index.ts:113_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L113)
 
-___
-
-###  InvalidAddress
+### InvalidAddress
 
 • **InvalidAddress**: = "InvalidAddress"
 
-*Defined in [src/types/index.ts:112](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L112)*
+_Defined in_ [_src/types/index.ts:112_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L112)
 
-___
-
-###  InvalidUuid
+### InvalidUuid
 
 • **InvalidUuid**: = "InvalidUuid"
 
-*Defined in [src/types/index.ts:111](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L111)*
+_Defined in_ [_src/types/index.ts:111_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L111)
 
-___
-
-###  MetamaskNotInstalled
+### MetamaskNotInstalled
 
 • **MetamaskNotInstalled**: = "MetamaskNotInstalled"
 
-*Defined in [src/types/index.ts:101](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L101)*
+_Defined in_ [_src/types/index.ts:101_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L101)
 
-___
-
-###  NonBrowserEnvironment
+### NonBrowserEnvironment
 
 • **NonBrowserEnvironment**: = "NonBrowserEnvironment"
 
-*Defined in [src/types/index.ts:100](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L100)*
+_Defined in_ [_src/types/index.ts:100_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L100)
 
-___
-
-###  ProcedureValidationError
+### ProcedureValidationError
 
 • **ProcedureValidationError**: = "ProcedureValidationError"
 
-*Defined in [src/types/index.ts:104](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L104)*
+_Defined in_ [_src/types/index.ts:104_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L104)
 
-___
-
-###  TransactionRejectedByUser
+### TransactionRejectedByUser
 
 • **TransactionRejectedByUser**: = "TransactionRejectedByUser"
 
-*Defined in [src/types/index.ts:106](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L106)*
+_Defined in_ [_src/types/index.ts:106_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L106)
 
-___
-
-###  TransactionReverted
+### TransactionReverted
 
 • **TransactionReverted**: = "TransactionReverted"
 
-*Defined in [src/types/index.ts:107](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L107)*
+_Defined in_ [_src/types/index.ts:107_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L107)
 
-___
-
-###  UnexpectedEventLogs
+### UnexpectedEventLogs
 
 • **UnexpectedEventLogs**: = "UnexpectedEventLogs"
 
-*Defined in [src/types/index.ts:110](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L110)*
+_Defined in_ [_src/types/index.ts:110_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L110)
 
-___
-
-###  UnexpectedReturnData
+### UnexpectedReturnData
 
 • **UnexpectedReturnData**: = "UnexpectedReturnData"
 
-*Defined in [src/types/index.ts:109](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L109)*
+_Defined in_ [_src/types/index.ts:109_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L109)
 
-___
-
-###  UserDeniedAccess
+### UserDeniedAccess
 
 • **UserDeniedAccess**: = "UserDeniedAccess"
 
-*Defined in [src/types/index.ts:102](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L102)*
+_Defined in_ [_src/types/index.ts:102_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L102)
 
-___
-
-###  WalletIsLocked
+### WalletIsLocked
 
 • **WalletIsLocked**: = "WalletIsLocked"
 
-*Defined in [src/types/index.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L103)*
+_Defined in_ [_src/types/index.ts:103_](https://github.com/PolymathNetwork/polymath-sdk/blob/e8bbc1e/src/types/index.ts#L103)
+
