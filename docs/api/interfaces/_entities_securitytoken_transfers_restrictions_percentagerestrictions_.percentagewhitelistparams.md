@@ -16,4 +16,4 @@
 
 • **whitelistEntries**: *[PercentageWhitelistEntry](_types_index_.percentagewhitelistentry.md)[]*
 
-*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L18)*
+*Defined in [src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts:18](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SecurityToken/Transfers/Restrictions/PercentageRestrictions.ts#L18)*

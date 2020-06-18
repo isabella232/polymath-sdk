@@ -24,7 +24,7 @@ Constructor parameters
 
 • **balance**: *BigNumber*
 
-Defined in src/entities/Tokenholder.ts:35
+*Defined in [src/entities/Tokenholder.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L35)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 • **canBuyFromSto**: *boolean*
 
-Defined in src/entities/Tokenholder.ts:34
+*Defined in [src/entities/Tokenholder.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L34)*
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 • **canReceiveAfter**: *Date*
 
-Defined in src/entities/Tokenholder.ts:31
+*Defined in [src/entities/Tokenholder.ts:31](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L31)*
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 • **canSendAfter**: *Date*
 
-Defined in src/entities/Tokenholder.ts:30
+*Defined in [src/entities/Tokenholder.ts:30](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L30)*
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 • **isAccredited**: *boolean*
 
-Defined in src/entities/Tokenholder.ts:33
+*Defined in [src/entities/Tokenholder.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L33)*
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 • **kycExpiry**: *Date*
 
-Defined in src/entities/Tokenholder.ts:32
+*Defined in [src/entities/Tokenholder.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L32)*
 
 ___
 
@@ -72,4 +72,4 @@ ___
 
 • **securityTokenSymbol**: *string*
 
-Defined in src/entities/Tokenholder.ts:29
+*Defined in [src/entities/Tokenholder.ts:29](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Tokenholder.ts#L29)*

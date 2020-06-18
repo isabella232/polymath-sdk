@@ -38,7 +38,7 @@ Used to manage an Investment in a Security Token Offering
 
 \+ **new Investment**(`params`: [Params](../interfaces/_entities_investment_.params.md) & [UniqueIdentifiers](../interfaces/_entities_investment_.uniqueidentifiers.md)): *[Investment](_entities_investment_.investment.md)*
 
-*Defined in [src/entities/Investment.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L103)*
+*Defined in [src/entities/Investment.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L103)*
 
 Create an Investment instance
 
@@ -56,7 +56,7 @@ Name | Type |
 
 • **address**: *string*
 
-*Defined in [src/entities/Investment.ts:88](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L88)*
+*Defined in [src/entities/Investment.ts:88](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L88)*
 
 wallet address of token holder
 
@@ -66,7 +66,7 @@ ___
 
 • **index**: *number*
 
-*Defined in [src/entities/Investment.ts:93](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L93)*
+*Defined in [src/entities/Investment.ts:93](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L93)*
 
 index of the Investment
 
@@ -76,7 +76,7 @@ ___
 
 • **investedFunds**: *BigNumber*
 
-*Defined in [src/entities/Investment.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L103)*
+*Defined in [src/entities/Investment.ts:103](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L103)*
 
 amount of funds used to make Investment
 
@@ -86,7 +86,7 @@ ___
 
 • **securityTokenId**: *string*
 
-*Defined in [src/entities/Investment.ts:76](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L76)*
+*Defined in [src/entities/Investment.ts:76](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L76)*
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 • **securityTokenSymbol**: *string*
 
-*Defined in [src/entities/Investment.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L83)*
+*Defined in [src/entities/Investment.ts:83](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L83)*
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 • **stoId**: *string*
 
-*Defined in [src/entities/Investment.ts:81](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L81)*
+*Defined in [src/entities/Investment.ts:81](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L81)*
 
 unique ID for the Investment
 
@@ -112,7 +112,7 @@ ___
 
 • **tokenAmount**: *BigNumber*
 
-*Defined in [src/entities/Investment.ts:98](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L98)*
+*Defined in [src/entities/Investment.ts:98](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L98)*
 
 total amount of tokens involved in the Investment
 
@@ -124,7 +124,7 @@ ___
 
 *Overrides [Entity](_entities_entity_.entity.md).[uid](_entities_entity_.entity.md#abstract-uid)*
 
-*Defined in [src/entities/Investment.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L74)*
+*Defined in [src/entities/Investment.ts:74](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L74)*
 
 unique generated identifier for an Investment
 
@@ -136,7 +136,7 @@ unique generated identifier for an Investment
 
 *Overrides [Entity](_entities_entity_.entity.md).[_refresh](_entities_entity_.entity.md#abstract-_refresh)*
 
-*Defined in [src/entities/Investment.ts:165](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L165)*
+*Defined in [src/entities/Investment.ts:165](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L165)*
 
 Hydrate the entity
 
@@ -156,7 +156,7 @@ ___
 
 *Overrides [Entity](_entities_entity_.entity.md).[toPojo](_entities_entity_.entity.md#abstract-topojo)*
 
-*Defined in [src/entities/Investment.ts:138](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L138)*
+*Defined in [src/entities/Investment.ts:138](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L138)*
 
 Convert entity to a POJO (Plain Old Javascript Object)
 
@@ -184,7 +184,7 @@ ___
 
 ▸ **generateId**(`__namedParameters`: object): *string*
 
-*Defined in [src/entities/Investment.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L45)*
+*Defined in [src/entities/Investment.ts:45](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L45)*
 
 Generate the Investment's UUID from its identifying properties
 
@@ -206,7 +206,7 @@ ___
 
 ▸ **unserialize**(`serialized`: string): *[UniqueIdentifiers](../interfaces/_entities_investment_.uniqueidentifiers.md)*
 
-*Defined in [src/entities/Investment.ts:58](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L58)*
+*Defined in [src/entities/Investment.ts:58](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L58)*
 
 Unserialize a serialized Investment entity
 

@@ -19,7 +19,7 @@ Arguments for the [SetDividendsWallet](../enums/_types_index_.proceduretype.md#s
 
 • **address**: *string*
 
-*Defined in [src/types/index.ts:859](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L859)*
+*Defined in [src/types/index.ts:859](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L859)*
 
 wallet address
 
@@ -29,6 +29,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:855](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L855)*
+*Defined in [src/types/index.ts:855](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L855)*
 
 the symbol of the Security Token

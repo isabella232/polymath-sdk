@@ -20,4 +20,4 @@
 
 • **weiToValue**: *weiToValue*
 
-*Defined in [src/entities/SimpleSto.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/SimpleSto.ts#L15)*
+*Defined in [src/entities/SimpleSto.ts:15](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/SimpleSto.ts#L15)*

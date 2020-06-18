@@ -21,7 +21,7 @@ Constructor parameters
 
 • **address**: *string*
 
-*Defined in [src/entities/Investment.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L33)*
+*Defined in [src/entities/Investment.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L33)*
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 • **investedFunds**: *BigNumber*
 
-*Defined in [src/entities/Investment.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L35)*
+*Defined in [src/entities/Investment.ts:35](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L35)*
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 • **securityTokenSymbol**: *string*
 
-*Defined in [src/entities/Investment.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L32)*
+*Defined in [src/entities/Investment.ts:32](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L32)*
 
 ___
 
@@ -45,4 +45,4 @@ ___
 
 • **tokenAmount**: *BigNumber*
 
-*Defined in [src/entities/Investment.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/entities/Investment.ts#L34)*
+*Defined in [src/entities/Investment.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/entities/Investment.ts#L34)*

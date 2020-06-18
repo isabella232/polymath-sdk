@@ -21,7 +21,7 @@ Arguments for the [TogglePauseSto](../enums/_types_index_.proceduretype.md#toggl
 
 • **pause**: *boolean*
 
-*Defined in [src/types/index.ts:1002](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1002)*
+*Defined in [src/types/index.ts:1002](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1002)*
 
 true if pausing the STO, false if un-pausing it
 
@@ -31,7 +31,7 @@ ___
 
 • **stoAddress**: *string*
 
-*Defined in [src/types/index.ts:994](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L994)*
+*Defined in [src/types/index.ts:994](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L994)*
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 • **stoType**: *[StoType](../enums/_types_index_.stotype.md)*
 
-*Defined in [src/types/index.ts:998](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L998)*
+*Defined in [src/types/index.ts:998](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L998)*
 
 type of the STO (Simple, Tiered, etc)
 
@@ -49,6 +49,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:993](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L993)*
+*Defined in [src/types/index.ts:993](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L993)*
 
 symbol of the Security Token

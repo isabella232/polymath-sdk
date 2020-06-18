@@ -40,7 +40,7 @@ Procedure that allows a tokenholder to pull their dividend payments from a Divid
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L40)*
+*Defined in [src/procedures/Procedure.ts:40](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L40)*
 
 **Parameters:**
 
@@ -59,7 +59,7 @@ Name | Type |
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L34)*
+*Defined in [src/procedures/Procedure.ts:34](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L34)*
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L36)*
+*Defined in [src/procedures/Procedure.ts:36](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L36)*
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/procedures/PullDividendPayment.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/PullDividendPayment.ts#L33)*
+*Defined in [src/procedures/PullDividendPayment.ts:33](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/PullDividendPayment.ts#L33)*
 
 ## Methods
 
@@ -89,7 +89,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L91)*
+*Defined in [src/procedures/Procedure.ts:91](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L91)*
 
 Appends a Procedure into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -118,7 +118,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L179)*
+*Defined in [src/procedures/Procedure.ts:179](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L179)*
 
 Appends a signature request into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -145,7 +145,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L137)*
+*Defined in [src/procedures/Procedure.ts:137](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L137)*
 
 Appends a method or future method into the TransactionQueue's queue. This defines
 what will be run by the TransactionQueue when it is started.
@@ -186,7 +186,7 @@ ___
 
 *Inherited from void*
 
-*Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/Procedure.ts#L52)*
+*Defined in [src/procedures/Procedure.ts:52](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/Procedure.ts#L52)*
 
 Mandatory method that builds a list of transactions that will be
 run
@@ -201,7 +201,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/procedures/PullDividendPayment.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/procedures/PullDividendPayment.ts#L44)*
+*Defined in [src/procedures/PullDividendPayment.ts:44](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/procedures/PullDividendPayment.ts#L44)*
 
 Pull dividend payments from the Dividend Distribution
 

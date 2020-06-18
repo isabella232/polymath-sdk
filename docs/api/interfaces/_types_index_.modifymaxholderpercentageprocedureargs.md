@@ -19,7 +19,7 @@ Arguments for the [ModifyMaxHolderPercentage](../enums/_types_index_.procedurety
 
 • **maxHolderPercentage**: *BigNumber*
 
-*Defined in [src/types/index.ts:1206](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1206)*
+*Defined in [src/types/index.ts:1206](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1206)*
 
 maximum percentage of total tokens a single Tokenholder can hold
 
@@ -29,6 +29,6 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:1202](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1202)*
+*Defined in [src/types/index.ts:1202](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1202)*
 
 the symbol of the Security Token

@@ -20,7 +20,7 @@ Arguments for the [UpdateDividendsTaxWithholdingList](../enums/_types_index_.pro
 
 • **percentages**: *number[]*
 
-*Defined in [src/types/index.ts:845](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L845)*
+*Defined in [src/types/index.ts:845](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L845)*
 
 list of percentages to update
 
@@ -30,7 +30,7 @@ ___
 
 • **symbol**: *string*
 
-*Defined in [src/types/index.ts:837](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L837)*
+*Defined in [src/types/index.ts:837](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L837)*
 
 the symbol of the Security Token
 
@@ -40,6 +40,6 @@ ___
 
 • **tokenholderAddresses**: *string[]*
 
-*Defined in [src/types/index.ts:841](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L841)*
+*Defined in [src/types/index.ts:841](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L841)*
 
 list of addresses of the Tokenholders for which to update the tax withholding percentages

@@ -19,7 +19,7 @@ Balance in Security Tokens of a specific Tokenholder
 
 • **address**: *string*
 
-*Defined in [src/types/index.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L125)*
+*Defined in [src/types/index.ts:125](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L125)*
 
 wallet address of the Tokenholder
 
@@ -29,6 +29,6 @@ ___
 
 • **balance**: *BigNumber*
 
-*Defined in [src/types/index.ts:129](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L129)*
+*Defined in [src/types/index.ts:129](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L129)*
 
 amount of Security Tokens the Tokenholder possesses

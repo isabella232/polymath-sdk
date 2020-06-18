@@ -31,7 +31,7 @@ Schema of a specific transaction
 
 • **args**: *[MapMaybeResolver](../modules/_types_index_.md#mapmayberesolver)‹Args›*
 
-*Defined in [src/types/index.ts:1562](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1562)*
+*Defined in [src/types/index.ts:1562](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1562)*
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 • **method**: *[LowLevelMethod](../modules/_types_index_.md#lowlevelmethod)‹Args› | [SignatureRequest](../modules/_types_index_.md#signaturerequest)‹Args› | [FutureLowLevelMethod](_types_index_.futurelowlevelmethod.md)‹FutureValue, Args›*
 
-*Defined in [src/types/index.ts:1561](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1561)*
+*Defined in [src/types/index.ts:1561](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1561)*
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 • **postTransactionResolvers**? : *[PostTransactionResolverArray](../modules/_types_index_.md#posttransactionresolverarray)‹Value, Receipt›*
 
-*Defined in [src/types/index.ts:1563](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1563)*
+*Defined in [src/types/index.ts:1563](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1563)*
 
 ___
 
@@ -55,4 +55,4 @@ ___
 
 • **tag**? : *[PolyTransactionTag](../enums/_types_index_.polytransactiontag.md)*
 
-*Defined in [src/types/index.ts:1564](https://github.com/PolymathNetwork/polymath-sdk/blob/550676f/src/types/index.ts#L1564)*
+*Defined in [src/types/index.ts:1564](https://github.com/PolymathNetwork/polymath-sdk/blob/45453ad/src/types/index.ts#L1564)*
