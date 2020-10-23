@@ -4,18 +4,17 @@ import { ErrorCode } from './types';
 import { delay } from './utils';
 
 export enum BrowserSupport {
-  NoMetamask = 'NoMetamask',
-  MetamaskLegacy = 'MetamaskLegacy',
-  MetamaskModern = 'MetamaskModern',
+  MetamaskDisabled = 'MetamaskDisabled',
+  MetamaskEnabled = 'MetamaskEnabled',
   None = 'None',
 }
 
 interface Ethereum extends Provider {
   networkVersion: string;
   _metamask?: {
-    isApproved: () => Promise<boolean>;
+    isUnlocked: () => Promise<boolean>;
   };
-  enable(): Promise<any>;
+  request(payload: { method: string }): Promise<any>;
 }
 
 interface Web3VersionAPI {
@@ -35,9 +34,6 @@ interface ExtendedWindow extends Window {
 interface WindowWithEthereum extends ExtendedWindow {
   ethereum: Ethereum;
 }
-interface WindowWithWeb3 extends ExtendedWindow {
-  web3: InjectedWeb3;
-}
 
 /**
  * Returns the browser support for Ethereum
@@ -52,34 +48,24 @@ export function getBrowserSupport() {
   const win = window as ExtendedWindow;
 
   if (win.ethereum) {
-    return BrowserSupport.MetamaskModern;
+    return BrowserSupport.MetamaskEnabled;
   }
-  if (win.web3) {
-    return BrowserSupport.MetamaskLegacy;
-  }
-  return BrowserSupport.NoMetamask;
+  return BrowserSupport.MetamaskDisabled;
 }
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * @hidden
  */
-function isModern(obj: any): obj is WindowWithEthereum {
-  return getBrowserSupport() === BrowserSupport.MetamaskModern;
+function isWindowWithEthereum(obj: any): obj is WindowWithEthereum {
+  return getBrowserSupport() === BrowserSupport.MetamaskEnabled;
 }
 
 /**
  * @hidden
  */
-function isLegacy(obj: any): obj is WindowWithWeb3 {
-  return getBrowserSupport() === BrowserSupport.MetamaskLegacy;
-}
-
-/**
- * @hidden
- */
-function isUnsupported(obj: any): obj is ExtendedWindow {
-  return getBrowserSupport() === BrowserSupport.NoMetamask;
+function isExtendedWindow(obj: any): obj is ExtendedWindow {
+  return getBrowserSupport() === BrowserSupport.MetamaskDisabled;
 }
 /* eslint-enable @typescript-eslint/no-unused-vars */
 
@@ -95,18 +81,14 @@ export async function getInjectedProvider(): Promise<Provider | undefined> {
 
   const win = (window as any) as ExtendedWindow;
 
-  if (isModern(win)) {
+  if (isWindowWithEthereum(win)) {
     const injectedProvider = win.ethereum;
     try {
-      await injectedProvider.enable();
+      await injectedProvider.request({ method: 'eth_requestAccounts' });
       return injectedProvider;
     } catch (err) {
       throw new PolymathError({ code: ErrorCode.UserDeniedAccess });
     }
-  } else if (isLegacy(win)) {
-    const injectedWeb3 = win.web3;
-    const web3Provider = injectedWeb3.currentProvider;
-    return web3Provider;
   } else {
     throw new PolymathError({ code: ErrorCode.MetamaskNotInstalled });
   }
@@ -135,10 +117,8 @@ export async function getNetworkId(): Promise<number | null> {
 
   let rawNetworkId: string | undefined;
 
-  if (isModern(win)) {
+  if (isWindowWithEthereum(win)) {
     rawNetworkId = win.ethereum.networkVersion;
-  } else if (isLegacy(win)) {
-    rawNetworkId = win.web3.version.network;
   } else {
     return null;
   }
@@ -163,16 +143,16 @@ export async function getCurrentAddress() {
     throw new PolymathError({ code: ErrorCode.NonBrowserEnvironment });
   }
 
-  if (isModern(win)) {
+  if (isWindowWithEthereum(win)) {
     // Special check for Metamask to know if it is locked or not
     const metamask = win.ethereum._metamask;
     if (metamask) {
-      const isApproved = await metamask.isApproved();
-      if (isApproved && !accounts.length) {
+      const isUnlocked = await metamask.isUnlocked();
+      if (isUnlocked && !accounts.length) {
         throw new PolymathError({ code: ErrorCode.WalletIsLocked });
       }
     }
-  } else if (isUnsupported(win)) {
+  } else if (isExtendedWindow(win)) {
     throw new PolymathError({ code: ErrorCode.IncompatibleBrowser });
   }
 
@@ -187,7 +167,7 @@ export async function getCurrentAddress() {
  * @returns an unsubscribe function
  */
 export function onAddressChange(cb: (newAddress: string, previousAddress?: string) => void) {
-  if (isUnsupported(window as ExtendedWindow)) {
+  if (isExtendedWindow(window)) {
     // eslint-disable-next-line no-console
     console.warn('"onAddressChange" Was called, but the current browser does not support Ethereum');
     return () => {};
@@ -223,7 +203,7 @@ export function onAddressChange(cb: (newAddress: string, previousAddress?: strin
  * @returns an unsubscribe function
  */
 export function onNetworkChange(cb: (newNetwork: number, previousNetwork?: number) => void) {
-  if (isUnsupported(window as ExtendedWindow)) {
+  if (isExtendedWindow(window)) {
     // eslint-disable-next-line no-console
     console.warn('"onNetworkChange" Was called, but the current browser does not support Ethereum');
     return () => {};
